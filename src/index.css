@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fredoka", ui-rounded, system-ui, sans-serif;
+  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --color-ink: #1c1a17;
+  --color-panel: #2a2622;
+  --color-panel-2: #353029;
+  --color-line: #4a4238;
+  --color-paper: #f4efe4;
+  --color-chalk: #2f5d50;
+  --color-gold: #e0a526;
+  --color-hp: #3b9d5d;
+  --color-danger: #d64545;
+}
+
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+button { cursor: pointer; touch-action: manipulation; }
+
+@keyframes bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-1.5px) } }
+@keyframes shake { 0%,100% { transform: translateX(0) } 20%,60% { transform: translateX(-1.5px) } 40%,80% { transform: translateX(1.5px) } }
+@keyframes lunge-r { 0%,100% { transform: translateX(0) } 40% { transform: translateX(8px) } }
+@keyframes flash { 0% { opacity: 1 } 100% { opacity: 0 } }
+@keyframes fade-in { from { opacity: 0; transform: translateY(6px) } to { opacity: 1; transform: none } }
+@keyframes pop { 0% { transform: scale(0.6); opacity: 0 } 70% { transform: scale(1.08) } 100% { transform: scale(1); opacity: 1 } }
+@keyframes float-up { 0% { opacity: 1; transform: translateY(0) } 100% { opacity: 0; transform: translateY(-24px) } }
+@keyframes wipe { 0% { clip-path: inset(0 100% 0 0) } 50% { clip-path: inset(0 0 0 0) } 100% { clip-path: inset(0 0 0 100%) } }
+
+.anim-bob { animation: bob 1.6s ease-in-out infinite; transform-box: fill-box; }
+.anim-shake { animation: shake 0.4s ease-in-out; transform-box: fill-box; }
+.anim-lunge-r { animation: lunge-r 0.45s ease-out; transform-box: fill-box; }
+.anim-fade-in { animation: fade-in 0.3s ease-out both; }
+.anim-pop { animation: pop 0.35s ease-out both; }
+.anim-float-up { animation: float-up 0.9s ease-out forwards; }
+.anim-wipe { animation: wipe 0.7s ease-in-out forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+@keyframes fly { 0% { opacity: 0; transform: translate(0,0) } 15% { opacity: 1 } 100% { opacity: 0; transform: translate(150px,-20px) scale(0.5) } }
+.anim-fly { animation: fly 1.4s ease-in forwards; transform-box: fill-box; }
+@keyframes appear { from { opacity: 0; transform: translateX(20px) } to { opacity: 1; transform: none } }
+.anim-appear { animation: appear 0.6s ease-out both; transform-box: fill-box; }
