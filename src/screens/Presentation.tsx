@@ -221,7 +221,7 @@ export function Presentation({ onDone }: { onDone: (hero: Hero, interest: Intere
     if (last) {
       onDone(
         { name: d.name, gender: d.gender, look: { skin: d.skin, hair: d.hair }, age: d.age, country: d.country },
-        { name: d.interestName, gender: d.interestGender, mode: d.interestMode === 'romance' ? 'romance' : 'friendship' },
+        { name: d.interestName, gender: d.interestGender, mode: d.interestMode === 'romance' ? 'romance' : 'friendship', viaLeo: d.interestMode === 'none' },
       )
     } else setI(i + 1)
   }

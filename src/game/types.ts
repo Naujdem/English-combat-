@@ -19,9 +19,11 @@ export type Interest = {
   gender: Gender
   /** 'romance' sigue la ruta romántica; 'friendship' la convierte en una amistad más */
   mode: 'romance' | 'friendship'
+  /** true si el jugador no conocía a nadie y Leo le presentó a su amigo */
+  viaLeo?: boolean
 }
 
-export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle'
+export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle' | 'epilogue'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
 export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'present-simple' | 'past-simple' | 'future'

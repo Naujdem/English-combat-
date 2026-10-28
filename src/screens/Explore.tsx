@@ -7,7 +7,8 @@ import { LESSONS } from '../data/lessons'
 import { Lesson } from '../components/Lesson'
 import type { TopicId } from '../game/types'
 import { applyCasual, completeStory, FRIEND_REWARDS, talkTo } from '../game/social'
-import { ReadingActivity, VocabActivity } from '../components/Activities'
+import { ReadingActivity, Timetable, VocabActivity } from '../components/Activities'
+import { nextSession, SESSIONS, sessionFor } from '../data/schedule'
 import { SPORTS_VOCAB } from '../data/activities'
 import { Chest, FLOOR, T, Tile, VOCAB, walkable } from '../components/Tiles'
 import { SpriteBody } from '../components/Sprite'
@@ -47,7 +48,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const firstVisit = !state.seenLesson.includes(scene.id)
   const doorOpen = bossDoorOpen(state, scene)
   const keys = state.keys[scene.id] ?? 0
-  const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | 'sports' | null>(null)
+  const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | 'sports' | 'timetable' | null>(null)
+  const boardNext = nextSession(state.opened, state.defeated)
   const npcTurn = useRef<Record<string, number>>({})
   const [notebook, setNotebook] = useState(false)
   // Preguntar "Is this your...?" mientras llevas un objeto perdido
@@ -126,6 +128,20 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           return
         }
       }
+      // Cada esbirro pide la tiza de su sesión del horario para aceptar el combate
+      if (e.type === 'enemy') {
+        const ses = sessionFor(e.id)
+        if (ses && !state.opened.includes(ses.id)) {
+          const person = ENEMIES[e.id].person
+          setMsg({
+            text: `${person}: "You need a piece of chalk to challenge me! Read the class schedule on the board."`,
+            sub: `¡Necesitas una tiza para retarme! Lee el horario de ${ses.subjectEs.toLowerCase()} en la pizarra del aula.`,
+            tone: 'warn',
+            say: 'You need a piece of chalk to challenge me! Read the class schedule on the board.',
+          })
+          return
+        }
+      }
       if (e.type === 'enemy' || e.type === 'boss') {
         setMsg(null)
         const unseen = ENEMIES[e.id].topics.find((t) => !state.seenLesson.includes(t) && LESSONS[t])
@@ -171,7 +187,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         setMsg({ text: res.line, sub: res.note, tone: res.note ? 'warn' : 'info' })
       }
     },
-    [onBattle, state, update],
+    [lf.carrying, onBattle, state, update],
   )
 
   const move = useCallback(
@@ -223,9 +239,22 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         setActivity('vocab')
         return
       }
-      if (c === 'B' && !state.opened.includes('school-reading')) {
+      if (c === 'B') {
+        // La pizarra del aula tiene el horario de clases por sesiones
         setMsg(null)
-        setActivity('reading')
+        if (boardNext.session) {
+          setActivity('reading')
+        } else if (boardNext.blockedBy) {
+          const who = ENEMIES[boardNext.blockedBy].person
+          setMsg({
+            text: 'La pizarra: la siguiente parte del horario está borrosa.',
+            sub: `Vence a ${who} para que aparezca la siguiente clase. Toca otra vez la pizarra para ver tu horario.`,
+            tone: 'warn',
+          })
+          setActivity(msg?.text.startsWith('La pizarra') ? 'timetable' : null)
+        } else {
+          setActivity('timetable')
+        }
         return
       }
       const v = VOCAB[c]
@@ -297,6 +326,12 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 {l.text}
               </text>
             ))}
+            {boardNext.session && (
+              <g transform={`translate(${3 * T + 22} 2)`} className="anim-bob">
+                <circle cx="5" cy="5" r="5.5" fill="#e0a526" />
+                <text x="5" y="8.5" textAnchor="middle" fontSize="9" fontWeight="700" fill="#1c1a17">!</text>
+              </g>
+            )}
             {alive.map((e) => {
               const key = `${e.type}-${e.x}-${e.y}`
               if (e.type === 'chest') return <Chest key={key} x={e.x} y={e.y} />
@@ -383,6 +418,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
 
       <div className="flex flex-wrap items-center gap-1.5 text-[11px]" aria-label="Objetivos para el jefe">
         <span className="font-semibold uppercase tracking-wide text-paper/50">Para el jefe:</span>
+        <span className={`rounded-full px-2 py-0.5 ${SESSIONS.every((x) => state.opened.includes(x.id)) ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
+          Horario {SESSIONS.filter((x) => state.opened.includes(x.id)).length}/{SESSIONS.length}
+        </span>
         <span className={`rounded-full px-2 py-0.5 ${keys >= scene.keysNeeded ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
           Llaves {keys}/{scene.keysNeeded}
         </span>
@@ -415,8 +453,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         ) : (
           <p className="px-1 pt-2 text-sm text-paper/55">
             {firstVisit
-              ? `Los estudiantes de ${scene.name.toLowerCase()} guardan tus palabras. Vence a los ${scene.keysNeeded} que tienen las llaves de la sala de profesores, consigue el silbato del entrenador y matricúlate en la secretaría.`
-              : 'Choca con personas para hablar y con objetos para ver su nombre en inglés. Lee el tablón del aula y repasa vocabulario en la biblioteca.'}
+              ? `Los estudiantes de ${scene.name.toLowerCase()} guardan tus palabras. Lee el horario en la pizarra del aula: cada sesión te da una tiza para retar a un estudiante. Vence a los ${scene.keysNeeded} que tienen las llaves, consigue el silbato del entrenador y matricúlate en la secretaría.`
+              : 'Choca con personas para hablar y con objetos para ver su nombre en inglés. Lee el horario en la pizarra del aula para conseguir tizas.'}
           </p>
         )}
       </div>
@@ -537,22 +575,44 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         </Overlay>
       )}
 
-      {activity === 'reading' && (
+      {activity === 'reading' && boardNext.session && (
         <Overlay>
           <ReadingActivity
             state={state}
+            session={boardNext.session}
+            minionName={ENEMIES[boardNext.session.minion].person}
             onClose={(finished) => {
+              const ses = boardNext.session!
               setActivity(null)
-              if (finished) {
-                update((s) => ({
-                  ...s,
-                  opened: [...s.opened, 'school-reading'],
-                  outfits: s.outfits.includes('gafas') ? s.outfits : [...s.outfits, 'gafas'],
-                }))
-                setMsg({ text: 'Desbloqueaste: Gafas de lectura.', sub: 'Póntelas desde el menú de atuendos.', tone: 'good' })
-              }
+              if (!finished) return
+              const last = ses.id === SESSIONS[SESSIONS.length - 1].id
+              update((s) => ({
+                ...s,
+                opened: [...s.opened, ses.id],
+                outfits: last && !s.outfits.includes('gafas') ? [...s.outfits, 'gafas'] : s.outfits,
+              }))
+              setMsg({
+                text: `Conseguiste una tiza para retar a ${ENEMIES[ses.minion].person}.`,
+                sub: last ? 'Completaste el horario. También encontraste unas gafas de lectura: póntelas en Atuendos.' : 'Cuando lo venzas, aparecerá la siguiente clase en la pizarra.',
+                tone: 'good',
+              })
             }}
           />
+        </Overlay>
+      )}
+
+      {activity === 'timetable' && (
+        <Overlay onClose={() => setActivity(null)}>
+          <Panel>
+            <div className="mb-2 flex items-center justify-between">
+              <h2 className="font-display text-xl">Tu horario</h2>
+              <button className={btnGhost} onClick={() => setActivity(null)}>Cerrar</button>
+            </div>
+            <Timetable opened={state.opened} />
+            <p className="mt-2 text-xs text-paper/60">
+              {SESSIONS.every((x) => state.opened.includes(x.id)) ? 'Horario completo.' : 'Las clases con ? aparecen al leer las siguientes sesiones.'}
+            </p>
+          </Panel>
         </Overlay>
       )}
 

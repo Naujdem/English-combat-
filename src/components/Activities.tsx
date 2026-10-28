@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import type { GameState } from '../game/types'
-import { SCHOOL_READING, SCHOOL_VOCAB } from '../data/activities'
+import { SCHOOL_VOCAB } from '../data/activities'
+import { DAYS, HOURS, SESSIONS, type Session } from '../data/schedule'
 
 type Word = { en: string; es: string }
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
@@ -116,9 +117,65 @@ export function VocabActivity({
   )
 }
 
-/** Lectura del tablón del aula con preguntas de comprensión */
-export function ReadingActivity({ onClose }: { state: GameState; onClose: (finished: boolean) => void }) {
-  const r = SCHOOL_READING
+/** Horario de la semana: muestra las clases que el jugador ya leyó en la pizarra */
+export function Timetable({ opened, highlight }: { opened: string[]; highlight?: Session | null }) {
+  const known = SESSIONS.filter((s) => opened.includes(s.id) || s.id === highlight?.id).flatMap((s) =>
+    s.entries.map((e) => ({ ...e, fresh: s.id === highlight?.id })),
+  )
+  return (
+    <div className="overflow-hidden rounded-xl border border-[#7a5230] bg-[#2f5d50] p-2 text-paper">
+      <p className="mb-1 text-center font-display text-sm">Class schedule</p>
+      <table className="w-full table-fixed border-collapse text-center text-[11px]">
+        <thead>
+          <tr>
+            <th className="w-[13%] font-normal text-paper/60" />
+            {DAYS.map((d) => (
+              <th key={d.id} className="pb-1 font-semibold">{d.id}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {HOURS.map((h) => (
+            <tr key={h}>
+              <td className="py-1 text-paper/60">{h}</td>
+              {DAYS.map((d) => {
+                const e = known.find((k) => k.day === d.id && k.hour === h)
+                return (
+                  <td key={d.id} className="p-0.5">
+                    <div
+                      className={`rounded-md px-0.5 py-1 leading-tight ${
+                        e ? (e.fresh ? 'anim-pop bg-gold/30 font-semibold text-paper' : 'bg-black/20') : 'bg-black/10 text-paper/30'
+                      }`}
+                    >
+                      {e ? e.subject : '?'}
+                    </div>
+                  </td>
+                )
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+/**
+ * Sesión de lectura del horario en la pizarra: un texto corto con preguntas de comprensión.
+ * Al terminar da una tiza para retar al esbirro de esa sesión.
+ */
+export function ReadingActivity({
+  state,
+  session,
+  minionName,
+  onClose,
+}: {
+  state: GameState
+  session: Session
+  minionName: string
+  onClose: (finished: boolean) => void
+}) {
+  const r = session
   const [showEs, setShowEs] = useState(false)
   const [i, setI] = useState(-1)
   const [tip, setTip] = useState<string | null>(null)
@@ -135,17 +192,19 @@ export function ReadingActivity({ onClose }: { state: GameState; onClose: (finis
   }
 
   return (
-    <Panel className="max-h-[85vh] overflow-y-auto">
+    <Panel className="max-h-[88vh] overflow-y-auto">
       <div className="mb-2 flex items-center justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-gold">Tablón del aula</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-gold">Pizarra del aula · Sesión {SESSIONS.indexOf(r) + 1} de {SESSIONS.length}</p>
           <h2 className="font-display text-xl">{r.title}</h2>
         </div>
         <button className={btnGhost} onClick={() => onClose(false)}>Salir</button>
       </div>
 
-      {(reading || !done) && (
-        <div className="rounded-xl bg-[#2f5d50] p-3 text-[15px] leading-relaxed text-paper">
+      <Timetable opened={state.opened} highlight={done ? r : null} />
+
+      {!done && (
+        <div className="mt-3 rounded-xl bg-[#2f5d50] p-3 text-[15px] leading-relaxed text-paper">
           {r.text.map((p, k) => (
             <div key={k} className={`flex items-start gap-2 ${k ? 'mt-2' : ''}`}>
               <p className="flex-1">
@@ -190,12 +249,12 @@ export function ReadingActivity({ onClose }: { state: GameState; onClose: (finis
           )}
         </div>
       ) : (
-        <div className="anim-fade-in">
-          <p className="font-display text-xl text-gold">¡Lectura completa!</p>
+        <div className="anim-fade-in mt-3">
+          <p className="font-display text-xl text-gold">¡Sesión completa: {r.subjectEs}!</p>
           <p className="mt-1 text-[15px] text-paper/80">
-            El profesor Grimm es amable... ¿por qué estará encerrado hoy? Junto al tablón encuentras unas gafas de lectura.
+            Las clases nuevas quedaron en tu horario. Junto a la pizarra encuentras una tiza: llévasela a <b>{minionName}</b> para retarlo.
           </p>
-          <button className={`${btnPrimary} mt-4 w-full`} onClick={() => onClose(true)} autoFocus>Tomar las gafas</button>
+          <button className={`${btnPrimary} mt-4 w-full`} onClick={() => onClose(true)} autoFocus>Tomar la tiza</button>
         </div>
       )}
     </Panel>

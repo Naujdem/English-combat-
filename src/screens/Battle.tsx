@@ -4,6 +4,7 @@ import type { Update } from '../game/store'
 import { ENEMIES, OUTFITS } from '../data/school'
 import { pickQuestion, TOPICS } from '../data/questions'
 import { QuestionCard } from '../components/QuestionCard'
+import { sessionFor } from '../data/schedule'
 import { SpeakButton } from '../components/SpeakButton'
 import { SCENES, heroLook, perks } from '../game/helpers'
 import { SpriteBody } from '../components/Sprite'
@@ -90,7 +91,15 @@ function Backdrop({ zone }: { zone: Zone }) {
   )
 }
 
-type Phase = 'story' | 'ask' | 'feedback' | 'after' | 'won' | 'lost'
+/** Grimm se despide al ser vencido: práctica de despedidas */
+const FAREWELL = {
+  q: "It's late. Goodbye, my student. See you in class tomorrow!",
+  options: ['Goodbye, Mr. Grimm! See you tomorrow!', 'Good morning, Mr. Grimm!', 'Hello, Mr. Grimm! Nice to meet you!'],
+  answer: 0,
+  tip: 'Para despedirse se dice "Goodbye" o "See you tomorrow". "Good morning" es para saludar y "Nice to meet you" es al conocer a alguien.',
+}
+
+type Phase = 'story' | 'ask' | 'feedback' | 'after' | 'bonus' | 'won' | 'lost'
 
 
 export function Battle({ state, update, onExit }: { state: GameState; update: Update; onExit: () => void }) {
@@ -237,6 +246,9 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
     }
     if (phase === 'lost') {
       update((s) => ({ ...s, hp: s.maxHp, pos: { ...scene.start }, battle: null, screen: 'explore' }))
+    } else if (enemy.kind === 'boss') {
+      // Al vencer al jefe viene el final del capítulo
+      update((s) => ({ ...s, battle: null, screen: s.opened.includes('school-epilogue') ? 'explore' : 'epilogue' }))
     } else {
       update((s) => ({ ...s, battle: null, screen: 'explore' }))
     }
@@ -246,6 +258,14 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const hero = useMemo(() => heroLook(state, { book: true }), [state])
   const keysNow = state.keys[state.sceneId] ?? 0
   const storyLines = phase === 'after' ? enemy.after : enemy.before
+  // Pregunta extra al ser vencido: los esbirros preguntan por el horario y Grimm se despide
+  const session = enemy.kind === 'minion' ? sessionFor(enemy.id) : undefined
+  const bonusSession = session
+    ? { id: session.id, title: 'Pregunta extra del horario', bonus: session.bonus, shield: true }
+    : enemy.kind === 'boss'
+      ? { id: 'farewell', title: 'Despedida', bonus: FAREWELL, shield: false }
+      : undefined
+  const [bonusPick, setBonusPick] = useState<number | null>(null)
   const story = storyLines[line]
   const wasMistake = state.mistakes.includes(q.id)
 
@@ -253,6 +273,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
     setShowEs(false)
     if (line < storyLines.length - 1) setLine(line + 1)
     else if (phase === 'story') setPhase('ask')
+    else if (bonusSession) setPhase('bonus')
     else setPhase('won')
   }
 
@@ -402,6 +423,52 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         </Panel>
       )}
 
+      {phase === 'bonus' && bonusSession && (
+        <Panel className="anim-fade-in">
+          <p className="text-xs font-semibold uppercase tracking-wide text-gold">{bonusSession.title}</p>
+          <div className="mt-1 flex items-start gap-2">
+            <p className="flex-1 text-[17px] leading-relaxed">
+              <span className="font-semibold text-gold">{enemy.person}: </span>"{bonusSession.bonus.q}"
+            </p>
+            <SpeakButton text={bonusSession.bonus.q} size="sm" />
+          </div>
+          <div className="mt-3 grid gap-2">
+            {bonusSession.bonus.options.map((o, k) => {
+              const right = k === bonusSession.bonus.answer
+              const look =
+                bonusPick === null ? 'border-line bg-panel-2' : right ? 'border-hp bg-hp/25' : bonusPick === k ? 'border-danger bg-danger/25' : 'border-line bg-panel-2 opacity-40'
+              return (
+                <button
+                  key={k}
+                  className={`rounded-xl border-2 px-3 py-2.5 text-left font-display text-[16px] text-paper transition ${look}`}
+                  disabled={bonusPick !== null}
+                  onClick={() => {
+                    setBonusPick(k)
+                    if (right && bonusSession.shield) update((s) => ({ ...s, items: { ...s.items, shield: Math.min(2, s.items.shield + 1) } }))
+                  }}
+                >
+                  {o}
+                </button>
+              )
+            })}
+          </div>
+          {bonusPick !== null && (
+            <div className="anim-fade-in mt-3 rounded-xl bg-panel-2 p-3">
+              {bonusPick === bonusSession.bonus.answer ? (
+                <p className="text-sm font-semibold text-hp">
+                  {bonusSession.shield ? '¡Correcto! Leíste bien el horario. Ganaste un escudo de palabras (máximo 2).' : '¡Muy bien! Así se despide uno en inglés.'}
+                </p>
+              ) : (
+                <p className="text-[15px] leading-snug"><span className="font-semibold text-gold">Pista: </span>{bonusSession.bonus.tip}</p>
+              )}
+              <div className="mt-3 flex justify-end">
+                <button className={btnPrimary} onClick={() => setPhase('won')} autoFocus>Continuar</button>
+              </div>
+            </div>
+          )}
+        </Panel>
+      )}
+
       {phase === 'won' && (
         <Panel className="anim-pop border-gold">
           <p className="font-display text-2xl text-gold">{enemy.kind === 'trainer' ? '¡Entrenamiento completo!' : '¡Victoria!'}</p>
@@ -416,6 +483,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               {enemy.person} te dio un pedazo de llave. Llevas {keysNow} de {scene.keysNeeded}.
               {enemy.reward && ` También te regaló: ${OUTFITS[enemy.reward].name}.`}
               {keysNow >= scene.keysNeeded && ' ¡La sala de profesores ya está abierta!'}
+              {session && session.id !== 'board-4' && ' Mira la pizarra del aula: apareció una clase nueva en el horario.'}
             </p>
           ) : (
             <div className="mt-1 grid gap-1.5 text-[16px]">

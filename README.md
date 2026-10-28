@@ -20,7 +20,7 @@ Tres capas, una dentro de otra:
 2. **Exploración en cuadrícula** (`src/screens/Explore.tsx`): vista desde arriba, el personaje camina casilla por casilla.
 3. **Combate 2D** (`src/screens/Battle.tsx`): vista lateral, preguntas de opción múltiple.
 
-Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → presentación con Leo (nombre, sexo, aspecto, edad, país, persona especial) → combate de entrenamiento con Leo → mapa → escuela → combates → jefe.
+Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → presentación con Leo (nombre, sexo, aspecto, edad, país, persona especial) → combate de entrenamiento con Leo → mapa → escuela → combates → jefe → final del capítulo (`src/screens/Epilogue.tsx`).
 
 ## Dónde está cada cosa
 
@@ -31,7 +31,8 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 | `docs/curriculo-a1.md` | Currículo A1: objetivos, gramática, vocabulario y funciones |
 | `src/data/school.ts` | Mapa de la escuela, enemigos y atuendos |
 | `src/data/friends.ts` | Amigos (Leo, Maya) y el interés especial: momentos de historia y charlas casuales |
-| `src/data/activities.ts` | Repaso de vocabulario de la biblioteca y lectura del tablón |
+| `src/data/activities.ts` | Repaso de vocabulario de la biblioteca |
+| `src/data/schedule.ts` | Horario de clases por sesiones (pizarra → tiza → esbirro → pregunta extra) |
 | `src/data/world.ts` | Nodos del mapa del mundo |
 | `src/game/types.ts` | Tipos de datos del juego |
 | `src/game/store.ts` | Estado y guardado automático (localStorage) |
@@ -76,9 +77,11 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 - Escribir (`write`): se generan solas. "Escribe la palabra que falta" sale de las preguntas de completar de *to be* y saludos (solo donde la respuesta es única), y "Escribe la oración en inglés" sale de las de ordenar (frase en español → oración en inglés). La revisión ignora mayúsculas y puntos y acepta contracciones (`src/game/text.ts`).
 - Cada enemigo tiene historia antes y después del combate; al vencerlo se queda en el mapa como estudiante normal.
 - Biblioteca: repaso de vocabulario que da un escudo de palabras (bloquea un error en combate).
-- Tablón del aula: lectura con preguntas de comprensión que desbloquea las gafas de lectura.
+- Horario de clases en la pizarra (`src/data/schedule.ts`), por sesiones: cada sesión es una lectura (materias, días, horas, profesores) con preguntas, y da una tiza. Cada esbirro pide su tiza para pelear (Tom → Maths, Rick → Science/English, Bella → Lunch/History, Max → P.E./Art/Music). Al vencerlo, hace una pregunta extra del horario (acertar da un escudo) y se abre la siguiente sesión. Tocar la pizarra cuando no hay sesión nueva muestra el horario descubierto. La última sesión da las gafas de lectura.
 - Llaves: cada esbirro vencido (Tom, Rick, Bella y Max) suelta una; con 4 se abre la sala de profesores.
 - Requisitos del jefe (`BOSS_REQUIREMENTS` en `school.ts`): Grimm no pelea si no tienes el silbato del entrenador (repaso de deportes en el patio) y el uniforme (matrícula en la secretaría). Una barra de objetivos en el mapa muestra lo que falta.
+- Al vencer a Grimm, él se despide ("Goodbye, my student. See you tomorrow!") y hay que responder con una despedida.
+- Final del capítulo 1: Leo y la persona especial esperan a la salida. El protagonista habla por primera vez, presenta a sus amigos con "This is..." (si fue Leo quien presentó a esa persona, se la presentas a Maya), aparece el villano anunciando la ciudad y todos se despiden.
 - El jefe devuelve un tema ("fragmento de voz"), una pieza del reloj del tiempo y un atuendo.
 - Si fallas, Leo te da la explicación. Si te quedas sin vida, vuelves a la entrada.
 - Amistad por puntos, sin respuestas incorrectas: las respuestas sin sentido bajan la amistad. Recompensas: Leo da una pista en combate; Maya da +1 de vida máxima.

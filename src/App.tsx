@@ -6,6 +6,7 @@ import { Intro } from './screens/Intro'
 import { World } from './screens/World'
 import { Explore } from './screens/Explore'
 import { Battle } from './screens/Battle'
+import { Epilogue } from './screens/Epilogue'
 import { ENEMIES } from './data/school'
 
 export default function App() {
@@ -34,7 +35,9 @@ export default function App() {
       screen = (
         <Title
           state={state}
-          onContinue={() => go(state.battle ? 'battle' : 'world')}
+          onContinue={() =>
+            go(state.battle ? 'battle' : state.defeated.includes('school-boss') && !state.opened.includes('school-epilogue') ? 'epilogue' : 'world')
+          }
           onNew={() => {
             clearSave()
             setState(newGame())
@@ -74,6 +77,20 @@ export default function App() {
       break
     case 'battle':
       screen = state.battle ? <Battle key={state.battle.enemyId} state={state} update={update} onExit={() => setFlash(0)} /> : null
+      break
+    case 'epilogue':
+      screen = (
+        <Epilogue
+          state={state}
+          onDone={() =>
+            update((s) => ({
+              ...s,
+              opened: s.opened.includes('school-epilogue') ? s.opened : [...s.opened, 'school-epilogue'],
+              screen: 'world',
+            }))
+          }
+        />
+      )
       break
   }
 
