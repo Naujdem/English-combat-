@@ -26,7 +26,9 @@ Flujo completo: título → creación de personaje → intro (te roban la voz) �
 
 | Archivo | Qué contiene |
 |---|---|
-| `src/data/questions.ts` | Banco de preguntas y mini lecciones de cada tema |
+| `src/data/questions.ts` | Banco de preguntas (completar y corregir al enemigo) |
+| `src/data/lessons.ts` | Lecciones paso a paso de Leo para cada tema |
+| `docs/curriculo-a1.md` | Currículo A1: objetivos, gramática, vocabulario y funciones |
 | `src/data/school.ts` | Mapa de la escuela, enemigos y atuendos |
 | `src/data/friends.ts` | Amigos (Leo, Maya) y el interés especial, con sus charlas |
 | `src/data/world.ts` | Nodos del mapa del mundo |
@@ -44,6 +46,14 @@ Flujo completo: título → creación de personaje → intro (te roban la voz) �
 { id: 'be-25', topic: 'to-be', prompt: 'My mother ___ a nurse.', options: ['is', 'are', 'am'], answer: 0, tip: '"My mother" equivale a "she", así que va "is".' },
 ```
 
+**Preguntas de "corregir al enemigo".** Con `kind: 'fix'`, el `prompt` es la frase con error que dice el enemigo y las opciones son frases completas:
+
+```ts
+{ id: 'bf-11', topic: 'to-be', kind: 'fix', prompt: 'He are tired!', options: ['He is tired.', 'He am tired.', 'Him is tired.'], answer: 0, tip: 'Con "he" va "is".' },
+```
+
+**Lecciones.** En `src/data/lessons.ts`, cada tema tiene pasos de Leo (`who: 'leo'`) y ejercicios en la pizarra (`who: 'board'`). La lección aparece sola la primera vez que el jugador se enfrenta a un enemigo con ese tema.
+
 **Mapas.** Cada escenario es una tabla de letras. `#` pared, `.` piso, `D` pupitre, `W` ventana, etc. (la leyenda completa está arriba del mapa en `school.ts`). Para crear un escenario nuevo: copia `school.ts`, cambia la tabla y las entidades, regístralo en `SCENES` (`src/game/helpers.ts`) y pon su `sceneId` en `world.ts`.
 
 **Charlas de amigos.** En `friends.ts`, cada conversación tiene `requires`: el tema que hay que haber recuperado. Si el jugador no lo tiene, el amigo dice que aún no le entiendes y el menú de amigos indica qué recuperar. Las charlas con `lines: []` aparecen como "próximamente".
@@ -51,7 +61,8 @@ Flujo completo: título → creación de personaje → intro (te roban la voz) �
 ## Sistemas incluidos
 
 - Selector de personaje (género, nombre, piel, cabello) y del interés especial (género, nombre, romántico o solo amistad). Las frases del narrador usan *he/she* según lo elegido.
-- Mini lección al entrar a un escenario.
+- Lecciones paso a paso con Leo antes del primer combate de cada tema (la de *to be* va en la intro).
+- Dos tipos de combate: completar la frase y corregir la frase con error que dice el enemigo.
 - Llaves: cada esbirro vencido suelta una; con 3 se abre la sala de profesores.
 - El jefe devuelve un tema ("fragmento de voz"), una pieza del reloj del tiempo y un atuendo.
 - Si fallas, Leo te da la explicación. Si te quedas sin vida, vuelves a la entrada.

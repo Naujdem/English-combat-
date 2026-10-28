@@ -3,14 +3,16 @@ import type { Entity, GameState } from '../game/types'
 import type { Update } from '../game/store'
 import { SCENES, bossDoorOpen, friendById, heroLook } from '../game/helpers'
 import { ENEMIES, OUTFITS } from '../data/school'
-import { TOPICS } from '../data/questions'
+import { LESSONS } from '../data/lessons'
+import { Lesson } from '../components/Lesson'
+import type { TopicId } from '../game/types'
 import { completeConversation, FRIEND_REWARDS, talkTo } from '../game/social'
 import { Chest, FLOOR, T, Tile, VOCAB, walkable } from '../components/Tiles'
 import { SpriteBody } from '../components/Sprite'
 import { DPad } from '../components/DPad'
 import { ConversationView } from '../components/Conversation'
 import { FriendsPanel } from '../components/FriendsPanel'
-import { btn, btnGhost, btnPrimary, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
+import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
 const VIEW = 11
 
@@ -22,10 +24,12 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [msg, setMsg] = useState<Msg | null>(null)
   const [talk, setTalk] = useState<Talk | null>(null)
   const [friendsOpen, setFriendsOpen] = useState(false)
-  const lessonPending = !state.seenLesson.includes(scene.id)
+  // Lección de Leo que se muestra antes de un combate con un tema nuevo
+  const [lesson, setLesson] = useState<{ topic: TopicId; enemyId: string } | null>(null)
+  const firstVisit = !state.seenLesson.includes(scene.id)
   const doorOpen = bossDoorOpen(state, scene)
   const keys = state.keys[scene.id] ?? 0
-  const blocked = !!talk || friendsOpen || lessonPending
+  const blocked = !!talk || friendsOpen || !!lesson
 
   const rows = scene.map.length
   const cols = scene.map[0].length
@@ -52,7 +56,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
     (e: Entity) => {
       if (e.type === 'enemy' || e.type === 'boss') {
         setMsg(null)
-        onBattle(e.id)
+        const unseen = ENEMIES[e.id].topics.find((t) => !state.seenLesson.includes(t) && LESSONS[t])
+        if (unseen) setLesson({ topic: unseen, enemyId: e.id })
+        else onBattle(e.id)
         return
       }
       if (e.type === 'chest') {
@@ -99,7 +105,12 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       const c = scene.map[ny][nx]
       if (walkable(c, doorOpen)) {
         setMsg(null)
-        update((s) => ({ ...s, pos: { x: nx, y: ny }, facing }))
+        update((s) => ({
+          ...s,
+          pos: { x: nx, y: ny },
+          facing,
+          seenLesson: s.seenLesson.includes(scene.id) ? s.seenLesson : [...s.seenLesson, scene.id],
+        }))
         return
       }
       if (facing !== state.facing) update((s) => ({ ...s, facing }))
@@ -226,7 +237,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           </Panel>
         ) : (
           <p className="px-1 pt-2 text-sm text-paper/55">
-            {scene.name}. Choca con objetos para ver su nombre en inglés y con personas para hablar.
+            {firstVisit
+              ? `Los estudiantes de ${scene.name.toLowerCase()} guardan tus palabras. Vence a ${scene.keysNeeded} para conseguir las llaves de la sala de profesores.`
+              : `${scene.name}. Choca con objetos para ver su nombre en inglés y con personas para hablar.`}
           </p>
         )}
       </div>
@@ -235,30 +248,6 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         <OutfitButton state={state} update={update} />
         <DPad onMove={move} disabled={blocked} />
       </div>
-
-      {lessonPending && (
-        <Overlay>
-          <Panel>
-            <p className="text-xs font-semibold uppercase tracking-wide text-gold">{TOPICS[scene.topic].level} · Antes de entrar</p>
-            <h2 className="mt-1 font-display text-2xl">{TOPICS[scene.topic].name}</h2>
-            <ul className="mt-3 grid gap-2">
-              {TOPICS[scene.topic].lesson.map((l, i) => (
-                <li key={i} className="rounded-lg bg-panel-2 px-3 py-2 text-[15px] leading-snug">{l}</li>
-              ))}
-            </ul>
-            <p className="mt-3 text-sm text-paper/70">
-              Los estudiantes de esta escuela guardan tus palabras. Vence a {scene.keysNeeded} para conseguir las llaves de la sala de profesores.
-            </p>
-            <button
-              className={`${btnPrimary} mt-4 w-full`}
-              onClick={() => update((s) => ({ ...s, seenLesson: [...s.seenLesson, scene.id] }))}
-              autoFocus
-            >
-              Entendido
-            </button>
-          </Panel>
-        </Overlay>
-      )}
 
       {talk && talkFriend && (
         <Overlay>
@@ -282,6 +271,22 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       )}
 
       {friendsOpen && <FriendsPanel state={state} onClose={() => setFriendsOpen(false)} />}
+
+      {lesson && (
+        <div className="absolute inset-0 z-40 overflow-y-auto bg-ink">
+          <Lesson
+            state={state}
+            steps={LESSONS[lesson.topic] ?? []}
+            title="Leo te alcanza antes del combate"
+            onDone={() => {
+              const { topic, enemyId } = lesson
+              update((s) => ({ ...s, seenLesson: s.seenLesson.includes(topic) ? s.seenLesson : [...s.seenLesson, topic] }))
+              setLesson(null)
+              onBattle(enemyId)
+            }}
+          />
+        </div>
+      )}
     </div>
   )
 }

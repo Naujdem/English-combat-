@@ -56,7 +56,7 @@ export default function App() {
                 ? {
                     ...s,
                     screen: 'world',
-                    seenLesson: s.seenLesson.includes('school') ? s.seenLesson : [...s.seenLesson, 'school'],
+                    seenLesson: s.seenLesson.includes('to-be') ? s.seenLesson : [...s.seenLesson, 'to-be'],
                     friendship: { ...s.friendship, leo: Math.max(1, s.friendship.leo ?? 0) },
                   }
                 : { ...s, screen: 'world' },

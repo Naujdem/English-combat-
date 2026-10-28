@@ -21,12 +21,19 @@ export type Interest = {
 export type Screen = 'title' | 'create' | 'intro' | 'world' | 'explore' | 'battle'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
-export type TopicId = 'to-be' | 'present-simple' | 'past-simple' | 'future'
+export type TopicId = 'to-be' | 'possessives' | 'present-simple' | 'past-simple' | 'future'
+
+/**
+ * fill: completar el espacio en blanco.
+ * fix: el enemigo dice una frase con error y el jugador elige la versión correcta.
+ */
+export type QuestionKind = 'fill' | 'fix'
 
 export type Question = {
   id: string
   topic: TopicId
-  /** Usa ___ para el espacio en blanco */
+  kind?: QuestionKind
+  /** fill: usa ___ para el espacio en blanco. fix: la frase con error que dice el enemigo */
   prompt: string
   options: string[]
   answer: number
@@ -41,7 +48,10 @@ export type EnemyDef = {
   name: string
   kind: 'minion' | 'boss'
   hp: number
-  topic: TopicId
+  /** Temas de los que salen sus preguntas */
+  topics: TopicId[]
+  /** Tipos de pregunta que usa: completar, corregir o ambos */
+  kinds: QuestionKind[]
   look: { shirt: string; hair: string; skin: string; accessory?: 'cap' | 'mortarboard' | 'glasses' }
   intro: string
 }
@@ -56,7 +66,8 @@ export type Entity =
 export type SceneDef = {
   id: string
   name: string
-  topic: TopicId
+  /** Temas que se recuperan al vencer al jefe de este escenario */
+  topics: TopicId[]
   map: string[]
   start: { x: number; y: number }
   /** Tile de la puerta del jefe, se abre con las llaves */
@@ -65,6 +76,16 @@ export type SceneDef = {
   entities: Entity[]
   labels: { text: string; x: number; y: number }[]
   zoneAt: (x: number, y: number) => Zone
+}
+
+/** Un paso de una lección guiada por Leo */
+export type LessonStep = {
+  who: 'leo' | 'board' | 'narrator'
+  text: string
+  es?: string
+  /** Lo que aparece escrito en la pizarra */
+  board?: [string, string?]
+  choice?: { options: string[]; answer: number; tip: string }
 }
 
 export type DialogLine = {

@@ -5,7 +5,7 @@ import { ENEMIES } from '../data/school'
 import { pickQuestion, TOPICS } from '../data/questions'
 import { SCENES, heroLook, perks } from '../game/helpers'
 import { SpriteBody } from '../components/Sprite'
-import { Bar, btn, btnPrimary, Hearts, Panel } from '../components/ui'
+import { Bar, btnPrimary, Hearts, Panel } from '../components/ui'
 
 type Phase = 'intro' | 'ask' | 'feedback' | 'won' | 'lost'
 
@@ -85,7 +85,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
 
   const [phase, setPhase] = useState<Phase>('intro')
   const [used, setUsed] = useState<string[]>([])
-  const [q, setQ] = useState<Question>(() => pickQuestion(enemy.topic, []))
+  const [q, setQ] = useState<Question>(() => pickQuestion(enemy.topics, enemy.kinds, []))
   const [picked, setPicked] = useState<number | null>(null)
   const [heroAnim, setHeroAnim] = useState('')
   const [enemyAnim, setEnemyAnim] = useState('')
@@ -130,7 +130,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   function nextQuestion() {
     const nextUsed = [...used, q.id]
     setUsed(nextUsed)
-    setQ(pickQuestion(enemy.topic, nextUsed))
+    setQ(pickQuestion(enemy.topics, enemy.kinds, nextUsed))
     setPicked(null)
     setRemoved(null)
     setHintUsed(false)
@@ -146,7 +146,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       }
       return {
         ...base,
-        recovered: s.recovered.includes(enemy.topic) ? s.recovered : [...s.recovered, enemy.topic],
+        recovered: [...s.recovered, ...enemy.topics.filter((t) => !s.recovered.includes(t))],
         relics: s.relics + 1,
         outfits: s.outfits.includes('capa') ? s.outfits : [...s.outfits, 'capa'],
       }
@@ -170,7 +170,8 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
 
   const hero = useMemo(() => heroLook(state, { book: true }), [state])
   const keysNow = (state.keys[state.sceneId] ?? 0)
-  const prompt = phase === 'feedback' && picked === q.answer ? q.prompt.replace('___', q.options[q.answer]) : q.prompt
+  const isFix = q.kind === 'fix'
+  const prompt = !isFix && phase === 'feedback' && picked === q.answer ? q.prompt.replace('___', q.options[q.answer]) : q.prompt
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col gap-3 px-3 py-3">
@@ -229,29 +230,41 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       {(phase === 'ask' || phase === 'feedback' || phase === 'lost') && (
         <Panel className="anim-fade-in">
           <div className="mb-1 flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-wide text-gold">{TOPICS[enemy.topic].name}</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-gold">
+              {isFix ? '¡Corrige al enemigo!' : TOPICS[q.topic].name}
+            </p>
             {leoHint && phase === 'ask' && (
               <button className="rounded-lg border border-hp/60 px-2 py-1 text-xs font-semibold text-hp disabled:opacity-40" onClick={takeHint} disabled={hintUsed}>
                 Pista de Leo
               </button>
             )}
           </div>
-          <p className="font-display text-[22px] leading-snug">{prompt}</p>
-          <div className="mt-3 grid grid-cols-3 gap-2">
+          {isFix ? (
+            <>
+              <p className="text-sm text-paper/60">{enemy.name} dice:</p>
+              <p className={`font-display text-[22px] leading-snug ${phase === 'ask' ? 'text-[#f3b0b0]' : 'text-paper/50 line-through decoration-danger'}`}>
+                "{prompt}"
+              </p>
+              <p className="mt-2 text-sm text-paper/70">¿Cuál es la forma correcta?</p>
+            </>
+          ) : (
+            <p className="font-display text-[22px] leading-snug">{prompt}</p>
+          )}
+          <div className={`mt-3 grid gap-2 ${isFix ? 'grid-cols-1' : 'grid-cols-3'}`}>
             {q.options.map((o, k) => {
               const isAnswer = k === q.answer
-              const state2 =
+              const look =
                 phase === 'ask'
-                  ? ''
+                  ? 'border-line bg-panel-2 hover:border-gold/70 active:scale-[0.97]'
                   : isAnswer
-                    ? 'border-hp bg-hp/20 text-paper'
+                    ? 'border-hp bg-hp/25'
                     : picked === k
-                      ? 'border-danger bg-danger/20 text-paper'
-                      : 'opacity-40'
+                      ? 'border-danger bg-danger/25'
+                      : 'border-line bg-panel-2 opacity-40'
               return (
                 <button
                   key={k}
-                  className={`${btn} px-2 text-[18px] disabled:opacity-100 ${state2} ${removed === k ? 'invisible' : ''}`}
+                  className={`rounded-xl border-2 py-2.5 font-display font-medium text-paper transition ${isFix ? 'px-3 text-left text-[17px]' : 'px-2 text-[18px]'} ${look} ${removed === k ? 'invisible' : ''}`}
                   onClick={() => answer(k)}
                   disabled={phase !== 'ask'}
                 >
@@ -262,7 +275,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
           </div>
           {phase === 'feedback' && picked === q.answer && battle.enemyHp > 0 && (
             <div className="anim-fade-in mt-3 flex items-center justify-between gap-2">
-              <p className="text-sm font-semibold text-hp">¡Correcto! El golpe acertó.</p>
+              <p className="text-sm font-semibold text-hp">{isFix ? '¡Lo corregiste! El golpe acertó.' : '¡Correcto! El golpe acertó.'}</p>
               <button className={btnPrimary} onClick={nextQuestion} autoFocus>Seguir</button>
             </div>
           )}
@@ -293,7 +306,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             </p>
           ) : (
             <div className="mt-1 grid gap-1.5 text-[16px]">
-              <p>Recuperaste una parte de tu voz: <b>{TOPICS[enemy.topic].name}</b>.</p>
+              <p>Recuperaste una parte de tu voz: <b>{enemy.topics.map((t) => TOPICS[t].name).join(' y ')}</b>.</p>
               <p className="text-paper/75">También ganaste una pieza del reloj del tiempo y la Capa del tiempo. Tus amigos tienen cosas nuevas que contarte.</p>
             </div>
           )}
