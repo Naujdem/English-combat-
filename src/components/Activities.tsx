@@ -42,7 +42,8 @@ export function VocabActivity({
   rewardText = 'Los libros te dan un escudo de palabras: bloquea un error en combate.',
 }: {
   state: GameState
-  onClose: (earned: boolean) => void
+  /** passed: acertó 4 de 5 o más */
+  onClose: (passed: boolean) => void
   words?: Word[]
   place?: string
   title?: string
@@ -108,7 +109,7 @@ export function VocabActivity({
           ) : (
             <p className="mt-1 text-[15px] text-paper/80">Necesitas 4 aciertos para ganar un escudo. Puedes intentarlo otra vez.</p>
           )}
-          <button className={`${btnPrimary} mt-4 w-full`} onClick={() => onClose(score >= 4 && !full)} autoFocus>Continuar</button>
+          <button className={`${btnPrimary} mt-4 w-full`} onClick={() => onClose(score >= 4)} autoFocus>Continuar</button>
         </div>
       )}
     </Panel>

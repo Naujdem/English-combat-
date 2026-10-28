@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import type { GameState, Question, Zone } from '../game/types'
 import type { Update } from '../game/store'
-import { ENEMIES } from '../data/school'
+import { ENEMIES, OUTFITS } from '../data/school'
 import { pickQuestion, TOPICS } from '../data/questions'
 import { QuestionCard } from '../components/QuestionCard'
 import { SpeakButton } from '../components/SpeakButton'
@@ -207,7 +207,12 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         return r && !s.outfits.includes(r) ? { ...base, outfits: [...s.outfits, r] } : base
       }
       if (enemy.kind === 'minion') {
-        return { ...base, keys: { ...s.keys, [s.sceneId]: (s.keys[s.sceneId] ?? 0) + 1 } }
+        const r = enemy.reward
+        return {
+          ...base,
+          keys: { ...s.keys, [s.sceneId]: (s.keys[s.sceneId] ?? 0) + 1 },
+          outfits: r && !s.outfits.includes(r) ? [...s.outfits, r] : s.outfits,
+        }
       }
       return {
         ...base,
@@ -409,6 +414,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
           ) : enemy.kind === 'minion' ? (
             <p className="mt-1 text-[16px]">
               {enemy.person} te dio un pedazo de llave. Llevas {keysNow} de {scene.keysNeeded}.
+              {enemy.reward && ` También te regaló: ${OUTFITS[enemy.reward].name}.`}
               {keysNow >= scene.keysNeeded && ' ¡La sala de profesores ya está abierta!'}
             </p>
           ) : (

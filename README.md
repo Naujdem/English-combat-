@@ -76,7 +76,8 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 - Cada enemigo tiene historia antes y después del combate; al vencerlo se queda en el mapa como estudiante normal.
 - Biblioteca: repaso de vocabulario que da un escudo de palabras (bloquea un error en combate).
 - Tablón del aula: lectura con preguntas de comprensión que desbloquea las gafas de lectura.
-- Llaves: cada esbirro vencido suelta una; con 3 se abre la sala de profesores.
+- Llaves: cada esbirro vencido (Tom, Rick, Bella y Max) suelta una; con 4 se abre la sala de profesores.
+- Requisitos del jefe (`BOSS_REQUIREMENTS` en `school.ts`): Grimm no pelea si no tienes el silbato del entrenador (repaso de deportes en el patio) y el uniforme (matrícula en la secretaría). Una barra de objetivos en el mapa muestra lo que falta.
 - El jefe devuelve un tema ("fragmento de voz"), una pieza del reloj del tiempo y un atuendo.
 - Si fallas, Leo te da la explicación. Si te quedas sin vida, vuelves a la entrada.
 - Amistad por puntos, sin respuestas incorrectas: las respuestas sin sentido bajan la amistad. Recompensas: Leo da una pista en combate; Maya da +1 de vida máxima.
@@ -84,7 +85,7 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 - Atuendos desbloqueables y guardado automático.
 - El Profesor Grimm pelea en 3 fases (to be → posesivos → mezcla con ordenar y escuchar), con diálogo entre fases (`phases` en `school.ts`).
 - Secretaría (`src/components/Registration.tsx`): la señora López llena contigo la ficha de matrícula (nombre, edad, país, nacionalidad, dirección, teléfono y email). La dirección y el teléfono son inventados (papel de traslado), así no se pide información real. Practica números de teléfono escuchando y cómo se dice un email (at, dot). Da el uniforme escolar.
-- Patio: césped, portería, árbol y banca. Coach Mike repasa palabras de deportes (da escudo) y Max, un rival opcional, pelea con preguntas de deportes y regala la camiseta deportiva (no da llave).
+- Patio: césped, portería, árbol y banca. Coach Mike repasa palabras de deportes y la primera vez da su silbato. Max pelea con preguntas de deportes, da un pedazo de llave y regala la camiseta deportiva.
 - Estudiantes de ambiente (`src/data/npcs.ts`): Ana en el aula, Mr. Brown en la biblioteca y Ben en el patio dicen una frase distinta cada vez que les hablas.
 - Misión de objetos perdidos (`src/data/lostFound.ts`): Maya perdió su mochila y Leo su libro. Al encontrarlos hay que preguntar "Is this your...?" y la gente responde con posesivos ("No, it isn't mine. It's Maya's").
 - Audio: botones para escuchar en inglés en diálogos, lecciones, combates, lecturas y vocabulario (voz del dispositivo, sin internet). Dos toques seguidos leen más lento.

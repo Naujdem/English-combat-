@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { DialogLine, Entity, GameState } from '../game/types'
 import type { Update } from '../game/store'
 import { SCENES, bossDoorOpen, friendById, heroLook } from '../game/helpers'
-import { ENEMIES, OUTFITS } from '../data/school'
+import { BOSS_REQUIREMENTS, ENEMIES, OUTFITS } from '../data/school'
 import { LESSONS } from '../data/lessons'
 import { Lesson } from '../components/Lesson'
 import type { TopicId } from '../game/types'
@@ -111,6 +111,20 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         const def = ENEMIES[e.id]
         setMsg({ text: `${def.person}: "${def.freed.text}"`, sub: def.freed.es, say: def.freed.text })
         return
+      }
+      // El profesor Grimm no pelea si te falta el silbato o el uniforme
+      if (e.type === 'boss') {
+        const missing = BOSS_REQUIREMENTS.filter((r) => !state.opened.includes(r.id))
+        if (missing.length > 0) {
+          const first = missing[0]
+          setMsg({
+            text: `${ENEMIES[e.id].person}: "${first.line.text}"`,
+            sub: `${first.line.es} Te falta: ${missing.map((m) => m.name).join(' y ')}.`,
+            tone: 'warn',
+            say: first.line.text,
+          })
+          return
+        }
       }
       if (e.type === 'enemy' || e.type === 'boss') {
         setMsg(null)
@@ -307,7 +321,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 )
               }
               if (e.type === 'npc') {
-                const pending = e.id === 'secretary' && !state.opened.includes('school-registration')
+                const pending =
+                  (e.id === 'secretary' && !state.opened.includes('school-registration')) ||
+                  (e.id === 'coach' && !state.opened.includes('school-whistle'))
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
                     <SpriteBody look={NPCS[e.id].look} />
@@ -365,6 +381,19 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         </svg>
       </div>
 
+      <div className="flex flex-wrap items-center gap-1.5 text-[11px]" aria-label="Objetivos para el jefe">
+        <span className="font-semibold uppercase tracking-wide text-paper/50">Para el jefe:</span>
+        <span className={`rounded-full px-2 py-0.5 ${keys >= scene.keysNeeded ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
+          Llaves {keys}/{scene.keysNeeded}
+        </span>
+        <span className={`rounded-full px-2 py-0.5 ${state.opened.includes('school-whistle') ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
+          {state.opened.includes('school-whistle') ? '✓ ' : ''}Silbato
+        </span>
+        <span className={`rounded-full px-2 py-0.5 ${state.opened.includes('school-registration') ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
+          {state.opened.includes('school-registration') ? '✓ ' : ''}Uniforme
+        </span>
+      </div>
+
       {lf.started && lf.returned.length < LOST_ITEMS.length && (
         <div className="flex items-center justify-between gap-2 rounded-xl border border-gold/40 bg-gold/10 px-3 py-1.5 text-xs">
           <span className="font-semibold text-gold">Misión: objetos perdidos ({lf.returned.length}/{LOST_ITEMS.length})</span>
@@ -386,7 +415,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         ) : (
           <p className="px-1 pt-2 text-sm text-paper/55">
             {firstVisit
-              ? `Los estudiantes de ${scene.name.toLowerCase()} guardan tus palabras. Vence a ${scene.keysNeeded} para conseguir las llaves de la sala de profesores.`
+              ? `Los estudiantes de ${scene.name.toLowerCase()} guardan tus palabras. Vence a los ${scene.keysNeeded} que tienen las llaves de la sala de profesores, consigue el silbato del entrenador y matricúlate en la secretaría.`
               : 'Choca con personas para hablar y con objetos para ver su nombre en inglés. Lee el tablón del aula y repasa vocabulario en la biblioteca.'}
           </p>
         )}
@@ -446,9 +475,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         <Overlay>
           <VocabActivity
             state={state}
-            onClose={(earned) => {
+            onClose={(passed) => {
               setActivity(null)
-              if (earned) {
+              if (passed && state.items.shield < 2) {
                 update((s) => ({ ...s, items: { ...s.items, shield: Math.min(2, s.items.shield + 1) } }))
                 setMsg({ text: 'Ganaste un escudo de palabras.', sub: 'En el próximo combate bloqueará un error sin perder vida.', tone: 'good' })
               }
@@ -465,9 +494,21 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             place="Patio · Coach Mike"
             title="Palabras de deportes"
             rewardText="El entrenador te da un escudo de palabras: bloquea un error en combate."
-            onClose={(earned) => {
+            onClose={(passed) => {
               setActivity(null)
-              if (earned) {
+              if (!passed) {
+                setMsg({ text: 'Coach Mike: "Try again! You can do it!"', sub: '¡Inténtalo otra vez! Necesitas 4 aciertos.', say: 'Try again! You can do it!' })
+                return
+              }
+              if (!state.opened.includes('school-whistle')) {
+                update((s) => ({ ...s, opened: [...s.opened, 'school-whistle'] }))
+                setMsg({
+                  text: 'Coach Mike: "Great job! Take my whistle. Show it to Mr. Grimm."',
+                  sub: '¡Buen trabajo! Toma mi silbato y muéstraselo al profesor Grimm. Conseguiste el silbato.',
+                  tone: 'good',
+                  say: 'Great job! Take my whistle. Show it to Mr. Grimm.',
+                })
+              } else if (state.items.shield < 2) {
                 update((s) => ({ ...s, items: { ...s.items, shield: Math.min(2, s.items.shield + 1) } }))
                 setMsg({ text: 'Coach Mike: "Great job! You are a good player!"', sub: 'Ganaste un escudo de palabras.', tone: 'good', say: 'Great job! You are a good player!' })
               }

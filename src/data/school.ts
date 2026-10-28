@@ -47,7 +47,7 @@ export const SCHOOL: SceneDef = {
   map: MAP,
   start: { x: 3, y: 11 },
   bossDoor: { x: 4, y: 12 },
-  keysNeeded: 3,
+  keysNeeded: 4,
   entities: [
     { type: 'friend', id: 'leo', x: 1, y: 3 },
     { type: 'friend', id: 'maya', x: 7, y: 7 },
@@ -87,7 +87,6 @@ export const ENEMIES: Record<string, EnemyDef> = {
     name: 'Max, el competitivo',
     person: 'Max',
     kind: 'minion',
-    optional: true,
     reward: 'deportivo',
     hp: 4,
     topics: ['to-be', 'possessives'],
@@ -96,11 +95,11 @@ export const ENEMIES: Record<string, EnemyDef> = {
     look: { shirt: '#2e9d8f', hair: '#a0522d', skin: '#f1c27d', accessory: 'cap' },
     before: [
       { text: 'Hey! This is MY court. Are you fast? Are you strong?', es: '¡Oye! Esta es MI cancha. ¿Eres rápido? ¿Eres fuerte?' },
-      { text: "I don't have a key, but I am the best player here. Prove you are better!", es: 'No tengo una llave, pero soy el mejor jugador de aquí. ¡Demuestra que eres mejor!' },
+      { text: 'Mr. Grimm gave me a piece of the key. It is MY prize, because I am the best player here!', es: 'El profesor Grimm me dio un pedazo de la llave. ¡Es MI premio, porque soy el mejor jugador de aquí!' },
     ],
     after: [
       { text: 'Wow, you are strong! OK, you are a good player too.', es: '¡Guau, eres fuerte! Bueno, tú también eres buen jugador.' },
-      { text: "Here, take this sports shirt. Let's play football after class!", es: 'Toma esta camiseta deportiva. ¡Juguemos fútbol después de clase!' },
+      { text: "Here is my piece of the key. And take this sports shirt. Let's play football after class!", es: 'Aquí está mi pedazo de la llave. Y toma esta camiseta deportiva. ¡Juguemos fútbol después de clase!' },
     ],
     freed: { text: 'My team is the best! Do you want to play with us?', es: '¡Mi equipo es el mejor! ¿Quieres jugar con nosotros?' },
   },
@@ -223,6 +222,26 @@ export const ENEMIES: Record<string, EnemyDef> = {
     freed: { text: 'Thank you, my student. Come to my class anytime!', es: 'Gracias, mi estudiante. ¡Ven a mi clase cuando quieras!' },
   },
 }
+
+/** Lo que el profesor Grimm exige antes de pelear, además de las llaves */
+export const BOSS_REQUIREMENTS = [
+  {
+    id: 'school-whistle',
+    name: 'el silbato del entrenador',
+    line: {
+      text: 'Stop! Where is your whistle? Every student in my school does sports. Go to the patio and talk to the coach!',
+      es: '¡Alto! ¿Dónde está tu silbato? Todos los estudiantes de mi escuela hacen deporte. ¡Ve al patio y habla con el entrenador!',
+    },
+  },
+  {
+    id: 'school-registration',
+    name: 'el uniforme de la secretaría',
+    line: {
+      text: 'Stop! Where is your uniform? You are not registered in my school. Go to the secretary\'s office!',
+      es: '¡Alto! ¿Dónde está tu uniforme? No tienes matrícula en mi escuela. ¡Ve a la secretaría!',
+    },
+  },
+]
 
 export const OUTFITS: Record<string, { name: string; color: string }> = {
   base: { name: 'Camiseta azul', color: '#3b6fb6' },
