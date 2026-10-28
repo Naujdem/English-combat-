@@ -47,7 +47,23 @@ export default function App() {
       screen = <Create onDone={(hero, interest) => update((s) => ({ ...s, hero, interest, screen: 'intro' }))} />
       break
     case 'intro':
-      screen = <Intro state={state} onDone={() => go('world')} />
+      screen = (
+        <Intro
+          state={state}
+          onDone={(tutorialDone) =>
+            update((s) =>
+              tutorialDone
+                ? {
+                    ...s,
+                    screen: 'world',
+                    seenLesson: s.seenLesson.includes('school') ? s.seenLesson : [...s.seenLesson, 'school'],
+                    friendship: { ...s.friendship, leo: Math.max(1, s.friendship.leo ?? 0) },
+                  }
+                : { ...s, screen: 'world' },
+            )
+          }
+        />
+      )
       break
     case 'world':
       screen = (
