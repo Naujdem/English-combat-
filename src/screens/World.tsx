@@ -6,14 +6,33 @@ import { SpriteBody } from '../components/Sprite'
 import { FriendsPanel } from '../components/FriendsPanel'
 import { btn, btnGhost, Hearts, Overlay, Panel } from '../components/ui'
 import { ClockPieces, TimeClock } from '../components/TimeClock'
+import { Diary } from '../components/Diary'
+import { Flashcards } from '../components/Flashcards'
+import { DIARY } from '../data/diary'
+import { dueCards } from '../game/cards'
+import type { Update } from '../game/store'
 import { heroLook } from '../game/helpers'
 
 const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } as const
 
-export function World({ state, onEnter, onTitle }: { state: GameState; onEnter: (sceneId: string) => void; onTitle: () => void }) {
+export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const [msg, setMsg] = useState<string>('Toca un lugar del mapa para viajar.')
   const [friends, setFriends] = useState(false)
   const [clock, setClock] = useState(false)
+  // Al terminar un capítulo, el diario se abre solo la primera vez
+  const newDiary = DIARY.find((c) => state.opened.includes(c.unlock) && !state.opened.includes(`diary-open-${c.id}`))
+  const [diary, setDiary] = useState(!!newDiary)
+  const [cards, setCards] = useState(false)
+  const hasDiary = DIARY.some((c) => state.opened.includes(c.unlock))
+  const dueCount = dueCards(state.cards).length
+
+  function openDiary() {
+    setDiary(true)
+  }
+  function closeDiary() {
+    setDiary(false)
+    if (newDiary) update((s) => ({ ...s, opened: [...s.opened, `diary-open-${newDiary.id}`] }))
+  }
   const here = WORLD.find((n) => n.sceneId === state.sceneId) ?? WORLD[0]
 
   function unlocked(n: WorldNode) {
@@ -93,7 +112,17 @@ export function World({ state, onEnter, onTitle }: { state: GameState; onEnter: 
         </span>
       </button>
 
+      <div className="grid grid-cols-2 gap-2">
+        <button className={btn} onClick={openDiary} disabled={!hasDiary}>Mi diario</button>
+        <button className={btn} onClick={() => setCards(true)}>
+          Fichas{dueCount > 0 ? ` (${dueCount})` : ''}
+        </button>
+      </div>
+
       <button className={btn} onClick={() => tap(here)}>Entrar a {here.name}</button>
+
+      {diary && <Diary state={state} update={update} onClose={closeDiary} />}
+      {cards && <Flashcards state={state} update={update} onClose={() => setCards(false)} />}
 
       {clock && (
         <Overlay onClose={() => setClock(false)}>

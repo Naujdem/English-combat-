@@ -1,3 +1,4 @@
+import type { Card } from './cards'
 export type Gender = 'male' | 'female'
 
 export type Look = {
@@ -196,6 +197,8 @@ export type GameState = {
   items: { shield: number }
   /** Preguntas falladas que siguen pendientes en el cuaderno de errores */
   mistakes: string[]
+  /** Fichas de vocabulario guardadas desde las lecturas */
+  cards: Card[]
   /** Misión de objetos perdidos de la escuela */
   lostFound: { started: boolean; carrying: string | null; picked: string[]; returned: string[] }
   seenLesson: string[]

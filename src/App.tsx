@@ -67,6 +67,7 @@ export default function App() {
       screen = (
         <World
           state={state}
+          update={update}
           onTitle={() => go('title')}
           onEnter={(sceneId) => update((s) => ({ ...s, sceneId, pos: s.sceneId === sceneId ? s.pos : { ...SCENES[sceneId].start }, screen: 'explore' }))}
         />

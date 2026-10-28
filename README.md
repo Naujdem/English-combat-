@@ -100,6 +100,8 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 - Audio: botones para escuchar en inglés en diálogos, lecciones, combates, lecturas y vocabulario (voz del dispositivo, sin internet). Dos toques seguidos leen más lento.
 - Combate de escucha: se oye una frase y hay que elegir la correcta. Se generan solas a partir de las preguntas de completar.
 - Cuaderno de errores: las preguntas falladas se anotan, los enemigos las repiten más seguido y se pueden repasar en el cuaderno de Leo (acertar 3 da un escudo).
+- Diario al final del capítulo (`src/components/Diary.tsx`, textos en `src/data/diary.ts`): la historia en pasado, presente, futuro (el plan del desconocido) y una mezcla, con preguntas. "Ver verbos" colorea cada tiempo. Al tocar una palabra se ve su traducción y se puede guardar en las fichas.
+- Fichas tipo Anki (`src/components/Flashcards.tsx`, `src/game/cards.ts`): repaso espaciado con Otra vez / Difícil / Bien / Fácil y exportación a CSV (frente,reverso) para SimulaPro o Anki. Para agregar palabras al diccionario del diario, edita `DICT` en `diary.ts`.
 - Instalable en el celular (PWA) y funciona sin internet después de abrirlo una vez. Al publicar cambios grandes, sube la versión de `CACHE` en `public/sw.js`.
 
 ## Siguientes pasos sugeridos

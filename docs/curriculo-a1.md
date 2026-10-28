@@ -6,13 +6,14 @@ Estado: ✅ ya está en el juego · 🟡 está a medias · ⬜ falta
 
 ## 1. La idea general: cada nivel en tres épocas
 
-Cada nivel (A1, A2, B1) se juega en tres vueltas: presente, pasado y futuro. La gramática de cada época es la que corresponde a ese nivel, así que el pasado de A1 es mucho más simple que el pasado de B1.
+Cada nivel (A1, A2, B1 y B2) se juega en tres vueltas: presente, pasado y futuro. La gramática de cada época es la que corresponde a ese nivel, así que el pasado de A1 es mucho más simple que el pasado de B1.
 
 | Nivel | Presente | Pasado | Futuro |
 |---|---|---|---|
 | **A1** | to be, presente simple, can, there is/are | was/were, pasado simple de verbos comunes (*played, went, ate*) | going to para planes (*I'm going to visit Leo*) |
 | **A2** | presente continuo vs. simple, comparativos, adverbios | pasado simple completo, pasado continuo | will, presente continuo para citas |
 | **B1** | presente perfecto, voz pasiva simple | pasado perfecto, used to | will vs. going to, condicional 1 y 2 |
+| **B2** | presente perfecto continuo, voz pasiva completa | estilo indirecto, condicional 3 | futuro continuo y perfecto, *be about to* |
 
 En cada lugar del presente, el jefe suelta una pieza del reloj del tiempo. Con el reloj completo el jugador puede viajar al pasado de esos lugares, y después al futuro, persiguiendo al desconocido.
 
@@ -192,7 +193,20 @@ Los mismos cinco lugares, más cortos. Solo gramática A1:
 
 Lo que no entra en A1 y queda para A2: pasado continuo, comparativos y *will*.
 
-## 8. Pendientes pequeños en la escuela
+## 8. Diario al final de cada capítulo
+
+Al terminar un capítulo se abre el diario (`src/data/diary.ts`): la misma historia del capítulo en cuatro versiones, cada una con 4 preguntas de comprensión.
+
+- **Pasado:** el diario de esa noche (*Dear diary, today was...*).
+- **Presente:** la misma historia contada como si pasara ahora.
+- **Futuro:** el plan que el desconocido escribió la noche anterior (*I am going to take the student's voice*). La última pregunta compara su plan con lo que pasó de verdad.
+- **Mezcla:** una semana después, con pasado, presente y futuro juntos.
+
+Ayudas: "Ver verbos" colorea cada verbo según su tiempo; cada palabra se puede tocar para ver su traducción y guardarla en las fichas tipo Anki (repaso espaciado, exportables en CSV para SimulaPro o Anki).
+
+El diario se lee aunque el jugador todavía no haya estudiado el pasado o el futuro: leer entiende más de lo que se produce, y la traducción, los colores y el diccionario lo apoyan. Así el diario adelanta lo que viene en las vueltas del pasado y del futuro.
+
+## 9. Pendientes pequeños en la escuela
 
 Caben en lo que ya existe, sin escenario nuevo:
 
@@ -200,7 +214,7 @@ Caben en lo que ya existe, sin escenario nuevo:
 2. Objetos perdidos: preguntar *Whose bag is this?* y responder *It's mine / It's hers*.
 3. Preguntas propias con *who / what / where / when* en los combates.
 
-## 9. Material de referencia
+## 10. Material de referencia
 
 - *Cuadernillo de Inglés Básico* (Telebachillerato de Veracruz, 2021): se usa solo como guía de temas y nivel. Su reproducción está prohibida y tiene algunos errores, así que no se copian sus ejercicios.
 - Índice del curso A1 de Busuu (37 capítulos): se usó solo para revisar qué temas cubre un A1 completo. No se copian sus diálogos ni ejercicios.

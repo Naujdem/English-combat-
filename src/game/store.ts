@@ -27,6 +27,7 @@ export function newGame(): GameState {
     talks: {},
     items: { shield: 0 },
     mistakes: [],
+    cards: [],
     lostFound: { started: false, carrying: null, picked: [], returned: [] },
     seenLesson: [],
     battle: null,
@@ -46,6 +47,7 @@ export function loadSave(): GameState | null {
     }
     if (!data.items) data.items = { shield: 0 }
     if (!data.mistakes) data.mistakes = []
+    if (!data.cards) data.cards = []
     if (!data.lostFound) data.lostFound = { started: false, carrying: null, picked: [], returned: [] }
     return data
   } catch {
