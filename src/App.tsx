@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { clearSave, newGame, useGameState } from './game/store'
 import { SCENES } from './game/helpers'
 import { Title } from './screens/Title'
-import { Create } from './screens/Create'
 import { Intro } from './screens/Intro'
 import { World } from './screens/World'
 import { Explore } from './screens/Explore'
@@ -43,25 +42,20 @@ export default function App() {
         />
       )
       break
-    case 'create':
-      screen = <Create onDone={(hero, interest) => update((s) => ({ ...s, hero, interest, screen: 'intro' }))} />
-      break
     case 'intro':
       screen = (
         <Intro
           state={state}
-          onDone={(tutorialDone) =>
-            update((s) =>
-              tutorialDone
-                ? {
-                    ...s,
-                    screen: 'world',
-                    seenLesson: s.seenLesson.includes('to-be') ? s.seenLesson : [...s.seenLesson, 'to-be'],
-                    talks: { ...s.talks, leo: Math.max(1, s.talks.leo ?? 0) },
-                    friendship: { ...s.friendship, leo: Math.max(3, s.friendship.leo ?? 0) },
-                  }
-                : { ...s, screen: 'world' },
-            )
+          onDone={({ lessonDone, hero, interest }) =>
+            update((s) => ({
+              ...s,
+              hero,
+              interest,
+              seenLesson: lessonDone && !s.seenLesson.includes('to-be') ? [...s.seenLesson, 'to-be'] : s.seenLesson,
+              // Primer combate: entrenamiento con Leo
+              screen: 'battle',
+              battle: { enemyId: 'leo-trainer', enemyHp: ENEMIES['leo-trainer'].hp, returnTo: { ...s.pos } },
+            }))
           }
         />
       )

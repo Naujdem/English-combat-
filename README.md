@@ -20,7 +20,7 @@ Tres capas, una dentro de otra:
 2. **Exploración en cuadrícula** (`src/screens/Explore.tsx`): vista desde arriba, el personaje camina casilla por casilla.
 3. **Combate 2D** (`src/screens/Battle.tsx`): vista lateral, preguntas de opción múltiple.
 
-Flujo completo: título → creación de personaje → intro (te roban la voz) → mapa → escuela → combates → jefe.
+Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → presentación con Leo (nombre, sexo, aspecto, edad, país, persona especial) → combate de entrenamiento con Leo → mapa → escuela → combates → jefe.
 
 ## Dónde está cada cosa
 
@@ -67,7 +67,8 @@ Flujo completo: título → creación de personaje → intro (te roban la voz) �
 
 ## Sistemas incluidos
 
-- Selector de personaje (género, nombre, piel, cabello) y del interés especial (género, nombre, romántico o solo amistad). Las frases del narrador usan *he/she* según lo elegido.
+- Presentación con Leo en inglés (`src/screens/Presentation.tsx`): el jugador escribe en la pizarra su nombre, dice si es chico o chica, elige su aspecto, su edad (*I am 15 years old*), su país y nacionalidad, y le cuenta a Leo si conoce a alguien especial (romántico, amistad o Leo le presenta a alguien). Las frases usan *he/she* según lo elegido.
+- Primer combate: entrenamiento con Leo sobre saludos y presentación. Si pierdes, vuelves a intentarlo sin castigo.
 - Lecciones paso a paso con Leo antes del primer combate de cada tema (la de *to be* va en la intro).
 - Tres tipos de combate: completar la frase, corregir la frase con error que dice el enemigo y ordenar palabras.
 - Cada enemigo tiene historia antes y después del combate; al vencerlo se queda en el mapa como estudiante normal.

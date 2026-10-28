@@ -9,6 +9,9 @@ export type Hero = {
   name: string
   gender: Gender
   look: Look
+  /** Edad y país que el jugador dice al presentarse con Leo (solo se guardan en el dispositivo) */
+  age?: number
+  country?: string
 }
 
 export type Interest = {
@@ -18,10 +21,10 @@ export type Interest = {
   mode: 'romance' | 'friendship'
 }
 
-export type Screen = 'title' | 'create' | 'intro' | 'world' | 'explore' | 'battle'
+export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
-export type TopicId = 'to-be' | 'possessives' | 'present-simple' | 'past-simple' | 'future'
+export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'present-simple' | 'past-simple' | 'future'
 
 /**
  * fill: completar el espacio en blanco.
@@ -53,7 +56,8 @@ export type EnemyDef = {
   name: string
   /** Nombre propio, para cuando ya no es enemigo */
   person: string
-  kind: 'minion' | 'boss'
+  /** trainer: Leo en modo entrenamiento, no castiga al perder */
+  kind: 'minion' | 'boss' | 'trainer'
   hp: number
   /** Temas de los que salen sus preguntas */
   topics: TopicId[]

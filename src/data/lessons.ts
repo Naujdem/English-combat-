@@ -28,7 +28,7 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: '___ he your teacher?', board: ['¿Pregunta?', 'Is she here?'], choice: { options: ['Are', 'Am', 'Is'], answer: 2, tip: 'Con "he" la pregunta empieza con "Is".' } },
 
     { who: 'leo', text: 'Careful! Some students say things like "She are happy". That is wrong! You can correct them.', es: '¡Cuidado! Algunos estudiantes dicen cosas como "She are happy". ¡Eso está mal! Puedes corregirlos.', board: ['She are happy ✗', 'She is happy ✓'] },
-    { who: 'leo', text: 'Great! You are ready. The students here have your words. Win them back, and I will help you!', es: '¡Genial! Estás listo. Los estudiantes de aquí tienen tus palabras. ¡Recupéralas, yo te ayudo!', board: ['I am · You are', 'He / She / It is'] },
+    { who: 'leo', text: 'Great! Now you know TO BE. Let me know you better!', es: '¡Genial! Ya conoces TO BE. ¡Déjame conocerte mejor!', board: ['I am · You are', 'He / She / It is'] },
   ],
 
   possessives: [

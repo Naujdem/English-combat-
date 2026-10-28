@@ -20,8 +20,9 @@ export function ClassroomStage({ board, children }: { board?: [string, string?];
       <rect x="95" y="19" width="130" height="56" fill="#2f5d50" />
       {board && (
         <g key={board.join()} className="anim-fade-in">
-          <text x="160" y="42" textAnchor="middle" fill="#f4efe4" fontSize="14" fontFamily={FONT} fontWeight="600">{board[0]}</text>
-          {board[1] && <text x="160" y="63" textAnchor="middle" fill="#e0a526" fontSize="12" fontFamily={FONT}>{board[1]}</text>}
+          {/* El tamaño baja con frases largas para que quepan en la pizarra */}
+          <text x="160" y="42" textAnchor="middle" fill="#f4efe4" fontSize={Math.min(14, 205 / Math.max(1, board[0].length))} fontFamily={FONT} fontWeight="600">{board[0]}</text>
+          {board[1] && <text x="160" y="63" textAnchor="middle" fill="#e0a526" fontSize={Math.min(12, 215 / Math.max(1, board[1].length))} fontFamily={FONT}>{board[1]}</text>}
         </g>
       )}
       <rect x="14" y="20" width="44" height="60" fill="#9fd3f0" stroke="#7a6a58" strokeWidth="4" />

@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import type { GameState, LessonStep } from '../game/types'
+import type { GameState, Hero, Interest, LessonStep } from '../game/types'
+import { Presentation } from './Presentation'
 import { SpriteBody } from '../components/Sprite'
 import { btnGhost, btnPrimary, Panel } from '../components/ui'
 import { ClassroomStage, FONT, Lesson } from '../components/Lesson'
@@ -9,12 +10,12 @@ import { SpeakButton } from '../components/SpeakButton'
 
 type StoryStep = { who: 'narrator' | 'stranger'; text: string; es?: string; stranger?: boolean; steal?: boolean; mute?: boolean }
 
-function story(name: string): StoryStep[] {
+function story(): StoryStep[] {
   return [
-    { who: 'narrator', text: `Un día cualquiera, ${name} llega temprano a la escuela.` },
+    { who: 'narrator', text: 'Un día cualquiera, llegas temprano a tu nueva escuela.' },
     { who: 'stranger', text: 'Hello there... What a nice voice you have.', es: 'Hola... Qué linda voz tienes.', stranger: true },
     { who: 'stranger', text: 'Your words are MINE now!', es: '¡Tus palabras ahora son MÍAS!', stranger: true, steal: true },
-    { who: 'narrator', text: `${name} intenta gritar, pero no sale ningún sonido.`, stranger: true, mute: true },
+    { who: 'narrator', text: 'Intentas gritar, pero no sale ningún sonido.', stranger: true, mute: true },
     { who: 'stranger', text: 'I hid your words across time. Find them... if you can! Ha ha ha!', es: 'Escondí tus palabras a través del tiempo. Encuéntralas... ¡si puedes! ¡Ja, ja, ja!', stranger: true, mute: true },
     { who: 'narrator', text: 'El desconocido desaparece en una nube oscura.', mute: true },
   ]
@@ -33,17 +34,28 @@ const LEO_ARRIVES: LessonStep[] = [
   { who: 'leo', text: "You can't talk, but you can write. Let's use the board!", es: 'No puedes hablar, pero puedes escribir. ¡Usemos la pizarra!' },
 ]
 
-const LEO_OUTRO: LessonStep[] = [
-  { who: 'narrator', text: 'Leo ahora es tu amigo. Si fallas en un combate, te dará una pista.', board: ['I am · You are', 'He / She / It is'] },
-]
 
-export function Intro({ state, onDone }: { state: GameState; onDone: (tutorialDone: boolean) => void }) {
-  const steps = story(state.hero.name)
+/**
+ * Inicio del juego: el desconocido roba la voz, llega Leo, enseña el verbo to be
+ * y luego el jugador se presenta (nombre, edad, país, persona especial).
+ */
+export function Intro({
+  state,
+  onDone,
+}: {
+  state: GameState
+  onDone: (r: { lessonDone: boolean; hero: Hero; interest: Interest }) => void
+}) {
+  const steps = story()
   const [i, setI] = useState(0)
   const [es, setEs] = useState(false)
+  const [lessonDone, setLessonDone] = useState<boolean | null>(null)
 
-  if (i >= steps.length) {
-    return <Lesson state={state} steps={[...LEO_ARRIVES, ...(LESSONS['to-be'] ?? []), ...LEO_OUTRO]} onDone={onDone} />
+  if (i >= steps.length && lessonDone === null) {
+    return <Lesson state={state} steps={[...LEO_ARRIVES, ...(LESSONS['to-be'] ?? [])]} onDone={(done) => setLessonDone(done)} />
+  }
+  if (lessonDone !== null) {
+    return <Presentation onDone={(hero, interest) => onDone({ lessonDone, hero, interest })} />
   }
 
   const s = steps[i]

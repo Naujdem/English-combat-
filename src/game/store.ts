@@ -8,7 +8,7 @@ const KEY = 'english-combat-save-v1'
 export function newGame(): GameState {
   return {
     version: 1,
-    screen: 'create',
+    screen: 'intro',
     hero: { name: '', gender: 'male', look: { skin: '#f1c27d', hair: '#4a2c17' } },
     interest: { name: '', gender: 'female', mode: 'romance' },
     outfit: 'base',

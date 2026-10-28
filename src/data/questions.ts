@@ -12,6 +12,33 @@ import { canSpeak } from '../game/speech'
  *   options son frases completas, una de ellas la correcta
  */
 export const QUESTIONS: Question[] = [
+  // ── Saludos y presentación (entrenamiento con Leo) ──────
+  { id: 'gr-01', topic: 'greetings', prompt: "It's 9 p.m. You leave a party. You say: Good ___!", options: ['night', 'morning', 'afternoon'], answer: 0, tip: 'Para despedirse en la noche se dice "Good night".' },
+  { id: 'gr-02', topic: 'greetings', prompt: '___ is your name?', options: ['Who', 'What', 'How'], answer: 1, tip: 'Para preguntar el nombre: What is your name?' },
+  { id: 'gr-03', topic: 'greetings', prompt: "How ___ you? — I'm fine, thanks.", options: ['is', 'am', 'are'], answer: 2, tip: 'Con "you" va "are": How are you?' },
+  { id: 'gr-04', topic: 'greetings', prompt: 'I ___ from Colombia.', options: ['am', 'is', 'are'], answer: 0, tip: 'Con "I" va "am": I am from...' },
+  { id: 'gr-05', topic: 'greetings', prompt: 'Where ___ you from?', options: ['is', 'are', 'am'], answer: 1, tip: 'Con "you" va "are": Where are you from?' },
+  { id: 'gr-06', topic: 'greetings', prompt: 'She is from Mexico. She is ___.', options: ['Mexico', 'Mexicans', 'Mexican'], answer: 2, tip: 'La nacionalidad de México es "Mexican", y va con mayúscula.' },
+  { id: 'gr-07', topic: 'greetings', prompt: 'How old ___ you?', options: ['are', 'is', 'do'], answer: 0, tip: 'Para la edad se usa TO BE: How old are you?' },
+  { id: 'gr-08', topic: 'greetings', prompt: 'I am fifteen years ___.', options: ['age', 'old', 'years'], answer: 1, tip: 'La edad se dice: I am ... years old.' },
+  { id: 'gr-09', topic: 'greetings', prompt: '___ morning, teacher!', options: ['Fine', 'Hello', 'Good'], answer: 2, tip: 'El saludo de la mañana es "Good morning".' },
+  { id: 'gr-10', topic: 'greetings', prompt: 'He is from the United States. He is ___.', options: ['American', 'United', 'States'], answer: 0, tip: 'La nacionalidad de Estados Unidos es "American".' },
+  { id: 'gr-11', topic: 'greetings', prompt: 'Maya is from Peru. ___ is Peruvian.', options: ['Her', 'She', 'He'], answer: 1, tip: 'Maya es mujer y es el sujeto, así que va "She".' },
+
+  { id: 'gf-01', topic: 'greetings', kind: 'fix', prompt: 'I have 15 years!', options: ['I have 15 years old.', 'I am 15 years old.', 'I is 15 years.'], answer: 1, tip: 'En inglés la edad se dice con TO BE: I am 15 years old. Nunca "I have".' },
+  { id: 'gf-02', topic: 'greetings', kind: 'fix', prompt: 'I am from Colombian!', options: ['I am from Colombia.', 'I am from Colombians.', 'I from Colombia.'], answer: 0, tip: 'Después de "from" va el país: from Colombia. La nacionalidad va sin "from": I am Colombian.' },
+  { id: 'gf-03', topic: 'greetings', kind: 'fix', prompt: 'What is you name?', options: ['What are your name?', 'What your name is?', 'What is your name?'], answer: 2, tip: 'Antes de "name" va el posesivo "your": What is your name?' },
+  { id: 'gf-04', topic: 'greetings', kind: 'fix', prompt: 'How you are?', options: ['How is you?', 'How are you?', 'How you is?'], answer: 1, tip: 'En preguntas el verbo va antes del sujeto: How are you?' },
+  { id: 'gf-05', topic: 'greetings', kind: 'fix', prompt: 'Where is you from?', options: ['Where are you from?', 'Where you are from?', 'Where am you from?'], answer: 0, tip: 'Con "you" va "are", y va antes del sujeto: Where are you from?' },
+  { id: 'gf-06', topic: 'greetings', kind: 'fix', prompt: 'She are Mexican!', options: ['She is Mexico.', 'Her is Mexican.', 'She is Mexican.'], answer: 2, tip: 'Con "she" va "is", y la nacionalidad es "Mexican".' },
+
+  { id: 'go-01', topic: 'greetings', kind: 'order', prompt: 'Mucho gusto.', options: ['Nice', 'to', 'meet', 'you.'], answer: 0, tip: '"Nice to meet you" significa "mucho gusto".' },
+  { id: 'go-02', topic: 'greetings', kind: 'order', prompt: '¿De dónde eres?', options: ['Where', 'are', 'you', 'from?'], answer: 0, tip: 'Where + are + you + from?' },
+  { id: 'go-03', topic: 'greetings', kind: 'order', prompt: 'Tengo quince años.', options: ['I', 'am', 'fifteen', 'years', 'old.'], answer: 0, tip: 'La edad: I am + número + years old.' },
+  { id: 'go-04', topic: 'greetings', kind: 'order', prompt: '¿Cómo te llamas?', options: ['What', 'is', 'your', 'name?'], answer: 0, tip: 'What is your name? = ¿Cuál es tu nombre?' },
+  { id: 'go-05', topic: 'greetings', kind: 'order', prompt: 'Soy de Colombia.', options: ['I', 'am', 'from', 'Colombia.'], answer: 0, tip: 'I am from + país.' },
+  { id: 'go-06', topic: 'greetings', kind: 'order', prompt: 'Ella es colombiana.', options: ['She', 'is', 'Colombian.'], answer: 0, tip: 'She is + nacionalidad. La nacionalidad va con mayúscula.' },
+
   // ── Verbo to be: afirmativo ─────────────────────────────
   { id: 'be-01', topic: 'to-be', prompt: 'I ___ a student.', options: ['am', 'is', 'are'], answer: 0, tip: 'Con "I" siempre se usa "am": I am.' },
   { id: 'be-02', topic: 'to-be', prompt: 'She ___ my teacher.', options: ['are', 'is', 'am'], answer: 1, tip: 'Con he, she e it se usa "is".' },
@@ -152,6 +179,16 @@ export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: str
 }
 
 export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; lesson: string[] }> = {
+  greetings: {
+    name: 'Saludos y presentación',
+    level: 'A1',
+    lesson: [
+      'Saludos: Hello, Hi, Good morning, Good afternoon, Good night.',
+      'What is your name? → My name is...',
+      'How old are you? → I am 15 years old.',
+      'Where are you from? → I am from Colombia. I am Colombian.',
+    ],
+  },
   'to-be': {
     name: 'Verbo to be',
     level: 'A1',

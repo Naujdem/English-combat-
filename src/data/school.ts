@@ -70,6 +70,25 @@ export const SCHOOL: SceneDef = {
  * estudiantes, prometiéndoles las mejores notas. Al vencerlos, el hechizo los suelta.
  */
 export const ENEMIES: Record<string, EnemyDef> = {
+  'leo-trainer': {
+    id: 'leo-trainer',
+    name: 'Leo, el entrenador',
+    person: 'Leo',
+    kind: 'trainer',
+    hp: 4,
+    topics: ['greetings'],
+    kinds: ['fill', 'fix', 'order', 'listen'],
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69' },
+    before: [
+      { text: "OK, trainer mode! I'm your sparring partner. Don't worry, it's just practice.", es: '¡Bien, modo entrenador! Soy tu compañero de práctica. Tranquilo, es solo práctica.' },
+      { text: 'Answer my questions about greetings and introductions. Ready? Go!', es: 'Responde mis preguntas sobre saludos y presentaciones. ¿Listo? ¡Vamos!' },
+    ],
+    after: [
+      { text: 'Wow! You are a fast learner!', es: '¡Guau! ¡Aprendes rápido!' },
+      { text: 'Now you are ready. The students in this school have your words. Let\'s go and get them back!', es: 'Ya estás listo. Los estudiantes de esta escuela tienen tus palabras. ¡Vamos a recuperarlas!' },
+    ],
+    freed: { text: "Let's practice again anytime!", es: '¡Practiquemos otra vez cuando quieras!' },
+  },
   'school-m1': {
     id: 'school-m1',
     name: 'Tom, el burlón',

@@ -151,6 +151,16 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
     setShowEs(false)
     setPhase('after')
     update((s) => {
+      if (enemy.kind === 'trainer') {
+        // Al terminar el entrenamiento Leo queda como amigo y da pistas en combate
+        return {
+          ...s,
+          hp: s.maxHp,
+          talks: { ...s.talks, leo: Math.max(1, s.talks.leo ?? 0) },
+          friendship: { ...s.friendship, leo: Math.max(3, s.friendship.leo ?? 0) },
+          seenLesson: s.seenLesson.includes('greetings') ? s.seenLesson : [...s.seenLesson, 'greetings'],
+        }
+      }
       const base = { ...s, defeated: [...s.defeated, enemy.id], hp: s.maxHp }
       if (enemy.kind === 'minion') {
         return { ...base, keys: { ...s.keys, [s.sceneId]: (s.keys[s.sceneId] ?? 0) + 1 } }
@@ -165,6 +175,17 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   }
 
   function leave() {
+    if (enemy.kind === 'trainer') {
+      if (phase === 'lost') {
+        // Con Leo no se pierde nada: se vuelve a intentar con la vida llena
+        update((s) => ({ ...s, hp: s.maxHp, battle: s.battle ? { ...s.battle, enemyHp: enemy.hp } : null }))
+        nextQuestion()
+        return
+      }
+      update((s) => ({ ...s, battle: null, screen: 'world' }))
+      onExit()
+      return
+    }
     if (phase === 'lost') {
       update((s) => ({ ...s, hp: s.maxHp, pos: { ...scene.start }, battle: null, screen: 'explore' }))
     } else {
@@ -204,7 +225,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         </Panel>
         <Panel className="px-3 py-2">
           <p className="truncate font-display text-[15px]">{enemy.name}</p>
-          <div className="mt-2"><Bar value={battle.enemyHp} max={enemy.hp} color={enemy.kind === 'boss' ? '#a07cd0' : '#d64545'} label="Vida del enemigo" /></div>
+          <div className="mt-2"><Bar value={battle.enemyHp} max={enemy.hp} color={enemy.kind === 'boss' ? '#a07cd0' : enemy.kind === 'trainer' ? '#3b9d5d' : '#d64545'} label="Vida del enemigo" /></div>
         </Panel>
       </div>
 
@@ -249,7 +270,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       {(phase === 'story' || phase === 'after') && story && (
         <Panel className="anim-fade-in">
           <div className="flex items-center justify-between gap-2">
-            <p className="font-display text-lg text-gold">{enemy.kind === 'boss' || phase === 'after' ? enemy.person : enemy.name}</p>
+            <p className="font-display text-lg text-gold">{enemy.kind !== 'minion' || phase === 'after' ? enemy.person : enemy.name}</p>
             <SpeakButton text={story.text} size="sm" />
           </div>
           <p key={`${phase}-${line}`} className="anim-fade-in text-[17px] leading-relaxed">"{story.text}"</p>
@@ -301,12 +322,18 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               <p className="mt-1 text-xs text-paper/50">Se anotó en tu cuaderno de errores.</p>
               <div className="mt-3 flex justify-end">
                 {phase === 'lost' ? (
-                  <button className={btnPrimary} onClick={leave} autoFocus>Volver a intentarlo</button>
+                  <button className={btnPrimary} onClick={leave} autoFocus>{enemy.kind === 'trainer' ? 'Intentar otra vez' : 'Volver a intentarlo'}</button>
                 ) : (
                   <button className={btnPrimary} onClick={nextQuestion} autoFocus>Seguir</button>
                 )}
               </div>
-              {phase === 'lost' && <p className="mt-2 text-xs text-paper/60">Te quedaste sin energía. Volverás a la entrada con la vida llena.</p>}
+              {phase === 'lost' && (
+                <p className="mt-2 text-xs text-paper/60">
+                  {enemy.kind === 'trainer'
+                    ? 'Leo: "Don\'t worry, it\'s just practice!" Vuelves a empezar con la vida llena.'
+                    : 'Te quedaste sin energía. Volverás a la entrada con la vida llena.'}
+                </p>
+              )}
             </div>
           )}
         </Panel>
@@ -314,8 +341,12 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
 
       {phase === 'won' && (
         <Panel className="anim-pop border-gold">
-          <p className="font-display text-2xl text-gold">¡Victoria!</p>
-          {enemy.kind === 'minion' ? (
+          <p className="font-display text-2xl text-gold">{enemy.kind === 'trainer' ? '¡Entrenamiento completo!' : '¡Victoria!'}</p>
+          {enemy.kind === 'trainer' ? (
+            <p className="mt-1 text-[16px]">
+              Leo ahora es tu amigo. Si fallas en un combate, te dará una pista. Tu aventura empieza en la escuela.
+            </p>
+          ) : enemy.kind === 'minion' ? (
             <p className="mt-1 text-[16px]">
               {enemy.person} te dio un pedazo de llave. Llevas {keysNow} de {scene.keysNeeded}.
               {keysNow >= scene.keysNeeded && ' ¡La sala de profesores ya está abierta!'}
@@ -326,7 +357,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               <p className="text-paper/75">También ganaste una pieza del reloj del tiempo y la Capa del tiempo. Tus amigos tienen cosas nuevas que contarte.</p>
             </div>
           )}
-          <button className={`${btnPrimary} mt-4 w-full`} onClick={leave} autoFocus>Continuar</button>
+          <button className={`${btnPrimary} mt-4 w-full`} onClick={leave} autoFocus>{enemy.kind === 'trainer' ? 'Ir al mapa' : 'Continuar'}</button>
         </Panel>
       )}
     </div>
