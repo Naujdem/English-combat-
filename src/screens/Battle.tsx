@@ -9,6 +9,8 @@ import { SpeakButton } from '../components/SpeakButton'
 import { SCENES, heroLook, perks } from '../game/helpers'
 import { SpriteBody } from '../components/Sprite'
 import { Bar, btnGhost, btnPrimary, Hearts, Panel } from '../components/ui'
+import { TimeClock } from '../components/TimeClock'
+import { WORLD } from '../data/world'
 
 
 function Backdrop({ zone }: { zone: Zone }) {
@@ -488,7 +490,13 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
           ) : (
             <div className="mt-1 grid gap-1.5 text-[16px]">
               <p>Recuperaste una parte de tu voz: <b>{enemy.topics.map((t) => TOPICS[t].name).join(' y ')}</b>.</p>
-              <p className="text-paper/75">También ganaste una pieza del reloj del tiempo y la Capa del tiempo. Tus amigos tienen cosas nuevas que contarte.</p>
+              <div className="my-1 flex items-center gap-3 rounded-xl bg-panel-2 p-2">
+                <TimeClock pieces={state.relics} size={72} highlight={state.relics - 1} />
+                <p className="text-[15px]">
+                  <b className="text-gold">¡Pieza del reloj!</b> Tienes {Math.min(state.relics, WORLD.length)} de {WORLD.length}. Grimm la tenía: el desconocido la dejó caer.
+                </p>
+              </div>
+              <p className="text-paper/75">También ganaste la Capa del tiempo. Tus amigos tienen cosas nuevas que contarte.</p>
             </div>
           )}
           <button className={`${btnPrimary} mt-4 w-full`} onClick={leave} autoFocus>{enemy.kind === 'trainer' ? 'Ir al mapa' : 'Continuar'}</button>

@@ -83,6 +83,7 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 - Al vencer a Grimm, él se despide ("Goodbye, my student. See you tomorrow!") y hay que responder con una despedida.
 - Final del capítulo 1: Leo y la persona especial esperan a la salida. El protagonista habla por primera vez, presenta a sus amigos con "This is..." (si fue Leo quien presentó a esa persona, se la presentas a Maya), aparece el villano anunciando la ciudad y todos se despiden.
 - El jefe devuelve un tema ("fragmento de voz"), una pieza del reloj del tiempo y un atuendo.
+- Reloj del tiempo (`src/components/TimeClock.tsx`): tiene una pieza por cada escenario del mapa (`WORLD` en `world.ts`) y cada jefe suelta la suya. Se ve en el mapa (al tocarlo explica dónde está cada pieza), en la victoria contra el jefe (la pieza nueva aparece animada) y en el final del capítulo, donde Leo pregunta *"Where are the other pieces?"*.
 - Si fallas, Leo te da la explicación. Si te quedas sin vida, vuelves a la entrada.
 - Amistad por puntos, sin respuestas incorrectas: las respuestas sin sentido bajan la amistad. Recompensas: Leo da una pista en combate; Maya da +1 de vida máxima.
 - Objetos del mapa que muestran su nombre en inglés al chocar con ellos.

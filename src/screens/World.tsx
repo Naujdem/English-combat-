@@ -4,7 +4,8 @@ import { WORLD, type WorldNode } from '../data/world'
 import { TOPICS } from '../data/questions'
 import { SpriteBody } from '../components/Sprite'
 import { FriendsPanel } from '../components/FriendsPanel'
-import { btn, btnGhost, Hearts, Panel } from '../components/ui'
+import { btn, btnGhost, Hearts, Overlay, Panel } from '../components/ui'
+import { ClockPieces, TimeClock } from '../components/TimeClock'
 import { heroLook } from '../game/helpers'
 
 const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } as const
@@ -12,6 +13,7 @@ const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } 
 export function World({ state, onEnter, onTitle }: { state: GameState; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const [msg, setMsg] = useState<string>('Toca un lugar del mapa para viajar.')
   const [friends, setFriends] = useState(false)
+  const [clock, setClock] = useState(false)
   const here = WORLD.find((n) => n.sceneId === state.sceneId) ?? WORLD[0]
 
   function unlocked(n: WorldNode) {
@@ -81,10 +83,34 @@ export function World({ state, onEnter, onTitle }: { state: GameState; onEnter: 
 
       <div className="flex flex-wrap gap-2 text-xs text-paper/70">
         <span className="rounded-full bg-panel-2 px-3 py-1">Palabras recuperadas: {state.recovered.length ? state.recovered.map((t) => TOPICS[t].name).join(', ') : 'ninguna'}</span>
-        <span className="rounded-full bg-panel-2 px-3 py-1">Piezas del reloj: {state.relics}</span>
       </div>
 
+      <button className={`${btn} flex items-center gap-3 text-left`} onClick={() => setClock(true)}>
+        <TimeClock pieces={state.relics} size={52} />
+        <span>
+          <span className="block">Reloj del tiempo</span>
+          <span className="block text-sm text-paper/65">Piezas: {Math.min(state.relics, WORLD.length)} de {WORLD.length}</span>
+        </span>
+      </button>
+
       <button className={btn} onClick={() => tap(here)}>Entrar a {here.name}</button>
+
+      {clock && (
+        <Overlay onClose={() => setClock(false)}>
+          <Panel>
+            <div className="flex items-center justify-between">
+              <p className="font-display text-xl text-gold">Reloj del tiempo</p>
+              <button className={btnGhost} onClick={() => setClock(false)}>Cerrar</button>
+            </div>
+            <div className="my-3 flex justify-center"><TimeClock pieces={state.relics} size={150} /></div>
+            <p className="text-[15px] text-paper/85">
+              El desconocido usa este reloj para viajar entre épocas y esconder tus palabras. Cada jefe guarda una pieza.
+              {state.relics >= WORLD.length ? ' ¡Lo tienes completo! Ya puedes ir tras el desconocido.' : ' Con el reloj completo podrás alcanzar al desconocido y recuperar toda tu voz.'}
+            </p>
+            <div className="mt-3"><ClockPieces pieces={state.relics} /></div>
+          </Panel>
+        </Overlay>
+      )}
 
       {friends && <FriendsPanel state={state} onClose={() => setFriends(false)} />}
     </div>

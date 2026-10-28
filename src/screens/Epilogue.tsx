@@ -5,6 +5,8 @@ import { SpeakButton } from '../components/SpeakButton'
 import { btn, btnGhost, btnPrimary, Panel } from '../components/ui'
 import { FRIENDS, interestFriend } from '../data/friends'
 import { heroLook } from '../game/helpers'
+import { TimeClock } from '../components/TimeClock'
+import { WORLD } from '../data/world'
 
 const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
@@ -16,6 +18,8 @@ type Step = {
   /** El jugador elige qué decir; solo una opción es correcta */
   choice?: { options: string[]; answer: number; tip: string }
   villain?: boolean
+  /** Muestra el reloj del tiempo en la escena */
+  clock?: boolean
   /** Quién más aparece en la escena */
   cast?: ('leo' | 'maya' | 'interest')[]
 }
@@ -77,7 +81,19 @@ function buildSteps(s: GameState): Step[] {
       : { who: 'interest', text: `${name}, you are very brave. I am happy you are my friend.`, es: `${name}, eres muy valiente. Me alegra que seas mi amigo.`, cast },
     { who: 'villain', text: 'Ha! So you have your school words back... and a piece of MY clock.', es: '¡Ja! Así que recuperaste tus palabras de la escuela... y una pieza de MI reloj.', villain: true, cast },
     { who: 'villain', text: 'Enjoy it. Your other words are in the city. Come and get them... if you can!', es: 'Disfrútalo. Tus otras palabras están en la ciudad. Ven por ellas... ¡si puedes!', villain: true, cast },
-    { who: 'narrator', text: 'El desconocido desaparece otra vez en una nube oscura.', cast },
+    { who: 'narrator', text: 'El desconocido desaparece otra vez en una nube oscura. Sacas la pieza del reloj que te dio Grimm.', cast, clock: true },
+    { who: 'leo', text: 'Look! It is a piece of a clock. The clock has four pieces. Where are the other pieces?', es: '¡Mira! Es una pieza de un reloj. El reloj tiene cuatro piezas. ¿Dónde están las otras piezas?', cast, clock: true },
+    {
+      who: 'hero',
+      text: '¿Qué le respondes a Leo?',
+      cast,
+      clock: true,
+      choice: {
+        options: ['They are in the city and in other times.', 'It are in the city.', 'They is in the city.'],
+        answer: 0,
+        tip: '"The other pieces" es plural, así que va "they are". "It are" y "they is" mezclan singular y plural.',
+      },
+    },
     { who: 'leo', text: "The city? We can go together! But now it's late. Goodbye, everyone! See you tomorrow!", es: '¿La ciudad? ¡Podemos ir juntos! Pero ya es tarde. ¡Adiós a todos! ¡Nos vemos mañana!', cast },
     {
       who: 'hero',
@@ -164,6 +180,12 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
           </g>
         )}
       </svg>
+      {s.clock && (
+        <div className="anim-pop -mt-2 flex items-center justify-center gap-3">
+          <TimeClock pieces={Math.max(1, state.relics)} size={84} />
+          <p className="text-sm text-paper/75">Reloj del tiempo: {Math.max(1, state.relics)} de {WORLD.length} piezas</p>
+        </div>
+      )}
 
       <Panel>
         {names[s.who] && (
