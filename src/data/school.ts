@@ -89,12 +89,12 @@ export const ENEMIES: Record<string, EnemyDef> = {
     kind: 'minion',
     reward: 'deportivo',
     hp: 4,
-    topics: ['to-be', 'possessives'],
+    topics: ['to-be', 'possessives', 'imperatives'],
     kinds: ['fill', 'fix', 'order', 'listen', 'write'],
     tags: ['patio'],
     look: { shirt: '#2e9d8f', hair: '#a0522d', skin: '#f1c27d', accessory: 'cap' },
     before: [
-      { text: 'Hey! This is MY court. Are you fast? Are you strong?', es: '¡Oye! Esta es MI cancha. ¿Eres rápido? ¿Eres fuerte?' },
+      { text: 'Hey! This is MY court. Are you fast? Are you strong? Run! Jump! Ha ha!', es: '¡Oye! Esta es MI cancha. ¿Eres rápido? ¿Eres fuerte? ¡Corre! ¡Salta! ¡Ja, ja!' },
       { text: 'Mr. Grimm gave me a piece of the key. It is MY prize, because I am the best player here!', es: 'El profesor Grimm me dio un pedazo de la llave. ¡Es MI premio, porque soy el mejor jugador de aquí!' },
     ],
     after: [
@@ -187,8 +187,8 @@ export const ENEMIES: Record<string, EnemyDef> = {
     name: 'Profesor Grimm',
     person: 'Mr. Grimm',
     kind: 'boss',
-    hp: 9,
-    topics: ['to-be', 'possessives'],
+    hp: 10,
+    topics: ['to-be', 'possessives', 'prepositions', 'imperatives'],
     kinds: ['fill', 'fix', 'order', 'listen'],
     tags: ['sala'],
     phases: [
@@ -201,18 +201,18 @@ export const ENEMIES: Record<string, EnemyDef> = {
         line: { text: 'Grr... My head! No! Your words are MY words! My desk, my papers, my students!', es: '¡Grr... Mi cabeza! ¡No! ¡Tus palabras son MIS palabras! ¡Mi escritorio, mis papeles, mis estudiantes!' },
       },
       {
-        hp: 3,
-        topics: ['to-be', 'possessives'],
-        kinds: ['order', 'listen', 'fix', 'write'],
-        tags: ['sala'],
-        line: { text: 'My eyes... A voice in my head... I am not... I AM YOUR TEACHER! Listen to me!', es: 'Mis ojos... Una voz en mi cabeza... Yo no soy... ¡SOY TU PROFESOR! ¡Escúchame!' },
+        hp: 4,
+        topics: ['prepositions', 'imperatives', 'to-be', 'possessives'],
+        kinds: ['fill', 'order', 'listen', 'fix', 'write'],
+        tags: ['sala', 'aula'],
+        line: { text: 'My eyes... A voice in my head... SIT DOWN! BE QUIET! Your words are IN my desk, UNDER my papers! Listen to me!', es: 'Mis ojos... Una voz en mi cabeza... ¡SIÉNTATE! ¡SILENCIO! ¡Tus palabras están DENTRO de mi escritorio, DEBAJO de mis papeles! ¡Escúchame!' },
       },
     ],
     look: { shirt: '#5a4a7a', hair: '#9a9a9a', skin: '#c68642', accessory: 'mortarboard' },
     before: [
       { text: 'So... you have the three keys. My students are not loyal.', es: 'Así que... tienes las tres llaves. Mis estudiantes no son leales.' },
       { text: 'Your words are in my desk. They are MY words now!', es: 'Tus palabras están en mi escritorio. ¡Ahora son MIS palabras!' },
-      { text: 'Show me you know TO BE and MY, YOUR, HIS, HER!', es: '¡Demuéstrame que sabes TO BE y MY, YOUR, HIS, HER!' },
+      { text: 'Show me you know TO BE and MY, YOUR, HIS, HER! And obey my orders!', es: '¡Demuéstrame que sabes TO BE y MY, YOUR, HIS, HER! ¡Y obedece mis órdenes!' },
     ],
     after: [
       { text: 'What... Where am I? My head...', es: '¿Qué... Dónde estoy? Mi cabeza...' },
@@ -225,6 +225,14 @@ export const ENEMIES: Record<string, EnemyDef> = {
 
 /** Lo que el profesor Grimm exige antes de pelear, además de las llaves */
 export const BOSS_REQUIREMENTS = [
+  {
+    id: 'school-supplies',
+    name: 'tus útiles escolares (Ana, en el aula)',
+    line: {
+      text: "Stop! Where are your book and your pencil? Don't come to my class without your things! Ask Ana in the classroom.",
+      es: '¡Alto! ¿Dónde están tu libro y tu lápiz? ¡No vengas a mi clase sin tus cosas! Pregúntale a Ana en el aula.',
+    },
+  },
   {
     id: 'school-whistle',
     name: 'el silbato del entrenador',

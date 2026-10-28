@@ -26,7 +26,7 @@ export type Interest = {
 export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle' | 'epilogue'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
-export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'present-simple' | 'past-simple' | 'future'
+export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'present-simple' | 'past-simple' | 'future'
 
 /**
  * fill: completar el espacio en blanco.
@@ -54,6 +54,8 @@ export type Question = {
   tags?: string[]
   /** Solo en preguntas de escribir: falta una palabra o hay que escribir la oración entera */
   writeMode?: 'blank' | 'sentence'
+  /** Pista en español bajo la frase (no se lee en voz alta), p. ej. "(debajo)" */
+  hint?: string
 }
 
 export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio'

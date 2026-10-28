@@ -21,6 +21,8 @@ import { LostAsk } from '../components/LostAsk'
 import { LOST_INTRO, LOST_ITEMS } from '../data/lostFound'
 import { NPCS } from '../data/npcs'
 import { Registration } from '../components/Registration'
+import { WhereIsIt } from '../components/WhereIsIt'
+import { CoachSays } from '../components/CoachSays'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
 const VIEW = 11
@@ -44,11 +46,12 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [talk, setTalk] = useState<Talk | null>(null)
   const [friendsOpen, setFriendsOpen] = useState(false)
   // Lección de Leo que se muestra antes de un combate con un tema nuevo
-  const [lesson, setLesson] = useState<{ topic: TopicId; enemyId: string } | null>(null)
+  // (o antes de una actividad que enseña un tema nuevo)
+  const [lesson, setLesson] = useState<{ topics: TopicId[]; enemyId?: string; then?: 'where' | 'coach' } | null>(null)
   const firstVisit = !state.seenLesson.includes(scene.id)
   const doorOpen = bossDoorOpen(state, scene)
   const keys = state.keys[scene.id] ?? 0
-  const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | 'sports' | 'timetable' | null>(null)
+  const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | 'sports' | 'timetable' | 'where' | 'coach' | null>(null)
   const boardNext = nextSession(state.opened, state.defeated)
   const npcTurn = useRef<Record<string, number>>({})
   const [notebook, setNotebook] = useState(false)
@@ -86,9 +89,18 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         if (e.id === 'secretary' && !state.opened.includes('school-registration')) {
           setMsg(null)
           setActivity('registration')
+        } else if (e.id === 'ana' && !state.opened.includes('school-supplies')) {
+          // Ana ayuda a encontrar los útiles: preposiciones de lugar
+          setMsg(null)
+          if (!state.seenLesson.includes('prepositions')) setLesson({ topics: ['prepositions'], then: 'where' })
+          else setActivity('where')
         } else if (e.id === 'coach') {
           setMsg(null)
-          setActivity('sports')
+          // La primera vez, el entrenador da órdenes (imperativos) antes del repaso de deportes
+          if (!state.opened.includes('school-commands')) {
+            if (!state.seenLesson.includes('imperatives')) setLesson({ topics: ['imperatives'], then: 'coach' })
+            else setActivity('coach')
+          } else setActivity('sports')
         } else if (npc.lines) {
           // Los estudiantes de ambiente dicen una frase distinta cada vez
           const k = npcTurn.current[e.id] ?? 0
@@ -121,7 +133,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           const first = missing[0]
           setMsg({
             text: `${ENEMIES[e.id].person}: "${first.line.text}"`,
-            sub: `${first.line.es} Te falta: ${missing.map((m) => m.name).join(' y ')}.`,
+            sub: `${first.line.es} Te falta: ${missing.map((m) => m.name).join(', ')}.`,
             tone: 'warn',
             say: first.line.text,
           })
@@ -144,8 +156,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       }
       if (e.type === 'enemy' || e.type === 'boss') {
         setMsg(null)
-        const unseen = ENEMIES[e.id].topics.find((t) => !state.seenLesson.includes(t) && LESSONS[t])
-        if (unseen) setLesson({ topic: unseen, enemyId: e.id })
+        const unseen = ENEMIES[e.id].topics.filter((t) => !state.seenLesson.includes(t) && LESSONS[t])
+        if (unseen.length) setLesson({ topics: unseen, enemyId: e.id })
         else onBattle(e.id)
         return
       }
@@ -358,7 +370,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               if (e.type === 'npc') {
                 const pending =
                   (e.id === 'secretary' && !state.opened.includes('school-registration')) ||
-                  (e.id === 'coach' && !state.opened.includes('school-whistle'))
+                  (e.id === 'coach' && !state.opened.includes('school-whistle')) ||
+                  (e.id === 'ana' && !state.opened.includes('school-supplies'))
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
                     <SpriteBody look={NPCS[e.id].look} />
@@ -429,6 +442,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         </span>
         <span className={`rounded-full px-2 py-0.5 ${state.opened.includes('school-registration') ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
           {state.opened.includes('school-registration') ? '✓ ' : ''}Uniforme
+        </span>
+        <span className={`rounded-full px-2 py-0.5 ${state.opened.includes('school-supplies') ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
+          {state.opened.includes('school-supplies') ? '✓ ' : ''}Útiles
         </span>
       </div>
 
@@ -555,6 +571,41 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         </Overlay>
       )}
 
+      {activity === 'where' && (
+        <Overlay>
+          <WhereIsIt
+            onClose={(done) => {
+              setActivity(null)
+              if (!done) return
+              update((s) => ({ ...s, opened: s.opened.includes('school-supplies') ? s.opened : [...s.opened, 'school-supplies'] }))
+              setMsg({
+                text: 'Ana: "Now you have your pencil, your book and your notebook. See you in class!"',
+                sub: 'Ahora tienes tu lápiz, tu libro y tu cuaderno. ¡Nos vemos en clase! Conseguiste tus útiles escolares.',
+                tone: 'good',
+                say: 'Now you have your pencil, your book and your notebook. See you in class!',
+              })
+            }}
+          />
+        </Overlay>
+      )}
+
+      {activity === 'coach' && (
+        <Overlay>
+          <CoachSays
+            look={heroLook(state)}
+            onClose={(done) => {
+              if (!done) {
+                setActivity(null)
+                setMsg({ text: 'Coach Mike: "Come back when you are ready!"', sub: '¡Vuelve cuando estés listo!', say: 'Come back when you are ready!' })
+                return
+              }
+              update((s) => ({ ...s, opened: s.opened.includes('school-commands') ? s.opened : [...s.opened, 'school-commands'] }))
+              setActivity('sports')
+            }}
+          />
+        </Overlay>
+      )}
+
       {activity === 'registration' && (
         <Overlay>
           <Registration
@@ -661,13 +712,14 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         <div className="absolute inset-0 z-40 overflow-y-auto bg-ink">
           <Lesson
             state={state}
-            steps={LESSONS[lesson.topic] ?? []}
-            title="Leo te alcanza antes del combate"
+            steps={lesson.topics.flatMap((t) => LESSONS[t] ?? [])}
+            title={lesson.enemyId ? 'Leo te alcanza antes del combate' : 'Leo te ayuda'}
             onDone={() => {
-              const { topic, enemyId } = lesson
-              update((s) => ({ ...s, seenLesson: s.seenLesson.includes(topic) ? s.seenLesson : [...s.seenLesson, topic] }))
+              const { topics, enemyId, then } = lesson
+              update((s) => ({ ...s, seenLesson: [...s.seenLesson, ...topics.filter((t) => !s.seenLesson.includes(t))] }))
               setLesson(null)
-              onBattle(enemyId)
+              if (enemyId) onBattle(enemyId)
+              else if (then) setActivity(then)
             }}
           />
         </div>

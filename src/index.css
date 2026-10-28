@@ -39,6 +39,8 @@ button { cursor: pointer; touch-action: manipulation; }
 .anim-lunge-r { animation: lunge-r 0.45s ease-out; transform-box: fill-box; }
 .anim-fade-in { animation: fade-in 0.3s ease-out both; }
 .anim-pop { animation: pop 0.35s ease-out both; }
+@keyframes jump { 0%,100% { transform: translateY(0) } 40% { transform: translateY(-10px) } }
+.anim-jump { animation: jump 0.5s ease-out 2; }
 @keyframes piece { 0% { opacity: 0; transform: scale(1.6) } 60% { opacity: 1; transform: scale(0.95) } 80% { filter: brightness(1.6) } 100% { transform: scale(1) } }
 .anim-piece { animation: piece 1s 0.3s ease-out both; transform-box: view-box; transform-origin: 50% 50%; }
 .anim-float-up { animation: float-up 0.9s ease-out forwards; }

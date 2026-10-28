@@ -186,7 +186,61 @@ export const QUESTIONS: Question[] = [
   { id: 'tpo-01', topic: 'possessives', tags: ['patio'], kind: 'order', prompt: 'El fútbol es mi deporte favorito.', options: ['Football', 'is', 'my', 'favorite', 'sport.'], answer: 0, tip: 'Football + is + my favorite sport.' },
   { id: 'tpo-02', topic: 'possessives', tags: ['patio'], kind: 'order', prompt: '¿Es esta tu pelota?', options: ['Is', 'this', 'your', 'ball?'], answer: 0, tip: 'La pregunta empieza con "Is": Is this your ball?' },
   { id: 'tpo-03', topic: 'to-be', tags: ['patio'], kind: 'order', prompt: 'Nosotros somos un equipo.', options: ['We', 'are', 'a', 'team.'], answer: 0, tip: 'We + are + a team.' },
+  // ── Preposiciones de lugar (aula, baño, cafetería, biblioteca) ──
+  { id: 'pp-01', topic: 'prepositions', tags: ['aula'], prompt: 'Your pencil is ___ the desk.', hint: 'encima de', options: ['on', 'under', 'in'], answer: 0, tip: '"On" es encima de algo, tocándolo: on the desk.' },
+  { id: 'pp-02', topic: 'prepositions', tags: ['aula'], prompt: 'Your bag is ___ the chair.', hint: 'debajo de', options: ['on', 'under', 'next to'], answer: 1, tip: '"Under" es debajo de: under the chair.' },
+  { id: 'pp-03', topic: 'prepositions', tags: ['aula'], prompt: 'The books are ___ my bag.', hint: 'dentro de', options: ['in', 'on', 'between'], answer: 0, tip: '"In" es dentro de: in my bag.' },
+  { id: 'pp-04', topic: 'prepositions', tags: ['aula'], prompt: 'Ana sits ___ the window.', hint: 'al lado de', options: ['under', 'in', 'next to'], answer: 2, tip: '"Next to" es al lado de: next to the window.' },
+  { id: 'pp-05', topic: 'prepositions', tags: ['aula'], prompt: 'The board is ___ the two windows.', hint: 'entre', options: ['between', 'next', 'in front'], answer: 0, tip: '"Between" es entre dos cosas: between the two windows.' },
+  { id: 'pp-06', topic: 'prepositions', tags: ['aula'], prompt: 'Mr. Grimm stands ___ the students.', hint: 'delante de', options: ['in front of', 'in front', 'front of'], answer: 0, tip: 'Delante de se dice completo: "in front of".' },
+  { id: 'pp-07', topic: 'prepositions', tags: ['aula'], prompt: 'The clock is ___ the wall.', options: ['on', 'under', 'between'], answer: 0, tip: 'Las cosas colgadas en la pared están "on the wall".' },
+  { id: 'pp-08', topic: 'prepositions', tags: ['bano'], prompt: 'The soap is ___ the sink.', hint: 'al lado de', options: ['next to', 'next', 'in front'], answer: 0, tip: 'Al lado de se dice "next to", siempre con "to".' },
+  { id: 'pp-09', topic: 'prepositions', tags: ['bano'], prompt: 'Rick is ___ the bathroom.', options: ['in', 'on', 'under'], answer: 0, tip: 'Para estar dentro de un lugar se usa "in": in the bathroom.' },
+  { id: 'pp-10', topic: 'prepositions', tags: ['cafeteria'], prompt: 'The pizza is ___ the table.', hint: 'encima de', options: ['under', 'on', 'in'], answer: 1, tip: '"On the table" = sobre la mesa.' },
+  { id: 'pp-11', topic: 'prepositions', tags: ['cafeteria'], prompt: 'The milk is ___ the fridge.', options: ['on', 'in', 'next'], answer: 1, tip: 'Dentro de la nevera: "in the fridge".' },
+  { id: 'pp-12', topic: 'prepositions', tags: ['cafeteria'], prompt: 'Bella sits ___ Leo and Maya.', hint: 'entre', options: ['between', 'next', 'under'], answer: 0, tip: '"Between" se usa entre dos personas o cosas: between Leo and Maya.' },
+  { id: 'pp-13', topic: 'prepositions', tags: ['sala'], prompt: 'Your words are ___ Mr. Grimm\'s desk.', hint: 'dentro de', options: ['in', 'on', 'between'], answer: 0, tip: 'Guardadas dentro del escritorio: "in the desk".' },
+  { id: 'pp-14', topic: 'prepositions', tags: ['patio'], prompt: 'The ball is ___ the tree.', hint: 'detrás de', options: ['behind', 'between', 'in front'], answer: 0, tip: '"Behind" es detrás de: behind the tree.' },
+  { id: 'pp-15', topic: 'to-be', prompt: 'Where ___ my keys? — They are on the table.', options: ['is', 'are', 'am'], answer: 1, tip: '"My keys" es plural: Where are my keys?' },
+
+  { id: 'ppf-01', topic: 'prepositions', tags: ['aula'], kind: 'fix', prompt: 'Your book is in the desk!', options: ['Your book is on the desk.', 'Your book is at the desk on.', 'Your book on the desk.'], answer: 0, tip: 'Encima de una superficie es "on": on the desk. Y no olvides el verbo "is".' },
+  { id: 'ppf-02', topic: 'prepositions', tags: ['aula'], kind: 'fix', prompt: 'The bag is next the chair!', options: ['The bag is next of the chair.', 'The bag is next to the chair.', 'The bag next to the chair.'], answer: 1, tip: '"Next to" siempre lleva "to". No es "next of".' },
+  { id: 'ppf-03', topic: 'prepositions', tags: ['cafeteria'], kind: 'fix', prompt: 'I sit between Leo with Maya!', options: ['I sit between Leo and Maya.', 'I sit between of Leo and Maya.', 'I sit Leo between Maya.'], answer: 0, tip: '"Between" va con "and": between Leo and Maya.' },
+  { id: 'ppf-04', topic: 'prepositions', tags: ['sala'], kind: 'fix', prompt: 'The teacher is in front the class!', options: ['The teacher is front of the class.', 'The teacher is in front to the class.', 'The teacher is in front of the class.'], answer: 2, tip: 'Delante de es "in front of", con "of".' },
+  { id: 'ppf-05', topic: 'prepositions', tags: ['bano'], kind: 'fix', prompt: 'The towel is under of the sink!', options: ['The towel is under the sink.', 'The towel under is the sink.', 'The towel is of under the sink.'], answer: 0, tip: '"Under" va solo, sin "of": under the sink.' },
+
+  { id: 'ppo-01', topic: 'prepositions', tags: ['aula'], kind: 'order', prompt: 'Mi lápiz está sobre el pupitre.', options: ['My', 'pencil', 'is', 'on', 'the', 'desk.'], answer: 0, tip: 'My pencil + is + on the desk.' },
+  { id: 'ppo-02', topic: 'prepositions', tags: ['aula'], kind: 'order', prompt: '¿Dónde está mi mochila?', options: ['Where', 'is', 'my', 'bag?'], answer: 0, tip: 'Para preguntar dónde está algo: Where is...?' },
+  { id: 'ppo-03', topic: 'prepositions', tags: ['cafeteria'], kind: 'order', prompt: 'La cafetería está al lado de la biblioteca.', options: ['The', 'cafeteria', 'is', 'next', 'to', 'the', 'library.'], answer: 0, tip: 'The cafeteria + is + next to + the library.' },
+  { id: 'ppo-04', topic: 'prepositions', tags: ['patio'], kind: 'order', prompt: 'La pelota está debajo de la banca.', options: ['The', 'ball', 'is', 'under', 'the', 'bench.'], answer: 0, tip: 'The ball + is + under + the bench.' },
+
+  // ── Imperativos (órdenes del profesor y del entrenador) ──
+  { id: 'im-01', topic: 'imperatives', tags: ['aula'], prompt: '___ your books, please. Page ten.', options: ['Open', 'Opens', 'To open'], answer: 0, tip: 'Las órdenes empiezan con el verbo tal cual, sin sujeto: Open your books.' },
+  { id: 'im-02', topic: 'imperatives', tags: ['aula'], prompt: '___ down, please. The class is starting.', options: ['Sits', 'Sit', 'You sit'], answer: 1, tip: 'La orden es "Sit down", con el verbo sin -s y sin "you".' },
+  { id: 'im-03', topic: 'imperatives', tags: ['aula'], prompt: "___ talk in class! It's a test.", options: ['No', 'Not', "Don't"], answer: 2, tip: 'Para prohibir algo: Don\'t + verbo. "Don\'t talk!"' },
+  { id: 'im-04', topic: 'imperatives', tags: ['aula'], prompt: 'Please ___ to me. This is important.', options: ['listen', 'listens', 'listening'], answer: 0, tip: 'Después de "please" va el verbo tal cual: Please listen.' },
+  { id: 'im-05', topic: 'imperatives', tags: ['aula'], prompt: "It's cold. ___ the window, please.", options: ['Open', 'Close', 'Opens'], answer: 1, tip: 'Si hace frío, se cierra la ventana: Close the window.' },
+  { id: 'im-06', topic: 'imperatives', tags: ['patio'], prompt: '___ run! The floor is wet!', options: ["Don't", "Doesn't", 'No'], answer: 0, tip: 'Para prohibir: Don\'t + verbo. Nunca "doesn\'t" en una orden.' },
+  { id: 'im-07', topic: 'imperatives', tags: ['patio'], prompt: '___ the ball to Ben!', options: ['Pass', 'Passes', 'Passing'], answer: 0, tip: 'La orden usa el verbo base: Pass the ball.' },
+  { id: 'im-08', topic: 'imperatives', tags: ['patio'], prompt: 'Run, run! ___ stop!', options: ["Don't", 'Not', 'No to'], answer: 0, tip: '"Don\'t stop!" = ¡No pares!' },
+  { id: 'im-09', topic: 'imperatives', tags: ['patio'], prompt: '___ some water after the game.', options: ['Drinks', 'Drink', 'To drinks'], answer: 1, tip: 'Las órdenes van con el verbo base: Drink some water.' },
+  { id: 'im-10', topic: 'imperatives', tags: ['sala'], prompt: '___ quiet! I am working.', options: ['Be', 'Are', 'Is'], answer: 0, tip: 'Con "to be" la orden es "Be": Be quiet! Be careful!' },
+  { id: 'im-11', topic: 'imperatives', tags: ['sala'], prompt: '___ late for my class!', options: ["Don't be", "Don't are", 'Not be'], answer: 0, tip: 'La orden negativa de "be" es "Don\'t be": Don\'t be late!' },
+  { id: 'im-12', topic: 'imperatives', tags: ['bano'], prompt: '___ your hands, please.', options: ['Wash', 'Washes', 'Washing'], answer: 0, tip: 'Verbo base al inicio: Wash your hands.' },
+  { id: 'im-13', topic: 'imperatives', tags: ['cafeteria'], prompt: "___ throw food! It's not a game!", options: ["Don't", 'No', "Isn't"], answer: 0, tip: 'Para prohibir algo: Don\'t + verbo.' },
+
+  { id: 'imf-01', topic: 'imperatives', tags: ['aula'], kind: 'fix', prompt: 'You opens the book!', options: ['Open the book.', 'Opens the book.', 'You opening the book.'], answer: 0, tip: 'Las órdenes no llevan sujeto ni -s: Open the book.' },
+  { id: 'imf-02', topic: 'imperatives', tags: ['aula'], kind: 'fix', prompt: 'No talk in class!', options: ['Not talk in class.', "Don't talk in class.", "Doesn't talk in class."], answer: 1, tip: 'Para prohibir se usa "Don\'t", no "No": Don\'t talk.' },
+  { id: 'imf-03', topic: 'imperatives', tags: ['patio'], kind: 'fix', prompt: 'Runs faster!', options: ['Run faster!', 'To run faster!', 'Running faster!'], answer: 0, tip: 'La orden va con el verbo base: Run faster!' },
+  { id: 'imf-04', topic: 'imperatives', tags: ['sala'], kind: 'fix', prompt: 'Are quiet, students!', options: ['Is quiet, students!', 'Be quiet, students!', 'Quiet are, students!'], answer: 1, tip: 'La orden de "to be" es "Be": Be quiet!' },
+  { id: 'imf-05', topic: 'imperatives', tags: ['cafeteria'], kind: 'fix', prompt: 'Please to give me the salt!', options: ['Please give me the salt.', 'Please gives me the salt.', 'Please giving me the salt.'], answer: 0, tip: 'Después de "please" va el verbo base, sin "to": Please give me the salt.' },
+
+  { id: 'imo-01', topic: 'imperatives', tags: ['aula'], kind: 'order', prompt: 'Abran sus libros, por favor.', options: ['Open', 'your', 'books,', 'please.'], answer: 0, tip: 'La orden empieza con el verbo: Open your books, please.' },
+  { id: 'imo-02', topic: 'imperatives', tags: ['aula'], kind: 'order', prompt: 'No hables en clase.', options: ["Don't", 'talk', 'in', 'class.'], answer: 0, tip: "Don't + verbo + resto: Don't talk in class." },
+  { id: 'imo-03', topic: 'imperatives', tags: ['patio'], kind: 'order', prompt: '¡Pásame la pelota!', options: ['Pass', 'me', 'the', 'ball!'], answer: 0, tip: 'Pass + me + the ball.' },
+  { id: 'imo-04', topic: 'imperatives', tags: ['sala'], kind: 'order', prompt: '¡Siéntate y escucha!', options: ['Sit', 'down', 'and', 'listen!'], answer: 0, tip: 'Dos órdenes unidas con "and": Sit down and listen!' },
 ]
+
 
 /** Pregunta de escucha generada a partir de una de completar */
 function toListen(q: Question): Question {
@@ -320,6 +374,24 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'I → my  ·  you → your  ·  he → his  ·  she → her  ·  it → its',
       'we → our  ·  they → their',
       "Para nombres se agrega 's: Leo's bag = la mochila de Leo.",
+    ],
+  },
+  prepositions: {
+    name: 'Preposiciones de lugar',
+    level: 'A1',
+    lesson: [
+      'Dicen dónde está algo: Where is my book? → It is on the desk.',
+      'in = dentro · on = encima · under = debajo',
+      'next to = al lado de · between = entre · in front of = delante de · behind = detrás de',
+    ],
+  },
+  imperatives: {
+    name: 'Imperativos',
+    level: 'A1',
+    lesson: [
+      'Las órdenes empiezan con el verbo, sin sujeto: Open the door. Sit down.',
+      "Para prohibir: Don't + verbo → Don't run!",
+      "Con to be: Be quiet! · Don't be late!",
     ],
   },
   'present-simple': {

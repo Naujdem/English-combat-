@@ -489,7 +489,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             </p>
           ) : (
             <div className="mt-1 grid gap-1.5 text-[16px]">
-              <p>Recuperaste una parte de tu voz: <b>{enemy.topics.map((t) => TOPICS[t].name).join(' y ')}</b>.</p>
+              <p>Recuperaste una parte de tu voz: <b>{listEs(enemy.topics.map((t) => TOPICS[t].name.toLowerCase()))}</b>.</p>
               <div className="my-1 flex items-center gap-3 rounded-xl bg-panel-2 p-2">
                 <TimeClock pieces={state.relics} size={72} highlight={state.relics - 1} />
                 <p className="text-[15px]">
@@ -504,4 +504,9 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       )}
     </div>
   )
+}
+
+/** "a, b y c" */
+function listEs(items: string[]) {
+  return items.length <= 1 ? items.join('') : `${items.slice(0, -1).join(', ')} y ${items[items.length - 1]}`
 }

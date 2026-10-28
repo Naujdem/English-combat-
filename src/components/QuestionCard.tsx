@@ -134,6 +134,7 @@ export function QuestionCard({
           {answered && <SpeakButton text={filled} size="sm" />}
         </div>
       )}
+      {kind === 'fill' && q.hint && <p className="mt-0.5 text-sm text-paper/60">Pista: {q.hint}</p>}
 
       {kind === 'fix' && (
         <>

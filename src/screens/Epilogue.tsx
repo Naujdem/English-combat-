@@ -107,7 +107,7 @@ function buildSteps(s: GameState): Step[] {
     },
     {
       who: 'narrator',
-      text: 'Fin del capítulo 1: La escuela. Recuperaste los saludos, el verbo to be y los posesivos. Tu viaje continúa en la ciudad...',
+      text: 'Fin del capítulo 1: La escuela. Recuperaste los saludos, el verbo to be, los posesivos, las preposiciones de lugar y los imperativos. Tu viaje continúa en la ciudad...',
       cast,
     },
   ]
