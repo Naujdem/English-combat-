@@ -72,7 +72,8 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 - Presentación con Leo en inglés (`src/screens/Presentation.tsx`): el jugador escribe en la pizarra su nombre, dice si es chico o chica, elige su aspecto, su edad (*I am 15 years old*), su país y nacionalidad, y le cuenta a Leo si conoce a alguien especial (romántico, amistad o Leo le presenta a alguien). Las frases usan *he/she* según lo elegido.
 - Primer combate: entrenamiento con Leo sobre saludos y presentación. Si pierdes, vuelves a intentarlo sin castigo.
 - Lecciones paso a paso con Leo antes del primer combate de cada tema (la de *to be* va en la intro).
-- Tres tipos de combate: completar la frase, corregir la frase con error que dice el enemigo y ordenar palabras.
+- Tipos de combate: completar la frase, corregir la frase con error que dice el enemigo, ordenar palabras, escuchar y escribir.
+- Escribir (`write`): se generan solas. "Escribe la palabra que falta" sale de las preguntas de completar de *to be* y saludos (solo donde la respuesta es única), y "Escribe la oración en inglés" sale de las de ordenar (frase en español → oración en inglés). La revisión ignora mayúsculas y puntos y acepta contracciones (`src/game/text.ts`).
 - Cada enemigo tiene historia antes y después del combate; al vencerlo se queda en el mapa como estudiante normal.
 - Biblioteca: repaso de vocabulario que da un escudo de palabras (bloquea un error en combate).
 - Tablón del aula: lectura con preguntas de comprensión que desbloquea las gafas de lectura.

@@ -33,8 +33,10 @@ export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'present-simple' |
  *        palabras en el orden correcto (el juego las desordena).
  * listen: escuchar una frase y elegir la que se oyó. Se generan solas a partir
  *        de las preguntas de completar, no hay que escribirlas.
+ * write: escribir con el teclado. Se generan solas: la palabra que falta (a partir
+ *        de las de completar) o la oración completa (a partir de las de ordenar).
  */
-export type QuestionKind = 'fill' | 'fix' | 'order' | 'listen'
+export type QuestionKind = 'fill' | 'fix' | 'order' | 'listen' | 'write'
 
 export type Question = {
   id: string
@@ -48,6 +50,8 @@ export type Question = {
   tip: string
   /** Etiquetas de lugar o personaje, para que cada enemigo pregunte sobre lo suyo */
   tags?: string[]
+  /** Solo en preguntas de escribir: falta una palabra o hay que escribir la oración entera */
+  writeMode?: 'blank' | 'sentence'
 }
 
 export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio'

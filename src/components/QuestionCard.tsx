@@ -4,6 +4,7 @@ import { TOPICS } from '../data/questions'
 import { btnPrimary } from './ui'
 import { SpeakButton } from './SpeakButton'
 import { speak } from '../game/speech'
+import { sameAnswer } from '../game/text'
 
 /** Desordena índices 0..n-1 asegurando que no queden en el orden correcto */
 function shuffled(n: number): number[] {
@@ -20,6 +21,7 @@ function shuffled(n: number): number[] {
 
 /** La frase correcta completa de una pregunta, para mostrarla o leerla en voz alta */
 export function correctSentence(q: Question): string {
+  if (q.kind === 'write') return q.writeMode === 'blank' ? q.prompt.replace('___', q.options[0]) : q.options[0]
   if (q.kind === 'order') return q.options.join(' ')
   if (q.kind === 'fix' || q.kind === 'listen') return q.options[q.answer]
   return q.prompt.replace('___', q.options[q.answer])
@@ -51,6 +53,8 @@ export function QuestionCard({
   const [picked, setPicked] = useState<number | null>(null)
   const [answered, setAnswered] = useState<null | boolean>(null)
   const [removed, setRemoved] = useState<number | null>(null)
+  const [typed, setTyped] = useState('')
+  const [writeError, setWriteError] = useState('')
   const ask = answered === null
 
   // Las preguntas de escucha se leen solas al aparecer
@@ -64,6 +68,12 @@ export function QuestionCard({
   // Pista de Leo: quita una opción incorrecta, o coloca la primera palabra al ordenar
   useEffect(() => {
     if (!hint || !ask) return
+    if (kind === 'write') {
+      // Leo escribe la primera palabra (o la primera letra, si falta una sola palabra)
+      const expected = q.options[0]
+      setTyped(q.writeMode === 'blank' ? expected.slice(0, 1) : expected.split(' ')[0] + ' ')
+      return
+    }
     if (kind === 'order') {
       const idx = order.find((i) => q.options[i] === q.options[0])!
       setPlaced([idx])
@@ -84,13 +94,31 @@ export function QuestionCard({
     finish(k === q.answer)
   }
 
+  function checkWrite() {
+    if (!ask) return
+    if (!typed.trim()) return setWriteError('Escribe tu respuesta primero.')
+    // En la palabra que falta también vale la forma negativa (is → is not / isn't)
+    const expected = q.options[0]
+    finish(sameAnswer(typed, expected) || (q.writeMode === 'blank' && sameAnswer(typed, `${expected} not`)))
+  }
+
   function checkOrder() {
     if (!ask || placed.length !== q.options.length) return
     finish(placed.map((i) => q.options[i]).join(' ') === q.options.join(' '))
   }
 
   const label =
-    kind === 'fix' ? '¡Corrige al enemigo!' : kind === 'order' ? 'Ordena la frase' : kind === 'listen' ? 'Escucha y elige' : TOPICS[q.topic].name
+    kind === 'fix'
+      ? '¡Corrige al enemigo!'
+      : kind === 'order'
+        ? 'Ordena la frase'
+        : kind === 'listen'
+          ? 'Escucha y elige'
+          : kind === 'write'
+            ? q.writeMode === 'blank'
+              ? 'Escribe la palabra que falta'
+              : 'Escribe la oración en inglés'
+            : TOPICS[q.topic].name
   const filled = kind === 'fill' && answered ? q.prompt.replace('___', q.options[q.answer]) : q.prompt
 
   return (
@@ -131,7 +159,57 @@ export function QuestionCard({
         </div>
       )}
 
-      {kind === 'order' ? (
+      {kind === 'write' ? (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            checkWrite()
+          }}
+        >
+          {q.writeMode === 'blank' ? (
+            <p className="font-display text-[22px] leading-snug" data-testid="prompt">
+              {answered ? q.prompt.replace('___', q.options[0]) : q.prompt}
+            </p>
+          ) : (
+            <>
+              <p className="text-sm text-paper/60">Lee la frase y escríbela en inglés:</p>
+              <p className="font-display text-[20px] leading-snug" data-testid="prompt">{q.prompt}</p>
+            </>
+          )}
+          <input
+            value={typed}
+            onChange={(e) => {
+              setTyped(e.target.value)
+              setWriteError('')
+            }}
+            disabled={!ask}
+            autoFocus
+            autoCapitalize="off"
+            autoCorrect="off"
+            autoComplete="off"
+            spellCheck={false}
+            placeholder={q.writeMode === 'blank' ? 'La palabra que falta' : 'Escribe aquí en inglés'}
+            className={`mt-3 w-full rounded-xl border-2 bg-ink px-3 py-2.5 font-display text-[18px] outline-none ${
+              ask ? 'border-line focus:border-gold' : answered ? 'border-hp' : 'border-danger'
+            }`}
+            data-testid="write-input"
+          />
+          {writeError && <p className="mt-2 text-sm text-[#f3b0b0]">{writeError}</p>}
+          {ask ? (
+            <button type="submit" className={`${btnPrimary} mt-3 w-full`}>Comprobar</button>
+          ) : (
+            <div className="mt-2 flex items-center gap-2 text-sm text-paper/70">
+              <span>
+                {answered ? 'Correcto:' : 'Correcta:'} <span className="font-semibold text-hp">{correctSentence(q)}</span>
+              </span>
+              <SpeakButton text={correctSentence(q)} size="sm" />
+            </div>
+          )}
+          {ask && (
+            <p className="mt-2 text-xs text-paper/45">No importan las mayúsculas ni los puntos. "I'm" y "I am" valen igual.</p>
+          )}
+        </form>
+      ) : kind === 'order' ? (
         <>
           <p className="text-sm text-paper/60">Escribe en inglés:</p>
           <p className="font-display text-[20px] leading-snug" data-testid="prompt">{q.prompt}</p>

@@ -203,21 +203,67 @@ function toListen(q: Question): Question {
   }
 }
 
+/** Pregunta de escribir la palabra que falta, a partir de una de completar */
+function toWriteBlank(q: Question): Question {
+  return {
+    id: `W-${q.id}`,
+    topic: q.topic,
+    kind: 'write',
+    writeMode: 'blank',
+    prompt: q.prompt,
+    options: [q.options[q.answer]],
+    answer: 0,
+    tags: q.tags,
+    tip: q.tip,
+  }
+}
+
+/** Pregunta de escribir la oración completa en inglés, a partir de una de ordenar */
+function toWriteSentence(q: Question): Question {
+  return {
+    id: `T-${q.id}`,
+    topic: q.topic,
+    kind: 'write',
+    writeMode: 'sentence',
+    prompt: q.prompt,
+    options: [q.options.join(' ')],
+    answer: 0,
+    tags: q.tags,
+    tip: q.tip,
+  }
+}
+
+/**
+ * Solo se pide escribir la palabra que falta cuando la respuesta es única sin ver opciones:
+ * verbo to be y saludos, sin negaciones ni contracciones (en posesivos podrían valer varias).
+ */
+function canWriteBlank(q: Question) {
+  const a = q.options[q.answer]
+  return canListen(q) && (q.topic === 'to-be' || q.topic === 'greetings') && !/not|'/i.test(a)
+}
+
 function canListen(q: Question) {
   return (q.kind ?? 'fill') === 'fill' && q.prompt.split('___').length === 2
 }
 
-export function questionsFor(topics: TopicId[], kinds: QuestionKind[] = ['fill', 'fix', 'order', 'listen']): Question[] {
+export function questionsFor(topics: TopicId[], kinds: QuestionKind[] = ['fill', 'fix', 'order', 'listen', 'write']): Question[] {
   const list: Question[] = []
   for (const q of QUESTIONS) {
     if (!topics.includes(q.topic)) continue
     if (kinds.includes(q.kind ?? 'fill')) list.push(q)
     if (kinds.includes('listen') && canSpeak && canListen(q)) list.push(toListen(q))
+    if (kinds.includes('write') && canWriteBlank(q)) list.push(toWriteBlank(q))
+    if (kinds.includes('write') && q.kind === 'order') list.push(toWriteSentence(q))
   }
   return list
 }
 
 export function questionById(id: string): Question | undefined {
+  if (id.startsWith('W-') || id.startsWith('T-')) {
+    const base = QUESTIONS.find((q) => q.id === id.slice(2))
+    if (!base) return undefined
+    return id.startsWith('W-') ? toWriteBlank(base) : toWriteSentence(base)
+  }
   if (id.startsWith('L-')) {
     const base = QUESTIONS.find((q) => q.id === id.slice(2))
     return base && canSpeak ? toListen(base) : undefined

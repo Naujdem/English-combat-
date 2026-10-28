@@ -90,7 +90,7 @@ export const ENEMIES: Record<string, EnemyDef> = {
     reward: 'deportivo',
     hp: 4,
     topics: ['to-be', 'possessives'],
-    kinds: ['fill', 'fix', 'order', 'listen'],
+    kinds: ['fill', 'fix', 'order', 'listen', 'write'],
     tags: ['patio'],
     look: { shirt: '#2e9d8f', hair: '#a0522d', skin: '#f1c27d', accessory: 'cap' },
     before: [
@@ -110,7 +110,7 @@ export const ENEMIES: Record<string, EnemyDef> = {
     kind: 'trainer',
     hp: 4,
     topics: ['greetings'],
-    kinds: ['fill', 'fix', 'order', 'listen'],
+    kinds: ['fill', 'fix', 'order', 'listen', 'write'],
     look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69' },
     before: [
       { text: "OK, trainer mode! I'm your sparring partner. Don't worry, it's just practice.", es: '¡Bien, modo entrenador! Soy tu compañero de práctica. Tranquilo, es solo práctica.' },
@@ -129,7 +129,7 @@ export const ENEMIES: Record<string, EnemyDef> = {
     kind: 'minion',
     hp: 4,
     topics: ['to-be'],
-    kinds: ['fill', 'order', 'listen'],
+    kinds: ['fill', 'order', 'listen', 'write'],
     tags: ['aula'],
     look: { shirt: '#c0504d', hair: '#2b5c3a', skin: '#e0ac69', accessory: 'cap' },
     before: [
@@ -169,7 +169,7 @@ export const ENEMIES: Record<string, EnemyDef> = {
     kind: 'minion',
     hp: 5,
     topics: ['possessives'],
-    kinds: ['fill', 'fix', 'order', 'listen'],
+    kinds: ['fill', 'fix', 'order', 'listen', 'write'],
     tags: ['cafeteria'],
     look: { shirt: '#d9822b', hair: '#6b3b1f', skin: '#f1c27d', accessory: 'cap' },
     before: [
@@ -203,7 +203,7 @@ export const ENEMIES: Record<string, EnemyDef> = {
       {
         hp: 3,
         topics: ['to-be', 'possessives'],
-        kinds: ['order', 'listen', 'fix'],
+        kinds: ['order', 'listen', 'fix', 'write'],
         tags: ['sala'],
         line: { text: 'My eyes... A voice in my head... I am not... I AM YOUR TEACHER! Listen to me!', es: 'Mis ojos... Una voz en mi cabeza... Yo no soy... ¡SOY TU PROFESOR! ¡Escúchame!' },
       },
