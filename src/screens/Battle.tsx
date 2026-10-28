@@ -91,7 +91,27 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const [line, setLine] = useState(0)
   const [showEs, setShowEs] = useState(false)
   const [used, setUsed] = useState<string[]>([])
-  const [q, setQ] = useState<Question>(() => pickQuestion(enemy.topics, enemy.kinds, [], state.mistakes))
+  // Fases del jefe: según la vida que le queda, cambia el tipo de preguntas
+  function phaseAt(hpLeft: number) {
+    if (!enemy.phases) return -1
+    const damage = enemy.hp - hpLeft
+    let acc = 0
+    for (let i = 0; i < enemy.phases.length; i++) {
+      acc += enemy.phases[i].hp
+      if (damage < acc) return i
+    }
+    return enemy.phases.length - 1
+  }
+  function poolAt(hpLeft: number) {
+    const ph = enemy.phases?.[phaseAt(hpLeft)]
+    return ph ?? { topics: enemy.topics, kinds: enemy.kinds, tags: enemy.tags }
+  }
+  function pick(hpLeft: number, usedIds: string[]) {
+    const p = poolAt(hpLeft)
+    return pickQuestion(p.topics, p.kinds, usedIds, state.mistakes, p.tags ?? [])
+  }
+  const [interlude, setInterlude] = useState<{ text: string; es?: string } | null>(null)
+  const [q, setQ] = useState<Question>(() => pick(battle.enemyHp, []))
   const [correct, setCorrect] = useState(false)
   const [blocked, setBlocked] = useState(false)
   const [heroAnim, setHeroAnim] = useState('')
@@ -119,6 +139,10 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       update((s) => ({ ...s, battle: s.battle ? { ...s.battle, enemyHp: left } : null }))
       setPhase('feedback')
       if (left <= 0) window.setTimeout(() => win(), 700)
+      else if (enemy.phases && phaseAt(left) !== phaseAt(battle.enemyHp)) {
+        const line = enemy.phases[phaseAt(left)].line
+        if (line) setInterlude(line)
+      }
       return
     }
     animate(setEnemyAnim, 'anim-lunge-r')
@@ -139,7 +163,8 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   function nextQuestion() {
     const nextUsed = [...used, q.id]
     setUsed(nextUsed)
-    setQ(pickQuestion(enemy.topics, enemy.kinds, nextUsed, state.mistakes))
+    setQ(pick(state.battle?.enemyHp ?? battle.enemyHp, nextUsed))
+    setInterlude(null)
     setCorrect(false)
     setBlocked(false)
     setHint(false)
@@ -226,6 +251,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         <Panel className="px-3 py-2">
           <p className="truncate font-display text-[15px]">{enemy.name}</p>
           <div className="mt-2"><Bar value={battle.enemyHp} max={enemy.hp} color={enemy.kind === 'boss' ? '#a07cd0' : enemy.kind === 'trainer' ? '#3b9d5d' : '#d64545'} label="Vida del enemigo" /></div>
+          {enemy.phases && <p className="mt-1 text-[11px] text-paper/50">Fase {phaseAt(battle.enemyHp) + 1} de {enemy.phases.length}</p>}
         </Panel>
       </div>
 
@@ -306,7 +332,20 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             }
           />
 
-          {phase === 'feedback' && correct && battle.enemyHp > 0 && (
+          {phase === 'feedback' && correct && battle.enemyHp > 0 && interlude && (
+            <div className="anim-fade-in mt-3 rounded-xl border-2 border-[#a07cd0]/60 bg-[#a07cd0]/10 p-3">
+              <div className="flex items-center justify-between gap-2">
+                <p className="font-display text-lg text-[#c9b3ee]">{enemy.person} cambia...</p>
+                <SpeakButton text={interlude.text} size="sm" />
+              </div>
+              <p className="text-[16px] leading-snug">"{interlude.text}"</p>
+              {interlude.es && <p className="mt-1 text-sm text-paper/60">{interlude.es}</p>}
+              <div className="mt-3 flex justify-end">
+                <button className={btnPrimary} onClick={nextQuestion} autoFocus>Siguiente fase</button>
+              </div>
+            </div>
+          )}
+          {phase === 'feedback' && correct && battle.enemyHp > 0 && !interlude && (
             <div className="anim-fade-in mt-3 flex items-center justify-between gap-2">
               <p className="text-sm font-semibold text-hp">
                 {q.kind === 'fix' ? '¡Lo corregiste! El golpe acertó.' : '¡Correcto! El golpe acertó.'}

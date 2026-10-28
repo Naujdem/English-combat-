@@ -63,6 +63,8 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 - `conversations`: momentos de historia en orden. Cada uno pide puntos de amistad (`STORY_POINTS` en `social.ts`) y la gramática de `requires`. Los que tienen `lines: []` aún no están escritos.
 - `casual`: charlas cortas y repetibles para subir la amistad entre momentos de historia.
 
+**Preguntas por lugar.** Con `tags: ['aula']` (o `bano`, `cafeteria`, `sala`) una pregunta queda ligada a un lugar. Cada enemigo tiene sus `tags` y la mayoría de sus preguntas salen de ahí.
+
 **Enemigos.** En `school.ts` cada enemigo tiene `before` (lo que dice antes del combate), `after` (al ser vencido) y `freed` (lo que dice si le hablas después, ya sin hechizo).
 
 ## Sistemas incluidos
@@ -80,6 +82,8 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 - Amistad por puntos, sin respuestas incorrectas: las respuestas sin sentido bajan la amistad. Recompensas: Leo da una pista en combate; Maya da +1 de vida máxima.
 - Objetos del mapa que muestran su nombre en inglés al chocar con ellos.
 - Atuendos desbloqueables y guardado automático.
+- El Profesor Grimm pelea en 3 fases (to be → posesivos → mezcla con ordenar y escuchar), con diálogo entre fases (`phases` en `school.ts`).
+- Misión de objetos perdidos (`src/data/lostFound.ts`): Maya perdió su mochila y Leo su libro. Al encontrarlos hay que preguntar "Is this your...?" y la gente responde con posesivos ("No, it isn't mine. It's Maya's").
 - Audio: botones para escuchar en inglés en diálogos, lecciones, combates, lecturas y vocabulario (voz del dispositivo, sin internet). Dos toques seguidos leen más lento.
 - Combate de escucha: se oye una frase y hay que elegir la correcta. Se generan solas a partir de las preguntas de completar.
 - Cuaderno de errores: las preguntas falladas se anotan, los enemigos las repiten más seguido y se pueden repasar en el cuaderno de Leo (acertar 3 da un escudo).

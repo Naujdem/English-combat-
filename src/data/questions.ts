@@ -123,6 +123,53 @@ export const QUESTIONS: Question[] = [
   { id: 'pr-04', topic: 'possessives', kind: 'order', prompt: 'Su profesor (de ellos) es amable.', options: ['Their', 'teacher', 'is', 'nice.'], answer: 0, tip: '"Their" va antes de "teacher".' },
   { id: 'pr-05', topic: 'possessives', kind: 'order', prompt: 'Esta es la mesa de Maya.', options: ['This', 'is', "Maya's", 'table.'], answer: 0, tip: "\"Maya's table\": el nombre con 's va antes de la cosa." },
   { id: 'pr-06', topic: 'possessives', kind: 'order', prompt: 'Nuestra escuela es grande.', options: ['Our', 'school', 'is', 'big.'], answer: 0, tip: '"Our" va antes de "school".' },
+
+  // ── Preguntas de lugar: aula (Tom) ──────────────────────
+  { id: 'ta-01', topic: 'to-be', tags: ['aula'], prompt: 'The board ___ big and green.', options: ['is', 'are', 'am'], answer: 0, tip: '"The board" es una sola cosa, así que va "is".' },
+  { id: 'ta-02', topic: 'to-be', tags: ['aula'], prompt: 'The desks ___ old.', options: ['is', 'are', 'am'], answer: 1, tip: '"The desks" es plural, así que va "are".' },
+  { id: 'ta-03', topic: 'to-be', tags: ['aula'], prompt: 'Mr. Grimm ___ not in the classroom today.', options: ['is', 'are', 'am'], answer: 0, tip: 'Mr. Grimm es una persona (he), así que va "is".' },
+  { id: 'ta-04', topic: 'to-be', tags: ['aula'], prompt: '___ your pencils in your bag?', options: ['Is', 'Are', 'Am'], answer: 1, tip: '"Your pencils" es plural, así que la pregunta empieza con "Are".' },
+  { id: 'ta-05', topic: 'to-be', tags: ['aula'], prompt: 'My classmates ___ very loud!', options: ['is', 'am', 'are'], answer: 2, tip: '"My classmates" (mis compañeros) es plural: va "are".' },
+  { id: 'ta-06', topic: 'to-be', tags: ['aula'], prompt: 'I ___ the funniest student in this class!', options: ['am', 'is', 'are'], answer: 0, tip: 'Con "I" siempre va "am".' },
+  { id: 'ta-07', topic: 'to-be', tags: ['aula'], prompt: 'The windows ___ open.', options: ['is', 'are', 'am'], answer: 1, tip: '"The windows" es plural, así que va "are".' },
+  { id: 'tao-01', topic: 'to-be', tags: ['aula'], kind: 'order', prompt: 'La pizarra es verde.', options: ['The', 'board', 'is', 'green.'], answer: 0, tip: 'The board + is + green.' },
+  { id: 'tao-02', topic: 'to-be', tags: ['aula'], kind: 'order', prompt: '¿Estás en mi clase?', options: ['Are', 'you', 'in', 'my', 'class?'], answer: 0, tip: 'La pregunta empieza con el verbo: Are you...?' },
+  { id: 'tao-03', topic: 'to-be', tags: ['aula'], kind: 'order', prompt: 'Los libros están sobre el pupitre.', options: ['The', 'books', 'are', 'on', 'the', 'desk.'], answer: 0, tip: 'The books + are + on the desk.' },
+
+  // ── Preguntas de lugar: baño (Rick, el presumido) ───────
+  { id: 'trf-01', topic: 'to-be', tags: ['bano'], kind: 'fix', prompt: 'I are the smartest student!', options: ['I am the smartest student.', 'I is the smartest student.', 'Me am the smartest student.'], answer: 0, tip: 'Con "I" va "am".' },
+  { id: 'trf-02', topic: 'to-be', tags: ['bano'], kind: 'fix', prompt: 'This mirror are beautiful, like me!', options: ['This mirror am beautiful, like me.', 'This mirror is beautiful, like me.', 'This mirrors is beautiful, like me.'], answer: 1, tip: '"This mirror" es una sola cosa, así que va "is".' },
+  { id: 'trf-03', topic: 'to-be', tags: ['bano'], kind: 'fix', prompt: 'My hair are perfect!', options: ['My hairs is perfect.', 'My hair am perfect.', 'My hair is perfect.'], answer: 2, tip: 'En inglés "hair" (cabello) es incontable, como una sola cosa: va "is".' },
+  { id: 'trf-04', topic: 'to-be', tags: ['bano'], kind: 'fix', prompt: 'The sinks is clean today!', options: ['The sinks are clean today.', 'The sink are clean today.', 'The sinks am clean today.'], answer: 0, tip: '"The sinks" es plural, así que va "are".' },
+  { id: 'trf-05', topic: 'to-be', tags: ['bano'], kind: 'fix', prompt: "You isn't smart like me!", options: ['You not smart like me.', "You aren't smart like me.", "You amn't smart like me."], answer: 1, tip: 'Con "you" la negación es "are not" o "aren\'t".' },
+  { id: 'trf-06', topic: 'to-be', tags: ['bano'], kind: 'fix', prompt: 'Am you jealous of me?', options: ['Are you jealous of me?', 'Is you jealous of me?', 'You jealous are of me?'], answer: 0, tip: 'Con "you" la pregunta empieza con "Are".' },
+  { id: 'trf-07', topic: 'to-be', tags: ['bano'], kind: 'fix', prompt: 'The bathroom are my office!', options: ['The bathroom am my office.', 'The bathrooms is my office.', 'The bathroom is my office.'], answer: 2, tip: '"The bathroom" es un solo lugar, así que va "is".' },
+  { id: 'trf-08', topic: 'to-be', tags: ['bano'], kind: 'fix', prompt: 'We is the best students!', options: ['We are the best students.', 'We am the best students.', 'Us are the best students.'], answer: 0, tip: 'Con "we" va "are". "Us" no puede ser el sujeto.' },
+
+  // ── Preguntas de lugar: cafetería (Bella, la egoísta) ───
+  { id: 'tc-01', topic: 'possessives', tags: ['cafeteria'], prompt: 'This is ___ sandwich, not yours!', options: ['my', 'me', 'mine'], answer: 0, tip: 'Antes de un sustantivo va "my": my sandwich.' },
+  { id: 'tc-02', topic: 'possessives', tags: ['cafeteria'], prompt: 'Excuse me, is this ___ juice?', options: ['your', 'you', 'yours'], answer: 0, tip: 'Antes de un sustantivo va "your": your juice.' },
+  { id: 'tc-03', topic: 'possessives', tags: ['cafeteria'], prompt: 'Maya loves cooking. ___ sandwiches are the best.', options: ['Her', 'His', 'She'], answer: 0, tip: 'Maya es mujer: her sandwiches.' },
+  { id: 'tc-04', topic: 'possessives', tags: ['cafeteria'], prompt: 'The cook is a man. ___ soup is delicious.', options: ['Her', 'His', 'Its'], answer: 1, tip: 'El cocinero es un hombre: his soup.' },
+  { id: 'tc-05', topic: 'possessives', tags: ['cafeteria'], prompt: 'We sit here every day. This is ___ table.', options: ['our', 'us', 'we'], answer: 0, tip: 'Para algo de nosotros: our table.' },
+  { id: 'tc-06', topic: 'possessives', tags: ['cafeteria'], prompt: 'These apples are from Leo. They are ___ apples.', options: ['Leos', "Leo's", 'Leo'], answer: 1, tip: "Para decir de quién es algo se agrega 's al nombre: Leo's apples." },
+  { id: 'tc-07', topic: 'possessives', tags: ['cafeteria'], prompt: 'The cafeteria is big. ___ windows are huge.', options: ["It's", 'It', 'Its'], answer: 2, tip: '"Its" sin apóstrofo: las ventanas de la cafetería.' },
+  { id: 'tcf-01', topic: 'possessives', tags: ['cafeteria'], kind: 'fix', prompt: 'This is me lunch!', options: ['This is my lunch.', 'This is I lunch.', 'This is mine lunch.'], answer: 0, tip: 'Antes de un sustantivo va "my": my lunch.' },
+  { id: 'tcf-02', topic: 'possessives', tags: ['cafeteria'], kind: 'fix', prompt: 'Give me you pizza!', options: ["Give me you're pizza.", 'Give me your pizza.', 'Give me yours pizza.'], answer: 1, tip: 'Antes de un sustantivo va "your": your pizza.' },
+  { id: 'tcf-03', topic: 'possessives', tags: ['cafeteria'], kind: 'fix', prompt: 'Maya and Leo eat they lunch here!', options: ['Maya and Leo eat there lunch here.', 'Maya and Leo eat them lunch here.', 'Maya and Leo eat their lunch here.'], answer: 2, tip: 'Para algo de ellos va "their": their lunch.' },
+  { id: 'tcf-04', topic: 'possessives', tags: ['cafeteria'], kind: 'fix', prompt: 'This is the table of me!', options: ['This is my table.', 'This is me table.', 'This is table my.'], answer: 0, tip: 'En inglés el posesivo va antes: my table.' },
+  { id: 'tco-01', topic: 'possessives', tags: ['cafeteria'], kind: 'order', prompt: 'Este es mi sándwich.', options: ['This', 'is', 'my', 'sandwich.'], answer: 0, tip: 'This is + my + sandwich.' },
+  { id: 'tco-02', topic: 'possessives', tags: ['cafeteria'], kind: 'order', prompt: '¿Es este tu jugo?', options: ['Is', 'this', 'your', 'juice?'], answer: 0, tip: 'La pregunta empieza con "Is": Is this your juice?' },
+  { id: 'tco-03', topic: 'possessives', tags: ['cafeteria'], kind: 'order', prompt: 'Su pizza (de él) está caliente.', options: ['His', 'pizza', 'is', 'hot.'], answer: 0, tip: '"His" va antes de "pizza".' },
+
+  // ── Preguntas de lugar: sala de profesores (Grimm) ──────
+  { id: 'ts-01', topic: 'to-be', tags: ['sala'], prompt: 'My desk ___ full of papers.', options: ['is', 'are', 'am'], answer: 0, tip: '"My desk" es una sola cosa: va "is".' },
+  { id: 'ts-02', topic: 'to-be', tags: ['sala'], prompt: 'Your words ___ in my desk now!', options: ['are', 'is', 'am'], answer: 0, tip: '"Your words" es plural: va "are".' },
+  { id: 'ts-03', topic: 'possessives', tags: ['sala'], prompt: 'The students are in ___ classroom. (de ellos)', options: ['there', 'their', 'they'], answer: 1, tip: '"Their" significa "de ellos". "There" significa "allí".' },
+  { id: 'tsf-01', topic: 'to-be', tags: ['sala'], kind: 'fix', prompt: 'They is my words now!', options: ['They are my words now.', 'They am my words now.', 'Them are my words now.'], answer: 0, tip: 'Con "they" va "are".' },
+  { id: 'tsf-02', topic: 'possessives', tags: ['sala'], kind: 'fix', prompt: 'I am you teacher!', options: ['I is your teacher.', 'I am your teacher.', 'I am you teacher.'], answer: 1, tip: 'Antes de "teacher" va "your": I am your teacher.' },
+  { id: 'tsf-03', topic: 'possessives', tags: ['sala'], kind: 'fix', prompt: 'This is mine classroom!', options: ['This is me classroom.', 'This is I classroom.', 'This is my classroom.'], answer: 2, tip: '"Mine" va solo, sin sustantivo. Antes de "classroom" va "my".' },
+  { id: 'tso-01', topic: 'possessives', tags: ['sala'], kind: 'order', prompt: 'Tus palabras están en mi escritorio.', options: ['Your', 'words', 'are', 'in', 'my', 'desk.'], answer: 0, tip: 'Your words + are + in my desk.' },
 ]
 
 /** Pregunta de escucha generada a partir de una de completar */
@@ -135,6 +182,7 @@ function toListen(q: Question): Question {
     prompt: sentences[q.answer],
     options: sentences,
     answer: q.answer,
+    tags: q.tags,
     tip: `Se escuchaba: "${sentences[q.answer]}" ${q.tip}`,
   }
 }
@@ -165,7 +213,7 @@ export function questionById(id: string): Question | undefined {
  * Devuelve una pregunta aleatoria evitando las ya usadas en este combate.
  * Las preguntas del cuaderno de errores salen con más frecuencia hasta que se acierten.
  */
-export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: string[], mistakes: string[] = []): Question {
+export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: string[], mistakes: string[] = [], tags: string[] = []): Question {
   const pool = questionsFor(topics, kinds)
   const fresh = pool.filter((q) => !used.includes(q.id))
   const list = fresh.length > 0 ? fresh : pool
@@ -175,7 +223,10 @@ export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: str
   const available = kinds.filter((k) => list.some((q) => (q.kind ?? 'fill') === k))
   const kind = available[Math.floor(Math.random() * available.length)]
   const ofKind = list.filter((q) => (q.kind ?? 'fill') === kind)
-  return ofKind[Math.floor(Math.random() * ofKind.length)]
+  // La mayoría de las veces el enemigo pregunta sobre su lugar o su historia
+  const own = ofKind.filter((q) => q.tags?.some((t) => tags.includes(t)))
+  const from = own.length > 0 && Math.random() < 0.7 ? own : ofKind
+  return from[Math.floor(Math.random() * from.length)]
 }
 
 export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; lesson: string[] }> = {

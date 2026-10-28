@@ -46,6 +46,8 @@ export type Question = {
   answer: number
   /** Explicación corta en español que da un amigo cuando fallas */
   tip: string
+  /** Etiquetas de lugar o personaje, para que cada enemigo pregunte sobre lo suyo */
+  tags?: string[]
 }
 
 export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala'
@@ -63,6 +65,10 @@ export type EnemyDef = {
   topics: TopicId[]
   /** Tipos de pregunta que usa: completar, corregir o ambos */
   kinds: QuestionKind[]
+  /** Etiquetas preferidas: la mayoría de sus preguntas salen de aquí */
+  tags?: string[]
+  /** Fases del combate (para jefes). Cada fase tiene su vida, temas y una frase al empezar */
+  phases?: { hp: number; topics: TopicId[]; kinds: QuestionKind[]; tags?: string[]; line?: StoryLine }[]
   look: { shirt: string; hair: string; skin: string; accessory?: 'cap' | 'mortarboard' | 'glasses' }
   /** Lo que dice antes del combate */
   before: StoryLine[]
@@ -176,6 +182,8 @@ export type GameState = {
   items: { shield: number }
   /** Preguntas falladas que siguen pendientes en el cuaderno de errores */
   mistakes: string[]
+  /** Misión de objetos perdidos de la escuela */
+  lostFound: { started: boolean; carrying: string | null; picked: string[]; returned: string[] }
   seenLesson: string[]
   battle: { enemyId: string; enemyHp: number; returnTo: { x: number; y: number } } | null
 }

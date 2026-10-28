@@ -15,6 +15,8 @@ import { SpeakButton } from '../components/SpeakButton'
 import { ConversationView } from '../components/Conversation'
 import { FriendsPanel } from '../components/FriendsPanel'
 import { Notebook } from '../components/Notebook'
+import { LostAsk } from '../components/LostAsk'
+import { LOST_INTRO, LOST_ITEMS } from '../data/lostFound'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
 const VIEW = 11
@@ -28,6 +30,8 @@ type Talk = {
   title: string
   level?: string
   note?: string
+  /** Charla especial de una misión */
+  quest?: 'lostIntro'
 }
 
 export function Explore({ state, update, onBattle, onWorld }: { state: GameState; update: Update; onBattle: (enemyId: string) => void; onWorld: () => void }) {
@@ -42,7 +46,11 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const keys = state.keys[scene.id] ?? 0
   const [activity, setActivity] = useState<'vocab' | 'reading' | null>(null)
   const [notebook, setNotebook] = useState(false)
-  const blocked = !!talk || friendsOpen || !!lesson || !!activity || notebook
+  // Preguntar "Is this your...?" mientras llevas un objeto perdido
+  const [ask, setAsk] = useState<{ itemId: string; npcId: string; npcName: string } | null>(null)
+  const lf = state.lostFound
+  const lostOnMap = lf.started ? LOST_ITEMS.filter((it) => !lf.picked.includes(it.id)) : []
+  const blocked = !!talk || friendsOpen || !!lesson || !!activity || notebook || !!ask
 
   const rows = scene.map.length
   const cols = scene.map[0].length
@@ -67,6 +75,15 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
 
   const interact = useCallback(
     (e: Entity) => {
+      // Si llevas un objeto perdido, le preguntas a quien sea si es suyo
+      const talkable = e.type === 'friend' || e.type === 'interest' || ((e.type === 'enemy' || e.type === 'boss') && state.defeated.includes(e.id))
+      if (lf.carrying && talkable) {
+        const npcId = e.type === 'friend' ? e.id : e.type === 'interest' ? 'interest' : e.id
+        const npcName = e.type === 'friend' || e.type === 'interest' ? friendById(state, npcId)!.name : ENEMIES[e.id].person
+        setMsg(null)
+        setAsk({ itemId: lf.carrying, npcId, npcName })
+        return
+      }
       if ((e.type === 'enemy' || e.type === 'boss') && state.defeated.includes(e.id)) {
         const def = ENEMIES[e.id]
         setMsg({ text: `${def.person}: "${def.freed.text}"`, sub: def.freed.es, say: def.freed.text })
@@ -93,6 +110,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       const id = e.type === 'friend' ? e.id : 'interest'
       const friend = friendById(state, id)
       if (!friend) return
+      // Después de conocerla, Maya pide ayuda con los objetos perdidos
+      if (id === 'maya' && !lf.started && (state.talks.maya ?? 0) >= 1) {
+        if (!(id in state.friendship)) update((s) => ({ ...s, friendship: { ...s.friendship, [id]: 0 } }))
+        setMsg(null)
+        setTalk({ friendId: id, story: null, lines: LOST_INTRO, title: 'Misión: objetos perdidos', quest: 'lostIntro' })
+        return
+      }
       const res = talkTo(state, friend)
       if (!(id in state.friendship)) update((s) => ({ ...s, friendship: { ...s.friendship, [id]: 0 } }))
       setMsg(null)
@@ -120,6 +144,17 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       const ny = state.pos.y + dy
       const facing = dx < 0 ? 'left' : dx > 0 ? 'right' : state.facing
       if (ny < 0 || nx < 0 || ny >= rows || nx >= cols) return
+      const item = lostOnMap.find((it) => it.x === nx && it.y === ny)
+      if (item) {
+        if (lf.carrying) {
+          const holding = LOST_ITEMS.find((it) => it.id === lf.carrying)!
+          setMsg({ text: `Ya llevas ${holding.es}.`, sub: 'Devuélvela a su dueño antes de recoger otra cosa.', tone: 'warn' })
+          return
+        }
+        update((s) => ({ ...s, lostFound: { ...s.lostFound, carrying: item.id, picked: [...s.lostFound.picked, item.id] } }))
+        setMsg({ text: `Encontraste ${item.es}. ¿De quién será?`, sub: `Pregúntale a la gente: "Is this your ${item.en}?"`, tone: 'good', say: `Is this your ${item.en}?` })
+        return
+      }
       const ent = alive.find((e) => e.x === nx && e.y === ny)
       if (ent) {
         if (facing !== state.facing) update((s) => ({ ...s, facing }))
@@ -159,7 +194,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       const v = VOCAB[c]
       if (v && c !== '#') setMsg({ text: `${v.en[0].toUpperCase()}${v.en.slice(1)}`, sub: `= ${v.es}`, say: v.en })
     },
-    [alive, blocked, cols, doorOpen, interact, rows, scene, state.facing, state.opened, state.pos.x, state.pos.y, update],
+    [alive, blocked, cols, doorOpen, interact, lf.carrying, lostOnMap, rows, scene, state.facing, state.opened, state.pos.x, state.pos.y, update],
   )
 
   useEffect(() => {
@@ -186,6 +221,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   function friendHasNews(id: string) {
     const f = friendById(state, id)
     if (!f) return false
+    if (id === 'maya' && !lf.started && (state.talks.maya ?? 0) >= 1) return true
     return talkTo(state, f).kind === 'story'
   }
 
@@ -261,6 +297,28 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 </g>
               )
             })}
+            {lostOnMap.map((it) => (
+              <g key={it.id} transform={`translate(${it.x * T} ${it.y * T})`}>
+                <g className="anim-bob">
+                  <ellipse cx="16" cy="27" rx="9" ry="2.5" fill="rgba(0,0,0,0.15)" />
+                  {it.id === 'bag' ? (
+                    <>
+                      <path d="M11 12 Q16 5 21 12" fill="none" stroke={it.color} strokeWidth="2" />
+                      <rect x="8" y="11" width="16" height="15" rx="4" fill={it.color} />
+                      <rect x="11" y="17" width="10" height="5" rx="1.5" fill="rgba(0,0,0,0.18)" />
+                    </>
+                  ) : (
+                    <>
+                      <rect x="8" y="12" width="16" height="13" rx="1.5" fill={it.color} />
+                      <rect x="10" y="12" width="2" height="13" fill="rgba(0,0,0,0.25)" />
+                      <rect x="14" y="16" width="8" height="2" fill="#f4efe4" />
+                    </>
+                  )}
+                  <circle cx="26" cy="7" r="5" fill="#e0a526" />
+                  <text x="26" y="10.5" textAnchor="middle" fontSize="9" fontWeight="700" fill="#1c1a17">?</text>
+                </g>
+              </g>
+            ))}
             <g style={{ transform: `translate(${state.pos.x * T}px, ${state.pos.y * T}px)`, transition: 'transform 150ms linear' }}>
               <g transform={state.facing === 'left' ? 'translate(32 0) scale(-1 1)' : undefined}>
                 <SpriteBody look={look} mood={state.recovered.length ? 'normal' : 'mute'} />
@@ -269,6 +327,15 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           </g>
         </svg>
       </div>
+
+      {lf.started && lf.returned.length < LOST_ITEMS.length && (
+        <div className="flex items-center justify-between gap-2 rounded-xl border border-gold/40 bg-gold/10 px-3 py-1.5 text-xs">
+          <span className="font-semibold text-gold">Misión: objetos perdidos ({lf.returned.length}/{LOST_ITEMS.length})</span>
+          <span className="text-paper/70">
+            {lf.carrying ? `Llevas: ${LOST_ITEMS.find((it) => it.id === lf.carrying)!.noun}` : 'Busca la mochila y el libro'}
+          </span>
+        </div>
+      )}
 
       <div className="min-h-[76px]">
         {msg ? (
@@ -314,6 +381,11 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             onDone={(delta) => {
               const t = talk
               setTalk(null)
+              if (t.quest === 'lostIntro') {
+                update((s) => ({ ...s, lostFound: { ...s.lostFound, started: true } }))
+                setMsg({ text: 'Nueva misión: objetos perdidos.', sub: 'Busca la mochila de Maya y el libro de Leo por la escuela.', tone: 'good' })
+                return
+              }
               if (t.story !== null) {
                 const index = t.story
                 update((s) => completeStory(s, t.friendId, index, delta))
@@ -370,6 +442,43 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       {friendsOpen && <FriendsPanel state={state} onClose={() => setFriendsOpen(false)} />}
 
       {notebook && <Notebook state={state} update={update} onClose={() => setNotebook(false)} />}
+
+      {ask && (
+        <Overlay>
+          <LostAsk
+            item={LOST_ITEMS.find((it) => it.id === ask.itemId)!}
+            npcId={ask.npcId}
+            npcName={ask.npcName}
+            onDone={(returned) => {
+              const a = ask
+              setAsk(null)
+              if (!returned) return
+              const item = LOST_ITEMS.find((it) => it.id === a.itemId)!
+              const allDone = lf.returned.length + 1 >= LOST_ITEMS.length
+              update((s) => {
+                let next = {
+                  ...s,
+                  lostFound: { ...s.lostFound, carrying: null, returned: [...s.lostFound.returned, item.id] },
+                  friendship: { ...s.friendship, [item.owner]: Math.min(30, (s.friendship[item.owner] ?? 0) + 2) },
+                }
+                if (allDone) {
+                  next = {
+                    ...next,
+                    outfits: next.outfits.includes('rosada') ? next.outfits : [...next.outfits, 'rosada'],
+                    items: { ...next.items, shield: Math.min(2, next.items.shield + 1) },
+                  }
+                }
+                return next
+              })
+              setMsg(
+                allDone
+                  ? { text: '¡Misión completa! Devolviste todo.', sub: 'Maya te regala una camiseta rosada y ganas un escudo de palabras. Tu amistad con Maya y Leo creció.', tone: 'good' }
+                  : { text: `Devolviste ${item.es}.`, sub: 'La amistad subió. Sigue buscando el otro objeto.', tone: 'good' },
+              )
+            }}
+          />
+        </Overlay>
+      )}
 
       {lesson && (
         <div className="absolute inset-0 z-40 overflow-y-auto bg-ink">
