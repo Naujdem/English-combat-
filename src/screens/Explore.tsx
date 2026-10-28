@@ -2,7 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { DialogLine, Entity, GameState } from '../game/types'
 import type { Update } from '../game/store'
 import { SCENES, bossDoorOpen, friendById, heroLook } from '../game/helpers'
-import { BOSS_REQUIREMENTS, ENEMIES, OUTFITS } from '../data/school'
+import { OUTFITS } from '../data/school'
+import { ENEMIES } from '../data/enemies'
 import { LESSONS } from '../data/lessons'
 import { Lesson } from '../components/Lesson'
 import type { TopicId } from '../game/types'
@@ -23,6 +24,8 @@ import { NPCS } from '../data/npcs'
 import { Registration } from '../components/Registration'
 import { WhereIsIt } from '../components/WhereIsIt'
 import { CoachSays } from '../components/CoachSays'
+import { Directions } from '../components/Directions'
+import { CafeOrder } from '../components/CafeOrder'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
 const VIEW = 11
@@ -47,18 +50,18 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [friendsOpen, setFriendsOpen] = useState(false)
   // Lección de Leo que se muestra antes de un combate con un tema nuevo
   // (o antes de una actividad que enseña un tema nuevo)
-  const [lesson, setLesson] = useState<{ topics: TopicId[]; enemyId?: string; then?: 'where' | 'coach' } | null>(null)
+  const [lesson, setLesson] = useState<{ topics: TopicId[]; enemyId?: string; then?: 'where' | 'coach' | 'directions' | 'cafe' } | null>(null)
   const firstVisit = !state.seenLesson.includes(scene.id)
   const doorOpen = bossDoorOpen(state, scene)
   const keys = state.keys[scene.id] ?? 0
-  const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | 'sports' | 'timetable' | 'where' | 'coach' | null>(null)
+  const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | 'sports' | 'timetable' | 'where' | 'coach' | 'directions' | 'cafe' | null>(null)
   const boardNext = nextSession(state.opened, state.defeated)
   const npcTurn = useRef<Record<string, number>>({})
   const [notebook, setNotebook] = useState(false)
   // Preguntar "Is this your...?" mientras llevas un objeto perdido
   const [ask, setAsk] = useState<{ itemId: string; npcId: string; npcName: string } | null>(null)
   const lf = state.lostFound
-  const lostOnMap = lf.started ? LOST_ITEMS.filter((it) => !lf.picked.includes(it.id)) : []
+  const lostOnMap = lf.started && scene.id === 'school' ? LOST_ITEMS.filter((it) => !lf.picked.includes(it.id)) : []
   const blocked = !!talk || friendsOpen || !!lesson || !!activity || notebook || !!ask
 
   const rows = scene.map.length
@@ -94,6 +97,16 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           setMsg(null)
           if (!state.seenLesson.includes('prepositions')) setLesson({ topics: ['prepositions'], then: 'where' })
           else setActivity('where')
+        } else if (e.id === 'rosa' && !state.opened.includes('city-map')) {
+          // La oficial Rosa: there is / there are y direcciones
+          setMsg(null)
+          if (!state.seenLesson.includes('there-is')) setLesson({ topics: ['there-is'], then: 'directions' })
+          else setActivity('directions')
+        } else if (e.id === 'lily' && !state.opened.includes('city-coffee')) {
+          // Lily, la cajera del café: pedir con Can I have...?
+          setMsg(null)
+          if (!state.seenLesson.includes('ordering')) setLesson({ topics: ['ordering'], then: 'cafe' })
+          else setActivity('cafe')
         } else if (e.id === 'coach') {
           setMsg(null)
           // La primera vez, el entrenador da órdenes (imperativos) antes del repaso de deportes
@@ -128,7 +141,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       }
       // El profesor Grimm no pelea si te falta el silbato o el uniforme
       if (e.type === 'boss') {
-        const missing = BOSS_REQUIREMENTS.filter((r) => !state.opened.includes(r.id))
+        const missing = scene.requirements.filter((r) => !state.opened.includes(r.id))
         if (missing.length > 0) {
           const first = missing[0]
           setMsg({
@@ -338,7 +351,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 {l.text}
               </text>
             ))}
-            {boardNext.session && (
+            {scene.id === 'school' && boardNext.session && (
               <g transform={`translate(${3 * T + 22} 2)`} className="anim-bob">
                 <circle cx="5" cy="5" r="5.5" fill="#e0a526" />
                 <text x="5" y="8.5" textAnchor="middle" fontSize="9" fontWeight="700" fill="#1c1a17">!</text>
@@ -371,7 +384,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 const pending =
                   (e.id === 'secretary' && !state.opened.includes('school-registration')) ||
                   (e.id === 'coach' && !state.opened.includes('school-whistle')) ||
-                  (e.id === 'ana' && !state.opened.includes('school-supplies'))
+                  (e.id === 'ana' && !state.opened.includes('school-supplies')) ||
+                  (e.id === 'rosa' && !state.opened.includes('city-map')) ||
+                  (e.id === 'lily' && !state.opened.includes('city-coffee'))
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
                     <SpriteBody look={NPCS[e.id].look} />
@@ -431,24 +446,14 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
 
       <div className="flex flex-wrap items-center gap-1.5 text-[11px]" aria-label="Objetivos para el jefe">
         <span className="font-semibold uppercase tracking-wide text-paper/50">Para el jefe:</span>
-        <span className={`rounded-full px-2 py-0.5 ${SESSIONS.every((x) => state.opened.includes(x.id)) ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
-          Horario {SESSIONS.filter((x) => state.opened.includes(x.id)).length}/{SESSIONS.length}
-        </span>
-        <span className={`rounded-full px-2 py-0.5 ${keys >= scene.keysNeeded ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
-          Llaves {keys}/{scene.keysNeeded}
-        </span>
-        <span className={`rounded-full px-2 py-0.5 ${state.opened.includes('school-whistle') ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
-          {state.opened.includes('school-whistle') ? '✓ ' : ''}Silbato
-        </span>
-        <span className={`rounded-full px-2 py-0.5 ${state.opened.includes('school-registration') ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
-          {state.opened.includes('school-registration') ? '✓ ' : ''}Uniforme
-        </span>
-        <span className={`rounded-full px-2 py-0.5 ${state.opened.includes('school-supplies') ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
-          {state.opened.includes('school-supplies') ? '✓ ' : ''}Útiles
-        </span>
+        {scene.chips(state).map((c) => (
+          <span key={c.label} className={`rounded-full px-2 py-0.5 ${c.done ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
+            {c.done && !/\d/.test(c.label) ? '✓ ' : ''}{c.label}
+          </span>
+        ))}
       </div>
 
-      {lf.started && lf.returned.length < LOST_ITEMS.length && (
+      {scene.id === 'school' && lf.started && lf.returned.length < LOST_ITEMS.length && (
         <div className="flex items-center justify-between gap-2 rounded-xl border border-gold/40 bg-gold/10 px-3 py-1.5 text-xs">
           <span className="font-semibold text-gold">Misión: objetos perdidos ({lf.returned.length}/{LOST_ITEMS.length})</span>
           <span className="text-paper/70">
@@ -468,9 +473,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           </Panel>
         ) : (
           <p className="px-1 pt-2 text-sm text-paper/55">
-            {firstVisit
-              ? `Los estudiantes de ${scene.name.toLowerCase()} guardan tus palabras. Lee el horario en la pizarra del aula: cada sesión te da una tiza para retar a un estudiante. Vence a los ${scene.keysNeeded} que tienen las llaves, consigue el silbato del entrenador y matricúlate en la secretaría.`
-              : 'Choca con personas para hablar y con objetos para ver su nombre en inglés. Lee el horario en la pizarra del aula para conseguir tizas.'}
+            {firstVisit ? scene.intro.first : scene.intro.later}
           </p>
         )}
       </div>
@@ -584,6 +587,38 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 tone: 'good',
                 say: 'Now you have your pencil, your book and your notebook. See you in class!',
               })
+            }}
+          />
+        </Overlay>
+      )}
+
+      {activity === 'directions' && (
+        <Overlay>
+          <Directions
+            onClose={(done) => {
+              setActivity(null)
+              if (!done) return
+              update((s) => ({ ...s, opened: s.opened.includes('city-map') ? s.opened : [...s.opened, 'city-map'] }))
+              setMsg({
+                text: 'Officer Rosa: "The tourist office is next to the fountain. Good luck!"',
+                sub: 'La oficina de turismo está al lado de la fuente. ¡Suerte! Conseguiste el mapa de la ciudad.',
+                tone: 'good',
+                say: 'The tourist office is next to the fountain. Good luck!',
+              })
+            }}
+          />
+        </Overlay>
+      )}
+
+      {activity === 'cafe' && (
+        <Overlay>
+          <CafeOrder
+            name={state.hero.name}
+            onClose={(done) => {
+              setActivity(null)
+              if (!done) return
+              update((s) => ({ ...s, opened: s.opened.includes('city-coffee') ? s.opened : [...s.opened, 'city-coffee'] }))
+              setMsg({ text: 'Tienes el café negro del señor Rossi.', sub: 'Llévaselo a la oficina de turismo, al lado de la fuente.', tone: 'good' })
             }}
           />
         </Overlay>

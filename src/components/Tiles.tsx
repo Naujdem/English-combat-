@@ -10,6 +10,10 @@ export const FLOOR: Record<Zone, string> = {
   sala: '#d8c9e0',
   secretaria: '#d6e3cf',
   patio: '#8fbf6a',
+  calle: '#d6d1c7',
+  cafe: '#ecd2b0',
+  tienda: '#eadff0',
+  turismo: '#d9e6f0',
 }
 
 const WALL = '#7a6a58'
@@ -17,7 +21,7 @@ const WALL_TOP = '#8d7c68'
 
 /** Casillas por las que se puede caminar */
 export function walkable(c: string, doorOpen: boolean) {
-  return c === '.' || c === ',' || c === 'd' || (c === 'X' && doorOpen)
+  return c === '.' || c === ',' || c === 'd' || c === '_' || c === 'z' || (c === 'X' && doorOpen)
 }
 
 /** Nombre en inglés de cada objeto, se muestra al chocar con él */
@@ -38,6 +42,13 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   Y: { en: 'tree', es: 'árbol' },
   H: { en: 'bench', es: 'banca' },
   '#': { en: 'wall', es: 'pared' },
+  '=': { en: 'road', es: 'calle (cruza por la cebra)' },
+  P: { en: 'bus stop', es: 'parada de autobús' },
+  U: { en: 'car', es: 'carro' },
+  N: { en: 'fountain', es: 'fuente' },
+  R: { en: 'clothes rack', es: 'perchero de ropa' },
+  Q: { en: 'mirror', es: 'espejo' },
+  O: { en: 'desk', es: 'escritorio' },
 }
 
 export function Tile({ c, x, y, floor, doorOpen }: { c: string; x: number; y: number; floor: string; doorOpen: boolean }) {
@@ -184,6 +195,84 @@ export function Tile({ c, x, y, floor, doorOpen }: { c: string; x: number; y: nu
               <rect x={X + 9.5} y={Y + 2.5} width={11} height={6} fill="#9fd3f0" />
             </>
           )}
+        </g>
+      )
+    case '_':
+      return (
+        <g>
+          {base}
+          <line x1={X} y1={Y + T - 0.5} x2={X + T} y2={Y + T - 0.5} stroke="rgba(0,0,0,0.08)" />
+          <line x1={X + T - 0.5} y1={Y} x2={X + T - 0.5} y2={Y + T} stroke="rgba(0,0,0,0.08)" />
+        </g>
+      )
+    case '=':
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill="#4f4f57" />
+          {x % 2 === 0 && <rect x={X + 6} y={y % 2 === 0 ? Y + T - 2 : Y} width={18} height={2} fill="#f2d16b" opacity="0.8" />}
+        </g>
+      )
+    case 'z':
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill="#4f4f57" />
+          {[3, 11, 19, 27].map((k) => <rect key={k} x={X + 3} y={Y + k - 2} width={T - 6} height={4} fill="#f4efe4" />)}
+        </g>
+      )
+    case 'U':
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill="#4f4f57" />
+          <rect x={X + 2} y={Y + 7} width={T - 4} height={18} rx="5" fill="#c0392b" />
+          <rect x={X + 8} y={Y + 9} width={T - 16} height={14} rx="2" fill="#9fd3f0" />
+          <circle cx={X + 8} cy={Y + 26} r="3" fill="#222" />
+          <circle cx={X + 24} cy={Y + 26} r="3" fill="#222" />
+        </g>
+      )
+    case 'P':
+      return (
+        <g>
+          {base}
+          <rect x={X + 15} y={Y + 8} width={2.5} height={22} fill="#6b6b6b" />
+          <rect x={X + 6} y={Y + 2} width={20} height={11} rx="2" fill="#2f6fd0" />
+          <text x={X + 16} y={Y + 10.5} textAnchor="middle" fontSize="7" fontWeight="700" fill="#fff" fontFamily="Fredoka, Nunito, system-ui, sans-serif">BUS</text>
+        </g>
+      )
+    case 'N':
+      return (
+        <g>
+          {base}
+          <rect x={X + 1} y={Y + 1} width={T - 2} height={T - 2} rx="6" fill="#9aa3ad" />
+          <rect x={X + 4} y={Y + 4} width={T - 8} height={T - 8} rx="4" fill="#7cc4e6" />
+          <circle cx={X + 16} cy={Y + 16} r="3" fill="#e8f6fc" />
+        </g>
+      )
+    case 'R':
+      return (
+        <g>
+          {base}
+          <rect x={X + 3} y={Y + 6} width={T - 6} height={2} fill="#6b6b6b" />
+          {['#d64545', '#2f6fd0', '#e0a526', '#3b9d5d'].map((col, k) => (
+            <path key={k} d={`M${X + 5 + k * 6} ${Y + 8} h5 l1 14 h-7 z`} fill={col} />
+          ))}
+          <rect x={X + 3} y={Y + 26} width={T - 6} height={2} fill="#6b6b6b" />
+        </g>
+      )
+    case 'Q':
+      return (
+        <g>
+          {base}
+          <rect x={X + 8} y={Y + 2} width={16} height={26} rx="3" fill="#b9dff0" stroke="#a8743f" strokeWidth="2" />
+          <line x1={X + 12} y1={Y + 6} x2={X + 16} y2={Y + 12} stroke="#fff" strokeWidth="1.5" />
+        </g>
+      )
+    case 'O':
+      return (
+        <g>
+          {base}
+          <rect x={X + 1} y={Y + 8} width={T - 2} height={16} fill="#5b7a99" />
+          <rect x={X + 1} y={Y + 8} width={T - 2} height={3} fill="#6f8fae" />
+          {x % 2 === 0 && <rect x={X + 9} y={Y + 2} width={14} height={9} rx="1" fill="#2d2d3a" />}
         </g>
       )
     case ',':

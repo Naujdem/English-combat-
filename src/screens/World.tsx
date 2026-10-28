@@ -8,6 +8,7 @@ import { btn, btnGhost, Hearts, Overlay, Panel } from '../components/ui'
 import { ClockPieces, TimeClock } from '../components/TimeClock'
 import { Diary } from '../components/Diary'
 import { Flashcards } from '../components/Flashcards'
+import { BusRide, BUS_TO_CITY } from '../components/BusRide'
 import { DIARY } from '../data/diary'
 import { dueCards } from '../game/cards'
 import type { Update } from '../game/store'
@@ -23,6 +24,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const newDiary = DIARY.find((c) => state.opened.includes(c.unlock) && !state.opened.includes(`diary-open-${c.id}`))
   const [diary, setDiary] = useState(!!newDiary)
   const [cards, setCards] = useState(false)
+  const [bus, setBus] = useState(false)
   const hasDiary = DIARY.some((c) => state.opened.includes(c.unlock))
   const dueCount = dueCards(state.cards).length
 
@@ -45,6 +47,8 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       return setMsg(`${n.name} está cerrado. Se llega ${r.how} desde ${r.from}, después de vencer a su jefe.`)
     }
     if (!n.sceneId) return setMsg(`${n.name} (${n.level}): ${n.about}. Este lugar se construirá pronto.`)
+    // La primera vez que se va a la ciudad, se llega en autobús
+    if (n.id === 'city' && !state.opened.includes('bus-city')) return setBus(true)
     onEnter(n.sceneId)
   }
 
@@ -122,6 +126,17 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       <button className={btn} onClick={() => tap(here)}>Entrar a {here.name}</button>
 
       {diary && <Diary state={state} update={update} onClose={closeDiary} />}
+      {bus && (
+        <BusRide
+          trip={BUS_TO_CITY}
+          hero={heroLook(state)}
+          onDone={() => {
+            setBus(false)
+            update((s) => ({ ...s, opened: [...s.opened, 'bus-city'] }))
+            onEnter('city')
+          }}
+        />
+      )}
       {cards && <Flashcards state={state} update={update} onClose={() => setCards(false)} />}
 
       {clock && (

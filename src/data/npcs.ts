@@ -35,6 +35,36 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
       { text: 'Please be quiet. The students are reading.', es: 'Por favor, silencio. Los estudiantes están leyendo.' },
     ],
   },
+  driver: {
+    name: 'Mr. Park',
+    look: { shirt: '#2f6fd0', hair: '#1f1f1f', skin: '#f1c27d', accessory: 'cap' },
+    lines: [
+      { text: 'This is the city bus stop. The next bus is at five o\'clock.', es: 'Esta es la parada de autobús de la ciudad. El próximo autobús es a las cinco.' },
+      { text: 'Cross the street at the crosswalk, please. Be careful!', es: 'Cruza la calle por la cebra, por favor. ¡Ten cuidado!' },
+      { text: 'There is a great café next to the clothes shop.', es: 'Hay un café muy bueno al lado de la tienda de ropa.' },
+    ],
+  },
+  rosa: {
+    name: 'Officer Rosa',
+    // Al hablarle abre la actividad de direcciones y da el mapa
+    look: { shirt: '#1f3c88', hair: '#2b1d14', skin: '#c68642', gender: 'female', accessory: 'cap' },
+    doneLine: { text: 'Do you need help? There is a map in your bag!', es: '¿Necesitas ayuda? ¡Hay un mapa en tu mochila!' },
+  },
+  lily: {
+    name: 'Lily',
+    // Cajera del café: abre la actividad de pedir
+    look: { shirt: '#8b5a2b', hair: '#d9822b', skin: '#f6d3b3', gender: 'female' },
+    doneLine: { text: 'Hi again! Can I get you anything?', es: '¡Hola otra vez! ¿Te traigo algo?' },
+  },
+  sam: {
+    name: 'Sam',
+    look: { shirt: '#e0a526', hair: '#5a3a1a', skin: '#8d5524' },
+    lines: [
+      { text: 'Look! There are fish in the fountain! One, two, three... ten fish!', es: '¡Mira! ¡Hay peces en la fuente! Uno, dos, tres... ¡diez peces!' },
+      { text: 'Is this your first time in the city? There are many shops here.', es: '¿Es tu primera vez en la ciudad? Aquí hay muchas tiendas.' },
+      { text: 'Those tourists are lost. Mr. Rossi always sends them to the wrong place!', es: 'Esos turistas están perdidos. ¡El señor Rossi siempre los manda al lugar equivocado!' },
+    ],
+  },
   ben: {
     name: 'Ben',
     look: { shirt: '#f4efe4', hair: '#d9b46a', skin: '#f6d3b3' },

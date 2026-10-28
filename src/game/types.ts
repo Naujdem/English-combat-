@@ -27,7 +27,7 @@ export type Interest = {
 export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle' | 'epilogue'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
-export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'present-simple' | 'past-simple' | 'future'
+export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'past-simple' | 'future'
 
 /**
  * fill: completar el espacio en blanco.
@@ -59,7 +59,7 @@ export type Question = {
   hint?: string
 }
 
-export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio'
+export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio' | 'calle' | 'cafe' | 'tienda' | 'turismo'
 
 export type EnemyDef = {
   id: string
@@ -116,7 +116,17 @@ export type SceneDef = {
   entities: Entity[]
   labels: { text: string; x: number; y: number }[]
   zoneAt: (x: number, y: number) => Zone
+  /** Lo que el jefe exige además de las llaves */
+  requirements: Requirement[]
+  /** Objetivos que se muestran bajo el mapa */
+  chips: (s: GameState) => { label: string; done: boolean }[]
+  /** Texto de ayuda bajo el mapa: la primera visita y las siguientes */
+  intro: { first: string; later: string }
+  /** Si existe, al vencer al jefe se muestra el final del capítulo hasta que este id esté en `opened` */
+  epilogue?: string
 }
+
+export type Requirement = { id: string; name: string; line: StoryLine }
 
 /** Un paso de una lección guiada por Leo */
 export type LessonStep = {

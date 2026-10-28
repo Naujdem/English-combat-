@@ -7,7 +7,8 @@ import { World } from './screens/World'
 import { Explore } from './screens/Explore'
 import { Battle } from './screens/Battle'
 import { Epilogue } from './screens/Epilogue'
-import { ENEMIES } from './data/school'
+import { TeacherPanel } from './components/TeacherPanel'
+import { ENEMIES } from './data/enemies'
 
 export default function App() {
   const { state, update, setState } = useGameState()
@@ -98,6 +99,7 @@ export default function App() {
   return (
     <main className="relative h-full w-full overflow-hidden">
       {screen}
+      <TeacherPanel state={state} update={update} />
       {flash > 0 && state.screen === 'explore' && (
         <div key={flash} className="anim-wipe pointer-events-none absolute inset-0 z-50 bg-paper" />
       )}

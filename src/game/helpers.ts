@@ -1,14 +1,15 @@
 import type { FriendDef, GameState, SceneDef } from './types'
 import type { SpriteLook } from '../components/Sprite'
 import { OUTFITS, SCHOOL } from '../data/school'
+import { CITY } from '../data/city'
 import { FRIENDS, interestFriend } from '../data/friends'
 
-export const SCENES: Record<string, SceneDef> = { [SCHOOL.id]: SCHOOL }
+export const SCENES: Record<string, SceneDef> = { [SCHOOL.id]: SCHOOL, [CITY.id]: CITY }
 
 export function heroLook(s: GameState, extra: Partial<SpriteLook> = {}): SpriteLook {
   const outfit = OUTFITS[s.outfit] ?? OUTFITS.base
   return {
-    accessory: s.outfit === 'gafas' ? 'glasses' : undefined,
+    accessory: s.outfit === 'gafas' ? 'glasses' : s.outfit === 'gorra' ? 'cap' : undefined,
     shirt: s.outfit === 'capa' ? OUTFITS.base.color : outfit.color,
     cape: s.outfit === 'capa' ? outfit.color : '#c0392b',
     hair: s.hero.look.hair,

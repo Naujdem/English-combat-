@@ -30,6 +30,8 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 | `src/data/lessons.ts` | Lecciones paso a paso de Leo para cada tema |
 | `docs/curriculo-a1.md` | Currículo A1: objetivos, gramática, vocabulario y funciones |
 | `src/data/school.ts` | Mapa de la escuela, enemigos y atuendos |
+| `src/data/city.ts` | Mapa de la ciudad, enemigos y requisitos del jefe |
+| `src/data/enemies.ts` | Junta los enemigos de todos los escenarios |
 | `src/data/friends.ts` | Amigos (Leo, Maya) y el interés especial: momentos de historia y charlas casuales |
 | `src/data/activities.ts` | Repaso de vocabulario de la biblioteca |
 | `src/data/schedule.ts` | Horario de clases por sesiones (pizarra → tiza → esbirro → pregunta extra) |
@@ -39,6 +41,17 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 | `src/game/social.ts` | Reglas de amistad: qué charla toca, límites por nivel, recompensas |
 | `src/components/Tiles.tsx` | Dibujo de cada casilla y vocabulario de los objetos |
 | `src/components/Sprite.tsx` | Personajes chibi |
+
+## Modo profesor
+
+Para revisar el juego sin jugarlo entero: en la pantalla de inicio, toca 5 veces el título "English Combat" y escribe la clave (`grimm`; se cambia en `TEACHER_PIN`, `src/game/teacher.ts`). Aparece un botón "Profe" abajo, en todas las pantallas, con:
+
+- Mostrar la respuesta correcta en los combates y botón "Ganar (profe)" para saltar combates.
+- Saltar lecciones, vida 20, llenar vida, 2 escudos.
+- Saltar a estados preparados: escuela lista para el jefe, escuela terminada, ciudad recién llegado, ciudad lista para el jefe.
+- Aparecer junto a cualquier personaje del escenario.
+
+Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del código, así que sirve para que los estudiantes no lo activen por accidente, no como seguridad.
 
 ## Agregar contenido
 
@@ -103,6 +116,14 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 - Diario al final del capítulo (`src/components/Diary.tsx`, textos en `src/data/diary.ts`): la historia en pasado, presente, futuro (el plan del desconocido) y una mezcla, con preguntas. "Ver verbos" colorea cada tiempo. Al tocar una palabra se ve su traducción y se puede guardar en las fichas.
 - Fichas tipo Anki (`src/components/Flashcards.tsx`, `src/game/cards.ts`): repaso espaciado con Otra vez / Difícil / Bien / Fácil y exportación a CSV (frente,reverso) para SimulaPro o Anki. Para agregar palabras al diccionario del diario, edita `DICT` en `diary.ts`.
 - Instalable en el celular (PWA) y funciona sin internet después de abrirlo una vez. Al publicar cambios grandes, sube la versión de `CACHE` en `public/sw.js`.
+
+## La ciudad
+
+- Se llega en autobús la primera vez (`src/components/BusRide.tsx`): comprar boletos (*To the city, please. Two tickets. Here you are.*).
+- Main Street solo se cruza por la cebra.
+- Oficial Rosa (`src/components/Directions.tsx`): mapa con *there is / there are* y direcciones (*Go straight, turn left, it's on your right*); se tocan los lugares en el mapa. Da el mapa de la ciudad.
+- Lily en el café (`src/components/CafeOrder.tsx`): pedir con *Can I have..., please?*, *a/an*, *any*, preguntar el precio, sumar con el menú, deletrear tu nombre para el vaso y pedir el café del guía.
+- Esbirros: Danny (calle, *there is/are*), Chloe (tienda, *this/these*, plurales y precios) y Víctor (café, *a/an, some/any*). Jefe: el señor Rossi, el guía, en 3 fases. Pide el mapa y su café. Suelta la pieza 2 del reloj y la gorra de turista.
 
 ## Siguientes pasos sugeridos
 

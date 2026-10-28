@@ -84,4 +84,39 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'leo', text: 'Add PLEASE to be polite. Sit down, please.', es: 'Agrega "please" para ser amable. Siéntate, por favor.', board: ['..., please.', 'Sit down, please.'] },
     { who: 'leo', text: "Perfect! Now listen to the coach. Do what he says!", es: '¡Perfecto! Ahora escucha al entrenador. ¡Haz lo que dice!', board: ['Run! Jump!', "Don't stop!"] },
   ],
+
+  'there-is': [
+    { who: 'leo', text: "Wow, the city is big! Let's learn to say what there is in a place.", es: '¡Guau, la ciudad es grande! Aprendamos a decir qué hay en un lugar.', board: ['There is / There are', '= hay'] },
+    { who: 'leo', text: 'For one thing, say THERE IS. There is a bank on Main Street.', es: 'Para una cosa: "There is". Hay un banco en Main Street.', board: ['There is + una cosa', 'There is a bank.'] },
+    { who: 'leo', text: 'For two or more, say THERE ARE. There are two cafés.', es: 'Para dos o más: "There are". Hay dos cafés.', board: ['There are + varias', 'There are two cafés.'] },
+    { who: 'board', text: 'There ___ a fountain in the plaza.', board: ['There is + una cosa', 'There are + varias'], choice: { options: ['is', 'are', 'have'], answer: 0, tip: 'Una fuente: There is.' } },
+    { who: 'board', text: 'There ___ three shops on this street.', board: ['There is + una cosa', 'There are + varias'], choice: { options: ['is', 'are', 'have'], answer: 1, tip: 'Tres tiendas: There are.' } },
+    { who: 'leo', text: 'To ask: Is there a bank? Are there any shops? Never "there have"!', es: 'Para preguntar: Is there...? Are there any...? ¡Nunca "there have"!', board: ['Is there a...?', 'Are there any...?'] },
+    { who: 'leo', text: 'Directions are orders: Go straight. Turn left. Turn right. It is on your left.', es: 'Las direcciones son órdenes: Sigue derecho. Gira a la izquierda. Gira a la derecha. Está a tu izquierda.', board: ['Go straight · Turn left', 'It is on your right.'] },
+    { who: 'board', text: '___ straight and turn right.', board: ['Go straight · Turn left', 'It is on your right.'], choice: { options: ['Goes', 'Go', 'Going'], answer: 1, tip: 'Las direcciones usan el verbo base: Go straight.' } },
+    { who: 'leo', text: "Great! Now you can find any place in the city.", es: '¡Genial! Ahora puedes encontrar cualquier lugar de la ciudad.', board: ['There is · There are', 'Go · Turn left / right'] },
+  ],
+
+  demonstratives: [
+    { who: 'leo', text: 'In a shop, you point at things. Here is the secret: near or far? One or many?', es: 'En una tienda señalas cosas. El secreto: ¿cerca o lejos? ¿Una o varias?', board: ['¿Cerca o lejos?', '¿Una o varias?'] },
+    { who: 'leo', text: 'Near me: THIS (one) and THESE (many). This jacket. These shoes.', es: 'Cerca: "this" (una) y "these" (varias). Esta chaqueta. Estos zapatos.', board: ['Cerca: this · these', 'This jacket. These shoes.'] },
+    { who: 'board', text: '___ shoes are nice. (cerca)', board: ['Cerca: this · these', 'This jacket. These shoes.'], choice: { options: ['This', 'These', 'Those'], answer: 1, tip: 'Varias cosas cerca: these.' } },
+    { who: 'leo', text: 'Far from me: THAT (one) and THOSE (many). That dress. Those T-shirts.', es: 'Lejos: "that" (una) y "those" (varias). Ese vestido. Esas camisetas.', board: ['Lejos: that · those', 'Those T-shirts.'] },
+    { who: 'board', text: 'Look at ___ T-shirt over there!', board: ['Lejos: that · those', 'Those T-shirts.'], choice: { options: ['that', 'these', 'this'], answer: 0, tip: 'Una cosa lejos: that.' } },
+    { who: 'leo', text: 'For many things, add -S: shirt, shirts. After -s, -sh, -ch, -x add -ES: dress, dresses.', es: 'Para el plural se agrega -s. Después de -s, -sh, -ch o -x se agrega -es.', board: ['shirt → shirts', 'dress → dresses'] },
+    { who: 'leo', text: 'Prices: How much is this? How much are these? It is ten dollars.', es: 'Precios: ¿Cuánto cuesta esto? ¿Cuánto cuestan estos? Cuesta diez dólares.', board: ['How much is this?', 'How much are these?'] },
+    { who: 'board', text: 'How much ___ these jeans?', board: ['How much is this?', 'How much are these?'], choice: { options: ['is', 'are', 'am'], answer: 1, tip: 'Varias cosas: How much are...?' } },
+    { who: 'leo', text: 'Careful with numbers: thirteen is 13, thirty is 30. Listen to the end!', es: 'Cuidado con los números: thirteen es 13 y thirty es 30. ¡Escucha el final!', board: ['13 thirteen · 30 thirty', '15 fifteen · 50 fifty'] },
+  ],
+
+  ordering: [
+    { who: 'leo', text: "I'm hungry! In a café, ask politely: Can I have a juice, please?", es: '¡Tengo hambre! En un café se pide con amabilidad: ¿Me da un jugo, por favor?', board: ['Can I have ..., please?', '¿Me da..., por favor?'] },
+    { who: 'board', text: '___ I have a sandwich, please?', board: ['Can I have ..., please?', '¿Me da..., por favor?'], choice: { options: ['Do', 'Can', 'Am'], answer: 1, tip: 'Para pedir: Can I have...?' } },
+    { who: 'leo', text: 'Use A before a consonant sound, and AN before a vowel sound: a sandwich, an apple.', es: '"A" antes de sonido de consonante y "an" antes de sonido de vocal.', board: ['a sandwich', 'an apple'] },
+    { who: 'board', text: 'Can I have ___ orange, please?', board: ['a sandwich', 'an apple'], choice: { options: ['a', 'an', 'any'], answer: 1, tip: '"Orange" empieza con vocal: an orange.' } },
+    { who: 'leo', text: "Some things you can't count: water, milk, coffee. Say SOME water, not a water.", es: 'Algunas cosas no se cuentan: agua, leche, café. Se dice "some water", no "a water".', board: ['some water', 'some milk'] },
+    { who: 'leo', text: 'In questions, use ANY: Is there any milk? Are there any cookies?', es: 'En preguntas se usa "any".', board: ['some → frases', 'any → preguntas'] },
+    { who: 'board', text: 'Is there ___ cake?', board: ['some → frases', 'any → preguntas'], choice: { options: ['a', 'some', 'any'], answer: 2, tip: 'En preguntas: any.' } },
+    { who: 'leo', text: "When they give you something, they say: Here you are. And you say: Thank you!", es: 'Cuando te entregan algo dicen "Here you are". Y tú dices "Thank you!".', board: ['Here you are.', 'Thank you!'] },
+  ],
 }

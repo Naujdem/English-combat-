@@ -1,4 +1,5 @@
-import type { EnemyDef, SceneDef, Zone } from '../game/types'
+import type { EnemyDef, Requirement, SceneDef, Zone } from '../game/types'
+import { SESSIONS } from './schedule'
 
 /**
  * Mapa de la escuela. Cada letra es una casilla de 1x1:
@@ -74,6 +75,21 @@ export const SCHOOL: SceneDef = {
     { text: 'Patio', x: 13, y: 14 },
   ],
   zoneAt,
+  // Se completan abajo, cuando BOSS_REQUIREMENTS ya existe
+  requirements: [],
+  chips: (s) => [
+    { label: `Horario ${SESSIONS.filter((x) => s.opened.includes(x.id)).length}/${SESSIONS.length}`, done: SESSIONS.every((x) => s.opened.includes(x.id)) },
+    { label: `Llaves ${s.keys.school ?? 0}/4`, done: (s.keys.school ?? 0) >= 4 },
+    { label: 'Silbato', done: s.opened.includes('school-whistle') },
+    { label: 'Uniforme', done: s.opened.includes('school-registration') },
+    { label: 'Útiles', done: s.opened.includes('school-supplies') },
+  ],
+  intro: {
+    first:
+      'Los estudiantes de la escuela guardan tus palabras. Lee el horario en la pizarra del aula: cada sesión te da una tiza para retar a un estudiante. Vence a los 4 que tienen las llaves, consigue el silbato del entrenador, tus útiles y matricúlate en la secretaría.',
+    later: 'Choca con personas para hablar y con objetos para ver su nombre en inglés. Lee el horario en la pizarra del aula para conseguir tizas.',
+  },
+  epilogue: 'school-epilogue',
 }
 
 /**
@@ -81,7 +97,7 @@ export const SCHOOL: SceneDef = {
  * Grimm partió la llave de la sala de profesores en tres y se la dio a sus "mejores"
  * estudiantes, prometiéndoles las mejores notas. Al vencerlos, el hechizo los suelta.
  */
-export const ENEMIES: Record<string, EnemyDef> = {
+export const SCHOOL_ENEMIES: Record<string, EnemyDef> = {
   'school-patio': {
     id: 'school-patio',
     name: 'Max, el competitivo',
@@ -224,7 +240,7 @@ export const ENEMIES: Record<string, EnemyDef> = {
 }
 
 /** Lo que el profesor Grimm exige antes de pelear, además de las llaves */
-export const BOSS_REQUIREMENTS = [
+export const BOSS_REQUIREMENTS: Requirement[] = [
   {
     id: 'school-supplies',
     name: 'tus útiles escolares (Ana, en el aula)',
@@ -259,4 +275,8 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   rosada: { name: 'Camiseta rosada', color: '#d4537e' },
   uniforme: { name: 'Uniforme escolar', color: '#2b4a7a' },
   deportivo: { name: 'Camiseta deportiva', color: '#2e9d8f' },
+  chaqueta: { name: 'Chaqueta de mezclilla', color: '#4a6fa5' },
+  gorra: { name: 'Gorra de turista', color: '#e07b39' },
 }
+
+SCHOOL.requirements = BOSS_REQUIREMENTS

@@ -32,7 +32,7 @@ Pendiente de decidir: si A2 y B1 usan los mismos cinco lugares (crecen con el ju
 | # | Lugar | Cómo se llega | Idea central | Gramática nueva |
 |---|---|---|---|---|
 | 1 ✅ | **Escuela** | — | Quién soy y dónde estoy | to be, posesivos, preposiciones de lugar, imperativos |
-| 2 ⬜ | **Ciudad** | Autobús desde la escuela | Moverme, comprar y pedir | there is/are, a/an, plurales, this/these, some/any, how much/many, Can I have...? |
+| 2 ✅ | **Ciudad** | Autobús desde la escuela | Moverme, comprar y pedir | there is/are, a/an, plurales, this/these, some/any, how much/many, Can I have...? |
 | 3 ⬜ | **Barrio** (casas de amigos, parque y la casa del protagonista) | Otro autobús desde la ciudad | La vida de la gente: rutinas, gustos, familia | presente simple afirmativo (I work / she works), like + -ing, can, presente continuo, have got, frecuencia |
 | 4 ⬜ | **Granja** | Desde el barrio | Cómo funciona un lugar | presente simple negativo y preguntas (do/does), plurales irregulares |
 | 5 ⬜ | **Oficina** | Desde la granja | Organizar el tiempo | la hora completa, at/on/in, pronombres de objeto, Could you...? |
@@ -58,13 +58,13 @@ El orden de la tabla es el orden en que aparece en el juego.
 | 5 | Imperativos | Open the door. Don't run! | No talk! | Escuela: Coach Mike, Max | ✅ |
 | 6 | Palabras de pregunta (who, what, where, when, how old) | Who is your teacher? | What is she? (para quién es) | Escuela (combates) y todo lo demás | 🟡 solo en lecturas |
 | 7 | Pronombres posesivos y *whose* | Whose bag is this? — It's mine. | It's my. | Escuela: objetos perdidos | 🟡 falta *whose* |
-| 8 | There is / there are | There is a bank next to the park. | There have a bank. | Ciudad: calles | ⬜ |
-| 9 | Artículos a / an / the | a juice, an apple, the menu | a apple | Ciudad: café | ⬜ |
-| 10 | Plurales regulares | two shirts, three boxes | two shirt | Ciudad: tienda | ⬜ |
-| 11 | This / that / these / those | These shoes are nice. | This shoes are nice. | Ciudad: tienda | ⬜ |
-| 12 | Contables e incontables, some / any | some water, any apples? | a water | Ciudad: café | ⬜ |
-| 13 | How much / how many | How much is it? How many apples? | How many money? | Ciudad: café y tienda | ⬜ |
-| 14 | Can I have...? (pedir) | Can I have a juice, please? | I want juice. | Ciudad: café | ⬜ |
+| 8 | There is / there are | There is a bank next to the park. | There have a bank. | Ciudad: calles | ✅ |
+| 9 | Artículos a / an / the | a juice, an apple, the menu | a apple | Ciudad: café | ✅ |
+| 10 | Plurales regulares | two shirts, three boxes | two shirt | Ciudad: tienda | ✅ |
+| 11 | This / that / these / those | These shoes are nice. | This shoes are nice. | Ciudad: tienda | ✅ |
+| 12 | Contables e incontables, some / any | some water, any apples? | a water | Ciudad: café | ✅ |
+| 13 | How much / how many | How much is it? How many apples? | How many money? | Ciudad: café y tienda | ✅ |
+| 14 | Can I have...? (pedir) | Can I have a juice, please? | I want juice. | Ciudad: café | ✅ |
 | 15 | Present simple afirmativo (I / he / she) | She goes to school. I work. | She go to school. | Barrio: casas de amigos y jefe | ⬜ |
 | 16 | Like / love / hate + -ing | Maya loves reading. | I like eat pizza. | Barrio: casa de Maya, parque | ⬜ |
 | 17 | Can / can't (habilidad) | I can swim. Can you dance? | I can to swim. | Barrio: parque | ⬜ |
@@ -88,13 +88,13 @@ El orden de la tabla es el orden en que aparece en el juego.
 | Materias, días, o'clock | Maths, Science, Monday, eight o'clock | Escuela: pizarra | ✅ |
 | Deportes | football, ball, team, run, jump | Escuela: patio | ✅ |
 | Útiles escolares | pencil, ruler, notebook, scissors | Escuela: Ana | ✅ |
-| Alfabeto y deletrear | A–Z, How do you spell...? | Escuela: secretaría | ⬜ pendiente pequeño |
-| Transporte | bus, ticket, stop, driver | Autobuses | ⬜ |
-| Lugares de la ciudad | bank, supermarket, café, hospital, street | Ciudad: calles | ⬜ |
-| Direcciones | go straight, turn left, near, far from, opposite | Ciudad: calles | ⬜ |
-| Comida y bebida | juice, water, bread, sandwich, apple, coffee | Ciudad: café | ⬜ |
-| Números 13–100 y precios | fifteen, fifty, ten dollars | Ciudad: café y tienda | ⬜ |
-| Ropa y colores | T-shirt, shoes, jacket, dress, red, blue | Ciudad: tienda | ⬜ |
+| Alfabeto y deletrear | A–Z, How do you spell...? | Ciudad: café (deletrear tu nombre para el vaso) | 🟡 falta en la secretaría |
+| Transporte | bus, ticket, stop, driver | Autobuses | ✅ |
+| Lugares de la ciudad | bank, supermarket, café, hospital, street | Ciudad: calles | ✅ |
+| Direcciones | go straight, turn left, near, far from, opposite | Ciudad: calles | ✅ |
+| Comida y bebida | juice, water, bread, sandwich, apple, coffee | Ciudad: café | ✅ |
+| Números 13–100 y precios | fifteen, fifty, ten dollars | Ciudad: café y tienda | ✅ |
+| Ropa y colores | T-shirt, shoes, jacket, dress, red, blue | Ciudad: tienda | ✅ |
 | Rutinas diarias | get up, have breakfast, go to work, go to bed | Barrio: casas y casa del protagonista | ⬜ |
 | Partes del día | morning, afternoon, evening, night | Barrio | ⬜ |
 | Gustos y tiempo libre | read, listen to music, watch films, dance | Barrio: casa de Maya y parque | ⬜ |
@@ -122,12 +122,12 @@ El orden de la tabla es el orden en que aparece en el juego.
 | Decir dónde están las cosas | Escuela: Ana | ✅ |
 | Dar y entender órdenes | Escuela: Coach Mike | ✅ |
 | Preguntar de quién es algo | Escuela: objetos perdidos | 🟡 falta *whose* |
-| Deletrear el nombre | Escuela: secretaría | ⬜ |
-| Comprar un boleto | Autobuses | ⬜ |
-| Pedir y dar direcciones | Ciudad: calles | ⬜ |
+| Deletrear el nombre | Ciudad: café (el vaso con tu nombre) | ✅ |
+| Comprar un boleto | Autobuses | ✅ |
+| Pedir y dar direcciones | Ciudad: calles | ✅ |
 | Pedir disculpas | Ciudad: alguien choca contigo | ⬜ |
-| Pedir comida y bebida | Ciudad: café | ⬜ |
-| Comprar y preguntar precios | Ciudad: tienda | ⬜ |
+| Pedir comida y bebida | Ciudad: café | ✅ |
+| Comprar y preguntar precios | Ciudad: tienda | ✅ |
 | Hablar de la rutina de otros | Barrio: casas de amigos | ⬜ |
 | Expresar gustos | Barrio: casa de Maya, parque | ⬜ |
 | Hablar de habilidades | Barrio: parque | ⬜ |

@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
 import type { GameState, Question, Zone } from '../game/types'
 import type { Update } from '../game/store'
-import { ENEMIES, OUTFITS } from '../data/school'
+import { OUTFITS } from '../data/school'
+import { ENEMIES } from '../data/enemies'
 import { pickQuestion, TOPICS } from '../data/questions'
 import { QuestionCard } from '../components/QuestionCard'
 import { sessionFor } from '../data/schedule'
@@ -11,14 +12,17 @@ import { SpriteBody } from '../components/Sprite'
 import { Bar, btnGhost, btnPrimary, Hearts, Panel } from '../components/ui'
 import { TimeClock } from '../components/TimeClock'
 import { WORLD } from '../data/world'
+import { useTeacher } from '../game/teacher'
 
 
 function Backdrop({ zone }: { zone: Zone }) {
-  const wall = zone === 'patio' ? '#bfe3f5' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : '#efe5d3'
+  const wall =
+    zone === 'patio' || zone === 'calle' ? '#bfe3f5' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : zone === 'tienda' ? '#f1e6f4' : zone === 'turismo' ? '#dfeaf3' : '#efe5d3'
+  const ground = zone === 'patio' ? '#8fbf6a' : zone === 'calle' ? '#b9b4ab' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : zone === 'tienda' ? '#cdb8d6' : zone === 'turismo' ? '#9fb3c6' : '#b98c5a'
   return (
     <g>
       <rect width="360" height="150" fill={wall} />
-      <rect y="150" width="360" height="70" fill={zone === 'patio' ? '#8fbf6a' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : '#b98c5a'} />
+      <rect y="150" width="360" height="70" fill={ground} />
       <line x1="0" y1="172" x2="360" y2="172" stroke="rgba(0,0,0,0.1)" />
       <line x1="0" y1="198" x2="360" y2="198" stroke="rgba(0,0,0,0.1)" />
       {zone === 'patio' && (
@@ -34,6 +38,56 @@ function Backdrop({ zone }: { zone: Zone }) {
           <rect x="22" y="92" width="10" height="40" fill="#7a5230" />
           <circle cx="27" cy="80" r="26" fill="#3b8a3e" />
           <circle cx="250" cy="196" r="9" fill="#ffffff" stroke="#2d2d3a" strokeWidth="1.5" />
+        </>
+      )}
+      {zone === 'calle' && (
+        <>
+          {[[0, 40, '#c98b4a'], [70, 20, '#8a9bb0'], [150, 50, '#d4a373'], [230, 30, '#9b7fb0'], [300, 45, '#c0504d']].map(([x, y, c]) => (
+            <g key={x as number}>
+              <rect x={x as number} y={y as number} width="62" height={150 - (y as number)} fill={c as string} />
+              {[0, 1, 2].map((r) => [0, 1].map((k) => (
+                <rect key={`${r}-${k}`} x={(x as number) + 10 + k * 26} y={(y as number) + 12 + r * 26} width="16" height="16" fill="#e8f2f8" opacity="0.85" />
+              )))}
+            </g>
+          ))}
+          <rect y="140" width="360" height="12" fill="#8d8d8d" />
+          {[0, 1, 2, 3, 4, 5].map((k) => <rect key={k} x={10 + k * 62} y="182" width="34" height="5" fill="#f2d16b" opacity="0.8" />)}
+        </>
+      )}
+      {zone === 'cafe' && (
+        <>
+          <rect x="20" y="78" width="210" height="58" fill="#8b5a2b" />
+          <rect x="20" y="70" width="210" height="10" fill="#a8743f" />
+          <rect x="40" y="46" width="22" height="26" rx="3" fill="#6b6b6b" />
+          <circle cx="110" cy="62" r="9" fill="#f4efe4" />
+          <circle cx="140" cy="62" r="9" fill="#e0a526" />
+          <rect x="250" y="20" width="96" height="74" rx="4" fill="#2b241c" />
+          <text x="298" y="40" textAnchor="middle" fontSize="11" fill="#f6d36b" fontFamily="Fredoka, Nunito, system-ui, sans-serif">MENU</text>
+          <text x="298" y="58" textAnchor="middle" fontSize="9" fill="#f4efe4" fontFamily="Fredoka, Nunito, system-ui, sans-serif">coffee $2 · juice $2</text>
+          <text x="298" y="74" textAnchor="middle" fontSize="9" fill="#f4efe4" fontFamily="Fredoka, Nunito, system-ui, sans-serif">sandwich $4 · cake $3</text>
+        </>
+      )}
+      {zone === 'tienda' && (
+        <>
+          {[30, 140].map((x) => (
+            <g key={x}>
+              <rect x={x} y="40" width="90" height="4" fill="#6b6b6b" />
+              {['#d64545', '#2f6fd0', '#e0a526', '#3b9d5d', '#d4537e'].map((c, k) => (
+                <path key={k} d={`M${x + 6 + k * 17} 44 h13 l3 44 h-19 z`} fill={c} />
+              ))}
+            </g>
+          ))}
+          <rect x="270" y="20" width="50" height="110" rx="6" fill="#b9dff0" stroke="#a8743f" strokeWidth="5" />
+        </>
+      )}
+      {zone === 'turismo' && (
+        <>
+          <rect x="30" y="22" width="150" height="96" rx="4" fill="#f4efe4" stroke="#5b7a99" strokeWidth="5" />
+          <path d="M45 100 L80 60 L110 85 L140 45 L165 70" fill="none" stroke="#3b9d5d" strokeWidth="4" />
+          <circle cx="140" cy="45" r="6" fill="#d64545" />
+          <text x="105" y="38" textAnchor="middle" fontSize="11" fill="#2b241c" fontFamily="Fredoka, Nunito, system-ui, sans-serif">CITY MAP</text>
+          <rect x="230" y="30" width="100" height="40" rx="4" fill="#2f5d50" />
+          <text x="280" y="55" textAnchor="middle" fontSize="12" fill="#f4efe4" fontFamily="Fredoka, Nunito, system-ui, sans-serif">TOURS $10</text>
         </>
       )}
       {zone === 'aula' && (
@@ -114,6 +168,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const metLeo = 'leo' in state.talks || 'leo' in state.friendship
 
   const [phase, setPhase] = useState<Phase>('story')
+  const teacher = useTeacher()
   const [line, setLine] = useState(0)
   const [showEs, setShowEs] = useState(false)
   const [used, setUsed] = useState<string[]>([])
@@ -229,7 +284,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         ...base,
         recovered: [...s.recovered, ...enemy.topics.filter((t) => !s.recovered.includes(t))],
         relics: s.relics + 1,
-        outfits: s.outfits.includes('capa') ? s.outfits : [...s.outfits, 'capa'],
+        outfits: s.outfits.includes(enemy.reward ?? 'capa') ? s.outfits : [...s.outfits, enemy.reward ?? 'capa'],
       }
     })
   }
@@ -250,7 +305,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       update((s) => ({ ...s, hp: s.maxHp, pos: { ...scene.start }, battle: null, screen: 'explore' }))
     } else if (enemy.kind === 'boss') {
       // Al vencer al jefe viene el final del capítulo
-      update((s) => ({ ...s, battle: null, screen: s.opened.includes('school-epilogue') ? 'explore' : 'epilogue' }))
+      update((s) => ({ ...s, battle: null, screen: scene.epilogue && !s.opened.includes(scene.epilogue) ? 'epilogue' : 'explore' }))
     } else {
       update((s) => ({ ...s, battle: null, screen: 'explore' }))
     }
@@ -265,7 +320,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const bonusSession = session
     ? { id: session.id, title: 'Pregunta extra del horario', bonus: session.bonus, shield: true }
     : enemy.kind === 'boss'
-      ? { id: 'farewell', title: 'Despedida', bonus: FAREWELL, shield: false }
+      ? enemy.id === 'school-boss' ? { id: 'farewell', title: 'Despedida', bonus: FAREWELL, shield: false } : null
       : undefined
   const [bonusPick, setBonusPick] = useState<number | null>(null)
   const story = storyLines[line]
@@ -357,6 +412,18 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             </button>
           </div>
         </Panel>
+      )}
+
+      {teacher.on && (phase === 'ask' || phase === 'feedback') && (
+        <button
+          className="self-end rounded-full border border-gold/60 px-3 py-1 text-xs font-semibold text-gold"
+          onClick={() => {
+            update((s) => ({ ...s, battle: s.battle ? { ...s.battle, enemyHp: 0 } : null }))
+            win()
+          }}
+        >
+          Ganar (profe)
+        </button>
       )}
 
       {showQuestion && (
@@ -493,10 +560,10 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               <div className="my-1 flex items-center gap-3 rounded-xl bg-panel-2 p-2">
                 <TimeClock pieces={state.relics} size={72} highlight={state.relics - 1} />
                 <p className="text-[15px]">
-                  <b className="text-gold">¡Pieza del reloj!</b> Tienes {Math.min(state.relics, WORLD.length)} de {WORLD.length}. Grimm la tenía: el desconocido la dejó caer.
+                  <b className="text-gold">¡Pieza del reloj!</b> Tienes {Math.min(state.relics, WORLD.length)} de {WORLD.length}. {enemy.person} la tenía: el desconocido la dejó caer.
                 </p>
               </div>
-              <p className="text-paper/75">También ganaste la Capa del tiempo. Tus amigos tienen cosas nuevas que contarte.</p>
+              <p className="text-paper/75">También ganaste: {OUTFITS[enemy.reward ?? 'capa'].name}. Tus amigos tienen cosas nuevas que contarte.</p>
             </div>
           )}
           <button className={`${btnPrimary} mt-4 w-full`} onClick={leave} autoFocus>{enemy.kind === 'trainer' ? 'Ir al mapa' : 'Continuar'}</button>

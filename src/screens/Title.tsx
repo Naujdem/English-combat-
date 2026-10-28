@@ -3,10 +3,16 @@ import type { GameState } from '../game/types'
 import { SpriteBody } from '../components/Sprite'
 import { btn, btnPrimary } from '../components/ui'
 import { heroLook } from '../game/helpers'
+import { setTeacher, TEACHER_PIN, useTeacher } from '../game/teacher'
 
 export function Title({ state, onContinue, onNew }: { state: GameState; onContinue: () => void; onNew: () => void }) {
   const hasSave = !!state.hero.name
   const [confirm, setConfirm] = useState(false)
+  // Modo profesor: 5 toques en el título y la clave
+  const teacher = useTeacher()
+  const [taps, setTaps] = useState(0)
+  const [pin, setPin] = useState('')
+  const [pinError, setPinError] = useState(false)
   // Android/Chrome ofrece instalar la app; guardamos el aviso para mostrar nuestro propio botón
   const [installEvt, setInstallEvt] = useState<(Event & { prompt: () => Promise<void> }) | null>(null)
   useEffect(() => {
@@ -33,7 +39,7 @@ export function Title({ state, onContinue, onNew }: { state: GameState; onContin
         </g>
       </svg>
       <div>
-        <h1 className="font-display text-4xl font-semibold tracking-tight text-gold">English Combat</h1>
+        <h1 className="select-none font-display text-4xl font-semibold tracking-tight text-gold" onClick={() => setTaps((n) => n + 1)}>English Combat</h1>
         <p className="mt-1 text-paper/70">Recupera tu voz, palabra por palabra.</p>
       </div>
       <div className="flex w-full max-w-xs flex-col gap-3">
@@ -55,6 +61,31 @@ export function Title({ state, onContinue, onNew }: { state: GameState; onContin
             </div>
           </div>
         )}
+        {taps >= 5 && !teacher.on && (
+          <form
+            className="anim-fade-in rounded-xl border-2 border-gold/60 p-3 text-left text-sm"
+            onSubmit={(e) => {
+              e.preventDefault()
+              if (pin.trim().toLowerCase() === TEACHER_PIN) {
+                setTeacher({ on: true })
+                setTaps(0)
+              } else setPinError(true)
+            }}
+          >
+            <p className="mb-2 font-semibold text-gold">Modo profesor</p>
+            <input
+              type="password"
+              value={pin}
+              onChange={(e) => { setPin(e.target.value); setPinError(false) }}
+              placeholder="Clave"
+              className="w-full rounded-lg border-2 border-line bg-panel-2 px-3 py-2 text-base text-paper outline-none focus:border-gold"
+              autoFocus
+            />
+            {pinError && <p className="mt-1 text-[#f3b0b0]">Clave incorrecta.</p>}
+            <button className={`${btnPrimary} mt-2 w-full`} type="submit">Activar</button>
+          </form>
+        )}
+        {teacher.on && <p className="text-sm text-gold">Modo profesor activo: usa el botón "Profe" de arriba.</p>}
         {installEvt && (
           <button
             className="mt-1 text-sm font-semibold text-paper/70 underline underline-offset-4"

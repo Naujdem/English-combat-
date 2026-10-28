@@ -3,6 +3,7 @@ import type { Question } from '../game/types'
 import { TOPICS } from '../data/questions'
 import { btnPrimary } from './ui'
 import { SpeakButton } from './SpeakButton'
+import { useTeacher } from '../game/teacher'
 import { speak } from '../game/speech'
 import { sameAnswer } from '../game/text'
 
@@ -52,6 +53,7 @@ export function QuestionCard({
   const [placed, setPlaced] = useState<number[]>([])
   const [picked, setPicked] = useState<number | null>(null)
   const [answered, setAnswered] = useState<null | boolean>(null)
+  const teacher = useTeacher()
   const [removed, setRemoved] = useState<number | null>(null)
   const [typed, setTyped] = useState('')
   const [writeError, setWriteError] = useState('')
@@ -285,6 +287,9 @@ export function QuestionCard({
             )
           })}
         </div>
+      )}
+      {teacher.on && teacher.answers && answered === null && (
+        <p className="mt-2 rounded-lg border border-gold/40 bg-gold/10 px-3 py-1.5 text-sm text-gold">Profe: {correctSentence(q)}</p>
       )}
     </div>
   )

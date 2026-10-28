@@ -239,7 +239,80 @@ export const QUESTIONS: Question[] = [
   { id: 'imo-02', topic: 'imperatives', tags: ['aula'], kind: 'order', prompt: 'No hables en clase.', options: ["Don't", 'talk', 'in', 'class.'], answer: 0, tip: "Don't + verbo + resto: Don't talk in class." },
   { id: 'imo-03', topic: 'imperatives', tags: ['patio'], kind: 'order', prompt: '¡Pásame la pelota!', options: ['Pass', 'me', 'the', 'ball!'], answer: 0, tip: 'Pass + me + the ball.' },
   { id: 'imo-04', topic: 'imperatives', tags: ['sala'], kind: 'order', prompt: '¡Siéntate y escucha!', options: ['Sit', 'down', 'and', 'listen!'], answer: 0, tip: 'Dos órdenes unidas con "and": Sit down and listen!' },
+  // ── Ciudad: there is / there are y direcciones (calle) ──
+  { id: 'ti-01', topic: 'there-is', tags: ['calle'], prompt: 'There ___ a bank on Main Street.', options: ['is', 'are', 'have'], answer: 0, tip: 'Para una sola cosa: There is a bank. Nunca "there have".' },
+  { id: 'ti-02', topic: 'there-is', tags: ['calle'], prompt: 'There ___ two cafés near the park.', options: ['is', 'are', 'have'], answer: 1, tip: 'Para varias cosas: There are two cafés.' },
+  { id: 'ti-03', topic: 'there-is', tags: ['calle'], prompt: '___ there a hospital near here?', options: ['Is', 'Are', 'Have'], answer: 0, tip: 'Para preguntar por una cosa: Is there a...?' },
+  { id: 'ti-04', topic: 'there-is', tags: ['calle'], prompt: '___ there any shops on this street?', options: ['Is', 'Are', 'Do'], answer: 1, tip: 'Para preguntar por varias cosas: Are there any...?' },
+  { id: 'ti-05', topic: 'there-is', tags: ['calle'], prompt: "Sorry, there ___ a supermarket here.", options: ["isn't", "aren't", 'no'], answer: 0, tip: 'Negativo de una cosa: There isn\'t a...' },
+  { id: 'ti-06', topic: 'there-is', tags: ['calle'], prompt: 'Is there a café near here? — Yes, there ___.', options: ['is', 'are', "it's"], answer: 0, tip: 'La respuesta corta repite el verbo: Yes, there is.' },
+  { id: 'ti-07', topic: 'there-is', tags: ['calle'], prompt: 'Are there any taxis? — No, there ___.', options: ["isn't", "aren't", 'not'], answer: 1, tip: 'Con varias cosas la respuesta corta es: No, there aren\'t.' },
+  { id: 'ti-08', topic: 'there-is', tags: ['calle'], prompt: '___ straight and turn left.', options: ['Go', 'Goes', 'Going'], answer: 0, tip: 'Las direcciones son órdenes: verbo base al inicio. Go straight.' },
+  { id: 'ti-09', topic: 'there-is', tags: ['calle'], prompt: 'Turn ___. The hospital is on your right.', hint: 'a la derecha', options: ['left', 'right', 'straight'], answer: 1, tip: 'right = derecha · left = izquierda · straight = derecho.' },
+  { id: 'ti-10', topic: 'there-is', tags: ['calle'], prompt: 'Excuse me, ___ is the bus stop? — It\'s next to the fountain.', options: ['where', 'what', 'who'], answer: 0, tip: 'Para preguntar por un lugar se usa "where".' },
+  { id: 'ti-11', topic: 'there-is', tags: ['turismo'], prompt: 'There are three ___ in the park.', options: ['trees', 'tree', 'treeses'], answer: 0, tip: 'Con "there are" va el plural: trees.' },
+  { id: 'ti-12', topic: 'there-is', tags: ['turismo'], prompt: 'The bank is ___ the park and the café.', hint: 'entre', options: ['between', 'next', 'in front'], answer: 0, tip: 'Entre dos lugares: between the park and the café.' },
+
+  { id: 'tif-01', topic: 'there-is', tags: ['calle'], kind: 'fix', prompt: 'There have a bank here!', options: ['There is a bank here.', 'There are a bank here.', 'It have a bank here.'], answer: 0, tip: 'Para decir que algo existe se usa "there is", no "there have".' },
+  { id: 'tif-02', topic: 'there-is', tags: ['calle'], kind: 'fix', prompt: 'There is two cafés!', options: ['There are two café.', 'There are two cafés.', 'There is two café.'], answer: 1, tip: 'Con dos o más cosas: There are + plural.' },
+  { id: 'tif-03', topic: 'there-is', tags: ['calle'], kind: 'fix', prompt: 'Is there a shops on this street?', options: ['Is there any shops on this street?', 'Are there a shops on this street?', 'Are there any shops on this street?'], answer: 2, tip: 'Para varias cosas: Are there any + plural?' },
+  { id: 'tif-04', topic: 'there-is', tags: ['calle'], kind: 'fix', prompt: 'Turns left at the park!', options: ['Turn left at the park.', 'Turning left at the park.', 'You turns left at the park.'], answer: 0, tip: 'Las direcciones son órdenes: verbo base, sin -s.' },
+  { id: 'tif-05', topic: 'there-is', tags: ['turismo'], kind: 'fix', prompt: 'The bus stop is next the fountain!', options: ['The bus stop is next of the fountain.', 'The bus stop is next to the fountain.', 'The bus stop next to the fountain.'], answer: 1, tip: '"Next to" siempre lleva "to".' },
+
+  { id: 'tio-01', topic: 'there-is', tags: ['calle'], kind: 'order', prompt: '¿Hay un banco cerca de aquí?', options: ['Is', 'there', 'a', 'bank', 'near', 'here?'], answer: 0, tip: 'La pregunta empieza con "Is there".' },
+  { id: 'tio-02', topic: 'there-is', tags: ['calle'], kind: 'order', prompt: 'Hay dos cafés en esta calle.', options: ['There', 'are', 'two', 'cafés', 'on', 'this', 'street.'], answer: 0, tip: 'There are + plural + lugar.' },
+  { id: 'tio-03', topic: 'there-is', tags: ['calle'], kind: 'order', prompt: 'Sigue derecho y gira a la izquierda.', options: ['Go', 'straight', 'and', 'turn', 'left.'], answer: 0, tip: 'Go straight + and + turn left.' },
+  { id: 'tio-04', topic: 'there-is', tags: ['turismo'], kind: 'order', prompt: 'Disculpe, ¿dónde está la parada de autobús?', options: ['Excuse', 'me,', 'where', 'is', 'the', 'bus', 'stop?'], answer: 0, tip: 'Excuse me + where is + lugar?' },
+
+  // ── Ciudad: this / that / these / those, plurales y precios (tienda) ──
+  { id: 'de-01', topic: 'demonstratives', tags: ['tienda'], prompt: '___ shoes are very nice.', hint: 'estos, aquí cerca', options: ['These', 'This', 'That'], answer: 0, tip: 'Varias cosas cerca: these. Una cosa cerca: this.' },
+  { id: 'de-02', topic: 'demonstratives', tags: ['tienda'], prompt: '___ jacket is perfect for you.', hint: 'esta, aquí cerca', options: ['These', 'This', 'Those'], answer: 1, tip: 'Una cosa cerca: this jacket.' },
+  { id: 'de-03', topic: 'demonstratives', tags: ['tienda'], prompt: 'Look at ___ T-shirts over there!', options: ['those', 'this', 'that'], answer: 0, tip: '"Over there" es allá lejos, y son varias: those T-shirts.' },
+  { id: 'de-04', topic: 'demonstratives', tags: ['tienda'], prompt: 'Is ___ dress over there blue? — No, it\'s green.', options: ['that', 'those', 'these'], answer: 0, tip: 'Una cosa lejos: that dress.' },
+  { id: 'de-05', topic: 'demonstratives', tags: ['tienda'], prompt: 'How much ___ this jacket?', options: ['is', 'are', 'am'], answer: 0, tip: 'Una cosa: How much is...?' },
+  { id: 'de-06', topic: 'demonstratives', tags: ['tienda'], prompt: 'How much ___ these shoes?', options: ['is', 'are', 'am'], answer: 1, tip: 'Varias cosas: How much are...?' },
+  { id: 'de-07', topic: 'demonstratives', tags: ['tienda'], prompt: 'This shirt is ten ___.', options: ['dollars', 'dollar', 'dollares'], answer: 0, tip: 'Más de un dólar: dollars.' },
+  { id: 'de-08', topic: 'demonstratives', tags: ['tienda'], prompt: 'Two ___, please.', options: ['T-shirts', 'T-shirt', 'T-shirtes'], answer: 0, tip: 'El plural regular agrega -s: T-shirts.' },
+  { id: 'de-09', topic: 'demonstratives', tags: ['tienda'], prompt: 'I need two new ___.', options: ['dresses', 'dresss', 'dress'], answer: 0, tip: 'Las palabras que terminan en -s, -sh, -ch o -x agregan -es: dresses.' },
+  { id: 'de-10', topic: 'demonstratives', tags: ['tienda'], prompt: 'These shoes are $30: ___ dollars.', options: ['thirty', 'thirteen', 'three'], answer: 0, tip: '30 = thirty. 13 = thirteen. Escucha el final: -ty o -teen.' },
+  { id: 'de-11', topic: 'demonstratives', tags: ['tienda'], prompt: 'The jacket is $15: ___ dollars.', options: ['fifty', 'fifteen', 'five'], answer: 1, tip: '15 = fifteen. 50 = fifty.' },
+  { id: 'de-12', topic: 'demonstratives', tags: ['turismo'], prompt: '___ is my city map.', hint: 'este, en mi mano', options: ['This', 'These', 'Those'], answer: 0, tip: 'Una cosa cerca: This is...' },
+
+  { id: 'def-01', topic: 'demonstratives', tags: ['tienda'], kind: 'fix', prompt: 'This shoes are beautiful!', options: ['These shoes are beautiful.', 'This shoes is beautiful.', 'These shoe are beautiful.'], answer: 0, tip: '"Shoes" es plural: these shoes.' },
+  { id: 'def-02', topic: 'demonstratives', tags: ['tienda'], kind: 'fix', prompt: 'These jacket is perfect!', options: ['These jackets is perfect.', 'This jacket is perfect.', 'This jacket are perfect.'], answer: 1, tip: 'Una sola chaqueta: this jacket is.' },
+  { id: 'def-03', topic: 'demonstratives', tags: ['tienda'], kind: 'fix', prompt: 'How much is these jeans?', options: ['How much are these jeans?', 'How many are these jeans?', 'How much is this jeans?'], answer: 0, tip: '"Jeans" siempre es plural: How much are these jeans?' },
+  { id: 'def-04', topic: 'demonstratives', tags: ['tienda'], kind: 'fix', prompt: 'I want two shirt!', options: ['I want two shirts.', 'I want two shirtes.', 'I want a two shirt.'], answer: 0, tip: 'Con dos o más se usa el plural: shirts.' },
+  { id: 'def-05', topic: 'demonstratives', tags: ['tienda'], kind: 'fix', prompt: 'Those dress is expensive!', options: ['Those dress are expensive.', 'That dress is expensive.', 'That dresses is expensive.'], answer: 1, tip: 'Un vestido lejos: that dress.' },
+
+  { id: 'deo-01', topic: 'demonstratives', tags: ['tienda'], kind: 'order', prompt: '¿Cuánto cuesta esta chaqueta?', options: ['How', 'much', 'is', 'this', 'jacket?'], answer: 0, tip: 'How much + is + this jacket?' },
+  { id: 'deo-02', topic: 'demonstratives', tags: ['tienda'], kind: 'order', prompt: 'Estos zapatos son muy bonitos.', options: ['These', 'shoes', 'are', 'very', 'nice.'], answer: 0, tip: 'These shoes + are + very nice.' },
+  { id: 'deo-03', topic: 'demonstratives', tags: ['tienda'], kind: 'order', prompt: 'Aquellas camisetas son baratas.', options: ['Those', 'T-shirts', 'are', 'cheap.'], answer: 0, tip: 'Those + T-shirts + are + cheap.' },
+
+  // ── Ciudad: pedir en el café (a/an, some/any, Can I have...?) ──
+  { id: 'or-01', topic: 'ordering', tags: ['cafe'], prompt: 'Can I have ___ apple, please?', options: ['an', 'a', 'any'], answer: 0, tip: 'Antes de sonido de vocal va "an": an apple.' },
+  { id: 'or-02', topic: 'ordering', tags: ['cafe'], prompt: 'Can I have ___ sandwich, please?', options: ['a', 'an', 'any'], answer: 0, tip: 'Antes de sonido de consonante va "a": a sandwich.' },
+  { id: 'or-03', topic: 'ordering', tags: ['cafe'], prompt: 'Can I have some ___, please?', options: ['water', 'waters', 'a water'], answer: 0, tip: '"Water" no se cuenta: some water, sin -s ni "a".' },
+  { id: 'or-04', topic: 'ordering', tags: ['cafe'], prompt: 'Is there ___ milk? — Yes, there is.', options: ['any', 'a', 'an'], answer: 0, tip: 'En preguntas, con cosas que no se cuentan: any milk.' },
+  { id: 'or-05', topic: 'ordering', tags: ['cafe'], prompt: 'There are ___ cookies on the table.', options: ['some', 'a', 'an'], answer: 0, tip: 'En frases afirmativas con plural: some cookies.' },
+  { id: 'or-06', topic: 'ordering', tags: ['cafe'], prompt: 'Are there ___ bananas? — No, there aren\'t.', options: ['any', 'a', 'an'], answer: 0, tip: 'En preguntas y negativas: any.' },
+  { id: 'or-07', topic: 'ordering', tags: ['cafe'], prompt: '___ I have a juice, please?', options: ['Can', 'Do', 'Am'], answer: 0, tip: 'Para pedir con amabilidad: Can I have...?' },
+  { id: 'or-08', topic: 'ordering', tags: ['cafe'], prompt: 'Can I have a coffee, ___?', options: ['please', 'sorry', 'hello'], answer: 0, tip: 'Al pedir algo se agrega "please".' },
+  { id: 'or-09', topic: 'ordering', tags: ['cafe'], prompt: 'How much ___ the cake? — It\'s three dollars.', options: ['is', 'are', 'do'], answer: 0, tip: 'Una cosa: How much is...?' },
+  { id: 'or-10', topic: 'ordering', tags: ['cafe'], prompt: 'Here ___ are! — Thank you.', options: ['you', 'your', 'yours'], answer: 0, tip: 'Al entregar algo se dice: Here you are.' },
+  { id: 'or-11', topic: 'ordering', tags: ['cafe'], prompt: 'Can I have ___ ice cream, please?', options: ['an', 'a', 'any'], answer: 0, tip: '"Ice" empieza con sonido de vocal: an ice cream.' },
+  { id: 'or-12', topic: 'ordering', tags: ['turismo'], prompt: 'Two ___, please.', options: ['sandwiches', 'sandwichs', 'sandwich'], answer: 0, tip: 'Las palabras que terminan en -ch agregan -es: sandwiches.' },
+
+  { id: 'orf-01', topic: 'ordering', tags: ['cafe'], kind: 'fix', prompt: 'I want a water!', options: ['Can I have some water, please?', 'Can I have a waters, please?', 'I want an water.'], answer: 0, tip: '"Water" no se cuenta: some water. Y "Can I have..., please?" es más amable que "I want".' },
+  { id: 'orf-02', topic: 'ordering', tags: ['cafe'], kind: 'fix', prompt: 'Can I have a apple?', options: ['Can I have an apple?', 'Can I have apple?', 'Can I have a apples?'], answer: 0, tip: 'Antes de vocal va "an": an apple.' },
+  { id: 'orf-03', topic: 'ordering', tags: ['cafe'], kind: 'fix', prompt: 'Is there some milk?', options: ['Is there any milk?', 'Are there any milk?', 'Is there a milk?'], answer: 0, tip: 'En preguntas se usa "any": Is there any milk?' },
+  { id: 'orf-04', topic: 'ordering', tags: ['cafe'], kind: 'fix', prompt: 'Give me coffee!', options: ['Can I have a coffee, please?', 'Can I have coffees, please?', 'I have a coffee, please.'], answer: 0, tip: 'Para pedir con amabilidad: Can I have a coffee, please?' },
+  { id: 'orf-05', topic: 'ordering', tags: ['cafe'], kind: 'fix', prompt: 'Two sandwichs, please!', options: ['Two sandwich, please.', 'Two sandwiches, please.', 'Two sandwichies, please.'], answer: 1, tip: 'Las palabras que terminan en -ch agregan -es: sandwiches.' },
+
+  { id: 'oro-01', topic: 'ordering', tags: ['cafe'], kind: 'order', prompt: '¿Me da un jugo, por favor?', options: ['Can', 'I', 'have', 'a', 'juice,', 'please?'], answer: 0, tip: 'Can I have + a juice + please?' },
+  { id: 'oro-02', topic: 'ordering', tags: ['cafe'], kind: 'order', prompt: '¿Hay leche?', options: ['Is', 'there', 'any', 'milk?'], answer: 0, tip: 'Is there any + cosa que no se cuenta?' },
+  { id: 'oro-03', topic: 'ordering', tags: ['cafe'], kind: 'order', prompt: 'Aquí tiene.', options: ['Here', 'you', 'are.'], answer: 0, tip: '"Here you are" se dice al entregar algo.' },
 ]
+
 
 
 /** Pregunta de escucha generada a partir de una de completar */
@@ -392,6 +465,33 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Las órdenes empiezan con el verbo, sin sujeto: Open the door. Sit down.',
       "Para prohibir: Don't + verbo → Don't run!",
       "Con to be: Be quiet! · Don't be late!",
+    ],
+  },
+  'there-is': {
+    name: 'There is / there are y direcciones',
+    level: 'A1',
+    lesson: [
+      'There is + una cosa: There is a bank. · There are + varias: There are two cafés.',
+      'Preguntas: Is there a...? · Are there any...?',
+      'Direcciones: Go straight · Turn left / right · It is on your left / right.',
+    ],
+  },
+  demonstratives: {
+    name: 'This, that, these, those y precios',
+    level: 'A1',
+    lesson: [
+      'Cerca: this (una) · these (varias). Lejos: that (una) · those (varias).',
+      'Plural: shirt → shirts · dress → dresses · sandwich → sandwiches.',
+      'Precios: How much is this? · How much are these? → It is / They are ten dollars.',
+    ],
+  },
+  ordering: {
+    name: 'Pedir en el café (a/an, some/any)',
+    level: 'A1',
+    lesson: [
+      'Pedir con amabilidad: Can I have a juice, please?',
+      'a + sonido de consonante (a sandwich) · an + sonido de vocal (an apple).',
+      'some en frases afirmativas · any en preguntas y negativas: Is there any milk?',
     ],
   },
   'present-simple': {

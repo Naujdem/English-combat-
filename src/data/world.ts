@@ -21,7 +21,7 @@ export type WorldNode = {
 
 export const WORLD: WorldNode[] = [
   { id: 'school', name: 'Escuela', era: 'Presente', level: 'A1', about: 'to be, posesivos, preposiciones e imperativos', sceneId: 'school', requires: null, x: 64, y: 296 },
-  { id: 'city', name: 'Ciudad', era: 'Presente', level: 'A1', about: 'direcciones, café y tienda: there is, this/these, some/any, precios', sceneId: null, requires: { boss: 'school-boss', from: 'la Escuela', how: 'en autobús' }, x: 178, y: 250 },
+  { id: 'city', name: 'Ciudad', era: 'Presente', level: 'A1', about: 'direcciones, café y tienda: there is, this/these, some/any, precios', sceneId: 'city', requires: { boss: 'school-boss', from: 'la Escuela', how: 'en autobús' }, x: 178, y: 250 },
   { id: 'barrio', name: 'Barrio', era: 'Presente', level: 'A1', about: 'casas de amigos, parque y tu casa: presente simple, gustos, can, familia', sceneId: null, requires: { boss: 'city-boss', from: 'la Ciudad', how: 'en otro autobús' }, x: 70, y: 160 },
   { id: 'farm', name: 'Granja', era: 'Presente', level: 'A1', about: 'animales y rutinas: preguntas y negativas con do/does', sceneId: null, requires: { boss: 'barrio-boss', from: 'el Barrio', how: 'por el camino' }, x: 190, y: 72 },
   { id: 'office', name: 'Oficina', era: 'Presente', level: 'A1', about: 'la hora, citas y teléfono: at/on/in, me/him/her, Could you...?', sceneId: null, requires: { boss: 'farm-boss', from: 'la Granja', how: 'por la carretera' }, x: 296, y: 176 },
