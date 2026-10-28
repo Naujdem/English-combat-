@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import type { GameState } from '../game/types'
 import { SCHOOL_READING, SCHOOL_VOCAB } from '../data/activities'
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
+import { SpeakButton } from './SpeakButton'
 
 function sample<T>(list: T[], n: number): T[] {
   const a = [...list]
@@ -12,7 +13,7 @@ function sample<T>(list: T[], n: number): T[] {
   return a.slice(0, n)
 }
 
-type VocabQ = { ask: string; options: string[]; answer: number; toEs: boolean }
+type VocabQ = { ask: string; options: string[]; answer: number; toEs: boolean; en: string }
 
 function buildVocabQuiz(): VocabQ[] {
   return sample(SCHOOL_VOCAB, 5).map((w, i) => {
@@ -24,6 +25,7 @@ function buildVocabQuiz(): VocabQ[] {
       options: opts.map((o) => (toEs ? o.es : o.en)),
       answer: opts.indexOf(w),
       toEs,
+      en: w.en,
     }
   })
 }
@@ -59,7 +61,10 @@ export function VocabActivity({ state, onClose }: { state: GameState; onClose: (
           <p className="text-sm text-paper/60">
             {i + 1} de {quiz.length} · {q.toEs ? '¿Qué significa?' : '¿Cómo se dice en inglés?'}
           </p>
-          <p className="mt-1 font-display text-[26px]">{q.ask}</p>
+          <div className="mt-1 flex items-center gap-3">
+            <p className="font-display text-[26px]">{q.ask}</p>
+            {(q.toEs || picked !== null) && <SpeakButton text={q.en} />}
+          </div>
           <div className="mt-3 grid gap-2">
             {q.options.map((o, k) => {
               const look =
@@ -125,10 +130,13 @@ export function ReadingActivity({ onClose }: { state: GameState; onClose: (finis
       {(reading || !done) && (
         <div className="rounded-xl bg-[#2f5d50] p-3 text-[15px] leading-relaxed text-paper">
           {r.text.map((p, k) => (
-            <p key={k} className={k ? 'mt-2' : ''}>
-              {p}
-              {showEs && <span className="mt-0.5 block text-sm text-paper/60">{r.es[k]}</span>}
-            </p>
+            <div key={k} className={`flex items-start gap-2 ${k ? 'mt-2' : ''}`}>
+              <p className="flex-1">
+                {p}
+                {showEs && <span className="mt-0.5 block text-sm text-paper/60">{r.es[k]}</span>}
+              </p>
+              <SpeakButton text={p} size="sm" />
+            </div>
           ))}
         </div>
       )}
@@ -141,7 +149,10 @@ export function ReadingActivity({ onClose }: { state: GameState; onClose: (finis
       ) : !done ? (
         <div className="anim-fade-in mt-3">
           <p className="text-sm text-paper/60">Pregunta {i + 1} de {r.questions.length}</p>
-          <p className="font-display text-[19px]">{q.q}</p>
+          <div className="flex items-center gap-2">
+            <p className="flex-1 font-display text-[19px]">{q.q}</p>
+            <SpeakButton text={q.q} size="sm" />
+          </div>
           <div className="mt-2 grid gap-2">
             {q.options.map((o, k) => (
               <button

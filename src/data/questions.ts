@@ -1,4 +1,5 @@
 import type { Question, QuestionKind, TopicId } from '../game/types'
+import { canSpeak } from '../game/speech'
 
 /**
  * Banco de preguntas.
@@ -97,16 +98,57 @@ export const QUESTIONS: Question[] = [
   { id: 'pr-06', topic: 'possessives', kind: 'order', prompt: 'Nuestra escuela es grande.', options: ['Our', 'school', 'is', 'big.'], answer: 0, tip: '"Our" va antes de "school".' },
 ]
 
-export function questionsFor(topics: TopicId[], kinds: QuestionKind[] = ['fill', 'fix', 'order']): Question[] {
-  return QUESTIONS.filter((q) => topics.includes(q.topic) && kinds.includes(q.kind ?? 'fill'))
+/** Pregunta de escucha generada a partir de una de completar */
+function toListen(q: Question): Question {
+  const sentences = q.options.map((o) => q.prompt.replace('___', o))
+  return {
+    id: `L-${q.id}`,
+    topic: q.topic,
+    kind: 'listen',
+    prompt: sentences[q.answer],
+    options: sentences,
+    answer: q.answer,
+    tip: `Se escuchaba: "${sentences[q.answer]}" ${q.tip}`,
+  }
 }
 
-/** Devuelve una pregunta aleatoria evitando las ya usadas en este combate */
-export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: string[]): Question {
+function canListen(q: Question) {
+  return (q.kind ?? 'fill') === 'fill' && q.prompt.split('___').length === 2
+}
+
+export function questionsFor(topics: TopicId[], kinds: QuestionKind[] = ['fill', 'fix', 'order', 'listen']): Question[] {
+  const list: Question[] = []
+  for (const q of QUESTIONS) {
+    if (!topics.includes(q.topic)) continue
+    if (kinds.includes(q.kind ?? 'fill')) list.push(q)
+    if (kinds.includes('listen') && canSpeak && canListen(q)) list.push(toListen(q))
+  }
+  return list
+}
+
+export function questionById(id: string): Question | undefined {
+  if (id.startsWith('L-')) {
+    const base = QUESTIONS.find((q) => q.id === id.slice(2))
+    return base && canSpeak ? toListen(base) : undefined
+  }
+  return QUESTIONS.find((q) => q.id === id)
+}
+
+/**
+ * Devuelve una pregunta aleatoria evitando las ya usadas en este combate.
+ * Las preguntas del cuaderno de errores salen con más frecuencia hasta que se acierten.
+ */
+export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: string[], mistakes: string[] = []): Question {
   const pool = questionsFor(topics, kinds)
   const fresh = pool.filter((q) => !used.includes(q.id))
   const list = fresh.length > 0 ? fresh : pool
-  return list[Math.floor(Math.random() * list.length)]
+  const pending = list.filter((q) => mistakes.includes(q.id))
+  if (pending.length > 0 && Math.random() < 0.45) return pending[Math.floor(Math.random() * pending.length)]
+  // Primero se elige el tipo de pregunta al azar, para que haya variedad
+  const available = kinds.filter((k) => list.some((q) => (q.kind ?? 'fill') === k))
+  const kind = available[Math.floor(Math.random() * available.length)]
+  const ofKind = list.filter((q) => (q.kind ?? 'fill') === kind)
+  return ofKind[Math.floor(Math.random() * ofKind.length)]
 }
 
 export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; lesson: string[] }> = {

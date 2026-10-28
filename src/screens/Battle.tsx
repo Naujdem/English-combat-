@@ -3,6 +3,8 @@ import type { GameState, Question, Zone } from '../game/types'
 import type { Update } from '../game/store'
 import { ENEMIES } from '../data/school'
 import { pickQuestion, TOPICS } from '../data/questions'
+import { QuestionCard } from '../components/QuestionCard'
+import { SpeakButton } from '../components/SpeakButton'
 import { SCENES, heroLook, perks } from '../game/helpers'
 import { SpriteBody } from '../components/Sprite'
 import { Bar, btnGhost, btnPrimary, Hearts, Panel } from '../components/ui'
@@ -75,18 +77,6 @@ function Backdrop({ zone }: { zone: Zone }) {
 
 type Phase = 'story' | 'ask' | 'feedback' | 'after' | 'won' | 'lost'
 
-/** Desordena índices 0..n-1 asegurando que no queden en el orden correcto */
-function shuffled(n: number): number[] {
-  const a = Array.from({ length: n }, (_, i) => i)
-  if (n < 2) return a
-  do {
-    for (let i = n - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[a[i], a[j]] = [a[j], a[i]]
-    }
-  } while (a.every((v, i) => v === i))
-  return a
-}
 
 export function Battle({ state, update, onExit }: { state: GameState; update: Update; onExit: () => void }) {
   const battle = state.battle!
@@ -101,20 +91,13 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const [line, setLine] = useState(0)
   const [showEs, setShowEs] = useState(false)
   const [used, setUsed] = useState<string[]>([])
-  const [q, setQ] = useState<Question>(() => pickQuestion(enemy.topics, enemy.kinds, []))
-  const [order, setOrder] = useState<number[]>(() => shuffled(q.options.length))
-  const [placed, setPlaced] = useState<number[]>([])
-  const [picked, setPicked] = useState<number | null>(null)
+  const [q, setQ] = useState<Question>(() => pickQuestion(enemy.topics, enemy.kinds, [], state.mistakes))
   const [correct, setCorrect] = useState(false)
   const [blocked, setBlocked] = useState(false)
   const [heroAnim, setHeroAnim] = useState('')
   const [enemyAnim, setEnemyAnim] = useState('')
   const [hitText, setHitText] = useState<{ who: 'hero' | 'enemy'; n: number; text: string } | null>(null)
-  const [hintUsed, setHintUsed] = useState(false)
-  const [removed, setRemoved] = useState<number | null>(null)
-
-  const isFix = q.kind === 'fix'
-  const isOrder = q.kind === 'order'
+  const [hint, setHint] = useState(false)
 
   function animate(setter: (v: string) => void, cls: string) {
     setter('')
@@ -123,6 +106,11 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
 
   function resolve(ok: boolean) {
     setCorrect(ok)
+    // Cuaderno de errores: se anota lo que fallas y se borra cuando lo aciertas
+    update((s) => ({
+      ...s,
+      mistakes: ok ? s.mistakes.filter((id) => id !== q.id) : s.mistakes.includes(q.id) ? s.mistakes : [...s.mistakes, q.id],
+    }))
     if (ok) {
       const left = battle.enemyHp - 1
       animate(setHeroAnim, 'anim-lunge-r')
@@ -148,30 +136,13 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
     setPhase(hp <= 0 ? 'lost' : 'feedback')
   }
 
-  function answer(k: number) {
-    if (phase !== 'ask') return
-    setPicked(k)
-    resolve(k === q.answer)
-  }
-
-  function checkOrder() {
-    if (phase !== 'ask' || placed.length !== q.options.length) return
-    const built = placed.map((i) => q.options[i]).join(' ')
-    resolve(built === q.options.join(' '))
-  }
-
   function nextQuestion() {
     const nextUsed = [...used, q.id]
-    const nq = pickQuestion(enemy.topics, enemy.kinds, nextUsed)
     setUsed(nextUsed)
-    setQ(nq)
-    setOrder(shuffled(nq.options.length))
-    setPlaced([])
-    setPicked(null)
+    setQ(pickQuestion(enemy.topics, enemy.kinds, nextUsed, state.mistakes))
     setCorrect(false)
     setBlocked(false)
-    setRemoved(null)
-    setHintUsed(false)
+    setHint(false)
     setPhase('ask')
   }
 
@@ -202,25 +173,11 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
     onExit()
   }
 
-  function takeHint() {
-    setHintUsed(true)
-    if (isOrder) {
-      // Leo pone la primera palabra en su lugar
-      const first = q.options[0]
-      const idx = order.find((i) => q.options[i] === first)!
-      setPlaced([idx])
-      return
-    }
-    const wrong = q.options.map((_, i) => i).filter((i) => i !== q.answer)
-    setRemoved(wrong[Math.floor(Math.random() * wrong.length)])
-  }
-
   const hero = useMemo(() => heroLook(state, { book: true }), [state])
   const keysNow = state.keys[state.sceneId] ?? 0
-  const prompt =
-    !isFix && !isOrder && phase === 'feedback' && correct ? q.prompt.replace('___', q.options[q.answer]) : q.prompt
   const storyLines = phase === 'after' ? enemy.after : enemy.before
   const story = storyLines[line]
+  const wasMistake = state.mistakes.includes(q.id)
 
   function nextStory() {
     setShowEs(false)
@@ -232,7 +189,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const showQuestion = phase === 'ask' || phase === 'feedback' || phase === 'lost'
 
   return (
-    <div className="mx-auto flex h-full max-w-md flex-col gap-3 px-3 py-3">
+    <div className="mx-auto flex h-full max-w-md flex-col gap-3 overflow-y-auto px-3 py-3">
       <div className="grid grid-cols-2 gap-2">
         <Panel className="px-3 py-2">
           <p className="truncate font-display text-[15px]">{state.hero.name}</p>
@@ -251,7 +208,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         </Panel>
       </div>
 
-      <div className="relative overflow-hidden rounded-2xl border-2 border-line">
+      <div className="relative shrink-0 overflow-hidden rounded-2xl border-2 border-line">
         <svg viewBox="0 0 360 220" className="block w-full" role="img" aria-label={`Combate contra ${enemy.name}`}>
           <Backdrop zone={zone} />
           <g transform="translate(26 92) scale(3.8)">
@@ -291,7 +248,10 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
 
       {(phase === 'story' || phase === 'after') && story && (
         <Panel className="anim-fade-in">
-          <p className="font-display text-lg text-gold">{enemy.kind === 'boss' || phase === 'after' ? enemy.person : enemy.name}</p>
+          <div className="flex items-center justify-between gap-2">
+            <p className="font-display text-lg text-gold">{enemy.kind === 'boss' || phase === 'after' ? enemy.person : enemy.name}</p>
+            <SpeakButton text={story.text} size="sm" />
+          </div>
           <p key={`${phase}-${line}`} className="anim-fade-in text-[17px] leading-relaxed">"{story.text}"</p>
           {showEs && story.es && <p className="mt-1 text-sm text-paper/60">{story.es}</p>}
           <div className="mt-3 flex items-center justify-between">
@@ -307,102 +267,29 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
 
       {showQuestion && (
         <Panel className="anim-fade-in">
-          <div className="mb-1 flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-wide text-gold">
-              {isFix ? '¡Corrige al enemigo!' : isOrder ? 'Ordena la frase' : TOPICS[q.topic].name}
-            </p>
-            {leoHint && phase === 'ask' && (
-              <button className="rounded-lg border border-hp/60 px-2 py-1 text-xs font-semibold text-hp disabled:opacity-40" onClick={takeHint} disabled={hintUsed}>
-                Pista de Leo
-              </button>
-            )}
-          </div>
-
-          {isFix && (
-            <>
-              <p className="text-sm text-paper/60">{enemy.person} dice:</p>
-              <p className={`font-display text-[22px] leading-snug ${phase === 'ask' ? 'text-[#f3b0b0]' : 'text-paper/50 line-through decoration-danger'}`}>
-                "{prompt}"
-              </p>
-              <p className="mt-2 text-sm text-paper/70">¿Cuál es la forma correcta?</p>
-            </>
+          {wasMistake && phase === 'ask' && (
+            <p className="mb-2 rounded-lg bg-gold/10 px-2 py-1 text-xs font-semibold text-gold">Esta pregunta está en tu cuaderno de errores</p>
           )}
-          {!isFix && !isOrder && <p className="font-display text-[22px] leading-snug">{prompt}</p>}
-
-          {isOrder ? (
-            <>
-              <p className="text-sm text-paper/60">Escribe en inglés:</p>
-              <p className="font-display text-[20px] leading-snug">{q.prompt}</p>
-              <div
-                className={`mt-3 flex min-h-[52px] flex-wrap items-center gap-1.5 rounded-xl border-2 border-dashed p-2 ${
-                  phase === 'ask' ? 'border-line' : correct ? 'border-hp bg-hp/10' : 'border-danger bg-danger/10'
-                }`}
-                aria-label="Tu frase"
-              >
-                {placed.length === 0 && <span className="px-1 text-sm text-paper/40">Toca las palabras en orden</span>}
-                {placed.map((i, k) => (
-                  <button
-                    key={`${i}-${k}`}
-                    className="rounded-lg bg-gold px-2.5 py-1.5 font-display text-[17px] font-medium text-ink"
-                    onClick={() => phase === 'ask' && setPlaced(placed.filter((_, j) => j !== k))}
-                    disabled={phase !== 'ask'}
-                  >
-                    {q.options[i]}
-                  </button>
-                ))}
-              </div>
-              {phase === 'ask' ? (
-                <>
-                  <div className="mt-2 flex flex-wrap gap-1.5">
-                    {order.map((i) =>
-                      placed.includes(i) ? null : (
-                        <button
-                          key={i}
-                          className="rounded-lg border-2 border-line bg-panel-2 px-2.5 py-1.5 font-display text-[17px] font-medium transition active:scale-95"
-                          onClick={() => setPlaced([...placed, i])}
-                        >
-                          {q.options[i]}
-                        </button>
-                      ),
-                    )}
-                  </div>
-                  <button className={`${btnPrimary} mt-3 w-full`} onClick={checkOrder} disabled={placed.length !== q.options.length}>
-                    Comprobar
-                  </button>
-                </>
-              ) : (
-                !correct && <p className="mt-2 text-sm text-paper/70">Correcta: <span className="font-semibold text-hp">{q.options.join(' ')}</span></p>
-              )}
-            </>
-          ) : (
-            <div className={`mt-3 grid gap-2 ${isFix ? 'grid-cols-1' : 'grid-cols-3'}`}>
-              {q.options.map((o, k) => {
-                const isAnswer = k === q.answer
-                const look =
-                  phase === 'ask'
-                    ? 'border-line bg-panel-2 hover:border-gold/70 active:scale-[0.97]'
-                    : isAnswer
-                      ? 'border-hp bg-hp/25'
-                      : picked === k
-                        ? 'border-danger bg-danger/25'
-                        : 'border-line bg-panel-2 opacity-40'
-                return (
-                  <button
-                    key={k}
-                    className={`rounded-xl border-2 py-2.5 font-display font-medium text-paper transition ${isFix ? 'px-3 text-left text-[17px]' : 'px-2 text-[18px]'} ${look} ${removed === k ? 'invisible' : ''}`}
-                    onClick={() => answer(k)}
-                    disabled={phase !== 'ask'}
-                  >
-                    {o}
-                  </button>
-                )
-              })}
-            </div>
-          )}
+          <QuestionCard
+            key={`${q.id}-${used.length}`}
+            q={q}
+            speaker={enemy.person}
+            hint={hint}
+            onAnswer={(ok) => phase === 'ask' && resolve(ok)}
+            headerRight={
+              leoHint && phase === 'ask' ? (
+                <button className="rounded-lg border border-hp/60 px-2 py-1 text-xs font-semibold text-hp disabled:opacity-40" onClick={() => setHint(true)} disabled={hint}>
+                  Pista de Leo
+                </button>
+              ) : undefined
+            }
+          />
 
           {phase === 'feedback' && correct && battle.enemyHp > 0 && (
             <div className="anim-fade-in mt-3 flex items-center justify-between gap-2">
-              <p className="text-sm font-semibold text-hp">{isFix ? '¡Lo corregiste! El golpe acertó.' : '¡Correcto! El golpe acertó.'}</p>
+              <p className="text-sm font-semibold text-hp">
+                {q.kind === 'fix' ? '¡Lo corregiste! El golpe acertó.' : '¡Correcto! El golpe acertó.'}
+              </p>
               <button className={btnPrimary} onClick={nextQuestion} autoFocus>Seguir</button>
             </div>
           )}
@@ -411,6 +298,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               {blocked && <p className="mb-1 text-sm font-semibold text-[#9cc0f0]">Tu escudo de palabras bloqueó el golpe.</p>}
               <p className="text-sm font-semibold text-gold">{metLeo ? 'Pista de Leo' : 'Pista'}</p>
               <p className="mt-0.5 text-[15px] leading-snug">{q.tip}</p>
+              <p className="mt-1 text-xs text-paper/50">Se anotó en tu cuaderno de errores.</p>
               <div className="mt-3 flex justify-end">
                 {phase === 'lost' ? (
                   <button className={btnPrimary} onClick={leave} autoFocus>Volver a intentarlo</button>

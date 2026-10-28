@@ -11,13 +11,15 @@ import { ReadingActivity, VocabActivity } from '../components/Activities'
 import { Chest, FLOOR, T, Tile, VOCAB, walkable } from '../components/Tiles'
 import { SpriteBody } from '../components/Sprite'
 import { DPad } from '../components/DPad'
+import { SpeakButton } from '../components/SpeakButton'
 import { ConversationView } from '../components/Conversation'
 import { FriendsPanel } from '../components/FriendsPanel'
+import { Notebook } from '../components/Notebook'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
 const VIEW = 11
 
-type Msg = { text: string; sub?: string; tone?: 'info' | 'good' | 'warn' }
+type Msg = { text: string; sub?: string; tone?: 'info' | 'good' | 'warn'; say?: string }
 type Talk = {
   friendId: string
   /** Índice del momento de historia, o null si es una charla casual */
@@ -39,7 +41,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const doorOpen = bossDoorOpen(state, scene)
   const keys = state.keys[scene.id] ?? 0
   const [activity, setActivity] = useState<'vocab' | 'reading' | null>(null)
-  const blocked = !!talk || friendsOpen || !!lesson || !!activity
+  const [notebook, setNotebook] = useState(false)
+  const blocked = !!talk || friendsOpen || !!lesson || !!activity || notebook
 
   const rows = scene.map.length
   const cols = scene.map[0].length
@@ -66,7 +69,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
     (e: Entity) => {
       if ((e.type === 'enemy' || e.type === 'boss') && state.defeated.includes(e.id)) {
         const def = ENEMIES[e.id]
-        setMsg({ text: `${def.person}: "${def.freed.text}"`, sub: def.freed.es })
+        setMsg({ text: `${def.person}: "${def.freed.text}"`, sub: def.freed.es, say: def.freed.text })
         return
       }
       if (e.type === 'enemy' || e.type === 'boss') {
@@ -154,7 +157,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         return
       }
       const v = VOCAB[c]
-      if (v && c !== '#') setMsg({ text: `${v.en[0].toUpperCase()}${v.en.slice(1)}`, sub: `= ${v.es}` })
+      if (v && c !== '#') setMsg({ text: `${v.en[0].toUpperCase()}${v.en.slice(1)}`, sub: `= ${v.es}`, say: v.en })
     },
     [alive, blocked, cols, doorOpen, interact, rows, scene, state.facing, state.opened, state.pos.x, state.pos.y, update],
   )
@@ -270,7 +273,10 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       <div className="min-h-[76px]">
         {msg ? (
           <Panel className={`anim-fade-in py-3 ${msg.tone === 'good' ? 'border-hp/70' : msg.tone === 'warn' ? 'border-gold/70' : ''}`}>
-            <p className="text-[16px] font-semibold">{msg.text}</p>
+            <div className="flex items-start gap-2">
+              <p className="flex-1 text-[16px] font-semibold">{msg.text}</p>
+              {msg.say && <SpeakButton text={msg.say} size="sm" />}
+            </div>
             {msg.sub && <p className="mt-0.5 text-sm text-paper/70">{msg.sub}</p>}
           </Panel>
         ) : (
@@ -283,7 +289,17 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       </div>
 
       <div className="mt-auto flex items-end justify-between pb-2">
-        <OutfitButton state={state} update={update} />
+        <div className="flex flex-col gap-2">
+          <button className={`${btn} relative px-3 text-sm`} onClick={() => setNotebook(true)}>
+            Cuaderno
+            {state.mistakes.length > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-danger px-1 text-[11px] font-bold text-white">
+                {state.mistakes.length}
+              </span>
+            )}
+          </button>
+          <OutfitButton state={state} update={update} />
+        </div>
         <DPad onMove={move} disabled={blocked} />
       </div>
 
@@ -352,6 +368,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       )}
 
       {friendsOpen && <FriendsPanel state={state} onClose={() => setFriendsOpen(false)} />}
+
+      {notebook && <Notebook state={state} update={update} onClose={() => setNotebook(false)} />}
 
       {lesson && (
         <div className="absolute inset-0 z-40 overflow-y-auto bg-ink">

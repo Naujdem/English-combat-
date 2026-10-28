@@ -79,9 +79,12 @@ Flujo completo: título → creación de personaje → intro (te roban la voz) �
 - Amistad por puntos, sin respuestas incorrectas: las respuestas sin sentido bajan la amistad. Recompensas: Leo da una pista en combate; Maya da +1 de vida máxima.
 - Objetos del mapa que muestran su nombre en inglés al chocar con ellos.
 - Atuendos desbloqueables y guardado automático.
+- Audio: botones para escuchar en inglés en diálogos, lecciones, combates, lecturas y vocabulario (voz del dispositivo, sin internet). Dos toques seguidos leen más lento.
+- Combate de escucha: se oye una frase y hay que elegir la correcta. Se generan solas a partir de las preguntas de completar.
+- Cuaderno de errores: las preguntas falladas se anotan, los enemigos las repiten más seguido y se pueden repasar en el cuaderno de Leo (acertar 3 da un escudo).
+- Instalable en el celular (PWA) y funciona sin internet después de abrirlo una vez. Al publicar cambios grandes, sube la versión de `CACHE` en `public/sw.js`.
 
 ## Siguientes pasos sugeridos
 
 - Más preguntas del verbo *to be* y el siguiente escenario (Ciudad, presente simple).
-- Convertirlo en PWA para instalarlo en el celular.
 - Sonidos y animación de caminar.

@@ -77,7 +77,7 @@ export const ENEMIES: Record<string, EnemyDef> = {
     kind: 'minion',
     hp: 2,
     topics: ['to-be'],
-    kinds: ['fill', 'order'],
+    kinds: ['fill', 'order', 'listen'],
     look: { shirt: '#c0504d', hair: '#2b5c3a', skin: '#e0ac69', accessory: 'cap' },
     before: [
       { text: "Ha! You are the new student. You can't talk? That is funny!", es: '¡Ja! Eres el estudiante nuevo. ¿No puedes hablar? ¡Qué chistoso!' },
@@ -115,7 +115,7 @@ export const ENEMIES: Record<string, EnemyDef> = {
     kind: 'minion',
     hp: 3,
     topics: ['possessives'],
-    kinds: ['fill', 'fix', 'order'],
+    kinds: ['fill', 'fix', 'order', 'listen'],
     look: { shirt: '#d9822b', hair: '#6b3b1f', skin: '#f1c27d', accessory: 'cap' },
     before: [
       { text: 'This is MY table. This is MY food. And this is MY key!', es: 'Esta es MI mesa. Esta es MI comida. ¡Y esta es MI llave!' },
@@ -134,7 +134,7 @@ export const ENEMIES: Record<string, EnemyDef> = {
     kind: 'boss',
     hp: 5,
     topics: ['to-be', 'possessives'],
-    kinds: ['fill', 'fix', 'order'],
+    kinds: ['fill', 'fix', 'order', 'listen'],
     look: { shirt: '#5a4a7a', hair: '#9a9a9a', skin: '#c68642', accessory: 'mortarboard' },
     before: [
       { text: 'So... you have the three keys. My students are not loyal.', es: 'Así que... tienes las tres llaves. Mis estudiantes no son leales.' },

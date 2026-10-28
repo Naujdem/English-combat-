@@ -3,6 +3,7 @@ import type { ChatOption, DialogLine, FriendDef, GameState } from '../game/types
 import { SpriteIcon } from './Sprite'
 import { heroLook } from '../game/helpers'
 import { btn, btnPrimary, Panel } from './ui'
+import { SpeakButton } from './SpeakButton'
 
 function EffectChip({ effect }: { effect: ChatOption['effect'] }) {
   if (effect > 0)
@@ -75,9 +76,12 @@ export function ConversationView({
 
       {!picked ? (
         <>
-          <p key={i} className={`anim-fade-in text-[17px] leading-relaxed ${line.who === 'narrator' ? 'italic text-paper/80' : ''}`}>
-            {line.text}
-          </p>
+          <div className="flex items-start gap-2">
+            <p key={i} className={`anim-fade-in flex-1 text-[17px] leading-relaxed ${line.who === 'narrator' ? 'italic text-paper/80' : ''}`}>
+              {line.text}
+            </p>
+            {line.who === 'friend' && <SpeakButton text={line.text} size="sm" />}
+          </div>
           {showEs && line.es && <p className="mt-1 text-sm text-paper/60">{line.es}</p>}
           {line.options && (
             <div className="mt-3 grid gap-2">
@@ -96,9 +100,12 @@ export function ConversationView({
             <span className="font-semibold text-[#9cc0f0]">{state.hero.name}: </span>
             {picked.text}
           </p>
-          <p className="text-[17px] leading-relaxed">
-            <span className="font-semibold text-gold">{friend.name}: </span>"{picked.reply}"
-          </p>
+          <div className="flex items-start gap-2">
+            <p className="flex-1 text-[17px] leading-relaxed">
+              <span className="font-semibold text-gold">{friend.name}: </span>"{picked.reply}"
+            </p>
+            <SpeakButton text={picked.reply} size="sm" />
+          </div>
           {showEs && picked.es && <p className="text-sm text-paper/60">{picked.es}</p>}
           <div><EffectChip effect={picked.effect} /></div>
         </div>

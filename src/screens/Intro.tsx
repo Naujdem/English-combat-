@@ -5,6 +5,7 @@ import { btnGhost, btnPrimary, Panel } from '../components/ui'
 import { ClassroomStage, FONT, Lesson } from '../components/Lesson'
 import { heroLook } from '../game/helpers'
 import { LESSONS } from '../data/lessons'
+import { SpeakButton } from '../components/SpeakButton'
 
 type StoryStep = { who: 'narrator' | 'stranger'; text: string; es?: string; stranger?: boolean; steal?: boolean; mute?: boolean }
 
@@ -80,7 +81,12 @@ export function Intro({ state, onDone }: { state: GameState; onDone: (tutorialDo
       </ClassroomStage>
 
       <Panel>
-        {s.who === 'stranger' && <p className="font-display text-lg text-[#b9a3e8]">???</p>}
+        {s.who === 'stranger' && (
+          <div className="flex items-center justify-between">
+            <p className="font-display text-lg text-[#b9a3e8]">???</p>
+            <SpeakButton text={s.text} size="sm" />
+          </div>
+        )}
         <p key={i} className={`anim-fade-in text-[17px] leading-relaxed ${s.who === 'narrator' ? 'italic text-paper/85' : ''}`}>
           {s.text}
         </p>

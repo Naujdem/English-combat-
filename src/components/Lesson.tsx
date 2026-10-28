@@ -4,6 +4,7 @@ import { SpriteBody } from './Sprite'
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
 import { heroLook } from '../game/helpers'
 import { FRIENDS } from '../data/friends'
+import { SpeakButton } from './SpeakButton'
 
 export const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
@@ -87,7 +88,12 @@ export function Lesson({
       </ClassroomStage>
 
       <Panel>
-        {s.who === 'leo' && <p className="font-display text-lg text-gold">Leo</p>}
+        {s.who === 'leo' && (
+          <div className="flex items-center justify-between">
+            <p className="font-display text-lg text-gold">Leo</p>
+            <SpeakButton text={s.text} size="sm" />
+          </div>
+        )}
         {s.who === 'board' && <p className="text-xs font-semibold uppercase tracking-wide text-hp">Escribe en la pizarra</p>}
         <p
           key={i}
@@ -107,7 +113,12 @@ export function Lesson({
           </div>
         )}
         {tip && <p className="anim-fade-in mt-3 rounded-lg bg-danger/15 px-3 py-2 text-sm text-[#f3b0b0]">Leo: casi. {tip}</p>}
-        {s.choice && solved && <p className="anim-fade-in mt-2 text-sm font-semibold text-hp">¡Bien hecho!</p>}
+        {s.choice && solved && (
+          <div className="anim-fade-in mt-2 flex items-center gap-2">
+            <p className="text-sm font-semibold text-hp">¡Bien hecho!</p>
+            {s.who === 'board' && <SpeakButton text={text} size="sm" />}
+          </div>
+        )}
 
         <div className="mt-4 flex items-center justify-between gap-2">
           <div className="flex gap-1">

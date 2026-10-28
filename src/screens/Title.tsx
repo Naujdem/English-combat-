@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { GameState } from '../game/types'
 import { SpriteBody } from '../components/Sprite'
 import { btn, btnPrimary } from '../components/ui'
@@ -7,6 +7,16 @@ import { heroLook } from '../game/helpers'
 export function Title({ state, onContinue, onNew }: { state: GameState; onContinue: () => void; onNew: () => void }) {
   const hasSave = !!state.hero.name
   const [confirm, setConfirm] = useState(false)
+  // Android/Chrome ofrece instalar la app; guardamos el aviso para mostrar nuestro propio botón
+  const [installEvt, setInstallEvt] = useState<(Event & { prompt: () => Promise<void> }) | null>(null)
+  useEffect(() => {
+    const onPrompt = (e: Event) => {
+      e.preventDefault()
+      setInstallEvt(e as Event & { prompt: () => Promise<void> })
+    }
+    window.addEventListener('beforeinstallprompt', onPrompt)
+    return () => window.removeEventListener('beforeinstallprompt', onPrompt)
+  }, [])
   const look = hasSave ? heroLook(state, { book: true }) : { shirt: '#3b6fb6', hair: '#4a2c17', skin: '#f1c27d', cape: '#c0392b', book: true }
 
   return (
@@ -44,6 +54,14 @@ export function Title({ state, onContinue, onNew }: { state: GameState; onContin
               <button className={`${btn} flex-1 border-danger text-base`} onClick={onNew}>Borrar y empezar</button>
             </div>
           </div>
+        )}
+        {installEvt && (
+          <button
+            className="mt-1 text-sm font-semibold text-paper/70 underline underline-offset-4"
+            onClick={() => installEvt.prompt().finally(() => setInstallEvt(null))}
+          >
+            Instalar en el celular para jugar sin internet
+          </button>
         )}
       </div>
     </div>

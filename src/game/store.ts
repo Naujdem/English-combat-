@@ -26,6 +26,7 @@ export function newGame(): GameState {
     friendship: {},
     talks: {},
     items: { shield: 0 },
+    mistakes: [],
     seenLesson: [],
     battle: null,
   }
@@ -43,6 +44,7 @@ export function loadSave(): GameState | null {
       data.friendship = Object.fromEntries(Object.entries(data.friendship).map(([k, v]) => [k, STORY_POINTS[v] ?? 0]))
     }
     if (!data.items) data.items = { shield: 0 }
+    if (!data.mistakes) data.mistakes = []
     return data
   } catch {
     return null

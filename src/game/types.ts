@@ -28,8 +28,10 @@ export type TopicId = 'to-be' | 'possessives' | 'present-simple' | 'past-simple'
  * fix: el enemigo dice una frase con error y el jugador elige la versión correcta.
  * order: ordenar palabras. `prompt` es la frase en español y `options` son las
  *        palabras en el orden correcto (el juego las desordena).
+ * listen: escuchar una frase y elegir la que se oyó. Se generan solas a partir
+ *        de las preguntas de completar, no hay que escribirlas.
  */
-export type QuestionKind = 'fill' | 'fix' | 'order'
+export type QuestionKind = 'fill' | 'fix' | 'order' | 'listen'
 
 export type Question = {
   id: string
@@ -168,6 +170,8 @@ export type GameState = {
   talks: Record<string, number>
   /** Objetos de apoyo, como el escudo de palabras */
   items: { shield: number }
+  /** Preguntas falladas que siguen pendientes en el cuaderno de errores */
+  mistakes: string[]
   seenLesson: string[]
   battle: { enemyId: string; enemyHp: number; returnTo: { x: number; y: number } } | null
 }
