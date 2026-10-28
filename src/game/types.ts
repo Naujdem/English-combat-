@@ -26,8 +26,10 @@ export type TopicId = 'to-be' | 'possessives' | 'present-simple' | 'past-simple'
 /**
  * fill: completar el espacio en blanco.
  * fix: el enemigo dice una frase con error y el jugador elige la versión correcta.
+ * order: ordenar palabras. `prompt` es la frase en español y `options` son las
+ *        palabras en el orden correcto (el juego las desordena).
  */
-export type QuestionKind = 'fill' | 'fix'
+export type QuestionKind = 'fill' | 'fix' | 'order'
 
 export type Question = {
   id: string
@@ -45,7 +47,10 @@ export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala'
 
 export type EnemyDef = {
   id: string
+  /** Nombre con el que aparece en combate, por ejemplo "Tom, el burlón" */
   name: string
+  /** Nombre propio, para cuando ya no es enemigo */
+  person: string
   kind: 'minion' | 'boss'
   hp: number
   /** Temas de los que salen sus preguntas */
@@ -53,8 +58,16 @@ export type EnemyDef = {
   /** Tipos de pregunta que usa: completar, corregir o ambos */
   kinds: QuestionKind[]
   look: { shirt: string; hair: string; skin: string; accessory?: 'cap' | 'mortarboard' | 'glasses' }
-  intro: string
+  /** Lo que dice antes del combate */
+  before: StoryLine[]
+  /** Lo que dice al ser vencido */
+  after: StoryLine[]
+  /** Lo que dice si le hablas después de vencerlo (ya no es enemigo) */
+  freed: StoryLine
 }
+
+/** Una línea de historia en inglés con su traducción */
+export type StoryLine = { text: string; es?: string }
 
 export type Entity =
   | { type: 'enemy'; id: string; x: number; y: number }
@@ -88,13 +101,28 @@ export type LessonStep = {
   choice?: { options: string[]; answer: number; tip: string }
 }
 
+/**
+ * Una respuesta posible en una charla con amigos. No hay respuestas "malas":
+ * cada opción tiene una reacción del amigo y sube o baja la amistad.
+ *  effect  2 = respuesta muy buena, 1 = buena, 0 = rara pero aceptable, -1 = sin sentido
+ */
+export type ChatOption = { text: string; reply: string; es?: string; effect: -1 | 0 | 1 | 2 }
+
 export type DialogLine = {
   who: 'friend' | 'hero' | 'narrator'
   text: string
   /** Traducción opcional al español, se muestra con el botón "Traducir" */
   es?: string
-  /** Si existe, el jugador debe responder eligiendo una opción */
-  choice?: { options: string[]; answer: number; tip: string }
+  /** Si existe, el jugador elige qué responder */
+  options?: ChatOption[]
+}
+
+/** Charla corta y repetible: el amigo pregunta algo y tú respondes */
+export type CasualChat = {
+  requires: TopicId | null
+  text: string
+  es?: string
+  options: ChatOption[]
 }
 
 export type Conversation = {
@@ -111,7 +139,10 @@ export type FriendDef = {
   name: string
   theme: string
   look: { shirt: string; hair: string; skin: string; gender: Gender }
+  /** Momentos de historia, en orden. Cada uno pide un mínimo de amistad y de gramática */
   conversations: Conversation[]
+  /** Charlas casuales para subir la amistad entre momentos de historia */
+  casual: CasualChat[]
 }
 
 export type GameState = {
@@ -131,7 +162,12 @@ export type GameState = {
   keys: Record<string, number>
   defeated: string[]
   opened: string[]
+  /** Puntos de amistad con cada amigo */
   friendship: Record<string, number>
+  /** Cuántos momentos de historia se han tenido con cada amigo */
+  talks: Record<string, number>
+  /** Objetos de apoyo, como el escudo de palabras */
+  items: { shield: number }
   seenLesson: string[]
   battle: { enemyId: string; enemyHp: number; returnTo: { x: number; y: number } } | null
 }

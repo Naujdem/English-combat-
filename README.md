@@ -30,7 +30,8 @@ Flujo completo: título → creación de personaje → intro (te roban la voz) �
 | `src/data/lessons.ts` | Lecciones paso a paso de Leo para cada tema |
 | `docs/curriculo-a1.md` | Currículo A1: objetivos, gramática, vocabulario y funciones |
 | `src/data/school.ts` | Mapa de la escuela, enemigos y atuendos |
-| `src/data/friends.ts` | Amigos (Leo, Maya) y el interés especial, con sus charlas |
+| `src/data/friends.ts` | Amigos (Leo, Maya) y el interés especial: momentos de historia y charlas casuales |
+| `src/data/activities.ts` | Repaso de vocabulario de la biblioteca y lectura del tablón |
 | `src/data/world.ts` | Nodos del mapa del mundo |
 | `src/game/types.ts` | Tipos de datos del juego |
 | `src/game/store.ts` | Estado y guardado automático (localStorage) |
@@ -56,17 +57,26 @@ Flujo completo: título → creación de personaje → intro (te roban la voz) �
 
 **Mapas.** Cada escenario es una tabla de letras. `#` pared, `.` piso, `D` pupitre, `W` ventana, etc. (la leyenda completa está arriba del mapa en `school.ts`). Para crear un escenario nuevo: copia `school.ts`, cambia la tabla y las entidades, regístralo en `SCENES` (`src/game/helpers.ts`) y pon su `sceneId` en `world.ts`.
 
-**Charlas de amigos.** En `friends.ts`, cada conversación tiene `requires`: el tema que hay que haber recuperado. Si el jugador no lo tiene, el amigo dice que aún no le entiendes y el menú de amigos indica qué recuperar. Las charlas con `lines: []` aparecen como "próximamente".
+**Ordenar palabras.** Con `kind: 'order'`, el `prompt` es la frase en español y `options` son las palabras en el orden correcto; el juego las desordena.
+
+**Charlas de amigos.** En `friends.ts` no hay respuestas incorrectas: cada opción tiene una reacción (`reply`) y un `effect` (2 muy buena, 1 buena, 0 rara, -1 sin sentido: el amigo no te entiende y baja la amistad). Hay dos tipos:
+- `conversations`: momentos de historia en orden. Cada uno pide puntos de amistad (`STORY_POINTS` en `social.ts`) y la gramática de `requires`. Los que tienen `lines: []` aún no están escritos.
+- `casual`: charlas cortas y repetibles para subir la amistad entre momentos de historia.
+
+**Enemigos.** En `school.ts` cada enemigo tiene `before` (lo que dice antes del combate), `after` (al ser vencido) y `freed` (lo que dice si le hablas después, ya sin hechizo).
 
 ## Sistemas incluidos
 
 - Selector de personaje (género, nombre, piel, cabello) y del interés especial (género, nombre, romántico o solo amistad). Las frases del narrador usan *he/she* según lo elegido.
 - Lecciones paso a paso con Leo antes del primer combate de cada tema (la de *to be* va en la intro).
-- Dos tipos de combate: completar la frase y corregir la frase con error que dice el enemigo.
+- Tres tipos de combate: completar la frase, corregir la frase con error que dice el enemigo y ordenar palabras.
+- Cada enemigo tiene historia antes y después del combate; al vencerlo se queda en el mapa como estudiante normal.
+- Biblioteca: repaso de vocabulario que da un escudo de palabras (bloquea un error en combate).
+- Tablón del aula: lectura con preguntas de comprensión que desbloquea las gafas de lectura.
 - Llaves: cada esbirro vencido suelta una; con 3 se abre la sala de profesores.
 - El jefe devuelve un tema ("fragmento de voz"), una pieza del reloj del tiempo y un atuendo.
 - Si fallas, Leo te da la explicación. Si te quedas sin vida, vuelves a la entrada.
-- Amistad por niveles con recompensas: Leo da una pista que elimina una opción; Maya da +1 de vida máxima.
+- Amistad por puntos, sin respuestas incorrectas: las respuestas sin sentido bajan la amistad. Recompensas: Leo da una pista en combate; Maya da +1 de vida máxima.
 - Objetos del mapa que muestran su nombre en inglés al chocar con ellos.
 - Atuendos desbloqueables y guardado automático.
 

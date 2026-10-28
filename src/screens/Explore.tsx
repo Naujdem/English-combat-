@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import type { Entity, GameState } from '../game/types'
+import type { DialogLine, Entity, GameState } from '../game/types'
 import type { Update } from '../game/store'
 import { SCENES, bossDoorOpen, friendById, heroLook } from '../game/helpers'
 import { ENEMIES, OUTFITS } from '../data/school'
 import { LESSONS } from '../data/lessons'
 import { Lesson } from '../components/Lesson'
 import type { TopicId } from '../game/types'
-import { completeConversation, FRIEND_REWARDS, talkTo } from '../game/social'
+import { applyCasual, completeStory, FRIEND_REWARDS, talkTo } from '../game/social'
+import { ReadingActivity, VocabActivity } from '../components/Activities'
 import { Chest, FLOOR, T, Tile, VOCAB, walkable } from '../components/Tiles'
 import { SpriteBody } from '../components/Sprite'
 import { DPad } from '../components/DPad'
@@ -17,7 +18,15 @@ import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui
 const VIEW = 11
 
 type Msg = { text: string; sub?: string; tone?: 'info' | 'good' | 'warn' }
-type Talk = { friendId: string; index: number }
+type Talk = {
+  friendId: string
+  /** Índice del momento de historia, o null si es una charla casual */
+  story: number | null
+  lines: DialogLine[]
+  title: string
+  level?: string
+  note?: string
+}
 
 export function Explore({ state, update, onBattle, onWorld }: { state: GameState; update: Update; onBattle: (enemyId: string) => void; onWorld: () => void }) {
   const scene = SCENES[state.sceneId]
@@ -29,7 +38,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const firstVisit = !state.seenLesson.includes(scene.id)
   const doorOpen = bossDoorOpen(state, scene)
   const keys = state.keys[scene.id] ?? 0
-  const blocked = !!talk || friendsOpen || !!lesson
+  const [activity, setActivity] = useState<'vocab' | 'reading' | null>(null)
+  const blocked = !!talk || friendsOpen || !!lesson || !!activity
 
   const rows = scene.map.length
   const cols = scene.map[0].length
@@ -37,7 +47,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const alive = useMemo(
     () =>
       scene.entities.filter((e) => {
-        if (e.type === 'enemy' || e.type === 'boss') return !state.defeated.includes(e.id)
+        // Los enemigos vencidos se quedan en el mapa como estudiantes normales
         if (e.type === 'chest') return !state.opened.includes(e.id)
         return true
       }),
@@ -54,6 +64,11 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
 
   const interact = useCallback(
     (e: Entity) => {
+      if ((e.type === 'enemy' || e.type === 'boss') && state.defeated.includes(e.id)) {
+        const def = ENEMIES[e.id]
+        setMsg({ text: `${def.person}: "${def.freed.text}"`, sub: def.freed.es })
+        return
+      }
       if (e.type === 'enemy' || e.type === 'boss') {
         setMsg(null)
         const unseen = ENEMIES[e.id].topics.find((t) => !state.seenLesson.includes(t) && LESSONS[t])
@@ -76,14 +91,20 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       const friend = friendById(state, id)
       if (!friend) return
       const res = talkTo(state, friend)
-      if (res.kind === 'conv') {
-        setMsg(null)
-        if (!(id in state.friendship)) update((s) => ({ ...s, friendship: { ...s.friendship, [id]: 0 } }))
-        setTalk({ friendId: id, index: res.index })
-      } else if (res.kind === 'maxed') {
-        setMsg({ text: res.line, sub: res.note, tone: 'warn' })
+      if (!(id in state.friendship)) update((s) => ({ ...s, friendship: { ...s.friendship, [id]: 0 } }))
+      setMsg(null)
+      if (res.kind === 'story') {
+        setTalk({ friendId: id, story: res.index, lines: res.conv.lines, title: res.conv.title, level: res.conv.level })
+      } else if (res.kind === 'casual') {
+        setTalk({
+          friendId: id,
+          story: null,
+          lines: [{ who: 'friend', text: res.chat.text, es: res.chat.es, options: res.chat.options }],
+          title: 'Charla casual',
+          note: res.note,
+        })
       } else {
-        setMsg({ text: res.line })
+        setMsg({ text: res.line, sub: res.note, tone: res.note ? 'warn' : 'info' })
       }
     },
     [onBattle, state, update],
@@ -122,10 +143,20 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         })
         return
       }
+      if (c === 'L') {
+        setMsg(null)
+        setActivity('vocab')
+        return
+      }
+      if (c === 'B' && !state.opened.includes('school-reading')) {
+        setMsg(null)
+        setActivity('reading')
+        return
+      }
       const v = VOCAB[c]
       if (v && c !== '#') setMsg({ text: `${v.en[0].toUpperCase()}${v.en.slice(1)}`, sub: `= ${v.es}` })
     },
-    [alive, blocked, cols, doorOpen, interact, rows, scene, state.facing, state.pos.x, state.pos.y, update],
+    [alive, blocked, cols, doorOpen, interact, rows, scene, state.facing, state.opened, state.pos.x, state.pos.y, update],
   )
 
   useEffect(() => {
@@ -152,7 +183,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   function friendHasNews(id: string) {
     const f = friendById(state, id)
     if (!f) return false
-    return talkTo(state, f).kind === 'conv'
+    return talkTo(state, f).kind === 'story'
   }
 
   return (
@@ -195,6 +226,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               if (e.type === 'chest') return <Chest key={key} x={e.x} y={e.y} />
               if (e.type === 'enemy' || e.type === 'boss') {
                 const def = ENEMIES[e.id]
+                if (state.defeated.includes(e.id)) {
+                  return (
+                    <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
+                      <SpriteBody look={{ ...def.look }} />
+                    </g>
+                  )
+                }
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
                     <g transform="translate(32 0) scale(-1 1)">
@@ -239,7 +277,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           <p className="px-1 pt-2 text-sm text-paper/55">
             {firstVisit
               ? `Los estudiantes de ${scene.name.toLowerCase()} guardan tus palabras. Vence a ${scene.keysNeeded} para conseguir las llaves de la sala de profesores.`
-              : `${scene.name}. Choca con objetos para ver su nombre en inglés y con personas para hablar.`}
+              : 'Choca con personas para hablar y con objetos para ver su nombre en inglés. Lee el tablón del aula y repasa vocabulario en la biblioteca.'}
           </p>
         )}
       </div>
@@ -253,18 +291,61 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         <Overlay>
           <ConversationView
             friend={talkFriend}
-            conv={talkFriend.conversations[talk.index]}
+            lines={talk.lines}
+            title={talk.title}
+            level={talk.level}
             state={state}
-            onDone={() => {
-              const before = state.friendship[talk.friendId] ?? 0
-              update((s) => completeConversation(s, talk.friendId, talk.index))
-              const reward = FRIEND_REWARDS[talk.friendId]?.[talk.index + 1]
+            onDone={(delta) => {
+              const t = talk
               setTalk(null)
-              setMsg({
-                text: `Tu amistad con ${talkFriend.name} subió a nivel ${Math.max(before, talk.index + 1)}.`,
-                sub: reward,
-                tone: 'good',
-              })
+              if (t.story !== null) {
+                const index = t.story
+                update((s) => completeStory(s, t.friendId, index, delta))
+                const reward = FRIEND_REWARDS[t.friendId]?.[index + 1]
+                setMsg({
+                  text: delta < 0 ? `${talkFriend.name} se quedó un poco confundido, pero la historia sigue.` : `Tu amistad con ${talkFriend.name} creció.`,
+                  sub: reward,
+                  tone: delta < 0 ? 'warn' : 'good',
+                })
+              } else {
+                update((s) => applyCasual(s, t.friendId, delta))
+                if (t.note) setMsg({ text: `${talkFriend.name} quiere contarte algo, pero aún no le entiendes.`, sub: t.note, tone: 'warn' })
+                else if (delta < 0) setMsg({ text: `${talkFriend.name} no te entendió. La amistad bajó un poco.`, tone: 'warn' })
+              }
+            }}
+          />
+        </Overlay>
+      )}
+
+      {activity === 'vocab' && (
+        <Overlay>
+          <VocabActivity
+            state={state}
+            onClose={(earned) => {
+              setActivity(null)
+              if (earned) {
+                update((s) => ({ ...s, items: { ...s.items, shield: Math.min(2, s.items.shield + 1) } }))
+                setMsg({ text: 'Ganaste un escudo de palabras.', sub: 'En el próximo combate bloqueará un error sin perder vida.', tone: 'good' })
+              }
+            }}
+          />
+        </Overlay>
+      )}
+
+      {activity === 'reading' && (
+        <Overlay>
+          <ReadingActivity
+            state={state}
+            onClose={(finished) => {
+              setActivity(null)
+              if (finished) {
+                update((s) => ({
+                  ...s,
+                  opened: [...s.opened, 'school-reading'],
+                  outfits: s.outfits.includes('gafas') ? s.outfits : [...s.outfits, 'gafas'],
+                }))
+                setMsg({ text: 'Desbloqueaste: Gafas de lectura.', sub: 'Póntelas desde el menú de atuendos.', tone: 'good' })
+              }
             }}
           />
         </Overlay>

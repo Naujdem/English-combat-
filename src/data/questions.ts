@@ -80,9 +80,24 @@ export const QUESTIONS: Question[] = [
   { id: 'pf-06', topic: 'possessives', kind: 'fix', prompt: 'We love us school!', options: ['We love we school.', 'We love our school.', 'We love ours school.'], answer: 1, tip: 'Para algo de nosotros, antes del sustantivo va "our": our school.' },
   { id: 'pf-07', topic: 'possessives', kind: 'fix', prompt: "The cat is sad. It's leg hurts!", options: ['Its leg hurts.', 'It leg hurts.', "Its' leg hurts."], answer: 0, tip: '"It\'s" es "it is". Para "su" (de un animal) va "its" sin apóstrofo.' },
   { id: 'pf-08', topic: 'possessives', kind: 'fix', prompt: 'Where is you book?', options: ['Where is yours book?', "Where is you're book?", 'Where is your book?'], answer: 2, tip: 'Para "tu" antes de un sustantivo va "your": your book.' },
+
+  // ── Ordenar palabras ────────────────────────────────────
+  // prompt: frase en español · options: palabras en el orden correcto (el juego las desordena)
+  { id: 'bo-01', topic: 'to-be', kind: 'order', prompt: 'Soy estudiante.', options: ['I', 'am', 'a', 'student.'], answer: 0, tip: 'Primero el sujeto (I), luego el verbo (am) y después el resto.' },
+  { id: 'bo-02', topic: 'to-be', kind: 'order', prompt: 'Ella no está en casa.', options: ['She', 'is', 'not', 'at', 'home.'], answer: 0, tip: '"Not" va después del verbo: She is not...' },
+  { id: 'bo-03', topic: 'to-be', kind: 'order', prompt: '¿Eres el nuevo estudiante?', options: ['Are', 'you', 'the', 'new', 'student?'], answer: 0, tip: 'En preguntas el verbo va primero: Are you...?' },
+  { id: 'bo-04', topic: 'to-be', kind: 'order', prompt: 'Ellos son mis amigos.', options: ['They', 'are', 'my', 'friends.'], answer: 0, tip: 'Sujeto (They) + verbo (are) + el resto.' },
+  { id: 'bo-05', topic: 'to-be', kind: 'order', prompt: '¿Está el profesor en el salón?', options: ['Is', 'the', 'teacher', 'in', 'the', 'classroom?'], answer: 0, tip: 'La pregunta empieza con el verbo: Is the teacher...?' },
+  { id: 'bo-06', topic: 'to-be', kind: 'order', prompt: 'Nosotros no estamos cansados.', options: ['We', 'are', 'not', 'tired.'], answer: 0, tip: 'We + are + not + el resto.' },
+  { id: 'pr-01', topic: 'possessives', kind: 'order', prompt: 'Mi nombre es Leo.', options: ['My', 'name', 'is', 'Leo.'], answer: 0, tip: 'El posesivo va antes del sustantivo: My name...' },
+  { id: 'pr-02', topic: 'possessives', kind: 'order', prompt: 'Su mochila (de ella) es roja.', options: ['Her', 'bag', 'is', 'red.'], answer: 0, tip: '"Her" va antes de "bag". En inglés el color va después del verbo.' },
+  { id: 'pr-03', topic: 'possessives', kind: 'order', prompt: '¿Este es tu libro?', options: ['Is', 'this', 'your', 'book?'], answer: 0, tip: 'La pregunta empieza con el verbo: Is this...? Y "your" va antes de "book".' },
+  { id: 'pr-04', topic: 'possessives', kind: 'order', prompt: 'Su profesor (de ellos) es amable.', options: ['Their', 'teacher', 'is', 'nice.'], answer: 0, tip: '"Their" va antes de "teacher".' },
+  { id: 'pr-05', topic: 'possessives', kind: 'order', prompt: 'Esta es la mesa de Maya.', options: ['This', 'is', "Maya's", 'table.'], answer: 0, tip: "\"Maya's table\": el nombre con 's va antes de la cosa." },
+  { id: 'pr-06', topic: 'possessives', kind: 'order', prompt: 'Nuestra escuela es grande.', options: ['Our', 'school', 'is', 'big.'], answer: 0, tip: '"Our" va antes de "school".' },
 ]
 
-export function questionsFor(topics: TopicId[], kinds: QuestionKind[] = ['fill', 'fix']): Question[] {
+export function questionsFor(topics: TopicId[], kinds: QuestionKind[] = ['fill', 'fix', 'order']): Question[] {
   return QUESTIONS.filter((q) => topics.includes(q.topic) && kinds.includes(q.kind ?? 'fill'))
 }
 

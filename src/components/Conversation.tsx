@@ -1,93 +1,110 @@
 import { useState } from 'react'
-import type { Conversation as Conv, FriendDef, GameState } from '../game/types'
+import type { ChatOption, DialogLine, FriendDef, GameState } from '../game/types'
 import { SpriteIcon } from './Sprite'
 import { heroLook } from '../game/helpers'
 import { btn, btnPrimary, Panel } from './ui'
 
-/** Muestra una charla línea por línea. Las preguntas deben responderse bien para avanzar. */
+function EffectChip({ effect }: { effect: ChatOption['effect'] }) {
+  if (effect > 0)
+    return <span className="rounded-full bg-hp/20 px-2 py-0.5 text-xs font-semibold text-hp">Amistad +{effect}</span>
+  if (effect < 0)
+    return <span className="rounded-full bg-danger/20 px-2 py-0.5 text-xs font-semibold text-[#f3b0b0]">Amistad −1</span>
+  return <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs font-semibold text-paper/70">Sin cambio</span>
+}
+
+/**
+ * Charla con un amigo, línea por línea. Las líneas con opciones no tienen respuesta
+ * incorrecta: cada opción tiene su reacción y suma o resta amistad.
+ */
 export function ConversationView({
   friend,
-  conv,
+  lines,
+  title,
+  level,
   state,
   onDone,
 }: {
   friend: FriendDef
-  conv: Conv
+  lines: DialogLine[]
+  title: string
+  level?: string
   state: GameState
-  onDone: () => void
+  onDone: (delta: number) => void
 }) {
   const [i, setI] = useState(0)
   const [showEs, setShowEs] = useState(false)
-  const [tip, setTip] = useState<string | null>(null)
-  const [solved, setSolved] = useState<number | null>(null)
-  const line = conv.lines[i]
-  const last = i === conv.lines.length - 1
+  const [picked, setPicked] = useState<ChatOption | null>(null)
+  const [delta, setDelta] = useState(0)
+  const line = lines[i]
+  const last = i === lines.length - 1
 
   function next() {
     setShowEs(false)
-    setTip(null)
-    setSolved(null)
-    if (last) onDone()
+    setPicked(null)
+    if (last) onDone(delta)
     else setI(i + 1)
   }
 
-  function choose(k: number) {
-    if (!line.choice) return
-    if (k === line.choice.answer) {
-      setSolved(k)
-      setTip(null)
-    } else {
-      setTip(line.choice.tip)
-    }
+  function choose(o: ChatOption) {
+    setPicked(o)
+    setDelta((d) => d + o.effect)
+    setShowEs(false)
   }
 
-  const speaker =
-    line.who === 'friend' ? friend.name : line.who === 'hero' ? state.hero.name : ''
-  const text =
-    line.choice && solved !== null && line.text.includes('___')
-      ? line.text.replace('___', line.choice.options[solved])
-      : line.text
+  const speaker = line.who === 'friend' ? friend.name : line.who === 'hero' ? state.hero.name : ''
+  const mute = !state.recovered.length
 
   return (
     <Panel className="shadow-2xl">
       <div className="mb-2 flex items-center gap-3">
         {line.who !== 'narrator' && (
           <div className="rounded-xl bg-panel-2 p-1">
-            <SpriteIcon look={line.who === 'hero' ? heroLook(state) : { ...friend.look }} size={44} mood={line.who === 'hero' && !state.recovered.length ? 'mute' : 'normal'} />
+            <SpriteIcon look={line.who === 'hero' ? heroLook(state) : { ...friend.look }} size={44} mood={line.who === 'hero' && mute ? 'mute' : 'normal'} />
           </div>
         )}
         <div className="min-w-0 flex-1">
           {speaker && <p className="font-display text-lg leading-tight text-gold">{speaker}</p>}
-          <p className="text-xs text-paper/50">{conv.title} · {conv.level}</p>
+          <p className="text-xs text-paper/50">{title}{level ? ` · ${level}` : ''}</p>
         </div>
-        {line.es && (
+        {(picked ? picked.es : line.es) && (
           <button className="rounded-lg border border-line px-2 py-1 text-xs font-semibold text-paper/80" onClick={() => setShowEs((v) => !v)}>
             {showEs ? 'Ocultar' : 'Traducir'}
           </button>
         )}
       </div>
 
-      <p key={i} className={`anim-fade-in text-[17px] leading-relaxed ${line.who === 'narrator' ? 'italic text-paper/80' : ''}`}>
-        {text}
-      </p>
-      {showEs && line.es && <p className="mt-1 text-sm text-paper/60">{line.es}</p>}
-
-      {line.choice && solved === null && (
-        <div className="mt-3 grid gap-2">
-          {line.choice.options.map((o, k) => (
-            <button key={k} className={`${btn} text-left text-base`} onClick={() => choose(k)}>
-              {o}
-            </button>
-          ))}
+      {!picked ? (
+        <>
+          <p key={i} className={`anim-fade-in text-[17px] leading-relaxed ${line.who === 'narrator' ? 'italic text-paper/80' : ''}`}>
+            {line.text}
+          </p>
+          {showEs && line.es && <p className="mt-1 text-sm text-paper/60">{line.es}</p>}
+          {line.options && (
+            <div className="mt-3 grid gap-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-paper/50">{mute ? '¿Qué haces?' : '¿Qué respondes?'}</p>
+              {line.options.map((o, k) => (
+                <button key={k} className={`${btn} text-left text-base`} onClick={() => choose(o)}>
+                  {o.text}
+                </button>
+              ))}
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="anim-fade-in grid gap-2">
+          <p className="rounded-xl bg-[#3b6fb6]/25 px-3 py-2 text-[15px]">
+            <span className="font-semibold text-[#9cc0f0]">{state.hero.name}: </span>
+            {picked.text}
+          </p>
+          <p className="text-[17px] leading-relaxed">
+            <span className="font-semibold text-gold">{friend.name}: </span>"{picked.reply}"
+          </p>
+          {showEs && picked.es && <p className="text-sm text-paper/60">{picked.es}</p>}
+          <div><EffectChip effect={picked.effect} /></div>
         </div>
       )}
-      {tip && (
-        <p className="anim-fade-in mt-3 rounded-lg bg-danger/15 px-3 py-2 text-sm text-[#f3b0b0]">
-          Casi. {tip}
-        </p>
-      )}
 
-      {(!line.choice || solved !== null) && (
+      {(!line.options || picked) && (
         <div className="mt-4 flex justify-end">
           <button className={btnPrimary} onClick={next} autoFocus>
             {last ? 'Terminar' : 'Siguiente'}

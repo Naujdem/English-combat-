@@ -8,6 +8,7 @@ export const SCENES: Record<string, SceneDef> = { [SCHOOL.id]: SCHOOL }
 export function heroLook(s: GameState, extra: Partial<SpriteLook> = {}): SpriteLook {
   const outfit = OUTFITS[s.outfit] ?? OUTFITS.base
   return {
+    accessory: s.outfit === 'gafas' ? 'glasses' : undefined,
     shirt: s.outfit === 'capa' ? OUTFITS.base.color : outfit.color,
     cape: s.outfit === 'capa' ? outfit.color : '#c0392b',
     hair: s.hero.look.hair,
@@ -18,12 +19,12 @@ export function heroLook(s: GameState, extra: Partial<SpriteLook> = {}): SpriteL
 }
 
 export function friendById(s: GameState, id: string): FriendDef | undefined {
-  if (id === 'interest') return interestFriend(s.interest)
+  if (id === 'interest') return interestFriend(s.interest, s.hero.name)
   return FRIENDS[id]
 }
 
 export function allFriends(s: GameState): FriendDef[] {
-  return [FRIENDS.leo, FRIENDS.maya, interestFriend(s.interest)]
+  return [FRIENDS.leo, FRIENDS.maya, interestFriend(s.interest, s.hero.name)]
 }
 
 export function bossDoorOpen(s: GameState, scene: SceneDef): boolean {
@@ -33,6 +34,6 @@ export function bossDoorOpen(s: GameState, scene: SceneDef): boolean {
 /** Las amistades dan pequeñas ventajas en combate */
 export function perks(s: GameState) {
   return {
-    leoHint: (s.friendship.leo ?? 0) >= 1,
+    leoHint: (s.talks.leo ?? 0) >= 1,
   }
 }

@@ -1,13 +1,12 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { GameState, Question, Zone } from '../game/types'
 import type { Update } from '../game/store'
 import { ENEMIES } from '../data/school'
 import { pickQuestion, TOPICS } from '../data/questions'
 import { SCENES, heroLook, perks } from '../game/helpers'
 import { SpriteBody } from '../components/Sprite'
-import { Bar, btnPrimary, Hearts, Panel } from '../components/ui'
+import { Bar, btnGhost, btnPrimary, Hearts, Panel } from '../components/ui'
 
-type Phase = 'intro' | 'ask' | 'feedback' | 'won' | 'lost'
 
 function Backdrop({ zone }: { zone: Zone }) {
   const wall = zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : '#efe5d3'
@@ -74,6 +73,21 @@ function Backdrop({ zone }: { zone: Zone }) {
   )
 }
 
+type Phase = 'story' | 'ask' | 'feedback' | 'after' | 'won' | 'lost'
+
+/** Desordena índices 0..n-1 asegurando que no queden en el orden correcto */
+function shuffled(n: number): number[] {
+  const a = Array.from({ length: n }, (_, i) => i)
+  if (n < 2) return a
+  do {
+    for (let i = n - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[a[i], a[j]] = [a[j], a[i]]
+    }
+  } while (a.every((v, i) => v === i))
+  return a
+}
+
 export function Battle({ state, update, onExit }: { state: GameState; update: Update; onExit: () => void }) {
   const battle = state.battle!
   const enemy = ENEMIES[battle.enemyId]
@@ -81,64 +95,90 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const ent = scene.entities.find((e) => 'id' in e && e.id === enemy.id)
   const zone = ent ? scene.zoneAt(ent.x, ent.y) : 'aula'
   const leoHint = perks(state).leoHint
-  const metLeo = 'leo' in state.friendship
+  const metLeo = 'leo' in state.talks || 'leo' in state.friendship
 
-  const [phase, setPhase] = useState<Phase>('intro')
+  const [phase, setPhase] = useState<Phase>('story')
+  const [line, setLine] = useState(0)
+  const [showEs, setShowEs] = useState(false)
   const [used, setUsed] = useState<string[]>([])
   const [q, setQ] = useState<Question>(() => pickQuestion(enemy.topics, enemy.kinds, []))
+  const [order, setOrder] = useState<number[]>(() => shuffled(q.options.length))
+  const [placed, setPlaced] = useState<number[]>([])
   const [picked, setPicked] = useState<number | null>(null)
+  const [correct, setCorrect] = useState(false)
+  const [blocked, setBlocked] = useState(false)
   const [heroAnim, setHeroAnim] = useState('')
   const [enemyAnim, setEnemyAnim] = useState('')
-  const [hitText, setHitText] = useState<{ who: 'hero' | 'enemy'; n: number } | null>(null)
+  const [hitText, setHitText] = useState<{ who: 'hero' | 'enemy'; n: number; text: string } | null>(null)
   const [hintUsed, setHintUsed] = useState(false)
   const [removed, setRemoved] = useState<number | null>(null)
 
-  useEffect(() => {
-    const t = window.setTimeout(() => setPhase('ask'), 1100)
-    return () => window.clearTimeout(t)
-  }, [])
-
-  const enemyHurt = phase === 'feedback' && picked === q.answer
-  const heroHurt = phase === 'feedback' && picked !== null && picked !== q.answer
+  const isFix = q.kind === 'fix'
+  const isOrder = q.kind === 'order'
 
   function animate(setter: (v: string) => void, cls: string) {
     setter('')
     requestAnimationFrame(() => setter(cls))
   }
 
-  function answer(k: number) {
-    if (phase !== 'ask') return
-    setPicked(k)
-    if (k === q.answer) {
+  function resolve(ok: boolean) {
+    setCorrect(ok)
+    if (ok) {
       const left = battle.enemyHp - 1
       animate(setHeroAnim, 'anim-lunge-r')
       animate(setEnemyAnim, 'anim-shake')
-      setHitText({ who: 'enemy', n: Date.now() })
+      setHitText({ who: 'enemy', n: Date.now(), text: '-1' })
       update((s) => ({ ...s, battle: s.battle ? { ...s.battle, enemyHp: left } : null }))
       setPhase('feedback')
       if (left <= 0) window.setTimeout(() => win(), 700)
-    } else {
-      const hp = state.hp - 1
-      animate(setEnemyAnim, 'anim-lunge-r')
-      animate(setHeroAnim, 'anim-shake')
-      setHitText({ who: 'hero', n: Date.now() })
-      update((s) => ({ ...s, hp: Math.max(0, hp) }))
-      setPhase(hp <= 0 ? 'lost' : 'feedback')
+      return
     }
+    animate(setEnemyAnim, 'anim-lunge-r')
+    if (state.items.shield > 0) {
+      setBlocked(true)
+      setHitText({ who: 'hero', n: Date.now(), text: '¡Escudo!' })
+      update((s) => ({ ...s, items: { ...s.items, shield: s.items.shield - 1 } }))
+      setPhase('feedback')
+      return
+    }
+    const hp = state.hp - 1
+    animate(setHeroAnim, 'anim-shake')
+    setHitText({ who: 'hero', n: Date.now(), text: '-1' })
+    update((s) => ({ ...s, hp: Math.max(0, hp) }))
+    setPhase(hp <= 0 ? 'lost' : 'feedback')
+  }
+
+  function answer(k: number) {
+    if (phase !== 'ask') return
+    setPicked(k)
+    resolve(k === q.answer)
+  }
+
+  function checkOrder() {
+    if (phase !== 'ask' || placed.length !== q.options.length) return
+    const built = placed.map((i) => q.options[i]).join(' ')
+    resolve(built === q.options.join(' '))
   }
 
   function nextQuestion() {
     const nextUsed = [...used, q.id]
+    const nq = pickQuestion(enemy.topics, enemy.kinds, nextUsed)
     setUsed(nextUsed)
-    setQ(pickQuestion(enemy.topics, enemy.kinds, nextUsed))
+    setQ(nq)
+    setOrder(shuffled(nq.options.length))
+    setPlaced([])
     setPicked(null)
+    setCorrect(false)
+    setBlocked(false)
     setRemoved(null)
     setHintUsed(false)
     setPhase('ask')
   }
 
   function win() {
-    setPhase('won')
+    setLine(0)
+    setShowEs(false)
+    setPhase('after')
     update((s) => {
       const base = { ...s, defeated: [...s.defeated, enemy.id], hp: s.maxHp }
       if (enemy.kind === 'minion') {
@@ -163,22 +203,47 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   }
 
   function takeHint() {
+    setHintUsed(true)
+    if (isOrder) {
+      // Leo pone la primera palabra en su lugar
+      const first = q.options[0]
+      const idx = order.find((i) => q.options[i] === first)!
+      setPlaced([idx])
+      return
+    }
     const wrong = q.options.map((_, i) => i).filter((i) => i !== q.answer)
     setRemoved(wrong[Math.floor(Math.random() * wrong.length)])
-    setHintUsed(true)
   }
 
   const hero = useMemo(() => heroLook(state, { book: true }), [state])
-  const keysNow = (state.keys[state.sceneId] ?? 0)
-  const isFix = q.kind === 'fix'
-  const prompt = !isFix && phase === 'feedback' && picked === q.answer ? q.prompt.replace('___', q.options[q.answer]) : q.prompt
+  const keysNow = state.keys[state.sceneId] ?? 0
+  const prompt =
+    !isFix && !isOrder && phase === 'feedback' && correct ? q.prompt.replace('___', q.options[q.answer]) : q.prompt
+  const storyLines = phase === 'after' ? enemy.after : enemy.before
+  const story = storyLines[line]
+
+  function nextStory() {
+    setShowEs(false)
+    if (line < storyLines.length - 1) setLine(line + 1)
+    else if (phase === 'story') setPhase('ask')
+    else setPhase('won')
+  }
+
+  const showQuestion = phase === 'ask' || phase === 'feedback' || phase === 'lost'
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col gap-3 px-3 py-3">
       <div className="grid grid-cols-2 gap-2">
         <Panel className="px-3 py-2">
           <p className="truncate font-display text-[15px]">{state.hero.name}</p>
-          <div className="mt-1"><Hearts hp={state.hp} max={state.maxHp} /></div>
+          <div className="mt-1 flex items-center gap-2">
+            <Hearts hp={state.hp} max={state.maxHp} />
+            {state.items.shield > 0 && (
+              <span className="whitespace-nowrap rounded-full bg-[#5d8fd4]/25 px-1.5 text-xs font-semibold text-[#9cc0f0]" title="Escudos de palabras">
+                Escudo ×{state.items.shield}
+              </span>
+            )}
+          </div>
         </Panel>
         <Panel className="px-3 py-2">
           <p className="truncate font-display text-[15px]">{enemy.name}</p>
@@ -191,12 +256,15 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
           <Backdrop zone={zone} />
           <g transform="translate(26 92) scale(3.8)">
             <g className={heroAnim} onAnimationEnd={() => setHeroAnim('')}>
-              <SpriteBody look={hero} mood={heroHurt || phase === 'lost' ? 'hurt' : state.recovered.length ? 'normal' : 'mute'} />
+              <SpriteBody look={hero} mood={(phase === 'feedback' && !correct && !blocked) || phase === 'lost' ? 'hurt' : state.recovered.length ? 'normal' : 'mute'} />
             </g>
           </g>
+          {blocked && phase === 'feedback' && (
+            <circle cx="88" cy="150" r="70" fill="none" stroke="#9cc0f0" strokeWidth="5" opacity="0.8" className="anim-pop" />
+          )}
           <g transform={`translate(${enemy.kind === 'boss' ? 342 : 334} ${enemy.kind === 'boss' ? 68 : 92}) scale(${enemy.kind === 'boss' ? -4.6 : -3.8} ${enemy.kind === 'boss' ? 4.6 : 3.8})`}>
-            <g className={enemyAnim} onAnimationEnd={() => setEnemyAnim('')} opacity={phase === 'won' ? 0.25 : 1} style={{ transition: 'opacity 0.6s' }}>
-              <SpriteBody look={{ ...enemy.look }} mood={enemyHurt || phase === 'won' ? 'hurt' : 'normal'} />
+            <g className={enemyAnim} onAnimationEnd={() => setEnemyAnim('')}>
+              <SpriteBody look={{ ...enemy.look }} mood={(phase === 'feedback' && correct) || phase === 'after' ? 'hurt' : 'normal'} />
             </g>
           </g>
           {hitText && (
@@ -208,30 +276,40 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               fontSize="22"
               fontFamily="Fredoka, Nunito, system-ui, sans-serif"
               fontWeight="600"
-              fill={hitText.who === 'enemy' ? '#d64545' : '#e0a526'}
+              fill={hitText.who === 'enemy' ? '#d64545' : hitText.text === '-1' ? '#e0a526' : '#9cc0f0'}
               stroke="#1c1a17"
               strokeWidth="3"
               paintOrder="stroke"
               className="anim-float-up"
             >
-              -1
+              {hitText.text}
             </text>
           )}
         </svg>
-        {phase === 'intro' && <div className="anim-wipe pointer-events-none absolute inset-0 bg-paper" />}
+        {phase === 'story' && line === 0 && <div className="anim-wipe pointer-events-none absolute inset-0 bg-paper" />}
       </div>
 
-      {phase === 'intro' && (
+      {(phase === 'story' || phase === 'after') && story && (
         <Panel className="anim-fade-in">
-          <p className="text-[17px] italic text-paper/85">{enemy.intro}</p>
+          <p className="font-display text-lg text-gold">{enemy.kind === 'boss' || phase === 'after' ? enemy.person : enemy.name}</p>
+          <p key={`${phase}-${line}`} className="anim-fade-in text-[17px] leading-relaxed">"{story.text}"</p>
+          {showEs && story.es && <p className="mt-1 text-sm text-paper/60">{story.es}</p>}
+          <div className="mt-3 flex items-center justify-between">
+            {story.es ? (
+              <button className={btnGhost} onClick={() => setShowEs((v) => !v)}>{showEs ? 'Ocultar' : 'Traducir'}</button>
+            ) : <span />}
+            <button className={btnPrimary} onClick={nextStory} autoFocus>
+              {phase === 'story' && line === storyLines.length - 1 ? '¡A pelear!' : 'Siguiente'}
+            </button>
+          </div>
         </Panel>
       )}
 
-      {(phase === 'ask' || phase === 'feedback' || phase === 'lost') && (
+      {showQuestion && (
         <Panel className="anim-fade-in">
           <div className="mb-1 flex items-center justify-between">
             <p className="text-xs font-semibold uppercase tracking-wide text-gold">
-              {isFix ? '¡Corrige al enemigo!' : TOPICS[q.topic].name}
+              {isFix ? '¡Corrige al enemigo!' : isOrder ? 'Ordena la frase' : TOPICS[q.topic].name}
             </p>
             {leoHint && phase === 'ask' && (
               <button className="rounded-lg border border-hp/60 px-2 py-1 text-xs font-semibold text-hp disabled:opacity-40" onClick={takeHint} disabled={hintUsed}>
@@ -239,48 +317,98 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               </button>
             )}
           </div>
-          {isFix ? (
+
+          {isFix && (
             <>
-              <p className="text-sm text-paper/60">{enemy.name} dice:</p>
+              <p className="text-sm text-paper/60">{enemy.person} dice:</p>
               <p className={`font-display text-[22px] leading-snug ${phase === 'ask' ? 'text-[#f3b0b0]' : 'text-paper/50 line-through decoration-danger'}`}>
                 "{prompt}"
               </p>
               <p className="mt-2 text-sm text-paper/70">¿Cuál es la forma correcta?</p>
             </>
-          ) : (
-            <p className="font-display text-[22px] leading-snug">{prompt}</p>
           )}
-          <div className={`mt-3 grid gap-2 ${isFix ? 'grid-cols-1' : 'grid-cols-3'}`}>
-            {q.options.map((o, k) => {
-              const isAnswer = k === q.answer
-              const look =
-                phase === 'ask'
-                  ? 'border-line bg-panel-2 hover:border-gold/70 active:scale-[0.97]'
-                  : isAnswer
-                    ? 'border-hp bg-hp/25'
-                    : picked === k
-                      ? 'border-danger bg-danger/25'
-                      : 'border-line bg-panel-2 opacity-40'
-              return (
-                <button
-                  key={k}
-                  className={`rounded-xl border-2 py-2.5 font-display font-medium text-paper transition ${isFix ? 'px-3 text-left text-[17px]' : 'px-2 text-[18px]'} ${look} ${removed === k ? 'invisible' : ''}`}
-                  onClick={() => answer(k)}
-                  disabled={phase !== 'ask'}
-                >
-                  {o}
-                </button>
-              )
-            })}
-          </div>
-          {phase === 'feedback' && picked === q.answer && battle.enemyHp > 0 && (
+          {!isFix && !isOrder && <p className="font-display text-[22px] leading-snug">{prompt}</p>}
+
+          {isOrder ? (
+            <>
+              <p className="text-sm text-paper/60">Escribe en inglés:</p>
+              <p className="font-display text-[20px] leading-snug">{q.prompt}</p>
+              <div
+                className={`mt-3 flex min-h-[52px] flex-wrap items-center gap-1.5 rounded-xl border-2 border-dashed p-2 ${
+                  phase === 'ask' ? 'border-line' : correct ? 'border-hp bg-hp/10' : 'border-danger bg-danger/10'
+                }`}
+                aria-label="Tu frase"
+              >
+                {placed.length === 0 && <span className="px-1 text-sm text-paper/40">Toca las palabras en orden</span>}
+                {placed.map((i, k) => (
+                  <button
+                    key={`${i}-${k}`}
+                    className="rounded-lg bg-gold px-2.5 py-1.5 font-display text-[17px] font-medium text-ink"
+                    onClick={() => phase === 'ask' && setPlaced(placed.filter((_, j) => j !== k))}
+                    disabled={phase !== 'ask'}
+                  >
+                    {q.options[i]}
+                  </button>
+                ))}
+              </div>
+              {phase === 'ask' ? (
+                <>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {order.map((i) =>
+                      placed.includes(i) ? null : (
+                        <button
+                          key={i}
+                          className="rounded-lg border-2 border-line bg-panel-2 px-2.5 py-1.5 font-display text-[17px] font-medium transition active:scale-95"
+                          onClick={() => setPlaced([...placed, i])}
+                        >
+                          {q.options[i]}
+                        </button>
+                      ),
+                    )}
+                  </div>
+                  <button className={`${btnPrimary} mt-3 w-full`} onClick={checkOrder} disabled={placed.length !== q.options.length}>
+                    Comprobar
+                  </button>
+                </>
+              ) : (
+                !correct && <p className="mt-2 text-sm text-paper/70">Correcta: <span className="font-semibold text-hp">{q.options.join(' ')}</span></p>
+              )}
+            </>
+          ) : (
+            <div className={`mt-3 grid gap-2 ${isFix ? 'grid-cols-1' : 'grid-cols-3'}`}>
+              {q.options.map((o, k) => {
+                const isAnswer = k === q.answer
+                const look =
+                  phase === 'ask'
+                    ? 'border-line bg-panel-2 hover:border-gold/70 active:scale-[0.97]'
+                    : isAnswer
+                      ? 'border-hp bg-hp/25'
+                      : picked === k
+                        ? 'border-danger bg-danger/25'
+                        : 'border-line bg-panel-2 opacity-40'
+                return (
+                  <button
+                    key={k}
+                    className={`rounded-xl border-2 py-2.5 font-display font-medium text-paper transition ${isFix ? 'px-3 text-left text-[17px]' : 'px-2 text-[18px]'} ${look} ${removed === k ? 'invisible' : ''}`}
+                    onClick={() => answer(k)}
+                    disabled={phase !== 'ask'}
+                  >
+                    {o}
+                  </button>
+                )
+              })}
+            </div>
+          )}
+
+          {phase === 'feedback' && correct && battle.enemyHp > 0 && (
             <div className="anim-fade-in mt-3 flex items-center justify-between gap-2">
               <p className="text-sm font-semibold text-hp">{isFix ? '¡Lo corregiste! El golpe acertó.' : '¡Correcto! El golpe acertó.'}</p>
               <button className={btnPrimary} onClick={nextQuestion} autoFocus>Seguir</button>
             </div>
           )}
-          {(phase === 'feedback' || phase === 'lost') && picked !== q.answer && (
+          {(phase === 'feedback' || phase === 'lost') && !correct && (
             <div className="anim-fade-in mt-3 rounded-xl bg-panel-2 p-3">
+              {blocked && <p className="mb-1 text-sm font-semibold text-[#9cc0f0]">Tu escudo de palabras bloqueó el golpe.</p>}
               <p className="text-sm font-semibold text-gold">{metLeo ? 'Pista de Leo' : 'Pista'}</p>
               <p className="mt-0.5 text-[15px] leading-snug">{q.tip}</p>
               <div className="mt-3 flex justify-end">
@@ -301,7 +429,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
           <p className="font-display text-2xl text-gold">¡Victoria!</p>
           {enemy.kind === 'minion' ? (
             <p className="mt-1 text-[16px]">
-              {enemy.name} soltó una llave. Llevas {keysNow} de {scene.keysNeeded}.
+              {enemy.person} te dio un pedazo de llave. Llevas {keysNow} de {scene.keysNeeded}.
               {keysNow >= scene.keysNeeded && ' ¡La sala de profesores ya está abierta!'}
             </p>
           ) : (

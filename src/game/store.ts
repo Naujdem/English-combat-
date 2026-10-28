@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { GameState } from './types'
 import { SCHOOL } from '../data/school'
+import { STORY_POINTS } from './social'
 
 const KEY = 'english-combat-save-v1'
 
@@ -23,6 +24,8 @@ export function newGame(): GameState {
     defeated: [],
     opened: [],
     friendship: {},
+    talks: {},
+    items: { shield: 0 },
     seenLesson: [],
     battle: null,
   }
@@ -33,7 +36,14 @@ export function loadSave(): GameState | null {
     const raw = localStorage.getItem(KEY)
     if (!raw) return null
     const data = JSON.parse(raw) as GameState
-    return data.version === 1 ? data : null
+    if (data.version !== 1) return null
+    // Partidas anteriores guardaban el nivel de amistad en vez de puntos
+    if (!data.talks) {
+      data.talks = { ...data.friendship }
+      data.friendship = Object.fromEntries(Object.entries(data.friendship).map(([k, v]) => [k, STORY_POINTS[v] ?? 0]))
+    }
+    if (!data.items) data.items = { shield: 0 }
+    return data
   } catch {
     return null
   }
