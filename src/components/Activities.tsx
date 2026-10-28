@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import type { GameState } from '../game/types'
 import { SCHOOL_READING, SCHOOL_VOCAB } from '../data/activities'
+
+type Word = { en: string; es: string }
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
 import { SpeakButton } from './SpeakButton'
 
@@ -15,10 +17,10 @@ function sample<T>(list: T[], n: number): T[] {
 
 type VocabQ = { ask: string; options: string[]; answer: number; toEs: boolean; en: string }
 
-function buildVocabQuiz(): VocabQ[] {
-  return sample(SCHOOL_VOCAB, 5).map((w, i) => {
+function buildVocabQuiz(words: Word[]): VocabQ[] {
+  return sample(words, 5).map((w, i) => {
     const toEs = i % 2 === 0
-    const others = sample(SCHOOL_VOCAB.filter((x) => x.en !== w.en), 2)
+    const others = sample(words.filter((x) => x.en !== w.en), 2)
     const opts = sample([w, ...others], 3)
     return {
       ask: toEs ? w.en : w.es,
@@ -30,9 +32,23 @@ function buildVocabQuiz(): VocabQ[] {
   })
 }
 
-/** Repaso de vocabulario en la biblioteca. Con 4 de 5 aciertos se gana un escudo de palabras. */
-export function VocabActivity({ state, onClose }: { state: GameState; onClose: (earned: boolean) => void }) {
-  const quiz = useMemo(buildVocabQuiz, [])
+/** Repaso de vocabulario (biblioteca, patio...). Con 4 de 5 aciertos se gana un escudo de palabras. */
+export function VocabActivity({
+  state,
+  onClose,
+  words = SCHOOL_VOCAB,
+  place = 'Biblioteca',
+  title = 'Repaso de vocabulario',
+  rewardText = 'Los libros te dan un escudo de palabras: bloquea un error en combate.',
+}: {
+  state: GameState
+  onClose: (earned: boolean) => void
+  words?: Word[]
+  place?: string
+  title?: string
+  rewardText?: string
+}) {
+  const quiz = useMemo(() => buildVocabQuiz(words), [words])
   const [i, setI] = useState(0)
   const [picked, setPicked] = useState<number | null>(null)
   const [score, setScore] = useState(0)
@@ -50,8 +66,8 @@ export function VocabActivity({ state, onClose }: { state: GameState; onClose: (
     <Panel>
       <div className="mb-2 flex items-center justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-gold">Biblioteca</p>
-          <h2 className="font-display text-xl">Repaso de vocabulario</h2>
+          <p className="text-xs font-semibold uppercase tracking-wide text-gold">{place}</p>
+          <h2 className="font-display text-xl">{title}</h2>
         </div>
         <button className={btnGhost} onClick={() => onClose(false)}>Salir</button>
       </div>
@@ -87,7 +103,7 @@ export function VocabActivity({ state, onClose }: { state: GameState; onClose: (
           <p className="font-display text-2xl">{score} de {quiz.length}</p>
           {score >= 4 ? (
             <p className="mt-1 text-[15px] text-paper/80">
-              {full ? '¡Muy bien! Ya tienes el máximo de escudos (2), pero el repaso siempre ayuda.' : '¡Muy bien! Los libros te dan un escudo de palabras: bloquea un error en combate.'}
+              {full ? '¡Muy bien! Ya tienes el máximo de escudos (2), pero el repaso siempre ayuda.' : `¡Muy bien! ${rewardText}`}
             </p>
           ) : (
             <p className="mt-1 text-[15px] text-paper/80">Necesitas 4 aciertos para ganar un escudo. Puedes intentarlo otra vez.</p>

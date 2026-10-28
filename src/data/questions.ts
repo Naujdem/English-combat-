@@ -170,6 +170,22 @@ export const QUESTIONS: Question[] = [
   { id: 'tsf-02', topic: 'possessives', tags: ['sala'], kind: 'fix', prompt: 'I am you teacher!', options: ['I is your teacher.', 'I am your teacher.', 'I am you teacher.'], answer: 1, tip: 'Antes de "teacher" va "your": I am your teacher.' },
   { id: 'tsf-03', topic: 'possessives', tags: ['sala'], kind: 'fix', prompt: 'This is mine classroom!', options: ['This is me classroom.', 'This is I classroom.', 'This is my classroom.'], answer: 2, tip: '"Mine" va solo, sin sustantivo. Antes de "classroom" va "my".' },
   { id: 'tso-01', topic: 'possessives', tags: ['sala'], kind: 'order', prompt: 'Tus palabras están en mi escritorio.', options: ['Your', 'words', 'are', 'in', 'my', 'desk.'], answer: 0, tip: 'Your words + are + in my desk.' },
+
+  // ── Preguntas de lugar: patio (Max, el competitivo) ─────
+  { id: 'tp-01', topic: 'to-be', tags: ['patio'], prompt: 'Football ___ my favorite sport.', options: ['is', 'are', 'am'], answer: 0, tip: '"Football" es un deporte, una sola cosa: va "is".' },
+  { id: 'tp-02', topic: 'to-be', tags: ['patio'], prompt: 'The players ___ on the field.', options: ['is', 'are', 'am'], answer: 1, tip: '"The players" es plural: va "are".' },
+  { id: 'tp-03', topic: 'possessives', tags: ['patio'], prompt: 'This is ___ ball. Give it back!', options: ['me', 'my', 'mine'], answer: 1, tip: 'Antes de "ball" va "my": my ball.' },
+  { id: 'tp-04', topic: 'possessives', tags: ['patio'], prompt: 'Max and Ben are on a team. ___ team is the best.', options: ['Their', 'There', 'They'], answer: 0, tip: 'Para algo de ellos: their team.' },
+  { id: 'tp-05', topic: 'to-be', tags: ['patio'], prompt: '___ you fast? — Yes, I am!', options: ['Are', 'Is', 'Am'], answer: 0, tip: 'Con "you" la pregunta empieza con "Are".' },
+  { id: 'tp-06', topic: 'to-be', tags: ['patio'], prompt: 'The coach ___ strict.', options: ['are', 'is', 'am'], answer: 1, tip: '"The coach" es una persona (he): va "is".' },
+  { id: 'tp-07', topic: 'to-be', tags: ['patio'], prompt: 'My shoes ___ new.', options: ['is', 'am', 'are'], answer: 2, tip: '"My shoes" es plural: va "are".' },
+  { id: 'tpf-01', topic: 'to-be', tags: ['patio'], kind: 'fix', prompt: 'I are the best player!', options: ['I am the best player.', 'I is the best player.', 'I are the best players.'], answer: 0, tip: 'Con "I" va "am".' },
+  { id: 'tpf-02', topic: 'possessives', tags: ['patio'], kind: 'fix', prompt: 'This is me ball!', options: ['This is mine ball.', 'This is my ball.', 'This is I ball.'], answer: 1, tip: 'Antes de un sustantivo va "my": my ball.' },
+  { id: 'tpf-03', topic: 'to-be', tags: ['patio'], kind: 'fix', prompt: 'We is the champions!', options: ['We are the champions.', 'We am the champions.', 'Us are the champions.'], answer: 0, tip: 'Con "we" va "are".' },
+  { id: 'tpf-04', topic: 'to-be', tags: ['patio'], kind: 'fix', prompt: 'The ball are red!', options: ['The ball am red.', 'The balls is red.', 'The ball is red.'], answer: 2, tip: '"The ball" es una sola cosa: va "is".' },
+  { id: 'tpo-01', topic: 'possessives', tags: ['patio'], kind: 'order', prompt: 'El fútbol es mi deporte favorito.', options: ['Football', 'is', 'my', 'favorite', 'sport.'], answer: 0, tip: 'Football + is + my favorite sport.' },
+  { id: 'tpo-02', topic: 'possessives', tags: ['patio'], kind: 'order', prompt: '¿Es esta tu pelota?', options: ['Is', 'this', 'your', 'ball?'], answer: 0, tip: 'La pregunta empieza con "Is": Is this your ball?' },
+  { id: 'tpo-03', topic: 'to-be', tags: ['patio'], kind: 'order', prompt: 'Nosotros somos un equipo.', options: ['We', 'are', 'a', 'team.'], answer: 0, tip: 'We + are + a team.' },
 ]
 
 /** Pregunta de escucha generada a partir de una de completar */

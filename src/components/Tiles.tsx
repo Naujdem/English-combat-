@@ -9,6 +9,7 @@ export const FLOOR: Record<Zone, string> = {
   biblioteca: '#dccdae',
   sala: '#d8c9e0',
   secretaria: '#d6e3cf',
+  patio: '#8fbf6a',
 }
 
 const WALL = '#7a6a58'
@@ -16,7 +17,7 @@ const WALL_TOP = '#8d7c68'
 
 /** Casillas por las que se puede caminar */
 export function walkable(c: string, doorOpen: boolean) {
-  return c === '.' || c === 'd' || (c === 'X' && doorOpen)
+  return c === '.' || c === ',' || c === 'd' || (c === 'X' && doorOpen)
 }
 
 /** Nombre en inglés de cada objeto, se muestra al chocar con él */
@@ -33,6 +34,9 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   M: { en: "teacher's desk", es: 'escritorio del profesor' },
   F: { en: 'cabinet', es: 'archivador' },
   C: { en: 'counter', es: 'mostrador' },
+  G: { en: 'goal', es: 'portería' },
+  Y: { en: 'tree', es: 'árbol' },
+  H: { en: 'bench', es: 'banca' },
   '#': { en: 'wall', es: 'pared' },
 }
 
@@ -180,6 +184,43 @@ export function Tile({ c, x, y, floor, doorOpen }: { c: string; x: number; y: nu
               <rect x={X + 9.5} y={Y + 2.5} width={11} height={6} fill="#9fd3f0" />
             </>
           )}
+        </g>
+      )
+    case ',':
+      return (
+        <g>
+          {base}
+          <path d={`M${X + 6} ${Y + 20} l2 -5 l2 5 M${X + 20} ${Y + 10} l2 -5 l2 5 M${X + 14} ${Y + 28} l1.5 -4 l1.5 4`} fill="none" stroke="#6fa04d" strokeWidth="1.2" />
+        </g>
+      )
+    case 'G':
+      return (
+        <g>
+          {base}
+          <rect x={X + 3} y={Y + 2} width={T - 6} height={T - 4} fill="none" stroke="#f4efe4" strokeWidth="3" />
+          {[0, 1, 2, 3].map((k) => (
+            <line key={k} x1={X + 5} y1={Y + 7 + k * 6} x2={X + T - 5} y2={Y + 7 + k * 6} stroke="#f4efe4" strokeOpacity="0.5" strokeWidth="0.8" />
+          ))}
+        </g>
+      )
+    case 'Y':
+      return (
+        <g>
+          {base}
+          <rect x={X + 13} y={Y + 18} width={6} height={11} fill="#7a5230" />
+          <circle cx={X + 16} cy={Y + 12} r={11} fill="#3b8a3e" />
+          <circle cx={X + 10} cy={Y + 15} r={6} fill="#2f7a33" />
+          <circle cx={X + 22} cy={Y + 15} r={6} fill="#2f7a33" />
+        </g>
+      )
+    case 'H':
+      return (
+        <g>
+          {base}
+          <rect x={X + 2} y={Y + 10} width={T - 4} height={7} rx="1" fill="#a8743f" />
+          <rect x={X + 2} y={Y + 19} width={T - 4} height={4} rx="1" fill="#93663f" />
+          <rect x={X + 4} y={Y + 23} width={3} height={6} fill="#5a5a5a" />
+          <rect x={X + T - 7} y={Y + 23} width={3} height={6} fill="#5a5a5a" />
         </g>
       )
     case 'p':

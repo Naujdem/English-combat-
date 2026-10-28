@@ -18,6 +18,23 @@ export const SCHOOL_VOCAB: { en: string; es: string }[] = [
   { en: 'friend', es: 'amigo' },
 ]
 
+/** Vocabulario de deportes para el repaso con el entrenador en el patio */
+export const SPORTS_VOCAB: { en: string; es: string }[] = [
+  { en: 'football', es: 'fútbol' },
+  { en: 'basketball', es: 'baloncesto' },
+  { en: 'tennis', es: 'tenis' },
+  { en: 'ball', es: 'pelota' },
+  { en: 'team', es: 'equipo' },
+  { en: 'player', es: 'jugador' },
+  { en: 'coach', es: 'entrenador' },
+  { en: 'run', es: 'correr' },
+  { en: 'jump', es: 'saltar' },
+  { en: 'swim', es: 'nadar' },
+  { en: 'win', es: 'ganar' },
+  { en: 'play', es: 'jugar' },
+  { en: 'shoes', es: 'zapatos' },
+]
+
 /** Lectura del tablón del aula. Da pistas de la historia y practica to be y posesivos. */
 export const SCHOOL_READING = {
   title: 'Welcome to Greenfield School!',

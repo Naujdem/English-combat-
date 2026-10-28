@@ -8,6 +8,7 @@ import type { EnemyDef, SceneDef, Zone } from '../game/types'
  *  K  mesa redonda   V  máquina         L  estantería
  *  p  planta         M  escritorio del profesor
  *  F  archivador     C  mostrador de la secretaría
+ *  ,  césped         G  portería        Y  árbol        H  banca
  * Para crear otro escenario basta con escribir otra tabla como esta.
  */
 const MAP = [
@@ -21,15 +22,16 @@ const MAP = [
   'W.....#...d....W',
   'W.D.D.#####CC..#',
   '#.....#LLL######',
-  'W.....d...######',
-  '#.....#...######',
-  '####X###########',
-  '#p....MMMp######',
-  'W.........W#####',
+  'W.....d...d,,,,#',
+  '#.....#...#,,,G#',
+  '####X######,,,,#',
+  '#p....MMMp#Y,,H#',
+  'W.........W,,,,#',
   '################',
 ]
 
 function zoneAt(x: number, y: number): Zone {
+  if (x >= 11 && y >= 10) return 'patio'
   if (x >= 11) return 'secretaria'
   if (y >= 13) return 'sala'
   if (x >= 7 && y <= 3) return 'bano'
@@ -56,6 +58,11 @@ export const SCHOOL: SceneDef = {
     { type: 'chest', id: 'school-chest', outfit: 'naranja', x: 7, y: 11 },
     { type: 'boss', id: 'school-boss', x: 7, y: 14 },
     { type: 'npc', id: 'secretary', x: 13, y: 6 },
+    { type: 'npc', id: 'ana', x: 1, y: 9 },
+    { type: 'npc', id: 'librarian', x: 8, y: 11 },
+    { type: 'npc', id: 'coach', x: 11, y: 11 },
+    { type: 'npc', id: 'ben', x: 12, y: 14 },
+    { type: 'enemy', id: 'school-patio', x: 13, y: 12 },
   ],
   labels: [
     { text: 'Aula', x: 3, y: 7 },
@@ -64,6 +71,7 @@ export const SCHOOL: SceneDef = {
     { text: 'Biblioteca', x: 8, y: 10 },
     { text: 'Sala de profesores', x: 3, y: 14 },
     { text: 'Secretaría', x: 13, y: 8 },
+    { text: 'Patio', x: 13, y: 14 },
   ],
   zoneAt,
 }
@@ -74,6 +82,28 @@ export const SCHOOL: SceneDef = {
  * estudiantes, prometiéndoles las mejores notas. Al vencerlos, el hechizo los suelta.
  */
 export const ENEMIES: Record<string, EnemyDef> = {
+  'school-patio': {
+    id: 'school-patio',
+    name: 'Max, el competitivo',
+    person: 'Max',
+    kind: 'minion',
+    optional: true,
+    reward: 'deportivo',
+    hp: 4,
+    topics: ['to-be', 'possessives'],
+    kinds: ['fill', 'fix', 'order', 'listen'],
+    tags: ['patio'],
+    look: { shirt: '#2e9d8f', hair: '#a0522d', skin: '#f1c27d', accessory: 'cap' },
+    before: [
+      { text: 'Hey! This is MY court. Are you fast? Are you strong?', es: '¡Oye! Esta es MI cancha. ¿Eres rápido? ¿Eres fuerte?' },
+      { text: "I don't have a key, but I am the best player here. Prove you are better!", es: 'No tengo una llave, pero soy el mejor jugador de aquí. ¡Demuestra que eres mejor!' },
+    ],
+    after: [
+      { text: 'Wow, you are strong! OK, you are a good player too.', es: '¡Guau, eres fuerte! Bueno, tú también eres buen jugador.' },
+      { text: "Here, take this sports shirt. Let's play football after class!", es: 'Toma esta camiseta deportiva. ¡Juguemos fútbol después de clase!' },
+    ],
+    freed: { text: 'My team is the best! Do you want to play with us?', es: '¡Mi equipo es el mejor! ¿Quieres jugar con nosotros?' },
+  },
   'leo-trainer': {
     id: 'leo-trainer',
     name: 'Leo, el entrenador',
@@ -201,4 +231,5 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   gafas: { name: 'Gafas de lectura', color: '#3b6fb6' },
   rosada: { name: 'Camiseta rosada', color: '#d4537e' },
   uniforme: { name: 'Uniforme escolar', color: '#2b4a7a' },
+  deportivo: { name: 'Camiseta deportiva', color: '#2e9d8f' },
 }

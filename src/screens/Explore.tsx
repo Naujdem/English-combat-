@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { DialogLine, Entity, GameState } from '../game/types'
 import type { Update } from '../game/store'
 import { SCENES, bossDoorOpen, friendById, heroLook } from '../game/helpers'
@@ -8,6 +8,7 @@ import { Lesson } from '../components/Lesson'
 import type { TopicId } from '../game/types'
 import { applyCasual, completeStory, FRIEND_REWARDS, talkTo } from '../game/social'
 import { ReadingActivity, VocabActivity } from '../components/Activities'
+import { SPORTS_VOCAB } from '../data/activities'
 import { Chest, FLOOR, T, Tile, VOCAB, walkable } from '../components/Tiles'
 import { SpriteBody } from '../components/Sprite'
 import { DPad } from '../components/DPad'
@@ -46,7 +47,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const firstVisit = !state.seenLesson.includes(scene.id)
   const doorOpen = bossDoorOpen(state, scene)
   const keys = state.keys[scene.id] ?? 0
-  const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | null>(null)
+  const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | 'sports' | null>(null)
+  const npcTurn = useRef<Record<string, number>>({})
   const [notebook, setNotebook] = useState(false)
   // Preguntar "Is this your...?" mientras llevas un objeto perdido
   const [ask, setAsk] = useState<{ itemId: string; npcId: string; npcName: string } | null>(null)
@@ -82,7 +84,16 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         if (e.id === 'secretary' && !state.opened.includes('school-registration')) {
           setMsg(null)
           setActivity('registration')
-        } else {
+        } else if (e.id === 'coach') {
+          setMsg(null)
+          setActivity('sports')
+        } else if (npc.lines) {
+          // Los estudiantes de ambiente dicen una frase distinta cada vez
+          const k = npcTurn.current[e.id] ?? 0
+          npcTurn.current[e.id] = k + 1
+          const line = npc.lines[k % npc.lines.length]
+          setMsg({ text: `${npc.name}: "${line.text}"`, sub: line.es, say: line.text })
+        } else if (npc.doneLine) {
           setMsg({ text: `${npc.name}: "${npc.doneLine.text}"`, sub: npc.doneLine.es, say: npc.doneLine.text })
         }
         return
@@ -440,6 +451,25 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               if (earned) {
                 update((s) => ({ ...s, items: { ...s.items, shield: Math.min(2, s.items.shield + 1) } }))
                 setMsg({ text: 'Ganaste un escudo de palabras.', sub: 'En el próximo combate bloqueará un error sin perder vida.', tone: 'good' })
+              }
+            }}
+          />
+        </Overlay>
+      )}
+
+      {activity === 'sports' && (
+        <Overlay>
+          <VocabActivity
+            state={state}
+            words={SPORTS_VOCAB}
+            place="Patio · Coach Mike"
+            title="Palabras de deportes"
+            rewardText="El entrenador te da un escudo de palabras: bloquea un error en combate."
+            onClose={(earned) => {
+              setActivity(null)
+              if (earned) {
+                update((s) => ({ ...s, items: { ...s.items, shield: Math.min(2, s.items.shield + 1) } }))
+                setMsg({ text: 'Coach Mike: "Great job! You are a good player!"', sub: 'Ganaste un escudo de palabras.', tone: 'good', say: 'Great job! You are a good player!' })
               }
             }}
           />

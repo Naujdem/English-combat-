@@ -11,13 +11,28 @@ import { Bar, btnGhost, btnPrimary, Hearts, Panel } from '../components/ui'
 
 
 function Backdrop({ zone }: { zone: Zone }) {
-  const wall = zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : '#efe5d3'
+  const wall = zone === 'patio' ? '#bfe3f5' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : '#efe5d3'
   return (
     <g>
       <rect width="360" height="150" fill={wall} />
-      <rect y="150" width="360" height="70" fill={zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : '#b98c5a'} />
+      <rect y="150" width="360" height="70" fill={zone === 'patio' ? '#8fbf6a' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : '#b98c5a'} />
       <line x1="0" y1="172" x2="360" y2="172" stroke="rgba(0,0,0,0.1)" />
       <line x1="0" y1="198" x2="360" y2="198" stroke="rgba(0,0,0,0.1)" />
+      {zone === 'patio' && (
+        <>
+          <circle cx="310" cy="38" r="20" fill="#f6d36b" />
+          <ellipse cx="90" cy="40" rx="34" ry="12" fill="#ffffff" opacity="0.85" />
+          <ellipse cx="200" cy="28" rx="26" ry="9" fill="#ffffff" opacity="0.8" />
+          <rect x="0" y="118" width="360" height="32" fill="#7aa95a" />
+          <rect x="140" y="80" width="90" height="70" fill="none" stroke="#f4efe4" strokeWidth="5" />
+          {[0, 1, 2, 3].map((k) => (
+            <line key={k} x1="143" y1={92 + k * 14} x2="227" y2={92 + k * 14} stroke="#f4efe4" strokeOpacity="0.5" />
+          ))}
+          <rect x="22" y="92" width="10" height="40" fill="#7a5230" />
+          <circle cx="27" cy="80" r="26" fill="#3b8a3e" />
+          <circle cx="250" cy="196" r="9" fill="#ffffff" stroke="#2d2d3a" strokeWidth="1.5" />
+        </>
+      )}
       {zone === 'aula' && (
         <>
           <rect x="110" y="22" width="140" height="66" rx="3" fill="#7a5230" />
@@ -187,6 +202,10 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         }
       }
       const base = { ...s, defeated: [...s.defeated, enemy.id], hp: s.maxHp }
+      if (enemy.optional) {
+        const r = enemy.reward
+        return r && !s.outfits.includes(r) ? { ...base, outfits: [...s.outfits, r] } : base
+      }
       if (enemy.kind === 'minion') {
         return { ...base, keys: { ...s.keys, [s.sceneId]: (s.keys[s.sceneId] ?? 0) + 1 } }
       }
@@ -385,6 +404,8 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             <p className="mt-1 text-[16px]">
               Leo ahora es tu amigo. Si fallas en un combate, te dará una pista. Tu aventura empieza en la escuela.
             </p>
+          ) : enemy.optional ? (
+            <p className="mt-1 text-[16px]">{enemy.person} te regaló un atuendo nuevo. Póntelo desde Atuendos.</p>
           ) : enemy.kind === 'minion' ? (
             <p className="mt-1 text-[16px]">
               {enemy.person} te dio un pedazo de llave. Llevas {keysNow} de {scene.keysNeeded}.

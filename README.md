@@ -84,6 +84,8 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 - Atuendos desbloqueables y guardado automático.
 - El Profesor Grimm pelea en 3 fases (to be → posesivos → mezcla con ordenar y escuchar), con diálogo entre fases (`phases` en `school.ts`).
 - Secretaría (`src/components/Registration.tsx`): la señora López llena contigo la ficha de matrícula (nombre, edad, país, nacionalidad, dirección, teléfono y email). La dirección y el teléfono son inventados (papel de traslado), así no se pide información real. Practica números de teléfono escuchando y cómo se dice un email (at, dot). Da el uniforme escolar.
+- Patio: césped, portería, árbol y banca. Coach Mike repasa palabras de deportes (da escudo) y Max, un rival opcional, pelea con preguntas de deportes y regala la camiseta deportiva (no da llave).
+- Estudiantes de ambiente (`src/data/npcs.ts`): Ana en el aula, Mr. Brown en la biblioteca y Ben en el patio dicen una frase distinta cada vez que les hablas.
 - Misión de objetos perdidos (`src/data/lostFound.ts`): Maya perdió su mochila y Leo su libro. Al encontrarlos hay que preguntar "Is this your...?" y la gente responde con posesivos ("No, it isn't mine. It's Maya's").
 - Audio: botones para escuchar en inglés en diálogos, lecciones, combates, lecturas y vocabulario (voz del dispositivo, sin internet). Dos toques seguidos leen más lento.
 - Combate de escucha: se oye una frase y hay que elegir la correcta. Se generan solas a partir de las preguntas de completar.

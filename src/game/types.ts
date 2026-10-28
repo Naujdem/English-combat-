@@ -50,7 +50,7 @@ export type Question = {
   tags?: string[]
 }
 
-export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria'
+export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio'
 
 export type EnemyDef = {
   id: string
@@ -60,6 +60,10 @@ export type EnemyDef = {
   person: string
   /** trainer: Leo en modo entrenamiento, no castiga al perder */
   kind: 'minion' | 'boss' | 'trainer'
+  /** Esbirro opcional: no da llave, da la recompensa de `reward` */
+  optional?: boolean
+  /** Atuendo que regala al ser vencido */
+  reward?: string
   hp: number
   /** Temas de los que salen sus preguntas */
   topics: TopicId[]
