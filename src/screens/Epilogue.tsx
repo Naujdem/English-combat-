@@ -82,7 +82,7 @@ function buildSteps(s: GameState): Step[] {
     { who: 'villain', text: 'Ha! So you have your school words back... and a piece of MY clock.', es: '¡Ja! Así que recuperaste tus palabras de la escuela... y una pieza de MI reloj.', villain: true, cast },
     { who: 'villain', text: 'Enjoy it. Your other words are in the city. Come and get them... if you can!', es: 'Disfrútalo. Tus otras palabras están en la ciudad. Ven por ellas... ¡si puedes!', villain: true, cast },
     { who: 'narrator', text: 'El desconocido desaparece otra vez en una nube oscura. Sacas la pieza del reloj que te dio Grimm.', cast, clock: true },
-    { who: 'leo', text: 'Look! It is a piece of a clock. The clock has four pieces. Where are the other pieces?', es: '¡Mira! Es una pieza de un reloj. El reloj tiene cuatro piezas. ¿Dónde están las otras piezas?', cast, clock: true },
+    { who: 'leo', text: 'Look! It is a piece of a clock. The clock has five pieces. Where are the other pieces?', es: '¡Mira! Es una pieza de un reloj. El reloj tiene cinco piezas. ¿Dónde están las otras piezas?', cast, clock: true },
     {
       who: 'hero',
       text: '¿Qué le respondes a Leo?',

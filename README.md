@@ -33,7 +33,7 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 | `src/data/friends.ts` | Amigos (Leo, Maya) y el interés especial: momentos de historia y charlas casuales |
 | `src/data/activities.ts` | Repaso de vocabulario de la biblioteca |
 | `src/data/schedule.ts` | Horario de clases por sesiones (pizarra → tiza → esbirro → pregunta extra) |
-| `src/data/world.ts` | Nodos del mapa del mundo |
+| `src/data/world.ts` | Lugares del mapa (Escuela → Ciudad → Barrio → Granja → Oficina) y qué jefe abre cada uno |
 | `src/game/types.ts` | Tipos de datos del juego |
 | `src/game/store.ts` | Estado y guardado automático (localStorage) |
 | `src/game/social.ts` | Reglas de amistad: qué charla toca, límites por nivel, recompensas |
@@ -104,5 +104,6 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 
 ## Siguientes pasos sugeridos
 
-- Más preguntas del verbo *to be* y el siguiente escenario (Ciudad, presente simple).
+- El plan completo está en `docs/curriculo-a1.md`: primera vuelta A1 en presente (Escuela → Ciudad → Barrio con la casa del protagonista → Granja → Oficina), y luego los mismos lugares en pasado (A2) y futuro (B1) con el reloj completo.
+- Pendientes pequeños de la escuela: deletrear en la secretaría, *whose* en objetos perdidos y preguntas con *who/what/where/when*.
 - Sonidos y animación de caminar.

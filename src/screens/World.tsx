@@ -17,15 +17,15 @@ export function World({ state, onEnter, onTitle }: { state: GameState; onEnter: 
   const here = WORLD.find((n) => n.sceneId === state.sceneId) ?? WORLD[0]
 
   function unlocked(n: WorldNode) {
-    return !n.requires || state.recovered.includes(n.requires)
+    return !n.requires || state.defeated.includes(n.requires.boss)
   }
 
   function tap(n: WorldNode) {
     if (!unlocked(n)) {
-      const t = TOPICS[n.requires!]
-      return setMsg(`${n.name} está cerrado. Recupera "${t.name}" para viajar hasta aquí.`)
+      const r = n.requires!
+      return setMsg(`${n.name} está cerrado. Se llega ${r.how} desde ${r.from}, después de vencer a su jefe.`)
     }
-    if (!n.sceneId) return setMsg(`${n.name} (${n.era}, ${n.level}): este escenario se construirá pronto.`)
+    if (!n.sceneId) return setMsg(`${n.name} (${n.level}): ${n.about}. Este lugar se construirá pronto.`)
     onEnter(n.sceneId)
   }
 
