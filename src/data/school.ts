@@ -7,28 +7,30 @@ import type { EnemyDef, SceneDef, Zone } from '../game/types'
  *  D  pupitre+silla  T  inodoro         S  lavamanos
  *  K  mesa redonda   V  máquina         L  estantería
  *  p  planta         M  escritorio del profesor
+ *  F  archivador     C  mostrador de la secretaría
  * Para crear otro escenario basta con escribir otra tabla como esta.
  */
 const MAP = [
-  '##BBB######',
-  'W.....#TTS#',
-  'W.D.D.d...#',
-  '#.....#...#',
-  'W.D.D.#####',
-  'W.....#KKV#',
-  '#.D.D.d...#',
-  'W.....#...#',
-  'W.D.D.#####',
-  '#.....#LLL#',
-  'W.....d...#',
-  '#.....#...#',
-  '####X######',
-  '#p....MMMp#',
-  'W.........W',
-  '###########',
+  '##BBB###########',
+  'W.....#TTS######',
+  'W.D.D.d...######',
+  '#.....#...######',
+  'W.D.D.##########',
+  'W.....#KKV######',
+  '#.D.D.d...#FF.p#',
+  'W.....#...d....W',
+  'W.D.D.#####CC..#',
+  '#.....#LLL######',
+  'W.....d...######',
+  '#.....#...######',
+  '####X###########',
+  '#p....MMMp######',
+  'W.........W#####',
+  '################',
 ]
 
 function zoneAt(x: number, y: number): Zone {
+  if (x >= 11) return 'secretaria'
   if (y >= 13) return 'sala'
   if (x >= 7 && y <= 3) return 'bano'
   if (x >= 7 && y >= 5 && y <= 7) return 'cafeteria'
@@ -53,6 +55,7 @@ export const SCHOOL: SceneDef = {
     { type: 'enemy', id: 'school-m3', x: 9, y: 6 },
     { type: 'chest', id: 'school-chest', outfit: 'naranja', x: 7, y: 11 },
     { type: 'boss', id: 'school-boss', x: 7, y: 14 },
+    { type: 'npc', id: 'secretary', x: 13, y: 6 },
   ],
   labels: [
     { text: 'Aula', x: 3, y: 7 },
@@ -60,6 +63,7 @@ export const SCHOOL: SceneDef = {
     { text: 'Cafetería', x: 8, y: 7 },
     { text: 'Biblioteca', x: 8, y: 10 },
     { text: 'Sala de profesores', x: 3, y: 14 },
+    { text: 'Secretaría', x: 13, y: 8 },
   ],
   zoneAt,
 }
@@ -196,4 +200,5 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   capa: { name: 'Capa del tiempo', color: '#2f5d50' },
   gafas: { name: 'Gafas de lectura', color: '#3b6fb6' },
   rosada: { name: 'Camiseta rosada', color: '#d4537e' },
+  uniforme: { name: 'Uniforme escolar', color: '#2b4a7a' },
 }

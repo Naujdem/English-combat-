@@ -50,7 +50,7 @@ export type Question = {
   tags?: string[]
 }
 
-export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala'
+export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria'
 
 export type EnemyDef = {
   id: string
@@ -87,6 +87,8 @@ export type Entity =
   | { type: 'interest'; x: number; y: number }
   | { type: 'chest'; id: string; outfit: string; x: number; y: number }
   | { type: 'boss'; id: string; x: number; y: number }
+  /** Personaje que no pelea, con su propia actividad */
+  | { type: 'npc'; id: string; x: number; y: number }
 
 export type SceneDef = {
   id: string

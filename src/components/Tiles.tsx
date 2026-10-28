@@ -8,6 +8,7 @@ export const FLOOR: Record<Zone, string> = {
   cafeteria: '#f0d9b5',
   biblioteca: '#dccdae',
   sala: '#d8c9e0',
+  secretaria: '#d6e3cf',
 }
 
 const WALL = '#7a6a58'
@@ -30,6 +31,8 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   L: { en: 'bookshelf', es: 'estantería' },
   p: { en: 'plant', es: 'planta' },
   M: { en: "teacher's desk", es: 'escritorio del profesor' },
+  F: { en: 'cabinet', es: 'archivador' },
+  C: { en: 'counter', es: 'mostrador' },
   '#': { en: 'wall', es: 'pared' },
 }
 
@@ -152,6 +155,31 @@ export function Tile({ c, x, y, floor, doorOpen }: { c: string; x: number; y: nu
           {['#c0504d', '#3b6fb6', '#e0a526', '#3b9d5d', '#7a4fa3'].map((col, k) => (
             <rect key={k} x={X + 4 + k * 5} y={Y + 4} width={4} height={18 - (k % 2) * 3} fill={col} />
           ))}
+        </g>
+      )
+    case 'F':
+      return (
+        <g>
+          {base}
+          <rect x={X + 4} y={Y + 2} width={T - 8} height={T - 5} rx="2" fill="#8a8f96" />
+          <rect x={X + 6} y={Y + 5} width={T - 12} height={7} fill="#9da3aa" />
+          <rect x={X + 6} y={Y + 15} width={T - 12} height={7} fill="#9da3aa" />
+          <rect x={X + 13} y={Y + 8} width={6} height={1.6} fill="#5f646b" />
+          <rect x={X + 13} y={Y + 18} width={6} height={1.6} fill="#5f646b" />
+        </g>
+      )
+    case 'C':
+      return (
+        <g>
+          {base}
+          <rect x={X} y={Y + 8} width={T} height={18} fill="#7a5230" />
+          <rect x={X} y={Y + 8} width={T} height={4} fill="#93663f" />
+          {x % 2 === 1 && (
+            <>
+              <rect x={X + 8} y={Y + 1} width={14} height={9} rx="1" fill="#2d2d3a" />
+              <rect x={X + 9.5} y={Y + 2.5} width={11} height={6} fill="#9fd3f0" />
+            </>
+          )}
         </g>
       )
     case 'p':

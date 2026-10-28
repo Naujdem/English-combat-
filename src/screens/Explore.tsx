@@ -17,6 +17,8 @@ import { FriendsPanel } from '../components/FriendsPanel'
 import { Notebook } from '../components/Notebook'
 import { LostAsk } from '../components/LostAsk'
 import { LOST_INTRO, LOST_ITEMS } from '../data/lostFound'
+import { NPCS } from '../data/npcs'
+import { Registration } from '../components/Registration'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
 const VIEW = 11
@@ -44,7 +46,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const firstVisit = !state.seenLesson.includes(scene.id)
   const doorOpen = bossDoorOpen(state, scene)
   const keys = state.keys[scene.id] ?? 0
-  const [activity, setActivity] = useState<'vocab' | 'reading' | null>(null)
+  const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | null>(null)
   const [notebook, setNotebook] = useState(false)
   // Preguntar "Is this your...?" mientras llevas un objeto perdido
   const [ask, setAsk] = useState<{ itemId: string; npcId: string; npcName: string } | null>(null)
@@ -75,6 +77,16 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
 
   const interact = useCallback(
     (e: Entity) => {
+      if (e.type === 'npc') {
+        const npc = NPCS[e.id]
+        if (e.id === 'secretary' && !state.opened.includes('school-registration')) {
+          setMsg(null)
+          setActivity('registration')
+        } else {
+          setMsg({ text: `${npc.name}: "${npc.doneLine.text}"`, sub: npc.doneLine.es, say: npc.doneLine.text })
+        }
+        return
+      }
       // Si llevas un objeto perdido, le preguntas a quien sea si es suyo
       const talkable = e.type === 'friend' || e.type === 'interest' || ((e.type === 'enemy' || e.type === 'boss') && state.defeated.includes(e.id))
       if (lf.carrying && talkable) {
@@ -283,6 +295,20 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   </g>
                 )
               }
+              if (e.type === 'npc') {
+                const pending = e.id === 'secretary' && !state.opened.includes('school-registration')
+                return (
+                  <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
+                    <SpriteBody look={NPCS[e.id].look} />
+                    {pending && (
+                      <g className="anim-bob">
+                        <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
+                        <text x="26" y="5.5" textAnchor="middle" fontSize="9" fontWeight="700" fill="#1c1a17">!</text>
+                      </g>
+                    )}
+                  </g>
+                )
+              }
               const id = e.type === 'friend' ? e.id : 'interest'
               const f = friendById(state, id)!
               return (
@@ -414,6 +440,26 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               if (earned) {
                 update((s) => ({ ...s, items: { ...s.items, shield: Math.min(2, s.items.shield + 1) } }))
                 setMsg({ text: 'Ganaste un escudo de palabras.', sub: 'En el próximo combate bloqueará un error sin perder vida.', tone: 'good' })
+              }
+            }}
+          />
+        </Overlay>
+      )}
+
+      {activity === 'registration' && (
+        <Overlay>
+          <Registration
+            state={state}
+            onClose={(finished) => {
+              setActivity(null)
+              if (finished) {
+                update((s) => ({
+                  ...s,
+                  opened: [...s.opened, 'school-registration'],
+                  outfits: s.outfits.includes('uniforme') ? s.outfits : [...s.outfits, 'uniforme'],
+                  outfit: 'uniforme',
+                }))
+                setMsg({ text: 'Recibiste tu carnet y el uniforme escolar.', sub: 'Ya lo llevas puesto. Puedes cambiarlo en Atuendos.', tone: 'good' })
               }
             }}
           />
