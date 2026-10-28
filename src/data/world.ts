@@ -1,6 +1,6 @@
 /**
- * Lugares del mapa. La primera vuelta es en presente (A1); con el reloj completo
- * se recorren los mismos lugares en el pasado (A2) y en el futuro (B1).
+ * Lugares del mapa. Cada nivel se recorre en presente; con el reloj completo
+ * se recorren los mismos lugares en el pasado y en el futuro de ese nivel.
  * Cada jefe suelta una pieza del reloj: el reloj tiene una pieza por lugar.
  * Plan completo en docs/curriculo-a1.md.
  */

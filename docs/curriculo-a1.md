@@ -4,25 +4,27 @@ Guía de contenidos y mapa de dónde va cada cosa en el juego. Todo el contenido
 
 Estado: ✅ ya está en el juego · 🟡 está a medias · ⬜ falta
 
-## 1. La idea general: un recorrido, tres épocas
+## 1. La idea general: cada nivel en tres épocas
 
-El jugador recorre los mismos cinco lugares tres veces:
+Cada nivel (A1, A2, B1) se juega en tres vueltas: presente, pasado y futuro. La gramática de cada época es la que corresponde a ese nivel, así que el pasado de A1 es mucho más simple que el pasado de B1.
 
-| Vuelta | Época | Nivel | Gramática base |
+| Nivel | Presente | Pasado | Futuro |
 |---|---|---|---|
-| 1 | Presente | A1 | to be, presente simple, can, there is/are |
-| 2 | Pasado | A2 | was/were, pasado simple, comparativos |
-| 3 | Futuro | B1 | going to, will, presente perfecto |
+| **A1** | to be, presente simple, can, there is/are | was/were, pasado simple de verbos comunes (*played, went, ate*) | going to para planes (*I'm going to visit Leo*) |
+| **A2** | presente continuo vs. simple, comparativos, adverbios | pasado simple completo, pasado continuo | will, presente continuo para citas |
+| **B1** | presente perfecto, voz pasiva simple | pasado perfecto, used to | will vs. going to, condicional 1 y 2 |
 
-En cada lugar de la primera vuelta, el jefe suelta una pieza del reloj del tiempo. Con el reloj completo (5 piezas) el jugador puede viajar a los mismos lugares en el pasado, y después en el futuro, persiguiendo al desconocido.
+En cada lugar del presente, el jefe suelta una pieza del reloj del tiempo. Con el reloj completo el jugador puede viajar al pasado de esos lugares, y después al futuro, persiguiendo al desconocido.
 
-Por qué repetir lugares:
+Por qué repetir lugares en las tres épocas:
 - El lugar ya es conocido (el mapa, la gente, el vocabulario), así que la atención va a la gramática nueva.
-- El contraste sale solo: *Today the farmer feeds the cows* → *Yesterday he fed the cows*.
+- El contraste sale solo: *Today the farmer feeds the cows* → *Yesterday he fed the cows* → *Tomorrow he is going to feed the cows*.
 - Para que no se sienta repetido, cada época cambia el lugar de verdad: en el pasado la escuela es vieja y Grimm es un estudiante joven; en el futuro Leo es el profesor.
-- Al terminar cada lugar en A1, se ve un momento cómo era en el pasado (solo la imagen, sin gramática nueva) para crear curiosidad.
+- La vuelta del pasado y la del futuro son más cortas que la del presente: menos esbirros por lugar y sin actividades largas, porque el vocabulario ya se aprendió.
 
-Por qué no se pasa al pasado justo después de cada lugar: el pasado se apoya en el presente simple (*work → worked*, *does → did*), y al salir de la escuela el jugador todavía no lo sabe. Además, jugar el mismo mapa dos veces seguidas cansa y frena la historia.
+Por qué no se pasa al pasado justo después de cada lugar: el pasado se apoya en el presente simple (*work → worked*, *does → did*), y al salir de la escuela el jugador todavía no lo sabe. Además, jugar el mismo mapa dos veces seguidas cansa y frena la historia. Lo que sí se hace es mostrar un momento cómo era cada lugar en el pasado al terminarlo (solo la imagen), para crear curiosidad.
+
+Pendiente de decidir: si A2 y B1 usan los mismos cinco lugares (crecen con el jugador: la escuela de A2 es secundaria, la ciudad tiene más zonas) o lugares nuevos (por ejemplo hospital, aeropuerto, playa). Con los mismos lugares serían 9 visitas a cada uno, lo que puede cansar; con lugares nuevos hay más variedad pero más trabajo.
 
 ## 2. Orden de A1 (primera vuelta, presente)
 
@@ -181,12 +183,14 @@ Historia: el desconocido hechizó el barrio y la gente olvidó su rutina.
 - Preguntas con *what time / when* y *do / does* (*What time do you start work?*).
 - **Jefe:** la directora de la oficina hechizada. Al vencerla, el reloj queda completo y se abre el viaje al pasado.
 
-## 7. Segunda y tercera vuelta (A2 y B1)
+## 7. Pasado y futuro de A1 (segunda y tercera vuelta)
 
-Se planearán en su propio documento. Ideas por ahora:
+Los mismos cinco lugares, más cortos. Solo gramática A1:
 
-- **Pasado (A2):** la escuela abre con *was / were* (Grimm joven como estudiante); luego pasado simple regular e irregular, preguntas con *did*, comparativos (granja: *The horse is bigger than the dog*), presente continuo para planes.
-- **Futuro (B1):** *going to*, *will*, presente perfecto, condicionales simples. Leo como profesor de la escuela del futuro.
+- **Pasado A1:** *was / were* (abre en la escuela vieja, con Grimm joven: *Mr. Grimm was a student here*), pasado simple de verbos regulares (*played, worked*) y de los irregulares más comunes (*went, had, saw, ate, got up*), y preguntas simples con *did* (*Did you go to school?*). Expresiones de tiempo: *yesterday, last week, ago*.
+- **Futuro A1:** *going to* para planes e intenciones (*I'm going to visit Leo tomorrow*), expresiones de tiempo (*tomorrow, next week, this weekend*).
+
+Lo que no entra en A1 y queda para A2: pasado continuo, comparativos y *will*.
 
 ## 8. Pendientes pequeños en la escuela
 
