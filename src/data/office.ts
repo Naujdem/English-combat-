@@ -87,7 +87,7 @@ export const OFFICE: SceneDef = {
   ],
   intro: {
     first:
-      'Green Valley Company. La última pieza del reloj está aquí, y la directora, la señora Clark, la tiene. Todo pasa a la hora equivocada. Ayuda a Sara con la agenda, a Grace con el teléfono y consigue la llave de la dirección.',
+      'Green Valley Company. Todos los relojes están locos y nadie sabe qué hora es. La directora, la señora Clark, no deja entrar a nadie a su oficina... y tiene la última pieza del reloj. Ayuda a Sara con la agenda, a Grace con el teléfono y consigue la llave de la dirección.',
     later: 'Habla con amabilidad: Could you...? Y fíjate en la hora: at nine, on Monday, in the morning.',
   },
   epilogue: 'office-epilogue',
@@ -109,11 +109,11 @@ export const OFFICE_ENEMIES: Record<string, EnemyDef> = {
     tags: ['recepcion'],
     look: { shirt: '#5b7a99', hair: '#6b3b1f', skin: '#f1c27d', accessory: 'glasses' },
     before: [
-      { text: "Good night! I mean... good morning! It's eight and half! No, it's nine and quarter! The meeting is in Monday at the morning!", es: '¡Buenas noches! Digo... ¡buenos días! ¡Son las "ocho y media"! ¡No, las "nueve y cuarto"! ¡La reunión es "en" lunes "a" la mañana!' },
+      { text: "I'm late! I'm always late! It's eight and half! No, it's nine and quarter! The meeting is in Monday at the morning! It isn't my fault: it's the CLOCK!", es: '¡Llego tarde! ¡Siempre llego tarde! ¡Son las "ocho y media"! ¡No, las "nueve y cuarto"! ¡La reunión es "en" lunes "a" la mañana! No es mi culpa: ¡es el RELOJ!' },
       { text: 'This shiny clock piece is on my desk, and now every clock is crazy! I have got a piece of a key too. Tell me the time... correctly!', es: '¡Esta pieza brillante de reloj está en mi escritorio, y ahora todos los relojes están locos! También tengo un pedazo de llave. Dime la hora... ¡bien dicha!' },
     ],
     after: [
-      { text: "It's half past nine. The meeting is on Monday at ten, in the morning. Ah, my head is OK now!", es: 'Son las nueve y media. La reunión es el lunes a las diez, en la mañana. ¡Ah, mi cabeza ya está bien!' },
+      { text: "Finally... it's half past nine. The meeting is on Monday at ten, in the morning. I'm not late. For once!", es: 'Por fin... son las nueve y media. La reunión es el lunes a las diez, en la mañana. No llego tarde. ¡Por una vez!' },
       { text: 'Take the piece of the key. And be careful with Ms. Clark: she is very angry today.', es: 'Toma el pedazo de la llave. Y cuidado con la señora Clark: hoy está muy enojada.' },
     ],
     freed: { text: "It's quarter past ten. I'm a receptionist, and I'm never late!", es: 'Son las diez y cuarto. Soy recepcionista, ¡y nunca llego tarde!' },
@@ -130,11 +130,11 @@ export const OFFICE_ENEMIES: Record<string, EnemyDef> = {
     tags: ['oficina'],
     look: { shirt: '#d4537e', hair: '#1f1f1f', skin: '#c68642', gender: 'female' },
     before: [
-      { text: 'Emails, emails! Send it to he! Call she! Them are my emails, give they to I!', es: '¡Correos, correos! ¡Envíaselo a "él" (he)! ¡Llama a "ella" (she)! ¡"Ellos" son mis correos, dáselos a "yo"!' },
+      { text: 'Emails, emails, forty emails! Send it to he! Call she! Them are my emails, give they to I! Quick, quick, QUICK!', es: '¡Correos, correos, cuarenta correos! ¡Envíaselo a "él" (he)! ¡Llama a "ella" (she)! ¡"Ellos" son mis correos, dáselos a "yo"! ¡Rápido, rápido, RÁPIDO!' },
       { text: 'Ms. Clark gives me a piece of a key. Do you want it? Answer me, and maybe I give it to... you!', es: 'La señora Clark me da un pedazo de llave. ¿Lo quieres? Respóndeme, y quizás te lo doy... ¡a ti!' },
     ],
     after: [
-      { text: 'Send it to him. Call her. Give them to me. Oh! Now my emails make sense!', es: 'Envíaselo a él. Llámala. Dámelos. ¡Oh! ¡Ahora mis correos tienen sentido!' },
+      { text: 'Send it to him. Call her. Give them to me. Thank you... I can breathe again.', es: 'Envíaselo a él. Llámala. Dámelos. Gracias... Ya puedo respirar otra vez.' },
       { text: 'Here is the piece of the key. Take it, it is for you.', es: 'Aquí está el pedazo de la llave. Tómalo, es para ti.' },
     ],
     freed: { text: "I'm a secretary. I write a lot of emails, and I answer them all!", es: 'Soy secretaria. Escribo muchos correos, ¡y los respondo todos!' },
@@ -151,11 +151,11 @@ export const OFFICE_ENEMIES: Record<string, EnemyDef> = {
     tags: ['reuniones'],
     look: { shirt: '#2b2b2b', hair: '#3b2a1a', skin: '#e0ac69' },
     before: [
-      { text: 'You! Bring me coffee! Open window! Close door! Now! Could you to hurry?', es: '¡Tú! ¡Tráeme café! ¡Abre ventana! ¡Cierra puerta! ¡Ya! ¿"Podrías a" apurarte?' },
+      { text: 'You! Coffee! Now! Open window! Close door! Could you to hurry? Please? I never say please!', es: '¡Tú! ¡Café! ¡Ya! ¡Abre ventana! ¡Cierra puerta! ¿"Podrías a" apurarte? ¿Por favor? ¡Yo nunca digo por favor!' },
       { text: 'I am the manager. I have got a piece of the key. Nobody says please in this office!', es: 'Soy el gerente. Tengo un pedazo de la llave. ¡En esta oficina nadie dice por favor!' },
     ],
     after: [
-      { text: 'Could you bring me a coffee, please? ... Oh. That is much better. Thank you.', es: '¿Podrías traerme un café, por favor? ... Oh. Eso suena mucho mejor. Gracias.' },
+      { text: 'Could you... bring me a coffee... please? ... Hmm. That is strange. But it is nice. Thank you.', es: '¿Podrías... traerme un café... por favor? ... Mmm. Qué raro. Pero se siente bien. Gracias.' },
       { text: 'Here is the piece of the key. Could you say sorry to my team for me? I am very rude today.', es: 'Aquí está el pedazo de la llave. ¿Podrías pedirle perdón a mi equipo de mi parte? Hoy estoy muy grosero.' },
     ],
     freed: { text: "I'm the manager. Could you close the door, please? Thank you!", es: 'Soy el gerente. ¿Podrías cerrar la puerta, por favor? ¡Gracias!' },
@@ -197,6 +197,7 @@ export const OFFICE_ENEMIES: Record<string, EnemyDef> = {
     after: [
       { text: "Oh... It's half past eleven. My meeting is at twelve. Everything is OK. Thank you.", es: 'Oh... Son las once y media. Mi reunión es a las doce. Todo está bien. Gracias.' },
       { text: 'This morning a man in a dark coat comes to my office. He looks at the phone on my desk for a long time. Then he says: "I can\'t use it." And he goes.', es: 'Esta mañana un hombre con abrigo oscuro viene a mi oficina. Mira el teléfono de mi escritorio un largo rato. Luego dice: "No puedo usarlo". Y se va.' },
+      { text: "(Ms. Clark looks at her phone.) His voice is very quiet... He isn't angry. He is sad. Just sad.", es: '(La señora Clark mira su teléfono.) Su voz es muy baja... No está enojado. Está triste. Solo triste.' },
       { text: 'Take this piece. It is yours, not mine. And take this jacket: every good worker needs one!', es: 'Toma esta pieza. Es tuya, no mía. Y toma esta chaqueta: ¡todo buen trabajador necesita una!' },
     ],
     freed: { text: 'Could you close the door when you go, please? And come back on Monday at nine!', es: '¿Podrías cerrar la puerta cuando te vayas, por favor? ¡Y vuelve el lunes a las nueve!' },

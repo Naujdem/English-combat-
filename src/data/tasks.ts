@@ -17,7 +17,7 @@ export type NpcTask = {
   shield?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks'
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
   vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
@@ -268,6 +268,10 @@ NPC_TASKS.grace = {
       text: 'Perfect note! Thank you. Now Ms. Clark can call him. You are a great assistant!',
       es: '¡Nota perfecta! Gracias. Ahora la señora Clark puede llamarlo. ¡Eres un gran asistente!',
     },
+    {
+      text: "Oh, and... look out of the window. Do you see that man in a dark coat? Every day he stands there and looks at our phone. He never calls. He never says anything.",
+      es: 'Ah, y... mira por la ventana. ¿Ves a ese hombre de abrigo oscuro? Todos los días se para ahí y mira nuestro teléfono. Nunca llama. Nunca dice nada.',
+    },
   ],
   reward: {
     text: 'Grace: "Thank you! I can give her the note now."',
@@ -500,6 +504,21 @@ NPC_TASKS['rosie-adult'] = {
     sub: 'Rosie te da su permiso para entrar a la casa. Ahora el abuelo Brown ya no puede decir que no la conoces.',
     say: 'You can see the future! Thank you!',
   },
+}
+
+// ── La oficina: los relojes locos (después de la agenda; da un escudo, no es requisito) ──
+NPC_TASKS['sara-clocks'] = {
+  npc: 'sara',
+  done: 'office-clocks',
+  activity: 'clocks',
+  steps: [],
+  reward: {
+    text: 'Sara: "Half past eight, quarter past nine... Every clock is OK now! Thank you!"',
+    es: 'Y media, y cuarto... ¡Todos los relojes están bien ahora! ¡Gracias!',
+    sub: 'Sara te da un escudo de palabras para la pelea con la directora.',
+    say: 'Every clock is OK now! Thank you!',
+  },
+  shield: true,
 }
 
 // ── La torre Green Valley en 2056 ──
