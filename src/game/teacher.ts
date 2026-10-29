@@ -9,6 +9,7 @@ import { OFFICE } from '../data/office'
 import { SCHOOL_PAST } from '../data/schoolPast'
 import { CITY_PAST } from '../data/cityPast'
 import { BARRIO_PAST } from '../data/barrioPast'
+import { FARM_PAST } from '../data/farmPast'
 import { SCHOOL } from '../data/school'
 
 /**
@@ -370,6 +371,43 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
         defeated: add(b.defeated, ['barrio-past-boss']),
         recovered: add(b.recovered, ['past-irregular']) as GameState['recovered'],
         outfits: add(b.outfits, ['casco']),
+      }
+    },
+  },
+  {
+    id: 'past-farm-start',
+    label: 'Pasado · Granja 1996: recién llegado',
+    apply: (s) => {
+      const b = PRESETS[22].apply(s)
+      return { ...b, screen: 'explore', sceneId: 'farm-past', pos: { ...FARM_PAST.start }, opened: add(b.opened, ['barrio-past-epilogue', 'bus-farm-past']) }
+    },
+  },
+  {
+    id: 'farm-past-boss',
+    label: 'Pasado · Granja 1996: listo para el jefe',
+    apply: (s) => {
+      const b = PRESETS[23].apply(s)
+      return {
+        ...b,
+        pos: { x: 11, y: 5 },
+        defeated: add(b.defeated, ['farm-past-m1', 'farm-past-m2']),
+        keys: { ...b.keys, 'farm-past': 2 },
+        opened: add(b.opened, ['past-mystery']),
+        seenLesson: add(b.seenLesson, ['farm-past', 'past-did']),
+      }
+    },
+  },
+  {
+    id: 'past-farm-done',
+    label: 'Pasado · Granja 1996: terminada',
+    apply: (s) => {
+      const b = PRESETS[24].apply(s)
+      return {
+        ...b,
+        screen: 'epilogue',
+        defeated: add(b.defeated, ['farm-past-boss']),
+        recovered: add(b.recovered, ['past-did']) as GameState['recovered'],
+        outfits: add(b.outfits, ['sombrero']),
       }
     },
   },

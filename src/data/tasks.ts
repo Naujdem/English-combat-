@@ -17,7 +17,7 @@ export type NpcTask = {
   shield?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery'
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
   vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
@@ -415,6 +415,20 @@ NPC_TASKS['joe-young'] = {
     es: '¡Veinticinco verbos! ¡Leíste todo mi libro!',
     sub: 'Los 25 verbos irregulares quedaron en tus fichas. También los ves en el Cuaderno, en "Libro de verbos".',
     say: 'Twenty-five verbs! You read my whole book!',
+  },
+}
+
+// ── La granja en 1996 ──
+NPC_TASKS.bill = {
+  done: 'past-mystery',
+  lesson: 'past-did',
+  activity: 'mystery',
+  steps: [],
+  reward: {
+    text: 'Bill: "The mice ate the rope! Did you see their little teeth? Ha ha. Thank you, detective!"',
+    es: '¡Los ratones se comieron la cuerda! ¿Viste sus dientecitos? Ja, ja. ¡Gracias, detective!',
+    sub: 'Misterio resuelto. Ahora la señora Brown ya no puede decir que tú paraste el molino.',
+    say: 'The mice ate the rope! Thank you, detective!',
   },
 }
 

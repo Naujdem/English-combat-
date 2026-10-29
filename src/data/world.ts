@@ -30,7 +30,7 @@ export const WORLD: WorldNode[] = [
   { id: 'school-past', name: 'Escuela', era: 'Pasado', level: 'A1', about: 'la escuela de ladrillo: was / were', sceneId: 'school-past', requires: { boss: 'office-boss', from: 'la Oficina', how: 'con el reloj del tiempo' }, x: 64, y: 296 },
   { id: 'city-past', name: 'Ciudad', era: 'Pasado', level: 'A1', about: 'la ciudad con carretera destapada: pasado de los verbos regulares (-ed)', sceneId: 'city-past', requires: { boss: 'school-past-boss', from: 'la Escuela vieja', how: 'a pie por la carretera destapada' }, x: 178, y: 250 },
   { id: 'barrio-past', name: 'Barrio', era: 'Pasado', level: 'A1', about: 'Green Street en construcción: verbos irregulares (went, had, saw...)', sceneId: 'barrio-past', requires: { boss: 'city-past-boss', from: 'la Ciudad vieja', how: 'a pie' }, x: 70, y: 160 },
-  { id: 'farm-past', name: 'Granja', era: 'Pasado', level: 'A1', about: 'la granja con molino: did / didn\'t', sceneId: null, requires: { boss: 'barrio-past-boss', from: 'el Barrio viejo', how: 'por el camino' }, x: 190, y: 72 },
+  { id: 'farm-past', name: 'Granja', era: 'Pasado', level: 'A1', about: 'la granja con molino: did / didn\'t', sceneId: 'farm-past', requires: { boss: 'barrio-past-boss', from: 'el Barrio viejo', how: 'por el camino' }, x: 190, y: 72 },
   { id: 'office-past', name: 'Cine', era: 'Pasado', level: 'A1', about: 'el viejo cine (hoy la oficina): yesterday, last week, ago', sceneId: null, requires: { boss: 'farm-past-boss', from: 'la Granja vieja', how: 'por la carretera' }, x: 296, y: 176 },
 ]
 

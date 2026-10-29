@@ -36,6 +36,9 @@ export const FLOOR: Record<Zone, string> = {
   obra: '#c9b48a',
   'casa-nueva': '#e8d3b0',
   caseta: '#cdb89a',
+  'granero-viejo': '#d9bd85',
+  'casa-vieja': '#e6d0a8',
+  'campo-viejo': '#a9c47e',
 }
 
 const WALL = '#7a6a58'
@@ -87,9 +90,10 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   g: { en: 'scaffolding', es: 'andamio' },
   a: { en: 'sand', es: 'arena' },
   x: { en: 'cement mixer', es: 'mezcladora de cemento' },
+  n: { en: 'windmill', es: 'molino de viento' },
 }
 
-export function Tile({ c, x, y, floor, doorOpen, party = true }: { c: string; x: number; y: number; floor: string; doorOpen: boolean; party?: boolean }) {
+export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: { c: string; x: number; y: number; floor: string; doorOpen: boolean; party?: boolean; still?: boolean }) {
   const X = x * T
   const Y = y * T
   const base = <rect x={X} y={Y} width={T} height={T} fill={floor} stroke="rgba(0,0,0,0.05)" />
@@ -550,6 +554,20 @@ export function Tile({ c, x, y, floor, doorOpen, party = true }: { c: string; x:
           <rect x={X + 6} y={Y + 23} width={20} height={3} fill="#5a5a5a" />
           <circle cx={X + 8} cy={Y + 28} r="3" fill="#2b2b2b" />
           <circle cx={X + 24} cy={Y + 28} r="3" fill="#2b2b2b" />
+        </g>
+      )
+    case 'n':
+      return (
+        <g>
+          {base}
+          <path d={`M${X + 10} ${Y + 31} L${X + 13} ${Y + 10} H${X + 19} L${X + 22} ${Y + 31} Z`} fill="#c98b4a" stroke="#8b5a2b" strokeWidth="1" />
+          <rect x={X + 14} y={Y + 22} width={4} height={9} fill="#5a3a1a" />
+          <g className={still ? undefined : 'anim-spin-slow'} style={{ transformOrigin: `${X + 16}px ${Y + 10}px` }}>
+            {[0, 90, 180, 270].map((a) => (
+              <rect key={a} x={X + 14.5} y={Y - 8} width={3} height={18} fill="#f4efe4" stroke="#8b5a2b" strokeWidth="0.8" transform={`rotate(${a} ${X + 16} ${Y + 10})`} />
+            ))}
+          </g>
+          <circle cx={X + 16} cy={Y + 10} r="2" fill="#5a3a1a" />
         </g>
       )
     default:

@@ -219,6 +219,22 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
       { text: 'Yesterday I saw a strange man in a dark coat. He was in front of Joe\'s house for a long time.', es: 'Ayer vi a un hombre raro con abrigo oscuro. Estuvo mucho rato frente a la casa de Joe.' },
     ],
   },
+  // ── La granja en 1996 ──
+  bill: {
+    name: 'Bill',
+    // El señor Brown de joven: la misma gorra y la misma camisa azul, el pelo todavía oscuro
+    look: { shirt: '#3b6fb6', hair: '#4a3a2a', skin: '#e0ac69', accessory: 'cap' },
+    doneLine: { text: 'The mice! Ha ha. I fixed the rope, and the windmill works again. Thank you!', es: '¡Los ratones! Ja, ja. Arreglé la cuerda y el molino funciona otra vez. ¡Gracias!' },
+  },
+  hank: {
+    name: 'Hank',
+    look: { shirt: '#c0602a', hair: '#e0b04a', skin: '#f1c27d', accessory: 'cap' },
+    lines: [
+      { text: "Did you see my son Tom? He didn't do his homework again!", es: '¿Viste a mi hijo Tom? ¡Otra vez no hizo su tarea!' },
+      { text: "I fixed three fences yesterday. I didn't sleep very much!", es: 'Ayer arreglé tres cercas. ¡No dormí mucho!' },
+      { text: "A man in a dark coat sat by the pond last night. He didn't say a word. Strange, no?", es: 'Anoche un hombre con abrigo oscuro se sentó junto al estanque. No dijo ni una palabra. Raro, ¿no?' },
+    ],
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

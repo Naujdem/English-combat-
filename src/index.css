@@ -52,6 +52,8 @@ button { cursor: pointer; touch-action: manipulation; }
 .anim-piece { animation: piece 1s 0.3s ease-out both; transform-box: view-box; transform-origin: 50% 50%; }
 .anim-float-up { animation: float-up 0.9s ease-out forwards; }
 .anim-wipe { animation: wipe 0.7s ease-in-out forwards; }
+@keyframes spin { to { transform: rotate(360deg) } }
+.anim-spin-slow { animation: spin 8s linear infinite; transform-box: view-box; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }

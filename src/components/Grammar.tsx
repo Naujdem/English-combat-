@@ -17,7 +17,7 @@ export const ROLE_STYLE: Record<Role, { bg: string; fg: string; name: string }> 
 
 const SUBJ = new Set(['i', 'you', 'he', 'she', 'it', 'we', 'they', 'there', "i'm", "you're", "he's", "she's", "it's", "we're", "they're", "there's"])
 const VERB = new Set([
-  "wasn't", "weren't",
+  "wasn't", "weren't", 'did', "didn't",
   'could', 'send', 'answer', 'repeat', 'spell', 'start', 'tell', 'bring',
   'am', 'is', 'are', "isn't", "aren't", 'be', 'can', "can't", 'do', 'does', "don't", "doesn't", 'have', 'has', 'go', 'goes', 'turn', 'open', 'close',
   'sit', 'stand', 'listen', 'pass', 'drink', 'wash', 'run', 'jump', 'stop', 'give', 'take', 'eat', 'read', 'play', 'need', 'want', 'like', 'love',
@@ -198,6 +198,10 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       return { title: 'En pasado, el verbo lleva -ed y es igual para todas las personas:', parts: [S('Sujeto'), '+', V('verbo + ed'), '+', R('...'), '+', K('yesterday / ago')] }
     case 'past-irregular':
       return { title: 'Los irregulares tienen su propio pasado (en morado), igual para todas las personas:', parts: [S('Sujeto'), '+', K('went / saw / ate...'), '+', R('...')] }
+    case 'past-did':
+      if (question) return { title: 'Pregunta en pasado: Did + sujeto + verbo simple (sin -ed):', parts: [V('Did'), '+', S('Sujeto'), '+', V('verbo simple'), '+', R('...?')] }
+      if (negative) return { title: "Negativo en pasado: didn't + verbo simple:", parts: [S('Sujeto'), '+', V("didn't"), '+', V('verbo simple'), '+', R('...')] }
+      return { title: "Did ya lleva el pasado: el verbo va simple. Yes, I did · No, I didn't:", parts: [V('Did'), '+', S('Sujeto'), '+', V('verbo simple'), '+', R('...?')] }
     case 'time':
       if (question) return { title: 'Para preguntar la hora:', parts: [K('What time'), '+', V('is'), '+', S('it?')] }
       return { title: 'at + hora · on + día · in + mes, estación o parte del día:', parts: [R('...'), '+', K('at / on / in'), '+', R('hora / día / mes')] }

@@ -24,8 +24,8 @@ import { AnimalSprite } from '../components/Animals'
 
 function Backdrop({ zone }: { zone: Zone }) {
   const wall =
-    zone === 'obra' ? '#cfe6f2' : zone === 'casa-nueva' ? '#e8d3b0' : zone === 'caseta' ? '#b89a70' : zone === 'calle-vieja' || zone === 'mercado' ? '#cfe6f2' : zone === 'tienda-vieja' ? '#c9a46a' : zone === 'correo' ? '#d9cdb4' : zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#a4553a' : zone === 'patio-viejo' ? '#d9c9a0' : zone === 'recepcion' || zone === 'oficina' ? '#e8ecf0' : zone === 'reuniones' ? '#ece6f4' : zone === 'direccion' ? '#f1e6d2' : zone === 'patio' || zone === 'calle' || zone === 'parque' || zone === 'campo' || zone === 'corral' ? '#bfe3f5' : zone === 'granero' ? '#b5523b' : zone === 'casa-granja' ? '#efd9b8' : zone === 'casa-leo' ? '#f3e2c4' : zone === 'casa-maya' ? '#dde6f4' : zone === 'casa' ? '#f1d9c0' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : zone === 'tienda' ? '#f1e6f4' : zone === 'turismo' ? '#dfeaf3' : '#efe5d3'
-  const ground = zone === 'obra' ? '#c9b48a' : zone === 'casa-nueva' ? '#a8743f' : zone === 'caseta' ? '#8b6a46' : zone === 'calle-vieja' || zone === 'mercado' ? '#b8946a' : zone === 'tienda-vieja' ? '#8b5a2b' : zone === 'correo' ? '#9c7a52' : zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#8b5a2b' : zone === 'patio-viejo' ? '#c2a878' : zone === 'recepcion' || zone === 'oficina' ? '#9aa6b2' : zone === 'reuniones' ? '#a99cc0' : zone === 'direccion' ? '#8b5a2b' : zone === 'campo' ? '#9cc46e' : zone === 'corral' ? '#c9a46a' : zone === 'granero' ? '#dcc08a' : zone === 'casa-granja' ? '#b98c5a' : zone === 'patio' || zone === 'parque' ? '#8fbf6a' : zone === 'casa-leo' || zone === 'casa' ? '#b98c5a' : zone === 'casa-maya' ? '#a7b4c8' : zone === 'calle' ? '#b9b4ab' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : zone === 'tienda' ? '#cdb8d6' : zone === 'turismo' ? '#9fb3c6' : '#b98c5a'
+    zone === 'campo-viejo' ? '#cfe6f2' : zone === 'granero-viejo' ? '#b5523b' : zone === 'casa-vieja' ? '#e6d0a8' : zone === 'obra' ? '#cfe6f2' : zone === 'casa-nueva' ? '#e8d3b0' : zone === 'caseta' ? '#b89a70' : zone === 'calle-vieja' || zone === 'mercado' ? '#cfe6f2' : zone === 'tienda-vieja' ? '#c9a46a' : zone === 'correo' ? '#d9cdb4' : zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#a4553a' : zone === 'patio-viejo' ? '#d9c9a0' : zone === 'recepcion' || zone === 'oficina' ? '#e8ecf0' : zone === 'reuniones' ? '#ece6f4' : zone === 'direccion' ? '#f1e6d2' : zone === 'patio' || zone === 'calle' || zone === 'parque' || zone === 'campo' || zone === 'corral' ? '#bfe3f5' : zone === 'granero' ? '#b5523b' : zone === 'casa-granja' ? '#efd9b8' : zone === 'casa-leo' ? '#f3e2c4' : zone === 'casa-maya' ? '#dde6f4' : zone === 'casa' ? '#f1d9c0' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : zone === 'tienda' ? '#f1e6f4' : zone === 'turismo' ? '#dfeaf3' : '#efe5d3'
+  const ground = zone === 'campo-viejo' ? '#a9c47e' : zone === 'granero-viejo' ? '#d9bd85' : zone === 'casa-vieja' ? '#a8743f' : zone === 'obra' ? '#c9b48a' : zone === 'casa-nueva' ? '#a8743f' : zone === 'caseta' ? '#8b6a46' : zone === 'calle-vieja' || zone === 'mercado' ? '#b8946a' : zone === 'tienda-vieja' ? '#8b5a2b' : zone === 'correo' ? '#9c7a52' : zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#8b5a2b' : zone === 'patio-viejo' ? '#c2a878' : zone === 'recepcion' || zone === 'oficina' ? '#9aa6b2' : zone === 'reuniones' ? '#a99cc0' : zone === 'direccion' ? '#8b5a2b' : zone === 'campo' ? '#9cc46e' : zone === 'corral' ? '#c9a46a' : zone === 'granero' ? '#dcc08a' : zone === 'casa-granja' ? '#b98c5a' : zone === 'patio' || zone === 'parque' ? '#8fbf6a' : zone === 'casa-leo' || zone === 'casa' ? '#b98c5a' : zone === 'casa-maya' ? '#a7b4c8' : zone === 'calle' ? '#b9b4ab' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : zone === 'tienda' ? '#cdb8d6' : zone === 'turismo' ? '#9fb3c6' : '#b98c5a'
   return (
     <g>
       <rect width="360" height="150" fill={wall} />
@@ -127,6 +127,36 @@ function Backdrop({ zone }: { zone: Zone }) {
           <rect x="240" y="80" width="90" height="62" rx="4" fill="#8b5a2b" />
           <rect x="250" y="66" width="20" height="16" rx="2" fill="#f4efe4" />
           <rect x="280" y="70" width="16" height="12" rx="2" fill="#e8c95a" />
+        </>
+      )}
+      {zone === 'campo-viejo' && (
+        <>
+          <path d="M0 150 Q90 120 180 138 T360 130 V150 Z" fill="#8fb35e" />
+          <path d="M226 150 L234 50 H254 L262 150 Z" fill="#c98b4a" stroke="#8b5a2b" strokeWidth="2" />
+          <g transform="rotate(20 244 50)">
+            {[0, 90, 180, 270].map((a) => <rect key={a} x="240" y="6" width="8" height="44" fill="#f4efe4" stroke="#8b5a2b" strokeWidth="1.5" transform={`rotate(${a} 244 50)`} />)}
+          </g>
+          {[0, 1, 2, 3, 4, 5].map((k) => <rect key={k} x={10 + k * 22} y="118" width="4" height="32" fill="#e8c95a" />)}
+        </>
+      )}
+      {zone === 'granero-viejo' && (
+        <>
+          {[0, 1, 2, 3, 4, 5, 6, 7].map((k) => <line key={k} x1={k * 48} y1="0" x2={k * 48} y2="150" stroke="#8b3a2b" strokeWidth="3" />)}
+          <path d="M20 150 Q60 100 100 150 Z" fill="#e8c95a" />
+          <path d="M270 150 Q300 110 340 150 Z" fill="#e8c95a" />
+          <rect x="150" y="30" width="70" height="8" fill="#6b4423" />
+          <ellipse cx="170" cy="28" rx="6" ry="4" fill="#8d8d8d" />
+          <ellipse cx="190" cy="27" rx="5" ry="3.5" fill="#8d8d8d" />
+        </>
+      )}
+      {zone === 'casa-vieja' && (
+        <>
+          <rect x="30" y="30" width="70" height="56" fill="#9fd3f0" stroke="#8b5a2b" strokeWidth="5" />
+          <line x1="65" y1="30" x2="65" y2="86" stroke="#8b5a2b" strokeWidth="3" />
+          <rect x="150" y="24" width="60" height="40" rx="3" fill="#f4efe4" stroke="#6b4423" strokeWidth="3" />
+          <circle cx="180" cy="44" r="10" fill="#e8c95a" />
+          <rect x="240" y="100" width="100" height="50" fill="#6b4423" />
+          <ellipse cx="270" cy="96" rx="14" ry="6" fill="#f4efe4" />
         </>
       )}
       {zone === 'obra' && (
@@ -488,6 +518,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         }
       }
       const base = { ...s, defeated: [...s.defeated, enemy.id], hp: s.maxHp }
+      if (enemy.echo) return { ...base, items: { ...s.items, shield: Math.min(2, s.items.shield + 1) } }
       if (enemy.optional) {
         const r = enemy.reward
         return r && !s.outfits.includes(r) ? { ...base, outfits: [...s.outfits, r] } : base

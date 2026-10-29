@@ -648,6 +648,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Nunca "goed" ni "eated". Repásalos en el libro de verbos y en tus fichas.',
     ],
   },
+  'past-did': {
+    name: "Preguntas y negaciones en pasado (did / didn't)",
+    level: 'A1',
+    lesson: [
+      'Pregunta: Did + sujeto + verbo simple: Did you go? Did she see it?',
+      "Negativo: didn't + verbo simple: I didn't go. He didn't see it.",
+      "Respuestas cortas: Yes, I did. · No, I didn't. Nunca \"Did you went?\".",
+      'Con was / were no se usa did: Were you there? Was it cold?',
+    ],
+  },
   'past-simple': {
     name: 'Pasado simple',
     level: 'A2',

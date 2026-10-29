@@ -250,4 +250,15 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'Sam ___ two hundred bricks.', board: ['have → had · make → made', 'buy → bought · come → came'], choice: { options: ['bought', 'buyed', 'buy'], answer: 0, tip: 'buy → bought.' } },
     { who: 'leo', text: 'Careful! Some people here say "I goed" or "I eated". That is wrong. You can correct them!', es: '¡Cuidado! Aquí hay gente que dice "I goed" o "I eated". Está mal. ¡Puedes corregirlos!', board: ['✗ I goed · ✗ I eated', '✓ I went · ✓ I ate'] },
   ],
+
+  'past-did': [
+    { who: 'leo', text: 'To ask about the past, use DID. Did you see it? Did she go? And here is the secret: after DID, the verb is simple. No -ED, no WENT!', es: 'Para preguntar en pasado se usa did. El secreto: después de did, el verbo va simple, como en el diccionario. Did ya lleva el pasado.', board: ['Did + sujeto + verbo?', 'Did you go?'], table: { head: ['Afirmativa', 'Pregunta'], rows: [['<You> {went} home.', '[Did] <you> [go] home?'], ['<She> [play]{ed} football.', '[Did] <she> [play] football?'], ['<They> {saw} the mice.', '[Did] <they> [see] the mice?']] } },
+    { who: 'board', text: '___ you see the windmill?', board: ['Did + sujeto + verbo?', 'Did you go?'], choice: { options: ['Did', 'Do', 'Were'], answer: 0, tip: 'Pregunta en pasado: Did...?' } },
+    { who: 'board', text: 'Did you ___ to the farm?', board: ['Did + sujeto + verbo?', 'Did you go?'], choice: { options: ['go', 'went', 'goed'], answer: 0, tip: 'Después de did: go.' } },
+    { who: 'leo', text: "To say no: DIDN'T plus the simple verb. I didn't go. He didn't see it. Never \"I didn't went\"!", es: "Para negar: didn't + verbo simple.", board: ["didn't + verbo", "I didn't go."], table: { head: ['Afirmativa', 'Negativa'], rows: [['<I> {went}.', "<I> [did]{n't} [go]."], ['<He> {saw} it.', "<He> [did]{n't} [see] it."], ['<We> [play]{ed}.', "<We> [did]{n't} [play]."]] } },
+    { who: 'board', text: "I didn't ___ the dog.", board: ["didn't + verbo", "I didn't go."], choice: { options: ['see', 'saw', 'seed'], answer: 0, tip: "didn't + see." } },
+    { who: 'leo', text: "Short answers are easy: Yes, I did. No, I didn't. The same for everybody!", es: 'Las respuestas cortas son fáciles, e iguales para todos.', board: ['Yes, I did.', "No, I didn't."], table: { head: ['Pregunta', 'Sí', 'No'], rows: [['[Did] <you> [go]?', 'Yes, <I> [did].', "No, <I> [did]{n't}."], ['[Did] <she> [eat]?', 'Yes, <she> [did].', "No, <she> [did]{n't}."]] } },
+    { who: 'board', text: 'Did you like the farm? — Yes, I ___.', board: ['Yes, I did.', "No, I didn't."], choice: { options: ['did', 'liked', 'do'], answer: 0, tip: 'Yes, I did.' } },
+    { who: 'leo', text: 'One more thing: with WAS and WERE we never use DID. Were you there? Was it cold? Easy!', es: 'Una cosa más: con was y were nunca se usa did.', board: ['Were you there? ✓', 'Did you were there? ✗'] },
+  ],
 }

@@ -40,6 +40,7 @@ import { Planner } from '../components/Planner'
 import { Attendance } from '../components/Attendance'
 import { SoundSacks } from '../components/SoundSacks'
 import { VerbBook } from '../components/VerbBook'
+import { Mystery } from '../components/Mystery'
 import { voiceOf, type Voice } from '../game/speech'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
@@ -128,17 +129,21 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       scene.entities.filter((e) => {
         // Los enemigos vencidos se quedan en el mapa como estudiantes normales
         if (e.type === 'chest') return !state.opened.includes(e.id)
+        // Los esbirros que vinieron del presente vuelven a su tiempo al ser vencidos
+        if (e.type === 'enemy' && ENEMIES[e.id]?.echo && state.defeated.includes(e.id)) return false
         return true
       }),
     [scene, state.defeated, state.opened],
   )
 
+  // En la granja de 1996 el molino está quieto hasta resolver el misterio
+  const windmillStill = scene.id === 'farm-past' && !state.opened.includes('past-mystery')
   const tiles = useMemo(
     () =>
       scene.map.flatMap((row, y) =>
-        row.split('').map((c, x) => <Tile key={`${x}-${y}`} c={c} x={x} y={y} floor={FLOOR[scene.zoneAt(x, y)]} doorOpen={doorOpen} party={partyReady} />),
+        row.split('').map((c, x) => <Tile key={`${x}-${y}`} c={c} x={x} y={y} floor={FLOOR[scene.zoneAt(x, y)]} doorOpen={doorOpen} party={partyReady} still={windmillStill} />),
       ),
-    [scene, doorOpen, partyReady],
+    [scene, doorOpen, partyReady, windmillStill],
   )
 
   const interact = useCallback(
@@ -938,6 +943,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'planner') return <Planner onClose={finish} />
             if (t.activity === 'attendance') return <Attendance onClose={finish} />
             if (t.activity === 'sounds') return <SoundSacks onClose={finish} />
+            if (t.activity === 'mystery') return <Mystery onClose={finish} />
             if (t.activity === 'verbs') return <VerbBook state={state} update={update} onClose={finish} />
             if (t.activity === 'vocab' && t.vocab)
               return <VocabActivity state={state} words={t.vocab.words} place={t.vocab.place} title={t.vocab.title} rewardText={t.reward.sub} onClose={finish} />

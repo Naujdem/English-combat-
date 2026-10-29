@@ -20,7 +20,7 @@ export type BusTrip = { place: string; placeEs: string; price: string; priceNum:
   /** Viaje con el reloj del tiempo (otro dibujo) */
   art?: 'clock' | 'walk'
   /** Para art 'walk': lo que se ve al fondo */
-  scenery?: 'market' | 'build'
+  scenery?: 'market' | 'build' | 'windmill'
   /** Texto del botón final */
   end?: string
 }
@@ -183,6 +183,33 @@ export const WALK_TO_GREEN_1996: BusTrip = {
   ],
 }
 
+/** A pie desde Green Street hasta la granja de 1996. Aparecen Danny y Daisy, traídos del presente */
+export const WALK_TO_FARM_1996: BusTrip = {
+  place: 'the farm',
+  placeEs: 'la granja en 1996',
+  price: '',
+  priceNum: '',
+  wrongPrices: ['', ''],
+  arrival: { text: '', es: '' },
+  sign: 'FARM',
+  three: true,
+  art: 'walk',
+  scenery: 'windmill',
+  end: 'Entrar a la granja',
+  steps: [
+    { who: 'narrator', text: 'Caminan por el camino viejo. Al fondo hay un molino de viento... pero no se mueve.', es: '' },
+    { who: 'leo', text: 'Wait... Look over there! Is that DANNY? From the city? And that cow... is it Daisy?', es: 'Espera... ¡Mira allá! ¿Ese es DANNY? ¿El de la ciudad? Y esa vaca... ¿es Daisy?' },
+    { who: 'leo', text: 'They touched the pieces of the clock. Maybe the light of the clock brought them here, with us!', es: 'Ellos tocaron las piezas del reloj. ¡Tal vez la luz del reloj los trajo aquí, con nosotros!' },
+    {
+      who: 'leo',
+      text: 'Did you see them in the old city or on Green Street?',
+      es: '¿Los viste en la ciudad vieja o en Green Street?',
+      choice: { options: ["No, I didn't. They are here now!", "No, I didn't saw them.", "No, I don't saw them."], answer: 0, tip: "Respuesta corta en pasado: No, I didn't. (Después de didn't, el verbo va simple: see.)" },
+    },
+    { who: 'leo', text: "If we help them with their words, maybe the light takes them home. Let's try!", es: 'Si los ayudamos con sus palabras, tal vez la luz los lleva a casa. ¡Intentémoslo!' },
+  ],
+}
+
 export const BUS_TO_BARRIO: BusTrip = {
   place: 'Green Street',
   placeEs: 'Green Street, el barrio de Leo',
@@ -276,7 +303,15 @@ export function BusRide({ trip, hero, friend, friendName = '', onDone }: { trip:
               <rect width="320" height="170" fill="#cfe6f2" />
               <path d="M0 112 Q90 92 170 104 T320 98 V130 H0 Z" fill="#a9c47e" />
               <rect x="196" y="58" width="48" height="56" fill="#a4553a" />
-              {trip.scenery === 'build' ? (
+              {trip.scenery === 'windmill' ? (
+                <g>
+                  <path d="M258 114 L262 70 H274 L278 114 Z" fill="#c98b4a" stroke="#8b5a2b" />
+                  <g transform="rotate(20 268 70)">
+                    {[0, 90, 180, 270].map((a) => <rect key={a} x="265" y="40" width="6" height="30" fill="#f4efe4" stroke="#8b5a2b" transform={`rotate(${a} 268 70)`} />)}
+                  </g>
+                  <path d="M120 128 h40 v-14 h-40 Z" fill="#e8c95a" opacity="0.8" />
+                </g>
+              ) : trip.scenery === 'build' ? (
                 <g>
                   <rect x="250" y="66" width="3" height="48" fill="#8d8d8d" />
                   <rect x="284" y="66" width="3" height="48" fill="#8d8d8d" />

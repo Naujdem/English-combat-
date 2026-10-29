@@ -16,8 +16,8 @@ import { AnimalSprite } from '../components/Animals'
 
 const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
-type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey'
-type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey'
+type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya'
+type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya'
 type Step = {
   who: Who
   text: string
@@ -46,6 +46,7 @@ function buildSteps(s: GameState, sceneId: string): Step[] {
   if (sceneId === 'school-past') return schoolPastSteps(s)
   if (sceneId === 'city-past') return cityPastSteps(s)
   if (sceneId === 'barrio-past') return barrioPastSteps(s)
+  if (sceneId === 'farm-past') return farmPastSteps(s)
   const name = s.hero.name
   const it = s.interest
   const iname = it.name
@@ -626,6 +627,57 @@ function barrioPastSteps(s: GameState): Step[] {
   ]
 }
 
+/**
+ * Final de la granja en 1996: Bill es el señor Brown de joven y Priya es la doctora Patel.
+ * El desconocido repite la pregunta que le hizo a la señora Brown: ¿alguien pidió ayuda?
+ */
+function farmPastSteps(s: GameState): Step[] {
+  const iname = s.interest.name
+  const cast: Cast[] = ['leo', 'interest']
+  const farm: Cast[] = ['martha', 'billy', 'priya']
+  return [
+    { who: 'narrator', text: 'La señora Brown sale de su casa. El molino gira otra vez. Bill y Priya se acercan.', cast: farm },
+    { who: 'martha', text: "Bill, Priya... I didn't listen to you today. I shouted at everybody. I am sorry.", es: 'Bill, Priya... Hoy no los escuché. Les grité a todos. Lo siento.', cast: farm },
+    { who: 'billy', text: "It's OK, Mom. These kids found the problem. The mice ate the rope! Ha ha.", es: 'No pasa nada, mamá. Estos chicos encontraron el problema. ¡Los ratones se comieron la cuerda! Ja, ja.', cast: farm },
+    { who: 'martha', text: 'Bill loves this farm. One day it is going to be his farm... and his grandchildren are going to play here.', es: 'Bill ama esta granja. Un día va a ser su granja... y sus nietos van a jugar aquí.', cast: farm },
+    { who: 'priya', text: 'And I am going to be the vet of this farm! I am going to help all the animals.', es: '¡Y yo voy a ser la veterinaria de esta granja! Voy a ayudar a todos los animales.', cast: farm },
+    { who: 'leo', text: 'Wait... Bill BROWN? Mr. Brown, the farmer? Rosie is his granddaughter! And Priya... Dr. Patel?!', es: 'Espera... ¿Bill BROWN? ¿El señor Brown, el granjero? ¡Rosie es su nieta! Y Priya... ¿¡la doctora Patel!?', cast },
+    { who: 'leo', text: 'Did you know that?', es: '¿Tú lo sabías?', cast },
+    {
+      who: 'hero',
+      text: '¿Qué le respondes a Leo?',
+      cast,
+      choice: {
+        options: ["No, I didn't! What a surprise!", "No, I didn't knew!", "No, I don't knew!"],
+        answer: 0,
+        tip: "Respuesta corta en pasado: No, I didn't. (Y si sigues: I didn't know, con el verbo simple.)",
+      },
+    },
+    { who: 'interest', text: 'Everybody is young here... Mr. Grimm, Mr. Rossi, your mom, Mr. Brown...', es: 'Aquí todos son jóvenes... El profesor Grimm, el señor Rossi, tu mamá, el señor Brown...', cast },
+    { who: 'narrator', text: 'Sientes algo cálido en la garganta: otro fragmento de tu voz vuelve a ti. Ahora puedes preguntar y negar en pasado: Did you...? I didn\'t...', cast },
+    { who: 'narrator', text: 'Leo se va con Bill a ver el molino. Junto al estanque, una voz ronca habla muy bajito.', cast: ['interest'] },
+    { who: 'villain', text: 'Did anybody call for help... that night? No. Nobody did.', es: '¿Alguien pidió ayuda... esa noche? No. Nadie lo hizo.', villain: true, cast: ['interest'] },
+    { who: 'villain', text: 'The last words of this time are in the old cinema. People went there to watch stories. Your story... is almost complete. Go.', es: 'Las últimas palabras de esta época están en el viejo cine. La gente iba allá a ver historias. Tu historia... está casi completa. Ve.', villain: true, cast: ['interest'] },
+    { who: 'narrator', text: `${iname} se da la vuelta. Junto al estanque no hay nadie, solo el ruido del molino.`, cast },
+    {
+      who: 'hero',
+      text: '¿Qué le preguntas a Leo cuando vuelve?',
+      cast,
+      choice: {
+        options: ['Did you see him? The stranger was here!', 'Did you saw him? The stranger was here!', 'Do you saw him? The stranger was here!'],
+        answer: 0,
+        tip: 'Pregunta en pasado: Did you see...? (see, no saw).',
+      },
+    },
+    { who: 'leo', text: "No, I didn't. I never see him... Why is it always you?", es: 'No, no lo vi. Yo nunca lo veo... ¿Por qué siempre eres tú?', cast },
+    {
+      who: 'narrator',
+      text: "Fin: La granja de 1996. Recuperaste las preguntas y negaciones en pasado (did / didn't). Tu diario de la granja tiene una página nueva de 1996. Tu último viaje por el pasado de A1 es al viejo cine...",
+      cast,
+    },
+  ]
+}
+
 export function Epilogue({ state, onDone }: { state: GameState; onDone: () => void }) {
   const city = state.sceneId === 'city'
   const barrio = state.sceneId === 'barrio'
@@ -634,6 +686,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
   const schoolPast = state.sceneId === 'school-past'
   const cityPast = state.sceneId === 'city-past'
   const barrioPast = state.sceneId === 'barrio-past'
+  const farmPast = state.sceneId === 'farm-past'
   const steps = buildSteps(state, state.sceneId)
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
@@ -663,6 +716,9 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     carmen: 'Carmen',
     hill: 'Mr. Hill',
     joey: 'Joe',
+    martha: 'Mrs. Brown',
+    billy: 'Bill',
+    priya: 'Priya',
   }
 
   const voices: Record<Who, Voice> = {
@@ -684,6 +740,9 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     carmen: 'female',
     hill: 'male',
     joey: 'male',
+    martha: 'female',
+    billy: 'male',
+    priya: 'female',
   }
 
   function next() {
@@ -698,8 +757,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 overflow-y-auto px-4 py-6">
-      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
-      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
+      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{farmPast ? 'Pasado · La granja de 1996' : barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
+      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : farmPast ? 'La granja con molino, 1996' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
         {s.home ? (
           <g>
             <rect width="320" height="200" fill="#f1d9c0" />
@@ -714,6 +773,19 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             <rect x="214" y="86" width="92" height="18" rx="6" fill="#c8664e" />
             <rect x="250" y="20" width="44" height="58" rx="2" fill="#e8eef2" stroke="#b8c4cc" strokeWidth="2" />
             <line x1="250" y1="40" x2="294" y2="40" stroke="#b8c4cc" strokeWidth="2" />
+          </g>
+        ) : farmPast ? (
+          <g>
+            <rect width="320" height="200" fill="#cfe6f2" />
+            <path d="M0 120 Q80 96 160 112 T320 104 V140 H0 Z" fill="#a9c47e" />
+            <rect x="200" y="56" width="100" height="70" fill="#d9bd85" />
+            <polygon points="192,58 250,24 308,58" fill="#8b3a2b" />
+            <rect x="238" y="92" width="24" height="34" fill="#6b4423" />
+            <path d="M92 130 L100 50 H118 L126 130 Z" fill="#c98b4a" stroke="#8b5a2b" strokeWidth="2" />
+            <g className="anim-spin-slow" style={{ transformOrigin: '109px 50px' }}>
+              {[0, 90, 180, 270].map((a) => <rect key={a} x="105" y="8" width="8" height="42" fill="#f4efe4" stroke="#8b5a2b" strokeWidth="1.5" transform={`rotate(${a} 109 50)`} />)}
+            </g>
+            <rect y="136" width="320" height="64" fill="#b8946a" />
           </g>
         ) : barrioPast ? (
           <g>
@@ -868,6 +940,9 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             : who === 'carmen' ? ENEMIES['barrio-past-m2'].look
             : who === 'hill' ? ENEMIES['barrio-past-boss'].look
             : who === 'joey' ? NPCS['joe-young'].look
+            : who === 'martha' ? ENEMIES['farm-past-boss'].look
+            : who === 'billy' ? NPCS.bill.look
+            : who === 'priya' ? ENEMIES['farm-past-m2'].look
             : interest.look
           return (
             <g key={who} transform={`translate(${spots[k] + 64} 128) scale(-2 2)`}>

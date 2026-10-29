@@ -294,6 +294,31 @@ export const DIARY: DiaryChapter[] = [
     ],
     versions: [
       {
+        id: 'farm-past',
+        unlock: 'farm-past-epilogue',
+        tense: 'p',
+        tab: 'Pasado',
+        title: 'Dear diary (1996)',
+        frame: "Lo escribes esa noche. Fíjate en las preguntas y negaciones: did / didn't + verbo simple.",
+        lines: [
+          { en: 'Dear diary, today we [walked]p to the farm in 1996. The windmill [didn\'t move]p.', es: 'Querido diario, hoy caminamos a la granja en 1996. El molino no se movía.' },
+          { en: 'Bill [asked]p me: "[Did]p you [stop]p my windmill?" I [said]p: "No, I [didn\'t]p!"', es: 'Bill me preguntó: "¿Tú paraste mi molino?". Yo dije: "¡No!"' },
+          { en: 'I [asked]p everybody. Hank [didn\'t touch]p it, and Lucy [didn\'t hear]p a sound.', es: 'Les pregunté a todos. Hank no lo tocó, y Lucy no oyó ningún ruido.' },
+          { en: 'Tom [saw]p a lot of mice in the barn. The mice [ate]p the rope!', es: 'Tom vio muchos ratones en el granero. ¡Los ratones se comieron la cuerda!' },
+          { en: 'Danny and Daisy [were]p here too! The light of the clock [brought]p them. Now they are home.', es: '¡Danny y Daisy también estaban aquí! La luz del reloj los trajo. Ya están en casa.' },
+          { en: 'Max, the puppy, [said]p: "I [didn\'t eat]p the shoes!" But he [did]p.', es: 'Max, el cachorro, dijo: "¡No me comí los zapatos!". Pero sí se los comió.' },
+          { en: 'Mrs. Brown [didn\'t listen]p to anybody. She [had]p a fragment of my voice.', es: 'La señora Brown no escuchaba a nadie. Tenía un fragmento de mi voz.' },
+          { en: 'Bill is Mr. Brown, and Priya is Dr. Patel! [Did]p they [know]p about us? No, they [didn\'t]p.', es: '¡Bill es el señor Brown, y Priya es la doctora Patel! ¿Sabían de nosotros? No.' },
+          { en: 'The stranger [asked]p: "[Did]p anybody [call]p for help?" Why [did]p he [ask]p that?', es: 'El desconocido preguntó: "¿Alguien pidió ayuda?". ¿Por qué preguntó eso?' },
+        ],
+        questions: [
+          { q: 'Did Hank touch the windmill?', options: ["Yes, he did.", "No, he didn't.", "No, he doesn't."], answer: 1, tip: "El diario dice: \"Hank didn't touch it\"." },
+          { q: 'Who ate the rope?', options: ['The mice.', 'Max.', 'Daisy.'], answer: 0, tip: 'El diario dice: "The mice ate the rope!".' },
+          { q: 'Did Max eat the shoes?', options: ['Yes, he did.', "No, he didn't.", 'Yes, he ate.'], answer: 0, tip: 'Max dijo que no, pero el diario dice: "But he did".' },
+          { q: 'Which question is correct?', options: ['Did you went?', 'Did you go?', 'Do you went?'], answer: 1, tip: 'Después de did, el verbo va simple: Did you go?' },
+        ],
+      },
+      {
         id: 'farm-present',
         tense: 'n',
         tab: 'Presente',

@@ -174,6 +174,8 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - Los jefes del pasado dan fragmentos de voz (no cuentan como piezas del reloj).
 - La ciudad de 1996 (`src/data/cityPast.ts`): se llega a pie (`WALK_TO_OLD_CITY`). Pasado de los verbos regulares (*-ed*), con los sacos de sonidos /t/ /d/ /ɪd/ del señor López (`src/components/SoundSacks.tsx`) y el repaso de palabras de Nora. Tony, el repartidor, es el señor Rossi de joven.
 - Green Street en 1996 (`src/data/barrioPast.ts`), en construcción. Verbos irregulares: los 25 de A1 están en `src/data/irregular.ts`. El libro de verbos de Joe (`src/components/VerbBook.tsx`) los guarda en las fichas y quedan en el Cuaderno ("Libro de verbos irregulares"). En las explicaciones, el pasado irregular va en morado y el regular en verde.
+- La granja de 1996 (`src/data/farmPast.ts`): *did / didn't*. El misterio del molino (`src/components/Mystery.tsx`): preguntar con *Did you...?* a los sospechosos.
+- Esbirros del presente en el pasado (`echo: true` en `EnemyDef`): copias de esbirros ya vencidos (Danny, Daisy) que la luz del reloj trajo. Son opcionales, repasan su tema, dan un escudo y al vencerlos vuelven a su tiempo (desaparecen del mapa).
 
 ## Explicaciones y repaso de cierre de A1
 
