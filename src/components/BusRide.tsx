@@ -111,7 +111,7 @@ export function BusRide({ trip, hero, onDone }: { trip: BusTrip; hero: SpriteLoo
           {s.who !== 'narrator' && (
             <div className="flex items-center justify-between">
               <p className="font-display text-lg text-gold">{s.who === 'leo' ? 'Leo' : NPCS.driver.name}</p>
-              <SpeakButton text={s.text} size="sm" auto />
+              <SpeakButton text={s.text} size="sm" auto voice="male" />
             </div>
           )}
           <p key={i} className={`anim-fade-in text-[17px] leading-relaxed ${s.who === 'narrator' ? 'italic text-paper/85' : ''}`}>{s.text}</p>

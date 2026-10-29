@@ -166,7 +166,7 @@ export function WhereIsIt({ onClose }: { onClose: (done: boolean) => void }) {
 
       <div className="mt-3 flex items-center justify-between">
         <p className="font-display text-lg text-gold">Ana</p>
-        <SpeakButton text={anaLine.text} size="sm" auto />
+        <SpeakButton text={anaLine.text} size="sm" auto voice="female" />
       </div>
       <p key={`${intro}-${r}`} className="anim-fade-in text-[17px] leading-relaxed">{anaLine.text}</p>
       {showEs && <p className="mt-1 text-sm text-paper/60">{anaLine.es}</p>}

@@ -1,15 +1,15 @@
 import { useEffect, useRef } from 'react'
-import { autoVoiceOn, canSpeak, speak } from '../game/speech'
+import { autoVoiceOn, canSpeak, speak, type Voice } from '../game/speech'
 
 /** Botón de bocina que lee el texto en inglés. Un toque: velocidad normal. Dos toques seguidos: más lento. */
-export function SpeakButton({ text, size = 'md', label = 'Escuchar en inglés', auto }: { text: string; size?: 'sm' | 'md' | 'lg'; label?: string; auto?: boolean }) {
+export function SpeakButton({ text, size = 'md', label = 'Escuchar en inglés', auto, voice = 'neutral' }: { text: string; size?: 'sm' | 'md' | 'lg'; label?: string; auto?: boolean; voice?: Voice }) {
   const last = useRef(0)
   // auto: la frase se lee sola cuando aparece (si la voz automática está activada)
   useEffect(() => {
     if (!auto || !canSpeak || !autoVoiceOn()) return
-    const t = window.setTimeout(() => speak(text), 250)
+    const t = window.setTimeout(() => speak(text, false, voice), 250)
     return () => window.clearTimeout(t)
-  }, [auto, text])
+  }, [auto, text, voice])
   if (!canSpeak) return null
   const dims = size === 'lg' ? 'h-14 w-14' : size === 'sm' ? 'h-7 w-7' : 'h-9 w-9'
   const icon = size === 'lg' ? 28 : size === 'sm' ? 15 : 18
@@ -23,7 +23,7 @@ export function SpeakButton({ text, size = 'md', label = 'Escuchar en inglés', 
         e.stopPropagation()
         const now = Date.now()
         // Dos toques rápidos = más lento
-        speak(text, now - last.current < 1200)
+        speak(text, now - last.current < 1200, voice)
         last.current = now
       }}
     >

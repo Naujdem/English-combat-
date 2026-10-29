@@ -9,11 +9,12 @@ import { heroLook } from '../game/helpers'
 import { TimeClock } from '../components/TimeClock'
 import { WORLD } from '../data/world'
 import { ENEMIES } from '../data/enemies'
+import type { Voice } from '../game/speech'
 
 const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
-type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick'
-type Cast = 'leo' | 'maya' | 'interest' | 'nick'
+type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom'
+type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom'
 type Step = {
   who: Who
   text: string
@@ -25,6 +26,8 @@ type Step = {
   clock?: boolean
   /** Quién más aparece en la escena */
   cast?: Cast[]
+  /** Escena en casa del protagonista (si no, el fondo del capítulo) */
+  home?: boolean
 }
 
 /**
@@ -197,7 +200,80 @@ function barrioSteps(s: GameState): Step[] {
   const iname = s.interest.name
   const cast: Cast[] = ['leo', 'maya', 'interest']
   const withNick: Cast[] = ['nick', 'leo', 'interest']
+  const family: Cast[] = ['nick', 'mom']
+  const h = { home: true, cast: family }
   return [
+    // En casa: llega mamá. Presentar la familia (have got), la casa (there is) y tu rutina (frecuencia)
+    { who: 'narrator', text: 'Nick se sienta en el sofá. Entonces se abre la puerta: ¡mamá llega del trabajo!', ...h },
+    { who: 'mom', text: "Hi, kids! I'm home! ... Nick, why are you on the floor? And why is the house so quiet?", es: '¡Hola, chicos! ¡Ya llegué! ... Nick, ¿por qué estás en el suelo? ¿Y por qué la casa está tan callada?', ...h },
+    { who: 'nick', text: "Sorry, Mom. I don't remember this morning. But look: we have got a photo of the family!", es: 'Perdón, mamá. No recuerdo esta mañana. Pero mira: ¡tenemos una foto de la familia!', ...h },
+    { who: 'mom', text: 'Oh, a photo from Grandpa Joe! Tell me about it.', es: '¡Oh, una foto del abuelo Joe! Cuéntame.', ...h },
+    {
+      who: 'hero',
+      text: 'Describe tu familia en la foto.',
+      ...h,
+      choice: {
+        options: ['This is our family. I have got one brother, Nick.', 'This is our family. I has got one brother, Nick.', 'This is our family. I have get one brother, Nick.'],
+        answer: 0,
+        tip: 'Con "I": have got. "Has got" es para he, she, it.',
+      },
+    },
+    { who: 'mom', text: 'And Dad? He always cooks dinner, but today he works late. Has he got his glasses in the photo?', es: '¿Y papá? Siempre cocina la cena, pero hoy trabaja hasta tarde. ¿Tiene sus gafas en la foto?', ...h },
+    {
+      who: 'hero',
+      text: '¿Qué le respondes? (Papá sí tiene gafas en la foto)',
+      ...h,
+      choice: {
+        options: ['Yes, he have.', 'Yes, he has.', 'Yes, he is.'],
+        answer: 1,
+        tip: 'Respuesta corta de have got con he: Yes, he has.',
+      },
+    },
+    { who: 'mom', text: "Ha ha! Now help me. I can't find my bag. Is there a bag on the sofa?", es: '¡Ja, ja! Ahora ayúdame. No encuentro mi bolso. ¿Hay un bolso en el sofá?', ...h },
+    {
+      who: 'hero',
+      text: 'Tu bolso está en la cocina, al lado de la nevera. ¿Qué le dices?',
+      ...h,
+      choice: {
+        options: ["No, there isn't. There is a bag in the kitchen, next to the fridge.", "No, there aren't. There are a bag in the kitchen.", "No, it isn't. It have a bag in the kitchen."],
+        answer: 0,
+        tip: 'Una cosa: there is / there isn\'t. Y di dónde está: in the kitchen, next to the fridge.',
+      },
+    },
+    { who: 'mom', text: 'Thank you! And your bedroom? Is it clean?', es: '¡Gracias! ¿Y tu cuarto? ¿Está limpio?', ...h },
+    {
+      who: 'hero',
+      text: 'En tu cuarto hay una cama y muchos libros en el piso. ¿Qué dices?',
+      ...h,
+      choice: {
+        options: ['There is a bed and there is a lot of books on the floor.', 'There is a bed and there are a lot of books on the floor.', 'There are a bed and there are books on the floor.'],
+        answer: 1,
+        tip: 'Una cama: there is. Muchos libros: there are.',
+      },
+    },
+    { who: 'mom', text: 'Books on the floor! OK... Tomorrow is a school day. What time do you get up?', es: '¡Libros en el piso! Bueno... Mañana hay clases. ¿A qué hora te levantas?', ...h },
+    {
+      who: 'hero',
+      text: 'Siempre te levantas a las siete. ¿Qué respondes?',
+      ...h,
+      choice: {
+        options: ['I get always up at seven.', 'Always I gets up at seven.', 'I always get up at seven.'],
+        answer: 2,
+        tip: 'La frecuencia va antes del verbo y con "I" el verbo va sin -s: I always get up.',
+      },
+    },
+    { who: 'nick', text: 'And I never get up at seven. I usually get up at nine! Ha ha.', es: 'Y yo nunca me levanto a las siete. ¡Normalmente me levanto a las nueve! Ja, ja.', ...h },
+    {
+      who: 'hero',
+      text: '¿Qué le dices a Nick?',
+      ...h,
+      choice: {
+        options: ['You are always late, Nick!', 'You always are late, Nick!', 'You late always, Nick!'],
+        answer: 0,
+        tip: 'Con el verbo to be, la frecuencia va después: you are always late.',
+      },
+    },
+    { who: 'mom', text: "Now go to Leo's party, both of you. Say happy birthday from me! Dinner is at eight.", es: 'Ahora vayan los dos a la fiesta de Leo. ¡Felicítenlo de mi parte! La cena es a las ocho.', ...h },
     { who: 'narrator', text: `Nick y tú salen de la casa. En el parque, la fiesta de Leo sigue: Leo, Maya y ${iname} los esperan al lado del pastel.`, cast: withNick },
     { who: 'leo', text: `${name}! Is that your brother? Is he OK now?`, es: `¡${name}! ¿Ese es tu hermano? ¿Ya está bien?`, cast: withNick },
     {
@@ -281,6 +357,18 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     villain: '???',
     hero: state.hero.name,
     nick: 'Nick',
+    mom: 'Mom',
+  }
+
+  const voices: Record<Who, Voice> = {
+    narrator: 'neutral',
+    hero: state.hero.gender === 'female' ? 'female' : 'male',
+    leo: 'male',
+    nick: 'male',
+    mom: 'female',
+    maya: 'female',
+    interest: state.interest.gender === 'female' ? 'female' : 'male',
+    villain: 'villain',
   }
 
   function next() {
@@ -296,8 +384,23 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 overflow-y-auto px-4 py-6">
       <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
-      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
-        {barrio ? (
+      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
+        {s.home ? (
+          <g>
+            <rect width="320" height="200" fill="#f1d9c0" />
+            <rect y="140" width="320" height="60" fill="#b98c5a" />
+            <rect x="24" y="30" width="56" height="50" fill="#9fd3f0" stroke="#8d7c68" strokeWidth="4" />
+            <rect x="122" y="26" width="64" height="46" rx="3" fill="#f4efe4" stroke="#7a5230" strokeWidth="4" />
+            <circle cx="140" cy="44" r="7" fill={state.hero.look.skin} />
+            <circle cx="158" cy="46" r="6" fill={state.hero.look.skin} />
+            <circle cx="172" cy="48" r="5" fill={state.hero.look.skin} />
+            <rect x="132" y="54" width="46" height="12" rx="3" fill="#3b6fb6" />
+            <rect x="214" y="96" width="92" height="46" rx="8" fill="#b5523b" />
+            <rect x="214" y="86" width="92" height="18" rx="6" fill="#c8664e" />
+            <rect x="250" y="20" width="44" height="58" rx="2" fill="#e8eef2" stroke="#b8c4cc" strokeWidth="2" />
+            <line x1="250" y1="40" x2="294" y2="40" stroke="#b8c4cc" strokeWidth="2" />
+          </g>
+        ) : barrio ? (
           <g>
             <rect width="320" height="200" fill="#bfe3f5" />
             <circle cx="280" cy="34" r="18" fill="#f6d36b" />
@@ -359,7 +462,12 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
           <SpriteBody look={heroLook(state)} />
         </g>
         {shown.map((who, k) => {
-          const look = who === 'leo' ? FRIENDS.leo.look : who === 'maya' ? FRIENDS.maya.look : who === 'nick' ? ENEMIES['barrio-boss'].look : interest.look
+          const look =
+            who === 'leo' ? FRIENDS.leo.look
+            : who === 'maya' ? FRIENDS.maya.look
+            : who === 'nick' ? { ...ENEMIES['barrio-boss'].look, skin: state.hero.look.skin, hair: state.hero.look.hair }
+            : who === 'mom' ? { shirt: '#2f6fd0', hair: state.hero.look.hair, skin: state.hero.look.skin, gender: 'female' as const }
+            : interest.look
           return (
             <g key={who} transform={`translate(${spots[k] + 64} 128) scale(-2 2)`}>
               <SpriteBody look={look} />
@@ -386,7 +494,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
         {names[s.who] && (
           <div className="flex items-center justify-between">
             <p className={`font-display text-lg ${s.who === 'villain' ? 'text-[#b9a3e8]' : 'text-gold'}`}>{names[s.who]}</p>
-            {s.who !== 'hero' && <SpeakButton text={s.text} size="sm" auto />}
+            {s.who !== 'hero' && <SpeakButton text={s.text} size="sm" auto voice={voices[s.who]} />}
           </div>
         )}
         <p key={i} className={`anim-fade-in text-[17px] leading-relaxed ${s.who === 'narrator' ? 'italic text-paper/85' : ''}`}>

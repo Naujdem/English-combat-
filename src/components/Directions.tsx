@@ -130,7 +130,7 @@ export function Directions({ onClose }: { onClose: (done: boolean) => void }) {
 
       <div className="mt-3 flex items-center justify-between">
         <p className="font-display text-lg text-gold">Officer Rosa</p>
-        <SpeakButton text={line.text} size="sm" auto />
+        <SpeakButton text={line.text} size="sm" auto voice="female" />
       </div>
       <p key={`${intro}-${r}`} className="anim-fade-in text-[17px] leading-relaxed">{line.text}</p>
       {showEs && <p className="mt-1 text-sm text-paper/60">{line.es}</p>}

@@ -127,7 +127,7 @@ export const CITY_ENEMIES: Record<string, EnemyDef> = {
     topics: ['demonstratives'],
     kinds: ['fill', 'fix', 'order', 'listen', 'write'],
     tags: ['tienda'],
-    look: { shirt: '#c2185b', hair: '#e0b04a', skin: '#f6d3b3' },
+    look: { shirt: '#c2185b', hair: '#e0b04a', skin: '#f6d3b3', gender: 'female' },
     before: [
       { text: 'Welcome to my shop! This shoes are beautiful! These jacket is perfect for you!', es: '¡Bienvenido a mi tienda! ¡"Este" zapatos son hermosos! ¡"Estas" chaqueta es perfecta para ti!' },
       { text: 'Mr. Rossi says I am the best seller in the city. Buy something... or answer me!', es: 'El señor Rossi dice que soy la mejor vendedora de la ciudad. Compra algo... ¡o respóndeme!' },

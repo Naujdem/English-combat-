@@ -187,7 +187,7 @@ export const SCHOOL_ENEMIES: Record<string, EnemyDef> = {
     topics: ['possessives'],
     kinds: ['fill', 'fix', 'order', 'listen', 'write'],
     tags: ['cafeteria'],
-    look: { shirt: '#d9822b', hair: '#6b3b1f', skin: '#f1c27d', accessory: 'cap' },
+    look: { shirt: '#d9822b', hair: '#6b3b1f', skin: '#f1c27d', accessory: 'cap', gender: 'female' },
     before: [
       { text: 'This is MY table. This is MY food. And this is MY key!', es: 'Esta es MI mesa. Esta es MI comida. ¡Y esta es MI llave!' },
       { text: "Nothing here is yours. Your words? They're mine now!", es: 'Nada aquí es tuyo. ¿Tus palabras? ¡Ahora son mías!' },

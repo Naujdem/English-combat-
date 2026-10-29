@@ -96,7 +96,7 @@ export function Lesson({
         {s.who === 'leo' && (
           <div className="flex items-center justify-between">
             <p className="font-display text-lg text-gold">Leo</p>
-            <SpeakButton text={s.text} size="sm" auto />
+            <SpeakButton text={s.text} size="sm" auto voice="male" />
           </div>
         )}
         {s.who === 'board' && <p className="text-xs font-semibold uppercase tracking-wide text-hp">Escribe en la pizarra</p>}

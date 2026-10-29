@@ -32,9 +32,24 @@ import { Directions } from '../components/Directions'
 import { CafeOrder } from '../components/CafeOrder'
 import { MiniTalk } from '../components/MiniTalk'
 import { NPC_TASKS } from '../data/tasks'
+import { voiceOf, type Voice } from '../game/speech'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
 const VIEW = 11
+
+/** Quién habla en un mensaje 'Nombre: "..."', para leerlo con voz de hombre o de mujer */
+function voiceFor(text: string, state: GameState): Voice {
+  const m = /^([^:"]{2,40}): "/.exec(text)
+  if (!m) return 'neutral'
+  const name = m[1].trim()
+  const npc = Object.values(NPCS).find((n) => n.name === name)
+  if (npc) return voiceOf(npc.look)
+  const enemy = Object.values(ENEMIES).find((e) => e.person === name)
+  if (enemy) return voiceOf(enemy.look)
+  if (name === state.interest.name) return state.interest.gender === 'female' ? 'female' : 'male'
+  if (name === 'Maya') return 'female'
+  return 'male'
+}
 
 /** sub = nota en español que siempre se ve · es = traducción de lo que se dice, se ve al tocar Traducir */
 type Msg = { text: string; sub?: string; es?: string; tone?: 'info' | 'good' | 'warn'; say?: string }
@@ -412,7 +427,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 if (state.defeated.includes(e.id)) {
                   return (
                     <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                      <SpriteBody look={{ ...def.look }} />
+                      <SpriteBody look={{ ...def.look, ...(def.id === 'barrio-boss' ? { skin: state.hero.look.skin, hair: state.hero.look.hair } : {}) }} />
                     </g>
                   )
                 }
@@ -420,7 +435,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
                     <g transform="translate(32 0) scale(-1 1)">
                       <g className="anim-bob">
-                        <SpriteBody look={{ ...def.look }} />
+                        <SpriteBody look={{ ...def.look, ...(def.id === 'barrio-boss' ? { skin: state.hero.look.skin, hair: state.hero.look.hair } : {}) }} />
                       </g>
                     </g>
                     <rect x="4" y="-3" width="24" height="3.5" rx="1.5" fill={e.type === 'boss' ? '#7a4fa3' : '#d64545'} />
@@ -527,7 +542,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   msg.text
                 )}
               </p>
-              {msg.say && <SpeakButton text={msg.say} size="sm" auto />}
+              {msg.say && <SpeakButton text={msg.say} size="sm" auto voice={voiceFor(msg.text, state)} />}
             </div>
             {msg.es && showEs && <p className="mt-0.5 text-sm text-paper/60">{msg.es}</p>}
             {msg.sub && <p className="mt-0.5 text-sm text-paper/70">{msg.sub}</p>}
@@ -844,6 +859,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             item={LOST_ITEMS.find((it) => it.id === ask.itemId)!}
             npcId={ask.npcId}
             npcName={ask.npcName}
+            voice={voiceFor(`${ask.npcName}: "`, state)}
             onDone={(returned) => {
               const a = ask
               setAsk(null)

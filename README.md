@@ -149,6 +149,7 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - Parque: la fiesta de Leo. El abuelo Joe (pide la invitación) practica fechas y *Happy birthday!* y da la foto de tu familia. Hay un regalo misterioso firmado "L".
 - Esbirros: Kevin (*can*), Olivia la reportera (presente continuo) y el señor Hill (gustos). Jefe: Nick, el hermano mayor, que habla sin la -s; antes del combate Leo enseña *have got*.
 - Las tareas de personajes nuevos se definen como datos en `src/data/tasks.ts`, sin tocar la pantalla de exploración.
+- Voces por personaje (`src/game/speech.ts`): mujeres con voz femenina, hombres con voz masculina y el desconocido grave y lento. Usa las voces en inglés del dispositivo; si solo hay una, cambia el tono.
 - En PC (pantalla ancha con ratón) el mapa es grande con un panel al lado, no hay flechas en pantalla y se juega con el teclado.
 
 - El plan completo está en `docs/curriculo-a1.md`: primera vuelta A1 en presente (Escuela → Ciudad → Barrio con la casa del protagonista → Granja → Oficina), y luego los mismos lugares en pasado y futuro, todavía en A1, con el reloj completo. A2 y B1 repiten el esquema presente → pasado → futuro.

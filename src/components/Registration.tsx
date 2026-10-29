@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { voiceOf } from '../game/speech'
 import type { GameState } from '../game/types'
 import { NPCS, schoolEmail, TRANSFER } from '../data/npcs'
 import { COUNTRIES, countryOf } from '../data/countries'
@@ -193,7 +194,7 @@ export function Registration({ state, onClose }: { state: GameState; onClose: (f
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-2">
             <p className="font-display text-lg text-gold">{npc.name}</p>
-            <SpeakButton text={s.say ?? s.text} size="sm" auto />
+            <SpeakButton text={s.say ?? s.text} size="sm" auto voice={voiceOf(npc.look)} />
           </div>
           <p key={i} className="anim-fade-in text-[16px] leading-relaxed">{s.text}</p>
           {!hideEs && <p className="mt-0.5 text-sm text-paper/60">{s.es}</p>}
@@ -219,7 +220,7 @@ export function Registration({ state, onClose }: { state: GameState; onClose: (f
                 <span className="font-semibold text-gold">{npc.name}: </span>"{s.after.text}"
                 {!hideEs && <span className="mt-0.5 block text-sm text-paper/60">{s.after.es}</span>}
               </p>
-              <SpeakButton text={s.after.text} size="sm" auto />
+              <SpeakButton text={s.after.text} size="sm" auto voice={voiceOf(npc.look)} />
             </div>
           )}
         </div>

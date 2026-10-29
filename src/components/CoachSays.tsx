@@ -45,7 +45,7 @@ export function CoachSays({ look, onClose }: { look: SpriteLook; onClose: (done:
 
   // El entrenador grita la orden al empezar cada ronda
   useEffect(() => {
-    if (!done) speak(round.coach)
+    if (!done) speak(round.coach, false, 'male')
   }, [r, done, round.coach])
 
   function choose(k: number) {
@@ -101,7 +101,7 @@ export function CoachSays({ look, onClose }: { look: SpriteLook; onClose: (done:
 
       <div className="mt-3 flex items-center justify-between">
         <p className="font-display text-lg text-gold">Coach Mike</p>
-        <SpeakButton text={line.text} size="sm" />
+        <SpeakButton text={line.text} size="sm" voice="male" />
       </div>
       <p key={r} className="anim-fade-in font-display text-[20px] leading-snug">{line.text}</p>
       {showEs && <p className="mt-1 text-sm text-paper/60">{line.es}</p>}

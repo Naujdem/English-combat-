@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { LostItem } from '../data/lostFound'
 import { lostReply } from '../data/lostFound'
 import { SpeakButton } from './SpeakButton'
+import type { Voice } from '../game/speech'
 import { btn, btnPrimary, Panel } from './ui'
 
 /** Preguntarle a alguien si el objeto que llevas es suyo */
@@ -9,11 +10,13 @@ export function LostAsk({
   item,
   npcId,
   npcName,
+  voice = 'neutral',
   onDone,
 }: {
   item: LostItem
   npcId: string
   npcName: string
+  voice?: Voice
   onDone: (returned: boolean) => void
 }) {
   const [asked, setAsked] = useState(false)
@@ -54,7 +57,7 @@ export function LostAsk({
             <p className="flex-1 text-[17px] leading-relaxed">
               <span className="font-semibold text-gold">{npcName}: </span>"{reply.text}"
             </p>
-            <SpeakButton text={reply.text} size="sm" auto />
+            <SpeakButton text={reply.text} size="sm" auto voice={voice} />
           </div>
           {es && <p className="text-sm text-paper/60">{reply.es}</p>}
           <div className="mt-2 flex items-center justify-between">

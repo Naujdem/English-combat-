@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { voiceOf } from '../game/speech'
 import type { SpriteLook } from './Sprite'
 import { SpriteIcon } from './Sprite'
 import { SpeakButton } from './SpeakButton'
@@ -29,7 +30,7 @@ export function MiniTalk({ name, look, steps, onClose }: { name: string; look: S
       <div className="flex items-center gap-3">
         <SpriteIcon look={look} size={48} />
         <p className="flex-1 font-display text-lg text-gold">{name}</p>
-        <SpeakButton text={s.text} size="sm" auto />
+        <SpeakButton text={s.text} size="sm" auto voice={voiceOf(look)} />
       </div>
       <p key={i} className="anim-fade-in mt-2 text-[17px] leading-relaxed">
         <Tappable text={s.text} />

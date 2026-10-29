@@ -217,6 +217,8 @@ export const DIARY: DiaryChapter[] = [
           { en: 'Today [is]n Leo\'s birthday. There [is]n a party in the park.', es: 'Hoy es el cumpleaños de Leo. Hay una fiesta en el parque.' },
           { en: 'My brother Nick [has]n a piece of the clock. He [says]n everything without -s!', es: 'Mi hermano Nick tiene una pieza del reloj. ¡Dice todo sin -s!' },
           { en: 'Grandpa Joe [gives]n me a photo of my family, and Nick [remembers]n me.', es: 'El abuelo Joe me da una foto de mi familia, y Nick me recuerda.' },
+          { en: 'At home, Mom [looks]n at the photo. I [have]n got one brother, Nick, and Dad always [cooks]n dinner.', es: 'En casa, mamá mira la foto. Tengo un hermano, Nick, y papá siempre cocina la cena.' },
+          { en: 'I always [get]n up at seven. Nick usually [gets]n up at nine!', es: 'Siempre me levanto a las siete. ¡Nick normalmente se levanta a las nueve!' },
           { en: 'A gift from "L" [says]n: "Use your voice." Leo [doesn\'t]n understand.', es: 'Un regalo de "L" dice: "Usa tu voz". Leo no entiende.' },
           { en: 'Now I [have]n three pieces of the clock. Tomorrow we [go]n to the farm.', es: 'Ahora tengo tres piezas del reloj. Mañana vamos a la granja.' },
         ],
@@ -224,6 +226,7 @@ export const DIARY: DiaryChapter[] = [
           { q: "Where does Leo's dad work?", options: ['In a bank.', 'In a hospital.', 'On a farm.'], answer: 1, tip: 'El texto dice: "His dad works in a hospital".' },
           { q: 'What does Maya love?', options: ['Reading.', 'Getting up early.', 'Cooking.'], answer: 0, tip: 'El texto dice: "Maya loves reading".' },
           { q: 'Where is the party?', options: ['In my house.', 'At school.', 'In the park.'], answer: 2, tip: 'El texto dice: "There is a party in the park".' },
+          { q: 'What time does Nick usually get up?', options: ['At seven.', 'At eight.', 'At nine.'], answer: 2, tip: 'El texto dice: "Nick usually gets up at nine".' },
           { q: 'What does the gift from "L" say?', options: ['Happy new year.', 'Use your voice.', 'Go to the farm.'], answer: 1, tip: 'El texto dice: "Use your voice".' },
         ],
       },
@@ -255,6 +258,7 @@ export const DICT: Record<string, string> = {
   early: 'temprano', birthday: 'cumpleaños', party: 'fiesta', park: 'parque', brother: 'hermano', nick: 'Nick (nombre)', says: 'dice (say)', everything: 'todo', without: 'sin',
   grandpa: 'abuelo', joe: 'Joe (nombre)', photo: 'foto', family: 'familia', remembers: 'recuerda (remember)', gift: 'regalo', use: 'usar', "doesn't": 'no (con he, she, it)',
   understand: 'entender', three: 'tres', farm: 'granja', "leo's": 'de Leo', "maya's": 'de Maya', dad: 'papá', mom: 'mamá', maya: 'Maya (nombre)', she: 'ella', her: 'su (de ella)',
+  looks: 'mira (look)', cooks: 'cocina (cook)', dinner: 'cena', always: 'siempre', usually: 'normalmente', nine: 'nueve', seven: 'siete', home: 'casa',
   "school's": 'de la escuela', ana: 'Ana (nombre)', story: 'historia', plan: 'plan', "stranger's": 'del desconocido',
 }
 

@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { voiceOf } from '../game/speech'
 import type { GameState, Question, TopicId, Zone } from '../game/types'
 import type { Update } from '../game/store'
 import { OUTFITS } from '../data/school'
@@ -420,7 +421,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
           )}
           <g transform={`translate(${enemy.kind === 'boss' ? 342 : 334} ${enemy.kind === 'boss' ? 68 : 92}) scale(${enemy.kind === 'boss' ? -4.6 : -3.8} ${enemy.kind === 'boss' ? 4.6 : 3.8})`}>
             <g className={enemyAnim} onAnimationEnd={() => setEnemyAnim('')}>
-              <SpriteBody look={{ ...enemy.look }} mood={(phase === 'feedback' && correct) || phase === 'after' ? 'hurt' : 'normal'} />
+              <SpriteBody look={{ ...enemy.look, ...(enemy.id === 'barrio-boss' ? { skin: state.hero.look.skin, hair: state.hero.look.hair } : {}) }} mood={(phase === 'feedback' && correct) || phase === 'after' ? 'hurt' : 'normal'} />
             </g>
           </g>
           {hitText && (
@@ -449,7 +450,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         <Panel className="anim-fade-in">
           <div className="flex items-center justify-between gap-2">
             <p className="font-display text-lg text-gold">{enemy.kind !== 'minion' || phase === 'after' ? enemy.person : enemy.name}</p>
-            <SpeakButton text={story.text} size="sm" auto />
+            <SpeakButton text={story.text} size="sm" auto voice={voiceOf(enemy.look)} />
           </div>
           <p key={`${phase}-${line}`} className="anim-fade-in text-[17px] leading-relaxed">"<Tappable text={story.text} />"</p>
           {showEs && story.es && <p className="mt-1 text-sm text-paper/60">{story.es}</p>}
@@ -501,7 +502,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             <div className="anim-fade-in mt-3 rounded-xl border-2 border-[#a07cd0]/60 bg-[#a07cd0]/10 p-3">
               <div className="flex items-center justify-between gap-2">
                 <p className="font-display text-lg text-[#c9b3ee]">{enemy.person} cambia...</p>
-                <SpeakButton text={interlude.text} size="sm" auto />
+                <SpeakButton text={interlude.text} size="sm" auto voice={voiceOf(enemy.look)} />
               </div>
               <p className="text-[16px] leading-snug">"<Tappable text={interlude.text} />"</p>
               {interlude.es && showEs && <p className="mt-1 text-sm text-paper/60">{interlude.es}</p>}
@@ -568,7 +569,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             <p className="flex-1 text-[17px] leading-relaxed">
               <span className="font-semibold text-gold">{enemy.person}: </span>"{bonusSession.bonus.q}"
             </p>
-            <SpeakButton text={bonusSession.bonus.q} size="sm" auto />
+            <SpeakButton text={bonusSession.bonus.q} size="sm" auto voice={voiceOf(enemy.look)} />
           </div>
           <div className="mt-3 grid gap-2">
             {bonusSession.bonus.options.map((o, k) => {
