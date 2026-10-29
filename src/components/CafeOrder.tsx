@@ -106,7 +106,7 @@ export function CafeOrder({ name, onClose }: { name: string; onClose: (done: boo
   const [r, setR] = useState(0)
   const [solved, setSolved] = useState(false)
   const [tip, setTip] = useState<string | null>(null)
-  const [showEs, setShowEs] = useState(true)
+  const [showEs, setShowEs] = useState(false)
   const done = r >= list.length
   const round = list[Math.min(r, list.length - 1)]
   const cup = r >= 5 ? (r === 5 && !solved ? misspell(name) : name.toUpperCase()) : null

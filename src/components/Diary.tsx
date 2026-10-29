@@ -3,6 +3,7 @@ import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
 import { DIARY, fillNames, lookup, normWord, TENSE_INFO, type DiaryChapter, type Tense } from '../data/diary'
 import { newCard } from '../game/cards'
+import { useTeacher } from '../game/teacher'
 import { SpeakButton } from './SpeakButton'
 import { btn, btnGhost, btnPrimary, Overlay, Panel } from './ui'
 
@@ -21,6 +22,7 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
   const [solved, setSolved] = useState(false)
   const [tip, setTip] = useState<string | null>(null)
   const [wordsView, setWordsView] = useState(false)
+  const teacher = useTeacher().on
 
   if (!chapter) {
     return (
@@ -33,7 +35,11 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
     )
   }
 
-  const version = chapter.versions[v]
+  // Solo se leen los tiempos que ya se estudiaron: en A1 primero el presente;
+  // pasado y futuro se abren al viajar en el tiempo (o en modo profesor)
+  const versions = chapter.versions.filter((x) => !x.unlock || teacher || state.opened.includes(x.unlock))
+  const hidden = chapter.versions.length - versions.length
+  const version = versions[Math.min(v, versions.length - 1)]
   const name = state.hero.name
   const iname = state.interest.name
   const fill = (t: string) => fillNames(t, name, iname)
@@ -70,7 +76,7 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
     setSolved(false)
     setTip(null)
     setWord(null)
-    if (chapter!.versions[k].tense === 'mix') setVerbs(true)
+    if (versions[k].tense === 'mix') setVerbs(true)
   }
 
   const meaning = word ? lookup(word.raw, names) : null
@@ -146,8 +152,8 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
           <button className={btnGhost} onClick={onClose}>Cerrar</button>
         </div>
 
-        <div className="grid grid-cols-4 gap-1.5" role="tablist">
-          {chapter.versions.map((x, k) => (
+        <div className="grid gap-1.5" style={{ gridTemplateColumns: `repeat(${versions.length}, minmax(0, 1fr))` }} role="tablist">
+          {versions.map((x, k) => (
             <button
               key={x.id}
               role="tab"
@@ -164,6 +170,8 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
         <button className={`${btn} py-2 text-sm`} onClick={() => setWordsView(true)}>
           Palabras del capítulo ({chapter.words.reduce((n, g) => n + g.words.length, 0)})
         </button>
+
+        {hidden > 0 && <p className="text-xs text-paper/55">Esta historia también se puede leer en pasado y en futuro. Esas versiones se abrirán cuando viajes en el tiempo con el reloj.</p>}
 
         <p className="text-sm text-paper/70">{version.frame}</p>
 
@@ -253,13 +261,13 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
           <Panel className="anim-pop border-gold">
             <p className="font-display text-xl text-gold">¡Lectura completa!</p>
             <p className="mt-1 text-[15px]">
-              {v < chapter.versions.length - 1
-                ? `Ahora lee la misma historia en ${chapter.versions[v + 1].tab.toLowerCase()} y compara cómo cambian los verbos.`
+              {v < versions.length - 1
+                ? `Ahora lee la misma historia en ${versions[v + 1].tab.toLowerCase()} y compara cómo cambian los verbos.`
                 : 'Leíste la historia en todos los tiempos. ¡Muy bien!'}
             </p>
             <p className="mt-1 text-sm text-paper/65">La primera vez que completas cada versión ganas un escudo de palabras (máximo 2).</p>
-            {v < chapter.versions.length - 1 && (
-              <button className={`${btnPrimary} mt-3 w-full`} onClick={() => switchVersion(v + 1)}>Leer en {chapter.versions[v + 1].tab.toLowerCase()}</button>
+            {v < versions.length - 1 && (
+              <button className={`${btnPrimary} mt-3 w-full`} onClick={() => switchVersion(v + 1)}>Leer en {versions[v + 1].tab.toLowerCase()}</button>
             )}
           </Panel>
         )}

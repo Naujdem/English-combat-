@@ -104,7 +104,7 @@ export function CoachSays({ look, onClose }: { look: SpriteLook; onClose: (done:
         <SpeakButton text={line.text} size="sm" />
       </div>
       <p key={r} className="anim-fade-in font-display text-[20px] leading-snug">{line.text}</p>
-      {(showEs || done || r >= 4) && <p className="mt-1 text-sm text-paper/60">{line.es}</p>}
+      {showEs && <p className="mt-1 text-sm text-paper/60">{line.es}</p>}
 
       {!done && (
         <>
@@ -127,9 +127,7 @@ export function CoachSays({ look, onClose }: { look: SpriteLook; onClose: (done:
       )}
 
       <div className="mt-4 flex items-center justify-between gap-2">
-        {!done && r < 4 ? (
-          <button className={btnGhost} onClick={() => setShowEs((v) => !v)}>{showEs ? 'Ocultar' : 'Traducir'}</button>
-        ) : <span />}
+        <button className={btnGhost} onClick={() => setShowEs((v) => !v)}>{showEs ? 'Ocultar' : 'Traducir'}</button>
         {done ? (
           <button className={btnPrimary} onClick={() => onClose(true)} autoFocus>A las palabras</button>
         ) : solved ? (

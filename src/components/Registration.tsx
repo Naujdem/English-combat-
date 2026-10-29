@@ -131,7 +131,7 @@ export function Registration({ state, onClose }: { state: GameState; onClose: (f
   const [i, setI] = useState(0)
   const [solved, setSolved] = useState(false)
   const [tip, setTip] = useState<string | null>(null)
-  const [hideEs, setHideEs] = useState(false)
+  const [hideEs, setHideEs] = useState(true)
   const [filled, setFilled] = useState<Field[]>([])
   const s = steps[i]
   const last = i === steps.length - 1

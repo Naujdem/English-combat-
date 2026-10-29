@@ -118,7 +118,7 @@ function buildSteps(s: GameState): Step[] {
 export function Epilogue({ state, onDone }: { state: GameState; onDone: () => void }) {
   const steps = buildSteps(state)
   const [i, setI] = useState(0)
-  const [hideEs, setHideEs] = useState(false)
+  const [hideEs, setHideEs] = useState(true)
   const [solved, setSolved] = useState(false)
   const [tip, setTip] = useState<string | null>(null)
   const s = steps[i]

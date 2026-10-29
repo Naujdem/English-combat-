@@ -41,7 +41,7 @@ export function Directions({ onClose }: { onClose: (done: boolean) => void }) {
   const [r, setR] = useState(0)
   const [solved, setSolved] = useState(false)
   const [tip, setTip] = useState<string | null>(null)
-  const [showEs, setShowEs] = useState(true)
+  const [showEs, setShowEs] = useState(false)
   const done = r >= ROUNDS.length
   const round = ROUNDS[Math.min(r, ROUNDS.length - 1)]
 

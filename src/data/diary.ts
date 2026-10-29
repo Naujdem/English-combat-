@@ -14,6 +14,8 @@ export type DiaryVersion = {
   id: string
   tense: Tense | 'mix'
   tab: string
+  /** Se abre cuando este id está en `opened` (pasado y futuro, al viajar en el tiempo) */
+  unlock?: string
   title: string
   /** Quién lo escribe y cuándo */
   frame: string
@@ -50,6 +52,7 @@ export const DIARY: DiaryChapter[] = [
     versions: [
       {
         id: 'school-past',
+        unlock: 'era-past-a1',
         tense: 'p',
         tab: 'Pasado',
         title: 'Dear diary',
@@ -95,11 +98,12 @@ export const DIARY: DiaryChapter[] = [
           { q: 'Where is {name} a new student?', options: ['At Greenfield School.', 'In the city.', 'At the farm.'], answer: 0, tip: 'El texto dice: "I am a new student at Greenfield School".' },
           { q: 'Who has the pieces of the key?', options: ['Leo and Ana.', 'Mrs. Lopez.', 'Tom, Rick, Bella and Max.'], answer: 2, tip: 'El texto dice: "Tom, Rick, Bella and Max have the pieces of the key".' },
           { q: 'What does Ana find?', options: ['My school things.', 'My voice.', 'The whistle.'], answer: 0, tip: 'El texto dice: "Ana finds my school things".' },
-          { q: '"Leo helps me." In the past, it is...', options: ['Leo helps me.', 'Leo helped me.', 'Leo is going to help me.'], answer: 1, tip: 'Muchos verbos forman el pasado con -ed: help → helped.' },
+          { q: 'Who is your first friend?', options: ['Tom.', 'Leo.', 'Mr. Grimm.'], answer: 1, tip: 'El texto dice: "Leo is my first friend."' },
         ],
       },
       {
         id: 'school-future',
+        unlock: 'era-future-a1',
         tense: 'f',
         tab: 'Futuro',
         title: 'The stranger\'s plan',
@@ -122,6 +126,7 @@ export const DIARY: DiaryChapter[] = [
       },
       {
         id: 'school-mix',
+        unlock: 'era-future-a1',
         tense: 'mix',
         tab: 'Mezcla',
         title: 'One week later',

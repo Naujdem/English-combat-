@@ -476,8 +476,9 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
                 <SpeakButton text={interlude.text} size="sm" />
               </div>
               <p className="text-[16px] leading-snug">"<Tappable text={interlude.text} />"</p>
-              {interlude.es && <p className="mt-1 text-sm text-paper/60">{interlude.es}</p>}
-              <div className="mt-3 flex justify-end">
+              {interlude.es && showEs && <p className="mt-1 text-sm text-paper/60">{interlude.es}</p>}
+              <div className="mt-3 flex items-center justify-between">
+                {interlude.es ? <button className={btnGhost} onClick={() => setShowEs((v) => !v)}>{showEs ? 'Ocultar' : 'Traducir'}</button> : <span />}
                 <button className={btnPrimary} onClick={nextQuestion} autoFocus>Siguiente fase</button>
               </div>
             </div>

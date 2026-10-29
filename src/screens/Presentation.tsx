@@ -201,7 +201,7 @@ export function Presentation({ onDone }: { onDone: (hero: Hero, interest: Intere
     interestName: '',
   })
   const [i, setI] = useState(0)
-  const [hideEs, setHideEs] = useState(false)
+  const [hideEs, setHideEs] = useState(true)
   const [picked, setPicked] = useState<Opt | null>(null)
   const [solved, setSolved] = useState(false)
   const [tip, setTip] = useState<string | null>(null)

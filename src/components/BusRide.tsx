@@ -60,6 +60,7 @@ export function BusRide({ trip, hero, onDone }: { trip: BusTrip; hero: SpriteLoo
   const [i, setI] = useState(0)
   const [solved, setSolved] = useState(false)
   const [tip, setTip] = useState<string | null>(null)
+  const [showEs, setShowEs] = useState(false)
   const s = list[i]
   const last = i === list.length - 1
   const waiting = !!s.choice && !solved
@@ -102,7 +103,12 @@ export function BusRide({ trip, hero, onDone }: { trip: BusTrip; hero: SpriteLoo
             </div>
           )}
           <p key={i} className={`anim-fade-in text-[17px] leading-relaxed ${s.who === 'narrator' ? 'italic text-paper/85' : ''}`}>{s.text}</p>
-          {s.es && <p className="mt-1 text-sm text-paper/60">{s.es}</p>}
+          {s.es && s.who !== 'narrator' && showEs && <p className="mt-1 text-sm text-paper/60">{s.es}</p>}
+          {s.es && s.who !== 'narrator' && (
+            <button className="mt-1 text-xs font-semibold text-paper/55 underline underline-offset-4" onClick={() => setShowEs((v) => !v)}>
+              {showEs ? 'Ocultar traducción' : 'Traducir'}
+            </button>
+          )}
 
           {waiting && (
             <div className="mt-3 grid gap-2">

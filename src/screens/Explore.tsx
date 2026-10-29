@@ -33,7 +33,8 @@ import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui
 
 const VIEW = 11
 
-type Msg = { text: string; sub?: string; tone?: 'info' | 'good' | 'warn'; say?: string }
+/** sub = nota en español que siempre se ve · es = traducción de lo que se dice, se ve al tocar Traducir */
+type Msg = { text: string; sub?: string; es?: string; tone?: 'info' | 'good' | 'warn'; say?: string }
 type Talk = {
   friendId: string
   /** Índice del momento de historia, o null si es una charla casual */
@@ -60,6 +61,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | 'sports' | 'timetable' | 'where' | 'coach' | 'directions' | 'cafe' | null>(null)
   const boardNext = nextSession(state.opened, state.defeated)
   const npcTurn = useRef<Record<string, number>>({})
+  // La traducción de lo que dicen los personajes se ve solo si se pide
+  const [showEs, setShowEs] = useState(false)
   // Controles: flechas o joystick, a elección (se recuerda en este dispositivo)
   const [controls, setControls] = useState<'dpad' | 'joystick'>(() => {
     try {
@@ -135,9 +138,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           const k = npcTurn.current[e.id] ?? 0
           npcTurn.current[e.id] = k + 1
           const line = npc.lines[k % npc.lines.length]
-          setMsg({ text: `${npc.name}: "${line.text}"`, sub: line.es, say: line.text })
+          setMsg({ text: `${npc.name}: "${line.text}"`, es: line.es, say: line.text })
         } else if (npc.doneLine) {
-          setMsg({ text: `${npc.name}: "${npc.doneLine.text}"`, sub: npc.doneLine.es, say: npc.doneLine.text })
+          setMsg({ text: `${npc.name}: "${npc.doneLine.text}"`, es: npc.doneLine.es, say: npc.doneLine.text })
         }
         return
       }
@@ -152,7 +155,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       }
       if ((e.type === 'enemy' || e.type === 'boss') && state.defeated.includes(e.id)) {
         const def = ENEMIES[e.id]
-        setMsg({ text: `${def.person}: "${def.freed.text}"`, sub: def.freed.es, say: def.freed.text })
+        setMsg({ text: `${def.person}: "${def.freed.text}"`, es: def.freed.es, say: def.freed.text })
         return
       }
       // El profesor Grimm no pelea si te falta el silbato o el uniforme
@@ -162,7 +165,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           const first = missing[0]
           setMsg({
             text: `${ENEMIES[e.id].person}: "${first.line.text}"`,
-            sub: `${first.line.es} Te falta: ${missing.map((m) => m.name).join(', ')}.`,
+            es: first.line.es,
+            sub: `Te falta: ${missing.map((m) => m.name).join(', ')}.`,
             tone: 'warn',
             say: first.line.text,
           })
@@ -496,7 +500,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               </p>
               {msg.say && <SpeakButton text={msg.say} size="sm" />}
             </div>
+            {msg.es && showEs && <p className="mt-0.5 text-sm text-paper/60">{msg.es}</p>}
             {msg.sub && <p className="mt-0.5 text-sm text-paper/70">{msg.sub}</p>}
+            {msg.es && (
+              <button className="mt-1 text-xs font-semibold text-paper/55 underline underline-offset-4" onClick={() => setShowEs((v) => !v)}>
+                {showEs ? 'Ocultar traducción' : 'Traducir'}
+              </button>
+            )}
           </Panel>
         ) : (
           <p className="px-1 pt-2 text-sm text-paper/55">
