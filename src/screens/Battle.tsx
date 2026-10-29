@@ -552,7 +552,12 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   // Al fallar: primero se ve el golpe; la explicación de Leo sube desde abajo un momento después
   const [fbReady, setFbReady] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
-  const wrongShown = (phase === 'feedback' || phase === 'lost') && !correct
+  // Preguntas falladas: vuelven al final del combate. A la tercera vez que fallas la misma, Leo la explica
+  const [retry, setRetry] = useState<Question[]>([])
+  const [fails, setFails] = useState<Record<string, number>>({})
+  const [explain, setExplain] = useState(false)
+  const wrongShown = (phase === 'feedback' || phase === 'lost') && !correct && (explain || phase === 'lost')
+  const quietWrong = phase === 'feedback' && !correct && !explain
   useEffect(() => {
     if (!wrongShown) return setFbReady(false)
     rootRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
@@ -576,7 +581,13 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       ),
     )
     window.setTimeout(() => sfx(ok ? 'hit' : 'hurt'), 180)
-    if (!ok) setFailed((f) => [...f, q.id])
+    if (!ok) {
+      setFailed((f) => [...f, q.id])
+      const n = (fails[q.id] ?? 0) + 1
+      setFails((f) => ({ ...f, [q.id]: n }))
+      setRetry((r) => [...r, q])
+      setExplain(n >= 3)
+    }
     if (ok) {
       const left = battle.enemyHp - 1
       animate(setHeroAnim, 'anim-lunge-r')
@@ -618,7 +629,13 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   function nextQuestion() {
     const nextUsed = [...used, q.id]
     setUsed(nextUsed)
-    setQ(pick(state.battle?.enemyHp ?? battle.enemyHp, nextUsed))
+    const left = state.battle?.enemyHp ?? battle.enemyHp
+    // Las falladas salen al final: cuando lo que le queda al enemigo alcanza justo para repetirlas todas
+    if (retry.length > 0 && left <= retry.length) {
+      setQ(retry[0])
+      setRetry(retry.slice(1))
+    } else setQ(pick(left, nextUsed))
+    setExplain(false)
     setInterlude(null)
     setCorrect(false)
     setBlocked(false)
@@ -718,8 +735,15 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const feedback = (
 <div className={`anim-slide-up w-full overflow-y-auto ${desktop ? '' : 'max-h-[60vh] max-w-md'} rounded-2xl border-2 border-gold/60 bg-panel p-3 shadow-[0_-8px_24px_rgba(0,0,0,0.45)]`} role="dialog" aria-label="Explicación de Leo">
               {blocked && <p className="mb-1 text-sm font-semibold text-[#9cc0f0]">Tu escudo de palabras bloqueó el golpe.</p>}
-              <LeoCoach key={q.id} q={q} metLeo={metLeo} tags={poolAt(battle.enemyHp).tags} />
-              <p className="mt-2 text-xs text-paper/50">Se anotó en tu cuaderno de errores.</p>
+              {explain ? (
+                <>
+                  <p className="mb-1 text-xs font-semibold text-paper/60">Fallaste esta pregunta 3 veces. Volverá al final una vez más.</p>
+                  <LeoCoach key={q.id} q={q} metLeo={metLeo} tags={poolAt(battle.enemyHp).tags} />
+                  <p className="mt-2 text-xs text-paper/50">Se anotó en tu cuaderno de errores.</p>
+                </>
+              ) : (
+                <p className="text-sm font-semibold text-[#f3b0b0]">No es correcto.</p>
+              )}
               <div className="mt-3 flex justify-end">
                 {phase === 'lost' ? (
                   <button className={btnPrimary} onClick={leave} autoFocus>{enemy.kind === 'trainer' ? 'Intentar otra vez' : 'Volver a intentarlo'}</button>
@@ -852,7 +876,12 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
 
       {showQuestion && (
         <Panel className={`anim-fade-in ${phase === 'ask' ? 'border-gold/60 shadow-[0_0_0_3px_rgba(224,165,38,0.12)]' : ''}`}>
-          {wasMistake && phase === 'ask' && (
+          {phase === 'ask' && (fails[q.id] ?? 0) > 0 && (
+            <p className="mb-2 rounded-lg bg-danger/15 px-2 py-1 text-xs font-semibold text-[#f3b0b0]">
+              Otra vez esta pregunta: la fallaste {fails[q.id] === 1 ? 'una vez' : `${fails[q.id]} veces`}.{fails[q.id] === 2 ? ' Si fallas de nuevo, Leo te la explica.' : ''}
+            </p>
+          )}
+          {wasMistake && phase === 'ask' && !fails[q.id] && (
             <p className="mb-2 rounded-lg bg-gold/10 px-2 py-1 text-xs font-semibold text-gold">Esta pregunta está en tu cuaderno de errores</p>
           )}
           <QuestionCard
@@ -862,6 +891,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             hint={hint}
             onSkip={phase === 'ask' ? skipSpeak : undefined}
             onAnswer={(ok) => phase === 'ask' && resolve(ok)}
+            reveal={(fails[q.id] ?? 0) >= 2}
             headerRight={
               leoHint && phase === 'ask' && q.kind !== 'speak' ? (
                 <button className="rounded-lg border border-hp/60 px-2 py-1 text-xs font-semibold text-hp disabled:opacity-40" onClick={() => setHint(true)} disabled={hint}>
@@ -882,6 +912,18 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               <div className="mt-3 flex items-center justify-between">
                 {interlude.es ? <button className={btnGhost} onClick={() => setShowEs((v) => !v)}>{showEs ? 'Ocultar' : 'Traducir'}</button> : <span />}
                 <button className={btnPrimary} onClick={nextQuestion} autoFocus>Siguiente fase</button>
+              </div>
+            </div>
+          )}
+          {quietWrong && (
+            <div className="anim-fade-in mt-3 rounded-xl bg-danger/10 p-3">
+              {blocked && <p className="mb-1 text-sm font-semibold text-[#9cc0f0]">Tu escudo de palabras bloqueó el golpe.</p>}
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-sm font-semibold text-[#f3b0b0]">
+                  No es correcto. Esta pregunta volverá al final del combate.
+                  <span className="block text-xs font-normal text-paper/60">Fallos: {fails[q.id] ?? 1} de 3. A la tercera, Leo te la explica.</span>
+                </p>
+                <button className={btnPrimary} onClick={nextQuestion} autoFocus>Seguir</button>
               </div>
             </div>
           )}

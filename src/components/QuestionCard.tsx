@@ -46,6 +46,7 @@ export function QuestionCard({
   colorTiles,
   onSkip,
   onAnswer,
+  reveal = true,
 }: {
   q: Question
   /** Quién dice la frase con error en las preguntas de corregir */
@@ -58,6 +59,8 @@ export function QuestionCard({
   /** Para las preguntas de hablar: cambiar de pregunta sin castigo si no se puede usar el micrófono */
   onSkip?: () => void
   onAnswer: (ok: boolean) => void
+  /** false: si fallas, no se muestra la respuesta correcta (la pregunta volverá más tarde) */
+  reveal?: boolean
 }) {
   const kind = q.kind ?? 'fill'
   const [order] = useState(() => shuffled(q.options.length))
@@ -69,6 +72,8 @@ export function QuestionCard({
   const [typed, setTyped] = useState('')
   const [writeError, setWriteError] = useState('')
   const ask = answered === null
+  // Se muestra la respuesta correcta: si acertaste, o si fallaste y ya toca explicarla
+  const showRight = answered === true || (answered === false && reveal)
   // Hablar: intentos, lo que se escuchó y si el micrófono está activo
   const [listening, setListening] = useState(false)
   const [tries, setTries] = useState(0)
@@ -185,9 +190,9 @@ export function QuestionCard({
       {kind === 'fill' && (
         <div className="flex items-start gap-2">
           <p className="flex-1 font-display text-[22px] leading-relaxed" data-testid="prompt" aria-label={filled}>
-            <BlankSentence prompt={q.prompt} answer={q.options[q.answer]} topic={q.topic} shown={answered !== null} ok={answered === true} picked={picked !== null ? q.options[picked] : null} />
+            <BlankSentence prompt={q.prompt} answer={q.options[q.answer]} topic={q.topic} shown={answered !== null} ok={answered === true} picked={picked !== null ? q.options[picked] : null} hide={!showRight} />
           </p>
-          <SpeakButton text={answered !== null ? filled : q.prompt.replace('___', '...')} size="sm" />
+          <SpeakButton text={showRight ? filled : q.prompt.replace('___', '...')} size="sm" />
         </div>
       )}
       {kind === 'fill' && q.hint && <p className="mt-0.5 text-sm text-paper/60">Pista: {q.hint}</p>}
@@ -204,7 +209,7 @@ export function QuestionCard({
               "<Tappable text={q.prompt} />"
             </p>
           </div>
-          {ask ? (
+          {ask || !showRight ? (
             <p className="mt-2 text-sm text-paper/70">¿Cuál es la forma correcta?</p>
           ) : (
             <div className="anim-fade-in mt-2 flex items-start gap-2 rounded-xl border-2 border-hp bg-hp/15 px-3 py-2">
@@ -231,7 +236,7 @@ export function QuestionCard({
             <p className="text-sm text-paper/70">Escucha sin leer. Puedes repetir; con dos toques va más lento.</p>
           </div>
           <p className="mt-2 font-display text-[20px] leading-snug" data-testid="prompt">{q.prompt}</p>
-          {!ask && (
+          {showRight && (
             <p className="mt-1 rounded-lg bg-panel-2 px-3 py-1.5 text-sm text-paper/75">Se escuchaba: "{q.audio}"</p>
           )}
         </div>
@@ -315,7 +320,7 @@ export function QuestionCard({
           {writeError && <p className="mt-2 text-sm text-[#f3b0b0]">{writeError}</p>}
           {ask ? (
             <button type="submit" className={`${btnPrimary} mt-3 w-full`}>Comprobar</button>
-          ) : (
+          ) : !showRight ? null : (
             <div className="mt-2 flex items-center gap-2 text-sm text-paper/70">
               <span>
                 {answered ? 'Correcto:' : 'Correcta:'} <span className="font-semibold text-hp">{correctSentence(q)}</span>
@@ -350,7 +355,7 @@ export function QuestionCard({
             {placed.map((i, k) => {
               // Al fallar: cada palabra en su sitio se marca en verde, y las que no, en rojo
               const right = q.options[i] === q.options[k]
-              const mark = answered === false ? (right ? 'ring-2 ring-hp' : 'ring-2 ring-danger line-through decoration-2') : ''
+              const mark = answered === false && reveal ? (right ? 'ring-2 ring-hp' : 'ring-2 ring-danger line-through decoration-2') : ''
               return (
                 <button
                   key={`${i}-${k}`}
@@ -385,7 +390,7 @@ export function QuestionCard({
                 Comprobar
               </button>
             </>
-          ) : (
+          ) : !showRight ? null : (
             <div className="mt-2 flex items-center gap-2 text-sm text-paper/70">
               <span>
                 {answered ? 'Correcto:' : 'Correcta:'} <span className="font-semibold text-hp">{q.options.join(' ')}</span>
@@ -404,7 +409,7 @@ export function QuestionCard({
             const isAnswer = k === q.answer
             const look = ask
               ? 'border-line bg-panel-2 hover:border-gold/70 active:scale-[0.97]'
-              : isAnswer
+              : isAnswer && showRight
                 ? 'border-hp bg-hp/25'
                 : picked === k
                   ? 'border-danger bg-danger/25'
@@ -418,7 +423,7 @@ export function QuestionCard({
                 >
                   {o}
                 </button>
-                {!ask && kind !== 'fill' && isAnswer && <SpeakButton text={o} size="sm" />}
+                {showRight && kind !== 'fill' && isAnswer && <SpeakButton text={o} size="sm" />}
               </div>
             )
           })}
@@ -435,7 +440,7 @@ export function QuestionCard({
  * La frase de completar: el espacio vacío se ve como una casilla, y el sujeto va en azul.
  * Al responder, la casilla muestra la respuesta correcta (y la que elegiste, si fallaste).
  */
-function BlankSentence({ prompt, answer, topic, shown, ok, picked }: { prompt: string; answer: string; topic: Question['topic']; shown: boolean; ok: boolean; picked: string | null }) {
+function BlankSentence({ prompt, answer, topic, shown, ok, picked, hide }: { prompt: string; answer: string; topic: Question['topic']; shown: boolean; ok: boolean; picked: string | null; hide?: boolean }) {
   const tokens = prompt.split(' ')
   const filled = prompt.replace('___', answer).split(' ')
   const roles = sentenceRoles(filled, topic)
@@ -452,9 +457,9 @@ function BlankSentence({ prompt, answer, topic, shown, ok, picked }: { prompt: s
             <span key={k}>
               {pre}
               {shown ? (
-                <span className={`rounded-md px-1.5 ${ok ? 'bg-hp/25 text-hp' : 'bg-hp/25 text-hp'}`}>
+                <span className={`rounded-md px-1.5 ${ok || !hide ? 'bg-hp/25 text-hp' : 'bg-danger/20 text-[#f3b0b0]'}`}>
                   {!ok && picked && <span className="mr-1 text-danger line-through decoration-2">{picked}</span>}
-                  {answer}
+                  {hide ? '?' : answer}
                 </span>
               ) : (
                 <span className="inline-block min-w-[3.2em] translate-y-[2px] rounded-md border-2 border-dashed border-gold bg-gold/10 text-center text-gold" aria-label="espacio en blanco">?</span>
