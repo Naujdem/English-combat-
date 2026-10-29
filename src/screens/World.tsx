@@ -16,10 +16,13 @@ import { DIARY } from '../data/diary'
 import { dueCards } from '../game/cards'
 import type { Update } from '../game/store'
 import { heroLook } from '../game/helpers'
+import { interestFriend } from '../data/friends'
+import { useDesktop } from '../game/device'
 
 const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } as const
 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
+  const desktop = useDesktop()
   const [msg, setMsg] = useState<string>('Toca un lugar del mapa para viajar.')
   const [friends, setFriends] = useState(false)
   const [clock, setClock] = useState(false)
@@ -62,7 +65,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   }
 
   return (
-    <div className="relative mx-auto flex h-full max-w-md flex-col [@media(min-width:900px)_and_(pointer:fine)]:max-w-2xl gap-3 px-3 py-3">
+    <div className={`relative mx-auto flex h-full flex-col gap-3 overflow-y-auto px-3 py-3 ${desktop ? 'max-w-5xl' : 'max-w-md'}`}>
       <header className="flex items-center justify-between">
         <button className={btnGhost} onClick={onTitle}>Menú</button>
         <Hearts hp={state.hp} max={state.maxHp} />
@@ -72,7 +75,14 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         </div>
       </header>
 
-      <svg viewBox="0 0 360 380" className="w-full rounded-2xl border-2 border-line bg-[#24301f]" role="img" aria-label="Mapa del mundo">
+      <div className={desktop ? 'grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_21rem] items-start gap-5' : 'contents'}>
+      <svg
+        viewBox="0 0 360 380"
+        className="w-full shrink-0 rounded-2xl border-2 border-line bg-[#24301f]"
+        style={desktop ? { height: 'calc(100svh - 96px)' } : { aspectRatio: '360 / 380' }}
+        role="img"
+        aria-label="Mapa del mundo"
+      >
         <path d="M0 0 H360 V380 H0Z" fill="#2a3a24" />
         {[...Array(18)].map((_, k) => (
           <circle key={k} cx={(k * 73) % 360} cy={(k * 131) % 380} r={10 + (k % 4) * 4} fill="#324a2a" />
@@ -112,12 +122,15 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         </g>
       </svg>
 
+      <div className={desktop ? 'flex flex-col gap-3' : 'contents'}>
       <Panel className="py-3">
         <p className="text-[15px] text-paper/85">{msg}</p>
       </Panel>
 
       <div className="flex flex-wrap gap-2 text-xs text-paper/70">
-        <span className="rounded-full bg-panel-2 px-3 py-1">Palabras recuperadas: {state.recovered.length ? state.recovered.map((t) => TOPICS[t].name).join(', ') : 'ninguna'}</span>
+        <span className="rounded-full bg-panel-2 px-3 py-1">
+          Palabras recuperadas: {state.recovered.length ? `${state.recovered.length} temas · la última: ${TOPICS[state.recovered[state.recovered.length - 1]].name}` : 'ninguna'}
+        </span>
       </div>
 
       <button className={`${btn} flex items-center gap-3 text-left`} onClick={() => setClock(true)}>
@@ -138,12 +151,16 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       </div>
 
       <button className={btn} onClick={() => tap(here)}>Entrar a {here.name}</button>
+      </div>
+      </div>
 
       {diary && <Diary state={state} update={update} onClose={closeDiary} />}
       {bus && (
         <BusRide
           trip={bus === 'city' ? BUS_TO_CITY : BUS_TO_BARRIO}
           hero={heroLook(state)}
+          friend={interestFriend(state.interest, state.hero.name).look}
+          friendName={state.interest.name}
           onDone={() => {
             const to = bus
             setBus(null)

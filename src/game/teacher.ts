@@ -60,8 +60,16 @@ function base(s: GameState): GameState {
     friendship: { ...s.friendship, leo: Math.max(3, s.friendship.leo ?? 0) },
     battle: null,
     hp: s.maxHp,
+    // Cada atajo parte de cero en los escenarios, para que no se mezcle con lo que ya se jugó
+    defeated: s.defeated.filter((d) => !SCENE_PREFIX.test(d)),
+    opened: s.opened.filter((o) => !SCENE_PREFIX.test(o) && !/^(bus-|diary-open-)/.test(o)),
+    keys: {},
+    relics: 0,
+    recovered: s.recovered.filter((t) => t === 'greetings'),
   }
 }
+
+const SCENE_PREFIX = /^(school|city|barrio|board)-/
 
 /** Estados preparados para revisar partes del juego */
 export const PRESETS: { id: string; label: string; apply: (s: GameState) => GameState }[] = [

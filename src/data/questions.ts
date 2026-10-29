@@ -169,7 +169,7 @@ export const QUESTIONS: Question[] = [
   { id: 'ts-02', topic: 'to-be', tags: ['sala'], prompt: 'Your words ___ in my desk now!', options: ['are', 'is', 'am'], answer: 0, tip: '"Your words" es plural: va "are".' },
   { id: 'ts-03', topic: 'possessives', tags: ['sala'], prompt: 'The students are in ___ classroom. (de ellos)', options: ['there', 'their', 'they'], answer: 1, tip: '"Their" significa "de ellos". "There" significa "allí".' },
   { id: 'tsf-01', topic: 'to-be', tags: ['sala'], kind: 'fix', prompt: 'They is my words now!', options: ['They are my words now.', 'They am my words now.', 'Them are my words now.'], answer: 0, tip: 'Con "they" va "are".' },
-  { id: 'tsf-02', topic: 'possessives', tags: ['sala'], kind: 'fix', prompt: 'I am you teacher!', options: ['I is your teacher.', 'I am your teacher.', 'I am you teacher.'], answer: 1, tip: 'Antes de "teacher" va "your": I am your teacher.' },
+  { id: 'tsf-02', topic: 'possessives', tags: ['sala'], kind: 'fix', prompt: 'I am you teacher!', options: ['I is your teacher.', 'I am your teacher.', 'I am yours teacher.'], answer: 1, tip: 'Antes de "teacher" va "your": I am your teacher.' },
   { id: 'tsf-03', topic: 'possessives', tags: ['sala'], kind: 'fix', prompt: 'This is mine classroom!', options: ['This is me classroom.', 'This is I classroom.', 'This is my classroom.'], answer: 2, tip: '"Mine" va solo, sin sustantivo. Antes de "classroom" va "my".' },
   { id: 'tso-01', topic: 'possessives', tags: ['sala'], kind: 'order', prompt: 'Tus palabras están en mi escritorio.', options: ['Your', 'words', 'are', 'in', 'my', 'desk.'], answer: 0, tip: 'Your words + are + in my desk.' },
 

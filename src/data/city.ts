@@ -94,6 +94,10 @@ export const CITY: SceneDef = {
     later: 'Cruza Main Street por la cebra. Choca con personas para hablar y con objetos para ver su nombre en inglés.',
   },
   epilogue: 'city-epilogue',
+  door: {
+    text: 'La puerta de la oficina de turismo está cerrada con llave.',
+    sub: 'Necesitas 3 pedazos de la llave: los tienen Danny, Chloe y Víctor.',
+  },
 }
 
 export const CITY_ENEMIES: Record<string, EnemyDef> = {

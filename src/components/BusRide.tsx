@@ -11,7 +11,7 @@ import { NPCS } from '../data/npcs'
  */
 type Step = { who: 'narrator' | 'leo' | 'driver'; text: string; es: string; choice?: { options: string[]; answer: number; tip: string } }
 
-export type BusTrip = { place: string; placeEs: string; price: string; priceNum: string; wrongPrices: [string, string]; arrival: { text: string; es: string }; sign: string; intro?: string }
+export type BusTrip = { place: string; placeEs: string; price: string; priceNum: string; wrongPrices: [string, string]; arrival: { text: string; es: string }; sign: string; intro?: string; three?: boolean }
 
 export const BUS_TO_CITY: BusTrip = {
   place: 'the city',
@@ -31,11 +31,12 @@ export const BUS_TO_BARRIO: BusTrip = {
   wrongPrices: ['$13', '$30'],
   arrival: { text: 'This is my street! My house is the yellow one. And look: your house is next to the park!', es: '¡Esta es mi calle! Mi casa es la amarilla. Y mira: ¡tu casa está al lado del parque!' },
   sign: 'GREEN ST.',
-  intro: 'Al día siguiente, después de clase, Leo y tú toman otro autobús. Van a Green Street: Leo vive allá... y tú también, en Park Street.',
+  three: true,
+  intro: 'Al día siguiente, después de clase, Leo, {iname} y tú toman otro autobús. Van a Green Street: Leo vive allá... y tú también, en Park Street.',
 }
 
-function steps(t: BusTrip): Step[] {
-  return [
+function steps(t: BusTrip, iname: string): Step[] {
+  return ([
     { who: 'narrator', text: t.intro ?? `Al día siguiente, Leo y tú van a la parada de autobús. Van a ${t.placeEs}.`, es: '' },
     { who: 'leo', text: "Here is the bus! Let's buy our tickets.", es: '¡Aquí está el autobús! Compremos los boletos.' },
     {
@@ -48,7 +49,9 @@ function steps(t: BusTrip): Step[] {
       who: 'driver',
       text: 'OK! How many tickets?',
       es: '¡Bien! ¿Cuántos boletos?',
-      choice: { options: ['Two tickets, please.', 'Two ticket, please.', 'Two tickets, thank.'], answer: 0, tip: 'Leo y tú son dos: two tickets (plural con -s), please.' },
+      choice: t.three
+        ? { options: ['Three tickets, please.', 'Three ticket, please.', 'Three tickets, thank.'], answer: 0, tip: 'Son tres (Leo, {iname} y tú): three tickets (plural con -s), please.' }
+        : { options: ['Two tickets, please.', 'Two ticket, please.', 'Two tickets, thank.'], answer: 0, tip: 'Leo y tú son dos: two tickets (plural con -s), please.' },
     },
     {
       who: 'driver',
@@ -64,11 +67,11 @@ function steps(t: BusTrip): Step[] {
     },
     { who: 'driver', text: `Thank you! Sit down, please. Next stop: ${t.place}!`, es: `¡Gracias! Siéntense, por favor. Próxima parada: ¡${t.placeEs}!` },
     { who: 'leo', text: t.arrival.text, es: t.arrival.es },
-  ]
+  ] as Step[]).map((st) => ({ ...st, text: st.text.replaceAll('{iname}', iname), choice: st.choice && { ...st.choice, tip: st.choice.tip.replaceAll('{iname}', iname) } }))
 }
 
-export function BusRide({ trip, hero, onDone }: { trip: BusTrip; hero: SpriteLook; onDone: () => void }) {
-  const list = steps(trip)
+export function BusRide({ trip, hero, friend, friendName = '', onDone }: { trip: BusTrip; hero: SpriteLook; friend?: SpriteLook; friendName?: string; onDone: () => void }) {
+  const list = steps(trip, friendName)
   const [i, setI] = useState(0)
   const [solved, setSolved] = useState(false)
   const [tip, setTip] = useState<string | null>(null)
@@ -100,6 +103,7 @@ export function BusRide({ trip, hero, onDone }: { trip: BusTrip; hero: SpriteLoo
             <rect x="248" y="52" width="40" height="70" rx="4" fill="#d9eef8" stroke="#c98b1a" strokeWidth="2" />
             <g transform="translate(44 58) scale(1.05)"><SpriteBody look={hero} /></g>
             <g transform="translate(96 58) scale(1.05)"><SpriteBody look={FRIENDS.leo.look} /></g>
+            {trip.three && friend && <g transform="translate(148 58) scale(1.05)"><SpriteBody look={friend} /></g>}
             <g transform="translate(252 66) scale(1.05)"><SpriteBody look={NPCS.driver.look} /></g>
             <circle cx="70" cy="132" r="12" fill="#2b2b2b" />
             <circle cx="250" cy="132" r="12" fill="#2b2b2b" />

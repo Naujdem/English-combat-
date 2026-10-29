@@ -182,7 +182,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       }
       // Si llevas un objeto perdido, le preguntas a quien sea si es suyo
       const talkable = e.type === 'friend' || e.type === 'interest' || ((e.type === 'enemy' || e.type === 'boss') && state.defeated.includes(e.id))
-      if (lf.carrying && talkable) {
+      if (lf.carrying && talkable && scene.id === 'school') {
         const npcId = e.type === 'friend' ? e.id : e.type === 'interest' ? 'interest' : e.id
         const npcName = e.type === 'friend' || e.type === 'interest' ? friendById(state, npcId)!.name : ENEMIES[e.id].person
         setMsg(null)
@@ -245,7 +245,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       const friend = friendById(state, id)
       if (!friend) return
       // Después de conocerla, Maya pide ayuda con los objetos perdidos
-      if (id === 'maya' && !lf.started && (state.talks.maya ?? 0) >= 1) {
+      if (id === 'maya' && scene.id === 'school' && !lf.started && (state.talks.maya ?? 0) >= 1) {
         if (!(id in state.friendship)) update((s) => ({ ...s, friendship: { ...s.friendship, [id]: 0 } }))
         setMsg(null)
         setTalk({ friendId: id, story: null, lines: LOST_INTRO, title: 'Misión: objetos perdidos', quest: 'lostIntro' })
@@ -315,12 +315,12 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         })
         return
       }
-      if (c === 'L') {
+      if (c === 'L' && scene.id === 'school') {
         setMsg(null)
         setActivity('vocab')
         return
       }
-      if (c === 'B') {
+      if (c === 'B' && scene.id === 'school') {
         // La pizarra del aula tiene el horario de clases por sesiones
         setMsg(null)
         if (boardNext.session) {
@@ -368,7 +368,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   function friendHasNews(id: string) {
     const f = friendById(state, id)
     if (!f) return false
-    if (id === 'maya' && !lf.started && (state.talks.maya ?? 0) >= 1) return true
+    if (id === 'maya' && scene.id === 'school' && !lf.started && (state.talks.maya ?? 0) >= 1) return true
     return talkTo(state, f).kind === 'story'
   }
 

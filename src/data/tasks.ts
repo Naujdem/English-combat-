@@ -67,8 +67,8 @@ export const NPC_TASKS: Record<string, NpcTask> = {
     lesson: 'likes',
     steps: [
       {
-        text: "Hi! I'm Maya's dad. Maya is in her room. She loves reading. She reads all day!",
-        es: '¡Hola! Soy el papá de Maya. Maya está en su cuarto. Le encanta leer. ¡Lee todo el día!',
+        text: "Hi! I'm Maya's dad. Look at Maya: she is reading again. She loves reading. She reads all day!",
+        es: '¡Hola! Soy el papá de Maya. Mira a Maya: está leyendo otra vez. Le encanta leer. ¡Lee todo el día!',
         choice: { ask: '¿Qué le encanta a Maya?', options: ['She loves read.', 'She loves reading.', 'She love reading.'], answer: 1, tip: 'love + verbo con -ing, y con "she" love lleva -s: she loves reading.' },
       },
       {
