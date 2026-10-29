@@ -242,6 +242,22 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#8a2830', hair: '#2b1d14', skin: '#f1c27d', gender: 'female', accessory: 'glasses' },
     doneLine: { text: 'One day I want to be a director... of a big company! Ha ha. Enjoy the film!', es: 'Un día quiero ser directora... ¡de una gran empresa! Ja, ja. ¡Disfruta la película!' },
   },
+  // ── La escuela en 2056 ──
+  'leo-adult': {
+    name: 'Mr. Garcia',
+    // Leo adulto, el profesor de inglés: la misma piel y el mismo pelo, con gafas y camisa de profesor
+    look: { shirt: '#2f5d50', hair: '#2d2d3a', skin: '#e0ac69', accessory: 'glasses' },
+    doneLine: { text: 'Hi, hi! On my tenth birthday somebody gave me a card: "Be brave. Use your voice." I never knew who. Now I say it to all my students.', es: '¡Hola, hola! En mi cumpleaños número diez alguien me dio una tarjeta: "Sé valiente. Usa tu voz". Nunca supe quién. Ahora se lo digo a todos mis estudiantes.' },
+  },
+  zoe: {
+    name: 'Zoe',
+    look: { shirt: '#e07b39', hair: '#e0b04a', skin: '#f6d3b3', gender: 'female' },
+    lines: [
+      { text: "Tomorrow I'm going to play football. My dad Tom is the coach!", es: 'Mañana voy a jugar fútbol. ¡Mi papá Tom es el entrenador!' },
+      { text: "Mr. Garcia is the best teacher. He always says: \"Be brave. Use your voice.\"", es: 'El profesor Garcia es el mejor. Siempre dice: "Sé valiente. Usa tu voz".' },
+      { text: "Look! The old bell. My grandma says it is from 1996. We are going to ring it at the party next week!", es: '¡Mira! La campana vieja. Mi abuela dice que es de 1996. ¡La vamos a tocar en la fiesta de la próxima semana!' },
+    ],
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

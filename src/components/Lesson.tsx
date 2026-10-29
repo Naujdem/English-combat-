@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useMemo, useState, type ReactNode } from 'react'
 import { mixed } from '../game/mix'
 import type { GameState, LessonStep } from '../game/types'
 import { SpriteBody } from './Sprite'
@@ -41,7 +41,7 @@ export function ClassroomStage({ board, children }: { board?: [string, string?];
  */
 export function Lesson({
   state,
-  steps,
+  steps: rawSteps,
   title,
   onDone,
 }: {
@@ -50,6 +50,12 @@ export function Lesson({
   title?: string
   onDone: (completed: boolean) => void
 }) {
+  // La muletilla de Leo: empieza cada lección con "Hi, hi!"
+  const steps = useMemo(() => {
+    const first = rawSteps[0]
+    if (!first || first.who !== 'leo' || /^hi, hi/i.test(first.text)) return rawSteps
+    return [{ ...first, text: `Hi, hi! ${first.text}`, es: first.es ? `¡Hola, hola! ${first.es}` : first.es }, ...rawSteps.slice(1)]
+  }, [rawSteps])
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
   const [solved, setSolved] = useState(false)

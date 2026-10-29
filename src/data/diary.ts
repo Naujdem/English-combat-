@@ -103,7 +103,7 @@ export const DIARY: DiaryChapter[] = [
       },
       {
         id: 'school-future',
-        unlock: 'era-future-a1',
+        unlock: 'school-future-epilogue',
         tense: 'f',
         tab: 'Futuro',
         title: 'The stranger\'s plan',
@@ -126,7 +126,7 @@ export const DIARY: DiaryChapter[] = [
       },
       {
         id: 'school-mix',
-        unlock: 'era-future-a1',
+        unlock: 'school-future-epilogue',
         tense: 'mix',
         tab: 'Mezcla',
         title: 'One week later',

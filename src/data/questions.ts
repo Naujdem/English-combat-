@@ -6,6 +6,7 @@ import { FARM_QUESTIONS } from './questions-farm'
 import { OFFICE_QUESTIONS } from './questions-office'
 import { EXTRA_QUESTIONS } from './questions-extra'
 import { PAST_QUESTIONS } from './questions-past'
+import { FUTURE_QUESTIONS } from './questions-future'
 
 /**
  * Banco de preguntas.
@@ -327,6 +328,7 @@ export const QUESTIONS: Question[] = [
   ...EXTRA_QUESTIONS,
   // ── A1 en pasado
   ...PAST_QUESTIONS,
+  ...FUTURE_QUESTIONS,
 ]
 
 
@@ -666,6 +668,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Tiempo + ago (hace...): two days ago · an hour ago · thirty years ago.',
       'in 1980 (años) · on Monday (días) · at six (horas). Sin "the" ni "in" antes de last o yesterday.',
       'Para preguntar: When did you...? → Two days ago.',
+    ],
+  },
+  'going-to': {
+    name: 'Planes con going to',
+    level: 'A1',
+    lesson: [
+      'Para planes: sujeto + am / is / are + going to + verbo simple: I am going to study.',
+      "I'm going to · she's going to · they're going to (formas cortas).",
+      'Palabras de futuro: tomorrow · tonight · next week · next year · one day.',
     ],
   },
   'past-simple': {

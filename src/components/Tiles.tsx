@@ -42,6 +42,9 @@ export const FLOOR: Record<Zone, string> = {
   'sala-cine': '#5a3a4a',
   vestibulo: '#c9a77a',
   'oficina-cine': '#d8c2a0',
+  'aula-futuro': '#e4eef5',
+  'patio-futuro': '#9fcf8a',
+  'direccion-futuro': '#d9e4ee',
 }
 
 const WALL = '#7a6a58'
@@ -99,6 +102,9 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   h: { en: 'poster', es: 'afiche' },
   j: { en: 'popcorn machine', es: 'máquina de palomitas' },
   l: { en: 'projector', es: 'proyector' },
+  q: { en: 'glass wall', es: 'pared de vidrio' },
+  i: { en: 'smart board', es: 'pizarra digital' },
+  t: { en: 'cleaning robot', es: 'robot de limpieza' },
 }
 
 export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: { c: string; x: number; y: number; floor: string; doorOpen: boolean; party?: boolean; still?: boolean }) {
@@ -625,6 +631,35 @@ export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: 
           <rect x={X + 1} y={Y + 15} width={6} height={6} fill="#5a5a5a" />
           <path d={`M${X + 1} ${Y + 18} L${X - 10} ${Y + 10} L${X - 10} ${Y + 26} Z`} fill="#fff6d6" opacity="0.35" />
           <rect x={X + 10} y={Y + 24} width={12} height={6} fill="#5a5a5a" />
+        </g>
+      )
+    case 'q':
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill="#8fb8cf" />
+          <rect x={X + 2} y={Y + 2} width={T - 4} height={T - 4} fill="#cfe9f5" opacity="0.7" />
+          <line x1={X + 6} y1={Y + 24} x2={X + 16} y2={Y + 6} stroke="#ffffff" strokeWidth="1.5" opacity="0.8" />
+        </g>
+      )
+    case 'i':
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill="#8fb8cf" />
+          <rect x={X} y={Y + 6} width={T} height={T - 10} fill="#1f3c58" />
+          <rect x={X + 2} y={Y + 8} width={T - 4} height={T - 14} fill="#2f7fbf" opacity="0.7" />
+          <line x1={X + 5} y1={Y + 13} x2={X + 25} y2={Y + 13} stroke="#7fe0ff" strokeWidth="1.2" />
+          <line x1={X + 5} y1={Y + 18} x2={X + 18} y2={Y + 18} stroke="#7fe0ff" strokeWidth="1.2" opacity="0.7" />
+        </g>
+      )
+    case 't':
+      return (
+        <g>
+          {base}
+          <ellipse cx={X + 16} cy={Y + 26} rx="10" ry="2.5" fill="rgba(0,0,0,0.15)" />
+          <ellipse cx={X + 16} cy={Y + 20} rx="11" ry="6" fill="#c9d3dc" stroke="#7a8794" strokeWidth="1" />
+          <ellipse cx={X + 16} cy={Y + 18} rx="7" ry="3" fill="#9aa6b2" />
+          <circle cx={X + 12} cy={Y + 18} r="1.2" fill="#7fe0ff" />
+          <circle cx={X + 20} cy={Y + 18} r="1.2" fill="#7fe0ff" />
         </g>
       )
     default:

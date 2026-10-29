@@ -17,6 +17,7 @@ export const ANIMALS: Record<AnimalKind, { en: string; plural: string; es: strin
   cat: { en: 'cat', plural: 'cats', es: 'gato', sound: 'Meow!' },
   rabbit: { en: 'rabbit', plural: 'rabbits', es: 'conejo', sound: '...' },
   mouse: { en: 'mouse', plural: 'mice', es: 'ratón', sound: 'Squeak!' },
+  robot: { en: 'robot', plural: 'robots', es: 'robot', sound: 'Beep!' },
 }
 
 function Eye({ x, y, hurt }: { x: number; y: number; hurt?: boolean }) {
@@ -170,6 +171,30 @@ export function AnimalSprite({ kind, hurt }: { kind: AnimalKind; hurt?: boolean 
           <circle cx="21" cy="24.5" r="0.6" fill="#e8a7b5" />
           <path d="M9 26 q-5 1 -5 -3" fill="none" stroke="#e8a7b5" strokeWidth="0.8" />
           <Eye x={19.5} y={24} hurt={hurt} />
+        </g>
+      )
+    case 'robot':
+      return (
+        <g>
+          {shadow}
+          <line x1="16" y1="3" x2="16" y2="7" stroke="#8d9aa3" strokeWidth="1.2" />
+          <circle cx="16" cy="2.5" r="1.6" fill="#e0a526" />
+          <rect x="9" y="7" width="14" height="9" rx="2.5" fill="#c9d3dc" stroke="#7a8794" strokeWidth="0.8" />
+          <rect x="11" y="9.5" width="10" height="4" rx="1.5" fill="#1f3c58" />
+          {hurt ? (
+            <path d="M12.5 10.5 l2 2 M14.5 10.5 l-2 2 M17.5 10.5 l2 2 M19.5 10.5 l-2 2" stroke="#ff6b6b" strokeWidth="0.8" />
+          ) : (
+            <>
+              <circle cx="13.5" cy="11.5" r="1.1" fill="#7fe0ff" />
+              <circle cx="18.5" cy="11.5" r="1.1" fill="#7fe0ff" />
+            </>
+          )}
+          <rect x="8" y="17" width="16" height="9" rx="2" fill="#9aa6b2" stroke="#7a8794" strokeWidth="0.8" />
+          <rect x="13" y="19" width="6" height="3" rx="1" fill="#5d8fd4" />
+          <rect x="5" y="18" width="3" height="6" rx="1.5" fill="#7a8794" />
+          <rect x="24" y="18" width="3" height="6" rx="1.5" fill="#7a8794" />
+          <rect x="10" y="26" width="4" height="4" fill="#5a6672" />
+          <rect x="18" y="26" width="4" height="4" fill="#5a6672" />
         </g>
       )
   }

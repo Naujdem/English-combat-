@@ -13,7 +13,7 @@ type StoryStep = { who: 'narrator' | 'stranger'; text: string; es?: string; stra
 function story(): StoryStep[] {
   return [
     { who: 'narrator', text: 'Un día cualquiera, llegas temprano a tu nueva escuela.' },
-    { who: 'stranger', text: 'Hello there... What a nice voice you have.', es: 'Hola... Qué linda voz tienes. (Su voz es ronca, como si casi no pudiera hablar.)', stranger: true },
+    { who: 'stranger', text: 'Hi, hi... What a nice voice you have.', es: 'Hola, hola... Qué linda voz tienes. (Su voz es ronca, como si casi no pudiera hablar.)', stranger: true },
     { who: 'stranger', text: 'Your words are MINE now!', es: '¡Tus palabras ahora son MÍAS!', stranger: true, steal: true },
     { who: 'narrator', text: 'Intentas gritar, pero no sale ningún sonido.', stranger: true, mute: true },
     { who: 'stranger', text: 'Now... back to my time!', es: 'Ahora... ¡de vuelta a mi tiempo!', stranger: true, mute: true },
@@ -32,7 +32,7 @@ const LEO_ARRIVES: LessonStep[] = [
     es: '¡Oye! ¿Estás bien?',
     choice: { options: ['(Asentir lentamente)', '(Salir corriendo)', '(Ignorarlo)'], answer: 0, tip: '"Are you OK?" significa "¿Estás bien?". Asentir es decir que sí.' },
   },
-  { who: 'leo', text: 'I am Leo. I saw a big light from the hall! A stranger took your words?', es: 'Soy Leo. ¡Vi una luz enorme desde el pasillo! ¿Un desconocido se llevó tus palabras?' },
+  { who: 'leo', text: 'Hi, hi! I am Leo. I saw a big light from the hall! A stranger took your words?', es: '¡Hola, hola! Soy Leo. ¡Vi una luz enorme desde el pasillo! ¿Un desconocido se llevó tus palabras?' },
   { who: 'leo', text: "You can't talk, but you can write. Let's use the board!", es: 'No puedes hablar, pero puedes escribir. ¡Usemos la pizarra!' },
 ]
 

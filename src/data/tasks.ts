@@ -17,7 +17,7 @@ export type NpcTask = {
   shield?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan'
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
   vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
@@ -443,6 +443,20 @@ NPC_TASKS.diana = {
     es: 'En 1980, hace diez años, la semana pasada, ayer... ¡Conoces la historia de nuestro cine!',
     sub: 'Diana te da una boleta. Ahora el señor Clark ya no puede decir que llegaste tarde sin boleta.',
     say: 'You know the story of our cinema!',
+  },
+}
+
+// ── La escuela en 2056 ──
+NPC_TASKS['leo-adult'] = {
+  done: 'future-plan',
+  lesson: 'going-to',
+  activity: 'plan',
+  steps: [],
+  reward: {
+    text: 'Mr. Garcia: "Hi, hi! What a great plan. Tomorrow is going to be a wonderful class. Thank you!"',
+    es: '¡Hola, hola! Qué buen plan. Mañana va a ser una clase maravillosa. ¡Gracias!',
+    sub: 'El plan de clase está listo. GRIMM-BOT ya no puede decir que no ayudaste al profesor.',
+    say: 'Hi, hi! What a great plan. Tomorrow is going to be a wonderful class. Thank you!',
   },
 }
 

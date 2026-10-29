@@ -271,4 +271,14 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'Mr. Clark opened the cinema ___ 1980.', board: ['in 1980 · on Monday', "at six o'clock"], choice: { options: ['in', 'on', 'at'], answer: 0, tip: 'Con años: in.' } },
     { who: 'leo', text: 'To ask: WHEN DID you...? When did you see it? Two days ago! Now you can tell any story from the past.', es: 'Para preguntar: When did you...? Ahora puedes contar cualquier historia del pasado.', board: ['When did you see it?', 'Two days ago!'] },
   ],
+
+  'going-to': [
+    { who: 'leo', text: 'We are in the future! To talk about PLANS, use GOING TO: I am going to study. She is going to teach. It is like TO BE plus GOING TO plus a verb.', es: '¡Estamos en el futuro! Para hablar de planes se usa going to. Es como to be + going to + verbo.', board: ['am / is / are + going to', 'I am going to study.'], table: { head: ['Sujeto', 'to be', 'going to + verbo'], rows: [['<I>', '[am]', '{going to} [study]'], ['<He> · <She> · <It>', '[is]', '{going to} [teach]'], ['<You> · <We> · <They>', '[are]', '{going to} [play]']] } },
+    { who: 'board', text: 'Tomorrow I ___ going to study.', board: ['am / is / are + going to', 'I am going to study.'], choice: { options: ['am', 'is', 'are'], answer: 0, tip: 'I + am going to.' } },
+    { who: 'board', text: 'Theo ___ going to be an astronaut.', board: ['am / is / are + going to', 'I am going to study.'], choice: { options: ['is', 'are', 'am'], answer: 0, tip: 'He + is going to.' } },
+    { who: 'leo', text: 'After GOING TO, the verb is simple: no -S, no -ED, no -ING. She is going to teach. Not "teaches"!', es: 'Después de going to, el verbo va simple: sin -s, sin -ed, sin -ing.', board: ['going to + verbo simple', '✗ going to teaches'], table: { head: ['Bien', 'Mal'], rows: [['<She> [is] {going to} [teach].', '✗ going to teaches'], ['<We> [are] {going to} [play].', '✗ going to played'], ['<I> [am] {going to} [fly].', '✗ I going to fly']] } },
+    { who: 'board', text: 'They are going to ___ a new robot.', board: ['going to + verbo simple', '✗ going to teaches'], choice: { options: ['buy', 'buys', 'bought'], answer: 0, tip: 'going to + buy.' } },
+    { who: 'leo', text: 'Words for the future: tomorrow, tonight, next week, next year, one day. Yesterday was the past... tomorrow is the future!', es: 'Palabras de futuro: tomorrow (mañana), tonight (esta noche), next week (la próxima semana), next year, one day (algún día).', board: ['tomorrow · tonight', 'next week · one day'], table: { head: ['Pasado', 'Futuro'], rows: [['{yesterday}', '{tomorrow}'], ['{last night}', '{tonight}'], ['{last week}', '{next week}']] } },
+    { who: 'board', text: 'I am going to visit my grandma ___ week.', board: ['tomorrow · tonight', 'next week · one day'], choice: { options: ['next', 'last', 'ago'], answer: 0, tip: 'Futuro: next week.' } },
+  ],
 }

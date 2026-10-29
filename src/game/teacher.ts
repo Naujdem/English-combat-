@@ -11,6 +11,7 @@ import { CITY_PAST } from '../data/cityPast'
 import { BARRIO_PAST } from '../data/barrioPast'
 import { FARM_PAST } from '../data/farmPast'
 import { CINEMA_PAST } from '../data/cinemaPast'
+import { SCHOOL_FUTURE } from '../data/schoolFuture'
 import { SCHOOL } from '../data/school'
 
 /**
@@ -76,7 +77,7 @@ function base(s: GameState): GameState {
   }
 }
 
-const SCENE_PREFIX = /^(school|city|barrio|board|party|farm|office|past)-/
+const SCENE_PREFIX = /^(school|city|barrio|board|party|farm|office|past|future)-/
 
 /** Estados preparados para revisar partes del juego */
 export const PRESETS: { id: string; label: string; apply: (s: GameState) => GameState }[] = [
@@ -446,6 +447,43 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
         defeated: add(b.defeated, ['office-past-boss']),
         recovered: add(b.recovered, ['past-time']) as GameState['recovered'],
         outfits: add(b.outfits, ['boina']),
+      }
+    },
+  },
+  {
+    id: 'future-school-start',
+    label: 'Futuro · Escuela 2056: recién llegado',
+    apply: (s) => {
+      const b = PRESETS[28].apply(s)
+      return { ...b, screen: 'explore', sceneId: 'school-future', pos: { ...SCHOOL_FUTURE.start }, opened: add(b.opened, ['office-past-epilogue', 'bus-school-future']) }
+    },
+  },
+  {
+    id: 'school-future-boss',
+    label: 'Futuro · Escuela 2056: listo para el jefe',
+    apply: (s) => {
+      const b = PRESETS[29].apply(s)
+      return {
+        ...b,
+        pos: { x: 10, y: 9 },
+        defeated: add(b.defeated, ['school-future-m1']),
+        keys: { ...b.keys, 'school-future': 1 },
+        opened: add(b.opened, ['future-plan']),
+        seenLesson: add(b.seenLesson, ['school-future', 'going-to']),
+      }
+    },
+  },
+  {
+    id: 'future-school-done',
+    label: 'Futuro · Escuela 2056: terminada',
+    apply: (s) => {
+      const b = PRESETS[30].apply(s)
+      return {
+        ...b,
+        screen: 'epilogue',
+        defeated: add(b.defeated, ['school-future-boss']),
+        recovered: add(b.recovered, ['going-to']) as GameState['recovered'],
+        outfits: add(b.outfits, ['traje-plata']),
       }
     },
   },

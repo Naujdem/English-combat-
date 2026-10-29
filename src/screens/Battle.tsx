@@ -24,8 +24,8 @@ import { AnimalSprite } from '../components/Animals'
 
 function Backdrop({ zone }: { zone: Zone }) {
   const wall =
-    zone === 'sala-cine' ? '#2b1d24' : zone === 'vestibulo' ? '#8a2830' : zone === 'oficina-cine' ? '#d8c2a0' : zone === 'campo-viejo' ? '#cfe6f2' : zone === 'granero-viejo' ? '#b5523b' : zone === 'casa-vieja' ? '#e6d0a8' : zone === 'obra' ? '#cfe6f2' : zone === 'casa-nueva' ? '#e8d3b0' : zone === 'caseta' ? '#b89a70' : zone === 'calle-vieja' || zone === 'mercado' ? '#cfe6f2' : zone === 'tienda-vieja' ? '#c9a46a' : zone === 'correo' ? '#d9cdb4' : zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#a4553a' : zone === 'patio-viejo' ? '#d9c9a0' : zone === 'recepcion' || zone === 'oficina' ? '#e8ecf0' : zone === 'reuniones' ? '#ece6f4' : zone === 'direccion' ? '#f1e6d2' : zone === 'patio' || zone === 'calle' || zone === 'parque' || zone === 'campo' || zone === 'corral' ? '#bfe3f5' : zone === 'granero' ? '#b5523b' : zone === 'casa-granja' ? '#efd9b8' : zone === 'casa-leo' ? '#f3e2c4' : zone === 'casa-maya' ? '#dde6f4' : zone === 'casa' ? '#f1d9c0' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : zone === 'tienda' ? '#f1e6f4' : zone === 'turismo' ? '#dfeaf3' : '#efe5d3'
-  const ground = zone === 'sala-cine' ? '#5a3a4a' : zone === 'vestibulo' ? '#c9a77a' : zone === 'oficina-cine' ? '#8b6a46' : zone === 'campo-viejo' ? '#a9c47e' : zone === 'granero-viejo' ? '#d9bd85' : zone === 'casa-vieja' ? '#a8743f' : zone === 'obra' ? '#c9b48a' : zone === 'casa-nueva' ? '#a8743f' : zone === 'caseta' ? '#8b6a46' : zone === 'calle-vieja' || zone === 'mercado' ? '#b8946a' : zone === 'tienda-vieja' ? '#8b5a2b' : zone === 'correo' ? '#9c7a52' : zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#8b5a2b' : zone === 'patio-viejo' ? '#c2a878' : zone === 'recepcion' || zone === 'oficina' ? '#9aa6b2' : zone === 'reuniones' ? '#a99cc0' : zone === 'direccion' ? '#8b5a2b' : zone === 'campo' ? '#9cc46e' : zone === 'corral' ? '#c9a46a' : zone === 'granero' ? '#dcc08a' : zone === 'casa-granja' ? '#b98c5a' : zone === 'patio' || zone === 'parque' ? '#8fbf6a' : zone === 'casa-leo' || zone === 'casa' ? '#b98c5a' : zone === 'casa-maya' ? '#a7b4c8' : zone === 'calle' ? '#b9b4ab' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : zone === 'tienda' ? '#cdb8d6' : zone === 'turismo' ? '#9fb3c6' : '#b98c5a'
+    zone === 'aula-futuro' || zone === 'direccion-futuro' ? '#e4eef5' : zone === 'patio-futuro' ? '#cfe9f5' : zone === 'sala-cine' ? '#2b1d24' : zone === 'vestibulo' ? '#8a2830' : zone === 'oficina-cine' ? '#d8c2a0' : zone === 'campo-viejo' ? '#cfe6f2' : zone === 'granero-viejo' ? '#b5523b' : zone === 'casa-vieja' ? '#e6d0a8' : zone === 'obra' ? '#cfe6f2' : zone === 'casa-nueva' ? '#e8d3b0' : zone === 'caseta' ? '#b89a70' : zone === 'calle-vieja' || zone === 'mercado' ? '#cfe6f2' : zone === 'tienda-vieja' ? '#c9a46a' : zone === 'correo' ? '#d9cdb4' : zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#a4553a' : zone === 'patio-viejo' ? '#d9c9a0' : zone === 'recepcion' || zone === 'oficina' ? '#e8ecf0' : zone === 'reuniones' ? '#ece6f4' : zone === 'direccion' ? '#f1e6d2' : zone === 'patio' || zone === 'calle' || zone === 'parque' || zone === 'campo' || zone === 'corral' ? '#bfe3f5' : zone === 'granero' ? '#b5523b' : zone === 'casa-granja' ? '#efd9b8' : zone === 'casa-leo' ? '#f3e2c4' : zone === 'casa-maya' ? '#dde6f4' : zone === 'casa' ? '#f1d9c0' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : zone === 'tienda' ? '#f1e6f4' : zone === 'turismo' ? '#dfeaf3' : '#efe5d3'
+  const ground = zone === 'aula-futuro' || zone === 'direccion-futuro' ? '#b8c8d6' : zone === 'patio-futuro' ? '#9fcf8a' : zone === 'sala-cine' ? '#5a3a4a' : zone === 'vestibulo' ? '#c9a77a' : zone === 'oficina-cine' ? '#8b6a46' : zone === 'campo-viejo' ? '#a9c47e' : zone === 'granero-viejo' ? '#d9bd85' : zone === 'casa-vieja' ? '#a8743f' : zone === 'obra' ? '#c9b48a' : zone === 'casa-nueva' ? '#a8743f' : zone === 'caseta' ? '#8b6a46' : zone === 'calle-vieja' || zone === 'mercado' ? '#b8946a' : zone === 'tienda-vieja' ? '#8b5a2b' : zone === 'correo' ? '#9c7a52' : zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#8b5a2b' : zone === 'patio-viejo' ? '#c2a878' : zone === 'recepcion' || zone === 'oficina' ? '#9aa6b2' : zone === 'reuniones' ? '#a99cc0' : zone === 'direccion' ? '#8b5a2b' : zone === 'campo' ? '#9cc46e' : zone === 'corral' ? '#c9a46a' : zone === 'granero' ? '#dcc08a' : zone === 'casa-granja' ? '#b98c5a' : zone === 'patio' || zone === 'parque' ? '#8fbf6a' : zone === 'casa-leo' || zone === 'casa' ? '#b98c5a' : zone === 'casa-maya' ? '#a7b4c8' : zone === 'calle' ? '#b9b4ab' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : zone === 'tienda' ? '#cdb8d6' : zone === 'turismo' ? '#9fb3c6' : '#b98c5a'
   return (
     <g>
       <rect width="360" height="150" fill={wall} />
@@ -127,6 +127,26 @@ function Backdrop({ zone }: { zone: Zone }) {
           <rect x="240" y="80" width="90" height="62" rx="4" fill="#8b5a2b" />
           <rect x="250" y="66" width="20" height="16" rx="2" fill="#f4efe4" />
           <rect x="280" y="70" width="16" height="12" rx="2" fill="#e8c95a" />
+        </>
+      )}
+      {(zone === 'aula-futuro' || zone === 'direccion-futuro') && (
+        <>
+          {[0, 1, 2, 3, 4, 5, 6].map((k) => <rect key={k} x={k * 52} y="0" width="48" height="150" fill="#cfe9f5" opacity="0.6" />)}
+          <rect x="100" y="18" width="160" height="76" rx="4" fill="#1f3c58" />
+          <rect x="106" y="24" width="148" height="64" fill="#2f7fbf" opacity="0.7" />
+          <text x="180" y="52" textAnchor="middle" fontSize="12" fill="#7fe0ff" fontFamily="Fredoka, Nunito, system-ui, sans-serif">{zone === 'direccion-futuro' ? 'GRIMM-BOT' : 'I am going to...'}</text>
+          <text x="180" y="72" textAnchor="middle" fontSize="11" fill="#d9f3ff" fontFamily="Fredoka, Nunito, system-ui, sans-serif">2056</text>
+        </>
+      )}
+      {zone === 'patio-futuro' && (
+        <>
+          <rect x="0" y="40" width="200" height="110" fill="#8fb8cf" />
+          {[0, 1, 2, 3, 4, 5].map((k) => <rect key={k} x={6 + k * 32} y="48" width="28" height="96" fill="#e4f4fb" opacity="0.8" />)}
+          <rect x="250" y="70" width="6" height="80" fill="#6b4423" />
+          <rect x="290" y="70" width="6" height="80" fill="#6b4423" />
+          <rect x="248" y="68" width="50" height="6" fill="#6b4423" />
+          <path d="M262 102 q11 -26 22 0 z" fill="#c9a83a" stroke="#8a6210" strokeWidth="1.5" />
+          <g className="anim-bob"><ellipse cx="300" cy="24" rx="12" ry="3.5" fill="#5a6672" /><circle cx="300" cy="21" r="3.5" fill="#7fe0ff" /></g>
         </>
       )}
       {zone === 'sala-cine' && (
@@ -865,7 +885,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               <p>Recuperaste una parte de tu voz: <b>{listEs(enemy.topics.map((t) => TOPICS[t].name.toLowerCase()))}</b>.</p>
               {SCENES[state.sceneId]?.era ? (
                 <div className="my-1 rounded-xl bg-panel-2 p-3 text-[15px]">
-                  <b className="text-gold">¡Fragmento de voz!</b> {enemy.person} tenía un fragmento de tu voz del pasado. Al tocarlo se corrompió; tú no, porque es tu voz. Ahora puedes hablar también del pasado.
+                  <b className="text-gold">¡Fragmento de voz!</b> {enemy.person} tenía un fragmento de tu voz {SCENES[state.sceneId]?.era === 'Futuro' ? 'del futuro' : 'del pasado'}. Al tocarlo se corrompió; tú no, porque es tu voz. Ahora puedes hablar también {SCENES[state.sceneId]?.era === 'Futuro' ? 'del futuro' : 'del pasado'}.
                 </div>
               ) : (
               <div className="my-1 flex items-center gap-3 rounded-xl bg-panel-2 p-2">

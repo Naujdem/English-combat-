@@ -16,8 +16,8 @@ import { AnimalSprite } from '../components/Animals'
 
 const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
-type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana'
-type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana'
+type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana' | 'leoadult'
+type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana' | 'leoadult'
 type Step = {
   who: Who
   text: string
@@ -48,6 +48,7 @@ function buildSteps(s: GameState, sceneId: string): Step[] {
   if (sceneId === 'barrio-past') return barrioPastSteps(s)
   if (sceneId === 'farm-past') return farmPastSteps(s)
   if (sceneId === 'office-past') return cinemaPastSteps(s)
+  if (sceneId === 'school-future') return schoolFutureSteps(s)
   const name = s.hero.name
   const it = s.interest
   const iname = it.name
@@ -732,6 +733,59 @@ function cinemaPastSteps(s: GameState): Step[] {
   ]
 }
 
+/**
+ * Final de la escuela en 2056: Leo joven conoce a Leo adulto, el profesor de inglés.
+ * Los dos dicen "Hi, hi!". El desconocido mira la clase por la ventana: "He was a good teacher."
+ */
+function schoolFutureSteps(s: GameState): Step[] {
+  const iname = s.interest.name
+  const cast: Cast[] = ['leo', 'interest']
+  const both: Cast[] = ['leoadult', 'leo', 'interest']
+  return [
+    { who: 'narrator', text: 'GRIMM-BOT abre la puerta de la dirección. El profesor de inglés sale del salón 1 con su tableta.', cast: both },
+    { who: 'leoadult', text: 'Hi, hi! Thank you for your help today. I am Mr. Garcia, the English teacher.', es: '¡Hola, hola! Gracias por su ayuda hoy. Soy el señor Garcia, el profesor de inglés.', cast: both },
+    { who: 'leo', text: 'Hi, hi! ... Wait. Mr. GARCIA? My name is Leo Garcia!', es: '¡Hola, hola! ... Espera. ¿Señor GARCIA? ¡Yo me llamo Leo Garcia!', cast: both },
+    { who: 'leoadult', text: 'Leo? That is my name too! Ha ha. You look very familiar... When I was a boy, I had a green shirt like that.', es: '¿Leo? ¡También es mi nombre! Ja, ja. Me pareces muy conocido... Cuando era niño, tenía una camiseta verde como esa.', cast: both },
+    { who: 'narrator', text: 'Leo se queda con la boca abierta. Te mira y te susurra:', cast },
+    { who: 'leo', text: "That's ME? I'm a teacher?! I am going to be a TEACHER!", es: '¿Ese soy YO? ¿¡Soy profesor!? ¡Voy a ser PROFESOR!', cast },
+    {
+      who: 'hero',
+      text: '¿Qué le dices a Leo?',
+      cast,
+      choice: {
+        options: ['Yes! You are going to be a great teacher!', 'Yes! You going to be a great teacher!', 'Yes! You are go to be a great teacher!'],
+        answer: 0,
+        tip: 'You + are going to + verbo.',
+      },
+    },
+    { who: 'leoadult', text: 'Be brave, and use your voice, kids. That is my lesson for today... and for every day.', es: 'Sean valientes y usen su voz, chicos. Esa es mi lección de hoy... y de todos los días.', cast: both },
+    { who: 'interest', text: 'Mr. Garcia, do you have a best friend?', es: 'Señor Garcia, ¿usted tiene un mejor amigo?', cast: both },
+    { who: 'leoadult', text: 'Yes! My best friend lives in another city now. But every Sunday we are going to play old video games together. Ha ha!', es: '¡Sí! Mi mejor amigo vive en otra ciudad ahora. Pero todos los domingos vamos a jugar videojuegos viejos juntos. ¡Ja, ja!', cast: both },
+    { who: 'interest', text: 'Old video games... like you two!', es: 'Videojuegos viejos... ¡como ustedes dos!', cast },
+    { who: 'narrator', text: 'Sientes algo cálido en la garganta: un fragmento de tu voz del futuro vuelve a ti. Ahora puedes hablar de tus planes: I am going to...', cast },
+    { who: 'narrator', text: 'Leo corre a ver el robot de limpieza. Por la ventana del salón 1, alguien con abrigo oscuro mira la clase desde lejos. Habla muy bajito.', cast: ['interest'] },
+    { who: 'villain', text: 'He was a good teacher... A very good teacher.', es: 'Era un buen profesor... Un muy buen profesor.', villain: true, cast: ['interest'] },
+    { who: 'villain', text: 'Your next words are in the city. The buses fly now... but the old fountain is still there. Go.', es: 'Tus siguientes palabras están en la ciudad. Ahora los buses vuelan... pero la fuente vieja sigue ahí. Ve.', villain: true, cast: ['interest'] },
+    { who: 'narrator', text: `Cuando ${iname} vuelve a mirar, la ventana está vacía.`, cast },
+    {
+      who: 'hero',
+      text: `¿Qué le dices a ${iname}?`,
+      cast,
+      choice: {
+        options: ['He is going to follow us again.', 'He going to follow us again.', 'He is go to follow us again.'],
+        answer: 0,
+        tip: 'He + is going to + verbo.',
+      },
+    },
+    { who: 'interest', text: '"He WAS a good teacher"... Why "was"? Mr. Garcia IS a teacher...', es: '"Era un buen profesor"... ¿Por qué "era"? El señor Garcia ES profesor...', cast },
+    {
+      who: 'narrator',
+      text: 'Fin: La escuela de 2056. Recuperaste going to para hablar de planes. En tu diario de la escuela apareció una hoja nueva: el plan del desconocido. Tu viaje por el futuro sigue en la ciudad...',
+      cast,
+    },
+  ]
+}
+
 export function Epilogue({ state, onDone }: { state: GameState; onDone: () => void }) {
   const city = state.sceneId === 'city'
   const barrio = state.sceneId === 'barrio'
@@ -742,6 +796,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
   const barrioPast = state.sceneId === 'barrio-past'
   const farmPast = state.sceneId === 'farm-past'
   const cinemaPast = state.sceneId === 'office-past'
+  const schoolFuture = state.sceneId === 'school-future'
   const steps = buildSteps(state, state.sceneId)
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
@@ -776,6 +831,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     priya: 'Priya',
     clarkdad: 'Mr. Clark',
     diana: 'Diana',
+    leoadult: 'Mr. Garcia',
   }
 
   const voices: Record<Who, Voice> = {
@@ -802,6 +858,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     priya: 'female',
     clarkdad: 'male',
     diana: 'female',
+    leoadult: 'male',
   }
 
   function next() {
@@ -816,8 +873,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 overflow-y-auto px-4 py-6">
-      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{cinemaPast ? 'Pasado · El viejo cine (final del pasado de A1)' : farmPast ? 'Pasado · La granja de 1996' : barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
-      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : cinemaPast ? 'La sala del viejo cine, 1996' : farmPast ? 'La granja con molino, 1996' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
+      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{schoolFuture ? 'Futuro · Greenfield Academy, 2056' : cinemaPast ? 'Pasado · El viejo cine (final del pasado de A1)' : farmPast ? 'Pasado · La granja de 1996' : barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
+      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : schoolFuture ? 'La escuela de vidrio en 2056' : cinemaPast ? 'La sala del viejo cine, 1996' : farmPast ? 'La granja con molino, 1996' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
         {s.home ? (
           <g>
             <rect width="320" height="200" fill="#f1d9c0" />
@@ -832,6 +889,19 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             <rect x="214" y="86" width="92" height="18" rx="6" fill="#c8664e" />
             <rect x="250" y="20" width="44" height="58" rx="2" fill="#e8eef2" stroke="#b8c4cc" strokeWidth="2" />
             <line x1="250" y1="40" x2="294" y2="40" stroke="#b8c4cc" strokeWidth="2" />
+          </g>
+        ) : schoolFuture ? (
+          <g>
+            <rect width="320" height="200" fill="#cfe9f5" />
+            <rect x="30" y="30" width="200" height="104" fill="#8fb8cf" />
+            {[0, 1, 2, 3, 4, 5].map((k) => <rect key={k} x={36 + k * 32} y="36" width="28" height="92" fill="#e4f4fb" opacity="0.8" />)}
+            <rect x="70" y="40" width="120" height="14" rx="2" fill="#1f3c58" />
+            <text x="130" y="50" textAnchor="middle" fontSize="7" fontWeight="700" fill="#7fe0ff" fontFamily={FONT}>GREENFIELD ACADEMY · 2056</text>
+            <rect x="262" y="70" width="5" height="62" fill="#6b4423" />
+            <rect x="296" y="70" width="5" height="62" fill="#6b4423" />
+            <rect x="260" y="68" width="43" height="5" fill="#6b4423" />
+            <path d="M272 98 q10 -24 20 0 z" fill="#c9a83a" stroke="#8a6210" strokeWidth="1.5" />
+            <rect y="134" width="320" height="66" fill="#9fcf8a" />
           </g>
         ) : cinemaPast ? (
           <g>
@@ -1017,6 +1087,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             : who === 'priya' ? ENEMIES['farm-past-m2'].look
             : who === 'clarkdad' ? ENEMIES['office-past-boss'].look
             : who === 'diana' ? NPCS.diana.look
+            : who === 'leoadult' ? NPCS['leo-adult'].look
             : interest.look
           return (
             <g key={who} transform={`translate(${spots[k] + 64} 128) scale(-2 2)`}>

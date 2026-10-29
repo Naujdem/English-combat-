@@ -209,6 +209,18 @@ Cada jefe del pasado devuelve un **fragmento de voz** en lugar de una pieza del 
 | Granja con molino | *did / didn't*, respuestas cortas, el error *Did you went* | ✅ misterio del molino con Bill (Brown de joven), Max el cachorro, Priya (Patel de joven), la señora Brown; repaso con Danny y Daisy, que vienen del presente |
 | Cine viejo (hoy la oficina) | *yesterday, last night, last week, two days ago, in 1980, When did...?* y repaso de todo el pasado | ✅ historia del cine con Diana (Clark de joven), Ray (Stone de joven), Grace; repaso con Gary y Kevin, que vienen del presente; final del pasado de A1 |
 
+### Plan del futuro (2056, treinta años después)
+
+Cada jefe del futuro devuelve un fragmento de voz del futuro. Gramática central: *going to* (*will* queda para A2).
+
+| Lugar | Gramática | Estado |
+|---|---|---|
+| Greenfield Academy | *going to* afirmativo + *tomorrow, tonight, next week* | ✅ la clase de mañana del profesor Garcia (Leo adulto), Theo (hijo de Maya), GRIMM-BOT; repaso con Tom y con Greg de 1996 |
+| Ciudad con buses que vuelan | *isn't going to*, *Are you going to...? Yes, I am* | pendiente |
+| Green Street en 2056 | *What / Where / When are you going to...?* | pendiente |
+| Granja con robots | predicciones: *It's going to rain* | pendiente |
+| Torre Green Valley | *want to / would like to* + repaso de todo A1 | pendiente |
+
 Lo que no entra en A1 y queda para A2: pasado continuo, comparativos y *will*.
 
 ## 8. Diario al final de cada capítulo

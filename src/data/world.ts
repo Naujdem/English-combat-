@@ -32,6 +32,13 @@ export const WORLD: WorldNode[] = [
   { id: 'barrio-past', name: 'Barrio', era: 'Pasado', level: 'A1', about: 'Green Street en construcción: verbos irregulares (went, had, saw...)', sceneId: 'barrio-past', requires: { boss: 'city-past-boss', from: 'la Ciudad vieja', how: 'a pie' }, x: 70, y: 160 },
   { id: 'farm-past', name: 'Granja', era: 'Pasado', level: 'A1', about: 'la granja con molino: did / didn\'t', sceneId: 'farm-past', requires: { boss: 'barrio-past-boss', from: 'el Barrio viejo', how: 'por el camino' }, x: 190, y: 72 },
   { id: 'office-past', name: 'Cine', era: 'Pasado', level: 'A1', about: 'el viejo cine (hoy la oficina): yesterday, last week, ago', sceneId: 'office-past', requires: { boss: 'farm-past-boss', from: 'la Granja vieja', how: 'por la carretera' }, x: 296, y: 176 },
+
+  // ── A1 en futuro: los mismos lugares en 2056. Cada jefe devuelve un fragmento de voz del futuro ──
+  { id: 'school-future', name: 'Escuela', era: 'Futuro', level: 'A1', about: 'Greenfield Academy: planes con going to', sceneId: 'school-future', requires: { boss: 'office-past-boss', from: 'el viejo Cine', how: 'con el reloj del tiempo' }, x: 64, y: 296 },
+  { id: 'city-future', name: 'Ciudad', era: 'Futuro', level: 'A1', about: 'la ciudad con buses que vuelan: going to en negativo y en preguntas', sceneId: null, requires: { boss: 'school-future-boss', from: 'la Escuela del futuro', how: 'en bus flotante' }, x: 178, y: 250 },
+  { id: 'barrio-future', name: 'Barrio', era: 'Futuro', level: 'A1', about: 'Green Street en 2056: What / Where / When are you going to...?', sceneId: null, requires: { boss: 'city-future-boss', from: 'la Ciudad del futuro', how: 'en bus flotante' }, x: 70, y: 160 },
+  { id: 'farm-future', name: 'Granja', era: 'Futuro', level: 'A1', about: 'la granja con robots: predicciones (It is going to rain)', sceneId: null, requires: { boss: 'barrio-future-boss', from: 'el Barrio del futuro', how: 'en tren magnético' }, x: 190, y: 72 },
+  { id: 'office-future', name: 'Torre', era: 'Futuro', level: 'A1', about: 'la torre Green Valley: want to / would like to y repaso de todo A1', sceneId: null, requires: { boss: 'farm-future-boss', from: 'la Granja del futuro', how: 'en tren magnético' }, x: 296, y: 176 },
 ]
 
 /** Los lugares del presente: el reloj tiene una pieza por cada uno */
