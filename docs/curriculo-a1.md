@@ -207,7 +207,7 @@ Cada jefe del pasado devuelve un **fragmento de voz** en lugar de una pieza del 
 | Ciudad con carretera destapada | pasado regular *-ed* (ortografía: *lived, studied, stopped*), sonidos /t/ /d/ /ɪd/, *yesterday / last / ago* | ✅ sacos de sonidos del señor López, Tony (Rossi de joven), Betty la cartera, la señora Rossi |
 | Green Street en construcción | 25 verbos irregulares (*went, had, saw, ate, bought, built…*), libro de verbos unido a las fichas, personajes que dicen *I goed* | ✅ libro de verbos de Joe (abuelo de Leo), Sam el albañil, Carmen la pintora (mamá de Leo), el capataz Hill |
 | Granja con molino | *did / didn't*, respuestas cortas, el error *Did you went* | ✅ misterio del molino con Bill (Brown de joven), Max el cachorro, Priya (Patel de joven), la señora Brown; repaso con Danny y Daisy, que vienen del presente |
-| Cine viejo (hoy la oficina) | *yesterday, last week, ago* | pendiente |
+| Cine viejo (hoy la oficina) | *yesterday, last night, last week, two days ago, in 1980, When did...?* y repaso de todo el pasado | ✅ historia del cine con Diana (Clark de joven), Ray (Stone de joven), Grace; repaso con Gary y Kevin, que vienen del presente; final del pasado de A1 |
 
 Lo que no entra en A1 y queda para A2: pasado continuo, comparativos y *will*.
 

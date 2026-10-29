@@ -8,9 +8,10 @@ import { SCHOOL_PAST_ENEMIES } from './schoolPast'
 import { CITY_PAST_ENEMIES } from './cityPast'
 import { BARRIO_PAST_ENEMIES } from './barrioPast'
 import { FARM_PAST_ENEMIES } from './farmPast'
+import { CINEMA_PAST_ENEMIES } from './cinemaPast'
 
 /** Todos los enemigos del juego, de todos los escenarios */
-const ALL: Record<string, EnemyDef> = { ...SCHOOL_ENEMIES, ...CITY_ENEMIES, ...BARRIO_ENEMIES, ...FARM_ENEMIES, ...OFFICE_ENEMIES, ...SCHOOL_PAST_ENEMIES, ...CITY_PAST_ENEMIES, ...BARRIO_PAST_ENEMIES, ...FARM_PAST_ENEMIES }
+const ALL: Record<string, EnemyDef> = { ...SCHOOL_ENEMIES, ...CITY_ENEMIES, ...BARRIO_ENEMIES, ...FARM_ENEMIES, ...OFFICE_ENEMIES, ...SCHOOL_PAST_ENEMIES, ...CITY_PAST_ENEMIES, ...BARRIO_PAST_ENEMIES, ...FARM_PAST_ENEMIES, ...CINEMA_PAST_ENEMIES }
 
 /**
  * Esbirros y jefes también piden hablar: decir la frase en voz alta.

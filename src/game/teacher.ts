@@ -10,6 +10,7 @@ import { SCHOOL_PAST } from '../data/schoolPast'
 import { CITY_PAST } from '../data/cityPast'
 import { BARRIO_PAST } from '../data/barrioPast'
 import { FARM_PAST } from '../data/farmPast'
+import { CINEMA_PAST } from '../data/cinemaPast'
 import { SCHOOL } from '../data/school'
 
 /**
@@ -408,6 +409,43 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
         defeated: add(b.defeated, ['farm-past-boss']),
         recovered: add(b.recovered, ['past-did']) as GameState['recovered'],
         outfits: add(b.outfits, ['sombrero']),
+      }
+    },
+  },
+  {
+    id: 'past-cinema-start',
+    label: 'Pasado · Cine 1996: recién llegado',
+    apply: (s) => {
+      const b = PRESETS[25].apply(s)
+      return { ...b, screen: 'explore', sceneId: 'office-past', pos: { ...CINEMA_PAST.start }, opened: add(b.opened, ['farm-past-epilogue', 'bus-office-past']) }
+    },
+  },
+  {
+    id: 'office-past-boss',
+    label: 'Pasado · Cine 1996: listo para el jefe',
+    apply: (s) => {
+      const b = PRESETS[26].apply(s)
+      return {
+        ...b,
+        pos: { x: 9, y: 11 },
+        defeated: add(b.defeated, ['office-past-m1', 'office-past-m2']),
+        keys: { ...b.keys, 'office-past': 2 },
+        opened: add(b.opened, ['past-timeline']),
+        seenLesson: add(b.seenLesson, ['office-past', 'past-time']),
+      }
+    },
+  },
+  {
+    id: 'past-cinema-done',
+    label: 'Pasado · Cine 1996: terminado (final del pasado)',
+    apply: (s) => {
+      const b = PRESETS[27].apply(s)
+      return {
+        ...b,
+        screen: 'epilogue',
+        defeated: add(b.defeated, ['office-past-boss']),
+        recovered: add(b.recovered, ['past-time']) as GameState['recovered'],
+        outfits: add(b.outfits, ['boina']),
       }
     },
   },

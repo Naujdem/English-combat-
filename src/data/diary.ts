@@ -356,6 +356,31 @@ export const DIARY: DiaryChapter[] = [
     ],
     versions: [
       {
+        id: 'office-past',
+        unlock: 'office-past-epilogue',
+        tense: 'p',
+        tab: 'Pasado',
+        title: 'Dear diary (1996)',
+        frame: 'Lo escribes esa noche. Es la última página del pasado: fíjate en cuándo pasó cada cosa.',
+        lines: [
+          { en: 'Dear diary, [last night]p we [went]p to an old cinema. Thirty years [ago]p, the office [was]p a cinema!', es: 'Querido diario, anoche fuimos a un cine viejo. ¡Hace treinta años, la oficina era un cine!' },
+          { en: 'Mr. Clark [opened]p the cinema [in 1980]p. His daughter Diana [sold]p the tickets.', es: 'El señor Clark abrió el cine en 1980. Su hija Diana vendía las boletas.' },
+          { en: 'Ray [said]p: "I fixed it ago two days." I [helped]p him: "two days ago"!', es: 'Ray dijo: "I fixed it ago two days". Lo ayudé: ¡"two days ago"!' },
+          { en: 'Grace [sold]p two hundred bags of popcorn [last week]p.', es: 'Grace vendió doscientas bolsas de palomitas la semana pasada.' },
+          { en: 'Gary and Kevin [came]p from the present. The light [took]p them home.', es: 'Gary y Kevin vinieron del presente. La luz se los llevó a casa.' },
+          { en: 'Diana is Ms. Clark! Ray is Mr. Stone! They [didn\'t forget]p their cinema.', es: '¡Diana es la señora Clark! ¡Ray es el señor Stone! No olvidaron su cine.' },
+          { en: 'The stranger [watched]p "Two Best Friends" three times. He [said]p: "I know how it ends."', es: 'El desconocido vio "Two Best Friends" tres veces. Dijo: "Sé cómo termina".' },
+          { en: 'He [left]p a ticket on the seat: "Be brave." Leo [didn\'t see]p him. He never [sees]n him.', es: 'Dejó una boleta en la butaca: "Be brave". Leo no lo vio. Nunca lo ve.' },
+          { en: 'Now I have five fragments of my past voice. Tomorrow... the future?', es: 'Ahora tengo cinco fragmentos de mi voz del pasado. Mañana... ¿el futuro?' },
+        ],
+        questions: [
+          { q: 'When did Mr. Clark open the cinema?', options: ['In 1980.', 'Last week.', 'Two days ago.'], answer: 0, tip: 'El diario dice: "Mr. Clark opened the cinema in 1980".' },
+          { q: 'What was the office thirty years ago?', options: ['A farm.', 'A cinema.', 'A school.'], answer: 1, tip: 'El diario dice: "Thirty years ago, the office was a cinema!".' },
+          { q: 'Which sentence is correct?', options: ['I fixed it ago two days.', 'I fixed it two days ago.', 'I fixed it before two days.'], answer: 1, tip: 'Ago va después del tiempo.' },
+          { q: 'How many times did the stranger watch the film?', options: ['One time.', 'Two times.', 'Three times.'], answer: 2, tip: 'El diario dice: "three times".' },
+        ],
+      },
+      {
         id: 'office-present',
         tense: 'n',
         tab: 'Presente',

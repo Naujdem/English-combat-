@@ -261,4 +261,14 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'Did you like the farm? — Yes, I ___.', board: ['Yes, I did.', "No, I didn't."], choice: { options: ['did', 'liked', 'do'], answer: 0, tip: 'Yes, I did.' } },
     { who: 'leo', text: 'One more thing: with WAS and WERE we never use DID. Were you there? Was it cold? Easy!', es: 'Una cosa más: con was y were nunca se usa did.', board: ['Were you there? ✓', 'Did you were there? ✗'] },
   ],
+
+  'past-time': [
+    { who: 'leo', text: 'To say WHEN something happened: yesterday, last night, last week, last year. No THE and no IN before them!', es: 'Para decir cuándo pasó algo: yesterday, last night, last week, last year. ¡Sin "the" y sin "in" antes!', board: ['yesterday · last night', 'last week · last year'], table: { head: ['Español', 'Inglés'], rows: [['ayer', '{yesterday}'], ['anoche', '{last night} (no yesterday night)'], ['la semana pasada', '{last week} (no the last week)'], ['el año pasado', '{last year}']] } },
+    { who: 'board', text: '___ night I watched a film.', board: ['yesterday · last night', 'last week · last year'], choice: { options: ['Last', 'Yesterday', 'The last'], answer: 0, tip: 'Anoche = last night.' } },
+    { who: 'leo', text: 'HACE in Spanish is AGO in English. And AGO goes at the END: two days ago, an hour ago, thirty years ago.', es: '"Hace" en español es "ago" en inglés, ¡y va al final!', board: ['tiempo + ago', 'two days ago'], table: { head: ['Español', 'Inglés'], rows: [['hace dos días', 'two days {ago}'], ['hace una hora', 'an hour {ago}'], ['hace treinta años', 'thirty years {ago}']] } },
+    { who: 'board', text: 'I saw that film two days ___.', board: ['tiempo + ago', 'two days ago'], choice: { options: ['ago', 'before', 'last'], answer: 0, tip: 'Two days ago.' } },
+    { who: 'leo', text: 'With dates: IN for years, ON for days, AT for hours. In 1980, on Monday, at six o\'clock.', es: 'Con fechas: in para años, on para días, at para horas.', board: ['in 1980 · on Monday', "at six o'clock"], table: { head: ['Palabra', 'Con', 'Ejemplo'], rows: [['{in}', 'años, meses', '{in} 1980 · {in} June'], ['{on}', 'días', '{on} Monday'], ['{at}', 'horas', "{at} six o'clock"]] } },
+    { who: 'board', text: 'Mr. Clark opened the cinema ___ 1980.', board: ['in 1980 · on Monday', "at six o'clock"], choice: { options: ['in', 'on', 'at'], answer: 0, tip: 'Con años: in.' } },
+    { who: 'leo', text: 'To ask: WHEN DID you...? When did you see it? Two days ago! Now you can tell any story from the past.', es: 'Para preguntar: When did you...? Ahora puedes contar cualquier historia del pasado.', board: ['When did you see it?', 'Two days ago!'] },
+  ],
 }

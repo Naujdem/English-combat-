@@ -235,6 +235,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
       { text: "A man in a dark coat sat by the pond last night. He didn't say a word. Strange, no?", es: 'Anoche un hombre con abrigo oscuro se sentó junto al estanque. No dijo ni una palabra. Raro, ¿no?' },
     ],
   },
+  // ── El viejo cine en 1996 ──
+  diana: {
+    name: 'Diana',
+    // La señora Clark de joven, en la taquilla del cine de su papá: las mismas gafas y el mismo pelo
+    look: { shirt: '#8a2830', hair: '#2b1d14', skin: '#f1c27d', gender: 'female', accessory: 'glasses' },
+    doneLine: { text: 'One day I want to be a director... of a big company! Ha ha. Enjoy the film!', es: 'Un día quiero ser directora... ¡de una gran empresa! Ja, ja. ¡Disfruta la película!' },
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

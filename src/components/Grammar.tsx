@@ -202,6 +202,9 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (question) return { title: 'Pregunta en pasado: Did + sujeto + verbo simple (sin -ed):', parts: [V('Did'), '+', S('Sujeto'), '+', V('verbo simple'), '+', R('...?')] }
       if (negative) return { title: "Negativo en pasado: didn't + verbo simple:", parts: [S('Sujeto'), '+', V("didn't"), '+', V('verbo simple'), '+', R('...')] }
       return { title: "Did ya lleva el pasado: el verbo va simple. Yes, I did · No, I didn't:", parts: [V('Did'), '+', S('Sujeto'), '+', V('verbo simple'), '+', R('...?')] }
+    case 'past-time':
+      if (question) return { title: 'Para preguntar cuándo: When + did + sujeto + verbo?', parts: [K('When'), '+', V('did'), '+', S('Sujeto'), '+', V('verbo'), '+', R('...?')] }
+      return { title: 'Cuándo pasó: yesterday · last week · tiempo + ago · in 1980:', parts: [S('Sujeto'), '+', V('pasado'), '+', R('...'), '+', K('two days ago / last week')] }
     case 'time':
       if (question) return { title: 'Para preguntar la hora:', parts: [K('What time'), '+', V('is'), '+', S('it?')] }
       return { title: 'at + hora · on + día · in + mes, estación o parte del día:', parts: [R('...'), '+', K('at / on / in'), '+', R('hora / día / mes')] }

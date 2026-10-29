@@ -41,6 +41,7 @@ import { Attendance } from '../components/Attendance'
 import { SoundSacks } from '../components/SoundSacks'
 import { VerbBook } from '../components/VerbBook'
 import { Mystery } from '../components/Mystery'
+import { Timeline } from '../components/Timeline'
 import { voiceOf, type Voice } from '../game/speech'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
@@ -943,6 +944,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'planner') return <Planner onClose={finish} />
             if (t.activity === 'attendance') return <Attendance onClose={finish} />
             if (t.activity === 'sounds') return <SoundSacks onClose={finish} />
+            if (t.activity === 'timeline') return <Timeline onClose={finish} />
             if (t.activity === 'mystery') return <Mystery onClose={finish} />
             if (t.activity === 'verbs') return <VerbBook state={state} update={update} onClose={finish} />
             if (t.activity === 'vocab' && t.vocab)

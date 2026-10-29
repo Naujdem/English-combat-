@@ -16,8 +16,8 @@ import { AnimalSprite } from '../components/Animals'
 
 const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
-type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya'
-type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya'
+type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana'
+type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana'
 type Step = {
   who: Who
   text: string
@@ -47,6 +47,7 @@ function buildSteps(s: GameState, sceneId: string): Step[] {
   if (sceneId === 'city-past') return cityPastSteps(s)
   if (sceneId === 'barrio-past') return barrioPastSteps(s)
   if (sceneId === 'farm-past') return farmPastSteps(s)
+  if (sceneId === 'office-past') return cinemaPastSteps(s)
   const name = s.hero.name
   const it = s.interest
   const iname = it.name
@@ -678,6 +679,59 @@ function farmPastSteps(s: GameState): Step[] {
   ]
 }
 
+/**
+ * Final del viejo cine y del pasado de A1: Diana es la señora Clark de joven y el cine será su oficina.
+ * Con los cinco fragmentos del pasado, el reloj muestra el futuro. El desconocido ve "Two Best Friends".
+ */
+function cinemaPastSteps(s: GameState): Step[] {
+  const iname = s.interest.name
+  const cast: Cast[] = ['leo', 'interest']
+  const clarks: Cast[] = ['clarkdad', 'diana', 'leo']
+  return [
+    { who: 'narrator', text: 'El señor Clark sale de su oficina. Diana corre hacia él con un rollo de boletas.', cast: clarks },
+    { who: 'clarkdad', text: 'Diana, my girl... Two nights ago I picked up that shiny thing, and I changed. I am sorry.', es: 'Diana, hija... Hace dos noches recogí esa cosa brillante y cambié. Lo siento.', cast: clarks },
+    { who: 'diana', text: "It's OK, Dad. Look, the cinema is full tonight! These kids helped Ray and Grace.", es: 'No pasa nada, papá. ¡Mira, el cine está lleno esta noche! Estos chicos ayudaron a Ray y a Grace.', cast: clarks },
+    { who: 'clarkdad', text: 'Diana wants to be a director one day. Of a big company! Ha ha. Can you believe it?', es: 'Diana quiere ser directora algún día. ¡De una gran empresa! Ja, ja. ¿Lo pueden creer?', cast: clarks },
+    { who: 'leo', text: 'Diana... CLARK? Ms. Clark, the director of Green Valley Company? And this cinema is her office in our time!', es: '¿Diana... CLARK? ¿La señora Clark, la directora de Green Valley Company? ¡Y este cine es su oficina en nuestro tiempo!', cast },
+    {
+      who: 'hero',
+      text: '¿Qué le dices a Leo?',
+      cast,
+      choice: {
+        options: ['Yes! Thirty years ago, her office was a cinema!', 'Yes! Ago thirty years, her office was a cinema!', 'Yes! Thirty years ago, her office is a cinema!'],
+        answer: 0,
+        tip: 'Ago va después del tiempo, y es pasado: was.',
+      },
+    },
+    { who: 'interest', text: 'And Ray is Mr. Stone! And Grace works with her! They stayed together for thirty years.', es: '¡Y Ray es el señor Stone! ¡Y Grace trabaja con ella! Siguieron juntos treinta años.', cast },
+    { who: 'narrator', text: 'Sientes algo cálido en la garganta: el último fragmento del pasado vuelve a ti. Ahora puedes contar cualquier historia: qué pasó, cuándo pasó y quién lo hizo.', cast },
+    { who: 'narrator', text: 'Las luces se apagan. En la pantalla empieza una película vieja, "Two Best Friends": dos niños caminan juntos por una calle.', cast },
+    { who: 'narrator', text: 'Leo sale a comprar palomitas. En la última fila, alguien con abrigo oscuro está sentado solo. Habla muy bajito.', cast: ['interest'] },
+    { who: 'villain', text: 'Two best friends... a happy story. I watched it three times. But I know how it ends.', es: 'Dos mejores amigos... una historia feliz. La vi tres veces. Pero sé cómo termina.', villain: true, cast: ['interest'] },
+    { who: 'villain', text: 'You can tell the past now. But the clock can go further... Did you ever think about the future? I did. Every day.', es: 'Ya puedes contar el pasado. Pero el reloj puede ir más lejos... ¿Alguna vez pensaste en el futuro? Yo sí. Todos los días.', villain: true, cast: ['interest'] },
+    { who: 'narrator', text: `Cuando se encienden las luces, la última fila está vacía. En la butaca hay una boleta con letra temblorosa: "Be brave."`, cast },
+    {
+      who: 'hero',
+      text: `¿Qué le cuentas a ${iname}?`,
+      cast,
+      choice: {
+        options: ['He was here! He watched the film with us!', 'He was here! He watched the film ago one hour!', 'He is here yesterday!'],
+        answer: 0,
+        tip: 'Pasado: was, watched. Y "ago" siempre va después del tiempo.',
+      },
+    },
+    { who: 'leo', text: 'Popcorn for everybody! ... What? He was here AGAIN? When?', es: '¡Palomitas para todos! ... ¿Qué? ¿Estuvo aquí OTRA VEZ? ¿Cuándo?', cast },
+    { who: 'interest', text: 'Five minutes ago! When you went for popcorn.', es: '¡Hace cinco minutos! Cuando fuiste por palomitas.', cast },
+    { who: 'leo', text: 'Every time I go away, he comes... Strange. Very strange.', es: 'Cada vez que me voy, él aparece... Raro. Muy raro.', cast },
+    { who: 'narrator', text: 'El reloj del tiempo vibra en tu mochila. En el cristal aparece una ciudad con edificios altos y luces azules: el futuro.', clock: true, cast },
+    {
+      who: 'narrator',
+      text: 'Fin del pasado de A1. Recuperaste los cinco fragmentos de voz del pasado: was / were, los verbos con -ed, los irregulares, did / didn\'t y cuándo pasó. Tu diario de la oficina tiene una página nueva de 1996. El futuro te espera...',
+      cast,
+    },
+  ]
+}
+
 export function Epilogue({ state, onDone }: { state: GameState; onDone: () => void }) {
   const city = state.sceneId === 'city'
   const barrio = state.sceneId === 'barrio'
@@ -687,6 +741,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
   const cityPast = state.sceneId === 'city-past'
   const barrioPast = state.sceneId === 'barrio-past'
   const farmPast = state.sceneId === 'farm-past'
+  const cinemaPast = state.sceneId === 'office-past'
   const steps = buildSteps(state, state.sceneId)
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
@@ -719,6 +774,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     martha: 'Mrs. Brown',
     billy: 'Bill',
     priya: 'Priya',
+    clarkdad: 'Mr. Clark',
+    diana: 'Diana',
   }
 
   const voices: Record<Who, Voice> = {
@@ -743,6 +800,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     martha: 'female',
     billy: 'male',
     priya: 'female',
+    clarkdad: 'male',
+    diana: 'female',
   }
 
   function next() {
@@ -757,8 +816,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 overflow-y-auto px-4 py-6">
-      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{farmPast ? 'Pasado · La granja de 1996' : barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
-      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : farmPast ? 'La granja con molino, 1996' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
+      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{cinemaPast ? 'Pasado · El viejo cine (final del pasado de A1)' : farmPast ? 'Pasado · La granja de 1996' : barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
+      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : cinemaPast ? 'La sala del viejo cine, 1996' : farmPast ? 'La granja con molino, 1996' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
         {s.home ? (
           <g>
             <rect width="320" height="200" fill="#f1d9c0" />
@@ -773,6 +832,19 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             <rect x="214" y="86" width="92" height="18" rx="6" fill="#c8664e" />
             <rect x="250" y="20" width="44" height="58" rx="2" fill="#e8eef2" stroke="#b8c4cc" strokeWidth="2" />
             <line x1="250" y1="40" x2="294" y2="40" stroke="#b8c4cc" strokeWidth="2" />
+          </g>
+        ) : cinemaPast ? (
+          <g>
+            <rect width="320" height="200" fill="#2b1d24" />
+            <rect x="30" y="14" width="260" height="96" fill="#f4efe4" />
+            <rect x="30" y="14" width="260" height="96" fill="#cfe6f2" opacity="0.6" />
+            <rect x="30" y="86" width="260" height="24" fill="#b8946a" opacity="0.7" />
+            <circle cx="140" cy="74" r="7" fill="#2b241c" opacity="0.6" />
+            <rect x="134" y="80" width="12" height="16" fill="#2b241c" opacity="0.6" />
+            <circle cx="170" cy="74" r="7" fill="#2b241c" opacity="0.6" />
+            <rect x="164" y="80" width="12" height="16" fill="#2b241c" opacity="0.6" />
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((k) => <rect key={k} x={8 + k * 35} y="126" width="28" height="14" rx="4" fill="#a8323a" />)}
+            <rect y="140" width="320" height="60" fill="#5a3a4a" />
           </g>
         ) : farmPast ? (
           <g>
@@ -943,6 +1015,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             : who === 'martha' ? ENEMIES['farm-past-boss'].look
             : who === 'billy' ? NPCS.bill.look
             : who === 'priya' ? ENEMIES['farm-past-m2'].look
+            : who === 'clarkdad' ? ENEMIES['office-past-boss'].look
+            : who === 'diana' ? NPCS.diana.look
             : interest.look
           return (
             <g key={who} transform={`translate(${spots[k] + 64} 128) scale(-2 2)`}>
@@ -962,7 +1036,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
       {s.clock && (
         <div className="anim-pop -mt-2 flex items-center justify-center gap-3">
           <TimeClock pieces={Math.max(1, state.relics)} size={84} />
-          <p className="text-sm text-paper/75">Reloj del tiempo: {Math.max(1, state.relics)} de {PRESENT_NODES.length} piezas</p>
+          <p className="text-sm text-paper/75">Reloj del tiempo: {Math.max(1, state.relics)} de {PRESENT_NODES.length} piezas{cinemaPast ? ' · 5 de 5 fragmentos de voz del pasado' : ''}</p>
         </div>
       )}
 

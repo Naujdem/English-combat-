@@ -290,6 +290,7 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   cuadros: { name: 'Camisa a cuadros de 1996', color: '#b5523b' },
   casco: { name: 'Overol de constructor (1996)', color: '#e0a526' },
   sombrero: { name: 'Camisa de granja (1996)', color: '#c9a83a' },
+  boina: { name: 'Chaqueta del cine (1996)', color: '#8a2830' },
 }
 
 SCHOOL.requirements = BOSS_REQUIREMENTS

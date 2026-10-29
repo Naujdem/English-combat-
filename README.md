@@ -176,6 +176,7 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - Green Street en 1996 (`src/data/barrioPast.ts`), en construcción. Verbos irregulares: los 25 de A1 están en `src/data/irregular.ts`. El libro de verbos de Joe (`src/components/VerbBook.tsx`) los guarda en las fichas y quedan en el Cuaderno ("Libro de verbos irregulares"). En las explicaciones, el pasado irregular va en morado y el regular en verde.
 - La granja de 1996 (`src/data/farmPast.ts`): *did / didn't*. El misterio del molino (`src/components/Mystery.tsx`): preguntar con *Did you...?* a los sospechosos.
 - Esbirros del presente en el pasado (`echo: true` en `EnemyDef`): copias de esbirros ya vencidos (Danny, Daisy) que la luz del reloj trajo. Son opcionales, repasan su tema, dan un escudo y al vencerlos vuelven a su tiempo (desaparecen del mapa).
+- El viejo cine de 1996 (`src/data/cinemaPast.ts`, escena `office-past`): expresiones de tiempo en pasado. La historia del cine (`src/components/Timeline.tsx`): ordenar momentos y leer un calendario. Con su jefe termina A1 en pasado (5 fragmentos de voz).
 
 ## Explicaciones y repaso de cierre de A1
 

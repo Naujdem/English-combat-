@@ -658,6 +658,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Con was / were no se usa did: Were you there? Was it cold?',
     ],
   },
+  'past-time': {
+    name: 'Cuándo pasó (yesterday, last week, ago)',
+    level: 'A1',
+    lesson: [
+      'yesterday (ayer) · last night (anoche) · last week / month / year (la semana / el mes / el año pasado).',
+      'Tiempo + ago (hace...): two days ago · an hour ago · thirty years ago.',
+      'in 1980 (años) · on Monday (días) · at six (horas). Sin "the" ni "in" antes de last o yesterday.',
+      'Para preguntar: When did you...? → Two days ago.',
+    ],
+  },
   'past-simple': {
     name: 'Pasado simple',
     level: 'A2',

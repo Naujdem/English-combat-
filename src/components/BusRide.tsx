@@ -20,7 +20,7 @@ export type BusTrip = { place: string; placeEs: string; price: string; priceNum:
   /** Viaje con el reloj del tiempo (otro dibujo) */
   art?: 'clock' | 'walk'
   /** Para art 'walk': lo que se ve al fondo */
-  scenery?: 'market' | 'build' | 'windmill'
+  scenery?: 'market' | 'build' | 'windmill' | 'cinema'
   /** Texto del botón final */
   end?: string
 }
@@ -210,6 +210,33 @@ export const WALK_TO_FARM_1996: BusTrip = {
   ],
 }
 
+/** De la granja al viejo cine (donde hoy está la oficina), por la carretera */
+export const WALK_TO_CINEMA_1996: BusTrip = {
+  place: 'the cinema',
+  placeEs: 'el viejo cine',
+  price: '',
+  priceNum: '',
+  wrongPrices: ['', ''],
+  arrival: { text: '', es: '' },
+  sign: 'CINEMA',
+  three: true,
+  art: 'walk',
+  scenery: 'cinema',
+  end: 'Entrar al cine',
+  steps: [
+    { who: 'narrator', text: 'Caminan por la carretera hasta el lugar de la oficina. Pero en 1996 no hay oficina: hay un cine con luces amarillas.', es: '' },
+    { who: 'leo', text: 'A cinema! Here, thirty years ago? This is where Green Valley Company is now!', es: '¡Un cine! ¿Aquí, hace treinta años? ¡Aquí es donde ahora está Green Valley Company!' },
+    {
+      who: 'leo',
+      text: 'When did we see Danny and Daisy?',
+      es: '¿Cuándo vimos a Danny y a Daisy?',
+      choice: { options: ['We saw them yesterday, on the farm.', 'We saw them ago one day, on the farm.', 'We saw them in yesterday, on the farm.'], answer: 0, tip: 'Yesterday va solo (sin "in"), y "hace un día" sería "a day ago".' },
+    },
+    { who: 'leo', text: 'Yesterday, two days ago, last week... In this place we talk about WHEN things happened.', es: 'Ayer, hace dos días, la semana pasada... En este lugar se habla de CUÁNDO pasaron las cosas.' },
+    { who: 'narrator', text: 'En la puerta hay un afiche viejo: "Two Best Friends — Tonight at 7". Alguien lo miró tanto que tiene una huella de dedo justo encima del título.', es: '' },
+  ],
+}
+
 export const BUS_TO_BARRIO: BusTrip = {
   place: 'Green Street',
   placeEs: 'Green Street, el barrio de Leo',
@@ -303,7 +330,15 @@ export function BusRide({ trip, hero, friend, friendName = '', onDone }: { trip:
               <rect width="320" height="170" fill="#cfe6f2" />
               <path d="M0 112 Q90 92 170 104 T320 98 V130 H0 Z" fill="#a9c47e" />
               <rect x="196" y="58" width="48" height="56" fill="#a4553a" />
-              {trip.scenery === 'windmill' ? (
+              {trip.scenery === 'cinema' ? (
+                <g>
+                  <rect x="240" y="56" width="70" height="58" fill="#8a2830" />
+                  <rect x="236" y="50" width="78" height="14" rx="2" fill="#e0a526" />
+                  <text x="275" y="60.5" textAnchor="middle" fontSize="8" fontWeight="700" fill="#2b241c" fontFamily="Fredoka, Nunito, system-ui, sans-serif">CINEMA</text>
+                  {[0, 1, 2, 3, 4, 5].map((k) => <circle key={k} cx={242 + k * 13} cy="66" r="2" fill="#fff6d6" />)}
+                  <rect x="262" y="88" width="26" height="26" fill="#2b1d24" />
+                </g>
+              ) : trip.scenery === 'windmill' ? (
                 <g>
                   <path d="M258 114 L262 70 H274 L278 114 Z" fill="#c98b4a" stroke="#8b5a2b" />
                   <g transform="rotate(20 268 70)">

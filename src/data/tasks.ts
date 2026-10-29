@@ -17,7 +17,7 @@ export type NpcTask = {
   shield?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline'
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
   vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
@@ -429,6 +429,20 @@ NPC_TASKS.bill = {
     es: '¡Los ratones se comieron la cuerda! ¿Viste sus dientecitos? Ja, ja. ¡Gracias, detective!',
     sub: 'Misterio resuelto. Ahora la señora Brown ya no puede decir que tú paraste el molino.',
     say: 'The mice ate the rope! Thank you, detective!',
+  },
+}
+
+// ── El viejo cine en 1996 ──
+NPC_TASKS.diana = {
+  done: 'past-timeline',
+  lesson: 'past-time',
+  activity: 'timeline',
+  steps: [],
+  reward: {
+    text: 'Diana: "In 1980, ten years ago, last week, yesterday... You know the story of our cinema!"',
+    es: 'En 1980, hace diez años, la semana pasada, ayer... ¡Conoces la historia de nuestro cine!',
+    sub: 'Diana te da una boleta. Ahora el señor Clark ya no puede decir que llegaste tarde sin boleta.',
+    say: 'You know the story of our cinema!',
   },
 }
 

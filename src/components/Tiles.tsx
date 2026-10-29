@@ -39,6 +39,9 @@ export const FLOOR: Record<Zone, string> = {
   'granero-viejo': '#d9bd85',
   'casa-vieja': '#e6d0a8',
   'campo-viejo': '#a9c47e',
+  'sala-cine': '#5a3a4a',
+  vestibulo: '#c9a77a',
+  'oficina-cine': '#d8c2a0',
 }
 
 const WALL = '#7a6a58'
@@ -91,6 +94,11 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   a: { en: 'sand', es: 'arena' },
   x: { en: 'cement mixer', es: 'mezcladora de cemento' },
   n: { en: 'windmill', es: 'molino de viento' },
+  v: { en: 'screen', es: 'pantalla' },
+  s: { en: 'seats', es: 'butacas' },
+  h: { en: 'poster', es: 'afiche' },
+  j: { en: 'popcorn machine', es: 'máquina de palomitas' },
+  l: { en: 'projector', es: 'proyector' },
 }
 
 export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: { c: string; x: number; y: number; floor: string; doorOpen: boolean; party?: boolean; still?: boolean }) {
@@ -568,6 +576,55 @@ export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: 
             ))}
           </g>
           <circle cx={X + 16} cy={Y + 10} r="2" fill="#5a3a1a" />
+        </g>
+      )
+    case 'v':
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill="#2b1d24" />
+          <rect x={X} y={Y + 6} width={T} height={T - 10} fill="#f4efe4" />
+          <rect x={X} y={Y + 6} width={T} height={2} fill="#d9d2c4" />
+        </g>
+      )
+    case 's':
+      return (
+        <g>
+          {base}
+          <rect x={X + 3} y={Y + 6} width={26} height={12} rx="4" fill="#a8323a" />
+          <rect x={X + 3} y={Y + 16} width={26} height={8} rx="2" fill="#8a2830" />
+          <line x1={X + 16} y1={Y + 6} x2={X + 16} y2={Y + 24} stroke="#5a1a20" strokeWidth="1.5" />
+        </g>
+      )
+    case 'h':
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill="#7a6a58" />
+          <rect x={X} y={Y} width={T} height={6} fill="#8d7c68" />
+          <rect x={X + 6} y={Y + 7} width={20} height={22} fill={['#d64545', '#3b6fb6', '#e0a526'][(x + y) % 3]} stroke="#f4efe4" strokeWidth="1.5" />
+          <circle cx={X + 16} cy={Y + 15} r="4" fill="#f4efe4" opacity="0.8" />
+          <rect x={X + 9} y={Y + 22} width={14} height={3} fill="#f4efe4" opacity="0.8" />
+        </g>
+      )
+    case 'j':
+      return (
+        <g>
+          {base}
+          <rect x={X + 7} y={Y + 4} width={18} height={18} rx="2" fill="#d64545" />
+          <rect x={X + 9} y={Y + 6} width={14} height={12} fill="#fbe9a8" />
+          {[0, 1, 2, 3, 4].map((k) => <circle key={k} cx={X + 11 + (k % 3) * 5} cy={Y + 10 + Math.floor(k / 3) * 4} r="2" fill="#fff6d6" />)}
+          <rect x={X + 9} y={Y + 22} width={14} height={8} fill="#8b3a2b" />
+        </g>
+      )
+    case 'l':
+      return (
+        <g>
+          {base}
+          <rect x={X + 6} y={Y + 12} width={20} height={12} rx="2" fill="#3a3a3a" />
+          <circle cx={X + 12} cy={Y + 9} r="5" fill="none" stroke="#3a3a3a" strokeWidth="2.5" />
+          <circle cx={X + 22} cy={Y + 9} r="5" fill="none" stroke="#3a3a3a" strokeWidth="2.5" />
+          <rect x={X + 1} y={Y + 15} width={6} height={6} fill="#5a5a5a" />
+          <path d={`M${X + 1} ${Y + 18} L${X - 10} ${Y + 10} L${X - 10} ${Y + 26} Z`} fill="#fff6d6" opacity="0.35" />
+          <rect x={X + 10} y={Y + 24} width={12} height={6} fill="#5a5a5a" />
         </g>
       )
     default:
