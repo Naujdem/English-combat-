@@ -42,7 +42,7 @@ export function voiceOf(look?: { gender?: string } | null): Voice {
 
 /** Limpia el texto para leerlo: quita acotaciones entre paréntesis y cambia ___ por una pausa */
 function clean(text: string) {
-  return text.replace(/\([^)]*\)/g, '').replace(/_{2,}/g, ' ... ').trim()
+  return text.replace(/\([^)]*\)/g, '').replace(/_{2,}/g, ' ... ').replace(/\s*→\s*/g, ', ').trim()
 }
 
 export function speak(text: string, slow = false, who: Voice = 'neutral') {

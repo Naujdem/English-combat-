@@ -152,6 +152,11 @@ export type LessonStep = {
   choice?: { options: string[]; answer: number; tip: string }
   /** Tema de la lección, para mostrar la estructura de la frase con colores */
   topic?: TopicId
+  /**
+   * Tabla de la explicación. En cada celda: <sujeto> en azul, [verbo] en verde, {clave} en morado.
+   * arrow: dibuja una flecha entre la primera y la segunda columna (child → children).
+   */
+  table?: { head?: string[]; rows: string[][]; arrow?: boolean }
 }
 
 /**

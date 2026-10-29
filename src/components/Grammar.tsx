@@ -236,3 +236,59 @@ export function tileStyle(words: string[], index: number, topic?: TopicId) {
   const r = sentenceRoles(words, topic).at(index) ?? 'rest'
   return r === 'rest' ? undefined : { background: ROLE_STYLE[r].bg, color: ROLE_STYLE[r].fg, borderColor: ROLE_STYLE[r].bg }
 }
+
+/** Una celda de tabla con colores: <sujeto> azul, [verbo] verde, {clave} morado */
+export function MarkedText({ text }: { text: string }) {
+  const parts = text.split(/(<[^>]+>|\[[^\]]+\]|\{[^}]+\})/g).filter(Boolean)
+  return (
+    <>
+      {parts.map((p, i) => {
+        const role: Role | null = p.startsWith('<') ? 'subj' : p.startsWith('[') ? 'verb' : p.startsWith('{') ? 'key' : null
+        if (!role) return <span key={i}>{p}</span>
+        return (
+          <span key={i} className="font-semibold" style={{ color: role === 'subj' ? '#5aa7f0' : role === 'verb' ? '#4cc47a' : '#b994ea' }}>
+            {p.slice(1, -1)}
+          </span>
+        )
+      })}
+    </>
+  )
+}
+
+/** Quita las marcas de color (para leer en voz alta) */
+export function unmark(text: string) {
+  return text.replace(/[<>[\]{}]/g, '')
+}
+
+/** Tabla de explicación: cada fila en su línea, con colores (en vez de una lista con comas) */
+export function GrammarTable({ table }: { table: { head?: string[]; rows: string[][]; arrow?: boolean } }) {
+  const cols = Math.max(...table.rows.map((r) => r.length))
+  const template = table.arrow ? `auto 1.2rem ${'auto '.repeat(cols - 1)}`.trim() : `repeat(${cols}, auto)`
+  return (
+    <div className="anim-fade-in mt-3 overflow-x-auto rounded-xl border-2 border-line" data-testid="grammar-table">
+      <div className="grid w-full" style={{ gridTemplateColumns: template }}>
+        {table.head &&
+          table.head.map((h, k) => (
+            <div key={`h${k}`} className="contents">
+              <div className="border-b border-line bg-black/20 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-paper/55">{h}</div>
+              {table.arrow && k === 0 && <div className="border-b border-line bg-black/20" />}
+            </div>
+          ))}
+        {table.rows.map((r, i) => (
+          <div key={i} className="contents">
+            {r.map((c, k) => (
+              <div key={k} className="contents">
+                <div className={`px-3 py-1.5 font-display text-[17px] leading-snug ${i < table.rows.length - 1 ? 'border-b border-line/60' : ''}`}>
+                  <MarkedText text={c} />
+                </div>
+                {table.arrow && k === 0 && (
+                  <div className={`flex items-center justify-center text-paper/45 ${i < table.rows.length - 1 ? 'border-b border-line/60' : ''}`}>→</div>
+                )}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}

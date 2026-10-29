@@ -6,7 +6,7 @@ import { heroLook } from '../game/helpers'
 import { FRIENDS } from '../data/friends'
 import { SpeakButton } from './SpeakButton'
 import { Tappable } from './Words'
-import { GrammarPattern, RoleSentence } from './Grammar'
+import { GrammarPattern, GrammarTable, RoleSentence } from './Grammar'
 
 export const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
@@ -107,6 +107,7 @@ export function Lesson({
           {s.who === 'leo' ? <Tappable text={text} /> : text}
         </p>
         {!hideEs && s.es && <p className="mt-1 text-sm text-paper/60">{s.es}</p>}
+        {s.table && <GrammarTable key={`t${i}`} table={s.table} />}
 
         {waiting && (
           <div className={`mt-3 grid gap-2 ${s.who === 'board' ? 'grid-cols-3' : ''}`}>
