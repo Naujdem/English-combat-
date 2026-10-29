@@ -16,15 +16,15 @@ import { sfx } from '../game/sfx'
 import { SpriteBody } from '../components/Sprite'
 import { Bar, btnGhost, btnPrimary, Hearts, Panel } from '../components/ui'
 import { TimeClock } from '../components/TimeClock'
-import { WORLD } from '../data/world'
+import { PRESENT_NODES } from '../data/world'
 import { useTeacher } from '../game/teacher'
 import { AnimalSprite } from '../components/Animals'
 
 
 function Backdrop({ zone }: { zone: Zone }) {
   const wall =
-    zone === 'recepcion' || zone === 'oficina' ? '#e8ecf0' : zone === 'reuniones' ? '#ece6f4' : zone === 'direccion' ? '#f1e6d2' : zone === 'patio' || zone === 'calle' || zone === 'parque' || zone === 'campo' || zone === 'corral' ? '#bfe3f5' : zone === 'granero' ? '#b5523b' : zone === 'casa-granja' ? '#efd9b8' : zone === 'casa-leo' ? '#f3e2c4' : zone === 'casa-maya' ? '#dde6f4' : zone === 'casa' ? '#f1d9c0' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : zone === 'tienda' ? '#f1e6f4' : zone === 'turismo' ? '#dfeaf3' : '#efe5d3'
-  const ground = zone === 'recepcion' || zone === 'oficina' ? '#9aa6b2' : zone === 'reuniones' ? '#a99cc0' : zone === 'direccion' ? '#8b5a2b' : zone === 'campo' ? '#9cc46e' : zone === 'corral' ? '#c9a46a' : zone === 'granero' ? '#dcc08a' : zone === 'casa-granja' ? '#b98c5a' : zone === 'patio' || zone === 'parque' ? '#8fbf6a' : zone === 'casa-leo' || zone === 'casa' ? '#b98c5a' : zone === 'casa-maya' ? '#a7b4c8' : zone === 'calle' ? '#b9b4ab' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : zone === 'tienda' ? '#cdb8d6' : zone === 'turismo' ? '#9fb3c6' : '#b98c5a'
+    zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#a4553a' : zone === 'patio-viejo' ? '#d9c9a0' : zone === 'recepcion' || zone === 'oficina' ? '#e8ecf0' : zone === 'reuniones' ? '#ece6f4' : zone === 'direccion' ? '#f1e6d2' : zone === 'patio' || zone === 'calle' || zone === 'parque' || zone === 'campo' || zone === 'corral' ? '#bfe3f5' : zone === 'granero' ? '#b5523b' : zone === 'casa-granja' ? '#efd9b8' : zone === 'casa-leo' ? '#f3e2c4' : zone === 'casa-maya' ? '#dde6f4' : zone === 'casa' ? '#f1d9c0' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : zone === 'tienda' ? '#f1e6f4' : zone === 'turismo' ? '#dfeaf3' : '#efe5d3'
+  const ground = zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#8b5a2b' : zone === 'patio-viejo' ? '#c2a878' : zone === 'recepcion' || zone === 'oficina' ? '#9aa6b2' : zone === 'reuniones' ? '#a99cc0' : zone === 'direccion' ? '#8b5a2b' : zone === 'campo' ? '#9cc46e' : zone === 'corral' ? '#c9a46a' : zone === 'granero' ? '#dcc08a' : zone === 'casa-granja' ? '#b98c5a' : zone === 'patio' || zone === 'parque' ? '#8fbf6a' : zone === 'casa-leo' || zone === 'casa' ? '#b98c5a' : zone === 'casa-maya' ? '#a7b4c8' : zone === 'calle' ? '#b9b4ab' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : zone === 'tienda' ? '#cdb8d6' : zone === 'turismo' ? '#9fb3c6' : '#b98c5a'
   return (
     <g>
       <rect width="360" height="150" fill={wall} />
@@ -126,6 +126,30 @@ function Backdrop({ zone }: { zone: Zone }) {
           <rect x="240" y="80" width="90" height="62" rx="4" fill="#8b5a2b" />
           <rect x="250" y="66" width="20" height="16" rx="2" fill="#f4efe4" />
           <rect x="280" y="70" width="16" height="12" rx="2" fill="#e8c95a" />
+        </>
+      )}
+      {(zone === 'aula-vieja' || zone === 'direccion-vieja') && (
+        <>
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].map((r) => (
+            <line key={r} x1="0" y1={r * 9} x2="360" y2={r * 9} stroke="#7d3f2a" strokeWidth="1.2" />
+          ))}
+          <rect x="110" y="20" width="140" height="66" rx="3" fill="#5a3a1a" />
+          <rect x="116" y="26" width="128" height="54" fill="#2b3a2e" />
+          <text x="180" y="50" textAnchor="middle" fontSize="12" fill="#f4efe4" fontFamily="Fredoka, Nunito, system-ui, sans-serif">I was · You were</text>
+          <text x="180" y="68" textAnchor="middle" fontSize="11" fill="#e0a526" fontFamily="Fredoka, Nunito, system-ui, sans-serif">1996</text>
+          <rect x="22" y="28" width="44" height="58" fill="#cfe4ec" stroke="#5a3a1a" strokeWidth="4" />
+          <rect x="294" y="28" width="44" height="58" fill="#cfe4ec" stroke="#5a3a1a" strokeWidth="4" />
+        </>
+      )}
+      {zone === 'patio-viejo' && (
+        <>
+          <rect x="0" y="40" width="200" height="110" fill="#a4553a" />
+          <polygon points="0,42 100,8 200,42" fill="#6b3a2a" />
+          <rect x="80" y="90" width="36" height="60" fill="#5a3a1a" />
+          <rect x="250" y="70" width="6" height="80" fill="#6b4423" />
+          <rect x="290" y="70" width="6" height="80" fill="#6b4423" />
+          <rect x="248" y="68" width="50" height="6" fill="#6b4423" />
+          <path d="M262 102 q11 -26 22 0 z" fill="#c9a83a" stroke="#8a6210" strokeWidth="1.5" />
         </>
       )}
       {(zone === 'recepcion' || zone === 'oficina') && (
@@ -401,7 +425,8 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       return {
         ...base,
         recovered: [...s.recovered, ...enemy.topics.filter((t) => !s.recovered.includes(t))],
-        relics: s.relics + 1,
+        // En otras épocas el jefe no da una pieza del reloj: devuelve un fragmento de voz
+        relics: SCENES[s.sceneId]?.era ? s.relics : s.relics + 1,
         outfits: s.outfits.includes(enemy.reward ?? 'capa') ? s.outfits : [...s.outfits, enemy.reward ?? 'capa'],
       }
     })
@@ -700,12 +725,18 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
           ) : (
             <div className="mt-1 grid gap-1.5 text-[16px]">
               <p>Recuperaste una parte de tu voz: <b>{listEs(enemy.topics.map((t) => TOPICS[t].name.toLowerCase()))}</b>.</p>
+              {SCENES[state.sceneId]?.era ? (
+                <div className="my-1 rounded-xl bg-panel-2 p-3 text-[15px]">
+                  <b className="text-gold">¡Fragmento de voz!</b> {enemy.person} tenía un fragmento de tu voz del pasado. Al tocarlo se corrompió; tú no, porque es tu voz. Ahora puedes hablar también del pasado.
+                </div>
+              ) : (
               <div className="my-1 flex items-center gap-3 rounded-xl bg-panel-2 p-2">
                 <TimeClock pieces={state.relics} size={72} highlight={state.relics - 1} />
                 <p className="text-[15px]">
-                  <b className="text-gold">¡Pieza del reloj!</b> Tienes {Math.min(state.relics, WORLD.length)} de {WORLD.length}. {enemy.person} tenía esta pieza, y al tocarla se corrompió. Tú no te corrompes: es tu voz.
+                  <b className="text-gold">¡Pieza del reloj!</b> Tienes {Math.min(state.relics, PRESENT_NODES.length)} de {PRESENT_NODES.length}. {enemy.person} tenía esta pieza, y al tocarla se corrompió. Tú no te corrompes: es tu voz.
                 </p>
               </div>
+              )}
               <p className="text-paper/75">También ganaste: {OUTFITS[enemy.reward ?? 'capa'].name}. Tus amigos tienen cosas nuevas que contarte.</p>
             </div>
           )}

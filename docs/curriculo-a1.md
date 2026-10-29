@@ -197,6 +197,18 @@ Los mismos cinco lugares, más cortos. Solo gramática A1:
 - **Pasado A1:** *was / were* (abre en la escuela vieja, con Grimm joven: *Mr. Grimm was a student here*), pasado simple de verbos regulares (*played, worked*) y de los irregulares más comunes (*went, had, saw, ate, got up*), y preguntas simples con *did* (*Did you go to school?*). Expresiones de tiempo: *yesterday, last week, ago*.
 - **Futuro A1:** *going to* para planes e intenciones (*I'm going to visit Leo tomorrow*), expresiones de tiempo (*tomorrow, next week, this weekend*).
 
+### Plan del pasado (1996, treinta años antes)
+
+Cada jefe del pasado devuelve un **fragmento de voz** en lugar de una pieza del reloj. Los verbos regulares se muestran en verde y los irregulares en morado.
+
+| Lugar | Gramática | Estado |
+|---|---|---|
+| Escuela de ladrillo | *was / were*, *there was / there were* | ✅ lista de asistencia de la señora Higgins, Greg (Grimm de niño), director Grimm |
+| Ciudad con carretera destapada | pasado regular *-ed* y juego de sonidos /t/ /d/ /ɪd/ | pendiente |
+| Green Street en construcción | unos 25 verbos irregulares, libro de verbos unido a las fichas, personajes que dicen *I goed* | pendiente |
+| Granja con molino | *did / didn't*, el error *Did you went* | pendiente |
+| Cine viejo (hoy la oficina) | *yesterday, last week, ago* | pendiente |
+
 Lo que no entra en A1 y queda para A2: pasado continuo, comparativos y *will*.
 
 ## 8. Diario al final de cada capítulo

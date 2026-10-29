@@ -166,6 +166,13 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - El teléfono de Grace: tarea con charla en `src/data/tasks.ts`.
 - Al vencer a la señora Clark el reloj queda con sus 5 piezas y termina A1 en presente.
 
+## El pasado: la escuela de 1996
+
+- Se abre al vencer a la señora Clark: el mapa muestra pestañas Presente / Pasado y el viaje `CLOCK_TO_1996` (`src/components/BusRide.tsx`).
+- Mapa y enemigos en `src/data/schoolPast.ts`, preguntas de *was / were* en `src/data/questions-past.ts`.
+- La lista de asistencia de la señora Higgins (`src/components/Attendance.tsx`). Greg resulta ser el señor Grimm de niño.
+- Los jefes del pasado dan fragmentos de voz (no cuentan como piezas del reloj).
+
 ## Explicaciones y repaso de cierre de A1
 
 - Las lecciones de Leo pueden llevar una tabla (`table` en `src/data/lessons.ts`): cada forma en su fila y con colores (`<sujeto>` azul, `[verbo]` verde, `{clave}` morado), en vez de listas con comas.

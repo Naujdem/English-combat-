@@ -6,6 +6,7 @@ import { CITY } from '../data/city'
 import { BARRIO } from '../data/barrio'
 import { FARM } from '../data/farm'
 import { OFFICE } from '../data/office'
+import { SCHOOL_PAST } from '../data/schoolPast'
 import { SCHOOL } from '../data/school'
 
 /**
@@ -71,7 +72,7 @@ function base(s: GameState): GameState {
   }
 }
 
-const SCENE_PREFIX = /^(school|city|barrio|board|party|farm|office)-/
+const SCENE_PREFIX = /^(school|city|barrio|board|party|farm|office|past)-/
 
 /** Estados preparados para revisar partes del juego */
 export const PRESETS: { id: string; label: string; apply: (s: GameState) => GameState }[] = [
@@ -256,6 +257,43 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
         relics: Math.max(5, b.relics),
         recovered: add(b.recovered, ['time', 'object-pronouns', 'could-you']) as GameState['recovered'],
         outfits: add(b.outfits, ['traje']),
+      }
+    },
+  },
+  {
+    id: 'past-school-start',
+    label: 'Pasado · Escuela 1996: recién llegado',
+    apply: (s) => {
+      const b = PRESETS[13].apply(s)
+      return { ...b, screen: 'explore', sceneId: 'school-past', pos: { ...SCHOOL_PAST.start }, opened: add(b.opened, ['office-epilogue', 'diary-open-office', 'bus-school-past']) }
+    },
+  },
+  {
+    id: 'school-past-boss',
+    label: 'Pasado · Escuela 1996: listo para el jefe',
+    apply: (s) => {
+      const b = PRESETS[14].apply(s)
+      return {
+        ...b,
+        pos: { x: 10, y: 9 },
+        defeated: add(b.defeated, ['school-past-m1']),
+        keys: { ...b.keys, 'school-past': 1 },
+        opened: add(b.opened, ['past-attendance']),
+        seenLesson: add(b.seenLesson, ['school-past', 'was-were']),
+      }
+    },
+  },
+  {
+    id: 'past-school-done',
+    label: 'Pasado · Escuela 1996: terminada',
+    apply: (s) => {
+      const b = PRESETS[15].apply(s)
+      return {
+        ...b,
+        screen: 'epilogue',
+        defeated: add(b.defeated, ['school-past-boss']),
+        recovered: add(b.recovered, ['was-were']) as GameState['recovered'],
+        outfits: add(b.outfits, ['chaleco']),
       }
     },
   },

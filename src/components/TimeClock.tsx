@@ -1,4 +1,4 @@
-import { WORLD } from '../data/world'
+import { PRESENT_NODES } from '../data/world'
 
 const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } as const
 
@@ -7,7 +7,7 @@ const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } 
  * La pieza k pertenece a WORLD[k]. Las que faltan se ven vacías y punteadas.
  */
 export function TimeClock({ pieces, size = 96, highlight }: { pieces: number; size?: number; highlight?: number }) {
-  const n = WORLD.length
+  const n = PRESENT_NODES.length
   const r = 40
   const wedge = (k: number) => {
     const a0 = (k / n) * Math.PI * 2 - Math.PI / 2
@@ -20,7 +20,7 @@ export function TimeClock({ pieces, size = 96, highlight }: { pieces: number; si
   return (
     <svg viewBox="0 0 100 100" width={size} height={size} role="img" aria-label={`Reloj del tiempo: ${Math.min(pieces, n)} de ${n} piezas`}>
       <circle cx="50" cy="50" r="47" fill="#1f1a14" stroke="#e0a526" strokeWidth="2.5" />
-      {WORLD.map((node, k) => {
+      {PRESENT_NODES.map((node, k) => {
         const owned = k < pieces
         return (
           <path
@@ -50,7 +50,7 @@ export function TimeClock({ pieces, size = 96, highlight }: { pieces: number; si
 export function ClockPieces({ pieces }: { pieces: number }) {
   return (
     <ul className="grid gap-1.5">
-      {WORLD.map((node, k) => (
+      {PRESENT_NODES.map((node, k) => (
         <li key={node.id} className="flex items-center gap-2 text-[15px]">
           <span className="h-3.5 w-3.5 rounded-sm border" style={{ background: k < pieces ? ERA_COLOR[node.era] : 'transparent', borderColor: '#8d7c68', borderStyle: k < pieces ? 'solid' : 'dashed' }} />
           <span className={k < pieces ? '' : 'text-paper/55'}>

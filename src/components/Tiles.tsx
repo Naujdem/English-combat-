@@ -26,6 +26,9 @@ export const FLOOR: Record<Zone, string> = {
   oficina: '#d9dfe6',
   reuniones: '#e3dcef',
   direccion: '#efe2cc',
+  'aula-vieja': '#c9a77a',
+  'patio-viejo': '#c2a878',
+  'direccion-vieja': '#b89a70',
 }
 
 const WALL = '#7a6a58'
@@ -68,6 +71,8 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   f: { en: 'fence', es: 'cerca' },
   w: { en: 'pond', es: 'estanque' },
   c: { en: 'corn', es: 'maíz' },
+  b: { en: 'brick wall', es: 'pared de ladrillo' },
+  I: { en: 'school bell', es: 'campana de la escuela' },
 }
 
 export function Tile({ c, x, y, floor, doorOpen, party = true }: { c: string; x: number; y: number; floor: string; doorOpen: boolean; party?: boolean }) {
@@ -419,6 +424,30 @@ export function Tile({ c, x, y, floor, doorOpen, party = true }: { c: string; x:
               <path d={`M${X + cx} ${Y + 20} q-5 -2 -6 -7`} fill="none" stroke="#5f9a3c" strokeWidth="1.5" />
             </g>
           ))}
+        </g>
+      )
+    case 'b':
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill="#a4553a" />
+          {[0, 1, 2, 3].map((r) => (
+            <g key={r}>
+              <line x1={X} y1={Y + r * 8} x2={X + T} y2={Y + r * 8} stroke="#7d3f2a" strokeWidth="1.2" />
+              <line x1={X + (r % 2 ? 8 : 16)} y1={Y + r * 8} x2={X + (r % 2 ? 8 : 16)} y2={Y + r * 8 + 8} stroke="#7d3f2a" strokeWidth="1.2" />
+              {r % 2 === 1 && <line x1={X + 24} y1={Y + r * 8} x2={X + 24} y2={Y + r * 8 + 8} stroke="#7d3f2a" strokeWidth="1.2" />}
+            </g>
+          ))}
+        </g>
+      )
+    case 'I':
+      return (
+        <g>
+          {base}
+          <rect x={X + 6} y={Y + 2} width={3} height={28} fill="#6b4423" />
+          <rect x={X + 23} y={Y + 2} width={3} height={28} fill="#6b4423" />
+          <rect x={X + 5} y={Y + 2} width={22} height={3} fill="#6b4423" />
+          <path d={`M${X + 10} ${Y + 18} q6 -14 12 0 z`} fill="#c9a83a" stroke="#8a6210" strokeWidth="1" />
+          <circle cx={X + 16} cy={Y + 19.5} r="1.6" fill="#8a6210" />
         </g>
       )
     default:

@@ -219,4 +219,14 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'leo', text: "And the answers: Sure! Of course! Or, if you can't: Sorry, I can't.", es: "Las respuestas: ¡Claro! ¡Por supuesto! O si no puedes: Lo siento, no puedo.", board: ['Sure! · Of course!', "Sorry, I can't."], table: {"head": ["Respuesta", "Significa"], "rows": [["{Sure!} · {Of course!}", "sí, claro"], ["{Sorry, I can't.}", "no, lo siento"]]} },
     { who: 'board', text: "Could you call me at nine? — ___, I can't. I'm busy.", board: ['Sure! · Of course!', "Sorry, I can't."], choice: { options: ['Sure', 'Sorry', 'Of course'], answer: 1, tip: "Para decir que no: Sorry, I can't." } },
   ],
+
+  'was-were': [
+    { who: 'leo', text: 'We are in the past! To talk about the past, TO BE changes: AM and IS become WAS. ARE becomes WERE.', es: '¡Estamos en el pasado! Para hablar del pasado, TO BE cambia: am e is se vuelven was. Are se vuelve were.', board: ['am / is → was', 'are → were'], table: { head: ['Presente', 'Pasado'], rows: [['<I> [am]', '<I> [was]'], ['<He> · <She> · <It> [is]', '<He> · <She> · <It> [was]'], ['<You> · <We> · <They> [are]', '<You> · <We> · <They> [were]']] } },
+    { who: 'board', text: 'The school ___ small.', board: ['am / is → was', 'are → were'], choice: { options: ['was', 'were', 'are'], answer: 0, tip: 'Una escuela (it): was.' } },
+    { who: 'board', text: 'The students ___ happy.', board: ['am / is → was', 'are → were'], choice: { options: ['was', 'were', 'is'], answer: 1, tip: 'Varios estudiantes (they): were.' } },
+    { who: 'leo', text: "To say no: WASN'T and WEREN'T. To ask, the verb goes first: Was he...? Were you...?", es: "Para negar: wasn't y weren't. Para preguntar, el verbo va primero.", board: ["wasn't · weren't", 'Was he...? Were you...?'], table: { head: ['Afirmativa', 'Negativa', 'Pregunta'], rows: [['<He> [was] here.', "<He> [was]{n't} here.", '[Was] <he> here?'], ['<They> [were] late.', "<They> [were]{n't} late.", '[Were] <they> late?']] } },
+    { who: 'board', text: '___ you at school yesterday?', board: ["wasn't · weren't", 'Was he...? Were you...?'], choice: { options: ['Was', 'Were', 'Did'], answer: 1, tip: 'Con you: Were you...?' } },
+    { who: 'leo', text: 'And THERE IS becomes THERE WAS. THERE ARE becomes THERE WERE. Words like yesterday and ago tell you: it is the past!', es: 'Y "there is" se vuelve "there was", "there are" se vuelve "there were". Palabras como yesterday (ayer) y ago (hace) te avisan: ¡es pasado!', board: ['there was · there were', 'yesterday · ago'], table: { head: ['Una cosa', 'Varias'], rows: [['<There> [was] a bell.', '<There> [were] two bells.'], ['[Was] <there> a bell?', '[Were] <there> {any} bells?']] } },
+    { who: 'board', text: 'There ___ twenty students in the class.', board: ['there was · there were', 'yesterday · ago'], choice: { options: ['was', 'were', 'is'], answer: 1, tip: 'Varios estudiantes: there were.' } },
+  ],
 }

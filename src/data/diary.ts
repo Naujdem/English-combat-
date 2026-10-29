@@ -52,7 +52,7 @@ export const DIARY: DiaryChapter[] = [
     versions: [
       {
         id: 'school-past',
-        unlock: 'era-past-a1',
+        unlock: 'school-past-epilogue',
         tense: 'p',
         tab: 'Pasado',
         title: 'Dear diary',

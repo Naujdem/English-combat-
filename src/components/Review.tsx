@@ -3,7 +3,7 @@ import type { GameState, TopicId } from '../game/types'
 import type { Update } from '../game/store'
 import { TOPICS } from '../data/questions'
 import { LESSONS } from '../data/lessons'
-import { WORLD } from '../data/world'
+import { WORLD, PRESENT_NODES } from '../data/world'
 import { ENEMIES } from '../data/enemies'
 import { DIARY } from '../data/diary'
 import { dueCards } from '../game/cards'
@@ -14,7 +14,7 @@ import { Practice } from './Practice'
 import { btn, btnGhost, Panel } from './ui'
 
 /** Temas de A1 en el orden en que aparecen en el juego */
-export const A1_ORDER: TopicId[] = ['greetings', 'to-be', 'possessives', 'prepositions', 'imperatives', 'there-is', 'demonstratives', 'ordering', 'present-simple', 'likes', 'can', 'present-continuous', 'have-got', 'do-does', 'plurals', 'time', 'object-pronouns', 'could-you']
+export const A1_ORDER: TopicId[] = ['greetings', 'to-be', 'possessives', 'prepositions', 'imperatives', 'there-is', 'demonstratives', 'ordering', 'present-simple', 'likes', 'can', 'present-continuous', 'have-got', 'do-does', 'plurals', 'time', 'object-pronouns', 'could-you', 'was-were']
 
 export function mastery(s: GameState, t: TopicId) {
   const st = s.stats[t] ?? { ok: 0, fail: 0 }
@@ -108,7 +108,7 @@ export function ProgressView({ state, onClose, onReview }: { state: GameState; o
   const teacher = useTeacher().on
   const shown = A1_ORDER.filter((t) => unlocked(state, t, teacher))
   const bosses = WORLD.filter((n) => n.sceneId)
-  const places = WORLD.filter((n) => Object.values(ENEMIES).some((e) => e.kind === 'boss' && e.id.startsWith(n.id) && state.defeated.includes(e.id))).length
+  const places = WORLD.filter((n) => state.defeated.includes(`${n.id}-boss`)).length
   const minions = Object.values(ENEMIES).filter((e) => e.kind === 'minion' && state.defeated.includes(e.id)).length
   const diaries = DIARY.flatMap((c) => c.versions).filter((v) => state.opened.includes(`diary-${v.id}`)).length
   const all = A1_ORDER.map((t) => mastery(state, t))
@@ -117,7 +117,7 @@ export function ProgressView({ state, onClose, onReview }: { state: GameState; o
 
   const facts: [string, string][] = [
     ['Lugares completados', `${places} de ${WORLD.length}`],
-    ['Piezas del reloj', `${Math.min(state.relics, WORLD.length)} de ${WORLD.length}`],
+    ['Piezas del reloj', `${Math.min(state.relics, PRESENT_NODES.length)} de ${PRESENT_NODES.length}`],
     ['Personas liberadas', `${minions + places}`],
     ['Respuestas correctas', answered ? `${right} de ${answered} (${Math.round((right / answered) * 100)}%)` : 'Aún no hay'],
     ['Fichas', `${state.cards.length} (${dueCards(state.cards).length} para hoy)`],
@@ -145,7 +145,7 @@ export function ProgressView({ state, onClose, onReview }: { state: GameState; o
               </div>
             ))}
           </dl>
-          <p className="mt-2 text-xs text-paper/50">{bosses.length} de {WORLD.length} lugares de A1 ya se pueden jugar.</p>
+          <p className="mt-2 text-xs text-paper/50">{bosses.length} de {WORLD.length} lugares de A1 (presente y pasado) ya se pueden jugar.</p>
         </Panel>
 
         <Panel>

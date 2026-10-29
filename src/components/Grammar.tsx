@@ -16,6 +16,7 @@ export const ROLE_STYLE: Record<Role, { bg: string; fg: string; name: string }> 
 
 const SUBJ = new Set(['i', 'you', 'he', 'she', 'it', 'we', 'they', 'there', "i'm", "you're", "he's", "she's", "it's", "we're", "they're", "there's"])
 const VERB = new Set([
+  "wasn't", "weren't",
   'could', 'send', 'answer', 'repeat', 'spell', 'start', 'tell', 'bring',
   'am', 'is', 'are', "isn't", "aren't", 'be', 'can', "can't", 'do', 'does', "don't", "doesn't", 'have', 'has', 'go', 'goes', 'turn', 'open', 'close',
   'sit', 'stand', 'listen', 'pass', 'drink', 'wash', 'run', 'jump', 'stop', 'give', 'take', 'eat', 'read', 'play', 'need', 'want', 'like', 'love',
@@ -170,6 +171,10 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
     case 'do-does':
       if (question) return { title: 'Para preguntar: Do (I, you, we, they) o Does (he, she, it) + verbo sin -s:', parts: [V('Do / Does'), '+', S('Sujeto'), '+', V('verbo'), '+', R('...?')] }
       return { title: "Para negar: don't o doesn't + verbo sin -s:", parts: [S('Sujeto'), '+', V("don't / doesn't"), '+', V('verbo'), '+', R('...')] }
+    case 'was-were':
+      if (question) return { title: 'Para preguntar en pasado, el verbo va primero:', parts: [V('Was / Were'), '+', S('Sujeto'), '+', R('...?')] }
+      if (negative) return { title: "Para negar en pasado: wasn't / weren't:", parts: [S('Sujeto'), '+', V("wasn't / weren't"), '+', R('...')] }
+      return { title: 'I, he, she, it → was · you, we, they → were:', parts: [S('Sujeto'), '+', V('was / were'), '+', R('...')] }
     case 'time':
       if (question) return { title: 'Para preguntar la hora:', parts: [K('What time'), '+', V('is'), '+', S('it?')] }
       return { title: 'at + hora · on + día · in + mes, estación o parte del día:', parts: [R('...'), '+', K('at / on / in'), '+', R('hora / día / mes')] }

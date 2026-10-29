@@ -37,6 +37,7 @@ import { AnimalSprite, ANIMALS } from '../components/Animals'
 import { GuessAnimal } from '../components/GuessAnimal'
 import { AnimalPens } from '../components/AnimalPens'
 import { Planner } from '../components/Planner'
+import { Attendance } from '../components/Attendance'
 import { voiceOf, type Voice } from '../game/speech'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
@@ -353,6 +354,16 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       if (c === 'L' && scene.id === 'school') {
         setMsg(null)
         setActivity('vocab')
+        return
+      }
+      if (c === 'B' && scene.id === 'school-past') {
+        // En 1996, alguien escribió algo en la pizarra
+        setMsg({
+          text: 'En la pizarra, con letra temblorosa, alguien escribió: "Be brave. Use your voice."',
+          sub: 'Sé valiente. Usa tu voz. Es la misma frase de la tarjeta del cumpleaños de Leo...',
+          say: 'Be brave. Use your voice.',
+          tone: 'warn',
+        })
         return
       }
       if (c === 'B' && scene.id === 'school') {
@@ -913,6 +924,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'guess') return <GuessAnimal onClose={finish} />
             if (t.activity === 'pens') return <AnimalPens onClose={finish} />
             if (t.activity === 'planner') return <Planner onClose={finish} />
+            if (t.activity === 'attendance') return <Attendance onClose={finish} />
             if (t.activity === 'vocab' && t.vocab)
               return <VocabActivity state={state} words={t.vocab.words} place={t.vocab.place} title={t.vocab.title} rewardText={t.reward.sub} onClose={finish} />
             const who = NPCS[t.npc ?? task]

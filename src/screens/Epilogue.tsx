@@ -7,7 +7,7 @@ import { btn, btnGhost, btnPrimary, Panel } from '../components/ui'
 import { FRIENDS, interestFriend } from '../data/friends'
 import { heroLook } from '../game/helpers'
 import { TimeClock } from '../components/TimeClock'
-import { WORLD } from '../data/world'
+import { PRESENT_NODES } from '../data/world'
 import { ENEMIES } from '../data/enemies'
 import type { Voice } from '../game/speech'
 import { NPCS } from '../data/npcs'
@@ -15,8 +15,8 @@ import { AnimalSprite } from '../components/Animals'
 
 const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
-type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark'
-type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark'
+type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal'
+type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal'
 type Step = {
   who: Who
   text: string
@@ -42,6 +42,7 @@ function buildSteps(s: GameState, sceneId: string): Step[] {
   if (sceneId === 'barrio') return barrioSteps(s)
   if (sceneId === 'farm') return farmSteps(s)
   if (sceneId === 'office') return officeSteps(s)
+  if (sceneId === 'school-past') return schoolPastSteps(s)
   const name = s.hero.name
   const it = s.interest
   const iname = it.name
@@ -475,11 +476,60 @@ function officeSteps(s: GameState): Step[] {
   ]
 }
 
+/**
+ * Final de la escuela en 1996: el director vuelve a ser amable y Greg resulta ser el profesor Grimm de joven.
+ * Primer fragmento de voz del pasado. El desconocido recuerda la escuela.
+ */
+function schoolPastSteps(s: GameState): Step[] {
+  const iname = s.interest.name
+  const cast: Cast[] = ['leo', 'interest']
+  const withGrimms: Cast[] = ['principal', 'greg', 'leo']
+  return [
+    { who: 'narrator', text: 'El director abre la puerta de su oficina. Greg corre hacia él.', cast: withGrimms },
+    { who: 'principal', text: 'Greg, my son... I was very angry today. I am sorry.', es: 'Greg, hijo... Hoy estaba muy enojado. Lo siento.', cast: withGrimms },
+    { who: 'greg', text: "It's OK, Dad. These kids were very kind to me. They were my friends today.", es: 'No pasa nada, papá. Estos chicos fueron muy amables conmigo. Hoy fueron mis amigos.', cast: withGrimms },
+    { who: 'principal', text: 'Thank you, children. Greg, say goodbye. Mr. Greg Grimm... ha ha, one day you are going to be a teacher!', es: 'Gracias, niños. Greg, despídete. El señor Greg Grimm... ja, ja, ¡un día vas a ser profesor!', cast: withGrimms },
+    { who: 'leo', text: 'Wait... Greg GRIMM? Mr. Grimm, our teacher? He was a student here?', es: 'Espera... ¿Greg GRIMM? ¿El profesor Grimm, nuestro profesor? ¿Él era estudiante aquí?', cast },
+    {
+      who: 'hero',
+      text: '¿Qué le respondes a Leo?',
+      cast,
+      choice: {
+        options: ['Yes! Mr. Grimm was a shy student, and his dad was the principal.', 'Yes! Mr. Grimm were a shy student, and his dad were the principal.', 'Yes! Mr. Grimm is a shy student yesterday.'],
+        answer: 0,
+        tip: 'Con he (Mr. Grimm, his dad): was.',
+      },
+    },
+    { who: 'interest', text: 'He was so nervous! And now he is a strict teacher. People change...', es: '¡Estaba tan nervioso! Y ahora es un profesor estricto. La gente cambia...', cast },
+    { who: 'narrator', text: 'Sientes algo cálido en la garganta: un fragmento de tu voz vuelve a ti. Ahora puedes hablar del pasado: I was, you were...', cast },
+    { who: 'narrator', text: 'Leo va a tocar la campana del patio. Entonces, detrás de la pared de ladrillo, una voz ronca habla muy bajito.', cast: ['interest'] },
+    { who: 'villain', text: 'This school... I remember it. It was small... and it was full of voices.', es: 'Esta escuela... La recuerdo. Era pequeña... y estaba llena de voces.', villain: true, cast: ['interest'] },
+    { who: 'villain', text: 'Your next words are in the old city. The road was dirt, and the people were kind. Go.', es: 'Tus siguientes palabras están en la ciudad vieja. La carretera era de tierra, y la gente era amable. Ve.', villain: true, cast: ['interest'] },
+    { who: 'narrator', text: `La campana suena: ¡DING, DONG! Cuando ${iname} mira detrás de la pared, no hay nadie.`, cast },
+    {
+      who: 'hero',
+      text: `¿Qué le dices a ${iname}?`,
+      cast,
+      choice: {
+        options: ['He was here! The stranger was here!', 'He were here! The stranger were here!', 'He is here yesterday!'],
+        answer: 0,
+        tip: 'Con he: was.',
+      },
+    },
+    {
+      who: 'narrator',
+      text: 'Fin: La escuela de 1996. Recuperaste was / were y there was / there were. Ahora tu diario también se puede leer en pasado. Tu viaje por el pasado sigue en la ciudad vieja...',
+      cast,
+    },
+  ]
+}
+
 export function Epilogue({ state, onDone }: { state: GameState; onDone: () => void }) {
   const city = state.sceneId === 'city'
   const barrio = state.sceneId === 'barrio'
   const farm = state.sceneId === 'farm'
   const office = state.sceneId === 'office'
+  const schoolPast = state.sceneId === 'school-past'
   const steps = buildSteps(state, state.sceneId)
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
@@ -502,6 +552,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     rosie: 'Rosie',
     farmer: 'Mr. Brown',
     clark: 'Ms. Clark',
+    greg: 'Greg',
+    principal: 'Principal Grimm',
   }
 
   const voices: Record<Who, Voice> = {
@@ -516,6 +568,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     rosie: 'female',
     farmer: 'male',
     clark: 'female',
+    greg: 'male',
+    principal: 'male',
   }
 
   function next() {
@@ -530,8 +584,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 overflow-y-auto px-4 py-6">
-      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
-      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
+      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
+      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
         {s.home ? (
           <g>
             <rect width="320" height="200" fill="#f1d9c0" />
@@ -546,6 +600,21 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             <rect x="214" y="86" width="92" height="18" rx="6" fill="#c8664e" />
             <rect x="250" y="20" width="44" height="58" rx="2" fill="#e8eef2" stroke="#b8c4cc" strokeWidth="2" />
             <line x1="250" y1="40" x2="294" y2="40" stroke="#b8c4cc" strokeWidth="2" />
+          </g>
+        ) : schoolPast ? (
+          <g>
+            <rect width="320" height="200" fill="#e9dcc0" />
+            <rect x="40" y="40" width="200" height="90" fill="#a4553a" />
+            <polygon points="30,42 140,10 250,42" fill="#6b3a2a" />
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((k) => <line key={k} x1="40" y1={48 + k * 9} x2="240" y2={48 + k * 9} stroke="#7d3f2a" />)}
+            <rect x="90" y="50" width="100" height="14" rx="2" fill="#f4efe4" />
+            <text x="140" y="60" textAnchor="middle" fontSize="7" fontWeight="700" fill="#2b241c" fontFamily={FONT}>GREENFIELD SCHOOL · 1996</text>
+            <rect x="126" y="86" width="28" height="44" fill="#5a3a1a" />
+            <rect y="130" width="320" height="70" fill="#c2a878" />
+            <rect x="262" y="70" width="5" height="62" fill="#6b4423" />
+            <rect x="296" y="70" width="5" height="62" fill="#6b4423" />
+            <rect x="260" y="68" width="43" height="5" fill="#6b4423" />
+            <path d="M272 98 q10 -24 20 0 z" fill="#c9a83a" stroke="#8a6210" strokeWidth="1.5" />
           </g>
         ) : office ? (
           <g>
@@ -646,6 +715,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             : who === 'rosie' ? NPCS.rosie.look
             : who === 'farmer' ? ENEMIES['farm-boss'].look
             : who === 'clark' ? ENEMIES['office-boss'].look
+            : who === 'greg' ? ENEMIES['school-past-m1'].look
+            : who === 'principal' ? ENEMIES['school-past-boss'].look
             : interest.look
           return (
             <g key={who} transform={`translate(${spots[k] + 64} 128) scale(-2 2)`}>
@@ -665,7 +736,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
       {s.clock && (
         <div className="anim-pop -mt-2 flex items-center justify-center gap-3">
           <TimeClock pieces={Math.max(1, state.relics)} size={84} />
-          <p className="text-sm text-paper/75">Reloj del tiempo: {Math.max(1, state.relics)} de {WORLD.length} piezas</p>
+          <p className="text-sm text-paper/75">Reloj del tiempo: {Math.max(1, state.relics)} de {PRESENT_NODES.length} piezas</p>
         </div>
       )}
 

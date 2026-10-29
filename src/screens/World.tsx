@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { GameState } from '../game/types'
-import { WORLD, type WorldNode } from '../data/world'
+import { WORLD, type WorldNode, PRESENT_NODES, nodesOf } from '../data/world'
+import { useTeacher } from '../game/teacher'
 import { TOPICS } from '../data/questions'
 import { SpriteBody } from '../components/Sprite'
 import { FriendsPanel } from '../components/FriendsPanel'
@@ -8,7 +9,10 @@ import { btn, btnGhost, Hearts, Overlay, Panel } from '../components/ui'
 import { ClockPieces, TimeClock } from '../components/TimeClock'
 import { Diary } from '../components/Diary'
 import { Flashcards } from '../components/Flashcards'
-import { BIKE_TO_FARM, BusRide, BUS_TO_BARRIO, BUS_TO_CITY, BUS_TO_OFFICE } from '../components/BusRide'
+import { BIKE_TO_FARM, BusRide, BUS_TO_BARRIO, BUS_TO_CITY, BUS_TO_OFFICE, CLOCK_TO_1996, type BusTrip } from '../components/BusRide'
+
+/** Cómo se llega la primera vez a cada lugar */
+const TRIPS: Record<string, BusTrip> = { city: BUS_TO_CITY, barrio: BUS_TO_BARRIO, farm: BIKE_TO_FARM, office: BUS_TO_OFFICE, 'school-past': CLOCK_TO_1996 }
 import { ProgressView, Review } from '../components/Review'
 import { setSound, soundOn } from '../game/sfx'
 import { autoVoiceOn, setAutoVoice } from '../game/speech'
@@ -24,9 +28,11 @@ const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
-    state.defeated.includes('office-boss')
-      ? '¡Terminaste A1 en presente! El reloj está completo. El viaje al pasado se construirá pronto; mientras tanto, puedes repasar y visitar cualquier lugar.'
-      : 'Toca un lugar del mapa para viajar.',
+    state.defeated.includes('school-past-boss')
+      ? 'Recuperaste el primer fragmento de voz. El resto del pasado se construirá pronto; mientras tanto, puedes repasar y visitar cualquier lugar.'
+      : state.defeated.includes('office-boss')
+      ? '¡Terminaste A1 en presente! El reloj está completo y puede llevarte al pasado: abre la pestaña Pasado y viaja a la escuela de 1996.'
+      :'Toca un lugar del mapa para viajar.',
   )
   const [friends, setFriends] = useState(false)
   const [clock, setClock] = useState(false)
@@ -35,7 +41,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const [diary, setDiary] = useState(!!newDiary)
   const [cards, setCards] = useState(false)
   // Viaje en autobús la primera vez que se va a un lugar (ciudad o barrio)
-  const [bus, setBus] = useState<'city' | 'barrio' | 'farm' | 'office' | null>(null)
+  const [bus, setBus] = useState<string | null>(null)
   const [review, setReview] = useState(false)
   const [progress, setProgress] = useState(false)
   const [sound, setSoundState] = useState(soundOn())
@@ -52,6 +58,12 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     if (newDiary) update((s) => ({ ...s, opened: [...s.opened, `diary-open-${newDiary.id}`] }))
   }
   const here = WORLD.find((n) => n.sceneId === state.sceneId) ?? WORLD[0]
+  // Épocas: el pasado aparece cuando el reloj está completo (o en modo profesor)
+  const teacher = useTeacher().on
+  const pastOpen = teacher || state.defeated.includes('office-boss')
+  const [era, setEra] = useState<WorldNode['era']>(here.era)
+  const shownNodes = nodesOf(era)
+  const pastFragments = nodesOf('Pasado').filter((n) => state.defeated.includes(`${n.id}-boss`)).length
 
   function unlocked(n: WorldNode) {
     return !n.requires || state.defeated.includes(n.requires.boss)
@@ -64,7 +76,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     }
     if (!n.sceneId) return setMsg(`${n.name} (${n.level}): ${n.about}. Este lugar se construirá pronto.`)
     // La primera vez que se va a la ciudad, se llega en autobús
-    if ((n.id === 'city' || n.id === 'barrio' || n.id === 'farm' || n.id === 'office') && !state.opened.includes(`bus-${n.id}`)) return setBus(n.id)
+    if (TRIPS[n.id] && !state.opened.includes(`bus-${n.id}`)) return setBus(n.id)
     onEnter(n.sceneId)
   }
 
@@ -79,6 +91,23 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         </div>
       </header>
 
+      {pastOpen && (
+        <div className="flex gap-1.5" role="tablist" aria-label="Épocas">
+          {(['Presente', 'Pasado'] as const).map((e) => (
+            <button
+              key={e}
+              role="tab"
+              aria-selected={era === e}
+              className={`rounded-full border-2 px-3 py-1 text-sm font-semibold ${era === e ? 'border-transparent text-ink' : 'border-line text-paper/70'}`}
+              style={era === e ? { background: ERA_COLOR[e] } : undefined}
+              onClick={() => setEra(e)}
+            >
+              {e}
+            </button>
+          ))}
+        </div>
+      )}
+
       <div className={desktop ? 'grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_21rem] items-start gap-5' : 'contents'}>
       <svg
         viewBox="0 0 360 380"
@@ -87,12 +116,12 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         role="img"
         aria-label="Mapa del mundo"
       >
-        <path d="M0 0 H360 V380 H0Z" fill="#2a3a24" />
+        <path d="M0 0 H360 V380 H0Z" fill={era === 'Pasado' ? '#4a3a24' : '#2a3a24'} />
         {[...Array(18)].map((_, k) => (
-          <circle key={k} cx={(k * 73) % 360} cy={(k * 131) % 380} r={10 + (k % 4) * 4} fill="#324a2a" />
+          <circle key={k} cx={(k * 73) % 360} cy={(k * 131) % 380} r={10 + (k % 4) * 4} fill={era === 'Pasado' ? '#5a4a2e' : '#324a2a'} />
         ))}
         <polyline
-          points={WORLD.map((n) => `${n.x},${n.y}`).join(' ')}
+          points={shownNodes.map((n) => `${n.x},${n.y}`).join(' ')}
           fill="none"
           stroke="#e8dcc8"
           strokeOpacity="0.55"
@@ -100,7 +129,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
           strokeDasharray="2 9"
           strokeLinecap="round"
         />
-        {WORLD.map((n) => {
+        {shownNodes.map((n) => {
           const open = unlocked(n)
           return (
             <g key={n.id} onClick={() => tap(n)} className="cursor-pointer" role="button" aria-label={`${n.name}, ${n.era}, ${n.level}`}>
@@ -119,11 +148,13 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
             </g>
           )
         })}
+        {here.era === era && (
         <g transform={`translate(${here.x - 18} ${here.y - 66}) scale(1.15)`} pointerEvents="none">
           <g className="anim-bob">
             <SpriteBody look={heroLook(state)} mood={state.recovered.length ? 'normal' : 'mute'} />
           </g>
         </g>
+        )}
       </svg>
 
       <div className={desktop ? 'flex flex-col gap-3' : 'contents'}>
@@ -141,7 +172,10 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         <TimeClock pieces={state.relics} size={52} />
         <span>
           <span className="block">Reloj del tiempo</span>
-          <span className="block text-sm text-paper/65">Piezas: {Math.min(state.relics, WORLD.length)} de {WORLD.length}</span>
+          <span className="block text-sm text-paper/65">
+            Piezas: {Math.min(state.relics, PRESENT_NODES.length)} de {PRESENT_NODES.length}
+            {pastOpen && ` · Fragmentos de voz del pasado: ${pastFragments} de ${nodesOf('Pasado').length}`}
+          </span>
         </span>
       </button>
 
@@ -161,7 +195,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       {diary && <Diary state={state} update={update} onClose={closeDiary} />}
       {bus && (
         <BusRide
-          trip={bus === 'city' ? BUS_TO_CITY : bus === 'barrio' ? BUS_TO_BARRIO : bus === 'farm' ? BIKE_TO_FARM : BUS_TO_OFFICE}
+          trip={TRIPS[bus]}
           hero={heroLook(state)}
           friend={interestFriend(state.interest, state.hero.name).look}
           friendName={state.interest.name}
@@ -223,7 +257,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
             <div className="my-3 flex justify-center"><TimeClock pieces={state.relics} size={150} /></div>
             <p className="text-[15px] text-paper/85">
               El reloj del desconocido explotó y sus piezas se llevaron pedazos de tu voz. Quien toca una pieza se corrompe; tú no, porque es tu voz. Cada jefe tiene una.
-              {state.relics >= WORLD.length ? ' ¡Lo tienes completo! Ya puedes ir tras el desconocido.' : ' Con el reloj completo podrás alcanzar al desconocido y recuperar toda tu voz.'}
+              {state.relics >= PRESENT_NODES.length ? ' ¡Lo tienes completo! Ya puedes ir tras el desconocido.' : ' Con el reloj completo podrás alcanzar al desconocido y recuperar toda tu voz.'}
             </p>
             <div className="mt-3"><ClockPieces pieces={state.relics} /></div>
           </Panel>

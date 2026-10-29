@@ -164,6 +164,22 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
       { text: 'Do you want coffee or tea? The coffee machine is in the kitchen.', es: '¿Quieres café o té? La máquina de café está en la cafetería.' },
     ],
   },
+  // ── La escuela en 1996 ──
+  higgins: {
+    name: 'Mrs. Higgins',
+    // La maestra de 1996: la lista de asistencia (was / were)
+    look: { shirt: '#7a4fa3', hair: '#8b5a2b', skin: '#f1c27d', gender: 'female' },
+    doneLine: { text: 'My attendance book was a disaster. Now it is perfect! Thank you, dear.', es: 'Mi lista de asistencia era un desastre. ¡Ahora está perfecta! Gracias, querido.' },
+  },
+  tina: {
+    name: 'Tina',
+    look: { shirt: '#d64545', hair: '#e0b04a', skin: '#f6d3b3', gender: 'female' },
+    lines: [
+      { text: 'Yesterday was my birthday! There was a big cake, and my friends were at my house.', es: '¡Ayer fue mi cumpleaños! Había un pastel grande, y mis amigos estaban en mi casa.' },
+      { text: 'Greg was very strange this morning. He was quiet, and his eyes were sad.', es: 'Greg estaba muy raro esta mañana. Estaba callado y sus ojos estaban tristes.' },
+      { text: 'Look at the board! There were strange words on it this morning.', es: '¡Mira la pizarra! Esta mañana había unas palabras raras escritas.' },
+    ],
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

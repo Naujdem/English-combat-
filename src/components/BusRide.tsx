@@ -16,6 +16,10 @@ export type BusTrip = { place: string; placeEs: string; price: string; priceNum:
   bike?: { steps: Step[]; person: string }
   /** Pasos propios para un viaje en autobús */
   steps?: Step[]
+  /** Viaje con el reloj del tiempo (otro dibujo) */
+  art?: 'clock'
+  /** Texto del botón final */
+  end?: string
 }
 
 export const BUS_TO_CITY: BusTrip = {
@@ -97,6 +101,32 @@ export const BUS_TO_OFFICE: BusTrip = {
   ],
 }
 
+/** El viaje en el tiempo a 1996: llegada a la escuela vieja */
+export const CLOCK_TO_1996: BusTrip = {
+  place: 'the past',
+  placeEs: '1996',
+  price: '',
+  priceNum: '',
+  wrongPrices: ['', ''],
+  arrival: { text: '', es: '' },
+  sign: 'GREENFIELD SCHOOL · 1996',
+  three: true,
+  art: 'clock',
+  end: 'Entrar a la escuela',
+  steps: [
+    { who: 'narrator', text: 'La luz blanca se apaga. Huele a tiza y a madera. Estás en un patio de tierra, frente a una escuela pequeña de ladrillo.', es: '' },
+    { who: 'leo', text: 'Where are we? ... Look at the sign: GREENFIELD SCHOOL, 1996!', es: '¿Dónde estamos? ... Mira el letrero: ¡ESCUELA GREENFIELD, 1996!' },
+    {
+      who: 'leo',
+      text: '1996! That was thirty years ago! What can you see?',
+      es: '¡1996! ¡Eso fue hace treinta años! ¿Qué ves?',
+      choice: { options: ['The school was small, and the walls were red!', 'The school were small, and the walls was red!', 'The school is small yesterday!'], answer: 0, tip: 'Una escuela: was. Varias paredes: were.' },
+    },
+    { who: 'narrator', text: 'Sientes algo en la garganta: unas palabras que todavía no puedes decir. Tu voz del pasado también está aquí, en pedazos.', es: '' },
+    { who: 'leo', text: "Listen! There are voices in the classroom. Come on, let's go!", es: '¡Escucha! Hay voces en el salón. ¡Vamos!' },
+  ],
+}
+
 export const BUS_TO_BARRIO: BusTrip = {
   place: 'Green Street',
   placeEs: 'Green Street, el barrio de Leo',
@@ -153,7 +183,7 @@ export function BusRide({ trip, hero, friend, friendName = '', onDone }: { trip:
   const s = list[i]
   const last = i === list.length - 1
   const waiting = !!s.choice && !solved
-  const moving = trip.bike ? i >= 1 : i >= 6
+  const moving = trip.bike || trip.art ? i >= 1 : i >= 6
 
   function next() {
     setSolved(false)
@@ -165,12 +195,27 @@ export function BusRide({ trip, hero, friend, friendName = '', onDone }: { trip:
   return (
     <div className="absolute inset-0 z-40 overflow-y-auto bg-ink">
       <div className="mx-auto flex max-w-md flex-col gap-3 px-3 py-6">
-        <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{trip.bike ? 'En bicicleta' : 'En el autobús'}</p>
+        <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{trip.art === 'clock' ? 'Viaje en el tiempo' : trip.bike ? 'En bicicleta' : 'En el autobús'}</p>
         <svg viewBox="0 0 320 170" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={`Autobús a ${trip.placeEs}`}>
           <rect width="320" height="170" fill="#bfe3f5" />
           <rect y="128" width="320" height="42" fill="#6b6b73" />
           {Array.from({ length: 6 }).map((_, k) => <rect key={k} x={k * 60 + 8} y="148" width="30" height="4" fill="#f2d16b" />)}
-          {trip.bike ? (
+          {trip.art === 'clock' ? (
+            <g>
+              <rect width="320" height="170" fill="#e9dcc0" />
+              <rect y="120" width="320" height="50" fill="#c2a878" />
+              <rect x="70" y="40" width="180" height="82" fill="#a4553a" />
+              <polygon points="60,42 160,10 260,42" fill="#6b3a2a" />
+              {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((r) => <line key={r} x1="70" y1={48 + r * 9} x2="250" y2={48 + r * 9} stroke="#7d3f2a" />)}
+              <rect x="110" y="50" width="100" height="14" rx="2" fill="#f4efe4" />
+              <text x="160" y="60" textAnchor="middle" fontSize="7" fontWeight="700" fill="#2b241c" fontFamily="Fredoka, Nunito, system-ui, sans-serif">{trip.sign}</text>
+              <rect x="146" y="82" width="28" height="40" fill="#5a3a1a" />
+              <circle cx="160" cy="95" r={moving ? 0 : 70} fill="#ffffff" opacity="0.85" style={{ transition: 'r 900ms ease-out' }} />
+              {(trip.three && friend ? [hero, FRIENDS.leo.look, friend] : [hero, FRIENDS.leo.look]).map((look, k) => (
+                <g key={k} transform={`translate(${40 + k * 90} 104) scale(1.3)`}><SpriteBody look={look} /></g>
+              ))}
+            </g>
+          ) : trip.bike ? (
             <g>
               <rect y="0" width="320" height="128" fill="#bfe3f5" />
               <path d="M0 128 Q80 96 160 116 T320 104 V128 Z" fill="#9cc46e" />
@@ -243,7 +288,7 @@ export function BusRide({ trip, hero, friend, friendName = '', onDone }: { trip:
           )}
           {!waiting && (
             <button className={`${btnPrimary} mt-4 w-full`} onClick={next} autoFocus>
-              {last ? (trip.bike ? 'Llegar a la granja' : 'Bajar del autobús') : 'Siguiente'}
+              {last ? (trip.end ?? (trip.bike ? 'Llegar a la granja' : 'Bajar del autobús')) : 'Siguiente'}
             </button>
           )}
         </Panel>

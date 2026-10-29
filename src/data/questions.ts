@@ -5,6 +5,7 @@ import { BARRIO_QUESTIONS } from './questions-barrio'
 import { FARM_QUESTIONS } from './questions-farm'
 import { OFFICE_QUESTIONS } from './questions-office'
 import { EXTRA_QUESTIONS } from './questions-extra'
+import { PAST_QUESTIONS } from './questions-past'
 
 /**
  * Banco de preguntas.
@@ -324,6 +325,8 @@ export const QUESTIONS: Question[] = [
   ...OFFICE_QUESTIONS,
   // ── Repaso de cierre: palabras de pregunta y conectores
   ...EXTRA_QUESTIONS,
+  // ── A1 en pasado
+  ...PAST_QUESTIONS,
 ]
 
 
@@ -615,6 +618,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Para pedir algo con amabilidad: Could you + verbo + ..., please? → Could you help me, please?',
       'Para pedir permiso: Could I speak to Ms. Clark, please?',
       "Respuestas: Sure! · Of course! · Sorry, I can't.",
+    ],
+  },
+  'was-were': {
+    name: 'Was / were (to be en pasado)',
+    level: 'A1',
+    lesson: [
+      'I · he · she · it → was · you · we · they → were.',
+      "Negativo: wasn't / weren't · Pregunta: Was he...? Were you...?",
+      'There was (una cosa) · there were (varias).',
     ],
   },
   'past-simple': {

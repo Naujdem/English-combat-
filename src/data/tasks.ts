@@ -17,7 +17,7 @@ export type NpcTask = {
   shield?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance'
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
   vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
@@ -351,6 +351,20 @@ NPC_TASKS['ana-adjectives'] = {
     say: 'Big and small, happy and sad... You are very smart!',
   },
   shield: true,
+}
+
+// ── La escuela en 1996 ──
+NPC_TASKS.higgins = {
+  done: 'past-attendance',
+  lesson: 'was-were',
+  activity: 'attendance',
+  steps: [],
+  reward: {
+    text: 'Mrs. Higgins: "Thank you, dear! You were a big help."',
+    es: '¡Gracias, querido! Fuiste de gran ayuda.',
+    sub: 'La lista de asistencia está en orden. El director ya no puede decir que no estabas en la lista.',
+    say: 'Thank you, dear! You were a big help.',
+  },
 }
 
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */

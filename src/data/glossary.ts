@@ -58,6 +58,7 @@ could=podría, podrías (can);sure=claro;course=curso (of course = por supuesto)
 hurry=apurarse;rude=grosero;drawer=cajón;card=tarjeta;job=trabajo;lunch=almuerzo;floor=piso;watch=reloj (de pulsera), mirar;crazy=loco;hands=manos, agujas (del reloj);past=pasado, y (half past = y media);
 future=futuro;team=equipo;secretary=secretaria;stay=quedarse;hang=colgar;note=nota;
 bird=pájaro;hamster=hámster;sunny=soleado;rainy=lluvioso;cloudy=nublado;windy=con viento;snow=nieve;tail=cola;ears=orejas;ear=oreja;nose=nariz;mouth=boca;legs=piernas, patas;whose=de quién;hers=suyo (de ella);his=su, suyo (de él);mine=mío;yours=tuyo;
+was=era, estaba, fue (to be);were=eran, estaban, fueron (to be);wasn't=no era, no estaba;weren't=no eran, no estaban;principal=director (de escuela);attendance=asistencia;ago=hace (tiempo);last=pasado, último (last week = la semana pasada);vest=chaleco;nervous=nervioso;shy=tímido;bell=campana;brick=ladrillo;dirt=tierra;pocket=bolsillo;dear=querido;gone=ido (he was gone = ya no estaba);
 i'm=yo soy, yo estoy;you're=tú eres, tú estás;he's=él es, él está;she's=ella es, ella está;it's=es, está;we're=nosotros somos;they're=ellos son;that's=eso es;let's=vamos a;what's=qué es;
 don't=no (no hagas);doesn't=no (con he/she/it);didn't=no (en pasado);won't=no va a;can't=no puede;haven't=no tiene (have got);hasn't=no tiene (has got);got=(have got = tener)
 `
