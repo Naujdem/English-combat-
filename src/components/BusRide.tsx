@@ -259,7 +259,7 @@ export const CLOCK_TO_2056: BusTrip = {
       es: 'Entonces... ¿qué vamos a hacer aquí?',
       choice: { options: ['We are going to find my voice!', 'We going to find my voice!', 'We are go to find my voice!'], answer: 0, tip: 'Para planes: We + are going to + verbo.' },
     },
-    { who: 'leo', text: "Yes! We are going to find it. Come on, there is a class in Room 1. Let's look!", es: '¡Sí! La vamos a encontrar. Vamos, hay una clase en el salón 1. ¡Miremos!' },
+    { who: 'leo', text: "Yes! We are going to find it. Come on, there is a class in the classroom. Let's look!", es: '¡Sí! La vamos a encontrar. Vamos, hay una clase en el aula. ¡Miremos!' },
   ],
 }
 

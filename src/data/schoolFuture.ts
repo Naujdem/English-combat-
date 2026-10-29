@@ -7,29 +7,36 @@ import { SCHOOL_PAST_ENEMIES } from './schoolPast'
  * y un robot que limpia. El patio viejo y su campana siguen iguales. Leo adulto es el profesor de inglés.
  * Gramática: going to (planes) con tomorrow, tonight, next week.
  * Leyenda nueva:  q  pared de vidrio   i  pizarra holográfica   t  robot de limpieza
+ * La distribución es la misma de la escuela del presente: aula, baño, cafetería, biblioteca, secretaría, patio y dirección.
  * Aquí aparecen Tom (del presente) y Greg (de 1996), traídos por la luz del reloj.
  */
 const MAP = [
-  'qqqqqqqiiqqqqqqq',
-  'q..............q',
-  'q.D.D.D..D.D.D.q',
-  'q..............q',
-  'q.D.D.D..D.D.D.q',
-  'q.........t....q',
-  'qqqqqqqdqqqqqqqq',
-  'f,,,,,,,,,,qqqqq',
-  'f,I,,,,,,,,q...q',
-  'f,,,,,Y,,,,X...q',
-  'f,,,,,,,,,,q...q',
-  'fY,,,,t,,,,qqqqq',
-  'f,,,,,,,,,,,,,,f',
-  'ffffffffffffffff',
+  'qqiiiqqqqqqqqqqq',
+  'q.....qTTSqqqqqq',
+  'q.D.D.d...qqqqqq',
+  'q.....q...qqqqqq',
+  'q.D.D.qqqqqqqqqq',
+  'q.....qKKVqqqqqq',
+  'q.D.D.d...qFF.pq',
+  'q.....q...d....q',
+  'q.D.D.qqqqqCC..q',
+  'q.....qLLLqqqqqq',
+  'qt....d...d,,,,q',
+  'q.....q...q,,,Gq',
+  'qqqqXqqqqqq,,,,q',
+  'qp...tMMMpqY,,Hq',
+  'q.........q,,,Iq',
+  'qqqqqqqqqqqqqqqq',
 ]
 
 function zoneAt(x: number, y: number): Zone {
-  if (y <= 5) return 'aula-futuro'
-  if (x >= 12 && y >= 8 && y <= 10) return 'direccion-futuro'
-  return 'patio-futuro'
+  if (x >= 11 && y >= 10) return 'patio-futuro'
+  if (x >= 11) return 'secretaria'
+  if (y >= 13) return 'direccion-futuro'
+  if (x >= 7 && y <= 3) return 'bano'
+  if (x >= 7 && y >= 5 && y <= 7) return 'cafeteria'
+  if (x >= 7 && y >= 9) return 'biblioteca'
+  return 'aula-futuro'
 }
 
 export const SCHOOL_FUTURE_REQUIREMENTS: Requirement[] = [
@@ -49,23 +56,27 @@ export const SCHOOL_FUTURE: SceneDef = {
   era: 'Futuro',
   topics: ['going-to'],
   map: MAP,
-  start: { x: 5, y: 12 },
-  bossDoor: { x: 11, y: 9 },
+  start: { x: 3, y: 11 },
+  bossDoor: { x: 4, y: 12 },
   keysNeeded: 1,
   entities: [
-    { type: 'friend', id: 'leo', x: 8, y: 12 },
-    { type: 'interest', x: 9, y: 10 },
-    { type: 'npc', id: 'leo-adult', x: 8, y: 1 },
-    { type: 'npc', id: 'zoe', x: 3, y: 9 },
-    { type: 'enemy', id: 'school-future-m1', x: 13, y: 3 },
-    { type: 'enemy', id: 'school-future-tom', x: 2, y: 10 },
-    { type: 'enemy', id: 'school-future-greg', x: 1, y: 3 },
-    { type: 'boss', id: 'school-future-boss', x: 13, y: 9 },
+    { type: 'friend', id: 'leo', x: 1, y: 3 },
+    { type: 'interest', x: 9, y: 11 },
+    { type: 'npc', id: 'leo-adult', x: 4, y: 1 },
+    { type: 'npc', id: 'zoe', x: 12, y: 12 },
+    { type: 'enemy', id: 'school-future-m1', x: 4, y: 9 },
+    { type: 'enemy', id: 'school-future-tom', x: 8, y: 2 },
+    { type: 'enemy', id: 'school-future-greg', x: 9, y: 6 },
+    { type: 'boss', id: 'school-future-boss', x: 7, y: 14 },
   ],
   labels: [
-    { text: 'Salón', x: 7, y: 3 },
-    { text: 'Patio', x: 5, y: 8 },
-    { text: 'Dirección', x: 13, y: 8 },
+    { text: 'Aula', x: 3, y: 7 },
+    { text: 'Baño', x: 8, y: 3 },
+    { text: 'Cafetería', x: 8, y: 7 },
+    { text: 'Biblioteca', x: 8, y: 10 },
+    { text: 'Dirección', x: 3, y: 14 },
+    { text: 'Secretaría', x: 13, y: 8 },
+    { text: 'Patio', x: 13, y: 11 },
   ],
   zoneAt,
   requirements: SCHOOL_FUTURE_REQUIREMENTS,
@@ -81,7 +92,7 @@ export const SCHOOL_FUTURE: SceneDef = {
   epilogue: 'school-future-epilogue',
   door: {
     text: 'La puerta de la dirección está cerrada con llave.',
-    sub: 'La llave la tiene Theo, el estudiante del salón.',
+    sub: 'La llave la tiene Theo, el estudiante del aula.',
   },
 }
 
@@ -169,7 +180,7 @@ export const SCHOOL_FUTURE_ENEMIES: Record<string, EnemyDef> = {
     ],
     after: [
       { text: 'BEEP... System OK. Classes are going to start at eight tomorrow. I am sorry, students.', es: 'BIP... Sistema bien. Las clases van a empezar mañana a las ocho. Lo siento, estudiantes.' },
-      { text: 'Yesterday my camera saw a man in a dark coat. He stood at the window of Room 1 for one hour. He watched Mr. Garcia\'s class. He did not come in. My sensors say: he was very sad.', es: 'Ayer mi cámara vio a un hombre con abrigo oscuro. Estuvo una hora en la ventana del salón 1. Miró la clase del profesor Garcia. No entró. Mis sensores dicen: estaba muy triste.' },
+      { text: 'Yesterday my camera saw a man in a dark coat. He stood at the window of the classroom for one hour. He watched Mr. Garcia\'s class. He did not come in. My sensors say: he was very sad.', es: 'Ayer mi cámara vio a un hombre con abrigo oscuro. Estuvo una hora en la ventana del aula. Miró la clase del profesor Garcia. No entró. Mis sensores dicen: estaba muy triste.' },
       { text: 'This piece of metal is yours. And take this silver jacket: it is the new uniform. BEEP!', es: 'Este pedazo de metal es tuyo. Y toma esta chaqueta plateada: es el uniforme nuevo. ¡BIP!' },
     ],
     freed: { text: 'BEEP! Tomorrow it is going to be a great day. My sensors are very happy.', es: '¡BIP! Mañana va a ser un gran día. Mis sensores están muy felices.' },

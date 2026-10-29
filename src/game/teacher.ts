@@ -465,7 +465,7 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
       const b = PRESETS[29].apply(s)
       return {
         ...b,
-        pos: { x: 10, y: 9 },
+        pos: { x: 4, y: 11 },
         defeated: add(b.defeated, ['school-future-m1']),
         keys: { ...b.keys, 'school-future': 1 },
         opened: add(b.opened, ['future-plan']),

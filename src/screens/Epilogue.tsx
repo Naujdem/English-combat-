@@ -742,7 +742,7 @@ function schoolFutureSteps(s: GameState): Step[] {
   const cast: Cast[] = ['leo', 'interest']
   const both: Cast[] = ['leoadult', 'leo', 'interest']
   return [
-    { who: 'narrator', text: 'GRIMM-BOT abre la puerta de la dirección. El profesor de inglés sale del salón 1 con su tableta.', cast: both },
+    { who: 'narrator', text: 'GRIMM-BOT abre la puerta de la dirección. El profesor de inglés sale del aula con su tableta.', cast: both },
     { who: 'leoadult', text: 'Hi, hi! Thank you for your help today. I am Mr. Garcia, the English teacher.', es: '¡Hola, hola! Gracias por su ayuda hoy. Soy el señor Garcia, el profesor de inglés.', cast: both },
     { who: 'leo', text: 'Hi, hi! ... Wait. Mr. GARCIA? My name is Leo Garcia!', es: '¡Hola, hola! ... Espera. ¿Señor GARCIA? ¡Yo me llamo Leo Garcia!', cast: both },
     { who: 'leoadult', text: 'Leo? That is my name too! Ha ha. You look very familiar... When I was a boy, I had a green shirt like that.', es: '¿Leo? ¡También es mi nombre! Ja, ja. Me pareces muy conocido... Cuando era niño, tenía una camiseta verde como esa.', cast: both },
@@ -763,7 +763,7 @@ function schoolFutureSteps(s: GameState): Step[] {
     { who: 'leoadult', text: 'Yes! My best friend lives in another city now. But every Sunday we are going to play old video games together. Ha ha!', es: '¡Sí! Mi mejor amigo vive en otra ciudad ahora. Pero todos los domingos vamos a jugar videojuegos viejos juntos. ¡Ja, ja!', cast: both },
     { who: 'interest', text: 'Old video games... like you two!', es: 'Videojuegos viejos... ¡como ustedes dos!', cast },
     { who: 'narrator', text: 'Sientes algo cálido en la garganta: un fragmento de tu voz del futuro vuelve a ti. Ahora puedes hablar de tus planes: I am going to...', cast },
-    { who: 'narrator', text: 'Leo corre a ver el robot de limpieza. Por la ventana del salón 1, alguien con abrigo oscuro mira la clase desde lejos. Habla muy bajito.', cast: ['interest'] },
+    { who: 'narrator', text: 'Leo corre a ver el robot de limpieza. Por la ventana del aula, alguien con abrigo oscuro mira la clase desde lejos. Habla muy bajito.', cast: ['interest'] },
     { who: 'villain', text: 'He was a good teacher... A very good teacher.', es: 'Era un buen profesor... Un muy buen profesor.', villain: true, cast: ['interest'] },
     { who: 'villain', text: 'Your next words are in the city. The buses fly now... but the old fountain is still there. Go.', es: 'Tus siguientes palabras están en la ciudad. Ahora los buses vuelan... pero la fuente vieja sigue ahí. Ve.', villain: true, cast: ['interest'] },
     { who: 'narrator', text: `Cuando ${iname} vuelve a mirar, la ventana está vacía.`, cast },
