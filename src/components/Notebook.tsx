@@ -5,6 +5,7 @@ import { questionById, TOPICS } from '../data/questions'
 import { QuestionCard } from './QuestionCard'
 import { recordAnswer } from '../game/helpers'
 import { btnGhost, btnPrimary, Overlay, Panel } from './ui'
+import { VerbTable } from './VerbBook'
 
 const SESSION = 6
 
@@ -79,6 +80,14 @@ export function Notebook({ state, update, onClose }: { state: GameState; update:
               Repasar {Math.min(SESSION, pending.length)}
             </button>
           </>
+        )}
+
+        {!started && state.opened.includes('past-verbbook') && (
+          <details className="mt-4 rounded-xl border-2 border-line px-3 py-2">
+            <summary className="cursor-pointer font-display text-lg">Libro de verbos irregulares</summary>
+            <p className="mb-2 mt-1 text-sm text-paper/70">El libro de Joe (1996): el pasado irregular va en morado. Toca el parlante para escucharlos.</p>
+            <VerbTable />
+          </details>
         )}
 
         {started && !done && q && (

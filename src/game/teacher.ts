@@ -8,6 +8,7 @@ import { FARM } from '../data/farm'
 import { OFFICE } from '../data/office'
 import { SCHOOL_PAST } from '../data/schoolPast'
 import { CITY_PAST } from '../data/cityPast'
+import { BARRIO_PAST } from '../data/barrioPast'
 import { SCHOOL } from '../data/school'
 
 /**
@@ -332,6 +333,43 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
         defeated: add(b.defeated, ['city-past-boss']),
         recovered: add(b.recovered, ['past-regular']) as GameState['recovered'],
         outfits: add(b.outfits, ['cuadros']),
+      }
+    },
+  },
+  {
+    id: 'past-barrio-start',
+    label: 'Pasado · Green Street 1996: recién llegado',
+    apply: (s) => {
+      const b = PRESETS[19].apply(s)
+      return { ...b, screen: 'explore', sceneId: 'barrio-past', pos: { ...BARRIO_PAST.start }, opened: add(b.opened, ['city-past-epilogue', 'bus-barrio-past']) }
+    },
+  },
+  {
+    id: 'barrio-past-boss',
+    label: 'Pasado · Green Street 1996: listo para el jefe',
+    apply: (s) => {
+      const b = PRESETS[20].apply(s)
+      return {
+        ...b,
+        pos: { x: 9, y: 11 },
+        defeated: add(b.defeated, ['barrio-past-m1', 'barrio-past-m2']),
+        keys: { ...b.keys, 'barrio-past': 2 },
+        opened: add(b.opened, ['past-verbbook']),
+        seenLesson: add(b.seenLesson, ['barrio-past', 'past-irregular']),
+      }
+    },
+  },
+  {
+    id: 'past-barrio-done',
+    label: 'Pasado · Green Street 1996: terminada',
+    apply: (s) => {
+      const b = PRESETS[21].apply(s)
+      return {
+        ...b,
+        screen: 'epilogue',
+        defeated: add(b.defeated, ['barrio-past-boss']),
+        recovered: add(b.recovered, ['past-irregular']) as GameState['recovered'],
+        outfits: add(b.outfits, ['casco']),
       }
     },
   },

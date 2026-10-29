@@ -18,6 +18,8 @@ export type BusTrip = { place: string; placeEs: string; price: string; priceNum:
   steps?: Step[]
   /** Viaje con el reloj del tiempo (otro dibujo) */
   art?: 'clock' | 'walk'
+  /** Para art 'walk': lo que se ve al fondo */
+  scenery?: 'market' | 'build'
   /** Texto del botón final */
   end?: string
 }
@@ -153,6 +155,33 @@ export const WALK_TO_OLD_CITY: BusTrip = {
   ],
 }
 
+/** A pie desde la ciudad vieja hasta Green Street, que todavía está en construcción */
+export const WALK_TO_GREEN_1996: BusTrip = {
+  place: 'Green Street',
+  placeEs: 'Green Street en 1996',
+  price: '',
+  priceNum: '',
+  wrongPrices: ['', ''],
+  arrival: { text: '', es: '' },
+  sign: 'GREEN ST.',
+  three: true,
+  art: 'walk',
+  scenery: 'build',
+  end: 'Entrar a Green Street',
+  steps: [
+    { who: 'narrator', text: 'Caminan por la carretera de tierra. Se oyen martillos y una mezcladora de cemento.', es: '' },
+    { who: 'leo', text: 'Green Street! My street! But... where are the houses? There is only one house!', es: '¡Green Street! ¡Mi calle! Pero... ¿dónde están las casas? ¡Solo hay una casa!' },
+    {
+      who: 'leo',
+      text: 'Tell me, what did we see in the old city?',
+      es: 'Dime, ¿qué vimos en la ciudad vieja?',
+      choice: { options: ['We saw a market and a well.', 'We seed a market and a well.', 'We see a market and a well yesterday.'], answer: 0, tip: 'see es irregular: el pasado es saw, no "seed".' },
+    },
+    { who: 'leo', text: 'Saw! Not "seed". Some verbs are special in the past. Went, saw, ate... We need a list!', es: '¡Saw! No "seed". Algunos verbos son especiales en pasado. Went, saw, ate... ¡Necesitamos una lista!' },
+    { who: 'narrator', text: 'En la única casa terminada, un señor con gafas te saluda desde la ventana. Tiene un libro grueso en la mano.', es: '' },
+  ],
+}
+
 export const BUS_TO_BARRIO: BusTrip = {
   place: 'Green Street',
   placeEs: 'Green Street, el barrio de Leo',
@@ -246,11 +275,22 @@ export function BusRide({ trip, hero, friend, friendName = '', onDone }: { trip:
               <rect width="320" height="170" fill="#cfe6f2" />
               <path d="M0 112 Q90 92 170 104 T320 98 V130 H0 Z" fill="#a9c47e" />
               <rect x="196" y="58" width="48" height="56" fill="#a4553a" />
-              <rect x="248" y="70" width="40" height="44" fill="#c98b4a" />
+              {trip.scenery === 'build' ? (
+                <g>
+                  <rect x="250" y="66" width="3" height="48" fill="#8d8d8d" />
+                  <rect x="284" y="66" width="3" height="48" fill="#8d8d8d" />
+                  <rect x="248" y="80" width="42" height="3" fill="#a8743f" />
+                  <rect x="248" y="98" width="42" height="3" fill="#a8743f" />
+                  <rect x="254" y="102" width="28" height="12" fill="#a4553a" />
+                  <path d="M120 128 Q134 104 148 128 Z" fill="#e3c98a" />
+                </g>
+              ) : (
+                <rect x="248" y="70" width="40" height="44" fill="#c98b4a" />
+              )}
               <polygon points="192,60 220,40 248,60" fill="#6b3a2a" />
               <rect x="208" y="74" width="10" height="12" fill="#cfe4ec" />
               <rect x="226" y="74" width="10" height="12" fill="#cfe4ec" />
-              <rect x="246" y="64" width="44" height="8" fill="#d64545" />
+              {trip.scenery !== 'build' && <rect x="246" y="64" width="44" height="8" fill="#d64545" />}
               <rect x="252" y="40" width="34" height="11" rx="2" fill="#f4efe4" stroke="#8b5a2b" strokeWidth="1.5" />
               <text x="269" y="48.5" textAnchor="middle" fontSize="7" fontWeight="700" fill="#2b241c" fontFamily="Fredoka, Nunito, system-ui, sans-serif">{trip.sign}</text>
               <rect y="128" width="320" height="42" fill="#b8946a" />

@@ -230,6 +230,31 @@ export const DIARY: DiaryChapter[] = [
     ],
     versions: [
       {
+        id: 'barrio-past',
+        unlock: 'barrio-past-epilogue',
+        tense: 'p',
+        tab: 'Pasado',
+        title: 'Dear diary (1996)',
+        frame: 'Lo escribes esa noche. Los verbos irregulares (en pasado) no terminan en -ed: went, saw, built...',
+        lines: [
+          { en: 'Dear diary, today we [went]p to Green Street in 1996. There [was]p only one house!', es: 'Querido diario, hoy fuimos a Green Street en 1996. ¡Solo había una casa!' },
+          { en: 'Joe [had]p a big verb book. I [read]p all the pages and I [learned]p twenty-five verbs.', es: 'Joe tenía un libro de verbos grande. Leí todas las páginas y aprendí veinticinco verbos.' },
+          { en: 'Sam, the builder, [said]p "I goed" and "I buyed". I [helped]p him with his words.', es: 'Sam, el albañil, decía "I goed" y "I buyed". Lo ayudé con sus palabras.' },
+          { en: 'Carmen, the painter, [came]p from the city. She [wrote]p a letter to her mom.', es: 'Carmen, la pintora, vino de la ciudad. Le escribió una carta a su mamá.' },
+          { en: 'Mr. Hill [was]p the boss. He [took]p a fragment of my voice, and he [became]p very angry.', es: 'El señor Hill era el jefe. Tomó un fragmento de mi voz y se volvió muy enojón.' },
+          { en: 'I [won]p, and he [gave]p me an old helmet.', es: 'Gané, y me dio un casco viejo.' },
+          { en: 'Then we [found]p out the truth: Joe is Leo\'s grandpa, and Carmen is Leo\'s mom!', es: 'Luego descubrimos la verdad: ¡Joe es el abuelo de Leo, y Carmen es la mamá de Leo!' },
+          { en: 'Joe [built]p the house with his hands. Carmen [met]p Daniel, Leo\'s dad, on Green Street.', es: 'Joe construyó la casa con sus manos. Carmen conoció a Daniel, el papá de Leo, en Green Street.' },
+          { en: 'The stranger [saw]p the house too. He [touched]p the walls and he [cried]p.', es: 'El desconocido también vio la casa. Tocó las paredes y lloró.' },
+        ],
+        questions: [
+          { q: 'Who built the house?', options: ['Mr. Hill.', 'Joe.', 'Sam.'], answer: 1, tip: 'El diario dice: "Joe built the house with his hands".' },
+          { q: 'Where did Carmen come from?', options: ['From the farm.', 'From the school.', 'From the city.'], answer: 2, tip: 'El diario dice: "Carmen came from the city".' },
+          { q: 'What is the past of "go"?', options: ['goed', 'went', 'gone'], answer: 1, tip: 'go es irregular: went.' },
+          { q: 'Which verb is irregular?', options: ['helped', 'touched', 'gave'], answer: 2, tip: 'gave (de give) no termina en -ed: es irregular.' },
+        ],
+      },
+      {
         id: 'barrio-present',
         tense: 'n',
         tab: 'Presente',

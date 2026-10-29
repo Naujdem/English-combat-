@@ -639,6 +639,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Palabras de pasado: yesterday · last week · two days ago.',
     ],
   },
+  'past-irregular': {
+    name: 'Pasado de los verbos irregulares (went, saw...)',
+    level: 'A1',
+    lesson: [
+      'Algunos verbos no usan -ed: cada uno tiene su propio pasado. go → went · see → saw · eat → ate · buy → bought.',
+      'Igual para todas las personas: I went, she went, they went.',
+      'Nunca "goed" ni "eated". Repásalos en el libro de verbos y en tus fichas.',
+    ],
+  },
   'past-simple': {
     name: 'Pasado simple',
     level: 'A2',

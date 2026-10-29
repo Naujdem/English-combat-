@@ -33,6 +33,9 @@ export const FLOOR: Record<Zone, string> = {
   'tienda-vieja': '#d8bf94',
   correo: '#d9cdb4',
   mercado: '#cdb28a',
+  obra: '#c9b48a',
+  'casa-nueva': '#e8d3b0',
+  caseta: '#cdb89a',
 }
 
 const WALL = '#7a6a58'
@@ -81,6 +84,9 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   m: { en: 'market stall', es: 'puesto del mercado' },
   o: { en: 'well', es: 'pozo' },
   e: { en: 'phone box', es: 'cabina de teléfono' },
+  g: { en: 'scaffolding', es: 'andamio' },
+  a: { en: 'sand', es: 'arena' },
+  x: { en: 'cement mixer', es: 'mezcladora de cemento' },
 }
 
 export function Tile({ c, x, y, floor, doorOpen, party = true }: { c: string; x: number; y: number; floor: string; doorOpen: boolean; party?: boolean }) {
@@ -511,6 +517,39 @@ export function Tile({ c, x, y, floor, doorOpen, party = true }: { c: string; x:
           <rect x={X + 10} y={Y + 7} width={12} height={17} fill="#d9eef8" />
           <rect x={X + 13} y={Y + 13} width={6} height={6} rx="1" fill="#2d2d3a" />
           <rect x={X + 9} y={Y + 2.5} width={14} height={3} fill="#f4efe4" />
+        </g>
+      )
+    case 'g':
+      return (
+        <g>
+          {base}
+          <rect x={X + 2} y={Y} width={3} height={T} fill="#8d8d8d" />
+          <rect x={X + 27} y={Y} width={3} height={T} fill="#8d8d8d" />
+          <rect x={X} y={Y + 6} width={T} height={3} fill="#a8743f" />
+          <rect x={X} y={Y + 22} width={T} height={3} fill="#a8743f" />
+          <line x1={X + 4} y1={Y + 9} x2={X + 28} y2={Y + 22} stroke="#8d8d8d" strokeWidth="1.5" />
+          <rect x={X + 8} y={Y + 12} width={16} height={8} fill="#a4553a" opacity="0.8" />
+        </g>
+      )
+    case 'a':
+      return (
+        <g>
+          {base}
+          <path d={`M${X + 2} ${Y + 28} Q${X + 16} ${Y + 2} ${X + 30} ${Y + 28} Z`} fill="#e3c98a" />
+          <path d={`M${X + 9} ${Y + 20} q4 -2 8 0 M${X + 15} ${Y + 13} q3 -2 6 0`} fill="none" stroke="#c9a85e" strokeWidth="1.2" />
+          <rect x={X + 21} y={Y + 8} width={2} height={16} fill="#6b4423" transform={`rotate(25 ${X + 22} ${Y + 16})`} />
+        </g>
+      )
+    case 'x':
+      return (
+        <g>
+          {base}
+          <ellipse cx={X + 16} cy={Y + 14} rx="10" ry="9" fill="#e07b39" />
+          <ellipse cx={X + 22} cy={Y + 9} rx="3.5" ry="3" fill="#5a3a1a" />
+          <path d={`M${X + 9} ${Y + 10} l12 8 M${X + 8} ${Y + 15} l12 7`} stroke="#c0602a" strokeWidth="1.5" />
+          <rect x={X + 6} y={Y + 23} width={20} height={3} fill="#5a5a5a" />
+          <circle cx={X + 8} cy={Y + 28} r="3" fill="#2b2b2b" />
+          <circle cx={X + 24} cy={Y + 28} r="3" fill="#2b2b2b" />
         </g>
       )
     default:

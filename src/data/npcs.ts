@@ -203,6 +203,22 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
       { text: 'A man in a dark coat watched the phone box all morning. He looked very sad.', es: 'Un hombre con abrigo oscuro miró la cabina de teléfono toda la mañana. Se veía muy triste.' },
     ],
   },
+  // ── Green Street en 1996 ──
+  'joe-young': {
+    name: 'Joe',
+    // El abuelo Joe de joven: construye la primera casa de Green Street y tiene el libro de verbos
+    look: { shirt: '#8b5a2b', hair: '#6b4a2a', skin: '#f1c27d', accessory: 'glasses' },
+    doneLine: { text: 'Keep my verb book in your head! Went, saw, ate... My son Daniel learned them all. He is a medical student now!', es: '¡Guarda mi libro de verbos en tu cabeza! Went, saw, ate... Mi hijo Daniel los aprendió todos. ¡Ahora estudia medicina!' },
+  },
+  pete: {
+    name: 'Pete',
+    look: { shirt: '#3b6fb6', hair: '#e0b04a', skin: '#f6d3b3', accessory: 'cap' },
+    lines: [
+      { text: 'Sam says "I goed to the shop". Ha ha! It is "I went"!', es: 'Sam dice "I goed to the shop". ¡Ja, ja! ¡Se dice "I went"!' },
+      { text: 'We built three houses last month. Well... we started three houses!', es: 'El mes pasado construimos tres casas. Bueno... ¡empezamos tres casas!' },
+      { text: 'Yesterday I saw a strange man in a dark coat. He stood in front of Joe\'s house for a long time.', es: 'Ayer vi a un hombre raro con abrigo oscuro. Se quedó mucho rato frente a la casa de Joe.' },
+    ],
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

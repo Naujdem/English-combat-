@@ -17,7 +17,7 @@ export type NpcTask = {
   shield?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs'
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
   vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
@@ -402,6 +402,20 @@ NPC_TASKS.nora = {
     say: 'Well, cart, stall, stamp... You learned all my words!',
   },
   shield: true,
+}
+
+// ── Green Street en 1996 ──
+NPC_TASKS['joe-young'] = {
+  done: 'past-verbbook',
+  lesson: 'past-irregular',
+  activity: 'verbs',
+  steps: [],
+  reward: {
+    text: 'Joe: "Twenty-five verbs! You read my whole book!"',
+    es: '¡Veinticinco verbos! ¡Leíste todo mi libro!',
+    sub: 'Los 25 verbos irregulares quedaron en tus fichas. También los ves en el Cuaderno, en "Libro de verbos".',
+    say: 'Twenty-five verbs! You read my whole book!',
+  },
 }
 
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */

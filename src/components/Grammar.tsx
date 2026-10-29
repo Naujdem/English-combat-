@@ -1,4 +1,5 @@
 import type { TopicId } from '../game/types'
+import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from '../data/irregular'
 
 /**
  * Ayudas visuales de gramática al estilo "Sujeto + Verbo + ...":
@@ -64,12 +65,16 @@ const KEY_BASE = [
   'always', 'usually', 'sometimes', 'often', 'never',
 ]
 const KEY = new Set([...KEY_BASE, 'yesterday', 'ago', 'last'])
+/** Pasados irregulares: van en morado (los regulares, en verde como todo verbo) */
+const IRREG_PAST = new Set([...IRREGULAR_VERBS.filter((v) => v.past !== v.base).map((v) => v.past), ...MORE_IRREGULAR_PASTS])
+for (const v of IRREGULAR_VERBS) VERB.add(v.base)
 
 /** Papel de una palabra en la frase, para colorearla */
 export function wordRole(word: string, topic?: TopicId): Role {
   const w = word.toLowerCase().replace(/[’`]/g, "'").replace(/[^a-z']/g, '')
   if (!w) return 'rest'
   if (SUBJ.has(w)) return 'subj'
+  if (IRREG_PAST.has(w) && (topic === 'past-irregular' || topic === 'past-regular')) return 'key'
   if (VERB.has(w)) return 'verb'
   if (/'s$/.test(w) && topic === 'possessives') return 'key'
   // Cada tema resalta sus palabras clave; las demás quedan neutras para no saturar
@@ -191,6 +196,8 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       return { title: 'I, he, she, it → was · you, we, they → were:', parts: [S('Sujeto'), '+', V('was / were'), '+', R('...')] }
     case 'past-regular':
       return { title: 'En pasado, el verbo lleva -ed y es igual para todas las personas:', parts: [S('Sujeto'), '+', V('verbo + ed'), '+', R('...'), '+', K('yesterday / ago')] }
+    case 'past-irregular':
+      return { title: 'Los irregulares tienen su propio pasado (en morado), igual para todas las personas:', parts: [S('Sujeto'), '+', K('went / saw / ate...'), '+', R('...')] }
     case 'time':
       if (question) return { title: 'Para preguntar la hora:', parts: [K('What time'), '+', V('is'), '+', S('it?')] }
       return { title: 'at + hora · on + día · in + mes, estación o parte del día:', parts: [R('...'), '+', K('at / on / in'), '+', R('hora / día / mes')] }
