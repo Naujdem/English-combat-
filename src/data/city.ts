@@ -61,12 +61,13 @@ export const CITY: SceneDef = {
   bossDoor: { x: 11, y: 12 },
   keysNeeded: 3,
   entities: [
-    { type: 'friend', id: 'leo', x: 3, y: 6 },
+    { type: 'friend', id: 'leo', x: 9, y: 10 },
     { type: 'interest', x: 9, y: 13 },
     { type: 'npc', id: 'driver', x: 2, y: 11 },
     { type: 'npc', id: 'rosa', x: 5, y: 9 },
     { type: 'npc', id: 'lily', x: 1, y: 4 },
     { type: 'npc', id: 'sam', x: 5, y: 13 },
+    { type: 'npc', id: 'mia', x: 4, y: 14 },
     { type: 'enemy', id: 'city-m1', x: 12, y: 9 },
     { type: 'enemy', id: 'city-m2', x: 12, y: 2 },
     { type: 'enemy', id: 'city-m3', x: 4, y: 2 },
@@ -92,6 +93,7 @@ export const CITY: SceneDef = {
       'Una pieza del reloj, con tus palabras, cayó en la ciudad. Tres personas tienen los pedazos de la llave de la oficina de turismo. Cruza la calle por la cebra, pídele un mapa a la oficial Rosa y lleva el café al guía.',
     later: 'Cruza Main Street por la cebra. Choca con personas para hablar y con objetos para ver su nombre en inglés.',
   },
+  epilogue: 'city-epilogue',
 }
 
 export const CITY_ENEMIES: Record<string, EnemyDef> = {
@@ -114,6 +116,7 @@ export const CITY_ENEMIES: Record<string, EnemyDef> = {
       { text: 'Here is the piece of the key. The guide is in the tourist office, next to the fountain.', es: 'Aquí está el pedazo de la llave. El guía está en la oficina de turismo, al lado de la fuente.' },
     ],
     freed: { text: "Excuse me, is there a bank near here? Ha ha, just kidding. It's on Main Street!", es: 'Disculpa, ¿hay un banco cerca? Ja, ja, es broma. ¡Está en Main Street!' },
+    bonus: { q: 'One more question. Look at the plaza. Is there a fountain?', options: ['Yes, there is.', 'Yes, there are.', "No, there isn't."], answer: 0, tip: 'En la plaza hay una fuente. Para una cosa: Yes, there is.' },
   },
   'city-m2': {
     id: 'city-m2',
@@ -134,6 +137,7 @@ export const CITY_ENEMIES: Record<string, EnemyDef> = {
       { text: 'Take this piece of the key. And look in the box next to the mirror: there is a jacket for you!', es: 'Toma este pedazo de la llave. Y mira en la caja al lado del espejo: ¡hay una chaqueta para ti!' },
     ],
     freed: { text: 'This T-shirt is ten dollars, and these shoes are twenty. Good prices!', es: 'Esta camiseta cuesta diez dólares, y estos zapatos veinte. ¡Buenos precios!' },
+    bonus: { q: 'Last question! This jacket is fifteen dollars. How much is it?', options: ['$50', '$15', '$5'], answer: 1, tip: '"Fifteen" es 15. "Fifty" es 50.' },
   },
   'city-m3': {
     id: 'city-m3',
@@ -154,6 +158,7 @@ export const CITY_ENEMIES: Record<string, EnemyDef> = {
       { text: 'Here is the piece of the key. Mr. Rossi is angry today. He has no coffee!', es: 'Aquí está el pedazo de la llave. El señor Rossi está enojado hoy. ¡No tiene café!' },
     ],
     freed: { text: "Can I take your order, please? Ha ha, I'm a good waiter now.", es: '¿Puedo tomar su pedido, por favor? Ja, ja, ahora soy un buen mesero.' },
+    bonus: { q: 'Here is your juice. Here you are! ... What do you say?', options: ["You're welcome!", 'Thank you!', 'Here you are!'], answer: 1, tip: 'Cuando te dan algo, se responde "Thank you!". "You\'re welcome" es "de nada".' },
   },
   'city-boss': {
     id: 'city-boss',
@@ -194,5 +199,11 @@ export const CITY_ENEMIES: Record<string, EnemyDef> = {
       { text: 'Take this piece of the clock. It is yours. And thank you for the coffee!', es: 'Toma esta pieza del reloj. Es tuya. ¡Y gracias por el café!' },
     ],
     freed: { text: 'Welcome to the city! There is a great café next to the shop.', es: '¡Bienvenido a la ciudad! Hay un café genial al lado de la tienda.' },
+    farewell: {
+      q: 'Thank you, my friend! Here is a free map of the city. Have a nice day!',
+      options: ["You're welcome!", 'Thank you! You too!', 'Good night!'],
+      answer: 1,
+      tip: 'Cuando alguien te desea un buen día, se responde "Thank you! You too!" (¡Gracias, igualmente!).',
+    },
   },
 }

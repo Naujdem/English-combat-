@@ -151,13 +151,6 @@ function Backdrop({ zone }: { zone: Zone }) {
   )
 }
 
-/** Grimm se despide al ser vencido: práctica de despedidas */
-const FAREWELL = {
-  q: "It's late. Goodbye, my student. See you in class tomorrow!",
-  options: ['Goodbye, Mr. Grimm! See you tomorrow!', 'Good morning, Mr. Grimm!', 'Hello, Mr. Grimm! Nice to meet you!'],
-  answer: 0,
-  tip: 'Para despedirse se dice "Goodbye" o "See you tomorrow". "Good morning" es para saludar y "Nice to meet you" es al conocer a alguien.',
-}
 
 type Phase = 'story' | 'ask' | 'feedback' | 'after' | 'bonus' | 'won' | 'lost'
 
@@ -341,9 +334,11 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const session = enemy.kind === 'minion' ? sessionFor(enemy.id) : undefined
   const bonusSession = session
     ? { id: session.id, title: 'Pregunta extra del horario', bonus: session.bonus, shield: true }
-    : enemy.kind === 'boss'
-      ? enemy.id === 'school-boss' ? { id: 'farewell', title: 'Despedida', bonus: FAREWELL, shield: false } : null
-      : undefined
+    : enemy.bonus
+      ? { id: 'bonus', title: 'Pregunta extra', bonus: enemy.bonus, shield: true }
+      : enemy.farewell
+        ? { id: 'farewell', title: 'Despedida', bonus: enemy.farewell, shield: false }
+        : undefined
   const [bonusPick, setBonusPick] = useState<number | null>(null)
   const story = storyLines[line]
   const wasMistake = state.mistakes.includes(q.id)
@@ -421,7 +416,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         <Panel className="anim-fade-in">
           <div className="flex items-center justify-between gap-2">
             <p className="font-display text-lg text-gold">{enemy.kind !== 'minion' || phase === 'after' ? enemy.person : enemy.name}</p>
-            <SpeakButton text={story.text} size="sm" />
+            <SpeakButton text={story.text} size="sm" auto />
           </div>
           <p key={`${phase}-${line}`} className="anim-fade-in text-[17px] leading-relaxed">"<Tappable text={story.text} />"</p>
           {showEs && story.es && <p className="mt-1 text-sm text-paper/60">{story.es}</p>}
@@ -473,7 +468,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             <div className="anim-fade-in mt-3 rounded-xl border-2 border-[#a07cd0]/60 bg-[#a07cd0]/10 p-3">
               <div className="flex items-center justify-between gap-2">
                 <p className="font-display text-lg text-[#c9b3ee]">{enemy.person} cambia...</p>
-                <SpeakButton text={interlude.text} size="sm" />
+                <SpeakButton text={interlude.text} size="sm" auto />
               </div>
               <p className="text-[16px] leading-snug">"<Tappable text={interlude.text} />"</p>
               {interlude.es && showEs && <p className="mt-1 text-sm text-paper/60">{interlude.es}</p>}
@@ -540,7 +535,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             <p className="flex-1 text-[17px] leading-relaxed">
               <span className="font-semibold text-gold">{enemy.person}: </span>"{bonusSession.bonus.q}"
             </p>
-            <SpeakButton text={bonusSession.bonus.q} size="sm" />
+            <SpeakButton text={bonusSession.bonus.q} size="sm" auto />
           </div>
           <div className="mt-3 grid gap-2">
             {bonusSession.bonus.options.map((o, k) => {
@@ -566,7 +561,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             <div className="anim-fade-in mt-3 rounded-xl bg-panel-2 p-3">
               {bonusPick === bonusSession.bonus.answer ? (
                 <p className="text-sm font-semibold text-hp">
-                  {bonusSession.shield ? '¡Correcto! Leíste bien el horario. Ganaste un escudo de palabras (máximo 2).' : '¡Muy bien! Así se despide uno en inglés.'}
+                  {bonusSession.shield ? (session ? '¡Correcto! Leíste bien el horario. ' : '¡Correcto! ') + 'Ganaste un escudo de palabras (máximo 2).' : '¡Muy bien! Así se responde en inglés.'}
                 </p>
               ) : (
                 <p className="text-[15px] leading-snug"><span className="font-semibold text-gold">Pista: </span>{bonusSession.bonus.tip}</p>

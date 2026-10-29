@@ -11,6 +11,7 @@ import { Flashcards } from '../components/Flashcards'
 import { BusRide, BUS_TO_CITY } from '../components/BusRide'
 import { ProgressView, Review } from '../components/Review'
 import { setSound, soundOn } from '../game/sfx'
+import { autoVoiceOn, setAutoVoice } from '../game/speech'
 import { DIARY } from '../data/diary'
 import { dueCards } from '../game/cards'
 import type { Update } from '../game/store'
@@ -30,6 +31,8 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const [review, setReview] = useState(false)
   const [progress, setProgress] = useState(false)
   const [sound, setSoundState] = useState(soundOn())
+  const [voice, setVoiceState] = useState(autoVoiceOn())
+  const [settings, setSettings] = useState(false)
   const hasDiary = DIARY.some((c) => state.opened.includes(c.unlock))
   const dueCount = dueCards(state.cards).length
 
@@ -63,16 +66,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         <button className={btnGhost} onClick={onTitle}>Menú</button>
         <Hearts hp={state.hp} max={state.maxHp} />
         <div className="flex items-center">
-          <button
-            className={`${btnGhost} px-2 text-xs`}
-            onClick={() => {
-              setSound(!sound)
-              setSoundState(!sound)
-            }}
-            aria-label={sound ? 'Silenciar sonidos' : 'Activar sonidos'}
-          >
-            {sound ? 'Sonido: sí' : 'Sonido: no'}
-          </button>
+          <button className={`${btnGhost} px-2 text-sm`} onClick={() => setSettings(true)}>Ajustes</button>
           <button className={btnGhost} onClick={() => setFriends(true)}>Amigos</button>
         </div>
       </header>
@@ -155,6 +149,33 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
             onEnter('city')
           }}
         />
+      )}
+      {settings && (
+        <Overlay onClose={() => setSettings(false)}>
+          <Panel>
+            <div className="mb-3 flex items-center justify-between">
+              <p className="font-display text-xl text-gold">Ajustes</p>
+              <button className={btnGhost} onClick={() => setSettings(false)}>Cerrar</button>
+            </div>
+            <div className="grid gap-2">
+              <label className="flex items-center justify-between rounded-xl border-2 border-line px-3 py-2.5 text-[15px]">
+                <span>
+                  Voz automática
+                  <span className="block text-xs text-paper/55">Las frases en inglés se leen solas al aparecer</span>
+                </span>
+                <input type="checkbox" className="h-5 w-5 accent-[#e0a526]" checked={voice} onChange={(e) => { setAutoVoice(e.target.checked); setVoiceState(e.target.checked) }} />
+              </label>
+              <label className="flex items-center justify-between rounded-xl border-2 border-line px-3 py-2.5 text-[15px]">
+                <span>
+                  Sonidos
+                  <span className="block text-xs text-paper/55">Aciertos, errores, golpes y premios</span>
+                </span>
+                <input type="checkbox" className="h-5 w-5 accent-[#e0a526]" checked={sound} onChange={(e) => { setSound(e.target.checked); setSoundState(e.target.checked) }} />
+              </label>
+              <p className="text-xs text-paper/50">Las flechas o el joystick se eligen en la exploración, encima de los controles.</p>
+            </div>
+          </Panel>
+        </Overlay>
       )}
       {review && <Review state={state} update={update} onClose={() => setReview(false)} />}
       {progress && (

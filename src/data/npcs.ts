@@ -56,6 +56,15 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#8b5a2b', hair: '#d9822b', skin: '#f6d3b3', gender: 'female' },
     doneLine: { text: 'Hi again! Can I get you anything?', es: '¡Hola otra vez! ¿Te traigo algo?' },
   },
+  mia: {
+    name: 'Mia',
+    // Corre con audífonos y choca contigo: practicar disculpas y dar indicaciones
+    look: { shirt: '#3b9d5d', hair: '#1f1f1f', skin: '#c68642', gender: 'female' },
+    lines: [
+      { text: 'Hi again! I run in the park every morning.', es: '¡Hola otra vez! Corro en el parque todas las mañanas.' },
+      { text: 'Thank you for your help! The bank is next to the park, right?', es: '¡Gracias por tu ayuda! El banco está al lado del parque, ¿cierto?' },
+    ],
+  },
   sam: {
     name: 'Sam',
     look: { shirt: '#e0a526', hair: '#5a3a1a', skin: '#8d5524' },

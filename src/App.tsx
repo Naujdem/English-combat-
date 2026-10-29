@@ -11,6 +11,13 @@ import { TeacherPanel } from './components/TeacherPanel'
 import { WordProvider } from './components/Words'
 import { ENEMIES } from './data/enemies'
 
+/** Un capítulo terminado cuyo final todavía no se vio (por si se cerró el juego en medio) */
+function pendingEpilogue(s: ReturnType<typeof useGameState>['state']) {
+  const scene = SCENES[s.sceneId]
+  const boss = scene?.entities.find((e) => e.type === 'boss')
+  return !!(scene?.epilogue && boss && 'id' in boss && s.defeated.includes(boss.id) && !s.opened.includes(scene.epilogue))
+}
+
 export default function App() {
   const { state, update, setState } = useGameState()
   const [flash, setFlash] = useState(0)
@@ -38,7 +45,7 @@ export default function App() {
         <Title
           state={state}
           onContinue={() =>
-            go(state.battle ? 'battle' : state.defeated.includes('school-boss') && !state.opened.includes('school-epilogue') ? 'epilogue' : 'world')
+            go(state.battle ? 'battle' : pendingEpilogue(state) ? 'epilogue' : 'world')
           }
           onNew={() => {
             clearSave()
@@ -88,7 +95,10 @@ export default function App() {
           onDone={() =>
             update((s) => ({
               ...s,
-              opened: s.opened.includes('school-epilogue') ? s.opened : [...s.opened, 'school-epilogue'],
+              opened: (() => {
+                const id = SCENES[s.sceneId].epilogue ?? 'school-epilogue'
+                return s.opened.includes(id) ? s.opened : [...s.opened, id]
+              })(),
               screen: 'world',
             }))
           }

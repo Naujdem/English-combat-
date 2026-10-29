@@ -55,7 +55,7 @@ const BASE: Record<string, string> = Object.fromEntries(
 
 /** Busca una palabra; si no está, prueba su forma base (plural, -ing, -ed) */
 export function translate(raw: string): string | null {
-  const w = raw.toLowerCase().replace(/[’`]/g, "'").replace(/^[^a-z']+|[^a-z']+$/g, '').replace(/^'+|'+$/g, '')
+  const w = raw.toLowerCase().replace(/[’`]/g, "'").replace(/^[^a-zà-ÿ']+|[^a-zà-ÿ']+$/g, '').replace(/^'+|'+$/g, '')
   if (!w) return null
   const direct = DICT[w] ?? BASE[w]
   if (direct) return direct
@@ -78,5 +78,5 @@ export function translate(raw: string): string | null {
 }
 
 export function normalizeWord(raw: string) {
-  return raw.toLowerCase().replace(/[’`]/g, "'").replace(/^[^a-z']+|[^a-z']+$/g, '').replace(/^'+|'+$/g, '')
+  return raw.toLowerCase().replace(/[’`]/g, "'").replace(/^[^a-zà-ÿ']+|[^a-zà-ÿ']+$/g, '').replace(/^'+|'+$/g, '')
 }

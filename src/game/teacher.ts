@@ -119,6 +119,21 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
       }
     },
   },
+  {
+    id: 'city-done',
+    label: 'Ciudad: terminada (ver el final)',
+    apply: (s) => {
+      const b = PRESETS[3].apply(s)
+      return {
+        ...b,
+        screen: 'epilogue',
+        defeated: add(b.defeated, ['city-boss']),
+        relics: Math.max(2, b.relics),
+        recovered: add(b.recovered, ['there-is', 'demonstratives', 'ordering']) as GameState['recovered'],
+        outfits: add(b.outfits, ['gorra']),
+      }
+    },
+  },
 ]
 
 /** Marca todas las lecciones como vistas (para no repetirlas al revisar) */

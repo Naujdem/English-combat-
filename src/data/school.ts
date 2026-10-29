@@ -236,6 +236,12 @@ export const SCHOOL_ENEMIES: Record<string, EnemyDef> = {
       { text: 'It is a piece of a clock, and your words are in it. A man in a dark coat came and asked for it... with a very strange voice. Take it. It is yours.', es: 'Es una pieza de un reloj, y tus palabras están ahí. Un hombre con abrigo oscuro vino a pedirla... con una voz muy extraña. Tómala. Es tuya.' },
     ],
     freed: { text: 'Thank you, my student. Come to my class anytime!', es: 'Gracias, mi estudiante. ¡Ven a mi clase cuando quieras!' },
+    farewell: {
+      q: "It's late. Goodbye, my student. See you in class tomorrow!",
+      options: ['Goodbye, Mr. Grimm! See you tomorrow!', 'Good morning, Mr. Grimm!', 'Hello, Mr. Grimm! Nice to meet you!'],
+      answer: 0,
+      tip: 'Para despedirse se dice "Goodbye" o "See you tomorrow". "Good morning" es para saludar y "Nice to meet you" es al conocer a alguien.',
+    },
   },
 }
 

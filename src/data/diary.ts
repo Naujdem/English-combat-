@@ -150,6 +150,46 @@ export const DIARY: DiaryChapter[] = [
       },
     ],
   },
+  {
+    id: 'city',
+    title: 'Capítulo 2: La ciudad',
+    unlock: 'city-epilogue',
+    words: [
+      { title: 'Lugares de la ciudad', words: [['street', 'calle'], ['bank', 'banco'], ['park', 'parque'], ['café', 'café'], ['supermarket', 'supermercado'], ['hospital', 'hospital'], ['bus stop', 'parada de autobús'], ['tourist office', 'oficina de turismo'], ['fountain', 'fuente'], ['crosswalk', 'cebra']] },
+      { title: 'Direcciones', words: [['go straight', 'sigue derecho'], ['turn left', 'gira a la izquierda'], ['turn right', 'gira a la derecha'], ['on your left', 'a tu izquierda'], ['on your right', 'a tu derecha'], ['near', 'cerca'], ['far from', 'lejos de'], ['cross the street', 'cruza la calle']] },
+      { title: 'There is / there are', words: [['there is', 'hay (una cosa)'], ['there are', 'hay (varias)'], ['is there...?', '¿hay...? (una)'], ['are there...?', '¿hay...? (varias)']] },
+      { title: 'En el café', words: [['coffee', 'café'], ['juice', 'jugo'], ['water', 'agua'], ['milk', 'leche'], ['cake', 'pastel'], ['sandwich', 'sándwich'], ['apple', 'manzana'], ['menu', 'menú'], ['Can I have..., please?', '¿Me da..., por favor?'], ['Here you are.', 'Aquí tiene.'], ['How much is it?', '¿Cuánto cuesta?']] },
+      { title: 'En la tienda', words: [['T-shirt', 'camiseta'], ['jacket', 'chaqueta'], ['shoes', 'zapatos'], ['dress', 'vestido'], ['jeans', 'jeans'], ['this / these', 'este / estos'], ['that / those', 'ese / esos'], ['cheap', 'barato'], ['expensive', 'caro']] },
+      { title: 'Números y precios', words: [['thirteen', 'trece'], ['fifteen', 'quince'], ['twenty', 'veinte'], ['thirty', 'treinta'], ['forty', 'cuarenta'], ['fifty', 'cincuenta'], ['dollars', 'dólares']] },
+      { title: 'Transporte y cortesía', words: [['bus', 'autobús'], ['ticket', 'boleto'], ['driver', 'conductor'], ['excuse me', 'disculpe'], ['sorry', 'perdón'], ["that's OK", 'no pasa nada'], ['thank you', 'gracias'], ['you too', 'igualmente']] },
+    ],
+    versions: [
+      {
+        id: 'city-present',
+        tense: 'n',
+        tab: 'Presente',
+        title: 'My story: the city',
+        frame: 'Lo que pasó en la ciudad, contado en presente.',
+        lines: [
+          { en: 'Leo and I [take]n the bus to the city.', es: 'Leo y yo tomamos el autobús a la ciudad.' },
+          { en: 'The city [is]n big. There [is]n a café, a clothes shop and a fountain.', es: 'La ciudad es grande. Hay un café, una tienda de ropa y una fuente.' },
+          { en: 'Officer Rosa [gives]n me a map. Now I [know]n the streets.', es: 'La oficial Rosa me da un mapa. Ahora conozco las calles.' },
+          { en: 'In the café, I [order]n a juice and a cake. Lily [writes]n my name on the cup.', es: 'En el café pido un jugo y un pastel. Lily escribe mi nombre en el vaso.' },
+          { en: 'Danny, Chloe and Victor [have]n the pieces of a key.', es: 'Danny, Chloe y Víctor tienen los pedazos de una llave.' },
+          { en: 'Mr. Rossi [is]n the guide. He [has]n a piece of the clock, and he [sends]n tourists to the wrong place!', es: 'El señor Rossi es el guía. Tiene una pieza del reloj, ¡y manda a los turistas al lugar equivocado!' },
+          { en: 'I [take]n him a black coffee, and I [win]n.', es: 'Le llevo un café negro, y gano.' },
+          { en: 'Now I [have]n two pieces of the clock.', es: 'Ahora tengo dos piezas del reloj.' },
+          { en: 'Tomorrow we [go]n to Green Street. Leo [lives]n there!', es: 'Mañana vamos a Green Street. ¡Leo vive allá!' },
+        ],
+        questions: [
+          { q: 'How do you go to the city?', options: ['By bus.', 'By car.', 'By bike.'], answer: 0, tip: 'El texto dice: "Leo and I take the bus to the city".' },
+          { q: 'What does Officer Rosa give you?', options: ['A coffee.', 'A map.', 'A key.'], answer: 1, tip: 'El texto dice: "Officer Rosa gives me a map".' },
+          { q: 'What do you order in the café?', options: ['An apple and water.', 'A pizza.', 'A juice and a cake.'], answer: 2, tip: 'El texto dice: "I order a juice and a cake".' },
+          { q: 'How many pieces of the clock do you have now?', options: ['One.', 'Two.', 'Five.'], answer: 1, tip: 'El texto dice: "Now I have two pieces of the clock".' },
+        ],
+      },
+    ],
+  },
 ]
 
 /** Diccionario de las palabras de los diarios (inglés → español) */
@@ -170,7 +210,7 @@ export const DICT: Record<string, string> = {
   student: 'estudiante', "student's": 'del estudiante', students: 'estudiantes', take: 'tomar, llevarse', takes: 'se lleva (take)', talk: 'hablar', terrible: 'terrible',
   the: 'el, la, los, las', then: 'luego', there: 'allá', they: 'ellos', things: 'cosas', to: 'a, para', today: 'hoy', together: 'juntos', tom: 'Tom (nombre)', tomorrow: 'mañana (el día siguiente)',
   took: 'se llevó (take)', travel: 'viajar', under: 'bajo, debajo de', uniform: 'uniforme', very: 'muy', voice: 'voz', was: 'era, fue, estaba (to be)', we: 'nosotros',
-  week: 'semana', whistle: 'silbato', win: 'ganar', won: 'gané (win)', words: 'palabras', ha: 'ja (risa)', broken: 'roto', machine: 'máquina', inside: 'dentro de', time: 'tiempo, época', this: 'este, esta', teacher: 'profesor', them: 'a ellos, los', keep: 'guardar', later: 'después',
+  week: 'semana', whistle: 'silbato', win: 'ganar', won: 'gané (win)', words: 'palabras', ha: 'ja (risa)', order: 'pedir', writes: 'escribe (write)', sends: 'manda (send)', lives: 'vive (live)', know: 'conocer, saber', streets: 'calles', tourists: 'turistas', guide: 'guía', wrong: 'equivocado', place: 'lugar', cup: 'vaso', cake: 'pastel', juice: 'jugo', map: 'mapa', officer: 'oficial', big: 'grande', fountain: 'fuente', shop: 'tienda', clothes: 'ropa', café: 'café', green: 'verde', street: 'calle', coffee: 'café (bebida)', go: 'ir', broken: 'roto', machine: 'máquina', inside: 'dentro de', time: 'tiempo, época', this: 'este, esta', teacher: 'profesor', them: 'a ellos, los', keep: 'guardar', later: 'después',
   "school's": 'de la escuela', ana: 'Ana (nombre)', story: 'historia', plan: 'plan', "stranger's": 'del desconocido',
 }
 
@@ -180,7 +220,7 @@ export function fillNames(text: string, name: string, iname: string) {
 
 /** Normaliza una palabra para buscarla en el diccionario */
 export function normWord(raw: string) {
-  return raw.toLowerCase().replace(/[’`]/g, "'").replace(/^[^a-z']+|[^a-z']+$/g, '').replace(/^'+|'+$/g, '')
+  return raw.toLowerCase().replace(/[’`]/g, "'").replace(/^[^a-zà-ÿ']+|[^a-zà-ÿ']+$/g, '').replace(/^'+|'+$/g, '')
 }
 
 export function lookup(raw: string, names: string[] = []): string | null {

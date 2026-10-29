@@ -29,6 +29,7 @@ import { Tappable } from '../components/Words'
 import { CoachSays } from '../components/CoachSays'
 import { Directions } from '../components/Directions'
 import { CafeOrder } from '../components/CafeOrder'
+import { MiniTalk } from '../components/MiniTalk'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
 const VIEW = 11
@@ -58,7 +59,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const firstVisit = !state.seenLesson.includes(scene.id)
   const doorOpen = bossDoorOpen(state, scene)
   const keys = state.keys[scene.id] ?? 0
-  const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | 'sports' | 'timetable' | 'where' | 'coach' | 'directions' | 'cafe' | null>(null)
+  const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | 'sports' | 'timetable' | 'where' | 'coach' | 'directions' | 'cafe' | 'sorry' | null>(null)
   const boardNext = nextSession(state.opened, state.defeated)
   const npcTurn = useRef<Record<string, number>>({})
   // La traducción de lo que dicen los personajes se ve solo si se pide
@@ -126,6 +127,10 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           setMsg(null)
           if (!state.seenLesson.includes('ordering')) setLesson({ topics: ['ordering'], then: 'cafe' })
           else setActivity('cafe')
+        } else if (e.id === 'mia' && !state.opened.includes('city-sorry')) {
+          // Mia choca contigo: pedir disculpas y responder
+          setMsg(null)
+          setActivity('sorry')
         } else if (e.id === 'coach') {
           setMsg(null)
           // La primera vez, el entrenador da órdenes (imperativos) antes del repaso de deportes
@@ -407,7 +412,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   (e.id === 'coach' && !state.opened.includes('school-whistle')) ||
                   (e.id === 'ana' && !state.opened.includes('school-supplies')) ||
                   (e.id === 'rosa' && !state.opened.includes('city-map')) ||
-                  (e.id === 'lily' && !state.opened.includes('city-coffee'))
+                  (e.id === 'lily' && !state.opened.includes('city-coffee')) ||
+                  (e.id === 'mia' && !state.opened.includes('city-sorry'))
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
                     <SpriteBody look={NPCS[e.id].look} />
@@ -498,7 +504,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   msg.text
                 )}
               </p>
-              {msg.say && <SpeakButton text={msg.say} size="sm" />}
+              {msg.say && <SpeakButton text={msg.say} size="sm" auto />}
             </div>
             {msg.es && showEs && <p className="mt-0.5 text-sm text-paper/60">{msg.es}</p>}
             {msg.sub && <p className="mt-0.5 text-sm text-paper/70">{msg.sub}</p>}
@@ -658,6 +664,26 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 tone: 'good',
                 say: 'The tourist office is next to the fountain. Good luck!',
               })
+            }}
+          />
+        </Overlay>
+      )}
+
+      {activity === 'sorry' && (
+        <Overlay>
+          <MiniTalk
+            name="Mia"
+            look={NPCS.mia.look}
+            steps={[
+              { text: 'Oh! Sorry! I am in a hurry!', es: '¡Oh! ¡Perdón! ¡Tengo prisa!', choice: { ask: 'Mia chocó contigo. ¿Qué le dices?', options: ["That's OK!", "You're welcome!", 'Nice to meet you!'], answer: 0, tip: 'Cuando alguien pide perdón, se responde "That\'s OK!" (no pasa nada).' } },
+              { text: 'Excuse me... Is there a bank near here?', es: 'Disculpa... ¿Hay un banco cerca de aquí?', choice: { ask: 'Hay un banco en Main Street. ¿Qué le respondes?', options: ['Yes, there are a bank.', "Yes, there is. It's on Main Street.", 'No, there have.'], answer: 1, tip: 'Una cosa: Yes, there is. Y dile dónde: It\'s on Main Street.' } },
+              { text: 'Thank you so much! Have a nice day!', es: '¡Muchas gracias! ¡Que tengas un buen día!', choice: { ask: '¿Qué le respondes?', options: ['You too! Bye!', 'Sorry!', 'How much is it?'], answer: 0, tip: 'Cuando te desean un buen día: "You too!" (igualmente).' } },
+            ]}
+            onClose={(done) => {
+              setActivity(null)
+              if (!done) return
+              update((s) => ({ ...s, opened: s.opened.includes('city-sorry') ? s.opened : [...s.opened, 'city-sorry'], items: { ...s.items, shield: Math.min(2, s.items.shield + 1) } }))
+              setMsg({ text: 'Mia: "Bye!"', es: '¡Adiós!', sub: 'Ayudaste a Mia. Ganaste un escudo de palabras.', tone: 'good', say: 'Bye!' })
             }}
           />
         </Overlay>

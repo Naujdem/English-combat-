@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
 import { DIARY, fillNames, lookup, normWord, TENSE_INFO, type DiaryChapter, type Tense } from '../data/diary'
+import { translate } from '../data/glossary'
 import { newCard } from '../game/cards'
 import { useTeacher } from '../game/teacher'
 import { SpeakButton } from './SpeakButton'
@@ -13,7 +14,8 @@ import { btn, btnGhost, btnPrimary, Overlay, Panel } from './ui'
  */
 export function Diary({ state, update, onClose }: { state: GameState; update: Update; onClose: () => void }) {
   const chapters = DIARY.filter((c) => state.opened.includes(c.unlock))
-  const [chapter] = useState<DiaryChapter | undefined>(chapters[chapters.length - 1])
+  const [ci, setCi] = useState(chapters.length - 1)
+  const chapter: DiaryChapter | undefined = chapters[ci]
   const [v, setV] = useState(0)
   const [showEs, setShowEs] = useState(false)
   const [verbs, setVerbs] = useState(false)
@@ -79,7 +81,7 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
     if (versions[k].tense === 'mix') setVerbs(true)
   }
 
-  const meaning = word ? lookup(word.raw, names) : null
+  const meaning = word ? lookup(word.raw, names) ?? translate(word.raw) : null
   const isName = word ? names.some((n) => n.toLowerCase() === normWord(word.raw)) || /\(nombre\)$/.test(meaning ?? '') : false
   const saved = word ? state.cards.some((c) => c.id === normWord(word.raw)) : false
 
@@ -151,6 +153,27 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
           </div>
           <button className={btnGhost} onClick={onClose}>Cerrar</button>
         </div>
+
+        {chapters.length > 1 && (
+          <div className="flex flex-wrap gap-1.5">
+            {chapters.map((c, k) => (
+              <button
+                key={c.id}
+                className={`rounded-full border px-3 py-1 text-xs font-semibold ${k === ci ? 'border-gold bg-gold/15 text-gold' : 'border-line text-paper/70'}`}
+                onClick={() => {
+                  setCi(k)
+                  setV(0)
+                  setQuiz(null)
+                  setSolved(false)
+                  setTip(null)
+                  setWord(null)
+                }}
+              >
+                {c.title.split(':')[0]}
+              </button>
+            ))}
+          </div>
+        )}
 
         <div className="grid gap-1.5" style={{ gridTemplateColumns: `repeat(${versions.length}, minmax(0, 1fr))` }} role="tablist">
           {versions.map((x, k) => (

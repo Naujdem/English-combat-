@@ -1,9 +1,15 @@
-import { useRef } from 'react'
-import { canSpeak, speak } from '../game/speech'
+import { useEffect, useRef } from 'react'
+import { autoVoiceOn, canSpeak, speak } from '../game/speech'
 
 /** Botón de bocina que lee el texto en inglés. Un toque: velocidad normal. Dos toques seguidos: más lento. */
-export function SpeakButton({ text, size = 'md', label = 'Escuchar en inglés' }: { text: string; size?: 'sm' | 'md' | 'lg'; label?: string }) {
+export function SpeakButton({ text, size = 'md', label = 'Escuchar en inglés', auto }: { text: string; size?: 'sm' | 'md' | 'lg'; label?: string; auto?: boolean }) {
   const last = useRef(0)
+  // auto: la frase se lee sola cuando aparece (si la voz automática está activada)
+  useEffect(() => {
+    if (!auto || !canSpeak || !autoVoiceOn()) return
+    const t = window.setTimeout(() => speak(text), 250)
+    return () => window.clearTimeout(t)
+  }, [auto, text])
   if (!canSpeak) return null
   const dims = size === 'lg' ? 'h-14 w-14' : size === 'sm' ? 'h-7 w-7' : 'h-9 w-9'
   const icon = size === 'lg' ? 28 : size === 'sm' ? 15 : 18

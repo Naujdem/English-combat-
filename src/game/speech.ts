@@ -43,3 +43,20 @@ export function speak(text: string, slow = false) {
 export function stopSpeaking() {
   if (canSpeak) window.speechSynthesis.cancel()
 }
+
+/** Voz automática: las frases se leen solas al aparecer (se puede apagar en el mapa) */
+const AUTO_KEY = 'english-combat-autovoice'
+export function autoVoiceOn(): boolean {
+  try {
+    return localStorage.getItem(AUTO_KEY) !== 'off'
+  } catch {
+    return true
+  }
+}
+export function setAutoVoice(on: boolean) {
+  try {
+    localStorage.setItem(AUTO_KEY, on ? 'on' : 'off')
+  } catch {
+    /* sin almacenamiento */
+  }
+}

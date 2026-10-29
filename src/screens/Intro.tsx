@@ -98,7 +98,7 @@ export function Intro({
         {s.who === 'stranger' && (
           <div className="flex items-center justify-between">
             <p className="font-display text-lg text-[#b9a3e8]">???</p>
-            <SpeakButton text={s.text} size="sm" />
+            <SpeakButton text={s.text} size="sm" auto />
           </div>
         )}
         <p key={i} className={`anim-fade-in text-[17px] leading-relaxed ${s.who === 'narrator' ? 'italic text-paper/85' : ''}`}>

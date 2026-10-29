@@ -263,7 +263,7 @@ export function Presentation({ onDone }: { onDone: (hero: Hero, interest: Intere
         {leoLine && (
           <div className="flex items-center justify-between">
             <p className="font-display text-lg text-gold">Leo</p>
-            <SpeakButton text={sayText} size="sm" />
+            <SpeakButton text={sayText} size="sm" auto />
           </div>
         )}
         {s.kind === 'practice' && <p className="text-xs font-semibold uppercase tracking-wide text-hp">Escribe en la pizarra</p>}
@@ -352,7 +352,7 @@ export function Presentation({ onDone }: { onDone: (hero: Hero, interest: Intere
             </p>
             <div className="flex items-start gap-2">
               <p className="flex-1 text-[17px]"><span className="font-semibold text-gold">Leo: </span>"{picked.reply}"</p>
-              <SpeakButton text={picked.reply!} size="sm" />
+              <SpeakButton text={picked.reply!} size="sm" auto />
             </div>
             {!hideEs && picked.es && <p className="text-sm text-paper/60">{picked.es}</p>}
           </div>

@@ -89,7 +89,13 @@ export type EnemyDef = {
   after: StoryLine[]
   /** Lo que dice si le hablas después de vencerlo (ya no es enemigo) */
   freed: StoryLine
+  /** Pregunta extra al ser vencido (esbirros): acertarla da un escudo */
+  bonus?: BonusQ
+  /** Despedida al ser vencido (jefes): practicar cómo despedirse */
+  farewell?: BonusQ
 }
+
+export type BonusQ = { q: string; options: string[]; answer: number; tip: string }
 
 /** Una línea de historia en inglés con su traducción */
 export type StoryLine = { text: string; es?: string }

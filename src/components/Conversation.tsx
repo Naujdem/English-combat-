@@ -81,7 +81,7 @@ export function ConversationView({
             <p key={i} className={`anim-fade-in flex-1 text-[17px] leading-relaxed ${line.who === 'narrator' ? 'italic text-paper/80' : ''}`}>
               {line.who === 'friend' ? <Tappable text={line.text} /> : line.text}
             </p>
-            {line.who === 'friend' && <SpeakButton text={line.text} size="sm" />}
+            {line.who === 'friend' && <SpeakButton text={line.text} size="sm" auto />}
           </div>
           {showEs && line.es && <p className="mt-1 text-sm text-paper/60">{line.es}</p>}
           {line.options && (
@@ -105,7 +105,7 @@ export function ConversationView({
             <p className="flex-1 text-[17px] leading-relaxed">
               <span className="font-semibold text-gold">{friend.name}: </span>"{picked.reply}"
             </p>
-            <SpeakButton text={picked.reply} size="sm" />
+            <SpeakButton text={picked.reply} size="sm" auto />
           </div>
           {showEs && picked.es && <p className="text-sm text-paper/60">{picked.es}</p>}
           <div><EffectChip effect={picked.effect} /></div>

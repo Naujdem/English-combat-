@@ -30,7 +30,8 @@ type Step = {
  * El protagonista habla por primera vez, presenta a sus amigos, aparece el villano
  * y todos se despiden. Practica "This is..." y las despedidas.
  */
-function buildSteps(s: GameState): Step[] {
+function buildSteps(s: GameState, sceneId: string): Step[] {
+  if (sceneId === 'city') return citySteps(s)
   const name = s.hero.name
   const it = s.interest
   const iname = it.name
@@ -115,8 +116,77 @@ function buildSteps(s: GameState): Step[] {
   ]
 }
 
+/**
+ * Final del capítulo 2: al salir de la oficina de turismo. Repasa there is/are,
+ * aparece el desconocido y Leo cuenta que vive en Green Street, el barrio.
+ */
+function citySteps(s: GameState): Step[] {
+  const name = s.hero.name
+  const iname = s.interest.name
+  const cast: ('leo' | 'maya' | 'interest')[] = ['leo', 'interest']
+  return [
+    { who: 'narrator', text: `Sales de la oficina de turismo. Al lado de la fuente, Leo y ${iname} miran los peces.`, cast },
+    { who: 'leo', text: `${name}! Is Mr. Rossi OK now?`, es: `¡${name}! ¿El señor Rossi ya está bien?`, cast },
+    {
+      who: 'hero',
+      text: '¿Qué le respondes a Leo?',
+      cast,
+      clock: true,
+      choice: {
+        options: ['Yes, he is. And look: another piece of the clock!', 'Yes, he are. Look at the clock!', "No, he isn't. He is a fish."],
+        answer: 0,
+        tip: 'Con "he" va "is": Yes, he is. Y muéstrales la pieza del reloj.',
+      },
+    },
+    { who: 'interest', text: 'Wow! There are two pieces now. And there is a little light inside!', es: '¡Guau! Ahora hay dos piezas. ¡Y hay una lucecita adentro!', cast, clock: true },
+    { who: 'narrator', text: 'Leo se acerca a la fuente para contar los peces. Entonces, una voz ronca suena a tu lado.', cast },
+    { who: 'villain', text: 'Two pieces... You are fast. Very fast.', es: 'Dos piezas... Eres rápido. Muy rápido.', villain: true, cast },
+    { who: 'villain', text: 'But the next piece is on Green Street. And this time, I am going to find it first!', es: 'Pero la siguiente pieza está en Green Street. ¡Y esta vez yo la voy a encontrar primero!', villain: true, cast },
+    { who: 'narrator', text: 'Cuando Leo se da vuelta, el desconocido ya no está. Solo queda un poco de humo oscuro.', cast },
+    { who: 'leo', text: 'Who was that? ... Wait. Green Street? My house is on Green Street!', es: '¿Quién era? ... Espera. ¿Green Street? ¡Mi casa está en Green Street!', cast },
+    {
+      who: 'hero',
+      text: '¿Qué les propones?',
+      cast,
+      choice: {
+        options: ["Let's go to Green Street tomorrow!", 'Go to Green Street yesterday!', 'Green Street are my house!'],
+        answer: 0,
+        tip: 'Para proponer algo se dice "Let\'s + verbo": Let\'s go! (¡Vamos!).',
+      },
+    },
+    { who: 'interest', text: 'Can I come too?', es: '¿Puedo ir yo también?', cast },
+    {
+      who: 'hero',
+      text: `¿Qué le respondes a ${iname}?`,
+      cast,
+      choice: {
+        options: ['Yes, of course!', "No, I can't swim.", 'Yes, I am a bank.'],
+        answer: 0,
+        tip: '"Yes, of course!" significa "¡Sí, claro!". Las otras respuestas no tienen sentido aquí.',
+      },
+    },
+    { who: 'leo', text: 'Great! Tomorrow we take the bus to Green Street. My family is very nice. See you tomorrow!', es: '¡Genial! Mañana tomamos el autobús a Green Street. Mi familia es muy amable. ¡Nos vemos mañana!', cast },
+    {
+      who: 'hero',
+      text: '¿Cómo te despides?',
+      cast,
+      choice: {
+        options: ['See you tomorrow, Leo!', 'Good morning, Leo!', 'Nice to meet you, Leo!'],
+        answer: 0,
+        tip: 'Para despedirse hasta mañana: "See you tomorrow!".',
+      },
+    },
+    {
+      who: 'narrator',
+      text: 'Fin del capítulo 2: La ciudad. Recuperaste there is / there are, this / these, los precios y cómo pedir en un café. Tu viaje continúa en Green Street, el barrio de Leo... Esa noche, escribes en tu diario.',
+      cast,
+    },
+  ]
+}
+
 export function Epilogue({ state, onDone }: { state: GameState; onDone: () => void }) {
-  const steps = buildSteps(state)
+  const city = state.sceneId === 'city'
+  const steps = buildSteps(state, state.sceneId)
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
   const [solved, setSolved] = useState(false)
@@ -147,8 +217,27 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 overflow-y-auto px-4 py-6">
-      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">Capítulo 1 · Final</p>
-      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label="Entrada de la escuela">
+      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
+      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
+        {city ? (
+          <g>
+            <rect width="320" height="200" fill="#f0c48c" />
+            <rect width="320" height="120" fill="#e5a37a" />
+            <circle cx="40" cy="36" r="18" fill="#f6d36b" />
+            <rect x="80" y="30" width="70" height="90" fill="#c98b4a" />
+            <rect x="150" y="50" width="60" height="70" fill="#8a9bb0" />
+            <rect x="210" y="24" width="90" height="96" fill="#2f5d50" />
+            <rect x="222" y="34" width="66" height="16" rx="3" fill="#f4efe4" />
+            <text x="255" y="46" textAnchor="middle" fontSize="8" fill="#2f5d50" fontFamily={FONT}>TOURIST OFFICE</text>
+            {[0, 1].map((r) => [0, 1].map((c) => <rect key={`${r}${c}`} x={90 + c * 28} y={44 + r * 30} width="18" height="18" fill="#e8f2f8" />))}
+            <rect y="120" width="320" height="80" fill="#d6d1c7" />
+            <ellipse cx="160" cy="150" rx="46" ry="14" fill="#9aa3ad" />
+            <ellipse cx="160" cy="147" rx="40" ry="10" fill="#7cc4e6" />
+            <rect x="156" y="122" width="8" height="24" fill="#9aa3ad" />
+            <circle cx="160" cy="120" r="6" fill="#7cc4e6" />
+          </g>
+        ) : (
+          <g>
         <rect width="320" height="200" fill="#f2c79a" />
         <rect width="320" height="120" fill="#e9a77a" />
         <circle cx="270" cy="40" r="22" fill="#f6d36b" />
@@ -161,6 +250,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
         <rect x="195" y="60" width="30" height="28" fill="#9fd3f0" stroke="#8d7c68" strokeWidth="3" />
         <rect y="140" width="320" height="60" fill="#8fbf6a" />
         <rect x="118" y="140" width="44" height="60" fill="#cdb79a" />
+          </g>
+        )}
 
         <g transform="translate(10 128) scale(2)">
           <SpriteBody look={heroLook(state)} />
@@ -193,7 +284,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
         {names[s.who] && (
           <div className="flex items-center justify-between">
             <p className={`font-display text-lg ${s.who === 'villain' ? 'text-[#b9a3e8]' : 'text-gold'}`}>{names[s.who]}</p>
-            {s.who !== 'hero' && <SpeakButton text={s.text} size="sm" />}
+            {s.who !== 'hero' && <SpeakButton text={s.text} size="sm" auto />}
           </div>
         )}
         <p key={i} className={`anim-fade-in text-[17px] leading-relaxed ${s.who === 'narrator' ? 'italic text-paper/85' : ''}`}>

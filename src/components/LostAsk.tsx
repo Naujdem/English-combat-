@@ -54,7 +54,7 @@ export function LostAsk({
             <p className="flex-1 text-[17px] leading-relaxed">
               <span className="font-semibold text-gold">{npcName}: </span>"{reply.text}"
             </p>
-            <SpeakButton text={reply.text} size="sm" />
+            <SpeakButton text={reply.text} size="sm" auto />
           </div>
           {es && <p className="text-sm text-paper/60">{reply.es}</p>}
           <div className="mt-2 flex items-center justify-between">

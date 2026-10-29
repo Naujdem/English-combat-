@@ -133,6 +133,9 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - Lily en el café (`src/components/CafeOrder.tsx`): pedir con *Can I have..., please?*, *a/an*, *any*, preguntar el precio, sumar con el menú, deletrear tu nombre para el vaso y pedir el café del guía.
 - Esbirros: Danny (calle, *there is/are*), Chloe (tienda, *this/these*, plurales y precios) y Víctor (café, *a/an, some/any*). Jefe: el señor Rossi, el guía, en 3 fases. Pide el mapa y su café. Suelta la pieza 2 del reloj y la gorra de turista.
 
+- Ciudad, añadido después: pregunta extra al vencer a cada esbirro (da escudo, campo `bonus`), despedida del jefe (`farewell`), Mia en la plaza para practicar disculpas (*Sorry! — That's OK!*) y dar indicaciones, final del capítulo 2 (Leo vive en Green Street) y diario de la ciudad con sus palabras.
+- Voz automática: las frases en inglés se leen solas al aparecer (`auto` en `SpeakButton`). Se apaga en Ajustes, en el mapa del mundo, junto con los sonidos.
+
 ## Siguientes pasos sugeridos
 
 - El plan completo está en `docs/curriculo-a1.md`: primera vuelta A1 en presente (Escuela → Ciudad → Barrio con la casa del protagonista → Granja → Oficina), y luego los mismos lugares en pasado y futuro, todavía en A1, con el reloj completo. A2 y B1 repiten el esquema presente → pasado → futuro.
