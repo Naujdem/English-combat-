@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { clearSave, newGame, useGameState } from './game/store'
 import { SCENES } from './game/helpers'
 import { Title } from './screens/Title'
@@ -10,6 +10,9 @@ import { Epilogue } from './screens/Epilogue'
 import { TeacherPanel } from './components/TeacherPanel'
 import { WordProvider } from './components/Words'
 import { ENEMIES } from './data/enemies'
+import { ACHIEVEMENTS, achieved } from './data/collection'
+import { OUTFITS } from './data/school'
+import { sfx } from './game/sfx'
 
 /** Un capítulo terminado cuyo final todavía no se vio (por si se cerró el juego en medio) */
 function pendingEpilogue(s: ReturnType<typeof useGameState>['state']) {
@@ -21,6 +24,27 @@ function pendingEpilogue(s: ReturnType<typeof useGameState>['state']) {
 export default function App() {
   const { state, update, setState } = useGameState()
   const [flash, setFlash] = useState(0)
+  const [toast, setToast] = useState<string[]>([])
+
+  // Logros nuevos: se avisan una vez (se guardan en opened como logro-<id>) y entregan su premio
+  useEffect(() => {
+    if (state.screen === 'title' || state.screen === 'intro') return
+    const fresh = ACHIEVEMENTS.filter((a) => !state.opened.includes(`logro-${a.id}`) && achieved(a, state))
+    if (!fresh.length) return
+    update((s) => ({
+      ...s,
+      opened: [...s.opened, ...fresh.map((a) => `logro-${a.id}`)],
+      outfits: [...s.outfits, ...fresh.map((a) => a.reward).filter((r): r is string => !!r && !s.outfits.includes(r))],
+    }))
+    sfx('item')
+    setToast((t) => [...t, ...fresh.map((a) => (a.reward ? `${a.name} · Premio: ${OUTFITS[a.reward].name}` : a.name))])
+  }, [state, update])
+
+  useEffect(() => {
+    if (!toast.length) return
+    const t = window.setTimeout(() => setToast([]), 4500)
+    return () => window.clearTimeout(t)
+  }, [toast])
 
   function go(screen: typeof state.screen) {
     update((s) => ({ ...s, screen }))
@@ -113,6 +137,15 @@ export default function App() {
         {screen}
       </WordProvider>
       <TeacherPanel state={state} update={update} />
+      {toast.length > 0 && (
+        <div className="pointer-events-none absolute inset-x-0 top-3 z-50 flex justify-center px-3" role="status">
+          <div className="anim-fade-in max-w-sm rounded-2xl border-2 border-gold bg-panel px-4 py-2 shadow-lg">
+            <p className="font-display text-[15px] text-gold">★ ¡Logro desbloqueado!</p>
+            {toast.slice(0, 3).map((t) => <p key={t} className="text-sm text-paper/85">{t}</p>)}
+            {toast.length > 3 && <p className="text-xs text-paper/60">y {toast.length - 3} más: míralos en Logros y álbum</p>}
+          </div>
+        </div>
+      )}
       {flash > 0 && state.screen === 'explore' && (
         <div key={flash} className="anim-wipe pointer-events-none absolute inset-0 z-50 bg-paper" />
       )}

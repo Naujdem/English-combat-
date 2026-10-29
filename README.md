@@ -196,3 +196,8 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - El plan completo está en `docs/curriculo-a1.md`: primera vuelta A1 en presente (Escuela → Ciudad → Barrio con la casa del protagonista → Granja → Oficina), y luego los mismos lugares en pasado y futuro, todavía en A1, con el reloj completo. A2 y B1 repiten el esquema presente → pasado → futuro.
 - Pendientes pequeños de la escuela: deletrear en la secretaría, *whose* en objetos perdidos y preguntas con *who/what/where/when*.
 - Sonidos y animación de caminar.
+
+## Logros y álbum del tiempo
+
+- `src/data/collection.ts`: 13 logros (con premios de atuendo) y el álbum del tiempo (una carta por personaje, con un espacio por época; los espacios "Viajero" se ganan venciendo a los ecos).
+- `src/components/Achievements.tsx`: la ventana de logros y álbum, desde el mapa del mundo. `App.tsx` avisa cada logro nuevo una sola vez (se guarda en `opened` como `logro-<id>`).

@@ -22,6 +22,8 @@ import type { Update } from '../game/store'
 import { heroLook } from '../game/helpers'
 import { interestFriend } from '../data/friends'
 import { useDesktop } from '../game/device'
+import { Achievements } from '../components/Achievements'
+import { ACHIEVEMENTS, achieved } from '../data/collection'
 
 const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } as const
 
@@ -58,6 +60,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const newDiary = DIARY.find((c) => state.opened.includes(c.unlock) && !state.opened.includes(`diary-open-${c.id}`))
   const [diary, setDiary] = useState(!!newDiary)
   const [cards, setCards] = useState(false)
+  const [logros, setLogros] = useState(false)
   // Viaje en autobús la primera vez que se va a un lugar (ciudad o barrio)
   const [bus, setBus] = useState<string | null>(null)
   const [review, setReview] = useState(false)
@@ -207,6 +210,9 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         <button className={btn} onClick={() => setCards(true)}>
           Fichas{dueCount > 0 ? ` (${dueCount})` : ''}
         </button>
+        <button className={`${btn} col-span-2`} onClick={() => setLogros(true)}>
+          Logros y álbum ★ {ACHIEVEMENTS.filter((a) => achieved(a, state)).length}/{ACHIEVEMENTS.length}
+        </button>
       </div>
 
       <button className={btn} onClick={() => tap(here)}>Entrar a {here.name}</button>
@@ -267,6 +273,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         />
       )}
       {cards && <Flashcards state={state} update={update} onClose={() => setCards(false)} />}
+      {logros && <Achievements state={state} onClose={() => setLogros(false)} />}
 
       {clock && (
         <Overlay onClose={() => setClock(false)}>
