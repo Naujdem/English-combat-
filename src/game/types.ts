@@ -136,6 +136,8 @@ export type LessonStep = {
   /** Lo que aparece escrito en la pizarra */
   board?: [string, string?]
   choice?: { options: string[]; answer: number; tip: string }
+  /** Tema de la lección, para mostrar la estructura de la frase con colores */
+  topic?: TopicId
 }
 
 /**

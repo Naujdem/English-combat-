@@ -5,6 +5,7 @@ import { btn, btnGhost, btnPrimary, Panel } from './ui'
 import { heroLook } from '../game/helpers'
 import { FRIENDS } from '../data/friends'
 import { SpeakButton } from './SpeakButton'
+import { GrammarPattern, RoleSentence } from './Grammar'
 
 export const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
@@ -88,6 +89,8 @@ export function Lesson({
         </g>
       </ClassroomStage>
 
+      {s.who === 'board' && s.topic && <GrammarPattern topic={s.topic} sentence={text} compact />}
+
       <Panel>
         {s.who === 'leo' && (
           <div className="flex items-center justify-between">
@@ -117,6 +120,7 @@ export function Lesson({
         {s.choice && solved && (
           <div className="anim-fade-in mt-2 flex items-center gap-2">
             <p className="text-sm font-semibold text-hp">¡Bien hecho!</p>
+            {s.who === 'board' && s.topic && <RoleSentence text={text.replace(/\s*\([^)]*\)\s*$/, '')} topic={s.topic} size="sm" />}
             {s.who === 'board' && <SpeakButton text={text} size="sm" />}
           </div>
         )}

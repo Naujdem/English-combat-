@@ -52,7 +52,7 @@ export function Intro({
   const [lessonDone, setLessonDone] = useState<boolean | null>(null)
 
   if (i >= steps.length && lessonDone === null) {
-    return <Lesson state={state} steps={[...LEO_ARRIVES, ...(LESSONS['to-be'] ?? [])]} onDone={(done) => setLessonDone(done)} />
+    return <Lesson state={state} steps={[...LEO_ARRIVES, ...(LESSONS['to-be'] ?? []).map((st) => ({ ...st, topic: 'to-be' as const }))]} onDone={(done) => setLessonDone(done)} />
   }
   if (lessonDone !== null) {
     return <Presentation onDone={(hero, interest) => onDone({ lessonDone, hero, interest })} />

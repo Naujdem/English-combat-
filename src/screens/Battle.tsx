@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react'
-import type { GameState, Question, Zone } from '../game/types'
+import type { GameState, Question, TopicId, Zone } from '../game/types'
 import type { Update } from '../game/store'
 import { OUTFITS } from '../data/school'
 import { ENEMIES } from '../data/enemies'
-import { pickQuestion, TOPICS } from '../data/questions'
-import { QuestionCard } from '../components/QuestionCard'
+import { pickQuestion, questionById, TOPICS } from '../data/questions'
+import { QuestionCard, correctSentence } from '../components/QuestionCard'
+import { GrammarPattern, RoleSentence } from '../components/Grammar'
+import { Practice } from '../components/Practice'
 import { sessionFor } from '../data/schedule'
 import { SpeakButton } from '../components/SpeakButton'
 import { SCENES, heroLook, perks } from '../game/helpers'
@@ -199,6 +201,9 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const [enemyAnim, setEnemyAnim] = useState('')
   const [hitText, setHitText] = useState<{ who: 'hero' | 'enemy'; n: number; text: string } | null>(null)
   const [hint, setHint] = useState(false)
+  // Preguntas falladas en este combate: Leo propone practicarlas si pierdes
+  const [failed, setFailed] = useState<string[]>([])
+  const [practice, setPractice] = useState(false)
 
   function animate(setter: (v: string) => void, cls: string) {
     setter('')
@@ -212,6 +217,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       ...s,
       mistakes: ok ? s.mistakes.filter((id) => id !== q.id) : s.mistakes.includes(q.id) ? s.mistakes : [...s.mistakes, q.id],
     }))
+    if (!ok) setFailed((f) => [...f, q.id])
     if (ok) {
       const left = battle.enemyHp - 1
       animate(setHeroAnim, 'anim-lunge-r')
@@ -472,6 +478,13 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               {blocked && <p className="mb-1 text-sm font-semibold text-[#9cc0f0]">Tu escudo de palabras bloqueó el golpe.</p>}
               <p className="text-sm font-semibold text-gold">{metLeo ? 'Pista de Leo' : 'Pista'}</p>
               <p className="mt-0.5 text-[15px] leading-snug">{q.tip}</p>
+              <div className="mt-2">
+                <GrammarPattern topic={q.topic} sentence={correctSentence(q)} compact />
+              </div>
+              <div className="mt-2 flex flex-wrap items-center gap-2">
+                <span className="text-xs text-paper/60">Así es:</span>
+                <RoleSentence text={correctSentence(q)} topic={q.topic} size="sm" />
+              </div>
               <p className="mt-1 text-xs text-paper/50">Se anotó en tu cuaderno de errores.</p>
               <div className="mt-3 flex justify-end">
                 {phase === 'lost' ? (
@@ -486,6 +499,16 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
                     ? 'Leo: "Don\'t worry, it\'s just practice!" Vuelves a empezar con la vida llena.'
                     : 'Te quedaste sin energía. Volverás a la entrada con la vida llena.'}
                 </p>
+              )}
+              {phase === 'lost' && failed.length > 0 && (
+                <div className="mt-3 rounded-xl border-2 border-hp/50 bg-hp/10 p-3">
+                  <p className="text-sm font-semibold text-hp">Sugerencia de Leo</p>
+                  <p className="mt-0.5 text-[15px] leading-snug">
+                    "Let's practice first!" Te costó{' '}
+                    <b>{listTopics(failed)}</b>. Practica conmigo sin perder vida y luego vuelve a intentarlo.
+                  </p>
+                  <button className={`${btnPrimary} mt-2 w-full`} onClick={() => setPractice(true)}>Practicar con Leo</button>
+                </div>
               )}
             </div>
           )}
@@ -569,8 +592,26 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
           <button className={`${btnPrimary} mt-4 w-full`} onClick={leave} autoFocus>{enemy.kind === 'trainer' ? 'Ir al mapa' : 'Continuar'}</button>
         </Panel>
       )}
+
+      {practice && (
+        <Practice
+          state={state}
+          update={update}
+          failed={failed}
+          onClose={() => {
+            setPractice(false)
+            leave()
+          }}
+        />
+      )}
     </div>
   )
+}
+
+/** Los temas de las preguntas falladas, en palabras */
+function listTopics(ids: string[]) {
+  const topics = [...new Set(ids.map((id) => questionById(id)?.topic).filter(Boolean))] as TopicId[]
+  return listEs(topics.map((t) => TOPICS[t].name.toLowerCase()))
 }
 
 /** "a, b y c" */

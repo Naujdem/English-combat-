@@ -747,7 +747,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         <div className="absolute inset-0 z-40 overflow-y-auto bg-ink">
           <Lesson
             state={state}
-            steps={lesson.topics.flatMap((t) => LESSONS[t] ?? [])}
+            steps={lesson.topics.flatMap((t) => (LESSONS[t] ?? []).map((st) => ({ ...st, topic: t })))}
             title={lesson.enemyId ? 'Leo te alcanza antes del combate' : 'Leo te ayuda'}
             onDone={() => {
               const { topics, enemyId, then } = lesson

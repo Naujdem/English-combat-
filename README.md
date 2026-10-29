@@ -115,6 +115,8 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - Cuaderno de errores: las preguntas falladas se anotan, los enemigos las repiten más seguido y se pueden repasar en el cuaderno de Leo (acertar 3 da un escudo).
 - Diario al final del capítulo (`src/components/Diary.tsx`, textos en `src/data/diary.ts`): la historia en pasado, presente, futuro (el plan del desconocido) y una mezcla, con preguntas. "Ver verbos" colorea cada tiempo. Al tocar una palabra se ve su traducción y se puede guardar en las fichas.
 - Fichas tipo Anki (`src/components/Flashcards.tsx`, `src/game/cards.ts`): repaso espaciado con Otra vez / Difícil / Bien / Fácil y exportación a CSV (frente,reverso) para SimulaPro o Anki. Para agregar palabras al diccionario del diario, edita `DICT` en `diary.ts`.
+- Estructura con colores (`src/components/Grammar.tsx`): el sujeto en azul, el verbo en verde y la palabra clave del tema en morado, como "Sujeto + am/is/are + ...". Aparece en los ejercicios de las lecciones de Leo, en la pista cuando fallas y en la práctica. La estructura de cada tema está en `patternFor`.
+- Práctica con Leo (`src/components/Practice.tsx`): si pierdes contra un esbirro o jefe, Leo dice qué te costó y te propone 6 frases de ese tema (primero las que fallaste) sin perder vida, con las fichas de ordenar coloreadas.
 - Instalable en el celular (PWA) y funciona sin internet después de abrirlo una vez. Al publicar cambios grandes, sube la versión de `CACHE` en `public/sw.js`.
 
 ## La ciudad

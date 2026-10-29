@@ -6,6 +6,7 @@ import { SpeakButton } from './SpeakButton'
 import { useTeacher } from '../game/teacher'
 import { speak } from '../game/speech'
 import { sameAnswer } from '../game/text'
+import { tileStyle } from './Grammar'
 
 /** Desordena índices 0..n-1 asegurando que no queden en el orden correcto */
 function shuffled(n: number): number[] {
@@ -38,6 +39,7 @@ export function QuestionCard({
   speaker,
   hint,
   headerRight,
+  colorTiles,
   onAnswer,
 }: {
   q: Question
@@ -46,6 +48,8 @@ export function QuestionCard({
   /** Cuando pasa a true, se aplica la pista de Leo */
   hint?: boolean
   headerRight?: ReactNode
+  /** Colorea las fichas al ordenar (sujeto, verbo, palabra clave): solo en práctica */
+  colorTiles?: boolean
   onAnswer: (ok: boolean) => void
 }) {
   const kind = q.kind ?? 'fill'
@@ -226,6 +230,7 @@ export function QuestionCard({
             {placed.map((i, k) => (
               <button
                 key={`${i}-${k}`}
+                style={colorTiles ? tileStyle(q.options, i, q.topic) : undefined}
                 className="rounded-lg bg-gold px-2.5 py-1.5 font-display text-[17px] font-medium text-ink"
                 onClick={() => ask && setPlaced(placed.filter((_, j) => j !== k))}
                 disabled={!ask}
@@ -241,6 +246,7 @@ export function QuestionCard({
                   placed.includes(i) ? null : (
                     <button
                       key={i}
+                      style={colorTiles ? tileStyle(q.options, i, q.topic) : undefined}
                       className="rounded-lg border-2 border-line bg-panel-2 px-2.5 py-1.5 font-display text-[17px] font-medium transition active:scale-95"
                       onClick={() => setPlaced([...placed, i])}
                     >
