@@ -120,6 +120,19 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
       { text: 'The sun is shining today. I love playing in the park!', es: 'Hoy brilla el sol. ¡Me encanta jugar en el parque!' },
     ],
   },
+  // ── La granja ──
+  rosie: {
+    name: 'Rosie',
+    // La nieta del granjero: juego de adivinar el animal con preguntas (Does it...?)
+    look: { shirt: '#d64545', hair: '#d9822b', skin: '#f6d3b3', gender: 'female' },
+    doneLine: { text: 'Do you want to play again? I love this game!', es: '¿Quieres jugar otra vez? ¡Me encanta este juego!' },
+  },
+  patel: {
+    name: 'Dr. Patel',
+    // La veterinaria: los animales a sus corrales (pistas con doesn't y plurales)
+    look: { shirt: '#f4efe4', hair: '#1f1f1f', skin: '#a0662e', gender: 'female', accessory: 'glasses' },
+    doneLine: { text: 'The animals are happy now. Thank you for your help!', es: 'Los animales ya están contentos. ¡Gracias por tu ayuda!' },
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

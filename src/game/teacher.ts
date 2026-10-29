@@ -4,6 +4,7 @@ import { LESSONS } from '../data/lessons'
 import { SESSIONS } from '../data/schedule'
 import { CITY } from '../data/city'
 import { BARRIO } from '../data/barrio'
+import { FARM } from '../data/farm'
 import { SCHOOL } from '../data/school'
 
 /**
@@ -69,7 +70,7 @@ function base(s: GameState): GameState {
   }
 }
 
-const SCENE_PREFIX = /^(school|city|barrio|board)-/
+const SCENE_PREFIX = /^(school|city|barrio|board|party|farm)-/
 
 /** Estados preparados para revisar partes del juego */
 export const PRESETS: { id: string; label: string; apply: (s: GameState) => GameState }[] = [
@@ -161,7 +162,7 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
         pos: { x: 12, y: 10 },
         defeated: add(b.defeated, ['barrio-m1', 'barrio-m2', 'barrio-m3']),
         keys: { ...b.keys, barrio: 3 },
-        opened: add(b.opened, ['barrio-invite', 'barrio-photo', 'barrio-likes']),
+        opened: add(b.opened, ['barrio-invite', 'barrio-photo', 'barrio-likes', 'party-started', 'party-cake', 'party-balloons', 'party-radio', 'party-ready']),
         seenLesson: add(b.seenLesson, ['barrio', 'present-simple', 'likes', 'can', 'present-continuous']),
       }
     },
@@ -178,6 +179,44 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
         relics: Math.max(3, b.relics),
         recovered: add(b.recovered, ['present-simple', 'likes', 'can', 'present-continuous', 'have-got']) as GameState['recovered'],
         outfits: add(b.outfits, ['sudadera']),
+      }
+    },
+  },
+  {
+    id: 'farm-start',
+    label: 'Granja: recién llegado',
+    apply: (s) => {
+      const b = PRESETS[7].apply(s)
+      return { ...b, screen: 'explore', sceneId: 'farm', pos: { ...FARM.start }, opened: add(b.opened, ['barrio-epilogue', 'diary-open-barrio', 'bus-farm']) }
+    },
+  },
+  {
+    id: 'farm-boss',
+    label: 'Granja: lista para el jefe',
+    apply: (s) => {
+      const b = PRESETS[8].apply(s)
+      return {
+        ...b,
+        pos: { x: 11, y: 5 },
+        defeated: add(b.defeated, ['farm-m1', 'farm-m2', 'farm-m3']),
+        keys: { ...b.keys, farm: 3 },
+        opened: add(b.opened, ['farm-guess', 'farm-pens']),
+        seenLesson: add(b.seenLesson, ['farm', 'do-does', 'plurals']),
+      }
+    },
+  },
+  {
+    id: 'farm-done',
+    label: 'Granja: terminada (ver el final)',
+    apply: (s) => {
+      const b = PRESETS[9].apply(s)
+      return {
+        ...b,
+        screen: 'epilogue',
+        defeated: add(b.defeated, ['farm-boss']),
+        relics: Math.max(4, b.relics),
+        recovered: add(b.recovered, ['do-does', 'plurals']) as GameState['recovered'],
+        outfits: add(b.outfits, ['overol']),
       }
     },
   },

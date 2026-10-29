@@ -31,7 +31,11 @@ import { CoachSays } from '../components/CoachSays'
 import { Directions } from '../components/Directions'
 import { CafeOrder } from '../components/CafeOrder'
 import { MiniTalk } from '../components/MiniTalk'
-import { NPC_TASKS } from '../data/tasks'
+import { NPC_TASKS, PARTY_ITEMS, taskOf } from '../data/tasks'
+import { PartyAsk } from '../components/PartyAsk'
+import { AnimalSprite, ANIMALS } from '../components/Animals'
+import { GuessAnimal } from '../components/GuessAnimal'
+import { AnimalPens } from '../components/AnimalPens'
 import { voiceOf, type Voice } from '../game/speech'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
@@ -75,6 +79,14 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [lesson, setLesson] = useState<{ topics: TopicId[]; enemyId?: string; then?: 'where' | 'coach' | 'directions' | 'cafe'; task?: string } | null>(null)
   // Tarea de un personaje (charla corta con elecciones), ver data/tasks.ts
   const [task, setTask] = useState<string | null>(null)
+  // Misión de la fiesta de Leo (barrio): lo que falta y a quién se le está preguntando
+  const [party, setParty] = useState<{ id: string; name: string; voice: Voice } | null>(null)
+  // La mesa de la fiesta se llena cuando ya está todo
+  const partyReady = scene.id !== 'barrio' || state.opened.includes('party-ready')
+  const partyMissing = useMemo(
+    () => (scene.id === 'barrio' && state.opened.includes('party-started') && !state.opened.includes('party-ready') ? PARTY_ITEMS.filter((it) => !state.opened.includes(`party-${it.id}`)).map((it) => it.id) : []),
+    [scene.id, state.opened],
+  )
   const firstVisit = !state.seenLesson.includes(scene.id)
   const doorOpen = bossDoorOpen(state, scene)
   const keys = state.keys[scene.id] ?? 0
@@ -97,7 +109,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [ask, setAsk] = useState<{ itemId: string; npcId: string; npcName: string } | null>(null)
   const lf = state.lostFound
   const lostOnMap = lf.started && scene.id === 'school' ? LOST_ITEMS.filter((it) => !lf.picked.includes(it.id)) : []
-  const blocked = !!talk || friendsOpen || !!lesson || !!activity || notebook || !!ask || !!task
+  const blocked = !!talk || friendsOpen || !!lesson || !!activity || notebook || !!ask || !!task || !!party
 
   // Sonido al conseguir algo (llave, objeto, recompensa)
   useEffect(() => {
@@ -120,24 +132,31 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const tiles = useMemo(
     () =>
       scene.map.flatMap((row, y) =>
-        row.split('').map((c, x) => <Tile key={`${x}-${y}`} c={c} x={x} y={y} floor={FLOOR[scene.zoneAt(x, y)]} doorOpen={doorOpen} />),
+        row.split('').map((c, x) => <Tile key={`${x}-${y}`} c={c} x={x} y={y} floor={FLOOR[scene.zoneAt(x, y)]} doorOpen={doorOpen} party={partyReady} />),
       ),
-    [scene, doorOpen],
+    [scene, doorOpen, partyReady],
   )
 
   const interact = useCallback(
     (e: Entity) => {
       if (e.type === 'npc') {
         const npc = NPCS[e.id]
-        const t = NPC_TASKS[e.id]
-        if (t && !state.opened.includes(t.done)) {
-          if (t.requires && !state.opened.includes(t.requires.id)) {
-            setMsg({ text: t.requires.text, es: t.requires.es, sub: t.requires.sub, tone: 'warn' })
-            return
-          }
+        const pend = taskOf(e.id, state.opened)
+        if (pend && !pend.blocked) {
+          const t = pend.task
           setMsg(null)
-          if (t.lesson && !state.seenLesson.includes(t.lesson)) setLesson({ topics: [t.lesson], task: e.id })
-          else setTask(e.id)
+          if (t.lesson && !state.seenLesson.includes(t.lesson)) setLesson({ topics: [t.lesson], task: pend.id })
+          else setTask(pend.id)
+          return
+        }
+        if (partyMissing.length && e.id !== 'joe') {
+          setMsg(null)
+          setParty({ id: e.id, name: npc.name, voice: voiceOf(npc.look) })
+          return
+        }
+        if (pend?.blocked && pend.task.requires) {
+          const req = pend.task.requires
+          setMsg({ text: req.text, es: req.es, sub: req.sub, tone: 'warn' })
           return
         }
         if (e.id === 'secretary' && !state.opened.includes('school-registration')) {
@@ -189,6 +208,15 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         setAsk({ itemId: lf.carrying, npcId, npcName })
         return
       }
+      // Preparando la fiesta de Leo: a cualquiera se le puede preguntar "Have you got...?"
+      if (talkable && partyMissing.length) {
+        const pid = e.type === 'friend' ? e.id : e.type === 'interest' ? 'interest' : e.id
+        const f = e.type === 'friend' || e.type === 'interest' ? friendById(state, pid)! : null
+        const name = f ? f.name : ENEMIES[pid].person
+        setMsg(null)
+        setParty({ id: pid, name, voice: f ? voiceOf(f.look) : voiceOf(ENEMIES[pid].look) })
+        return
+      }
       if ((e.type === 'enemy' || e.type === 'boss') && state.defeated.includes(e.id)) {
         const def = ENEMIES[e.id]
         setMsg({ text: `${def.person}: "${def.freed.text}"`, es: def.freed.es, say: def.freed.text })
@@ -230,6 +258,11 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         else onBattle(e.id)
         return
       }
+      if (e.type === 'animal') {
+        const a = ANIMALS[e.kind]
+        setMsg({ text: `${a.en[0].toUpperCase()}${a.en.slice(1)}: "${a.sound}"`, sub: `${a.en} = ${a.es} · plural: ${a.plural}`, say: a.en })
+        return
+      }
       if (e.type === 'chest') {
         const outfit = OUTFITS[e.outfit]
         update((s) => ({
@@ -268,7 +301,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         setMsg({ text: res.line, sub: res.note, tone: res.note ? 'warn' : 'info' })
       }
     },
-    [lf.carrying, onBattle, state, update],
+    [lf.carrying, onBattle, state, update, partyMissing],
   )
 
   const move = useCallback(
@@ -422,12 +455,21 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             {alive.map((e) => {
               const key = `${e.type}-${e.x}-${e.y}`
               if (e.type === 'chest') return <Chest key={key} x={e.x} y={e.y} />
+              if (e.type === 'animal') {
+                return (
+                  <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
+                    <g transform={(e.x + e.y) % 2 ? 'translate(32 0) scale(-1 1)' : undefined}>
+                      <AnimalSprite kind={e.kind} />
+                    </g>
+                  </g>
+                )
+              }
               if (e.type === 'enemy' || e.type === 'boss') {
                 const def = ENEMIES[e.id]
                 if (state.defeated.includes(e.id)) {
                   return (
                     <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                      <SpriteBody look={{ ...def.look, ...(def.id === 'barrio-boss' ? { skin: state.hero.look.skin, hair: state.hero.look.hair } : {}) }} />
+                      {def.animal ? <AnimalSprite kind={def.animal} /> : <SpriteBody look={{ ...def.look, ...(def.id === 'barrio-boss' ? { skin: state.hero.look.skin, hair: state.hero.look.hair } : {}) }} />}
                     </g>
                   )
                 }
@@ -435,7 +477,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
                     <g transform="translate(32 0) scale(-1 1)">
                       <g className="anim-bob">
-                        <SpriteBody look={{ ...def.look, ...(def.id === 'barrio-boss' ? { skin: state.hero.look.skin, hair: state.hero.look.hair } : {}) }} />
+                        {def.animal ? <AnimalSprite kind={def.animal} /> : <SpriteBody look={{ ...def.look, ...(def.id === 'barrio-boss' ? { skin: state.hero.look.skin, hair: state.hero.look.hair } : {}) }} />}
                       </g>
                     </g>
                     <rect x="4" y="-3" width="24" height="3.5" rx="1.5" fill={e.type === 'boss' ? '#7a4fa3' : '#d64545'} />
@@ -450,7 +492,10 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   (e.id === 'rosa' && !state.opened.includes('city-map')) ||
                   (e.id === 'lily' && !state.opened.includes('city-coffee')) ||
                   (e.id === 'mia' && !state.opened.includes('city-sorry')) ||
-                  (!!NPC_TASKS[e.id] && !state.opened.includes(NPC_TASKS[e.id].done) && (!NPC_TASKS[e.id].requires || state.opened.includes(NPC_TASKS[e.id].requires!.id)))
+                  (() => {
+                    const p = taskOf(e.id, state.opened)
+                    return !!p && !p.blocked
+                  })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
                     <SpriteBody look={NPCS[e.id].look} />
@@ -827,14 +872,32 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         </Overlay>
       )}
 
+      {party && (
+        <Overlay>
+          <PartyAsk
+            name={party.name}
+            personId={party.id}
+            voice={party.voice}
+            missing={partyMissing}
+            onClose={() => setParty(null)}
+            onGot={(itemId) => {
+              const done = partyMissing.length === 1 && partyMissing[0] === itemId
+              update((s) => ({ ...s, opened: [...s.opened, `party-${itemId}`, ...(done ? ['party-ready'] : [])] }))
+              setMsg(
+                done
+                  ? { text: '¡Tienes todo para la fiesta!', sub: 'El pastel, los globos y la radio. Vuelve con el abuelo Joe, al lado de la mesa del parque.', tone: 'good' }
+                  : { text: `Conseguiste ${PARTY_ITEMS.find((it) => it.id === itemId)!.es}.`, sub: 'Sigue preguntando a los vecinos: Have you got...?', tone: 'good' },
+              )
+            }}
+          />
+        </Overlay>
+      )}
+
       {task && NPC_TASKS[task] && (
         <Overlay>
-          <MiniTalk
-            name={NPCS[task].name}
-            look={NPCS[task].look}
-            steps={NPC_TASKS[task].steps}
-            onClose={(done) => {
-              const t = NPC_TASKS[task]
+          {(() => {
+            const t = NPC_TASKS[task]
+            const finish = (done: boolean) => {
               setTask(null)
               if (!done) return
               update((s) => ({
@@ -844,8 +907,12 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 outfits: t.outfit && !s.outfits.includes(t.outfit) ? [...s.outfits, t.outfit] : s.outfits,
               }))
               setMsg({ text: t.reward.text, es: t.reward.es, sub: t.reward.sub, say: t.reward.say, tone: 'good' })
-            }}
-          />
+            }
+            if (t.activity === 'guess') return <GuessAnimal onClose={finish} />
+            if (t.activity === 'pens') return <AnimalPens onClose={finish} />
+            const who = NPCS[t.npc ?? task]
+            return <MiniTalk name={who.name} look={who.look} steps={t.steps} onClose={finish} />
+          })()}
         </Overlay>
       )}
 

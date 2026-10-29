@@ -2,9 +2,10 @@ import type { EnemyDef } from '../game/types'
 import { SCHOOL_ENEMIES } from './school'
 import { CITY_ENEMIES } from './city'
 import { BARRIO_ENEMIES } from './barrio'
+import { FARM_ENEMIES } from './farm'
 
 /** Todos los enemigos del juego, de todos los escenarios */
-const ALL: Record<string, EnemyDef> = { ...SCHOOL_ENEMIES, ...CITY_ENEMIES, ...BARRIO_ENEMIES }
+const ALL: Record<string, EnemyDef> = { ...SCHOOL_ENEMIES, ...CITY_ENEMIES, ...BARRIO_ENEMIES, ...FARM_ENEMIES }
 
 /**
  * Esbirros y jefes también piden hablar: decir la frase en voz alta.

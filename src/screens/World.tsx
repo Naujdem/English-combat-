@@ -8,7 +8,7 @@ import { btn, btnGhost, Hearts, Overlay, Panel } from '../components/ui'
 import { ClockPieces, TimeClock } from '../components/TimeClock'
 import { Diary } from '../components/Diary'
 import { Flashcards } from '../components/Flashcards'
-import { BusRide, BUS_TO_BARRIO, BUS_TO_CITY } from '../components/BusRide'
+import { BIKE_TO_FARM, BusRide, BUS_TO_BARRIO, BUS_TO_CITY } from '../components/BusRide'
 import { ProgressView, Review } from '../components/Review'
 import { setSound, soundOn } from '../game/sfx'
 import { autoVoiceOn, setAutoVoice } from '../game/speech'
@@ -31,7 +31,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const [diary, setDiary] = useState(!!newDiary)
   const [cards, setCards] = useState(false)
   // Viaje en autobús la primera vez que se va a un lugar (ciudad o barrio)
-  const [bus, setBus] = useState<'city' | 'barrio' | null>(null)
+  const [bus, setBus] = useState<'city' | 'barrio' | 'farm' | null>(null)
   const [review, setReview] = useState(false)
   const [progress, setProgress] = useState(false)
   const [sound, setSoundState] = useState(soundOn())
@@ -60,7 +60,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     }
     if (!n.sceneId) return setMsg(`${n.name} (${n.level}): ${n.about}. Este lugar se construirá pronto.`)
     // La primera vez que se va a la ciudad, se llega en autobús
-    if ((n.id === 'city' || n.id === 'barrio') && !state.opened.includes(`bus-${n.id}`)) return setBus(n.id)
+    if ((n.id === 'city' || n.id === 'barrio' || n.id === 'farm') && !state.opened.includes(`bus-${n.id}`)) return setBus(n.id)
     onEnter(n.sceneId)
   }
 
@@ -157,7 +157,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       {diary && <Diary state={state} update={update} onClose={closeDiary} />}
       {bus && (
         <BusRide
-          trip={bus === 'city' ? BUS_TO_CITY : BUS_TO_BARRIO}
+          trip={bus === 'city' ? BUS_TO_CITY : bus === 'barrio' ? BUS_TO_BARRIO : BIKE_TO_FARM}
           hero={heroLook(state)}
           friend={interestFriend(state.interest, state.hero.name).look}
           friendName={state.interest.name}

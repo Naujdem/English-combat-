@@ -31,7 +31,7 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
   }
 
   const people = scene.entities
-    .filter((e) => e.type !== 'chest')
+    .filter((e) => e.type !== 'chest' && e.type !== 'animal')
     .map((e) => {
       const name =
         e.type === 'enemy' || e.type === 'boss' ? ENEMIES[e.id].person : e.type === 'npc' ? NPCS[e.id].name : e.type === 'friend' ? e.id[0].toUpperCase() + e.id.slice(1) : state.interest.name

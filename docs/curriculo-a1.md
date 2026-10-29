@@ -34,7 +34,7 @@ Pendiente de decidir: si A2 y B1 usan los mismos cinco lugares (crecen con el ju
 | 1 ✅ | **Escuela** | — | Quién soy y dónde estoy | to be, posesivos, preposiciones de lugar, imperativos |
 | 2 ✅ | **Ciudad** | Autobús desde la escuela | Moverme, comprar y pedir | there is/are, a/an, plurales, this/these, some/any, how much/many, Can I have...? |
 | 3 ✅ | **Barrio** (casas de amigos, parque y la casa del protagonista) | Otro autobús desde la ciudad | La vida de la gente: rutinas, gustos, familia | presente simple afirmativo (I work / she works), like + -ing, can, presente continuo, have got, frecuencia |
-| 4 ⬜ | **Granja** | Desde el barrio | Cómo funciona un lugar | presente simple negativo y preguntas (do/does), plurales irregulares |
+| 4 ✅ | **Granja** | Desde el barrio | Cómo funciona un lugar | presente simple negativo y preguntas (do/does), plurales irregulares |
 | 5 ⬜ | **Oficina** | Desde la granja | Organizar el tiempo | la hora completa, at/on/in, pronombres de objeto, Could you...? |
 
 Por qué este orden:
@@ -71,7 +71,7 @@ El orden de la tabla es el orden en que aparece en el juego.
 | 18 | Present continuous (lo que pasa ahora) | Ben is playing football. | Ben playing football. | Barrio: parque | ✅ |
 | 19 | Have got | I have got two brothers. | I have got a brothers. | Barrio: casa del protagonista | ✅ |
 | 20 | Adverbios de frecuencia | I always get up at 7. | I get up always at 7. | Barrio: casa del protagonista y jefe | ✅ |
-| 21 | Present simple negativo y preguntas | Does the cow eat grass? It doesn't fly. | Does she lives here? | Granja | ⬜ |
+| 21 | Present simple negativo y preguntas | Does the cow eat grass? It doesn't fly. | Does she lives here? | Granja | ✅ |
 | 22 | Plurales irregulares | sheep, mice, geese, children | two sheeps | Granja | ⬜ |
 | 23 | La hora completa | It's half past eight. | It's eight and half. | Oficina | ⬜ |
 | 24 | Preposiciones de tiempo (at / on / in) | at 9, on Monday, in May | in Monday | Oficina | ⬜ |
@@ -104,7 +104,7 @@ El orden de la tabla es el orden en que aparece en el juego.
 | Celebraciones e invitaciones | Happy birthday! Do you want to come? gift | Barrio: cumpleaños de Leo | ✅ |
 | Familia | mother, father, brother, sister, grandparents | Barrio: casa de Leo (his/her) y casa del protagonista (my) | ✅ |
 | Casa y muebles | kitchen, bedroom, living room, bed, sofa | Barrio: casa del protagonista | ✅ |
-| Animales de granja | cow, horse, sheep, chicken, pig, goose | Granja | ⬜ |
+| Animales de granja | cow, horse, sheep, chicken, pig, goose | Granja | ✅ |
 | Cuerpo | head, eyes, legs, arms, tail | Granja (animales) | ⬜ |
 | Estaciones | spring, summer, autumn, winter | Granja | ⬜ |
 | Profesiones | doctor, nurse, waiter, driver, manager | Oficina (y oficios de la gente del barrio) | ⬜ |
@@ -134,7 +134,7 @@ El orden de la tabla es el orden en que aparece en el juego.
 | Describir lo que pasa ahora | Barrio: parque | ✅ |
 | Invitar, aceptar y felicitar | Barrio: cumpleaños de Leo | ✅ |
 | Hablar de la propia familia y la casa | Barrio: casa del protagonista | ✅ |
-| Describir cómo funciona un lugar | Granja | ⬜ |
+| Describir cómo funciona un lugar | Granja | ✅ |
 | Preguntar y decir la hora | Oficina | ⬜ |
 | Concertar una cita | Oficina | ⬜ |
 | Hablar por teléfono | Oficina | ⬜ |
@@ -169,7 +169,7 @@ Historia: el desconocido hechizó el barrio y la gente olvidó su rutina.
 - **Casa del protagonista** (final del barrio): la familia del protagonista, la casa y los muebles (*There is a sofa in the living room*), *have got*, su rutina en primera persona con adverbios de frecuencia.
 - **Jefe:** el hermano o la hermana mayor del protagonista, hechizado/a. Habla de la rutina de la familia sin la -s (*Mom go to work at 8* ✗). Pelea de presente simple y frecuencia.
 
-**Construido (✅):** Green Street con la casa de Leo (la señora García: rutinas y la invitación), la casa de Maya (el señor Rojas: gustos con -ing, da una galleta-escudo), el parque con la fiesta de Leo (el abuelo Joe: fechas, *Happy birthday!* y la foto de tu familia), esbirros Kevin (*can*), Olivia la reportera (presente continuo) y el señor Hill (gustos), y tu casa en 25 Park Street con tu hermano mayor Nick como jefe (presente simple, frecuencia y *have got*). Requisitos del jefe: invitación y foto de familia. Al vencer a Nick llega mamá: presentas tu familia con *have got*, dices qué hay en cada cuarto con *there is* y cuentas tu rutina con *always / usually / never*. Final del capítulo 3 con el regalo de "L" (*Use your voice*) y diario del barrio. Pendiente para más adelante: partes del día, mascotas y clima con más práctica (por ahora solo aparecen de pasada).
+**Construido (✅):** Green Street con la misión de preparar la fiesta de Leo (preguntar *Have you got a cake? Have you got any balloons? Have you got a radio?* a los vecinos; la radio la tiene el señor Hill, que hay que liberar antes), la casa de Leo (la señora García: rutinas y la invitación), la casa de Maya (el señor Rojas: gustos con -ing, da una galleta-escudo), el parque con la fiesta de Leo (el abuelo Joe: fechas, *Happy birthday!* y la foto de tu familia), esbirros Kevin (*can*), Olivia la reportera (presente continuo) y el señor Hill (gustos), y tu casa en 25 Park Street con tu hermano mayor Nick como jefe (presente simple, frecuencia y *have got*). Requisitos del jefe: invitación y foto de familia. Al vencer a Nick llega mamá: presentas tu familia con *have got*, dices qué hay en cada cuarto con *there is* y cuentas tu rutina con *always / usually / never*. Final del capítulo 3 con el regalo de "L" (*Use your voice*) y diario del barrio. Pendiente para más adelante: partes del día, mascotas y clima con más práctica (por ahora solo aparecen de pasada).
 
 ### Granja
 - Animales y plurales irregulares (*one sheep, two sheep*).
@@ -177,6 +177,8 @@ Historia: el desconocido hechizó el barrio y la gente olvidó su rutina.
 - Preguntas y negativas: *Does the cow give milk? Do chickens fly?*
 - Repaso: *can* (*Horses can run fast*), *there is / there are*, comida (*milk, eggs*), estaciones y clima, partes del cuerpo de los animales.
 - **Jefe:** el granjero hechizado.
+
+**Construido (✅):** se llega en bicicleta por el camino viejo (preguntar *Does this road go to the farm?*). Los esbirros son animales que tocaron pedazos del reloj y por eso hablan (con errores): Daisy la vaca (negativas con *don't / doesn't*), Thunder el caballo (preguntas con *do / does*) y Fluffy la oveja (plurales irregulares); al vencerlos vuelven a decir solo *Moo! Baa! Neigh!*. Rosie, la nieta, juega "Adivina el animal" en el granero (eliges qué preguntar y cómo se dice bien: *Does it have wings?*; los animales que no encajan se apagan). La doctora Patel, veterinaria, da pistas con *doesn't* para devolver cada animal a su corral y practicar *sheep, geese, mice*. Animales de adorno que dicen su nombre al chocar. Jefe: el señor Brown (do/does, plurales y repaso de presente simple). Final del capítulo 4 y diario de la granja. Pendiente: estaciones, clima y partes del cuerpo de los animales con más práctica.
 
 ### Oficina
 - Profesiones.

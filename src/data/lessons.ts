@@ -171,4 +171,24 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: '___ you got a sister?', board: ['Have you got a pet?', "Yes, I have. / No, I haven't."], choice: { options: ['Do', 'Have', 'Has'], answer: 1, tip: 'Con you: Have you got...?' } },
     { who: 'leo', text: 'Your brother is in there. He says everything without -S! Remember: he goes, she works, it has got.', es: 'Tu hermano está ahí dentro. ¡Dice todo sin -s! Recuerda: he goes, she works, it has got.', board: ['he goes · she works', 'it has got'] },
   ],
+
+  'do-does': [
+    { who: 'leo', text: 'On the farm, everybody asks questions. To ask in the present, use DO or DOES.', es: 'En la granja todos hacen preguntas. Para preguntar en presente se usa DO o DOES.', board: ['Do / Does + ...?', '= ¿...?'] },
+    { who: 'leo', text: 'With I, you, we and they: DO. Do you like horses? Do the cows sleep here?', es: 'Con I, you, we y they: DO.', board: ['Do + you / we / they', 'Do you like horses?'] },
+    { who: 'board', text: '___ you live on a farm?', board: ['Do + you / we / they', 'Do you like horses?'], choice: { options: ['Do', 'Does', 'Are'], answer: 0, tip: 'Con you: Do.' } },
+    { who: 'leo', text: 'With he, she and it: DOES. And the verb loses the -S! Does the cow eat grass? Not "eats".', es: 'Con he, she e it: DOES. ¡Y el verbo pierde la -s! No se dice "Does the cow eats".', board: ['Does + he / she / it + verbo', 'Does the cow eat grass?'] },
+    { who: 'board', text: 'Does the horse ___ fast?', board: ['Does + he / she / it + verbo', 'Does the cow eat grass?'], choice: { options: ['runs', 'run', 'running'], answer: 1, tip: 'Después de does el verbo va sin -s: run.' } },
+    { who: 'leo', text: "To say NO: DON'T or DOESN'T, and the verb without -S. Pigs don't fly. The horse doesn't eat meat.", es: "Para negar: don't o doesn't, y el verbo sin -s.", board: ["don't / doesn't + verbo", "The horse doesn't eat meat."] },
+    { who: 'board', text: "The cat ___ like water.", board: ["don't / doesn't + verbo", "The horse doesn't eat meat."], choice: { options: ["don't", "doesn't", 'not'], answer: 1, tip: "The cat es it: doesn't." } },
+    { who: 'leo', text: "Short answers: Does it swim? Yes, it does. No, it doesn't. Do they fly? Yes, they do. No, they don't.", es: 'Respuestas cortas: se repite does o do.', board: ["Yes, it does. / No, it doesn't.", "Yes, they do. / No, they don't."] },
+  ],
+
+  plurals: [
+    { who: 'leo', text: 'One cow, two cows. Easy! But some animals are strange in the plural.', es: 'Una vaca, dos vacas. ¡Fácil! Pero algunos animales son raros en plural.', board: ['cow → cows', 'horse → horses'] },
+    { who: 'leo', text: 'SHEEP is the same: one sheep, ten sheep. Never "sheeps"!', es: 'SHEEP no cambia: una oveja, diez ovejas. ¡Nunca "sheeps"!', board: ['one sheep', 'ten sheep'] },
+    { who: 'board', text: 'There are five ___ in the pen.', board: ['one sheep', 'ten sheep'], choice: { options: ['sheeps', 'sheep', 'sheepes'], answer: 1, tip: 'Sheep es igual en plural.' } },
+    { who: 'leo', text: 'GOOSE → GEESE. MOUSE → MICE. They change inside!', es: 'GOOSE → GEESE. MOUSE → MICE. ¡Cambian por dentro!', board: ['goose → geese', 'mouse → mice'] },
+    { who: 'board', text: 'The cat catches three ___.', board: ['goose → geese', 'mouse → mice'], choice: { options: ['mouses', 'mice', 'mices'], answer: 1, tip: 'mouse → mice.' } },
+    { who: 'leo', text: 'People too: child → children, man → men, woman → women. And foot → feet, tooth → teeth.', es: 'Las personas también: niño → niños, hombre → hombres, mujer → mujeres. Y pie → pies, diente → dientes.', board: ['child → children', 'foot → feet'] },
+  ],
 }

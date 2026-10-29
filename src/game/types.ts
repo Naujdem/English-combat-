@@ -1,6 +1,8 @@
 import type { Card } from './cards'
 export type Gender = 'male' | 'female'
 
+export type AnimalKind = 'cow' | 'horse' | 'sheep' | 'pig' | 'chicken' | 'duck' | 'goose' | 'dog' | 'cat' | 'rabbit' | 'mouse'
+
 export type Look = {
   skin: string
   hair: string
@@ -27,7 +29,7 @@ export type Interest = {
 export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle' | 'epilogue'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
-export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'past-simple' | 'future'
+export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'past-simple' | 'future'
 
 /**
  * fill: completar el espacio en blanco.
@@ -59,7 +61,7 @@ export type Question = {
   hint?: string
 }
 
-export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio' | 'calle' | 'cafe' | 'tienda' | 'turismo' | 'casa-leo' | 'casa-maya' | 'parque' | 'casa'
+export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio' | 'calle' | 'cafe' | 'tienda' | 'turismo' | 'casa-leo' | 'casa-maya' | 'parque' | 'casa' | 'granero' | 'corral' | 'campo' | 'casa-granja'
 
 export type EnemyDef = {
   id: string
@@ -83,6 +85,8 @@ export type EnemyDef = {
   /** Fases del combate (para jefes). Cada fase tiene su vida, temas y una frase al empezar */
   phases?: { hp: number; topics: TopicId[]; kinds: QuestionKind[]; tags?: string[]; line?: StoryLine }[]
   look: { shirt: string; hair: string; skin: string; accessory?: 'cap' | 'mortarboard' | 'glasses'; gender?: Gender }
+  /** Si es un animal corrompido (granja), se dibuja como ese animal */
+  animal?: AnimalKind
   /** Lo que dice antes del combate */
   before: StoryLine[]
   /** Lo que dice al ser vencido */
@@ -108,6 +112,8 @@ export type Entity =
   | { type: 'boss'; id: string; x: number; y: number }
   /** Personaje que no pelea, con su propia actividad */
   | { type: 'npc'; id: string; x: number; y: number }
+  /** Animal de adorno: al chocar dice su nombre en inglés */
+  | { type: 'animal'; kind: AnimalKind; x: number; y: number }
 
 export type SceneDef = {
   id: string

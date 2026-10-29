@@ -18,12 +18,13 @@ import { Bar, btnGhost, btnPrimary, Hearts, Panel } from '../components/ui'
 import { TimeClock } from '../components/TimeClock'
 import { WORLD } from '../data/world'
 import { useTeacher } from '../game/teacher'
+import { AnimalSprite } from '../components/Animals'
 
 
 function Backdrop({ zone }: { zone: Zone }) {
   const wall =
-    zone === 'patio' || zone === 'calle' || zone === 'parque' ? '#bfe3f5' : zone === 'casa-leo' ? '#f3e2c4' : zone === 'casa-maya' ? '#dde6f4' : zone === 'casa' ? '#f1d9c0' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : zone === 'tienda' ? '#f1e6f4' : zone === 'turismo' ? '#dfeaf3' : '#efe5d3'
-  const ground = zone === 'patio' || zone === 'parque' ? '#8fbf6a' : zone === 'casa-leo' || zone === 'casa' ? '#b98c5a' : zone === 'casa-maya' ? '#a7b4c8' : zone === 'calle' ? '#b9b4ab' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : zone === 'tienda' ? '#cdb8d6' : zone === 'turismo' ? '#9fb3c6' : '#b98c5a'
+    zone === 'patio' || zone === 'calle' || zone === 'parque' || zone === 'campo' || zone === 'corral' ? '#bfe3f5' : zone === 'granero' ? '#b5523b' : zone === 'casa-granja' ? '#efd9b8' : zone === 'casa-leo' ? '#f3e2c4' : zone === 'casa-maya' ? '#dde6f4' : zone === 'casa' ? '#f1d9c0' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : zone === 'tienda' ? '#f1e6f4' : zone === 'turismo' ? '#dfeaf3' : '#efe5d3'
+  const ground = zone === 'campo' ? '#9cc46e' : zone === 'corral' ? '#c9a46a' : zone === 'granero' ? '#dcc08a' : zone === 'casa-granja' ? '#b98c5a' : zone === 'patio' || zone === 'parque' ? '#8fbf6a' : zone === 'casa-leo' || zone === 'casa' ? '#b98c5a' : zone === 'casa-maya' ? '#a7b4c8' : zone === 'calle' ? '#b9b4ab' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : zone === 'tienda' ? '#cdb8d6' : zone === 'turismo' ? '#9fb3c6' : '#b98c5a'
   return (
     <g>
       <rect width="360" height="150" fill={wall} />
@@ -90,6 +91,41 @@ function Backdrop({ zone }: { zone: Zone }) {
           <rect x="240" y="96" width="100" height="46" rx="8" fill={zone === 'casa-maya' ? '#5b7a99' : '#b5523b'} />
           <rect x="240" y="86" width="100" height="18" rx="6" fill={zone === 'casa-maya' ? '#6f8fae' : '#c8664e'} />
           {zone === 'casa-maya' && [0, 1, 2, 3].map((k) => <rect key={k} x={40 + k * 14} y="98" width="10" height="44" fill={['#d64545', '#2f6fd0', '#e0a526', '#3b9d5d'][k]} />)}
+        </>
+      )}
+      {(zone === 'campo' || zone === 'corral') && (
+        <>
+          <circle cx="300" cy="36" r="18" fill="#f6d36b" />
+          <ellipse cx="90" cy="38" rx="32" ry="11" fill="#ffffff" opacity="0.85" />
+          <path d="M0 150 Q90 112 180 140 T360 128 V150 Z" fill="#7fae5a" />
+          <rect x="230" y="70" width="80" height="62" fill="#b5523b" />
+          <polygon points="222,72 270,40 318,72" fill="#8b3a2b" />
+          <rect x="258" y="96" width="24" height="36" fill="#f4efe4" />
+          <path d="M258 96 l24 36 M282 96 l-24 36" stroke="#b5523b" strokeWidth="3" />
+          {[0, 1, 2, 3, 4, 5, 6].map((k) => <rect key={k} x={10 + k * 28} y="122" width="5" height="30" fill="#a8743f" />)}
+          <rect x="8" y="128" width="190" height="4" fill="#a8743f" />
+          <rect x="8" y="140" width="190" height="4" fill="#a8743f" />
+        </>
+      )}
+      {zone === 'granero' && (
+        <>
+          {[0, 1, 2, 3, 4, 5].map((k) => <rect key={k} x={k * 60} y="0" width="4" height="150" fill="#8b3a2b" />)}
+          <rect x="30" y="96" width="90" height="40" rx="4" fill="#e8c95a" />
+          <rect x="60" y="66" width="70" height="34" rx="4" fill="#e8c95a" />
+          <line x1="30" y1="116" x2="120" y2="116" stroke="#c9a83a" strokeWidth="2" />
+          <rect x="240" y="40" width="70" height="50" fill="#5a3a1a" />
+          <circle cx="275" cy="65" r="14" fill="#f6d36b" opacity="0.6" />
+        </>
+      )}
+      {zone === 'casa-granja' && (
+        <>
+          <rect x="30" y="24" width="56" height="50" fill="#9fd3f0" stroke="#8d7c68" strokeWidth="4" />
+          <rect x="140" y="30" width="60" height="44" rx="3" fill="#f4efe4" stroke="#7a5230" strokeWidth="4" />
+          <ellipse cx="170" cy="56" rx="16" ry="10" fill="#f4efe4" stroke="#2d2d3a" strokeWidth="1.5" />
+          <ellipse cx="164" cy="54" rx="4" ry="3" fill="#2d2d3a" />
+          <rect x="240" y="80" width="90" height="62" rx="4" fill="#8b5a2b" />
+          <rect x="250" y="66" width="20" height="16" rx="2" fill="#f4efe4" />
+          <rect x="280" y="70" width="16" height="12" rx="2" fill="#e8c95a" />
         </>
       )}
       {zone === 'cafe' && (
@@ -421,7 +457,11 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
           )}
           <g transform={`translate(${enemy.kind === 'boss' ? 342 : 334} ${enemy.kind === 'boss' ? 68 : 92}) scale(${enemy.kind === 'boss' ? -4.6 : -3.8} ${enemy.kind === 'boss' ? 4.6 : 3.8})`}>
             <g className={enemyAnim} onAnimationEnd={() => setEnemyAnim('')}>
-              <SpriteBody look={{ ...enemy.look, ...(enemy.id === 'barrio-boss' ? { skin: state.hero.look.skin, hair: state.hero.look.hair } : {}) }} mood={(phase === 'feedback' && correct) || phase === 'after' ? 'hurt' : 'normal'} />
+              {enemy.animal ? (
+                <AnimalSprite kind={enemy.animal} hurt={(phase === 'feedback' && correct) || phase === 'after'} />
+              ) : (
+                <SpriteBody look={{ ...enemy.look, ...(enemy.id === 'barrio-boss' ? { skin: state.hero.look.skin, hair: state.hero.look.hair } : {}) }} mood={(phase === 'feedback' && correct) || phase === 'after' ? 'hurt' : 'normal'} />
+              )}
             </g>
           </g>
           {hitText && (

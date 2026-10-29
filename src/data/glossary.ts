@@ -47,6 +47,11 @@ living=vivir (living room = sala);sun=sol;shine=brillar;rain=llover, lluvia;weat
 breaking=de última hora (breaking news);sing=cantar;song=canción;dance=bailar;draw=dibujar;watch=mirar, ver;tv=televisión;bike=bicicleta;everybody=todo el mundo;nobody=nadie;remember=recordar;
 brave=valiente;hate=odiar;hurt=doler;minutes=minutos;wonderful=maravilloso;young=joven;photo=foto;photos=fotos;smile=sonreír;letter=letra, carta;strange=extraño;mean=significar;
 fifteen=quince;enjoy=disfrutar;peruvian=peruano;everything=todo;alone=solo;floor=suelo, piso;nothing=nada;mine=mío;teach=enseñar;high=alto;walk=caminar;wait=esperar;waiting=esperando;
+farmer=granjero;barn=granero;pen=corral;field=campo;pond=estanque;fence=cerca;hay=heno;wool=lana;wing=ala;wings=alas;grass=pasto;vet=veterinario;goose=ganso;geese=gansos;
+mouse=ratón;mice=ratones;sheep=oveja, ovejas;pig=cerdo;duck=pato;rabbit=conejo;cow=vaca;horse=caballo;egg=huevo;eggs=huevos;foot=pie;feet=pies;tooth=diente;teeth=dientes;
+man=hombre;men=hombres;woman=mujer;women=mujeres;leaf=hoja;leaves=hojas;meat=carne;corn=maíz;kilometers=kilómetros;believe=creer;catch=atrapar, cazar;milkshake=malteada;
+milkshakes=malteadas;overalls=overol;granddaughter=nieta;glasses=gafas;metal=metal;shiny=brillante;sky=cielo;fall=caer;falls=cae (fall);count=contar;clearly=claramente;slowly=despacio;
+quiet=callado, bajito;prefer=preferir;cheese=queso;box=caja;boxes=cajas;neigh=relincho;moo=muu;baa=bee;woof=guau;honk=graznido;questions=preguntas;sign=letrero;
 i'm=yo soy, yo estoy;you're=tú eres, tú estás;he's=él es, él está;she's=ella es, ella está;it's=es, está;we're=nosotros somos;they're=ellos son;that's=eso es;let's=vamos a;what's=qué es;
 don't=no (no hagas);doesn't=no (con he/she/it);didn't=no (en pasado);won't=no va a;can't=no puede;haven't=no tiene (have got);hasn't=no tiene (has got);got=(have got = tener)
 `

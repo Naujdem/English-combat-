@@ -27,6 +27,7 @@ const MORE_VERBS = [
   'get', 'work', 'play', 'live', 'eat', 'watch', 'cook', 'read', 'sleep', 'swim', 'run', 'dance', 'sing', 'ride', 'fly', 'drive', 'walk', 'study',
   'brush', 'sit', 'make', 'take', 'wait', 'listen', 'rain', 'shine', 'help', 'cry', 'speak', 'write', 'jump', 'love', 'like', 'hate', 'draw',
   'buy', 'find', 'remember', 'say', 'know', 'teach', 'wash', 'go', 'do', 'have', 'stand', 'drink', 'look', 'snow', 'garden', 'shop', 'smile',
+  'give', 'fly', 'catch', 'count', 'milk', 'want', 'believe', 'prefer', 'swim', 'bark',
 ]
 function third(v: string) {
   if (v === 'have') return 'has'
@@ -65,6 +66,7 @@ export function wordRole(word: string, topic?: TopicId): Role {
     if (topic === 'to-be') return w === 'not' ? 'key' : 'rest'
     if (topic === 'imperatives') return w === 'please' ? 'key' : 'rest'
     if (topic === 'present-simple') return ['always', 'usually', 'sometimes', 'often', 'never', 'not'].includes(w) ? 'key' : 'rest'
+    if (topic === 'do-does') return ['not', 'what', 'where', 'when'].includes(w) ? 'key' : 'rest'
     if (topic === 'present-continuous' || topic === 'have-got') return ['not', 'what', 'where'].includes(w) ? 'key' : 'rest'
   }
   return 'rest'
@@ -72,7 +74,7 @@ export function wordRole(word: string, topic?: TopicId): Role {
 
 const QWORDS = new Set(['what', 'where', 'who', 'when', 'how', 'excuse'])
 /** Verbos que también pueden ser adjetivos: después del verbo principal no se colorean */
-const AMBIG = new Set(['open', 'close', 'like', 'look', 'call', 'work', 'love', 'read', 'stop', 'play', 'run', 'garden', 'shop', 'watch', 'rain', 'snow', 'smile', 'walk', 'drink', 'cook', 'dance', 'help', 'study', 'draw', 'ride', 'sleep', 'swim', 'hate'])
+const AMBIG = new Set(['open', 'close', 'like', 'look', 'call', 'work', 'love', 'read', 'stop', 'play', 'run', 'garden', 'shop', 'watch', 'rain', 'snow', 'smile', 'walk', 'drink', 'cook', 'dance', 'help', 'study', 'draw', 'ride', 'sleep', 'swim', 'hate', 'milk', 'count', 'fly', 'catch'])
 const norm = (w: string) => w.toLowerCase().replace(/[’`]/g, "'").replace(/[^a-z']/g, '')
 
 /**
@@ -160,6 +162,11 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (question) return { title: 'Para preguntar, have o has va primero:', parts: [V('Have / Has'), '+', S('Sujeto'), '+', V('got'), '+', R('...?')] }
       if (negative) return { title: "Para negar: haven't got o hasn't got:", parts: [S('Sujeto'), '+', V("haven't / hasn't"), '+', V('got'), '+', R('...')] }
       return { title: 'I, you, we, they: have got · he, she, it: has got:', parts: [S('Sujeto'), '+', V('have / has'), '+', V('got'), '+', R('cosa')] }
+    case 'do-does':
+      if (question) return { title: 'Para preguntar: Do (I, you, we, they) o Does (he, she, it) + verbo sin -s:', parts: [V('Do / Does'), '+', S('Sujeto'), '+', V('verbo'), '+', R('...?')] }
+      return { title: "Para negar: don't o doesn't + verbo sin -s:", parts: [S('Sujeto'), '+', V("don't / doesn't"), '+', V('verbo'), '+', R('...')] }
+    case 'plurals':
+      return { title: 'Plurales: -s normal, pero sheep → sheep, goose → geese, mouse → mice, child → children:', parts: [K('two / three...'), '+', R('cosas en plural')] }
     default:
       return { title: 'Usa esta estructura:', parts: [S('Sujeto'), '+', V('Verbo'), '+', R('...')] }
   }

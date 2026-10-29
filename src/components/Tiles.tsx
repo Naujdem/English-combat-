@@ -18,6 +18,10 @@ export const FLOOR: Record<Zone, string> = {
   'casa-maya': '#e3e8f5',
   parque: '#8fbf6a',
   casa: '#f3dcc6',
+  granero: '#dcc08a',
+  corral: '#c9a46a',
+  campo: '#9cc46e',
+  'casa-granja': '#efd9b8',
 }
 
 const WALL = '#7a6a58'
@@ -56,9 +60,13 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   A: { en: 'sofa', es: 'sofá' },
   J: { en: 'fridge', es: 'nevera' },
   k: { en: 'birthday cake', es: 'pastel de cumpleaños' },
+  y: { en: 'hay', es: 'heno' },
+  f: { en: 'fence', es: 'cerca' },
+  w: { en: 'pond', es: 'estanque' },
+  c: { en: 'corn', es: 'maíz' },
 }
 
-export function Tile({ c, x, y, floor, doorOpen }: { c: string; x: number; y: number; floor: string; doorOpen: boolean }) {
+export function Tile({ c, x, y, floor, doorOpen, party = true }: { c: string; x: number; y: number; floor: string; doorOpen: boolean; party?: boolean }) {
   const X = x * T
   const Y = y * T
   const base = <rect x={X} y={Y} width={T} height={T} fill={floor} stroke="rgba(0,0,0,0.05)" />
@@ -354,7 +362,7 @@ export function Tile({ c, x, y, floor, doorOpen }: { c: string; x: number; y: nu
         <g>
           {base}
           <rect x={X + 1} y={Y + 9} width={T - 2} height={15} rx="2" fill="#f4efe4" stroke="#d64545" strokeWidth="1" strokeDasharray="3 2" />
-          {y % 2 === 1 ? (
+          {!party ? null : y % 2 === 1 ? (
             <>
               <rect x={X + 8} y={Y + 4} width={16} height={11} rx="2" fill="#e88aa8" />
               <rect x={X + 8} y={Y + 4} width={16} height={3} rx="1" fill="#f4efe4" />
@@ -367,6 +375,46 @@ export function Tile({ c, x, y, floor, doorOpen }: { c: string; x: number; y: nu
               <circle cx={X + 24} cy={Y + 10} r="4" fill="#3b9d5d" />
             </>
           )}
+        </g>
+      )
+    case 'y':
+      return (
+        <g>
+          {base}
+          <rect x={X + 3} y={Y + 8} width={T - 6} height={18} rx="3" fill="#e8c95a" />
+          <line x1={X + 3} y1={Y + 14} x2={X + T - 3} y2={Y + 14} stroke="#c9a83a" strokeWidth="1.2" />
+          <line x1={X + 3} y1={Y + 20} x2={X + T - 3} y2={Y + 20} stroke="#c9a83a" strokeWidth="1.2" />
+        </g>
+      )
+    case 'f':
+      return (
+        <g>
+          {base}
+          <rect x={X} y={Y + 10} width={T} height={3} fill="#a8743f" />
+          <rect x={X} y={Y + 19} width={T} height={3} fill="#a8743f" />
+          <rect x={X + 4} y={Y + 6} width={4} height={20} fill="#8b5a2b" />
+          <rect x={X + 22} y={Y + 6} width={4} height={20} fill="#8b5a2b" />
+        </g>
+      )
+    case 'w':
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill={floor} />
+          <rect x={X} y={Y} width={T} height={T} rx="8" fill="#6fb6d9" />
+          <path d={`M${X + 6} ${Y + 12} q4 -3 8 0 M${X + 16} ${Y + 22} q4 -3 8 0`} fill="none" stroke="#e8f6fc" strokeWidth="1.2" />
+        </g>
+      )
+    case 'c':
+      return (
+        <g>
+          {base}
+          {[7, 16, 25].map((cx) => (
+            <g key={cx}>
+              <rect x={X + cx - 1} y={Y + 8} width={2} height={20} fill="#5f9a3c" />
+              <ellipse cx={X + cx + 2.5} cy={Y + 14} rx="2" ry="4.5" fill="#e8c95a" />
+              <path d={`M${X + cx} ${Y + 20} q-5 -2 -6 -7`} fill="none" stroke="#5f9a3c" strokeWidth="1.5" />
+            </g>
+          ))}
         </g>
       )
     default:

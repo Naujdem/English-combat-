@@ -10,11 +10,13 @@ import { TimeClock } from '../components/TimeClock'
 import { WORLD } from '../data/world'
 import { ENEMIES } from '../data/enemies'
 import type { Voice } from '../game/speech'
+import { NPCS } from '../data/npcs'
+import { AnimalSprite } from '../components/Animals'
 
 const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
-type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom'
-type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom'
+type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer'
+type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer'
 type Step = {
   who: Who
   text: string
@@ -38,6 +40,7 @@ type Step = {
 function buildSteps(s: GameState, sceneId: string): Step[] {
   if (sceneId === 'city') return citySteps(s)
   if (sceneId === 'barrio') return barrioSteps(s)
+  if (sceneId === 'farm') return farmSteps(s)
   const name = s.hero.name
   const it = s.interest
   const iname = it.name
@@ -336,9 +339,82 @@ function barrioSteps(s: GameState): Step[] {
   ]
 }
 
+/**
+ * Final del capítulo 4: el granjero vuelve a ser él mismo. Repasa do / does y plurales.
+ * El desconocido susurra algo que solo se entiende al final del juego.
+ */
+function farmSteps(s: GameState): Step[] {
+  const name = s.hero.name
+  const iname = s.interest.name
+  const cast: Cast[] = ['leo', 'interest', 'rosie']
+  const withFarmer: Cast[] = ['farmer', 'rosie', 'leo']
+  return [
+    { who: 'narrator', text: `El señor Brown sale de su casa. Rosie corre a abrazarlo. Leo y ${iname} esperan al lado del corral.`, cast: withFarmer },
+    { who: 'farmer', text: "Thank you, kids! My animals don't talk now. Listen: moo, baa, neigh... Perfect!", es: '¡Gracias, chicos! Mis animales ya no hablan. Escuchen: muu, bee, iiih... ¡Perfecto!', cast: withFarmer },
+    { who: 'rosie', text: 'Grandpa, do you remember the morning? Do you remember the shiny metal?', es: 'Abuelo, ¿recuerdas la mañana? ¿Recuerdas el metal brillante?', cast: withFarmer },
+    { who: 'farmer', text: "No, I don't. I only remember the man in the dark coat... and his strange, quiet voice.", es: 'No. Solo recuerdo al hombre del abrigo oscuro... y su voz extraña y bajita.', cast: withFarmer },
+    {
+      who: 'hero',
+      text: 'Pregúntale a Rosie si el perro también hablaba.',
+      cast,
+      choice: {
+        options: ['Does the dog talk too?', 'Do the dog talk too?', 'Does the dog talks too?'],
+        answer: 0,
+        tip: '"The dog" es "it": Does + verbo sin -s.',
+      },
+    },
+    { who: 'rosie', text: "No, it doesn't! It only says woof. Ha ha! But the geese talk all day... and they say nothing.", es: '¡No! Solo dice guau. ¡Ja, ja! Pero los gansos hablan todo el día... y no dicen nada.', cast },
+    { who: 'leo', text: 'How many pieces of the clock have we got now?', es: '¿Cuántas piezas del reloj tenemos ahora?', cast, clock: true },
+    {
+      who: 'hero',
+      text: '¿Qué le respondes a Leo?',
+      cast,
+      clock: true,
+      choice: {
+        options: ['We have got four pieces. Only one more!', 'We has got four pieces. Only one more!', 'We have got four piece. Only one more!'],
+        answer: 0,
+        tip: 'Con we: have got. Y cuatro piezas: pieces (con -s).',
+      },
+    },
+    { who: 'narrator', text: 'Rosie se lleva a Leo a ver los conejos. Entonces, detrás de la cerca, una voz ronca te habla muy despacio.', cast: ['interest'] },
+    { who: 'villain', text: 'You always run to help people... Good. But one day, you are going to stop. And you are going to be silent.', es: 'Siempre corres a ayudar a la gente... Bien. Pero un día te vas a detener. Y vas a quedarte callado.', villain: true, cast: ['interest'] },
+    { who: 'villain', text: 'The last piece is in an office. Every office has got a phone... and a phone needs a voice.', es: 'La última pieza está en una oficina. Toda oficina tiene un teléfono... y un teléfono necesita una voz.', villain: true, cast: ['interest'] },
+    { who: 'narrator', text: `Cuando ${iname} se da vuelta, solo queda la cerca y el viento. Leo vuelve corriendo con un conejo en los brazos.`, cast },
+    { who: 'interest', text: `${name}, who was that? What does he mean: "one day you are going to be silent"?`, es: `${name}, ¿quién era? ¿Qué quiere decir con "un día vas a quedarte callado"?`, cast },
+    {
+      who: 'hero',
+      text: `¿Qué le respondes a ${iname}?`,
+      cast,
+      choice: {
+        options: ["I don't know. But I don't want to be silent again!", "I doesn't know. But I don't want silent again!", "I not know. But I want be silent!"],
+        answer: 0,
+        tip: "Con I: don't + verbo. I don't know (no sé).",
+      },
+    },
+    { who: 'leo', text: 'An office... There are big offices next to the city. We can take the road tomorrow!', es: 'Una oficina... Hay oficinas grandes al lado de la ciudad. ¡Mañana podemos ir por la carretera!', cast },
+    { who: 'farmer', text: 'Take some eggs for your families! The chickens give us a lot of eggs every day.', es: '¡Lleven huevos para sus familias! Las gallinas nos dan muchos huevos todos los días.', cast: withFarmer },
+    {
+      who: 'hero',
+      text: '¿Cómo te despides del señor Brown?',
+      cast: withFarmer,
+      choice: {
+        options: ['Thank you, Mr. Brown! Goodbye, Rosie!', 'You are welcome, Mr. Brown!', 'Good morning, Rosie!'],
+        answer: 0,
+        tip: 'Te regalan algo y te vas: "Thank you!" y "Goodbye!".',
+      },
+    },
+    {
+      who: 'narrator',
+      text: 'Fin del capítulo 4: La granja. Recuperaste las preguntas y negativas con do / does y los plurales irregulares. Solo falta una pieza del reloj... Esa noche escribes en tu diario.',
+      cast,
+    },
+  ]
+}
+
 export function Epilogue({ state, onDone }: { state: GameState; onDone: () => void }) {
   const city = state.sceneId === 'city'
   const barrio = state.sceneId === 'barrio'
+  const farm = state.sceneId === 'farm'
   const steps = buildSteps(state, state.sceneId)
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
@@ -358,6 +434,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     hero: state.hero.name,
     nick: 'Nick',
     mom: 'Mom',
+    rosie: 'Rosie',
+    farmer: 'Mr. Brown',
   }
 
   const voices: Record<Who, Voice> = {
@@ -369,6 +447,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     maya: 'female',
     interest: state.interest.gender === 'female' ? 'female' : 'male',
     villain: 'villain',
+    rosie: 'female',
+    farmer: 'male',
   }
 
   function next() {
@@ -383,8 +463,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 overflow-y-auto px-4 py-6">
-      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
-      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
+      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
+      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
         {s.home ? (
           <g>
             <rect width="320" height="200" fill="#f1d9c0" />
@@ -399,6 +479,22 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             <rect x="214" y="86" width="92" height="18" rx="6" fill="#c8664e" />
             <rect x="250" y="20" width="44" height="58" rx="2" fill="#e8eef2" stroke="#b8c4cc" strokeWidth="2" />
             <line x1="250" y1="40" x2="294" y2="40" stroke="#b8c4cc" strokeWidth="2" />
+          </g>
+        ) : farm ? (
+          <g>
+            <rect width="320" height="200" fill="#bfe3f5" />
+            <circle cx="40" cy="34" r="18" fill="#f6d36b" />
+            <path d="M0 120 Q80 92 160 110 T320 100 V120 Z" fill="#7fae5a" />
+            <rect x="200" y="50" width="90" height="70" fill="#b5523b" />
+            <polygon points="192,52 245,18 298,52" fill="#8b3a2b" />
+            <rect x="232" y="82" width="26" height="38" fill="#f4efe4" />
+            <path d="M232 82 l26 38 M258 82 l-26 38" stroke="#b5523b" strokeWidth="3" />
+            <rect y="120" width="320" height="80" fill="#9cc46e" />
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((k) => <rect key={k} x={4 + k * 32} y="128" width="4" height="22" fill="#a8743f" />)}
+            <rect x="0" y="133" width="320" height="3" fill="#a8743f" />
+            <g transform="translate(150 96) scale(1.2)"><AnimalSprite kind="cow" /></g>
+            <g transform="translate(110 104) scale(0.9)"><AnimalSprite kind="sheep" /></g>
+            <g transform="translate(186 108) scale(0.8)"><AnimalSprite kind="goose" /></g>
           </g>
         ) : barrio ? (
           <g>
@@ -467,6 +563,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             : who === 'maya' ? FRIENDS.maya.look
             : who === 'nick' ? { ...ENEMIES['barrio-boss'].look, skin: state.hero.look.skin, hair: state.hero.look.hair }
             : who === 'mom' ? { shirt: '#2f6fd0', hair: state.hero.look.hair, skin: state.hero.look.skin, gender: 'female' as const }
+            : who === 'rosie' ? NPCS.rosie.look
+            : who === 'farmer' ? ENEMIES['farm-boss'].look
             : interest.look
           return (
             <g key={who} transform={`translate(${spots[k] + 64} 128) scale(-2 2)`}>

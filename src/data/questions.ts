@@ -2,6 +2,7 @@ import type { Question, QuestionKind, TopicId } from '../game/types'
 import { canSpeak } from '../game/speech'
 import { canRecognize } from '../game/mic'
 import { BARRIO_QUESTIONS } from './questions-barrio'
+import { FARM_QUESTIONS } from './questions-farm'
 
 /**
  * Banco de preguntas.
@@ -315,6 +316,8 @@ export const QUESTIONS: Question[] = [
   { id: 'oro-03', topic: 'ordering', tags: ['cafe'], kind: 'order', prompt: 'Aquí tiene.', options: ['Here', 'you', 'are.'], answer: 0, tip: '"Here you are" se dice al entregar algo.' },
   // ── Barrio (Green Street): presente simple, gustos, can, presente continuo, have got
   ...BARRIO_QUESTIONS,
+  // ── Granja: preguntas y negativas con do / does, plurales
+  ...FARM_QUESTIONS,
 ]
 
 
@@ -561,6 +564,24 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Para decir lo que tienes: I have got a dog. She has got two brothers.',
       'I, you, we, they → have got · he, she, it → has got.',
       'Pregunta: Have you got a pet? → Yes, I have. / No, I haven\'t.',
+    ],
+  },
+  'do-does': {
+    name: 'Preguntas y negativas (do / does)',
+    level: 'A1',
+    lesson: [
+      'Para preguntar en presente: Do (I, you, we, they) o Does (he, she, it) + verbo sin -s: Does the cow eat grass?',
+      "Para negar: don't o doesn't + verbo sin -s: The horse doesn't eat meat.",
+      "Respuestas cortas: Yes, it does. / No, it doesn't. · Yes, they do. / No, they don't.",
+    ],
+  },
+  plurals: {
+    name: 'Plurales (sheep, geese, mice...)',
+    level: 'A1',
+    lesson: [
+      'Plural normal: -s (cow → cows) · -es después de -s, -sh, -ch, -x (box → boxes).',
+      'Irregulares: sheep → sheep · goose → geese · mouse → mice · child → children · man → men · woman → women.',
+      'Otros: foot → feet · tooth → teeth · leaf → leaves.',
     ],
   },
   'past-simple': {

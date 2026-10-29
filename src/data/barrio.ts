@@ -44,7 +44,7 @@ export const BARRIO_REQUIREMENTS: Requirement[] = [
   },
   {
     id: 'barrio-photo',
-    name: 'la foto de tu familia (en la fiesta del parque)',
+    name: 'la foto de tu familia (prepara la fiesta del parque con el abuelo Joe)',
     line: {
       text: 'Family? What family? I have no family! Show me a photo, if you can!',
       es: '¿Familia? ¿Qué familia? ¡No tengo familia! Muéstrame una foto, si puedes.',
@@ -87,6 +87,9 @@ export const BARRIO: SceneDef = {
     { label: `Llaves ${s.keys.barrio ?? 0}/3`, done: (s.keys.barrio ?? 0) >= 3 },
     { label: 'Invitación', done: s.opened.includes('barrio-invite') },
     { label: 'Foto de familia', done: s.opened.includes('barrio-photo') },
+    ...(s.opened.includes('party-started') && !s.opened.includes('barrio-photo')
+      ? [{ label: `Fiesta ${['cake', 'balloons', 'radio'].filter((it) => s.opened.includes(`party-${it}`)).length}/3`, done: s.opened.includes('party-ready') }]
+      : []),
   ],
   intro: {
     first:

@@ -7,6 +7,8 @@ import type { MiniStep } from '../components/MiniTalk'
  * Si tiene `requires`, el personaje no abre la tarea hasta que esté en `opened`.
  */
 export type NpcTask = {
+  /** Personaje que da la tarea (si no se indica, el id de la tarea es el del personaje) */
+  npc?: string
   done: string
   lesson?: TopicId
   requires?: { id: string; text: string; es: string; sub: string }
@@ -14,6 +16,8 @@ export type NpcTask = {
   reward: { text: string; es?: string; sub: string; say?: string }
   shield?: boolean
   outfit?: string
+  /** En vez de la charla, abre un juego propio */
+  activity?: 'guess' | 'pens'
 }
 
 export const NPC_TASKS: Record<string, NpcTask> = {
@@ -101,8 +105,10 @@ export const NPC_TASKS: Record<string, NpcTask> = {
   },
 
   // El abuelo de Leo en la fiesta: fechas, felicitar y la foto de tu familia
-  joe: {
-    done: 'barrio-photo',
+  // Primero: la fiesta no está lista. Hay que conseguir el pastel, los globos y la música
+  'joe-start': {
+    npc: 'joe',
+    done: 'party-started',
     requires: {
       id: 'barrio-invite',
       text: 'Grandpa Joe: "Hello! This party is for family and friends. Have you got an invitation? Leo\'s mom has got the invitations."',
@@ -114,6 +120,43 @@ export const NPC_TASKS: Record<string, NpcTask> = {
         text: "Hello, young friend! Welcome to Leo's party! Have you got your invitation?",
         es: '¡Hola, joven amigo! ¡Bienvenido a la fiesta de Leo! ¿Tienes tu invitación?',
         choice: { ask: 'Dale la invitación.', options: ['Yes, you are here.', 'Yes, here you are.', 'No, thank you.'], answer: 1, tip: 'Al entregar algo: Here you are.' },
+      },
+      {
+        text: "Oh no! Look at the table. We haven't got a cake. We haven't got balloons. And we haven't got any music!",
+        es: '¡Oh, no! Mira la mesa. No tenemos pastel. No tenemos globos. ¡Y no tenemos música!',
+        choice: { ask: '¿Qué falta para la fiesta?', options: ['A cake, balloons and music.', 'A dog, a bike and a ball.', 'Nothing. The party is ready.'], answer: 0, tip: 'El abuelo dice: "We haven\'t got a cake... balloons... any music".' },
+      },
+      {
+        text: 'Can you help me? Ask the neighbors: "Have you got...?" The man who loves cooking has got a cake, I think.',
+        es: '¿Me ayudas? Pregúntales a los vecinos: "Have you got...?" El hombre al que le encanta cocinar tiene un pastel, creo.',
+      },
+      {
+        text: 'The girl with orange hair in the park has got a lot of balloons. And the man who loves old music has got a radio... but he is very angry today.',
+        es: 'La niña de pelo naranja del parque tiene muchos globos. Y el hombre al que le encanta la música vieja tiene una radio... pero hoy está muy enojado.',
+        choice: { ask: '¿Quién tiene la radio?', options: ['The girl in the park.', 'The man who loves old music.', 'Leo.'], answer: 1, tip: 'El abuelo dice: "the man who loves old music has got a radio".' },
+      },
+    ],
+    reward: {
+      text: 'Grandpa Joe: "Please hurry! Leo is coming soon!"',
+      es: '¡Date prisa, por favor! ¡Leo viene pronto!',
+      sub: 'Misión: prepara la fiesta. Pregunta a los vecinos "Have you got...?" y consigue el pastel, los globos y la radio.',
+      say: 'Please hurry! Leo is coming soon!',
+    },
+  },
+
+  // Con todo listo, la fiesta: fechas, felicitar y la foto de tu familia
+  joe: {
+    done: 'barrio-photo',
+    requires: {
+      id: 'party-ready',
+      text: 'Grandpa Joe: "The party isn\'t ready! Ask the neighbors: Have you got a cake? Have you got any balloons? Have you got a radio?"',
+      es: '¡La fiesta no está lista! Pregúntales a los vecinos.',
+      sub: 'Mira lo que falta en "Fiesta" bajo el mapa.',
+    },
+    steps: [
+      {
+        text: 'A cake, balloons and music! Thank you! Now the party is perfect.',
+        es: '¡Un pastel, globos y música! ¡Gracias! Ahora la fiesta es perfecta.',
       },
       {
         text: "Wonderful! Today is the fifth of May. Leo's birthday is on May 5th. He is fifteen today!",
@@ -149,3 +192,83 @@ export const NPC_TASKS: Record<string, NpcTask> = {
     },
   },
 }
+
+// ── La granja: estas tareas abren un juego propio (activity) en vez de una charla ──
+NPC_TASKS.rosie = {
+  done: 'farm-guess',
+  lesson: 'do-does',
+  activity: 'guess',
+  steps: [],
+  reward: {
+    text: 'Rosie: "You are very good at this game! Now you know all our animals."',
+    es: '¡Eres muy bueno en este juego! Ya conoces a todos nuestros animales.',
+    sub: 'Ya conoces a los animales de la granja. El granjero no podrá decir que no.',
+    say: 'You are very good at this game! Now you know all our animals.',
+  },
+}
+NPC_TASKS.patel = {
+  done: 'farm-pens',
+  lesson: 'plurals',
+  activity: 'pens',
+  steps: [],
+  reward: {
+    text: 'Dr. Patel: "Every animal is in the right pen. Thank you!"',
+    es: 'Cada animal está en su corral. ¡Gracias!',
+    sub: 'Los corrales están en orden. La doctora te da un escudo de palabras.',
+    say: 'Every animal is in the right pen. Thank you!',
+  },
+  shield: true,
+}
+
+/** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */
+export function taskOf(npcId: string, opened: string[]): { id: string; task: NpcTask; blocked: boolean } | null {
+  for (const [id, t] of Object.entries(NPC_TASKS)) {
+    if ((t.npc ?? id) !== npcId || opened.includes(t.done)) continue
+    return { id, task: t, blocked: !!t.requires && !opened.includes(t.requires.id) }
+  }
+  return null
+}
+
+/**
+ * Misión del barrio: preparar la fiesta de Leo. Se pregunta "Have you got...?" a los vecinos.
+ * owner = quién lo tiene (un personaje o un esbirro que hay que liberar antes).
+ */
+export type PartyItem = {
+  id: string
+  es: string
+  question: string
+  wrong: [string, string]
+  owner: string
+  yes: { text: string; es: string }
+  no: { text: string; es: string }
+}
+
+export const PARTY_ITEMS: PartyItem[] = [
+  {
+    id: 'cake',
+    es: 'el pastel',
+    question: 'Have you got a cake?',
+    wrong: ['Has you got a cake?', 'Do you have got a cake?'],
+    owner: 'rojas',
+    yes: { text: 'Yes, I have! I always make a cake on Sundays. Take it, and say happy birthday to Leo!', es: '¡Sí! Siempre hago un pastel los domingos. ¡Llévatelo y felicita a Leo!' },
+    no: { text: "No, I haven't. Ask Maya's dad. He loves cooking!", es: 'No, no tengo. Pregúntale al papá de Maya. ¡Le encanta cocinar!' },
+  },
+  {
+    id: 'balloons',
+    es: 'los globos',
+    question: 'Have you got any balloons?',
+    wrong: ['Have you got a balloons?', 'Have you get any balloons?'],
+    owner: 'lucy',
+    yes: { text: 'Yes, I have! I have got ten balloons. Here you are!', es: '¡Sí! Tengo diez globos. ¡Aquí tienes!' },
+    no: { text: "No, I haven't. The girl with orange hair in the park has got a lot of balloons.", es: 'No, no tengo. La niña de pelo naranja del parque tiene muchos globos.' },
+  },
+  {
+    id: 'radio',
+    es: 'la radio',
+    question: 'Have you got a radio?',
+    wrong: ['Has you got a radio?', 'Have you a radio got?'],
+    owner: 'barrio-m3',
+    yes: { text: 'A radio? Yes, I have. I love old music! Take it. Leo is a good boy.', es: '¿Una radio? Sí, tengo. ¡Me encanta la música vieja! Llévatela. Leo es un buen chico.' },
+    no: { text: "No, I haven't. Mr. Hill has got an old radio... but he is very angry today.", es: 'No, no tengo. El señor Hill tiene una radio vieja... pero hoy está muy enojado.' },
+  },
+]

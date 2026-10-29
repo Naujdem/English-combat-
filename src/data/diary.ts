@@ -232,6 +232,41 @@ export const DIARY: DiaryChapter[] = [
       },
     ],
   },
+  {
+    id: 'farm',
+    title: 'Capítulo 4: La granja',
+    unlock: 'farm-epilogue',
+    words: [
+      { title: 'Animales de la granja', words: [['cow', 'vaca'], ['horse', 'caballo'], ['sheep', 'oveja'], ['pig', 'cerdo'], ['chicken', 'gallina'], ['duck', 'pato'], ['goose', 'ganso'], ['rabbit', 'conejo'], ['mouse', 'ratón'], ['dog', 'perro'], ['cat', 'gato']] },
+      { title: 'Plurales raros', words: [['sheep → sheep', 'oveja → ovejas'], ['goose → geese', 'ganso → gansos'], ['mouse → mice', 'ratón → ratones'], ['child → children', 'niño → niños'], ['man → men', 'hombre → hombres'], ['woman → women', 'mujer → mujeres'], ['foot → feet', 'pie → pies'], ['tooth → teeth', 'diente → dientes']] },
+      { title: 'En la granja', words: [['farm', 'granja'], ['farmer', 'granjero'], ['barn', 'granero'], ['pen', 'corral'], ['field', 'campo'], ['pond', 'estanque'], ['fence', 'cerca'], ['hay', 'heno'], ['milk', 'leche'], ['eggs', 'huevos'], ['wool', 'lana'], ['wings', 'alas'], ['grass', 'pasto'], ['vet', 'veterinario']] },
+      { title: 'Preguntas y respuestas', words: [['Do you...?', '¿Tú...?'], ['Does it...?', '¿Eso / él / ella...?'], ['Yes, it does.', 'Sí.'], ["No, it doesn't.", 'No.'], ['Yes, they do.', 'Sí (ellos).'], ["No, they don't.", 'No (ellos).'], ["don't / doesn't", 'no (antes del verbo)']] },
+    ],
+    versions: [
+      {
+        id: 'farm-present',
+        tense: 'n',
+        tab: 'Presente',
+        title: 'My story: the farm',
+        frame: 'Lo que pasó en la granja, contado en presente.',
+        lines: [
+          { en: 'We [go]n to the farm by bike. A man [says]n: "The animals talk!"', es: 'Vamos a la granja en bicicleta. Un señor dice: "¡Los animales hablan!".' },
+          { en: 'Rosie [plays]n a game with me. I [ask]n: "Does it have wings?" and she [answers]n: "No, it doesn\'t."', es: 'Rosie juega un juego conmigo. Yo pregunto: "¿Tiene alas?" y ella responde: "No".' },
+          { en: 'Daisy the cow [doesn\'t]n eat pizza. She [eats]n grass!', es: 'Daisy la vaca no come pizza. ¡Come pasto!' },
+          { en: 'There [are]n five sheep and three geese. And there [are]n a lot of mice in the barn!', es: 'Hay cinco ovejas y tres gansos. ¡Y hay muchos ratones en el granero!' },
+          { en: 'Mr. Brown [has]n a piece of the clock. He [doesn\'t]n remember the morning.', es: 'El señor Brown tiene una pieza del reloj. No recuerda la mañana.' },
+          { en: 'The stranger [says]n: "One day you are going to be silent." I [don\'t]n understand.', es: 'El desconocido dice: "Un día te vas a quedar callado". No entiendo.' },
+          { en: 'Now I [have]n four pieces of the clock. The last piece [is]n in an office.', es: 'Ahora tengo cuatro piezas del reloj. La última pieza está en una oficina.' },
+        ],
+        questions: [
+          { q: 'How do you go to the farm?', options: ['By bus.', 'By bike.', 'By car.'], answer: 1, tip: 'El texto dice: "We go to the farm by bike".' },
+          { q: 'Does Daisy eat pizza?', options: ["No, she doesn't.", 'Yes, she does.', 'Yes, she eats.'], answer: 0, tip: 'El texto dice: "Daisy the cow doesn\'t eat pizza".' },
+          { q: 'What is in the barn?', options: ['A lot of geese.', 'A lot of mice.', 'Five sheep.'], answer: 1, tip: 'El texto dice: "a lot of mice in the barn".' },
+          { q: 'Where is the last piece?', options: ['In an office.', 'On the farm.', 'In the park.'], answer: 0, tip: 'El texto dice: "The last piece is in an office".' },
+        ],
+      },
+    ],
+  },
 ]
 
 /** Diccionario de las palabras de los diarios (inglés → español) */
@@ -259,6 +294,7 @@ export const DICT: Record<string, string> = {
   grandpa: 'abuelo', joe: 'Joe (nombre)', photo: 'foto', family: 'familia', remembers: 'recuerda (remember)', gift: 'regalo', use: 'usar', "doesn't": 'no (con he, she, it)',
   understand: 'entender', three: 'tres', farm: 'granja', "leo's": 'de Leo', "maya's": 'de Maya', dad: 'papá', mom: 'mamá', maya: 'Maya (nombre)', she: 'ella', her: 'su (de ella)',
   looks: 'mira (look)', cooks: 'cocina (cook)', dinner: 'cena', always: 'siempre', usually: 'normalmente', nine: 'nueve', seven: 'siete', home: 'casa',
+  bike: 'bicicleta', by: 'en (by bike = en bicicleta)', animals: 'animales', rosie: 'Rosie (nombre)', game: 'juego', ask: 'pregunto (ask)', wings: 'alas', answers: 'responde (answer)', daisy: 'Daisy (nombre)', cow: 'vaca', pizza: 'pizza', eats: 'come (eat)', grass: 'pasto', sheep: 'ovejas, oveja', geese: 'gansos', mice: 'ratones', barn: 'granero', lot: 'mucho (a lot of = muchos)', brown: 'Brown (nombre)', remember: 'recordar', silent: 'callado', office: 'oficina', does: 'hace (do) / auxiliar de preguntas',
   "school's": 'de la escuela', ana: 'Ana (nombre)', story: 'historia', plan: 'plan', "stranger's": 'del desconocido',
 }
 
