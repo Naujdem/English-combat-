@@ -108,14 +108,14 @@ export const SCHOOL_PAST_ENEMIES: Record<string, EnemyDef> = {
     kind: 'boss',
     reward: 'chaleco',
     hp: 8,
-    topics: ['was-were', 'to-be', 'possessives'],
+    topics: ['was-were', 'there-is'],
     kinds: ['fill', 'fix', 'order', 'listen'],
     tags: ['direccion-vieja'],
     phases: [
       { hp: 4, topics: ['was-were'], kinds: ['fill', 'fix', 'listen'], tags: ['direccion-vieja', 'aula-vieja'] },
       {
         hp: 4,
-        topics: ['was-were', 'to-be', 'possessives'],
+        topics: ['was-were', 'there-is'],
         kinds: ['fill', 'fix', 'order', 'write'],
         tags: ['direccion-vieja', 'patio-viejo'],
         line: { text: 'This school were MY school! The students was MY students! Yesterday... today... everything is MINE!', es: '¡Esta escuela "eran" MI escuela! ¡Los estudiantes "era" MIS estudiantes! Ayer... hoy... ¡todo es MÍO!' },

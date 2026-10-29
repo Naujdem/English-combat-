@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { mixed } from '../game/mix'
 import { SpeakButton } from './SpeakButton'
 import { Tappable } from './Words'
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
@@ -186,7 +187,7 @@ export function Planner({ onClose }: { onClose: (done: boolean) => void }) {
           <p className="text-sm text-paper/75">Completa la nota de la agenda:</p>
           <p className="mt-1 text-[17px]">{r.sentence.text}</p>
           <div className="mt-2 grid gap-2">
-            {r.sentence.options.map((o, k) => (
+            {mixed(r.sentence.options).map(([o, k]) => (
               <button
                 key={o}
                 className={`${btn} text-left text-base`}

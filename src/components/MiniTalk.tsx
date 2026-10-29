@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { mixed } from '../game/mix'
 import { voiceOf } from '../game/speech'
 import type { SpriteLook } from './Sprite'
 import { SpriteIcon } from './Sprite'
@@ -39,7 +40,7 @@ export function MiniTalk({ name, look, steps, onClose }: { name: string; look: S
       {s.choice && !solved && <p className="mt-3 text-sm text-paper/75">{s.choice.ask}</p>}
       {waiting && (
         <div className="mt-2 grid gap-2">
-          {s.choice!.options.map((o, k) => (
+          {mixed(s.choice!.options).map(([o, k]) => (
             <button key={k} className={`${btn} text-left text-base`} onClick={() => (k === s.choice!.answer ? (setSolved(true), setTip(null)) : setTip(s.choice!.tip))}>
               {o}
             </button>

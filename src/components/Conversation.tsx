@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { mixed } from '../game/mix'
 import { voiceOf } from '../game/speech'
 import type { ChatOption, DialogLine, FriendDef, GameState } from '../game/types'
 import { SpriteIcon } from './Sprite'
@@ -88,7 +89,7 @@ export function ConversationView({
           {line.options && (
             <div className="mt-3 grid gap-2">
               <p className="text-xs font-semibold uppercase tracking-wide text-paper/50">{mute ? '¿Qué haces?' : '¿Qué respondes?'}</p>
-              {line.options.map((o, k) => (
+              {mixed(line.options, line.options.map((o) => o.text).join('|')).map(([o, k]) => (
                 <button key={k} className={`${btn} text-left text-base`} onClick={() => choose(o)}>
                   {o.text}
                 </button>

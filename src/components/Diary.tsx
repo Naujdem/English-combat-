@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { mixed } from '../game/mix'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
 import { DIARY, fillNames, lookup, normWord, TENSE_INFO, type DiaryChapter, type Tense } from '../data/diary'
@@ -262,7 +263,7 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
               <SpeakButton text={fill(version.questions[quiz].q)} size="sm" />
             </div>
             <div className="mt-3 grid gap-2">
-              {version.questions[quiz].options.map((o, k) => (
+              {mixed(version.questions[quiz].options).map(([o, k]) => (
                 <button
                   key={k}
                   className={`${btn} text-left text-base ${solved && k === version.questions[quiz].answer ? 'border-hp bg-hp/15' : ''}`}

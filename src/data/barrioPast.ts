@@ -155,13 +155,13 @@ export const BARRIO_PAST_ENEMIES: Record<string, EnemyDef> = {
       { text: 'This shiny thing falled on my desk last night. I taked it, and now I am the king of Green Street!', es: 'Esta cosa brillante cayó en mi escritorio anoche. La tomé, ¡y ahora soy el rey de Green Street! (Se equivoca: dice falled, taked).' },
     ],
     after: [
-      { text: 'Oh... I took it, and I became a different man. I shouted at Sam, at Carmen, at everybody. I am sorry.', es: 'Oh... La tomé y me volví otro hombre. Le grité a Sam, a Carmen, a todos. Lo siento.' },
-      { text: 'Yesterday a man in a dark coat came here. He went into Joe\'s new house. He touched the walls... and he cried. Then he left on the farm road.', es: 'Ayer vino un hombre con abrigo oscuro. Entró a la casa nueva de Joe. Tocó las paredes... y lloró. Luego se fue por el camino de la granja.' },
+      { text: 'Oh... I took it, and I changed. I was a different man. I shouted at Sam, at Carmen, at everybody. I am sorry.', es: 'Oh... La tomé y cambié. Era otro hombre. Le grité a Sam, a Carmen, a todos. Lo siento.' },
+      { text: 'Yesterday a man in a dark coat came here. He went into Joe\'s new house. He touched the walls... and he cried. Then he walked to the farm road.', es: 'Ayer vino un hombre con abrigo oscuro. Entró a la casa nueva de Joe. Tocó las paredes... y lloró. Luego caminó hacia el camino de la granja.' },
       { text: 'This piece of metal is yours. And take this old helmet. Every builder needs one!', es: 'Este pedazo de metal es tuyo. Y toma este casco viejo. ¡Todo constructor necesita uno!' },
     ],
     freed: { text: 'I was a hard boss. Now I want a quiet street, with children and music. Well... maybe not too much music.', es: 'Fui un jefe duro. Ahora quiero una calle tranquila, con niños y música. Bueno... tal vez no tanta música.' },
     farewell: {
-      q: 'Goodbye, kids! What did you do on Green Street today?',
+      q: 'Goodbye, kids! Tell me one thing about today.',
       options: ['We saw the new houses and we met Joe!', 'We seed the new houses and we meeted Joe!', 'We see the new houses yesterday!'],
       answer: 0,
       tip: 'Irregulares: see → saw, meet → met.',

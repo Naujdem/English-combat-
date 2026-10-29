@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { mixed } from '../game/mix'
 import { SpeakButton } from './SpeakButton'
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
 
@@ -137,7 +138,7 @@ export function Directions({ onClose }: { onClose: (done: boolean) => void }) {
 
       {!intro && !done && round.mode === 'choose' && !solved && (
         <div className="mt-3 grid gap-2">
-          {round.options.map((o, k) => (
+          {mixed(round.options).map(([o, k]) => (
             <button key={k} className={`${btn} text-left text-base`} onClick={() => choose(k)}>{o}</button>
           ))}
         </div>

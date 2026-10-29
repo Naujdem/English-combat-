@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { mixed } from '../game/mix'
 import { voiceOf } from '../game/speech'
 import type { GameState, Question, TopicId, Zone } from '../game/types'
 import type { Update } from '../game/store'
@@ -747,7 +748,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             <SpeakButton text={bonusSession.bonus.q} size="sm" auto voice={voiceOf(enemy.look)} />
           </div>
           <div className="mt-3 grid gap-2">
-            {bonusSession.bonus.options.map((o, k) => {
+            {mixed(bonusSession.bonus.options).map(([o, k]) => {
               const right = k === bonusSession.bonus.answer
               const look =
                 bonusPick === null ? 'border-line bg-panel-2' : right ? 'border-hp bg-hp/25' : bonusPick === k ? 'border-danger bg-danger/25' : 'border-line bg-panel-2 opacity-40'

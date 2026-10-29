@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { mixed } from '../game/mix'
 import type { Gender, Hero, Interest } from '../game/types'
 import { SpriteBody } from '../components/Sprite'
 import { ClassroomStage } from '../components/Lesson'
@@ -281,7 +282,7 @@ export function Presentation({ onDone }: { onDone: (hero: Hero, interest: Intere
         {/* Respuesta de práctica en la pizarra */}
         {s.kind === 'practice' && !solved && (
           <div className={`mt-3 grid gap-2 ${s.options.some((o) => o.length > 12) ? 'grid-cols-1' : 'grid-cols-3'}`}>
-            {s.options.map((o, k) => (
+            {mixed(s.options).map(([o, k]) => (
               <button
                 key={k}
                 className={`${btn} ${s.options.some((x) => x.length > 12) ? 'text-left text-base' : 'px-2 text-[17px]'}`}

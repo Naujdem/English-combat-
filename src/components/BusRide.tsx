@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { mixed } from '../game/mix'
 import { SpriteBody, type SpriteLook } from './Sprite'
 import { SpeakButton } from './SpeakButton'
 import { btn, btnPrimary, Panel } from './ui'
@@ -146,8 +147,8 @@ export const WALK_TO_OLD_CITY: BusTrip = {
     { who: 'leo', text: 'Look! This is our city... thirty years ago! There was no fountain and there were no cars.', es: '¡Mira! Esta es nuestra ciudad... ¡hace treinta años! No había fuente y no había carros.' },
     {
       who: 'leo',
-      text: 'We walked a lot! Tell me, what did we do this morning?',
-      es: '¡Caminamos mucho! Dime, ¿qué hicimos esta mañana?',
+      text: 'We walked a lot! Tell me about this morning, at school.',
+      es: '¡Caminamos mucho! Cuéntame de esta mañana, en la escuela.',
       choice: { options: ['We helped Greg and we talked to Mrs. Higgins.', 'We help Greg yesterday and we talk to Mrs. Higgins.', 'We helpped Greg and we talkd to Mrs. Higgins.'], answer: 0, tip: 'Para contar lo que ya pasó, el verbo lleva -ed: helped, talked.' },
     },
     { who: 'leo', text: 'Yes! Helped, talked... In the past, the verbs have -ED at the end. Easy!', es: '¡Sí! Helped, talked... En pasado, los verbos llevan -ed al final. ¡Fácil!' },
@@ -173,8 +174,8 @@ export const WALK_TO_GREEN_1996: BusTrip = {
     { who: 'leo', text: 'Green Street! My street! But... where are the houses? There is only one house!', es: '¡Green Street! ¡Mi calle! Pero... ¿dónde están las casas? ¡Solo hay una casa!' },
     {
       who: 'leo',
-      text: 'Tell me, what did we see in the old city?',
-      es: 'Dime, ¿qué vimos en la ciudad vieja?',
+      text: 'Tell me about the old city. What was there?',
+      es: 'Cuéntame de la ciudad vieja. ¿Qué había?',
       choice: { options: ['We saw a market and a well.', 'We seed a market and a well.', 'We see a market and a well yesterday.'], answer: 0, tip: 'see es irregular: el pasado es saw, no "seed".' },
     },
     { who: 'leo', text: 'Saw! Not "seed". Some verbs are special in the past. Went, saw, ate... We need a list!', es: '¡Saw! No "seed". Algunos verbos son especiales en pasado. Went, saw, ate... ¡Necesitamos una lista!' },
@@ -359,7 +360,7 @@ export function BusRide({ trip, hero, friend, friendName = '', onDone }: { trip:
 
           {waiting && (
             <div className="mt-3 grid gap-2">
-              {s.choice!.options.map((o, k) => (
+              {mixed(s.choice!.options).map(([o, k]) => (
                 <button
                   key={k}
                   className={`${btn} text-left text-base`}

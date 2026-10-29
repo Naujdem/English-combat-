@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { mixed } from '../game/mix'
 import type { GameState } from '../game/types'
 import { SpriteBody } from '../components/Sprite'
 import { SpeakButton } from '../components/SpeakButton'
@@ -555,7 +556,7 @@ function cityPastSteps(s: GameState): Step[] {
     { who: 'narrator', text: 'Leo va a mirar el pozo. Junto a la cabina de teléfono, alguien cuelga el teléfono muy despacio.', cast: ['interest'] },
     { who: 'villain', text: 'I picked up this phone. I wanted to call... I wanted to shout... but there was no voice.', es: 'Levanté este teléfono. Quería llamar... quería gritar... pero no había voz.', villain: true, cast: ['interest'] },
     { who: 'villain', text: 'Your next words are in Green Street. They are building it now. The houses... are not there yet. Go.', es: 'Tus siguientes palabras están en Green Street. La están construyendo ahora. Las casas... todavía no están. Ve.', villain: true, cast: ['interest'] },
-    { who: 'narrator', text: `Cuando Leo vuelve del pozo, la cabina está vacía. El teléfono todavía se balancea. ${iname} te mira, preocupado.`, cast },
+    { who: 'narrator', text: `Cuando Leo vuelve del pozo, la cabina está vacía. El teléfono todavía se balancea. ${iname} te mira, ${s.interest.gender === 'female' ? 'preocupada' : 'preocupado'}.`, cast },
     {
       who: 'hero',
       text: '¿Qué le cuentas a Leo?',
@@ -569,7 +570,7 @@ function cityPastSteps(s: GameState): Step[] {
     { who: 'leo', text: 'He wanted to call someone? Who...? Come on, Green Street is my street. Let\'s go!', es: '¿Quería llamar a alguien? ¿A quién...? Vamos, Green Street es mi calle. ¡Vamos!', cast },
     {
       who: 'narrator',
-      text: 'Fin: La ciudad de 1996. Recuperaste el pasado de los verbos regulares (-ed) y sus tres sonidos. Tu viaje por el pasado sigue en Green Street...',
+      text: 'Fin: La ciudad de 1996. Recuperaste el pasado de los verbos regulares (-ed) y sus tres sonidos. Tu diario de la ciudad tiene una página nueva de 1996. Tu viaje por el pasado sigue en Green Street...',
       cast,
     },
   ]
@@ -588,7 +589,7 @@ function barrioPastSteps(s: GameState): Step[] {
     { who: 'hill', text: 'Carmen, Joe... I shouted at everybody today. I was a bad boss. I am sorry.', es: 'Carmen, Joe... Hoy les grité a todos. Fui un mal jefe. Lo siento.', cast: site },
     { who: 'joey', text: "It's OK, Frank. Look, my son Daniel came from the university! He brought cookies for everybody. He wants to be a doctor.", es: 'No pasa nada, Frank. ¡Mira, mi hijo Daniel vino de la universidad! Trajo galletas para todos. Quiere ser médico.', cast: site },
     { who: 'carmen', text: 'Daniel? The tall boy with the cookies? He is very kind... and very handsome! Ha ha.', es: '¿Daniel? ¿El muchacho alto de las galletas? Es muy amable... ¡y muy guapo! Ja, ja.', cast: site },
-    { who: 'leo', text: "Wait... Joe's son is DANIEL? My dad is Daniel, and he is a doctor! And Carmen... my mom's name is Carmen!", es: '¿Espera... el hijo de Joe es DANIEL? ¡Mi papá se llama Daniel y es médico! Y Carmen... ¡mi mamá se llama Carmen!', cast },
+    { who: 'leo', text: "Wait... Joe's son is DANIEL? My dad is Daniel, and he is a doctor! And Carmen... my mom's name is Carmen!", es: 'Espera... ¿el hijo de Joe es DANIEL? ¡Mi papá se llama Daniel y es médico! Y Carmen... ¡mi mamá se llama Carmen!', cast },
     {
       who: 'hero',
       text: '¿Qué le dices a Leo?',
@@ -619,7 +620,7 @@ function barrioPastSteps(s: GameState): Step[] {
     { who: 'leo', text: 'Again? Why does he always find us...? OK. The farm. Let\'s go!', es: '¿Otra vez? ¿Por qué siempre nos encuentra...? Bueno. La granja. ¡Vamos!', cast },
     {
       who: 'narrator',
-      text: 'Fin: Green Street en 1996. Recuperaste el pasado de los verbos irregulares. Los 25 del libro de Joe están en tus fichas. Tu viaje por el pasado sigue en la granja...',
+      text: 'Fin: Green Street en 1996. Recuperaste el pasado de los verbos irregulares. Los 25 del libro de Joe están en tus fichas y en el Cuaderno, y tu diario de Green Street tiene una página nueva de 1996. Tu viaje por el pasado sigue en la granja...',
       cast,
     },
   ]
@@ -904,7 +905,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
 
         {waiting && (
           <div className="mt-3 grid gap-2">
-            {s.choice!.options.map((o, k) => (
+            {mixed(s.choice!.options).map(([o, k]) => (
               <button
                 key={k}
                 className={`${btn} text-left text-base`}

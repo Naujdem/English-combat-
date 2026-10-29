@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { mixed } from '../game/mix'
 import type { LostItem } from '../data/lostFound'
 import { lostReply } from '../data/lostFound'
 import { SpeakButton } from './SpeakButton'
@@ -34,7 +35,7 @@ export function LostAsk({
       {!asked ? (
         <>
           <div className="mt-3 grid gap-2">
-            {item.ask.options.map((o, k) => (
+            {mixed(item.ask.options).map(([o, k]) => (
               <button
                 key={k}
                 className={`${btn} text-left text-base`}

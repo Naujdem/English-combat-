@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { mixed } from '../game/mix'
 import { SpriteBody } from './Sprite'
 import { SpeakButton } from './SpeakButton'
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
@@ -168,7 +169,7 @@ export function CafeOrder({ name, onClose }: { name: string; onClose: (done: boo
         <>
           <p className="mt-3 text-sm text-paper/75">{round.ask}</p>
           <div className="mt-2 grid gap-2">
-            {round.options.map((o, k) => (
+            {mixed(round.options).map(([o, k]) => (
               <button key={k} className={`${btn} text-left text-base`} onClick={() => choose(k)}>{o}</button>
             ))}
           </div>

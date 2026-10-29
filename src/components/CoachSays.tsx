@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { mixed } from '../game/mix'
 import { SpriteBody, type SpriteLook } from './Sprite'
 import { SpeakButton } from './SpeakButton'
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
@@ -111,7 +112,7 @@ export function CoachSays({ look, onClose }: { look: SpriteLook; onClose: (done:
           <p className="mt-3 text-sm text-paper/75">{round.ask}</p>
           {!solved && (
             <div className="mt-2 grid gap-2">
-              {round.options.map((o, k) => (
+              {mixed(round.options).map(([o, k]) => (
                 <button key={k} className={`${btn} text-left text-base`} onClick={() => choose(k)}>{o}</button>
               ))}
             </div>

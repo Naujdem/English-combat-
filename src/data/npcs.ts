@@ -216,7 +216,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     lines: [
       { text: 'Sam says "I goed to the shop". Ha ha! It is "I went"!', es: 'Sam dice "I goed to the shop". ¡Ja, ja! ¡Se dice "I went"!' },
       { text: 'We built three houses last month. Well... we started three houses!', es: 'El mes pasado construimos tres casas. Bueno... ¡empezamos tres casas!' },
-      { text: 'Yesterday I saw a strange man in a dark coat. He stood in front of Joe\'s house for a long time.', es: 'Ayer vi a un hombre raro con abrigo oscuro. Se quedó mucho rato frente a la casa de Joe.' },
+      { text: 'Yesterday I saw a strange man in a dark coat. He was in front of Joe\'s house for a long time.', es: 'Ayer vi a un hombre raro con abrigo oscuro. Estuvo mucho rato frente a la casa de Joe.' },
     ],
   },
 }

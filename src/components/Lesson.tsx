@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react'
+import { mixed } from '../game/mix'
 import type { GameState, LessonStep } from '../game/types'
 import { SpriteBody } from './Sprite'
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
@@ -111,7 +112,7 @@ export function Lesson({
 
         {waiting && (
           <div className={`mt-3 grid gap-2 ${s.who === 'board' ? 'grid-cols-3' : ''}`}>
-            {s.choice!.options.map((o, k) => (
+            {mixed(s.choice!.options).map(([o, k]) => (
               <button key={k} className={`${btn} ${s.who === 'board' ? 'px-2 text-[18px]' : 'text-left text-base'}`} onClick={() => choose(k)}>
                 {o}
               </button>

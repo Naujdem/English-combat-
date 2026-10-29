@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { mixed } from '../game/mix'
 import { SpeakButton } from './SpeakButton'
 import { Tappable } from './Words'
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
@@ -114,7 +115,7 @@ export function Attendance({ onClose }: { onClose: (done: boolean) => void }) {
 
       {!ok && (
         <div className="mt-2 grid gap-2">
-          {r.options.map((o, k) => (
+          {mixed(r.options).map(([o, k]) => (
             <button
               key={o}
               className={`${btn} text-left text-base`}

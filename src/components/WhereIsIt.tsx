@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react'
+import { mixed } from '../game/mix'
 import { SpriteBody } from './Sprite'
 import { SpeakButton } from './SpeakButton'
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
@@ -173,7 +174,7 @@ export function WhereIsIt({ onClose }: { onClose: (done: boolean) => void }) {
 
       {intro >= INTRO.length && !done && round.mode === 'choose' && !solved && (
         <div className="mt-3 grid gap-2">
-          {round.options.map((o, k) => (
+          {mixed(round.options).map(([o, k]) => (
             <button key={k} className={`${btn} text-left text-base`} onClick={() => choose(k)}>{o}</button>
           ))}
         </div>

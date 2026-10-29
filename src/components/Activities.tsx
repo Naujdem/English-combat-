@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { mixed } from '../game/mix'
 import type { GameState } from '../game/types'
 import { SCHOOL_VOCAB } from '../data/activities'
 import { DAYS, HOURS, SESSIONS, type Session } from '../data/schedule'
@@ -231,7 +232,7 @@ export function ReadingActivity({
             <SpeakButton text={q.q} size="sm" />
           </div>
           <div className="mt-2 grid gap-2">
-            {q.options.map((o, k) => (
+            {mixed(q.options).map(([o, k]) => (
               <button
                 key={k}
                 className={`${btn} text-left text-base disabled:opacity-100 ${ok && k === q.answer ? 'border-hp bg-hp/20' : ok ? 'opacity-40' : ''}`}
