@@ -629,6 +629,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'There was (una cosa) · there were (varias).',
     ],
   },
+  'past-regular': {
+    name: 'Pasado de los verbos regulares (-ed)',
+    level: 'A1',
+    lesson: [
+      'Verbo + ed, igual para todas las personas: walk → walked · play → played · want → wanted.',
+      'Ortografía: live → lived · study → studied · stop → stopped.',
+      'Tres sonidos: /t/ walked · /d/ played · /ɪd/ wanted (después de t o d).',
+      'Palabras de pasado: yesterday · last week · two days ago.',
+    ],
+  },
   'past-simple': {
     name: 'Pasado simple',
     level: 'A2',

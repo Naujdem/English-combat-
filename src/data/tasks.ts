@@ -17,7 +17,7 @@ export type NpcTask = {
   shield?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds'
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
   vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
@@ -365,6 +365,43 @@ NPC_TASKS.higgins = {
     sub: 'La lista de asistencia está en orden. El director ya no puede decir que no estabas en la lista.',
     say: 'Thank you, dear! You were a big help.',
   },
+}
+
+// ── La ciudad en 1996 ──
+NPC_TASKS.lopez = {
+  done: 'past-sounds',
+  lesson: 'past-regular',
+  activity: 'sounds',
+  steps: [],
+  reward: {
+    text: 'Mr. Lopez: "Walked, played, wanted! You listened very well."',
+    es: '¡Walked, played, wanted! Escuchaste muy bien.',
+    sub: 'Los sacos están en orden. Ahora la señora Rossi no puede decir que nadie ayudó en el mercado.',
+    say: 'Walked, played, wanted! You listened very well.',
+  },
+}
+
+NPC_TASKS.nora = {
+  done: 'city-past-vocab',
+  activity: 'vocab',
+  vocab: {
+    title: 'Cosas de 1996',
+    place: 'Tienda · Nora',
+    words: [
+      { en: 'well', es: 'pozo' }, { en: 'cart', es: 'carreta' }, { en: 'horse', es: 'caballo' }, { en: 'dirt road', es: 'carretera destapada' },
+      { en: 'market', es: 'mercado' }, { en: 'stall', es: 'puesto' }, { en: 'phone box', es: 'cabina de teléfono' }, { en: 'letter', es: 'carta' },
+      { en: 'stamp', es: 'estampilla' }, { en: 'mail carrier', es: 'cartero' }, { en: 'bread', es: 'pan' }, { en: 'sack', es: 'saco' },
+      { en: 'apron', es: 'delantal' }, { en: 'radio', es: 'radio' },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Nora: "Well, cart, stall, stamp... You learned all my words!"',
+    es: 'Pozo, carreta, puesto, estampilla... ¡Aprendiste todas mis palabras!',
+    sub: 'Nora te da un escudo de palabras.',
+    say: 'Well, cart, stall, stamp... You learned all my words!',
+  },
+  shield: true,
 }
 
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */

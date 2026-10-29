@@ -172,6 +172,7 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - Mapa y enemigos en `src/data/schoolPast.ts`, preguntas de *was / were* en `src/data/questions-past.ts`.
 - La lista de asistencia de la señora Higgins (`src/components/Attendance.tsx`). Greg resulta ser el señor Grimm de niño.
 - Los jefes del pasado dan fragmentos de voz (no cuentan como piezas del reloj).
+- La ciudad de 1996 (`src/data/cityPast.ts`): se llega a pie (`WALK_TO_OLD_CITY`). Pasado de los verbos regulares (*-ed*), con los sacos de sonidos /t/ /d/ /ɪd/ del señor López (`src/components/SoundSacks.tsx`) y el repaso de palabras de Nora. Tony, el repartidor, es el señor Rossi de joven.
 
 ## Explicaciones y repaso de cierre de A1
 

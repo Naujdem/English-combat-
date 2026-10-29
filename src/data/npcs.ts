@@ -180,6 +180,29 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
       { text: 'Look at the board! There were strange words on it this morning.', es: '¡Mira la pizarra! Esta mañana había unas palabras raras escritas.' },
     ],
   },
+  // ── La ciudad en 1996 ──
+  lopez: {
+    name: 'Mr. Lopez',
+    // El vendedor de frutas: los sacos de sonidos (/t/ /d/ /ɪd/)
+    look: { shirt: '#5f9a3c', hair: '#3b2a1a', skin: '#c68642', accessory: 'cap' },
+    doneLine: { text: 'My sacks are perfect now. Walked, played, wanted! You listened very well.', es: 'Mis sacos ya están perfectos. ¡Walked, played, wanted! Escuchaste muy bien.' },
+  },
+  nora: {
+    name: 'Nora',
+    // La dueña de la tienda: repaso de palabras de 1996
+    look: { shirt: '#c98b4a', hair: '#8b5a2b', skin: '#f1c27d', gender: 'female' },
+    doneLine: { text: 'Thank you for visiting my shop! Everything here is new... in 1996!', es: '¡Gracias por visitar mi tienda! Aquí todo es nuevo... ¡en 1996!' },
+  },
+  'rosa-kid': {
+    name: 'Rosa',
+    // La oficial Rosa de niña
+    look: { shirt: '#1f3c88', hair: '#2b1d14', skin: '#c68642', gender: 'female' },
+    lines: [
+      { text: 'Yesterday I helped a lost dog. I walked him to his house. One day I want to be a police officer!', es: 'Ayer ayudé a un perro perdido. Lo acompañé a su casa. ¡Un día quiero ser policía!' },
+      { text: 'My dad cleaned the well last week. The water is very cold!', es: 'Mi papá limpió el pozo la semana pasada. ¡El agua está muy fría!' },
+      { text: 'A man in a dark coat watched the phone box all morning. He looked very sad.', es: 'Un hombre con abrigo oscuro miró la cabina de teléfono toda la mañana. Se veía muy triste.' },
+    ],
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

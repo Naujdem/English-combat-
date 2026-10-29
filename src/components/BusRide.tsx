@@ -17,7 +17,7 @@ export type BusTrip = { place: string; placeEs: string; price: string; priceNum:
   /** Pasos propios para un viaje en autobús */
   steps?: Step[]
   /** Viaje con el reloj del tiempo (otro dibujo) */
-  art?: 'clock'
+  art?: 'clock' | 'walk'
   /** Texto del botón final */
   end?: string
 }
@@ -127,6 +127,32 @@ export const CLOCK_TO_1996: BusTrip = {
   ],
 }
 
+/** A pie por la carretera destapada: de la escuela de 1996 a la ciudad vieja */
+export const WALK_TO_OLD_CITY: BusTrip = {
+  place: 'the old city',
+  placeEs: 'la ciudad de 1996',
+  price: '',
+  priceNum: '',
+  wrongPrices: ['', ''],
+  arrival: { text: '', es: '' },
+  sign: 'MARKET',
+  three: true,
+  art: 'walk',
+  end: 'Entrar a la ciudad',
+  steps: [
+    { who: 'narrator', text: 'Salen de la escuela por la carretera de tierra. No hay carros: solo una carreta, unas gallinas y mucho polvo.', es: '' },
+    { who: 'leo', text: 'Look! This is our city... thirty years ago! There was no fountain and there were no cars.', es: '¡Mira! Esta es nuestra ciudad... ¡hace treinta años! No había fuente y no había carros.' },
+    {
+      who: 'leo',
+      text: 'We walked a lot! Tell me, what did we do this morning?',
+      es: '¡Caminamos mucho! Dime, ¿qué hicimos esta mañana?',
+      choice: { options: ['We helped Greg and we talked to Mrs. Higgins.', 'We help Greg yesterday and we talk to Mrs. Higgins.', 'We helpped Greg and we talkd to Mrs. Higgins.'], answer: 0, tip: 'Para contar lo que ya pasó, el verbo lleva -ed: helped, talked.' },
+    },
+    { who: 'leo', text: 'Yes! Helped, talked... In the past, the verbs have -ED at the end. Easy!', es: '¡Sí! Helped, talked... En pasado, los verbos llevan -ed al final. ¡Fácil!' },
+    { who: 'narrator', text: 'Al fondo se ve un mercado con toldos rojos y un letrero: MARKET. Tu voz se siente un poco más cerca.', es: '' },
+  ],
+}
+
 export const BUS_TO_BARRIO: BusTrip = {
   place: 'Green Street',
   placeEs: 'Green Street, el barrio de Leo',
@@ -195,7 +221,7 @@ export function BusRide({ trip, hero, friend, friendName = '', onDone }: { trip:
   return (
     <div className="absolute inset-0 z-40 overflow-y-auto bg-ink">
       <div className="mx-auto flex max-w-md flex-col gap-3 px-3 py-6">
-        <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{trip.art === 'clock' ? 'Viaje en el tiempo' : trip.bike ? 'En bicicleta' : 'En el autobús'}</p>
+        <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{trip.art === 'clock' ? 'Viaje en el tiempo' : trip.art === 'walk' ? 'A pie' : trip.bike ? 'En bicicleta' : 'En el autobús'}</p>
         <svg viewBox="0 0 320 170" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={`Autobús a ${trip.placeEs}`}>
           <rect width="320" height="170" fill="#bfe3f5" />
           <rect y="128" width="320" height="42" fill="#6b6b73" />
@@ -213,6 +239,31 @@ export function BusRide({ trip, hero, friend, friendName = '', onDone }: { trip:
               <circle cx="160" cy="95" r={moving ? 0 : 70} fill="#ffffff" opacity="0.85" style={{ transition: 'r 900ms ease-out' }} />
               {(trip.three && friend ? [hero, FRIENDS.leo.look, friend] : [hero, FRIENDS.leo.look]).map((look, k) => (
                 <g key={k} transform={`translate(${40 + k * 90} 104) scale(1.3)`}><SpriteBody look={look} /></g>
+              ))}
+            </g>
+          ) : trip.art === 'walk' ? (
+            <g>
+              <rect width="320" height="170" fill="#cfe6f2" />
+              <path d="M0 112 Q90 92 170 104 T320 98 V130 H0 Z" fill="#a9c47e" />
+              <rect x="196" y="58" width="48" height="56" fill="#a4553a" />
+              <rect x="248" y="70" width="40" height="44" fill="#c98b4a" />
+              <polygon points="192,60 220,40 248,60" fill="#6b3a2a" />
+              <rect x="208" y="74" width="10" height="12" fill="#cfe4ec" />
+              <rect x="226" y="74" width="10" height="12" fill="#cfe4ec" />
+              <rect x="246" y="64" width="44" height="8" fill="#d64545" />
+              <rect x="252" y="40" width="34" height="11" rx="2" fill="#f4efe4" stroke="#8b5a2b" strokeWidth="1.5" />
+              <text x="269" y="48.5" textAnchor="middle" fontSize="7" fontWeight="700" fill="#2b241c" fontFamily="Fredoka, Nunito, system-ui, sans-serif">{trip.sign}</text>
+              <rect y="128" width="320" height="42" fill="#b8946a" />
+              <path d="M0 140 H320 M0 158 H320" stroke="#9c7a52" strokeWidth="2" strokeDasharray="10 8" />
+              <g transform="translate(150 116)">
+                <rect x="0" y="0" width="34" height="12" rx="2" fill="#8b5a2b" />
+                <circle cx="7" cy="15" r="5" fill="none" stroke="#5a3a1a" strokeWidth="2" />
+                <circle cx="27" cy="15" r="5" fill="none" stroke="#5a3a1a" strokeWidth="2" />
+              </g>
+              {(trip.three && friend ? [hero, FRIENDS.leo.look, friend] : [hero, FRIENDS.leo.look]).map((look, k) => (
+                <g key={k} transform={`translate(${24 + k * 40} 100)`}>
+                  <g className={moving ? 'anim-bob' : undefined}><SpriteBody look={look} /></g>
+                </g>
               ))}
             </g>
           ) : trip.bike ? (

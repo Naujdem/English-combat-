@@ -38,6 +38,7 @@ import { GuessAnimal } from '../components/GuessAnimal'
 import { AnimalPens } from '../components/AnimalPens'
 import { Planner } from '../components/Planner'
 import { Attendance } from '../components/Attendance'
+import { SoundSacks } from '../components/SoundSacks'
 import { voiceOf, type Voice } from '../game/speech'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
@@ -362,6 +363,16 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           text: 'En la pizarra, con letra temblorosa, alguien escribió: "Be brave. Use your voice."',
           sub: 'Sé valiente. Usa tu voz. Es la misma frase de la tarjeta del cumpleaños de Leo...',
           say: 'Be brave. Use your voice.',
+          tone: 'warn',
+        })
+        return
+      }
+      if (c === 'e' && scene.id === 'city-past') {
+        // La cabina donde el desconocido quiso llamar
+        setMsg({
+          text: 'Una cabina de teléfono vieja. El teléfono cuelga del cable y todavía se balancea.',
+          sub: 'Alguien levantó el teléfono hace poco... y no dijo nada.',
+          say: 'phone box',
           tone: 'warn',
         })
         return
@@ -925,6 +936,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'pens') return <AnimalPens onClose={finish} />
             if (t.activity === 'planner') return <Planner onClose={finish} />
             if (t.activity === 'attendance') return <Attendance onClose={finish} />
+            if (t.activity === 'sounds') return <SoundSacks onClose={finish} />
             if (t.activity === 'vocab' && t.vocab)
               return <VocabActivity state={state} words={t.vocab.words} place={t.vocab.place} title={t.vocab.title} rewardText={t.reward.sub} onClose={finish} />
             const who = NPCS[t.npc ?? task]

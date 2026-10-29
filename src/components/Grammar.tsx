@@ -44,12 +44,26 @@ function ing(v: string) {
   return v + 'ing'
 }
 for (const v of MORE_VERBS) [v, third(v), ing(v)].forEach((f) => VERB.add(f))
-const KEY = new Set([
+/** Pasado de los verbos regulares: también se colorean como verbo */
+const PAST_VERBS = [
+  'walk', 'play', 'want', 'need', 'visit', 'start', 'wait', 'paint', 'clean', 'open', 'close', 'call', 'listen', 'live', 'love', 'like', 'help', 'stop',
+  'wash', 'watch', 'cook', 'talk', 'study', 'try', 'carry', 'deliver', 'post', 'look', 'work', 'jump', 'laugh', 'dance', 'smile', 'shout', 'pick',
+  'land', 'sort', 'fix', 'finish', 'arrive', 'stay', 'change', 'thank', 'show', 'use', 'spell', 'rain', 'drop', 'hate', 'answer', 'ask', 'kick',
+]
+function ed(v: string) {
+  if (v.endsWith('e')) return v + 'd'
+  if (/[^aeiou]y$/.test(v)) return v.slice(0, -1) + 'ied'
+  if (['stop', 'drop'].includes(v)) return v + v.at(-1) + 'ed'
+  return v + 'ed'
+}
+for (const v of PAST_VERBS) [v, third(v), ed(v)].forEach((f) => VERB.add(f))
+const KEY_BASE = [
   'me', 'him', 'us', 'them', 'past', 'at',
   'my', 'your', 'his', 'her', 'its', 'our', 'their', 'this', 'that', 'these', 'those', 'a', 'an', 'some', 'any', 'in', 'on', 'under', 'next', 'to',
   'between', 'behind', 'front', 'of', 'not', 'what', 'where', 'who', 'when', 'how', 'much', 'many', 'please',
   'always', 'usually', 'sometimes', 'often', 'never',
-])
+]
+const KEY = new Set([...KEY_BASE, 'yesterday', 'ago', 'last'])
 
 /** Papel de una palabra en la frase, para colorearla */
 export function wordRole(word: string, topic?: TopicId): Role {
@@ -175,6 +189,8 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (question) return { title: 'Para preguntar en pasado, el verbo va primero:', parts: [V('Was / Were'), '+', S('Sujeto'), '+', R('...?')] }
       if (negative) return { title: "Para negar en pasado: wasn't / weren't:", parts: [S('Sujeto'), '+', V("wasn't / weren't"), '+', R('...')] }
       return { title: 'I, he, she, it → was · you, we, they → were:', parts: [S('Sujeto'), '+', V('was / were'), '+', R('...')] }
+    case 'past-regular':
+      return { title: 'En pasado, el verbo lleva -ed y es igual para todas las personas:', parts: [S('Sujeto'), '+', V('verbo + ed'), '+', R('...'), '+', K('yesterday / ago')] }
     case 'time':
       if (question) return { title: 'Para preguntar la hora:', parts: [K('What time'), '+', V('is'), '+', S('it?')] }
       return { title: 'at + hora · on + día · in + mes, estación o parte del día:', parts: [R('...'), '+', K('at / on / in'), '+', R('hora / día / mes')] }

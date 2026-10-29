@@ -6,9 +6,10 @@ import { BARRIO } from '../data/barrio'
 import { FARM } from '../data/farm'
 import { OFFICE } from '../data/office'
 import { SCHOOL_PAST } from '../data/schoolPast'
+import { CITY_PAST } from '../data/cityPast'
 import { FRIENDS, interestFriend } from '../data/friends'
 
-export const SCENES: Record<string, SceneDef> = { [SCHOOL.id]: SCHOOL, [CITY.id]: CITY, [BARRIO.id]: BARRIO, [FARM.id]: FARM, [OFFICE.id]: OFFICE, [SCHOOL_PAST.id]: SCHOOL_PAST }
+export const SCENES: Record<string, SceneDef> = { [SCHOOL.id]: SCHOOL, [CITY.id]: CITY, [BARRIO.id]: BARRIO, [FARM.id]: FARM, [OFFICE.id]: OFFICE, [SCHOOL_PAST.id]: SCHOOL_PAST, [CITY_PAST.id]: CITY_PAST }
 
 export function heroLook(s: GameState, extra: Partial<SpriteLook> = {}): SpriteLook {
   const outfit = OUTFITS[s.outfit] ?? OUTFITS.base

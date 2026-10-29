@@ -15,8 +15,8 @@ import { AnimalSprite } from '../components/Animals'
 
 const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
-type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal'
-type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal'
+type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca'
+type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca'
 type Step = {
   who: Who
   text: string
@@ -43,6 +43,7 @@ function buildSteps(s: GameState, sceneId: string): Step[] {
   if (sceneId === 'farm') return farmSteps(s)
   if (sceneId === 'office') return officeSteps(s)
   if (sceneId === 'school-past') return schoolPastSteps(s)
+  if (sceneId === 'city-past') return cityPastSteps(s)
   const name = s.hero.name
   const it = s.interest
   const iname = it.name
@@ -524,12 +525,62 @@ function schoolPastSteps(s: GameState): Step[] {
   ]
 }
 
+/**
+ * Final de la ciudad en 1996: la señora Rossi vuelve a ser amable y Tony resulta ser el guía Rossi de joven.
+ * Segundo fragmento de voz. El desconocido estuvo en la cabina de teléfono y quiso llamar.
+ */
+function cityPastSteps(s: GameState): Step[] {
+  const iname = s.interest.name
+  const cast: Cast[] = ['leo', 'interest']
+  const rossis: Cast[] = ['bianca', 'tony', 'leo']
+  return [
+    { who: 'narrator', text: 'La señora Rossi sale de su oficina. Tony llega corriendo con su bicicleta.', cast: rossis },
+    { who: 'bianca', text: 'Tony, my boy... I shouted at you this morning. I am so sorry.', es: 'Tony, hijo... Esta mañana te grité. Lo siento mucho.', cast: rossis },
+    { who: 'tony', text: "It's OK, Mom. These kids helped me. Look, I delivered all the bread!", es: 'No pasa nada, mamá. Estos chicos me ayudaron. ¡Mira, entregué todo el pan!', cast: rossis },
+    { who: 'bianca', text: 'Thank you, children. Tony loves this city. He talks about every street, every shop... One day he wants to be a tourist guide!', es: 'Gracias, niños. Tony ama esta ciudad. Habla de cada calle, de cada tienda... ¡Un día quiere ser guía turístico!', cast: rossis },
+    { who: 'leo', text: 'A tourist guide? Tony... ROSSI? Mr. Rossi, the guide in our city? He was a delivery boy here?', es: '¿Guía turístico? ¿Tony... ROSSI? ¿El señor Rossi, el guía de nuestra ciudad? ¿Él era repartidor aquí?', cast },
+    {
+      who: 'hero',
+      text: '¿Qué le respondes a Leo?',
+      cast,
+      choice: {
+        options: ['Yes! He delivered bread, and he walked everywhere.', 'Yes! He deliverred bread, and he walkd everywhere.', 'Yes! He deliver bread yesterday.'],
+        answer: 0,
+        tip: 'Pasado regular: deliver → delivered, walk → walked.',
+      },
+    },
+    { who: 'interest', text: 'And look at his cap! Thirty years later, he has the same cap!', es: '¡Y mira su gorra! ¡Treinta años después tiene la misma gorra!', cast },
+    { who: 'narrator', text: 'Sientes algo cálido en la garganta: otro fragmento de tu voz vuelve a ti. Ahora puedes contar lo que pasó: I walked, I played, I wanted...', cast },
+    { who: 'narrator', text: 'Leo va a mirar el pozo. Junto a la cabina de teléfono, alguien cuelga el teléfono muy despacio.', cast: ['interest'] },
+    { who: 'villain', text: 'I picked up this phone. I wanted to call... I wanted to shout... but there was no voice.', es: 'Levanté este teléfono. Quería llamar... quería gritar... pero no había voz.', villain: true, cast: ['interest'] },
+    { who: 'villain', text: 'Your next words are in Green Street. They are building it now. The houses... are not there yet. Go.', es: 'Tus siguientes palabras están en Green Street. La están construyendo ahora. Las casas... todavía no están. Ve.', villain: true, cast: ['interest'] },
+    { who: 'narrator', text: `Cuando Leo vuelve del pozo, la cabina está vacía. El teléfono todavía se balancea. ${iname} te mira, preocupado.`, cast },
+    {
+      who: 'hero',
+      text: '¿Qué le cuentas a Leo?',
+      cast,
+      choice: {
+        options: ['The stranger was here! He talked to me!', 'The stranger were here! He talk to me!', 'The stranger is here yesterday!'],
+        answer: 0,
+        tip: 'El desconocido (he): was. Y el verbo regular en pasado: talked.',
+      },
+    },
+    { who: 'leo', text: 'He wanted to call someone? Who...? Come on, Green Street is my street. Let\'s go!', es: '¿Quería llamar a alguien? ¿A quién...? Vamos, Green Street es mi calle. ¡Vamos!', cast },
+    {
+      who: 'narrator',
+      text: 'Fin: La ciudad de 1996. Recuperaste el pasado de los verbos regulares (-ed) y sus tres sonidos. Tu viaje por el pasado sigue en Green Street...',
+      cast,
+    },
+  ]
+}
+
 export function Epilogue({ state, onDone }: { state: GameState; onDone: () => void }) {
   const city = state.sceneId === 'city'
   const barrio = state.sceneId === 'barrio'
   const farm = state.sceneId === 'farm'
   const office = state.sceneId === 'office'
   const schoolPast = state.sceneId === 'school-past'
+  const cityPast = state.sceneId === 'city-past'
   const steps = buildSteps(state, state.sceneId)
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
@@ -554,6 +605,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     clark: 'Ms. Clark',
     greg: 'Greg',
     principal: 'Principal Grimm',
+    tony: 'Tony',
+    bianca: 'Mrs. Rossi',
   }
 
   const voices: Record<Who, Voice> = {
@@ -570,6 +623,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     clark: 'female',
     greg: 'male',
     principal: 'male',
+    tony: 'male',
+    bianca: 'female',
   }
 
   function next() {
@@ -584,8 +639,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 overflow-y-auto px-4 py-6">
-      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
-      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
+      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
+      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
         {s.home ? (
           <g>
             <rect width="320" height="200" fill="#f1d9c0" />
@@ -600,6 +655,24 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             <rect x="214" y="86" width="92" height="18" rx="6" fill="#c8664e" />
             <rect x="250" y="20" width="44" height="58" rx="2" fill="#e8eef2" stroke="#b8c4cc" strokeWidth="2" />
             <line x1="250" y1="40" x2="294" y2="40" stroke="#b8c4cc" strokeWidth="2" />
+          </g>
+        ) : cityPast ? (
+          <g>
+            <rect width="320" height="200" fill="#cfe6f2" />
+            <rect x="14" y="40" width="96" height="96" fill="#a4553a" />
+            <polygon points="8,42 62,12 116,42" fill="#6b3a2a" />
+            <rect x="34" y="60" width="20" height="22" fill="#cfe4ec" />
+            <rect x="70" y="60" width="20" height="22" fill="#cfe4ec" />
+            {[0, 1].map((k) => (
+              <g key={k}>
+                <rect x={128 + k * 62} y="96" width="52" height="40" fill="#a8743f" />
+                <path d={`M${122 + k * 62} 96 L${128 + k * 62} 78 H${180 + k * 62} L${186 + k * 62} 96 Z`} fill={k ? '#e0a526' : '#d64545'} />
+              </g>
+            ))}
+            <rect x="272" y="62" width="30" height="74" rx="3" fill="#c0392b" />
+            <rect x="277" y="74" width="20" height="30" fill="#d9eef8" />
+            <rect y="136" width="320" height="64" fill="#b8946a" />
+            <path d="M0 150 H320 M0 176 H320" stroke="#9c7a52" strokeWidth="2" strokeDasharray="12 9" />
           </g>
         ) : schoolPast ? (
           <g>
@@ -717,6 +790,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             : who === 'clark' ? ENEMIES['office-boss'].look
             : who === 'greg' ? ENEMIES['school-past-m1'].look
             : who === 'principal' ? ENEMIES['school-past-boss'].look
+            : who === 'tony' ? ENEMIES['city-past-m1'].look
+            : who === 'bianca' ? ENEMIES['city-past-boss'].look
             : interest.look
           return (
             <g key={who} transform={`translate(${spots[k] + 64} 128) scale(-2 2)`}>

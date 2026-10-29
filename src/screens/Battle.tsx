@@ -23,8 +23,8 @@ import { AnimalSprite } from '../components/Animals'
 
 function Backdrop({ zone }: { zone: Zone }) {
   const wall =
-    zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#a4553a' : zone === 'patio-viejo' ? '#d9c9a0' : zone === 'recepcion' || zone === 'oficina' ? '#e8ecf0' : zone === 'reuniones' ? '#ece6f4' : zone === 'direccion' ? '#f1e6d2' : zone === 'patio' || zone === 'calle' || zone === 'parque' || zone === 'campo' || zone === 'corral' ? '#bfe3f5' : zone === 'granero' ? '#b5523b' : zone === 'casa-granja' ? '#efd9b8' : zone === 'casa-leo' ? '#f3e2c4' : zone === 'casa-maya' ? '#dde6f4' : zone === 'casa' ? '#f1d9c0' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : zone === 'tienda' ? '#f1e6f4' : zone === 'turismo' ? '#dfeaf3' : '#efe5d3'
-  const ground = zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#8b5a2b' : zone === 'patio-viejo' ? '#c2a878' : zone === 'recepcion' || zone === 'oficina' ? '#9aa6b2' : zone === 'reuniones' ? '#a99cc0' : zone === 'direccion' ? '#8b5a2b' : zone === 'campo' ? '#9cc46e' : zone === 'corral' ? '#c9a46a' : zone === 'granero' ? '#dcc08a' : zone === 'casa-granja' ? '#b98c5a' : zone === 'patio' || zone === 'parque' ? '#8fbf6a' : zone === 'casa-leo' || zone === 'casa' ? '#b98c5a' : zone === 'casa-maya' ? '#a7b4c8' : zone === 'calle' ? '#b9b4ab' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : zone === 'tienda' ? '#cdb8d6' : zone === 'turismo' ? '#9fb3c6' : '#b98c5a'
+    zone === 'calle-vieja' || zone === 'mercado' ? '#cfe6f2' : zone === 'tienda-vieja' ? '#c9a46a' : zone === 'correo' ? '#d9cdb4' : zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#a4553a' : zone === 'patio-viejo' ? '#d9c9a0' : zone === 'recepcion' || zone === 'oficina' ? '#e8ecf0' : zone === 'reuniones' ? '#ece6f4' : zone === 'direccion' ? '#f1e6d2' : zone === 'patio' || zone === 'calle' || zone === 'parque' || zone === 'campo' || zone === 'corral' ? '#bfe3f5' : zone === 'granero' ? '#b5523b' : zone === 'casa-granja' ? '#efd9b8' : zone === 'casa-leo' ? '#f3e2c4' : zone === 'casa-maya' ? '#dde6f4' : zone === 'casa' ? '#f1d9c0' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : zone === 'tienda' ? '#f1e6f4' : zone === 'turismo' ? '#dfeaf3' : '#efe5d3'
+  const ground = zone === 'calle-vieja' || zone === 'mercado' ? '#b8946a' : zone === 'tienda-vieja' ? '#8b5a2b' : zone === 'correo' ? '#9c7a52' : zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#8b5a2b' : zone === 'patio-viejo' ? '#c2a878' : zone === 'recepcion' || zone === 'oficina' ? '#9aa6b2' : zone === 'reuniones' ? '#a99cc0' : zone === 'direccion' ? '#8b5a2b' : zone === 'campo' ? '#9cc46e' : zone === 'corral' ? '#c9a46a' : zone === 'granero' ? '#dcc08a' : zone === 'casa-granja' ? '#b98c5a' : zone === 'patio' || zone === 'parque' ? '#8fbf6a' : zone === 'casa-leo' || zone === 'casa' ? '#b98c5a' : zone === 'casa-maya' ? '#a7b4c8' : zone === 'calle' ? '#b9b4ab' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : zone === 'tienda' ? '#cdb8d6' : zone === 'turismo' ? '#9fb3c6' : '#b98c5a'
   return (
     <g>
       <rect width="360" height="150" fill={wall} />
@@ -126,6 +126,50 @@ function Backdrop({ zone }: { zone: Zone }) {
           <rect x="240" y="80" width="90" height="62" rx="4" fill="#8b5a2b" />
           <rect x="250" y="66" width="20" height="16" rx="2" fill="#f4efe4" />
           <rect x="280" y="70" width="16" height="12" rx="2" fill="#e8c95a" />
+        </>
+      )}
+      {(zone === 'calle-vieja' || zone === 'mercado') && (
+        <>
+          <rect x="10" y="50" width="90" height="100" fill="#a4553a" />
+          <polygon points="4,52 55,22 106,52" fill="#6b3a2a" />
+          <rect x="30" y="70" width="20" height="24" fill="#cfe4ec" />
+          <rect x="62" y="96" width="24" height="54" fill="#5a3a1a" />
+          {[0, 1, 2].map((k) => (
+            <g key={k}>
+              <rect x={150 + k * 64} y="104" width="54" height="46" fill="#a8743f" />
+              <path d={`M${144 + k * 64} 104 L${150 + k * 64} 86 H${204 + k * 64} L${210 + k * 64} 104 Z`} fill={zone === 'mercado' ? ['#d64545', '#e0a526', '#3b9d5d'][k] : '#d64545'} />
+              <circle cx={164 + k * 64} cy="100" r="5" fill="#d64545" />
+              <circle cx={178 + k * 64} cy="100" r="5" fill="#e8c95a" />
+              <circle cx={192 + k * 64} cy="100" r="5" fill="#5f9a3c" />
+            </g>
+          ))}
+          <path d="M0 166 H360 M0 188 H360" stroke="#9c7a52" strokeWidth="2" strokeDasharray="12 9" />
+        </>
+      )}
+      {zone === 'tienda-vieja' && (
+        <>
+          {[0, 1, 2, 3, 4, 5, 6, 7].map((k) => <line key={k} x1={k * 48} y1="0" x2={k * 48} y2="150" stroke="#a8743f" strokeWidth="2" />)}
+          <rect x="30" y="30" width="130" height="8" fill="#6b4423" />
+          <rect x="30" y="70" width="130" height="8" fill="#6b4423" />
+          {[0, 1, 2, 3, 4].map((k) => <rect key={k} x={36 + k * 25} y="14" width="16" height="16" rx="2" fill={['#d64545', '#e8c95a', '#3b6fb6', '#3b9d5d', '#c98b4a'][k]} />)}
+          {[0, 1, 2, 3].map((k) => <rect key={k} x={40 + k * 30} y="52" width="20" height="18" rx="3" fill="#f4efe4" />)}
+          <rect x="220" y="96" width="120" height="54" fill="#6b4423" />
+          <rect x="250" y="76" width="36" height="22" rx="3" fill="#3a3a3a" />
+          <circle cx="262" cy="87" r="5" fill="#8d8d8d" />
+          <rect x="270" y="82" width="12" height="3" fill="#e0a526" />
+        </>
+      )}
+      {zone === 'correo' && (
+        <>
+          <rect x="90" y="16" width="180" height="22" rx="3" fill="#2f5d50" />
+          <text x="180" y="32" textAnchor="middle" fontSize="12" fill="#f4efe4" fontFamily="Fredoka, Nunito, system-ui, sans-serif">POST OFFICE · 1996</text>
+          {[0, 1, 2, 3, 4, 5].map((k) => (
+            <rect key={k} x={40 + (k % 3) * 34} y={56 + Math.floor(k / 3) * 30} width="28" height="24" fill="#b89a70" stroke="#6b4423" strokeWidth="2" />
+          ))}
+          <rect x="190" y="70" width="34" height="80" rx="6" fill="#c0392b" />
+          <rect x="196" y="84" width="22" height="4" fill="#2d2d3a" />
+          <rect x="300" y="110" width="40" height="40" fill="#8b5a2b" />
+          <rect x="306" y="100" width="28" height="12" fill="#f4efe4" />
         </>
       )}
       {(zone === 'aula-vieja' || zone === 'direccion-vieja') && (

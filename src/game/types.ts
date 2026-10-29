@@ -29,7 +29,7 @@ export type Interest = {
 export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle' | 'epilogue'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
-export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-simple' | 'future'
+export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-simple' | 'future'
 
 /**
  * fill: completar el espacio en blanco.
@@ -61,7 +61,7 @@ export type Question = {
   hint?: string
 }
 
-export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio' | 'calle' | 'cafe' | 'tienda' | 'turismo' | 'casa-leo' | 'casa-maya' | 'parque' | 'casa' | 'granero' | 'corral' | 'campo' | 'casa-granja' | 'recepcion' | 'oficina' | 'reuniones' | 'direccion' | 'aula-vieja' | 'patio-viejo' | 'direccion-vieja'
+export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio' | 'calle' | 'cafe' | 'tienda' | 'turismo' | 'casa-leo' | 'casa-maya' | 'parque' | 'casa' | 'granero' | 'corral' | 'campo' | 'casa-granja' | 'recepcion' | 'oficina' | 'reuniones' | 'direccion' | 'aula-vieja' | 'patio-viejo' | 'direccion-vieja' | 'calle-vieja' | 'tienda-vieja' | 'correo' | 'mercado'
 
 export type EnemyDef = {
   id: string

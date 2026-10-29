@@ -204,7 +204,7 @@ Cada jefe del pasado devuelve un **fragmento de voz** en lugar de una pieza del 
 | Lugar | Gramática | Estado |
 |---|---|---|
 | Escuela de ladrillo | *was / were*, *there was / there were* | ✅ lista de asistencia de la señora Higgins, Greg (Grimm de niño), director Grimm |
-| Ciudad con carretera destapada | pasado regular *-ed* y juego de sonidos /t/ /d/ /ɪd/ | pendiente |
+| Ciudad con carretera destapada | pasado regular *-ed* (ortografía: *lived, studied, stopped*), sonidos /t/ /d/ /ɪd/, *yesterday / last / ago* | ✅ sacos de sonidos del señor López, Tony (Rossi de joven), Betty la cartera, la señora Rossi |
 | Green Street en construcción | unos 25 verbos irregulares, libro de verbos unido a las fichas, personajes que dicen *I goed* | pendiente |
 | Granja con molino | *did / didn't*, el error *Did you went* | pendiente |
 | Cine viejo (hoy la oficina) | *yesterday, last week, ago* | pendiente |

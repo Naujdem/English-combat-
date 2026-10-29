@@ -165,6 +165,31 @@ export const DIARY: DiaryChapter[] = [
     ],
     versions: [
       {
+        id: 'city-past',
+        unlock: 'city-past-epilogue',
+        tense: 'p',
+        tab: 'Pasado',
+        title: 'Dear diary (1996)',
+        frame: 'Lo escribes esa noche, después de volver de 1996. En pasado, casi todos los verbos terminan en -ed.',
+        lines: [
+          { en: 'Dear diary, today Leo, {iname} and I [walked]p to the old city on a dirt road.', es: 'Querido diario, hoy Leo, {iname} y yo caminamos a la ciudad vieja por una carretera destapada.' },
+          { en: 'There [were]p market stalls, a well and an old phone box. There [was]p no fountain!', es: 'Había puestos de mercado, un pozo y una cabina de teléfono vieja. ¡No había fuente!' },
+          { en: 'Mr. Lopez [needed]p help with his sacks. I [listened]p and I [sorted]p the sounds: /t/, /d/ and /ɪd/.', es: 'El señor López necesitaba ayuda con sus sacos. Escuché y ordené los sonidos: /t/, /d/ y /ɪd/.' },
+          { en: 'Tony [delivered]p bread on his bike. He [talked]p like a broken radio, but I [helped]p him.', es: 'Tony repartía pan en su bicicleta. Hablaba como una radio dañada, pero lo ayudé.' },
+          { en: 'Betty, the mail carrier, [spelled]p words wrong: "studyed", "stoped"... We [fixed]p them.', es: 'Betty, la cartera, escribía mal las palabras: "studyed", "stoped"... Las arreglamos.' },
+          { en: 'Mrs. Rossi [shouted]p at everybody. She [had]p a fragment of my voice.', es: 'La señora Rossi les gritaba a todos. Tenía un fragmento de mi voz.' },
+          { en: 'In the end she [smiled]p and she [thanked]p us.', es: 'Al final sonrió y nos dio las gracias.' },
+          { en: 'Tony is Mr. Rossi, the guide! He [wanted]p to show the city to tourists.', es: '¡Tony es el señor Rossi, el guía! Quería mostrarles la ciudad a los turistas.' },
+          { en: 'The stranger [stopped]p at the phone box. He [wanted]p to call someone, but he [was]p silent.', es: 'El desconocido se detuvo en la cabina de teléfono. Quería llamar a alguien, pero se quedó callado.' },
+        ],
+        questions: [
+          { q: 'Who delivered bread?', options: ['Betty.', 'Tony.', 'Mrs. Rossi.'], answer: 1, tip: 'El diario dice: "Tony delivered bread on his bike".' },
+          { q: 'Where did the stranger stop?', options: ['At the well.', 'At the phone box.', 'At the market.'], answer: 1, tip: 'El diario dice: "The stranger stopped at the phone box".' },
+          { q: 'Which verb ends with the sound /ɪd/?', options: ['walked', 'played', 'wanted'], answer: 2, tip: 'want termina en t: want-ed suena /ɪd/.' },
+          { q: 'Which sentence is in the past?', options: ['We help Tony.', 'We helped Tony.', 'We are going to help Tony.'], answer: 1, tip: '"Helped" es el pasado de "help". Las otras están en presente y en futuro.' },
+        ],
+      },
+      {
         id: 'city-present',
         tense: 'n',
         tab: 'Presente',

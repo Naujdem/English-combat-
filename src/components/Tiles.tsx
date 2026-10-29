@@ -29,6 +29,10 @@ export const FLOOR: Record<Zone, string> = {
   'aula-vieja': '#c9a77a',
   'patio-viejo': '#c2a878',
   'direccion-vieja': '#b89a70',
+  'calle-vieja': '#c9b48a',
+  'tienda-vieja': '#d8bf94',
+  correo: '#d9cdb4',
+  mercado: '#cdb28a',
 }
 
 const WALL = '#7a6a58'
@@ -36,7 +40,7 @@ const WALL_TOP = '#8d7c68'
 
 /** Casillas por las que se puede caminar */
 export function walkable(c: string, doorOpen: boolean) {
-  return c === '.' || c === ',' || c === 'd' || c === '_' || c === 'z' || (c === 'X' && doorOpen)
+  return c === '.' || c === ',' || c === 'd' || c === '_' || c === 'z' || c === 'r' || (c === 'X' && doorOpen)
 }
 
 /** Nombre en inglés de cada objeto, se muestra al chocar con él */
@@ -73,6 +77,10 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   c: { en: 'corn', es: 'maíz' },
   b: { en: 'brick wall', es: 'pared de ladrillo' },
   I: { en: 'school bell', es: 'campana de la escuela' },
+  u: { en: 'cart', es: 'carreta' },
+  m: { en: 'market stall', es: 'puesto del mercado' },
+  o: { en: 'well', es: 'pozo' },
+  e: { en: 'phone box', es: 'cabina de teléfono' },
 }
 
 export function Tile({ c, x, y, floor, doorOpen, party = true }: { c: string; x: number; y: number; floor: string; doorOpen: boolean; party?: boolean }) {
@@ -448,6 +456,61 @@ export function Tile({ c, x, y, floor, doorOpen, party = true }: { c: string; x:
           <rect x={X + 5} y={Y + 2} width={22} height={3} fill="#6b4423" />
           <path d={`M${X + 10} ${Y + 18} q6 -14 12 0 z`} fill="#c9a83a" stroke="#8a6210" strokeWidth="1" />
           <circle cx={X + 16} cy={Y + 19.5} r="1.6" fill="#8a6210" />
+        </g>
+      )
+    case 'r':
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill="#b8946a" />
+          <line x1={X} y1={Y + 9} x2={X + T} y2={Y + 9} stroke="#9c7a52" strokeWidth="1.5" strokeDasharray="5 4" />
+          <line x1={X} y1={Y + 23} x2={X + T} y2={Y + 23} stroke="#9c7a52" strokeWidth="1.5" strokeDasharray="3 6" />
+          <circle cx={X + ((x * 7 + y * 3) % 24) + 4} cy={Y + 16} r="1.4" fill="#8a6a46" />
+        </g>
+      )
+    case 'u':
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill="#b8946a" />
+          <rect x={X + 3} y={Y + 8} width={26} height={12} rx="2" fill="#8b5a2b" />
+          <rect x={X + 3} y={Y + 6} width={26} height={4} fill="#a8743f" />
+          <circle cx={X + 8} cy={Y + 23} r="5" fill="none" stroke="#5a3a1a" strokeWidth="2.2" />
+          <circle cx={X + 24} cy={Y + 23} r="5" fill="none" stroke="#5a3a1a" strokeWidth="2.2" />
+          <circle cx={X + 12} cy={Y + 6} r="3" fill="#d64545" />
+          <circle cx={X + 19} cy={Y + 5} r="3" fill="#e8c95a" />
+        </g>
+      )
+    case 'm':
+      return (
+        <g>
+          {base}
+          <rect x={X + 4} y={Y + 14} width={24} height={14} fill="#a8743f" />
+          <rect x={X + 6} y={Y + 10} width={4} height={4} rx="2" fill="#d64545" />
+          <rect x={X + 13} y={Y + 10} width={4} height={4} rx="2" fill="#e8c95a" />
+          <rect x={X + 20} y={Y + 10} width={4} height={4} rx="2" fill="#5f9a3c" />
+          <path d={`M${X + 1} ${Y + 9} L${X + 4} ${Y + 2} H${X + 28} L${X + 31} ${Y + 9} Z`} fill="#d64545" />
+          <path d={`M${X + 9} ${Y + 2} L${X + 8} ${Y + 9} M${X + 16} ${Y + 2} V${Y + 9} M${X + 23} ${Y + 2} L${X + 24} ${Y + 9}`} stroke="#f4efe4" strokeWidth="2.5" />
+        </g>
+      )
+    case 'o':
+      return (
+        <g>
+          {base}
+          <ellipse cx={X + 16} cy={Y + 22} rx="12" ry="6" fill="#8d8d8d" />
+          <ellipse cx={X + 16} cy={Y + 20} rx="12" ry="6" fill="#a9a9a9" />
+          <ellipse cx={X + 16} cy={Y + 20} rx="8" ry="3.5" fill="#3d6f8a" />
+          <rect x={X + 5} y={Y + 3} width={2.5} height={17} fill="#6b4423" />
+          <rect x={X + 24.5} y={Y + 3} width={2.5} height={17} fill="#6b4423" />
+          <path d={`M${X + 3} ${Y + 5} L${X + 16} ${Y} L${X + 29} ${Y + 5} Z`} fill="#8b3a2b" />
+        </g>
+      )
+    case 'e':
+      return (
+        <g>
+          {base}
+          <rect x={X + 7} y={Y + 1} width={18} height={29} rx="2" fill="#c0392b" />
+          <rect x={X + 10} y={Y + 7} width={12} height={17} fill="#d9eef8" />
+          <rect x={X + 13} y={Y + 13} width={6} height={6} rx="1" fill="#2d2d3a" />
+          <rect x={X + 9} y={Y + 2.5} width={14} height={3} fill="#f4efe4" />
         </g>
       )
     default:
