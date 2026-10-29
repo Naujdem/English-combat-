@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import type { GameState } from '../game/types'
 import { WORLD, type WorldNode, PRESENT_NODES, nodesOf } from '../data/world'
 import { useTeacher } from '../game/teacher'
 import { TOPICS } from '../data/questions'
 import { SpriteBody } from '../components/Sprite'
 import { FriendsPanel } from '../components/FriendsPanel'
-import { btn, btnGhost, Hearts, Overlay, Panel } from '../components/ui'
+import { btn, btnGhost, btnPrimary, Hearts, Overlay, Panel } from '../components/ui'
 import { ClockPieces, TimeClock } from '../components/TimeClock'
 import { Diary } from '../components/Diary'
 import { Flashcards } from '../components/Flashcards'
@@ -63,6 +63,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const [cards, setCards] = useState(false)
   const [logros, setLogros] = useState(false)
   const [exam, setExam] = useState<EraId | null>(null)
+  const [menu, setMenu] = useState(false)
   const exams = (Object.keys(EXAMS) as EraId[]).filter((e) => state.opened.includes(EXAMS[e].unlock))
   const pendingExam = exams.find((e) => !state.writings?.[e])
   // Viaje en autobús la primera vez que se va a un lugar (ciudad o barrio)
@@ -74,6 +75,13 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const [settings, setSettings] = useState(false)
   const hasDiary = DIARY.some((c) => state.opened.includes(c.unlock))
   const dueCount = dueCards(state.cards).length
+
+  const menuAlert = dueCount > 0 || !!pendingExam || !!newDiary
+  /** Cierra el menú y abre lo elegido */
+  function go(open: () => void) {
+    setMenu(false)
+    open()
+  }
 
   function openDiary() {
     setDiary(true)
@@ -110,12 +118,13 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   return (
     <div className={`relative mx-auto flex h-full flex-col gap-3 overflow-y-auto px-3 py-3 ${desktop ? 'max-w-5xl' : 'max-w-md'}`}>
       <header className="flex items-center justify-between">
-        <button className={btnGhost} onClick={onTitle}>Menú</button>
+        <button className={`${btnGhost} relative flex items-center gap-1.5`} onClick={() => setMenu(true)} aria-label={`Menú${menuAlert ? ' (hay cosas nuevas)' : ''}`}>
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" /></svg>
+          Menú
+          {menuAlert && <span className="absolute right-1 top-1 h-2.5 w-2.5 rounded-full bg-gold" />}
+        </button>
         <Hearts hp={state.hp} max={state.maxHp} />
-        <div className="flex items-center">
-          <button className={`${btnGhost} px-2 text-sm`} onClick={() => setSettings(true)}>Ajustes</button>
-          <button className={btnGhost} onClick={() => setFriends(true)}>Amigos</button>
-        </div>
+        <button className={btnGhost} onClick={() => setFriends(true)}>Amigos</button>
       </header>
 
       {pastOpen && (
@@ -189,51 +198,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         <p className="text-[15px] text-paper/85">{msg}</p>
       </Panel>
 
-      <div className="flex flex-wrap gap-2 text-xs text-paper/70">
-        <span className="rounded-full bg-panel-2 px-3 py-1">
-          Palabras recuperadas: {state.recovered.length ? `${state.recovered.length} temas · la última: ${TOPICS[state.recovered[state.recovered.length - 1]].name}` : 'ninguna'}
-        </span>
-      </div>
-
-      <button className={`${btn} flex items-center gap-3 text-left`} onClick={() => setClock(true)}>
-        <TimeClock pieces={state.relics} size={52} />
-        <span>
-          <span className="block">Reloj del tiempo</span>
-          <span className="block text-sm text-paper/65">
-            Piezas: {Math.min(state.relics, PRESENT_NODES.length)} de {PRESENT_NODES.length}
-            {pastOpen && ` · Fragmentos de voz del pasado: ${pastFragments} de ${nodesOf('Pasado').length}`}
-            {futureOpen && ` · Del futuro: ${futureFragments} de ${nodesOf('Futuro').length}`}
-          </span>
-        </span>
-      </button>
-
-      {exams.length > 0 && (
-        <div className={`rounded-2xl border-2 px-3 py-2 ${pendingExam ? 'border-gold bg-gold/10' : 'border-line'}`}>
-          <p className="font-display text-[16px] text-gold">✍ Exámenes de época</p>
-          <p className="text-sm text-paper/70">{pendingExam ? 'Escribe 4 frases tuyas sobre lo que pasó. No hay una sola respuesta.' : 'Tus frases de cada época.'}</p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {exams.map((e) => (
-              <button key={e} className={`${btn} px-3 py-1.5 text-[15px]`} onClick={() => setExam(e)}>
-                {state.writings?.[e] ? '✓ ' : ''}{EXAMS[e].title.replace('Examen del ', '').replace(/^./, (c) => c.toUpperCase())}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      <div className="grid grid-cols-2 gap-2">
-        <button className={btn} onClick={() => setReview(true)}>Repasar</button>
-        <button className={btn} onClick={() => setProgress(true)}>Mi progreso</button>
-        <button className={btn} onClick={openDiary} disabled={!hasDiary}>Mi diario</button>
-        <button className={btn} onClick={() => setCards(true)}>
-          Fichas{dueCount > 0 ? ` (${dueCount})` : ''}
-        </button>
-        <button className={`${btn} col-span-2`} onClick={() => setLogros(true)}>
-          Logros y álbum ★ {ACHIEVEMENTS.filter((a) => achieved(a, state)).length}/{ACHIEVEMENTS.length}
-        </button>
-      </div>
-
-      <button className={btn} onClick={() => tap(here)}>Entrar a {here.name}</button>
+      <button className={btnPrimary} onClick={() => tap(here)}>Entrar a {here.name}</button>
       </div>
       </div>
 
@@ -322,6 +287,64 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       )}
 
       {friends && <FriendsPanel state={state} onClose={() => setFriends(false)} />}
+
+      {menu && (
+        <Overlay onClose={() => setMenu(false)}>
+          <Panel className="max-h-[88vh] overflow-y-auto">
+            <div className="flex items-center justify-between">
+              <p className="font-display text-xl text-gold">Menú</p>
+              <button className={btnGhost} onClick={() => setMenu(false)}>Volver al juego</button>
+            </div>
+            <p className="mt-1 text-xs text-paper/60">
+              Palabras recuperadas: {state.recovered.length ? `${state.recovered.length} temas · la última: ${TOPICS[state.recovered[state.recovered.length - 1]].name}` : 'ninguna'}
+            </p>
+            <div className="mt-3 grid gap-2">
+              <MenuRow icon={<TimeClock pieces={state.relics} size={34} />} title="Reloj del tiempo" sub={`Piezas ${Math.min(state.relics, PRESENT_NODES.length)}/${PRESENT_NODES.length}${pastOpen ? ` · Pasado ${pastFragments}/${nodesOf('Pasado').length}` : ''}${futureOpen ? ` · Futuro ${futureFragments}/${nodesOf('Futuro').length}` : ''}`} onClick={() => go(() => setClock(true))} />
+              {exams.length > 0 && (
+                <div className={`rounded-xl border-2 px-3 py-2 ${pendingExam ? 'border-gold bg-gold/10' : 'border-line'}`}>
+                  <p className="font-display text-[16px]">✍ Exámenes de época {pendingExam && <span className="ml-1 rounded-full bg-gold px-2 text-xs text-ink">nuevo</span>}</p>
+                  <p className="text-xs text-paper/60">Escribe 4 frases tuyas sobre lo que pasó.</p>
+                  <div className="mt-1.5 flex flex-wrap gap-1.5">
+                    {exams.map((e) => (
+                      <button key={e} className={`${btn} px-3 py-1 text-[14px]`} onClick={() => go(() => setExam(e))}>
+                        {state.writings?.[e] ? '✓ ' : ''}{EXAMS[e].title.replace('Examen del ', '').replace(/^./, (c) => c.toUpperCase())}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <div className="grid grid-cols-2 gap-2">
+                <MenuRow icon="🗂" stack title="Fichas" sub={dueCount > 0 ? `${dueCount} para repasar` : `${state.cards.length} guardadas`} badge={dueCount > 0} onClick={() => go(() => setCards(true))} />
+                <MenuRow icon="📖" stack title="Mi diario" sub={newDiary ? 'Capítulo nuevo' : hasDiary ? 'Releer capítulos' : 'Aún vacío'} badge={!!newDiary} disabled={!hasDiary} onClick={() => go(openDiary)} />
+                <MenuRow icon="🔁" stack title="Repasar" sub="Temas y errores" onClick={() => go(() => setReview(true))} />
+                <MenuRow icon="📊" stack title="Mi progreso" sub="Aciertos por tema" onClick={() => go(() => setProgress(true))} />
+              </div>
+              <MenuRow icon="★" title="Logros y álbum" sub={`${ACHIEVEMENTS.filter((a) => achieved(a, state)).length} de ${ACHIEVEMENTS.length} logros`} onClick={() => go(() => setLogros(true))} />
+              <div className="grid grid-cols-2 gap-2">
+                <MenuRow icon="⚙" stack title="Ajustes" sub="Voz y sonidos" onClick={() => go(() => setSettings(true))} />
+                <MenuRow icon="⏏" stack title="Salir" sub="Pantalla de título" onClick={() => go(onTitle)} />
+              </div>
+            </div>
+          </Panel>
+        </Overlay>
+      )}
     </div>
+  )
+}
+
+function MenuRow({ icon, title, sub, onClick, badge, disabled, stack }: { icon: ReactNode; title: string; sub?: string; onClick: () => void; badge?: boolean; disabled?: boolean; stack?: boolean }) {
+  return (
+    <button
+      className={`${btn} relative flex gap-2.5 px-3 py-2 text-left ${stack ? 'flex-col items-start gap-1' : 'items-center'}`}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      <span className={`flex shrink-0 text-[22px] leading-none ${stack ? '' : 'w-9 justify-center'}`} aria-hidden="true">{icon}</span>
+      <span className="min-w-0">
+        <span className="block text-[16px] leading-tight">{title}</span>
+        {sub && <span className="block text-xs leading-snug text-paper/60">{sub}</span>}
+      </span>
+      {badge && <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-gold" />}
+    </button>
   )
 }
