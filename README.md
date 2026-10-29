@@ -159,6 +159,13 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - Animales dibujados en `src/components/Animals.tsx`: esbirros animales (campo `animal` en el enemigo) y animales de adorno (entidad `animal`).
 - Juegos: "Adivina el animal" con Rosie (`src/components/GuessAnimal.tsx`) y los corrales de la doctora Patel (`src/components/AnimalPens.tsx`). Se abren desde `src/data/tasks.ts` con el campo `activity`.
 
+## La oficina (final de A1 en presente)
+
+- Se llega en autobús (`BUS_TO_OFFICE`). Mapa y enemigos en `src/data/office.ts`, preguntas en `src/data/questions-office.ts`.
+- La agenda de Sara (`src/components/Planner.tsx`): correos, días, relojes de agujas (`AnalogClock`) y *at / on / in*.
+- El teléfono de Grace: tarea con charla en `src/data/tasks.ts`.
+- Al vencer a la señora Clark el reloj queda con sus 5 piezas y termina A1 en presente.
+
 - El plan completo está en `docs/curriculo-a1.md`: primera vuelta A1 en presente (Escuela → Ciudad → Barrio con la casa del protagonista → Granja → Oficina), y luego los mismos lugares en pasado y futuro, todavía en A1, con el reloj completo. A2 y B1 repiten el esquema presente → pasado → futuro.
 - Pendientes pequeños de la escuela: deletrear en la secretaría, *whose* en objetos perdidos y preguntas con *who/what/where/when*.
 - Sonidos y animación de caminar.

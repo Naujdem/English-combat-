@@ -24,5 +24,5 @@ export const WORLD: WorldNode[] = [
   { id: 'city', name: 'Ciudad', era: 'Presente', level: 'A1', about: 'direcciones, café y tienda: there is, this/these, some/any, precios', sceneId: 'city', requires: { boss: 'school-boss', from: 'la Escuela', how: 'en autobús' }, x: 178, y: 250 },
   { id: 'barrio', name: 'Barrio', era: 'Presente', level: 'A1', about: 'casas de amigos, parque y tu casa: presente simple, gustos, can, familia', sceneId: 'barrio', requires: { boss: 'city-boss', from: 'la Ciudad', how: 'en otro autobús' }, x: 70, y: 160 },
   { id: 'farm', name: 'Granja', era: 'Presente', level: 'A1', about: 'animales y rutinas: preguntas y negativas con do/does', sceneId: 'farm', requires: { boss: 'barrio-boss', from: 'el Barrio', how: 'en bicicleta por el camino viejo' }, x: 190, y: 72 },
-  { id: 'office', name: 'Oficina', era: 'Presente', level: 'A1', about: 'la hora, citas y teléfono: at/on/in, me/him/her, Could you...?', sceneId: null, requires: { boss: 'farm-boss', from: 'la Granja', how: 'por la carretera' }, x: 296, y: 176 },
+  { id: 'office', name: 'Oficina', era: 'Presente', level: 'A1', about: 'la hora, citas y teléfono: at/on/in, me/him/her, Could you...?', sceneId: 'office', requires: { boss: 'farm-boss', from: 'la Granja', how: 'en autobús por la carretera' }, x: 296, y: 176 },
 ]

@@ -191,4 +191,32 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'The cat catches three ___.', board: ['goose → geese', 'mouse → mice'], choice: { options: ['mouses', 'mice', 'mices'], answer: 1, tip: 'mouse → mice.' } },
     { who: 'leo', text: 'People too: child → children, man → men, woman → women. And foot → feet, tooth → teeth.', es: 'Las personas también: niño → niños, hombre → hombres, mujer → mujeres. Y pie → pies, diente → dientes.', board: ['child → children', 'foot → feet'] },
   ],
+
+  time: [
+    { who: 'leo', text: 'In an office, time is very important! What time is it? Look at the clock.', es: '¡En una oficina la hora es muy importante! ¿Qué hora es? Mira el reloj.', board: ['What time is it?', '¿Qué hora es?'] },
+    { who: 'leo', text: "Exact hour: O'CLOCK. It's nine o'clock. Half an hour: HALF PAST. 9:30 is half past nine.", es: "Hora exacta: o'clock. Media hora: half past. 9:30 es half past nine.", board: ["9:00 nine o'clock", '9:30 half past nine'] },
+    { who: 'board', text: "It's 6:30. It's ___ six.", board: ["9:00 nine o'clock", '9:30 half past nine'], choice: { options: ['half past', 'half to', 'six and half'], answer: 0, tip: '6:30 = half past six.' } },
+    { who: 'leo', text: 'A quarter is 15 minutes. 9:15 is quarter PAST nine. 9:45 is quarter TO ten: fifteen minutes to ten!', es: 'Un cuarto son 15 minutos. 9:15 es quarter past nine. 9:45 es quarter to ten: ¡faltan quince para las diez!', board: ['9:15 quarter past nine', '9:45 quarter to ten'] },
+    { who: 'board', text: "It's 4:45. It's quarter ___ five.", board: ['9:15 quarter past nine', '9:45 quarter to ten'], choice: { options: ['past', 'to', 'and'], answer: 1, tip: 'Faltan 15 minutos para las cinco: quarter to five.' } },
+    { who: 'leo', text: 'Now the little words: AT for the hour, ON for the day, IN for months, seasons and parts of the day.', es: 'Ahora las palabras pequeñas: at para la hora, on para el día, in para meses, estaciones y partes del día.', board: ['at 9 · on Monday', 'in May · in summer · in the morning'] },
+    { who: 'board', text: 'The meeting is ___ Tuesday ___ ten o\'clock.', board: ['at 9 · on Monday', 'in May · in summer · in the morning'], choice: { options: ['on / at', 'in / on', 'at / in'], answer: 0, tip: 'on + día, at + hora.' } },
+    { who: 'leo', text: 'One strange one: AT NIGHT. In the morning, in the afternoon, in the evening... but at night!', es: 'Una rara: at night. In the morning, in the afternoon, in the evening... ¡pero at night!', board: ['in the morning / evening', 'at night'] },
+  ],
+
+  'object-pronouns': [
+    { who: 'leo', text: 'In an office, people say: Call me! Send it to her! Help them! These words come AFTER the verb.', es: 'En una oficina la gente dice: ¡Llámame! ¡Envíaselo a ella! ¡Ayúdalos! Estas palabras van DESPUÉS del verbo.', board: ['Call me!', 'Send it to her!'] },
+    { who: 'leo', text: 'I becomes ME, he becomes HIM, she becomes HER, we becomes US, they becomes THEM. You and it do not change.', es: 'I → me, he → him, she → her, we → us, they → them. You e it no cambian.', board: ['I → me · he → him · she → her', 'we → us · they → them'] },
+    { who: 'board', text: 'Ms. Clark is busy. Call ___ later.', board: ['I → me · he → him · she → her', 'we → us · they → them'], choice: { options: ['she', 'her', 'hers'], answer: 1, tip: 'Después del verbo: her.' } },
+    { who: 'board', text: 'Could you help ___? I am lost.', board: ['I → me · he → him · she → her', 'we → us · they → them'], choice: { options: ['I', 'me', 'my'], answer: 1, tip: 'Después del verbo: me.' } },
+    { who: 'leo', text: 'After to, with and for too: Give it to HIM. I work with THEM. This is for YOU.', es: 'También después de to, with y for.', board: ['to him · with them', 'for you · for us'] },
+  ],
+
+  'could-you': [
+    { who: 'leo', text: 'In an office we are very polite. Not "Give me the report!" but "Could you give me the report, please?"', es: 'En una oficina somos muy amables. No "¡Dame el informe!", sino "¿Podrías darme el informe, por favor?"', board: ['Could you + verbo, please?', 'Could you help me, please?'] },
+    { who: 'board', text: '___ you open the door, please?', board: ['Could you + verbo, please?', 'Could you help me, please?'], choice: { options: ['Could', 'Do', 'Are'], answer: 0, tip: 'Para pedir con cortesía: Could you...?' } },
+    { who: 'leo', text: 'After COULD, the simple verb. No TO, no -S: Could you send it? Not "could you to send".', es: 'Después de could, el verbo solo: sin to y sin -s.', board: ['Could you send it?', '✗ Could you to send it?'] },
+    { who: 'leo', text: 'To ask for permission: COULD I...? Could I speak to Ms. Clark, please?', es: 'Para pedir permiso: Could I...?', board: ['Could I speak to...?', '¿Podría hablar con...?'] },
+    { who: 'leo', text: "And the answers: Sure! Of course! Or, if you can't: Sorry, I can't.", es: "Las respuestas: ¡Claro! ¡Por supuesto! O si no puedes: Lo siento, no puedo.", board: ['Sure! · Of course!', "Sorry, I can't."] },
+    { who: 'board', text: "Could you call me at nine? — ___, I can't. I'm busy.", board: ['Sure! · Of course!', "Sorry, I can't."], choice: { options: ['Sure', 'Sorry', 'Of course'], answer: 1, tip: "Para decir que no: Sorry, I can't." } },
+  ],
 }

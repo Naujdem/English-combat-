@@ -3,6 +3,7 @@ import { canSpeak } from '../game/speech'
 import { canRecognize } from '../game/mic'
 import { BARRIO_QUESTIONS } from './questions-barrio'
 import { FARM_QUESTIONS } from './questions-farm'
+import { OFFICE_QUESTIONS } from './questions-office'
 
 /**
  * Banco de preguntas.
@@ -318,6 +319,8 @@ export const QUESTIONS: Question[] = [
   ...BARRIO_QUESTIONS,
   // ── Granja: preguntas y negativas con do / does, plurales
   ...FARM_QUESTIONS,
+  // ── Oficina: la hora y at/on/in, pronombres de objeto, Could you...?
+  ...OFFICE_QUESTIONS,
 ]
 
 
@@ -582,6 +585,33 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Plural normal: -s (cow → cows) · -es después de -s, -sh, -ch, -x (box → boxes).',
       'Irregulares: sheep → sheep · goose → geese · mouse → mice · child → children · man → men · woman → women.',
       'Otros: foot → feet · tooth → teeth · leaf → leaves.',
+    ],
+  },
+  time: {
+    name: 'La hora y at / on / in',
+    level: 'A1',
+    lesson: [
+      "What time is it? → It's seven o'clock · half past seven (7:30) · quarter past seven (7:15) · quarter to eight (7:45).",
+      'at + hora (at nine) · on + día (on Monday) · in + mes, estación o parte del día (in May, in summer, in the morning).',
+      'Excepción: at night (en la noche).',
+    ],
+  },
+  'object-pronouns': {
+    name: 'Pronombres de objeto (me, him, her...)',
+    level: 'A1',
+    lesson: [
+      'Después del verbo o de to / with / for: me, you, him, her, it, us, them.',
+      'I → me · he → him · she → her · we → us · they → them: Call me. Send it to her. I work with them.',
+      'Antes del verbo va el sujeto (I, she, they); después, el objeto (me, her, them).',
+    ],
+  },
+  'could-you': {
+    name: 'Pedir con cortesía (Could you...?)',
+    level: 'A1',
+    lesson: [
+      'Para pedir algo con amabilidad: Could you + verbo + ..., please? → Could you help me, please?',
+      'Para pedir permiso: Could I speak to Ms. Clark, please?',
+      "Respuestas: Sure! · Of course! · Sorry, I can't.",
     ],
   },
   'past-simple': {

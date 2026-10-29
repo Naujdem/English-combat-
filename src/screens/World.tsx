@@ -8,7 +8,7 @@ import { btn, btnGhost, Hearts, Overlay, Panel } from '../components/ui'
 import { ClockPieces, TimeClock } from '../components/TimeClock'
 import { Diary } from '../components/Diary'
 import { Flashcards } from '../components/Flashcards'
-import { BIKE_TO_FARM, BusRide, BUS_TO_BARRIO, BUS_TO_CITY } from '../components/BusRide'
+import { BIKE_TO_FARM, BusRide, BUS_TO_BARRIO, BUS_TO_CITY, BUS_TO_OFFICE } from '../components/BusRide'
 import { ProgressView, Review } from '../components/Review'
 import { setSound, soundOn } from '../game/sfx'
 import { autoVoiceOn, setAutoVoice } from '../game/speech'
@@ -23,7 +23,11 @@ const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } 
 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const desktop = useDesktop()
-  const [msg, setMsg] = useState<string>('Toca un lugar del mapa para viajar.')
+  const [msg, setMsg] = useState<string>(
+    state.defeated.includes('office-boss')
+      ? '¡Terminaste A1 en presente! El reloj está completo. El viaje al pasado se construirá pronto; mientras tanto, puedes repasar y visitar cualquier lugar.'
+      : 'Toca un lugar del mapa para viajar.',
+  )
   const [friends, setFriends] = useState(false)
   const [clock, setClock] = useState(false)
   // Al terminar un capítulo, el diario se abre solo la primera vez
@@ -31,7 +35,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const [diary, setDiary] = useState(!!newDiary)
   const [cards, setCards] = useState(false)
   // Viaje en autobús la primera vez que se va a un lugar (ciudad o barrio)
-  const [bus, setBus] = useState<'city' | 'barrio' | 'farm' | null>(null)
+  const [bus, setBus] = useState<'city' | 'barrio' | 'farm' | 'office' | null>(null)
   const [review, setReview] = useState(false)
   const [progress, setProgress] = useState(false)
   const [sound, setSoundState] = useState(soundOn())
@@ -60,7 +64,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     }
     if (!n.sceneId) return setMsg(`${n.name} (${n.level}): ${n.about}. Este lugar se construirá pronto.`)
     // La primera vez que se va a la ciudad, se llega en autobús
-    if ((n.id === 'city' || n.id === 'barrio' || n.id === 'farm') && !state.opened.includes(`bus-${n.id}`)) return setBus(n.id)
+    if ((n.id === 'city' || n.id === 'barrio' || n.id === 'farm' || n.id === 'office') && !state.opened.includes(`bus-${n.id}`)) return setBus(n.id)
     onEnter(n.sceneId)
   }
 
@@ -157,7 +161,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       {diary && <Diary state={state} update={update} onClose={closeDiary} />}
       {bus && (
         <BusRide
-          trip={bus === 'city' ? BUS_TO_CITY : bus === 'barrio' ? BUS_TO_BARRIO : BIKE_TO_FARM}
+          trip={bus === 'city' ? BUS_TO_CITY : bus === 'barrio' ? BUS_TO_BARRIO : bus === 'farm' ? BIKE_TO_FARM : BUS_TO_OFFICE}
           hero={heroLook(state)}
           friend={interestFriend(state.interest, state.hero.name).look}
           friendName={state.interest.name}

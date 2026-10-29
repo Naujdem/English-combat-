@@ -55,7 +55,7 @@ export const FARM_QUESTIONS: Question[] = [
   { id: 'plf-03', topic: 'plurals', kind: 'fix', prompt: 'The mouses eat the cheese!', options: ['The mice eat the cheese.', 'The mices eat the cheese.', 'The mouse eat the cheese.'], answer: 0, tip: 'mouse → mice.', tags: ['granero'] },
   { id: 'plf-04', topic: 'plurals', kind: 'fix', prompt: 'The childs play with the dog!', options: ['The children play with the dog.', 'The childrens play with the dog.', 'The child play with the dog.'], answer: 0, tip: 'child → children (sin -s).', tags: ['casa-granja'] },
   { id: 'plf-05', topic: 'plurals', kind: 'fix', prompt: 'My foots are cold!', options: ['My feet are cold.', 'My feets are cold.', 'My foot are cold.'], answer: 0, tip: 'foot → feet.', tags: ['campo'] },
-  { id: 'plf-06', topic: 'plurals', kind: 'fix', prompt: 'I have got two horse!', options: ['I have got two horses.', 'I have got two horsies.', 'I have got two horse.'], answer: 0, tip: 'Dos o más: se agrega -s: horses.', tags: ['campo'] },
+  { id: 'plf-06', topic: 'plurals', kind: 'fix', prompt: 'I have got two horse!', options: ['I have got two horses.', 'I have got two horsies.', 'I have got two horseses.'], answer: 0, tip: 'Dos o más: se agrega -s: horses.', tags: ['campo'] },
 
   { id: 'plo-01', topic: 'plurals', kind: 'order', prompt: 'Hay tres ovejas en el corral.', options: ['There', 'are', 'three', 'sheep', 'in', 'the', 'pen.'], answer: 0, tip: 'There are + three sheep (sheep no cambia).', tags: ['corral'] },
   { id: 'plo-02', topic: 'plurals', kind: 'order', prompt: 'Los ratones viven en el granero.', options: ['The', 'mice', 'live', 'in', 'the', 'barn.'], answer: 0, tip: 'The mice + live + in the barn.', tags: ['granero'] },

@@ -16,6 +16,7 @@ export const ROLE_STYLE: Record<Role, { bg: string; fg: string; name: string }> 
 
 const SUBJ = new Set(['i', 'you', 'he', 'she', 'it', 'we', 'they', 'there', "i'm", "you're", "he's", "she's", "it's", "we're", "they're", "there's"])
 const VERB = new Set([
+  'could', 'send', 'answer', 'repeat', 'spell', 'start', 'tell', 'bring',
   'am', 'is', 'are', "isn't", "aren't", 'be', 'can', "can't", 'do', 'does', "don't", "doesn't", 'have', 'has', 'go', 'goes', 'turn', 'open', 'close',
   'sit', 'stand', 'listen', 'pass', 'drink', 'wash', 'run', 'jump', 'stop', 'give', 'take', 'eat', 'read', 'play', 'need', 'want', 'like', 'love',
   'loves', 'work', 'works', 'live', 'lives', 'speak', 'help', 'bring', 'kick', 'call', 'send', 'look', 'meet', 'was', 'were', 'excuse',
@@ -43,6 +44,7 @@ function ing(v: string) {
 }
 for (const v of MORE_VERBS) [v, third(v), ing(v)].forEach((f) => VERB.add(f))
 const KEY = new Set([
+  'me', 'him', 'us', 'them', 'past', 'at',
   'my', 'your', 'his', 'her', 'its', 'our', 'their', 'this', 'that', 'these', 'those', 'a', 'an', 'some', 'any', 'in', 'on', 'under', 'next', 'to',
   'between', 'behind', 'front', 'of', 'not', 'what', 'where', 'who', 'when', 'how', 'much', 'many', 'please',
   'always', 'usually', 'sometimes', 'often', 'never',
@@ -66,6 +68,9 @@ export function wordRole(word: string, topic?: TopicId): Role {
     if (topic === 'to-be') return w === 'not' ? 'key' : 'rest'
     if (topic === 'imperatives') return w === 'please' ? 'key' : 'rest'
     if (topic === 'present-simple') return ['always', 'usually', 'sometimes', 'often', 'never', 'not'].includes(w) ? 'key' : 'rest'
+    if (topic === 'time') return ['at', 'on', 'in', 'what', 'past', 'to'].includes(w) ? 'key' : 'rest'
+    if (topic === 'object-pronouns') return ['me', 'him', 'her', 'us', 'them', 'it'].includes(w) ? 'key' : 'rest'
+    if (topic === 'could-you') return w === 'please' ? 'key' : 'rest'
     if (topic === 'do-does') return ['not', 'what', 'where', 'when'].includes(w) ? 'key' : 'rest'
     if (topic === 'present-continuous' || topic === 'have-got') return ['not', 'what', 'where'].includes(w) ? 'key' : 'rest'
   }
@@ -165,6 +170,13 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
     case 'do-does':
       if (question) return { title: 'Para preguntar: Do (I, you, we, they) o Does (he, she, it) + verbo sin -s:', parts: [V('Do / Does'), '+', S('Sujeto'), '+', V('verbo'), '+', R('...?')] }
       return { title: "Para negar: don't o doesn't + verbo sin -s:", parts: [S('Sujeto'), '+', V("don't / doesn't"), '+', V('verbo'), '+', R('...')] }
+    case 'time':
+      if (question) return { title: 'Para preguntar la hora:', parts: [K('What time'), '+', V('is'), '+', S('it?')] }
+      return { title: 'at + hora · on + día · in + mes, estación o parte del día:', parts: [R('...'), '+', K('at / on / in'), '+', R('hora / día / mes')] }
+    case 'object-pronouns':
+      return { title: 'Después del verbo (o de to, with, for): me, you, him, her, it, us, them:', parts: [V('Verbo'), '+', K('me / him / her / us / them'), '+', R('...')] }
+    case 'could-you':
+      return { title: 'Para pedir con cortesía:', parts: [V('Could'), '+', S('you / I'), '+', V('verbo'), '+', R('...'), '+', K('please?')] }
     case 'plurals':
       return { title: 'Plurales: -s normal, pero sheep → sheep, goose → geese, mouse → mice, child → children:', parts: [K('two / three...'), '+', R('cosas en plural')] }
     default:

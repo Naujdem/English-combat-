@@ -35,7 +35,7 @@ Pendiente de decidir: si A2 y B1 usan los mismos cinco lugares (crecen con el ju
 | 2 ✅ | **Ciudad** | Autobús desde la escuela | Moverme, comprar y pedir | there is/are, a/an, plurales, this/these, some/any, how much/many, Can I have...? |
 | 3 ✅ | **Barrio** (casas de amigos, parque y la casa del protagonista) | Otro autobús desde la ciudad | La vida de la gente: rutinas, gustos, familia | presente simple afirmativo (I work / she works), like + -ing, can, presente continuo, have got, frecuencia |
 | 4 ✅ | **Granja** | Desde el barrio | Cómo funciona un lugar | presente simple negativo y preguntas (do/does), plurales irregulares |
-| 5 ⬜ | **Oficina** | Desde la granja | Organizar el tiempo | la hora completa, at/on/in, pronombres de objeto, Could you...? |
+| 5 ✅ | **Oficina** | Desde la granja | Organizar el tiempo | la hora completa, at/on/in, pronombres de objeto, Could you...? |
 
 Por qué este orden:
 - **La ciudad va justo después de la escuela** porque se puede jugar solo con lo que ya se sabe. Las direcciones son imperativos (*Go straight. Turn left.*), los precios son *to be* (*How much is it? It's five dollars.*) y pedir es una frase fija (*Can I have a juice, please?*). Lo nuevo es vocabulario, *there is/are* y *this/these*.
@@ -72,12 +72,12 @@ El orden de la tabla es el orden en que aparece en el juego.
 | 19 | Have got | I have got two brothers. | I have got a brothers. | Barrio: casa del protagonista | ✅ |
 | 20 | Adverbios de frecuencia | I always get up at 7. | I get up always at 7. | Barrio: casa del protagonista y jefe | ✅ |
 | 21 | Present simple negativo y preguntas | Does the cow eat grass? It doesn't fly. | Does she lives here? | Granja | ✅ |
-| 22 | Plurales irregulares | sheep, mice, geese, children | two sheeps | Granja | ⬜ |
-| 23 | La hora completa | It's half past eight. | It's eight and half. | Oficina | ⬜ |
-| 24 | Preposiciones de tiempo (at / on / in) | at 9, on Monday, in May | in Monday | Oficina | ⬜ |
-| 25 | Pronombres de objeto (me, him, her, us, them) | Call me. Send it to her. | Send it to she. | Oficina: teléfono y correos | ⬜ |
-| 26 | Could you...? (pedir con cortesía) | Could you help me, please? | You help me. | Oficina | ⬜ |
-| 27 | Conectores and / but / or | I like tea but I don't like coffee. | — | Lecturas de todos los lugares | ⬜ |
+| 22 | Plurales irregulares | sheep, mice, geese, children | two sheeps | Granja | ✅ |
+| 23 | La hora completa | It's half past eight. | It's eight and half. | Oficina | ✅ |
+| 24 | Preposiciones de tiempo (at / on / in) | at 9, on Monday, in May | in Monday | Oficina | ✅ |
+| 25 | Pronombres de objeto (me, him, her, us, them) | Call me. Send it to her. | Send it to she. | Oficina: teléfono y correos | ✅ |
+| 26 | Could you...? (pedir con cortesía) | Could you help me, please? | You help me. | Oficina | ✅ |
+| 27 | Conectores and / but / or | I like tea but I don't like coffee. | — | Lecturas de todos los lugares | 🟡 en los correos de la oficina y algunas lecturas |
 
 ## 4. Vocabulario por temas y dónde va
 
@@ -96,7 +96,7 @@ El orden de la tabla es el orden en que aparece en el juego.
 | Números 13–100 y precios | fifteen, fifty, ten dollars | Ciudad: café y tienda | ✅ |
 | Ropa y colores | T-shirt, shoes, jacket, dress, red, blue | Ciudad: tienda | ✅ |
 | Rutinas diarias | get up, have breakfast, go to work, go to bed | Barrio: casas y casa del protagonista | ✅ |
-| Partes del día | morning, afternoon, evening, night | Barrio | ⬜ |
+| Partes del día | morning, afternoon, evening, night | Barrio | ✅ |
 | Gustos y tiempo libre | read, listen to music, watch films, dance | Barrio: casa de Maya y parque | ✅ |
 | Mascotas | dog, cat, bird, fish | Barrio: parque y casa de Leo | ⬜ |
 | Clima | sunny, rainy, hot, cold | Barrio: parque | ⬜ |
@@ -106,10 +106,10 @@ El orden de la tabla es el orden en que aparece en el juego.
 | Casa y muebles | kitchen, bedroom, living room, bed, sofa | Barrio: casa del protagonista | ✅ |
 | Animales de granja | cow, horse, sheep, chicken, pig, goose | Granja | ✅ |
 | Cuerpo | head, eyes, legs, arms, tail | Granja (animales) | ⬜ |
-| Estaciones | spring, summer, autumn, winter | Granja | ⬜ |
-| Profesiones | doctor, nurse, waiter, driver, manager | Oficina (y oficios de la gente del barrio) | ⬜ |
-| Hora completa y calendario | half past, quarter to, meeting, appointment | Oficina | ⬜ |
-| Teléfono y correo | Hello, it's..., Can I speak to...?, call me back | Oficina | ⬜ |
+| Estaciones | spring, summer, autumn, winter | Granja | ✅ |
+| Profesiones | doctor, nurse, waiter, driver, manager | Oficina (y oficios de la gente del barrio) | ✅ |
+| Hora completa y calendario | half past, quarter to, meeting, appointment | Oficina | ✅ |
+| Teléfono y correo | Hello, it's..., Can I speak to...?, call me back | Oficina | ✅ |
 | Adjetivos básicos | big, small, happy, sad, new, old | Todas partes | 🟡 |
 
 ## 5. Funciones comunicativas y dónde va cada una
@@ -125,7 +125,7 @@ El orden de la tabla es el orden en que aparece en el juego.
 | Deletrear el nombre | Ciudad: café (el vaso con tu nombre) | ✅ |
 | Comprar un boleto | Autobuses | ✅ |
 | Pedir y dar direcciones | Ciudad: calles | ✅ |
-| Pedir disculpas | Ciudad: alguien choca contigo | ⬜ |
+| Pedir disculpas | Ciudad: alguien choca contigo | ✅ |
 | Pedir comida y bebida | Ciudad: café | ✅ |
 | Comprar y preguntar precios | Ciudad: tienda | ✅ |
 | Hablar de la rutina de otros | Barrio: casas de amigos | ✅ |
@@ -135,10 +135,10 @@ El orden de la tabla es el orden en que aparece en el juego.
 | Invitar, aceptar y felicitar | Barrio: cumpleaños de Leo | ✅ |
 | Hablar de la propia familia y la casa | Barrio: casa del protagonista | ✅ |
 | Describir cómo funciona un lugar | Granja | ✅ |
-| Preguntar y decir la hora | Oficina | ⬜ |
-| Concertar una cita | Oficina | ⬜ |
-| Hablar por teléfono | Oficina | ⬜ |
-| Pedir ayuda con cortesía | Oficina | ⬜ |
+| Preguntar y decir la hora | Oficina | ✅ |
+| Concertar una cita | Oficina | ✅ |
+| Hablar por teléfono | Oficina | ✅ |
+| Pedir ayuda con cortesía | Oficina | ✅ |
 
 ## 6. Plan detallado de cada lugar A1
 
@@ -187,6 +187,8 @@ Historia: el desconocido hechizó el barrio y la gente olvidó su rutina.
 - Teléfono y correos: *Call me. Send it to her.* (pronombres de objeto), *Could you...?*
 - Preguntas con *what time / when* y *do / does* (*What time do you start work?*).
 - **Jefe:** la directora de la oficina hechizada. Al vencerla, el reloj queda completo y se abre el viaje al pasado.
+
+**Construido (✅):** se llega en autobús por la carretera (leer *8:45 = quarter to nine*, pedir *Could we have three tickets, please?*). Sara, la recepcionista, necesita ayuda con la agenda de la directora: se leen correos (con *and / but / or*), se pone cada cita en el día correcto, se elige el reloj de agujas con la hora y se completa la nota con *at / on / in* o un pronombre. Grace, la asistente, pide contestar el teléfono: tomar un mensaje del señor Rossi (*Could I speak to...? Can I take a message? Call him...*). Esbirros: Gary (la hora), Paula (pronombres de objeto) y el señor Stone (*Could you...?*). Profesiones en los personajes de ambiente. Jefa: la señora Clark. Final del capítulo 5 y de A1 en presente: el reloj completo muestra otras épocas, Leo decide viajar y la luz también se lleva al desconocido. Diario de la oficina.
 
 ## 7. Pasado y futuro de A1 (segunda y tercera vuelta)
 

@@ -36,6 +36,7 @@ import { PartyAsk } from '../components/PartyAsk'
 import { AnimalSprite, ANIMALS } from '../components/Animals'
 import { GuessAnimal } from '../components/GuessAnimal'
 import { AnimalPens } from '../components/AnimalPens'
+import { Planner } from '../components/Planner'
 import { voiceOf, type Voice } from '../game/speech'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
@@ -910,6 +911,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             }
             if (t.activity === 'guess') return <GuessAnimal onClose={finish} />
             if (t.activity === 'pens') return <AnimalPens onClose={finish} />
+            if (t.activity === 'planner') return <Planner onClose={finish} />
             const who = NPCS[t.npc ?? task]
             return <MiniTalk name={who.name} look={who.look} steps={t.steps} onClose={finish} />
           })()}

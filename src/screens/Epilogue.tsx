@@ -15,8 +15,8 @@ import { AnimalSprite } from '../components/Animals'
 
 const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
-type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer'
-type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer'
+type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark'
+type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark'
 type Step = {
   who: Who
   text: string
@@ -41,6 +41,7 @@ function buildSteps(s: GameState, sceneId: string): Step[] {
   if (sceneId === 'city') return citySteps(s)
   if (sceneId === 'barrio') return barrioSteps(s)
   if (sceneId === 'farm') return farmSteps(s)
+  if (sceneId === 'office') return officeSteps(s)
   const name = s.hero.name
   const it = s.interest
   const iname = it.name
@@ -411,10 +412,74 @@ function farmSteps(s: GameState): Step[] {
   ]
 }
 
+/**
+ * Final del capítulo 5 y de A1 en presente: el reloj queda completo y muestra otras épocas.
+ * Leo decide viajar con el protagonista... y sin que nadie lo note, la luz se lleva a alguien más.
+ */
+function officeSteps(s: GameState): Step[] {
+  const name = s.hero.name
+  const iname = s.interest.name
+  const cast: Cast[] = ['leo', 'interest']
+  const withClark: Cast[] = ['clark', 'leo', 'interest']
+  return [
+    { who: 'narrator', text: 'La señora Clark abre las ventanas de su oficina. Todos los relojes del edificio marcan la misma hora por fin.', cast: withClark },
+    { who: 'clark', text: "It's twelve o'clock. Lunch time! Could you stay for lunch? The café is on the first floor.", es: 'Son las doce. ¡Hora del almuerzo! ¿Podrían quedarse a almorzar? La cafetería está en el primer piso.', cast: withClark },
+    {
+      who: 'hero',
+      text: '¿Qué le respondes con amabilidad?',
+      cast: withClark,
+      choice: {
+        options: ["Sorry, we can't. But thank you!", "Sorry, we can't to. But thank you!", "No. We don't could."],
+        answer: 0,
+        tip: "Para decir que no con amabilidad: Sorry, we can't. But thank you!",
+      },
+    },
+    { who: 'narrator', text: 'Sacas el reloj del tiempo y pones la última pieza. Encaja con un clic.', cast, clock: true },
+    { who: 'leo', text: 'Five pieces! The clock is complete! ... Wait. Look at the hands. They are moving!', es: '¡Cinco piezas! ¡El reloj está completo! ... Espera. Mira las agujas. ¡Se están moviendo!', cast, clock: true },
+    { who: 'narrator', text: 'Las agujas giran hacia atrás y luego hacia adelante. En el cristal aparecen imágenes: la escuela, pero vieja... y una ciudad con edificios que nunca has visto.', cast, clock: true },
+    { who: 'interest', text: 'The school... but old! And that city... is it the future? There are more pieces in other times!', es: 'La escuela... ¡pero vieja! Y esa ciudad... ¿es el futuro? ¡Hay más piezas en otros tiempos!', cast, clock: true },
+    {
+      who: 'hero',
+      text: `¿Qué le dices a ${iname}?`,
+      cast,
+      clock: true,
+      choice: {
+        options: ['Yes! My other words are in the past and in the future.', 'Yes! My other words is in the past and in the future.', 'Yes! My others words are in past and in future.'],
+        answer: 0,
+        tip: '"My other words" es plural: are. Y se dice "in the past" y "in the future".',
+      },
+    },
+    { who: 'narrator', text: 'Leo va a buscar agua a la máquina del pasillo. Entonces, desde la puerta, una voz ronca habla muy bajito.', cast: ['interest'] },
+    { who: 'villain', text: 'Five pieces... Thank you. You are doing my work for me.', es: 'Cinco piezas... Gracias. Estás haciendo mi trabajo por mí.', villain: true, cast: ['interest'] },
+    { who: 'villain', text: 'Now the clock can travel. To the past... and to the future. Go. I am always behind you.', es: 'Ahora el reloj puede viajar. Al pasado... y al futuro. Ve. Siempre estoy detrás de ti.', villain: true, cast: ['interest'] },
+    { who: 'narrator', text: 'Cuando Leo vuelve con el agua, en la puerta no hay nadie.', cast },
+    { who: 'leo', text: `${name}, you look strange. Are you OK? ... The clock is very bright now. What do we do?`, es: `${name}, ¿te pasa algo? ¿Estás bien? ... El reloj brilla mucho ahora. ¿Qué hacemos?`, cast, clock: true },
+    {
+      who: 'hero',
+      text: 'Pregúntale a Leo si quiere viajar contigo.',
+      cast,
+      clock: true,
+      choice: {
+        options: ['Could you come with me, Leo? I need your help.', 'Could you to come with me, Leo?', 'You come with I, Leo!'],
+        answer: 0,
+        tip: 'Con cortesía: Could you + verbo...? Y después de with: me.',
+      },
+    },
+    { who: 'leo', text: 'Of course! You are my best friend. I always help you. Always.', es: '¡Claro! Eres mi mejor amigo. Siempre te ayudo. Siempre.', cast, clock: true },
+    { who: 'narrator', text: `Leo, ${iname} y tú ponen la mano sobre el reloj. Una luz blanca lo llena todo. Nadie lo nota, pero detrás de ustedes, la luz también se lleva a alguien más.`, cast, clock: true },
+    {
+      who: 'narrator',
+      text: 'Fin del capítulo 5: La oficina. Recuperaste la hora, at / on / in, los pronombres de objeto y cómo pedir con cortesía. ¡Terminaste A1 en presente! El reloj está completo... y el próximo viaje es al pasado.',
+      cast,
+    },
+  ]
+}
+
 export function Epilogue({ state, onDone }: { state: GameState; onDone: () => void }) {
   const city = state.sceneId === 'city'
   const barrio = state.sceneId === 'barrio'
   const farm = state.sceneId === 'farm'
+  const office = state.sceneId === 'office'
   const steps = buildSteps(state, state.sceneId)
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
@@ -436,6 +501,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     mom: 'Mom',
     rosie: 'Rosie',
     farmer: 'Mr. Brown',
+    clark: 'Ms. Clark',
   }
 
   const voices: Record<Who, Voice> = {
@@ -449,6 +515,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     villain: 'villain',
     rosie: 'female',
     farmer: 'male',
+    clark: 'female',
   }
 
   function next() {
@@ -463,8 +530,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 overflow-y-auto px-4 py-6">
-      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
-      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
+      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
+      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
         {s.home ? (
           <g>
             <rect width="320" height="200" fill="#f1d9c0" />
@@ -479,6 +546,19 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             <rect x="214" y="86" width="92" height="18" rx="6" fill="#c8664e" />
             <rect x="250" y="20" width="44" height="58" rx="2" fill="#e8eef2" stroke="#b8c4cc" strokeWidth="2" />
             <line x1="250" y1="40" x2="294" y2="40" stroke="#b8c4cc" strokeWidth="2" />
+          </g>
+        ) : office ? (
+          <g>
+            <rect width="320" height="200" fill="#e8ecf0" />
+            {[0, 1, 2].map((k) => (
+              <g key={k}>
+                <rect x={20 + k * 100} y="20" width="80" height="70" fill="#9fd3f0" stroke="#8d9aa3" strokeWidth="4" />
+                <line x1={60 + k * 100} y1="20" x2={60 + k * 100} y2="90" stroke="#8d9aa3" strokeWidth="3" />
+              </g>
+            ))}
+            <rect x="0" y="120" width="320" height="80" fill="#9aa6b2" />
+            <rect x="200" y="108" width="110" height="18" rx="3" fill="#6b4423" />
+            <rect x="240" y="92" width="22" height="16" rx="2" fill="#2d2d3a" />
           </g>
         ) : farm ? (
           <g>
@@ -565,6 +645,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             : who === 'mom' ? { shirt: '#2f6fd0', hair: state.hero.look.hair, skin: state.hero.look.skin, gender: 'female' as const }
             : who === 'rosie' ? NPCS.rosie.look
             : who === 'farmer' ? ENEMIES['farm-boss'].look
+            : who === 'clark' ? ENEMIES['office-boss'].look
             : interest.look
           return (
             <g key={who} transform={`translate(${spots[k] + 64} 128) scale(-2 2)`}>

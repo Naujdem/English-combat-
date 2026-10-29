@@ -22,6 +22,10 @@ export const FLOOR: Record<Zone, string> = {
   corral: '#c9a46a',
   campo: '#9cc46e',
   'casa-granja': '#efd9b8',
+  recepcion: '#e6e1d6',
+  oficina: '#d9dfe6',
+  reuniones: '#e3dcef',
+  direccion: '#efe2cc',
 }
 
 const WALL = '#7a6a58'

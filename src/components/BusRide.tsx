@@ -14,6 +14,8 @@ type Step = { who: 'narrator' | 'leo' | 'driver'; text: string; es: string; choi
 export type BusTrip = { place: string; placeEs: string; price: string; priceNum: string; wrongPrices: [string, string]; arrival: { text: string; es: string }; sign: string; intro?: string; three?: boolean
   /** Viaje en bicicleta (granja): pasos propios y otro dibujo */
   bike?: { steps: Step[]; person: string }
+  /** Pasos propios para un viaje en autobús */
+  steps?: Step[]
 }
 
 export const BUS_TO_CITY: BusTrip = {
@@ -60,6 +62,41 @@ export const BIKE_TO_FARM: BusTrip = {
   },
 }
 
+/** A la oficina en autobús por la carretera: practicar la hora */
+export const BUS_TO_OFFICE: BusTrip = {
+  place: 'Office Park',
+  placeEs: 'la zona de oficinas',
+  price: 'two dollars',
+  priceNum: '$2',
+  wrongPrices: ['$12', '$20'],
+  arrival: { text: '', es: '' },
+  sign: 'OFFICE PARK',
+  three: true,
+  steps: [
+    { who: 'narrator', text: 'Al día siguiente, Leo, {iname} y tú esperan el autobús en la carretera, al lado de la granja.', es: '' },
+    {
+      who: 'leo',
+      text: "My watch says 8:45. What time is it? I can't read it!",
+      es: 'Mi reloj marca 8:45. ¿Qué hora es? ¡No lo sé leer!',
+      choice: { options: ["It's quarter to nine.", "It's quarter past nine.", "It's eight and forty-five."], answer: 0, tip: '8:45 = quarter to nine (falta un cuarto para las nueve).' },
+    },
+    {
+      who: 'driver',
+      text: 'Good morning! This bus goes to Office Park. We arrive at half past nine.',
+      es: '¡Buenos días! Este autobús va a la zona de oficinas. Llegamos a las nueve y media.',
+      choice: { options: ['At 9:30.', 'At 9:15.', 'At 8:30.'], answer: 0, tip: '"Half past nine" = 9:30.' },
+    },
+    {
+      who: 'driver',
+      text: 'Tickets are two dollars each.',
+      es: 'Los boletos cuestan dos dólares cada uno.',
+      choice: { options: ['Could we have three tickets, please?', 'Could we to have three tickets?', 'Give we three tickets!'], answer: 0, tip: 'Para pedir con cortesía: Could we have..., please?' },
+    },
+    { who: 'driver', text: 'Sure! Here you are. Sit down, please. Next stop: Office Park!', es: '¡Claro! Aquí tienen. Siéntense, por favor. Próxima parada: ¡la zona de oficinas!' },
+    { who: 'leo', text: 'Look! A big office: Green Valley Company. The last piece of the clock is there!', es: '¡Mira! Una oficina grande: Green Valley Company. ¡La última pieza del reloj está ahí!' },
+  ],
+}
+
 export const BUS_TO_BARRIO: BusTrip = {
   place: 'Green Street',
   placeEs: 'Green Street, el barrio de Leo',
@@ -73,7 +110,7 @@ export const BUS_TO_BARRIO: BusTrip = {
 }
 
 function steps(t: BusTrip, iname: string): Step[] {
-  return (t.bike ? t.bike.steps : [
+  return (t.bike ? t.bike.steps : t.steps ? t.steps : [
     { who: 'narrator', text: t.intro ?? `Al día siguiente, Leo y tú van a la parada de autobús. Van a ${t.placeEs}.`, es: '' },
     { who: 'leo', text: "Here is the bus! Let's buy our tickets.", es: '¡Aquí está el autobús! Compremos los boletos.' },
     {

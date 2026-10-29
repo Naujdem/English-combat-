@@ -52,6 +52,11 @@ mouse=ratón;mice=ratones;sheep=oveja, ovejas;pig=cerdo;duck=pato;rabbit=conejo;
 man=hombre;men=hombres;woman=mujer;women=mujeres;leaf=hoja;leaves=hojas;meat=carne;corn=maíz;kilometers=kilómetros;believe=creer;catch=atrapar, cazar;milkshake=malteada;
 milkshakes=malteadas;overalls=overol;granddaughter=nieta;glasses=gafas;metal=metal;shiny=brillante;sky=cielo;fall=caer;falls=cae (fall);count=contar;clearly=claramente;slowly=despacio;
 quiet=callado, bajito;prefer=preferir;cheese=queso;box=caja;boxes=cajas;neigh=relincho;moo=muu;baa=bee;woof=guau;honk=graznido;questions=preguntas;sign=letrero;
+quarter=cuarto;half=media, mitad;o'clock=en punto;meeting=reunión;appointment=cita;agenda=agenda;emails=correos;message=mensaje;report=informe;manager=gerente;receptionist=recepcionista;
+designer=diseñador;cleaner=conserje;director=director, directora;company=empresa;busy=ocupado;free=libre;spring=primavera;summer=verano;autumn=otoño;winter=invierno;evening=noche (temprano);
+could=podría, podrías (can);sure=claro;course=curso (of course = por supuesto);repeat=repetir;slowly=despacio;spell=deletrear;send=enviar;answer=contestar;ring=sonar (teléfono);book=libro, reservar;
+hurry=apurarse;rude=grosero;drawer=cajón;card=tarjeta;job=trabajo;lunch=almuerzo;floor=piso;watch=reloj (de pulsera), mirar;crazy=loco;hands=manos, agujas (del reloj);past=pasado, y (half past = y media);
+future=futuro;team=equipo;secretary=secretaria;stay=quedarse;hang=colgar;note=nota;
 i'm=yo soy, yo estoy;you're=tú eres, tú estás;he's=él es, él está;she's=ella es, ella está;it's=es, está;we're=nosotros somos;they're=ellos son;that's=eso es;let's=vamos a;what's=qué es;
 don't=no (no hagas);doesn't=no (con he/she/it);didn't=no (en pasado);won't=no va a;can't=no puede;haven't=no tiene (have got);hasn't=no tiene (has got);got=(have got = tener)
 `

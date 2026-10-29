@@ -133,6 +133,37 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#f4efe4', hair: '#1f1f1f', skin: '#a0662e', gender: 'female', accessory: 'glasses' },
     doneLine: { text: 'The animals are happy now. Thank you for your help!', es: 'Los animales ya están contentos. ¡Gracias por tu ayuda!' },
   },
+  // ── La oficina ──
+  sara: {
+    name: 'Sara',
+    // La recepcionista: la agenda de la directora (la hora y at / on / in)
+    look: { shirt: '#3b9d5d', hair: '#e0b04a', skin: '#f6d3b3', gender: 'female' },
+    doneLine: { text: 'Your appointment with Ms. Clark is today. Good luck!', es: 'Tu cita con la señora Clark es hoy. ¡Suerte!' },
+  },
+  grace: {
+    name: 'Grace',
+    // La asistente: contestar el teléfono y tomar un mensaje (pronombres de objeto, Could you...?)
+    look: { shirt: '#e07b39', hair: '#2b1d14', skin: '#8d5524', gender: 'female' },
+    doneLine: { text: 'Thank you for your help with the phone! Could you come back tomorrow? Ha ha!', es: '¡Gracias por ayudarme con el teléfono! ¿Podrías volver mañana? ¡Ja, ja!' },
+  },
+  diaz: {
+    name: 'Mr. Diaz',
+    look: { shirt: '#5a7a5a', hair: '#9a9a9a', skin: '#c68642', accessory: 'cap' },
+    lines: [
+      { text: "I'm a cleaner. I start work at six in the morning, and I finish at two.", es: 'Soy conserje. Empiezo a trabajar a las seis de la mañana y termino a las dos.' },
+      { text: 'Could you put your cup in the kitchen, please? Thank you!', es: '¿Podrías poner tu taza en la cocina, por favor? ¡Gracias!' },
+      { text: 'In summer the office is very hot, but in winter it is very cold!', es: 'En verano la oficina es muy calurosa, ¡pero en invierno es muy fría!' },
+    ],
+  },
+  amy: {
+    name: 'Amy',
+    look: { shirt: '#9b6fd0', hair: '#d9822b', skin: '#f6d3b3', gender: 'female' },
+    lines: [
+      { text: "I'm a designer. I draw pictures for the company, and I love my job!", es: 'Soy diseñadora. Hago dibujos para la empresa, ¡y me encanta mi trabajo!' },
+      { text: 'I usually have lunch at half past one, but today I am very busy.', es: 'Normalmente almuerzo a la una y media, pero hoy estoy muy ocupada.' },
+      { text: 'Do you want coffee or tea? The coffee machine is in the kitchen.', es: '¿Quieres café o té? La máquina de café está en la cafetería.' },
+    ],
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

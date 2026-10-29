@@ -267,6 +267,43 @@ export const DIARY: DiaryChapter[] = [
       },
     ],
   },
+  {
+    id: 'office',
+    title: 'Capítulo 5: La oficina',
+    unlock: 'office-epilogue',
+    words: [
+      { title: 'La hora', words: [["o'clock", 'en punto'], ['half past', 'y media'], ['quarter past', 'y cuarto'], ['quarter to', 'menos cuarto'], ['ten past', 'y diez'], ['ten to', 'menos diez'], ['What time is it?', '¿Qué hora es?']] },
+      { title: 'at / on / in', words: [['at nine', 'a las nueve'], ['at night', 'en la noche'], ['on Monday', 'el lunes'], ['in May', 'en mayo'], ['in summer', 'en verano'], ['in the morning', 'en la mañana'], ['in the afternoon', 'en la tarde'], ['in the evening', 'en la noche (temprano)']] },
+      { title: 'Días y estaciones', words: [['Monday', 'lunes'], ['Tuesday', 'martes'], ['Wednesday', 'miércoles'], ['Thursday', 'jueves'], ['Friday', 'viernes'], ['spring', 'primavera'], ['summer', 'verano'], ['autumn', 'otoño'], ['winter', 'invierno']] },
+      { title: 'Pronombres de objeto', words: [['me', 'me, a mí'], ['you', 'te, a ti'], ['him', 'lo, a él'], ['her', 'la, a ella'], ['it', 'lo (cosa)'], ['us', 'nos'], ['them', 'los, a ellos']] },
+      { title: 'En la oficina', words: [['meeting', 'reunión'], ['appointment', 'cita'], ['agenda', 'agenda'], ['email', 'correo'], ['message', 'mensaje'], ['phone', 'teléfono'], ['Could you...?', '¿Podrías...?'], ['Sure! / Of course!', '¡Claro!'], ["Sorry, I can't.", 'Lo siento, no puedo.']] },
+      { title: 'Profesiones', words: [['receptionist', 'recepcionista'], ['secretary', 'secretaria'], ['manager', 'gerente'], ['director', 'directora'], ['designer', 'diseñadora'], ['cleaner', 'conserje'], ['doctor', 'médico'], ['farmer', 'granjero'], ['teacher', 'profesor']] },
+    ],
+    versions: [
+      {
+        id: 'office-present',
+        tense: 'n',
+        tab: 'Presente',
+        title: 'My story: the office',
+        frame: 'Lo que pasó en la oficina, contado en presente.',
+        lines: [
+          { en: 'We [take]n the bus at quarter to nine, and we [arrive]n at half past nine.', es: 'Tomamos el autobús a las nueve menos cuarto y llegamos a las nueve y media.' },
+          { en: 'In the office, every clock [is]n crazy. Gary [says]n: "It\'s eight and half!"', es: 'En la oficina, todos los relojes están locos. Gary dice: "¡Son las ocho y media!" (mal dicho).' },
+          { en: 'Sara [has]n a lot of emails. I [put]n the meetings in the agenda: on Monday at nine, on Friday in the morning...', es: 'Sara tiene muchos correos. Pongo las reuniones en la agenda: el lunes a las nueve, el viernes en la mañana...' },
+          { en: 'The phone [rings]n. Mr. Rossi [wants]n to speak to Ms. Clark, but she [isn\'t]n there. I [write]n a message for her.', es: 'Suena el teléfono. El señor Rossi quiere hablar con la señora Clark, pero no está. Le escribo un mensaje.' },
+          { en: 'Ms. Clark [has]n the last piece. She [is]n very angry, but I [ask]n: "Could you help me, please?"', es: 'La señora Clark tiene la última pieza. Está muy enojada, pero le pregunto: "¿Podrías ayudarme, por favor?"' },
+          { en: 'Now the clock [is]n complete. It [shows]n the old school and a city of the future.', es: 'Ahora el reloj está completo. Muestra la escuela vieja y una ciudad del futuro.' },
+          { en: 'Leo [says]n: "I always help you." We [touch]n the clock together...', es: 'Leo dice: "Siempre te ayudo". Tocamos el reloj juntos...' },
+        ],
+        questions: [
+          { q: 'What time do you arrive at the office?', options: ['At quarter to nine.', 'At half past nine.', 'At nine o\'clock.'], answer: 1, tip: 'El texto dice: "we arrive at half past nine".' },
+          { q: 'Who wants to speak to Ms. Clark?', options: ['Mr. Rossi.', 'Mr. Stone.', 'Gary.'], answer: 0, tip: 'El texto dice: "Mr. Rossi wants to speak to Ms. Clark".' },
+          { q: 'What does the clock show?', options: ['The farm and the park.', 'The old school and a city of the future.', 'Ms. Clark and her phone.'], answer: 1, tip: 'El texto dice: "It shows the old school and a city of the future".' },
+          { q: 'What does Leo say?', options: ['"I always help you."', '"I never help you."', '"Could you help me?"'], answer: 0, tip: 'El texto dice: "I always help you".' },
+        ],
+      },
+    ],
+  },
 ]
 
 /** Diccionario de las palabras de los diarios (inglés → español) */
@@ -295,6 +332,7 @@ export const DICT: Record<string, string> = {
   understand: 'entender', three: 'tres', farm: 'granja', "leo's": 'de Leo', "maya's": 'de Maya', dad: 'papá', mom: 'mamá', maya: 'Maya (nombre)', she: 'ella', her: 'su (de ella)',
   looks: 'mira (look)', cooks: 'cocina (cook)', dinner: 'cena', always: 'siempre', usually: 'normalmente', nine: 'nueve', seven: 'siete', home: 'casa',
   bike: 'bicicleta', by: 'en (by bike = en bicicleta)', animals: 'animales', rosie: 'Rosie (nombre)', game: 'juego', ask: 'pregunto (ask)', wings: 'alas', answers: 'responde (answer)', daisy: 'Daisy (nombre)', cow: 'vaca', pizza: 'pizza', eats: 'come (eat)', grass: 'pasto', sheep: 'ovejas, oveja', geese: 'gansos', mice: 'ratones', barn: 'granero', lot: 'mucho (a lot of = muchos)', brown: 'Brown (nombre)', remember: 'recordar', silent: 'callado', office: 'oficina', does: 'hace (do) / auxiliar de preguntas',
+  quarter: 'cuarto', half: 'media', past: 'pasado, y (half past = y media)', crazy: 'loco', gary: 'Gary (nombre)', sara: 'Sara (nombre)', emails: 'correos', put: 'pongo (put)', meetings: 'reuniones', agenda: 'agenda', monday: 'lunes', friday: 'viernes', phone: 'teléfono', rings: 'suena (ring)', rossi: 'Rossi (nombre)', wants: 'quiere (want)', speak: 'hablar', clark: 'Clark (nombre)', "isn't": 'no es, no está', write: 'escribo (write)', message: 'mensaje', for: 'para', angry: 'enojado', could: 'podrías (can)', please: 'por favor', complete: 'completo', shows: 'muestra (show)', old: 'viejo', future: 'futuro', touch: 'tocamos (touch)', ms: 'señora', eight: 'ocho', with: 'con',
   "school's": 'de la escuela', ana: 'Ana (nombre)', story: 'historia', plan: 'plan', "stranger's": 'del desconocido',
 }
 

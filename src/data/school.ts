@@ -285,6 +285,7 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   gorra: { name: 'Gorra de turista', color: '#e07b39' },
   sudadera: { name: 'Sudadera de Nick', color: '#6b4fa3' },
   overol: { name: 'Overol de granjero', color: '#3b6fb6' },
+  traje: { name: 'Chaqueta de oficina', color: '#2b2b3a' },
 }
 
 SCHOOL.requirements = BOSS_REQUIREMENTS

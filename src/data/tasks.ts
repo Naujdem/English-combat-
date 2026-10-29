@@ -17,7 +17,7 @@ export type NpcTask = {
   shield?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens'
+  activity?: 'guess' | 'pens' | 'planner'
 }
 
 export const NPC_TASKS: Record<string, NpcTask> = {
@@ -218,6 +218,61 @@ NPC_TASKS.patel = {
     say: 'Every animal is in the right pen. Thank you!',
   },
   shield: true,
+}
+
+// ── La oficina ──
+NPC_TASKS.sara = {
+  done: 'office-planner',
+  lesson: 'time',
+  activity: 'planner',
+  steps: [],
+  reward: {
+    text: 'Sara: "The agenda is perfect now! You have got an appointment with Ms. Clark today."',
+    es: '¡La agenda ya está perfecta! Tienes una cita con la señora Clark hoy.',
+    sub: 'Tienes una cita con la directora.',
+    say: 'The agenda is perfect now! You have got an appointment with Ms. Clark today.',
+  },
+}
+NPC_TASKS.grace = {
+  done: 'office-message',
+  lesson: 'object-pronouns',
+  steps: [
+    {
+      text: "Ring, ring! Oh no, the phone! I'm very busy. Could you answer it, please?",
+      es: '¡Ring, ring! ¡Oh, no, el teléfono! Estoy muy ocupada. ¿Podrías contestar, por favor?',
+      choice: { ask: '¿Qué le dices a Grace?', options: ['Sure!', 'Sorry, I can.', 'Yes, I could to.'], answer: 0, tip: 'Para aceptar: Sure! / Of course!' },
+    },
+    {
+      text: '(You answer the phone.) ... Hello? This is Mr. Rossi, from the tourist office. Could I speak to Ms. Clark, please?',
+      es: '(Contestas el teléfono.) ... ¿Hola? Habla el señor Rossi, de la oficina de turismo. ¿Podría hablar con la señora Clark, por favor?',
+      choice: { ask: 'La señora Clark no está disponible. ¿Qué le dices?', options: ["I'm sorry, she isn't here. Can I take a message?", "Sorry, her isn't here. Can I take message?", "No. Call she later."], answer: 0, tip: "Con cortesía: I'm sorry, she isn't here. Can I take a message?" },
+    },
+    {
+      text: 'Yes, please. Could you tell her to call me? I am in my office in the afternoon, from two to five.',
+      es: 'Sí, por favor. ¿Podrías decirle que me llame? Estoy en mi oficina en la tarde, de dos a cinco.',
+      choice: { ask: '¿Qué le respondes?', options: ['Of course. I can tell her.', 'Of course. I can tell she.', 'Of course. I can tell to her.'], answer: 0, tip: 'Después del verbo: her (tell her).' },
+    },
+    {
+      text: 'And could you send me the new city map? Send it to me today, please. Thank you!',
+      es: 'Y ¿podrías enviarme el nuevo mapa de la ciudad? Envíamelo hoy, por favor. ¡Gracias!',
+      choice: { ask: '¿Qué le respondes?', options: ['Sure! I can send it to you today.', 'Sure! I can send it to your today.', 'Sure! I can send you it to.'], answer: 0, tip: 'send it to you: después de to va you.' },
+    },
+    {
+      text: '(You hang up.) Grace: Who is it? Could you write a note for Ms. Clark, please?',
+      es: '(Cuelgas.) Grace: ¿Quién era? ¿Podrías escribir una nota para la señora Clark, por favor?',
+      choice: { ask: 'Elige la nota bien escrita.', options: ['Message from Mr. Rossi: please call him in the afternoon, and send him the city map.', 'Message from Mr. Rossi: please call he in the afternoon, and send he the city map.', 'Message from Mr. Rossi: please call his at the afternoon, and send his the city map.'], answer: 0, tip: 'Después del verbo: him. Y partes del día: in the afternoon.' },
+    },
+    {
+      text: 'Perfect note! Thank you. Now Ms. Clark can call him. You are a great assistant!',
+      es: '¡Nota perfecta! Gracias. Ahora la señora Clark puede llamarlo. ¡Eres un gran asistente!',
+    },
+  ],
+  reward: {
+    text: 'Grace: "Thank you! I can give her the note now."',
+    es: '¡Gracias! Ya le puedo dar la nota.',
+    sub: 'Tomaste el mensaje del teléfono.',
+    say: 'Thank you! I can give her the note now.',
+  },
 }
 
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */

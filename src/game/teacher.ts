@@ -5,6 +5,7 @@ import { SESSIONS } from '../data/schedule'
 import { CITY } from '../data/city'
 import { BARRIO } from '../data/barrio'
 import { FARM } from '../data/farm'
+import { OFFICE } from '../data/office'
 import { SCHOOL } from '../data/school'
 
 /**
@@ -70,7 +71,7 @@ function base(s: GameState): GameState {
   }
 }
 
-const SCENE_PREFIX = /^(school|city|barrio|board|party|farm)-/
+const SCENE_PREFIX = /^(school|city|barrio|board|party|farm|office)-/
 
 /** Estados preparados para revisar partes del juego */
 export const PRESETS: { id: string; label: string; apply: (s: GameState) => GameState }[] = [
@@ -217,6 +218,44 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
         relics: Math.max(4, b.relics),
         recovered: add(b.recovered, ['do-does', 'plurals']) as GameState['recovered'],
         outfits: add(b.outfits, ['overol']),
+      }
+    },
+  },
+  {
+    id: 'office-start',
+    label: 'Oficina: recién llegado',
+    apply: (s) => {
+      const b = PRESETS[10].apply(s)
+      return { ...b, screen: 'explore', sceneId: 'office', pos: { ...OFFICE.start }, opened: add(b.opened, ['farm-epilogue', 'diary-open-farm', 'bus-office']) }
+    },
+  },
+  {
+    id: 'office-boss',
+    label: 'Oficina: lista para el jefe',
+    apply: (s) => {
+      const b = PRESETS[11].apply(s)
+      return {
+        ...b,
+        pos: { x: 12, y: 5 },
+        defeated: add(b.defeated, ['office-m1', 'office-m2', 'office-m3']),
+        keys: { ...b.keys, office: 3 },
+        opened: add(b.opened, ['office-planner', 'office-message']),
+        seenLesson: add(b.seenLesson, ['office', 'time', 'object-pronouns', 'could-you']),
+      }
+    },
+  },
+  {
+    id: 'office-done',
+    label: 'Oficina: terminada (final de A1)',
+    apply: (s) => {
+      const b = PRESETS[12].apply(s)
+      return {
+        ...b,
+        screen: 'epilogue',
+        defeated: add(b.defeated, ['office-boss']),
+        relics: Math.max(5, b.relics),
+        recovered: add(b.recovered, ['time', 'object-pronouns', 'could-you']) as GameState['recovered'],
+        outfits: add(b.outfits, ['traje']),
       }
     },
   },
