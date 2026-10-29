@@ -17,7 +17,9 @@ export type NpcTask = {
   shield?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab'
+  /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
+  vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
 
 export const NPC_TASKS: Record<string, NpcTask> = {
@@ -273,6 +275,82 @@ NPC_TASKS.grace = {
     sub: 'Tomaste el mensaje del teléfono.',
     say: 'Thank you! I can give her the note now.',
   },
+}
+
+// ── Repaso de vocabulario suelto (cierre de A1) ──
+NPC_TASKS['lucy-vocab'] = {
+  npc: 'lucy',
+  done: 'barrio-vocab',
+  requires: {
+    id: 'barrio-photo',
+    text: 'Lucy: "I love animals and sunny days! After the party, can we play a word game?"',
+    es: '¡Me encantan los animales y los días de sol! Después de la fiesta, ¿jugamos un juego de palabras?',
+    sub: 'Lucy tiene un juego de mascotas y clima para después de la fiesta.',
+  },
+  activity: 'vocab',
+  vocab: {
+    title: 'Mascotas y clima',
+    place: 'Parque · Lucy',
+    words: [
+      { en: 'dog', es: 'perro' }, { en: 'cat', es: 'gato' }, { en: 'bird', es: 'pájaro' }, { en: 'fish', es: 'pez' }, { en: 'hamster', es: 'hámster' },
+      { en: 'sunny', es: 'soleado' }, { en: 'rainy', es: 'lluvioso' }, { en: 'cloudy', es: 'nublado' }, { en: 'windy', es: 'con viento' },
+      { en: 'hot', es: 'caluroso' }, { en: 'cold', es: 'frío' }, { en: 'snow', es: 'nieve' },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Lucy: "You know a lot of words! My dog likes you too. Woof!"',
+    es: '¡Sabes muchas palabras! A mi perro también le caes bien. ¡Guau!',
+    sub: 'Lucy te da un escudo de palabras.',
+    say: 'You know a lot of words! My dog likes you too.',
+  },
+  shield: true,
+}
+NPC_TASKS['rosie-body'] = {
+  npc: 'rosie',
+  done: 'farm-body',
+  requires: { id: 'farm-guess', text: '', es: '', sub: '' },
+  activity: 'vocab',
+  vocab: {
+    title: 'Partes del cuerpo',
+    place: 'Granero · Rosie',
+    words: [
+      { en: 'head', es: 'cabeza' }, { en: 'eyes', es: 'ojos' }, { en: 'ears', es: 'orejas' }, { en: 'nose', es: 'nariz' }, { en: 'mouth', es: 'boca' },
+      { en: 'legs', es: 'patas, piernas' }, { en: 'tail', es: 'cola' }, { en: 'wings', es: 'alas' }, { en: 'feet', es: 'pies, patas' }, { en: 'teeth', es: 'dientes' },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Rosie: "Great! A horse has got four legs and a long tail. A duck has got two feet and two wings!"',
+    es: '¡Genial! Un caballo tiene cuatro patas y una cola larga. ¡Un pato tiene dos patas y dos alas!',
+    sub: 'Rosie te da un escudo de palabras.',
+    say: 'Great! A horse has got four legs and a long tail. A duck has got two feet and two wings!',
+  },
+  shield: true,
+}
+
+NPC_TASKS['ana-adjectives'] = {
+  npc: 'ana',
+  done: 'school-adjectives',
+  requires: { id: 'school-supplies', text: '', es: '', sub: '' },
+  activity: 'vocab',
+  vocab: {
+    title: 'Adjetivos opuestos',
+    place: 'Aula · Ana',
+    words: [
+      { en: 'big', es: 'grande' }, { en: 'small', es: 'pequeño' }, { en: 'happy', es: 'feliz' }, { en: 'sad', es: 'triste' }, { en: 'new', es: 'nuevo' },
+      { en: 'old', es: 'viejo' }, { en: 'fast', es: 'rápido' }, { en: 'slow', es: 'lento' }, { en: 'tall', es: 'alto' }, { en: 'short', es: 'bajo, corto' },
+      { en: 'easy', es: 'fácil' }, { en: 'difficult', es: 'difícil' }, { en: 'clean', es: 'limpio' }, { en: 'dirty', es: 'sucio' },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Ana: "Big and small, happy and sad... You are very smart!"',
+    es: 'Grande y pequeño, feliz y triste... ¡Eres muy inteligente!',
+    sub: 'Ana te da un escudo de palabras.',
+    say: 'Big and small, happy and sad... You are very smart!',
+  },
+  shield: true,
 }
 
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */

@@ -155,7 +155,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           setParty({ id: e.id, name: npc.name, voice: voiceOf(npc.look) })
           return
         }
-        if (pend?.blocked && pend.task.requires) {
+        if (pend?.blocked && pend.task.requires?.text) {
           const req = pend.task.requires
           setMsg({ text: req.text, es: req.es, sub: req.sub, tone: 'warn' })
           return
@@ -320,7 +320,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           return
         }
         update((s) => ({ ...s, lostFound: { ...s.lostFound, carrying: item.id, picked: [...s.lostFound.picked, item.id] } }))
-        setMsg({ text: `Encontraste ${item.es}. ¿De quién será?`, sub: `Pregúntale a la gente: "Is this your ${item.en}?"`, tone: 'good', say: `Is this your ${item.en}?` })
+        const q = item.whose ? `Whose ${item.en} is this?` : `Is this your ${item.en}?`
+        setMsg({ text: `Encontraste ${item.es}. ¿De quién será?`, sub: `Pregúntale a la gente: "${q}"`, tone: 'good', say: q })
         return
       }
       const ent = alive.find((e) => e.x === nx && e.y === ny)
@@ -912,6 +913,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'guess') return <GuessAnimal onClose={finish} />
             if (t.activity === 'pens') return <AnimalPens onClose={finish} />
             if (t.activity === 'planner') return <Planner onClose={finish} />
+            if (t.activity === 'vocab' && t.vocab)
+              return <VocabActivity state={state} words={t.vocab.words} place={t.vocab.place} title={t.vocab.title} rewardText={t.reward.sub} onClose={finish} />
             const who = NPCS[t.npc ?? task]
             return <MiniTalk name={who.name} look={who.look} steps={t.steps} onClose={finish} />
           })()}

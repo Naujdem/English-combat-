@@ -166,6 +166,11 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - El teléfono de Grace: tarea con charla en `src/data/tasks.ts`.
 - Al vencer a la señora Clark el reloj queda con sus 5 piezas y termina A1 en presente.
 
+## Explicaciones y repaso de cierre de A1
+
+- Las lecciones de Leo pueden llevar una tabla (`table` en `src/data/lessons.ts`): cada forma en su fila y con colores (`<sujeto>` azul, `[verbo]` verde, `{clave}` morado), en vez de listas con comas.
+- Huecos de A1 cubiertos: *whose* y *mine / his / hers* en objetos perdidos, deletrear el nombre en la secretaría, palabras de pregunta y *and / but / or* (`src/data/questions-extra.ts`), y repasos de vocabulario: adjetivos opuestos (Ana), mascotas y clima (Lucy, después de la fiesta) y partes del cuerpo (Rosie, después de su juego).
+
 - El plan completo está en `docs/curriculo-a1.md`: primera vuelta A1 en presente (Escuela → Ciudad → Barrio con la casa del protagonista → Granja → Oficina), y luego los mismos lugares en pasado y futuro, todavía en A1, con el reloj completo. A2 y B1 repiten el esquema presente → pasado → futuro.
 - Pendientes pequeños de la escuela: deletrear en la secretaría, *whose* en objetos perdidos y preguntas con *who/what/where/when*.
 - Sonidos y animación de caminar.

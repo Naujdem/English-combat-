@@ -38,6 +38,23 @@ const LABELS: Record<Field, string> = {
  * números de teléfono (escucha) y cómo se dice un email (at, dot).
  * Dirección y teléfono son inventados, vienen en el papel de traslado del juego.
  */
+/** El nombre letra por letra (J-U-A-N) y dos versiones mal deletreadas */
+function spellOptions(name: string): { options: string[]; answer: number } {
+  const letters = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase().replace(/[^A-Z]/g, '').split('')
+  const ok = letters.join('-') || 'A-L-E-X'
+  const l = letters.length ? letters : ['A', 'L', 'E', 'X']
+  const swapped = l.length > 2 ? [l[0], l[2], l[1], ...l.slice(3)] : [...l].reverse()
+  const changed = [...l]
+  const k = Math.min(l.length - 1, 1)
+  changed[k] = changed[k] === 'E' ? 'I' : changed[k] === 'I' ? 'E' : changed[k] === 'A' ? 'E' : 'A'
+  const wrong = [...new Set([swapped.join('-'), changed.join('-'), `${ok}-S`, `${l[0]}-${ok}`])].filter((w) => w !== ok).slice(0, 2)
+  // La respuesta correcta cambia de lugar según el nombre (siempre el mismo para el mismo nombre)
+  const answer = l.length % 3
+  const options = [...wrong]
+  options.splice(answer, 0, ok)
+  return { options, answer }
+}
+
 export function Registration({ state, onClose }: { state: GameState; onClose: (finished: boolean) => void }) {
   const name = state.hero.name
   const age = state.hero.age ?? 15
@@ -68,6 +85,12 @@ export function Registration({ state, onClose }: { state: GameState; onClose: (f
       answer: 0,
       tip: '"What\'s your name?" pregunta tu nombre: My name is...',
       field: 'name',
+    },
+    {
+      text: 'How do you spell that, please?',
+      es: '¿Cómo se deletrea, por favor?',
+      ...spellOptions(name),
+      tip: 'Deletrear es decir el nombre letra por letra. Fíjate bien en el orden de las letras.',
     },
     {
       text: 'How old are you?',
@@ -180,7 +203,7 @@ export function Registration({ state, onClose }: { state: GameState; onClose: (f
       </div>
 
       {/* El papel de traslado con los datos inventados */}
-      {i >= 5 && i < steps.length - 1 && (
+      {i >= 6 && i < steps.length - 1 && (
         <div className="mt-2 rounded-lg border border-dashed border-line px-3 py-2 text-xs text-paper/75">
           <span className="font-semibold text-gold">Tu papel de traslado: </span>
           {TRANSFER.address} · Tel. {TRANSFER.phone} · {email}

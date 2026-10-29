@@ -4,6 +4,7 @@ import { canRecognize } from '../game/mic'
 import { BARRIO_QUESTIONS } from './questions-barrio'
 import { FARM_QUESTIONS } from './questions-farm'
 import { OFFICE_QUESTIONS } from './questions-office'
+import { EXTRA_QUESTIONS } from './questions-extra'
 
 /**
  * Banco de preguntas.
@@ -321,6 +322,8 @@ export const QUESTIONS: Question[] = [
   ...FARM_QUESTIONS,
   // ── Oficina: la hora y at/on/in, pronombres de objeto, Could you...?
   ...OFFICE_QUESTIONS,
+  // ── Repaso de cierre: palabras de pregunta y conectores
+  ...EXTRA_QUESTIONS,
 ]
 
 

@@ -56,8 +56,8 @@ El orden de la tabla es el orden en que aparece en el juego.
 | 3 | Posesivos (my, your...) y 's | This is her book. Maya's bag. | This is she book. | Escuela: Bella, objetos perdidos | ✅ |
 | 4 | Preposiciones de lugar | The book is under the desk. | The bag is next the chair. | Escuela: Ana | ✅ |
 | 5 | Imperativos | Open the door. Don't run! | No talk! | Escuela: Coach Mike, Max | ✅ |
-| 6 | Palabras de pregunta (who, what, where, when, how old) | Who is your teacher? | What is she? (para quién es) | Escuela (combates) y todo lo demás | 🟡 solo en lecturas |
-| 7 | Pronombres posesivos y *whose* | Whose bag is this? — It's mine. | It's my. | Escuela: objetos perdidos | 🟡 falta *whose* |
+| 6 | Palabras de pregunta (who, what, where, when, how old) | Who is your teacher? | What is she? (para quién es) | Escuela (combates) y todo lo demás | ✅ |
+| 7 | Pronombres posesivos y *whose* | Whose bag is this? — It's mine. | It's my. | Escuela: objetos perdidos | ✅ |
 | 8 | There is / there are | There is a bank next to the park. | There have a bank. | Ciudad: calles | ✅ |
 | 9 | Artículos a / an / the | a juice, an apple, the menu | a apple | Ciudad: café | ✅ |
 | 10 | Plurales regulares | two shirts, three boxes | two shirt | Ciudad: tienda | ✅ |
@@ -77,7 +77,7 @@ El orden de la tabla es el orden en que aparece en el juego.
 | 24 | Preposiciones de tiempo (at / on / in) | at 9, on Monday, in May | in Monday | Oficina | ✅ |
 | 25 | Pronombres de objeto (me, him, her, us, them) | Call me. Send it to her. | Send it to she. | Oficina: teléfono y correos | ✅ |
 | 26 | Could you...? (pedir con cortesía) | Could you help me, please? | You help me. | Oficina | ✅ |
-| 27 | Conectores and / but / or | I like tea but I don't like coffee. | — | Lecturas de todos los lugares | 🟡 en los correos de la oficina y algunas lecturas |
+| 27 | Conectores and / but / or | I like tea but I don't like coffee. | — | Lecturas de todos los lugares | ✅ |
 
 ## 4. Vocabulario por temas y dónde va
 
@@ -88,7 +88,7 @@ El orden de la tabla es el orden en que aparece en el juego.
 | Materias, días, o'clock | Maths, Science, Monday, eight o'clock | Escuela: pizarra | ✅ |
 | Deportes | football, ball, team, run, jump | Escuela: patio | ✅ |
 | Útiles escolares | pencil, ruler, notebook, scissors | Escuela: Ana | ✅ |
-| Alfabeto y deletrear | A–Z, How do you spell...? | Ciudad: café (deletrear tu nombre para el vaso) | 🟡 falta en la secretaría |
+| Alfabeto y deletrear | A–Z, How do you spell...? | Ciudad: café (deletrear tu nombre para el vaso) | ✅ |
 | Transporte | bus, ticket, stop, driver | Autobuses | ✅ |
 | Lugares de la ciudad | bank, supermarket, café, hospital, street | Ciudad: calles | ✅ |
 | Direcciones | go straight, turn left, near, far from, opposite | Ciudad: calles | ✅ |
@@ -98,19 +98,19 @@ El orden de la tabla es el orden en que aparece en el juego.
 | Rutinas diarias | get up, have breakfast, go to work, go to bed | Barrio: casas y casa del protagonista | ✅ |
 | Partes del día | morning, afternoon, evening, night | Barrio | ✅ |
 | Gustos y tiempo libre | read, listen to music, watch films, dance | Barrio: casa de Maya y parque | ✅ |
-| Mascotas | dog, cat, bird, fish | Barrio: parque y casa de Leo | ⬜ |
-| Clima | sunny, rainy, hot, cold | Barrio: parque | ⬜ |
+| Mascotas | dog, cat, bird, fish | Barrio: parque y casa de Leo | ✅ |
+| Clima | sunny, rainy, hot, cold | Barrio: parque | ✅ |
 | Meses, fechas y ordinales | January…, first, second, My birthday is on... | Barrio: cumpleaños de Leo | ✅ |
 | Celebraciones e invitaciones | Happy birthday! Do you want to come? gift | Barrio: cumpleaños de Leo | ✅ |
 | Familia | mother, father, brother, sister, grandparents | Barrio: casa de Leo (his/her) y casa del protagonista (my) | ✅ |
 | Casa y muebles | kitchen, bedroom, living room, bed, sofa | Barrio: casa del protagonista | ✅ |
 | Animales de granja | cow, horse, sheep, chicken, pig, goose | Granja | ✅ |
-| Cuerpo | head, eyes, legs, arms, tail | Granja (animales) | ⬜ |
+| Cuerpo | head, eyes, legs, arms, tail | Granja (animales) | ✅ |
 | Estaciones | spring, summer, autumn, winter | Granja | ✅ |
 | Profesiones | doctor, nurse, waiter, driver, manager | Oficina (y oficios de la gente del barrio) | ✅ |
 | Hora completa y calendario | half past, quarter to, meeting, appointment | Oficina | ✅ |
 | Teléfono y correo | Hello, it's..., Can I speak to...?, call me back | Oficina | ✅ |
-| Adjetivos básicos | big, small, happy, sad, new, old | Todas partes | 🟡 |
+| Adjetivos básicos | big, small, happy, sad, new, old | Todas partes; repaso de opuestos con Ana en el aula | ✅ |
 
 ## 5. Funciones comunicativas y dónde va cada una
 
@@ -121,7 +121,7 @@ El orden de la tabla es el orden en que aparece en el juego.
 | Dar y pedir información personal | Escuela: secretaría | ✅ |
 | Decir dónde están las cosas | Escuela: Ana | ✅ |
 | Dar y entender órdenes | Escuela: Coach Mike | ✅ |
-| Preguntar de quién es algo | Escuela: objetos perdidos | 🟡 falta *whose* |
+| Preguntar de quién es algo | Escuela: objetos perdidos | ✅ |
 | Deletrear el nombre | Ciudad: café (el vaso con tu nombre) | ✅ |
 | Comprar un boleto | Autobuses | ✅ |
 | Pedir y dar direcciones | Ciudad: calles | ✅ |
