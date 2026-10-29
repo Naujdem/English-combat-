@@ -70,6 +70,7 @@ holo=holográfico;fit=quedar bien (ropa);mayor=alcalde;post=enviar por correo;dr
 person=persona;growing=creciendo (grow);grow=crecer;toy=juguete;woke=desperté (wake up);waked=(error: se dice woke);wife=esposa;throat=garganta;magic=mágico;amazing=increíble;eighty=ochenta;grandson=nieto;speech=discurso;wear=usar, llevar puesto;hat=sombrero;single=cada, solo;sixty=sesenta;neighbors=vecinos;street=calle;basketball=baloncesto;guitar=guitarra;
 i'm=yo soy, yo estoy;you're=tú eres, tú estás;he's=él es, él está;she's=ella es, ella está;it's=es, está;we're=nosotros somos;they're=ellos son;that's=eso es;let's=vamos a;what's=qué es;
 don't=no (no hagas);doesn't=no (con he/she/it);didn't=no (en pasado);won't=no va a;can't=no puede;haven't=no tiene (have got);hasn't=no tiene (has got);got=(have got = tener)
+clouds=nubes;cloud=nube;tractor=tractor;roof=techo;solar=solar;wind=viento;turbine=turbina (wind turbine = molino eólico);lick=lamer;ninety=noventa;porch=porche;warm=cálido, tibio;exactly=exactamente;tower=torre;chick=pollito;battery=batería;drone=dron;forever=para siempre;together=juntos;loud=ruidoso, fuerte;begin=empezar;end=terminar, final;happen=pasar, suceder;
 `
 
 const BASE: Record<string, string> = Object.fromEntries(

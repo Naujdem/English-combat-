@@ -109,6 +109,9 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   t: { en: 'cleaning robot', es: 'robot de limpieza' },
   E: { en: 'flying car', es: 'carro volador' },
   Z: { en: 'statue', es: 'estatua' },
+  '1': { en: 'wind turbine', es: 'molino eólico' },
+  '2': { en: 'solar panel', es: 'panel solar' },
+  '3': { en: 'robot tractor', es: 'tractor robot' },
 }
 
 export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: { c: string; x: number; y: number; floor: string; doorOpen: boolean; party?: boolean; still?: boolean }) {
@@ -689,6 +692,39 @@ export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: 
           <path d={`M${X + 11} ${Y + 6} h10 v-2 h-10 z`} fill="#8d8d8d" />
           <rect x={X + 12} y={Y + 11} width={8} height={9} rx="2" fill="#a9a9a9" />
           <path d={`M${X + 20} ${Y + 13} l5 -4`} stroke="#a9a9a9" strokeWidth="2.5" strokeLinecap="round" />
+        </g>
+      )
+    case '1':
+      return (
+        <g>
+          {base}
+          <rect x={X + 15} y={Y + 8} width={2.5} height={23} fill="#e4eef5" stroke="#9aa6b2" strokeWidth="0.6" />
+          <g className="anim-spin-slow" style={{ transformOrigin: `${X + 16}px ${Y + 8}px` }}>
+            {[0, 120, 240].map((a) => <rect key={a} x={X + 15.2} y={Y - 6} width={1.8} height={14} rx="0.9" fill="#ffffff" stroke="#9aa6b2" strokeWidth="0.5" transform={`rotate(${a} ${X + 16} ${Y + 8})`} />)}
+          </g>
+          <circle cx={X + 16} cy={Y + 8} r="1.6" fill="#9aa6b2" />
+        </g>
+      )
+    case '2':
+      return (
+        <g>
+          {base}
+          <path d={`M${X + 3} ${Y + 26} L${X + 8} ${Y + 8} H${X + 29} L${X + 24} ${Y + 26} Z`} fill="#1f3c58" stroke="#9aa6b2" strokeWidth="1" />
+          <path d={`M${X + 6} ${Y + 17} H${X + 26} M${X + 13} ${Y + 8} L${X + 10} ${Y + 26} M${X + 21} ${Y + 8} L${X + 18} ${Y + 26}`} stroke="#5d8fd4" strokeWidth="0.8" />
+          <rect x={X + 14} y={Y + 26} width={3} height={4} fill="#7a8794" />
+        </g>
+      )
+    case '3':
+      return (
+        <g>
+          {base}
+          <rect x={X + 3} y={Y + 12} width={24} height={11} rx="3" fill="#e07b39" />
+          <rect x={X + 16} y={Y + 5} width={10} height={9} rx="2" fill="#cfe9f5" stroke="#7a8794" strokeWidth="0.8" />
+          <circle cx={X + 19} cy={Y + 9} r="1" fill="#1f3c58" />
+          <circle cx={X + 23} cy={Y + 9} r="1" fill="#1f3c58" />
+          <circle cx={X + 8} cy={Y + 25} r="5" fill="#2b2b2b" />
+          <circle cx={X + 23} cy={Y + 26} r="4" fill="#2b2b2b" />
+          <rect x={X + 6} y={Y + 9} width={2} height={4} fill="#7fe0ff" />
         </g>
       )
     default:

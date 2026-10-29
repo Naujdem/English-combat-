@@ -16,8 +16,8 @@ import { AnimalSprite } from '../components/Animals'
 
 const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
-type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana' | 'leoadult' | 'mayor' | 'marco' | 'nickold' | 'joeykid'
-type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana' | 'leoadult' | 'mayor' | 'marco' | 'nickold' | 'joeykid'
+type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana' | 'leoadult' | 'mayor' | 'marco' | 'nickold' | 'joeykid' | 'brownold' | 'rosieadult'
+type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana' | 'leoadult' | 'mayor' | 'marco' | 'nickold' | 'joeykid' | 'brownold' | 'rosieadult'
 type Step = {
   who: Who
   text: string
@@ -51,6 +51,7 @@ function buildSteps(s: GameState, sceneId: string): Step[] {
   if (sceneId === 'school-future') return schoolFutureSteps(s)
   if (sceneId === 'city-future') return cityFutureSteps(s)
   if (sceneId === 'barrio-future') return barrioFutureSteps(s)
+  if (sceneId === 'farm-future') return farmFutureSteps(s)
   const name = s.hero.name
   const it = s.interest
   const iname = it.name
@@ -892,6 +893,55 @@ function barrioFutureSteps(s: GameState): Step[] {
   ]
 }
 
+/**
+ * Final de la granja en 2056: el abuelo Brown recuerda a los dos niños que lo ayudaron con el molino en 1996.
+ * El desconocido, bajo la lluvia: "Nobody can hear you in the rain."
+ */
+function farmFutureSteps(s: GameState): Step[] {
+  const iname = s.interest.name
+  const cast: Cast[] = ['leo', 'interest']
+  const farm: Cast[] = ['brownold', 'rosieadult', 'leo']
+  return [
+    { who: 'narrator', text: 'El abuelo Brown sale al porche. Empieza a llover. Rosie corre hacia él con un paraguas.', cast: farm },
+    { who: 'brownold', text: "Rosie, I'm sorry. The robots aren't going to break anything. You are a great farmer.", es: 'Rosie, lo siento. Los robots no van a romper nada. Eres una gran granjera.', cast: farm },
+    { who: 'rosieadult', text: "Thank you, Grandpa. And look: with this wind, the turbine is going to make a lot of energy today!", es: 'Gracias, abuelo. Y mira: con este viento, el molino va a hacer mucha energía hoy.', cast: farm },
+    { who: 'brownold', text: 'Sixty years ago, two kids helped me with the old windmill. A boy with a green shirt... and you. You look exactly like them!', es: 'Hace sesenta años, dos niños me ayudaron con el molino viejo. Un niño con camiseta verde... y tú. ¡Se parecen idénticos!', cast: farm },
+    { who: 'leo', text: 'Because we ARE those kids! Ha ha... Wait. Mr. Brown remembers US?', es: '¡Porque SOMOS esos niños! Ja, ja... Espera. ¿El señor Brown se acuerda de NOSOTROS?', cast },
+    {
+      who: 'hero',
+      text: '¿Qué le dices a Leo?',
+      cast,
+      choice: {
+        options: ["Yes! And he's going to remember us forever!", 'Yes! And he going to remember us forever!', 'Yes! And he is go to remember us forever!'],
+        answer: 0,
+        tip: "He + is ('s) going to + verbo.",
+      },
+    },
+    { who: 'interest', text: 'And Rosie is the girl with the animal game! Now she has got robots... and a son.', es: '¡Y Rosie es la niña del juego de los animales! Ahora tiene robots... y un hijo.', cast },
+    { who: 'narrator', text: "Sientes algo cálido en la garganta: otro fragmento de tu voz del futuro. Ahora puedes decir lo que va a pasar: It's going to rain!", cast },
+    { who: 'narrator', text: 'Leo y Finn corren a ayudar al dron con las ovejas. Bajo la lluvia, junto al estanque, una voz ronca habla muy bajito.', cast: ['interest'] },
+    { who: 'villain', text: 'Rain is loud... Nobody can hear you in the rain. I know.', es: 'La lluvia es ruidosa... Nadie te puede oír en la lluvia. Lo sé.', villain: true, cast: ['interest'] },
+    { who: 'villain', text: 'One more place: the tower. Everything is going to end there... and everything is going to begin. Go.', es: 'Un lugar más: la torre. Todo va a terminar allá... y todo va a empezar. Ve.', villain: true, cast: ['interest'] },
+    { who: 'narrator', text: `Un relámpago ilumina el estanque. Cuando ${iname} vuelve a mirar, no hay nadie.`, cast },
+    {
+      who: 'hero',
+      text: `¿Qué le dices a ${iname}?`,
+      cast,
+      choice: {
+        options: ['Something big is going to happen in the tower.', 'Something big going to happen in the tower.', 'Something big is go to happen in the tower.'],
+        answer: 0,
+        tip: 'Something (it): is going to + happen.',
+      },
+    },
+    { who: 'interest', text: "I know. And we are going to be there. Together.", es: 'Lo sé. Y vamos a estar ahí. Juntos.', cast },
+    {
+      who: 'narrator',
+      text: 'Fin: La granja de 2056. Recuperaste las predicciones con going to. Solo falta un lugar: la torre Green Valley. El final de A1 te espera...',
+      cast,
+    },
+  ]
+}
+
 export function Epilogue({ state, onDone }: { state: GameState; onDone: () => void }) {
   const city = state.sceneId === 'city'
   const barrio = state.sceneId === 'barrio'
@@ -905,6 +955,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
   const schoolFuture = state.sceneId === 'school-future'
   const cityFuture = state.sceneId === 'city-future'
   const barrioFuture = state.sceneId === 'barrio-future'
+  const farmFuture = state.sceneId === 'farm-future'
   const steps = buildSteps(state, state.sceneId)
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
@@ -944,6 +995,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     marco: 'Marco',
     nickold: 'Nick',
     joeykid: 'Joey',
+    brownold: 'Grandpa Brown',
+    rosieadult: 'Rosie',
   }
 
   const voices: Record<Who, Voice> = {
@@ -975,6 +1028,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     marco: 'male',
     nickold: 'male',
     joeykid: 'male',
+    brownold: 'male',
+    rosieadult: 'female',
   }
 
   function next() {
@@ -989,8 +1044,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 overflow-y-auto px-4 py-6">
-      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{barrioFuture ? 'Futuro · Green Street, 60 años' : cityFuture ? 'Futuro · La ciudad de 2056' : schoolFuture ? 'Futuro · Greenfield Academy, 2056' : cinemaPast ? 'Pasado · El viejo cine (final del pasado de A1)' : farmPast ? 'Pasado · La granja de 1996' : barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
-      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : barrioFuture ? 'La fiesta de Green Street en 2056' : cityFuture ? 'La plaza de 2056 con la fuente vieja' : schoolFuture ? 'La escuela de vidrio en 2056' : cinemaPast ? 'La sala del viejo cine, 1996' : farmPast ? 'La granja con molino, 1996' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
+      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{farmFuture ? 'Futuro · La granja de 2056' : barrioFuture ? 'Futuro · Green Street, 60 años' : cityFuture ? 'Futuro · La ciudad de 2056' : schoolFuture ? 'Futuro · Greenfield Academy, 2056' : cinemaPast ? 'Pasado · El viejo cine (final del pasado de A1)' : farmPast ? 'Pasado · La granja de 1996' : barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
+      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : farmFuture ? 'La granja con robots bajo la lluvia' : barrioFuture ? 'La fiesta de Green Street en 2056' : cityFuture ? 'La plaza de 2056 con la fuente vieja' : schoolFuture ? 'La escuela de vidrio en 2056' : cinemaPast ? 'La sala del viejo cine, 1996' : farmPast ? 'La granja con molino, 1996' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
         {s.home ? (
           <g>
             <rect width="320" height="200" fill="#f1d9c0" />
@@ -1005,6 +1060,20 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             <rect x="214" y="86" width="92" height="18" rx="6" fill="#c8664e" />
             <rect x="250" y="20" width="44" height="58" rx="2" fill="#e8eef2" stroke="#b8c4cc" strokeWidth="2" />
             <line x1="250" y1="40" x2="294" y2="40" stroke="#b8c4cc" strokeWidth="2" />
+          </g>
+        ) : farmFuture ? (
+          <g>
+            <rect width="320" height="200" fill="#8a96a3" />
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((k) => <line key={k} x1={k * 28 + 6} y1={(k * 37) % 60} x2={k * 28} y2={(k * 37) % 60 + 14} stroke="#cfe9f5" strokeWidth="1.5" />)}
+            <path d="M0 120 Q80 96 160 112 T320 104 V140 H0 Z" fill="#7fa25a" />
+            <rect x="200" y="56" width="100" height="70" fill="#efd9b8" />
+            <polygon points="192,58 250,24 308,58" fill="#8b3a2b" />
+            {[0, 1, 2].map((k) => <rect key={k} x={208 + k * 30} y="34" width="22" height="8" fill="#1f3c58" transform="skewX(-20)" />)}
+            <rect x="100" y="40" width="5" height="90" fill="#e4eef5" />
+            <g className="anim-spin-slow" style={{ transformOrigin: '102px 40px' }}>
+              {[0, 120, 240].map((a) => <rect key={a} x="100" y="6" width="4" height="34" rx="2" fill="#ffffff" transform={`rotate(${a} 102 40)`} />)}
+            </g>
+            <rect y="136" width="320" height="64" fill="#9cc46e" />
           </g>
         ) : barrioFuture ? (
           <g>
@@ -1232,6 +1301,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             : who === 'marco' ? NPCS.marco.look
             : who === 'nickold' ? ENEMIES['barrio-future-boss'].look
             : who === 'joeykid' ? ENEMIES['barrio-future-m1'].look
+            : who === 'brownold' ? ENEMIES['farm-future-boss'].look
+            : who === 'rosieadult' ? NPCS['rosie-adult'].look
             : interest.look
           return (
             <g key={who} transform={`translate(${spots[k] + 64} 128) scale(-2 2)`}>

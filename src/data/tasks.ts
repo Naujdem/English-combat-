@@ -17,7 +17,7 @@ export type NpcTask = {
   shield?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict'
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
   vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
@@ -485,6 +485,20 @@ NPC_TASKS['emma-adult'] = {
     es: 'Baloncesto, fotos, Theo, el árbol grande, las cinco... ¡La fiesta va a ser perfecta!',
     sub: 'La lista de la fiesta está lista. Ahora Nick ya no puede decir que no ayudaste a los vecinos.',
     say: 'The party is going to be perfect!',
+  },
+}
+
+// ── La granja en 2056 ──
+NPC_TASKS['rosie-adult'] = {
+  done: 'future-predict',
+  lesson: 'going-to-predict',
+  activity: 'predict',
+  steps: [],
+  reward: {
+    text: 'Rosie: "You can see the future! Rain, a hungry cow, a robot in the pond... Ha ha. Thank you!"',
+    es: '¡Puedes ver el futuro! Lluvia, una vaca con hambre, un robot en el estanque... Ja, ja. ¡Gracias!',
+    sub: 'Rosie te da su permiso para entrar a la casa. Ahora el abuelo Brown ya no puede decir que no la conoces.',
+    say: 'You can see the future! Thank you!',
   },
 }
 

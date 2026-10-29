@@ -299,4 +299,13 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'leo', text: 'Careful! Not "What you are going to do?". The AM, IS or ARE goes BEFORE the person.', es: '¡Cuidado! No "What you are going to do?": am / is / are va ANTES de la persona.', board: ['✗ What you are going to do?', '✓ What are you going to do?'] },
     { who: 'board', text: 'Where ___ Lucy going to sit?', board: ['✗ What you are going to do?', '✓ What are you going to do?'], choice: { options: ['is', 'are', 'does'], answer: 0, tip: 'Lucy (she): Where is Lucy going to sit?' } },
   ],
+
+  'going-to-predict': [
+    { who: 'leo', text: "GOING TO is not only for plans. When you SEE something is going to happen, use it too: Look at the clouds! It's going to rain!", es: 'Going to no es solo para planes. Cuando VES que algo va a pasar, también se usa: ¡Mira las nubes! ¡Va a llover!', board: ['Look! It is going to rain.', '(ves las nubes)'], table: { head: ['Lo que ves', 'Lo que va a pasar'], rows: [['Black clouds', "<It>'[s] {going to} [rain]."], ['A cow next to a hat', '<The cow> [is] {going to} [eat] it.'], ['A boy on a wet floor', "<He>'[s] {going to} [fall]!"]] } },
+    { who: 'board', text: "Look at those clouds! It's going to ___.", board: ['Look! It is going to rain.', '(ves las nubes)'], choice: { options: ['rain', 'rains', 'rained'], answer: 0, tip: 'going to + rain.' } },
+    { who: 'leo', text: "Words that help: LOOK! CAREFUL! SOON! Careful! You're going to fall!", es: 'Palabras que ayudan: Look! (¡Mira!), Careful! (¡Cuidado!), soon (pronto).', board: ["Careful! You're going to fall!", 'Look! · Careful! · soon'] },
+    { who: 'board', text: 'Careful! You ___ going to fall!', board: ["Careful! You're going to fall!", 'Look! · Careful! · soon'], choice: { options: ['are', 'is', 'am'], answer: 0, tip: 'You + are going to.' } },
+    { who: 'leo', text: "And to say it is NOT going to happen: There are no clouds. It isn't going to rain.", es: 'Y para decir que no va a pasar: no hay nubes, no va a llover.', board: ["It isn't going to rain.", '(no hay nubes)'] },
+    { who: 'board', text: "There are no clouds. It ___ going to rain.", board: ["It isn't going to rain.", '(no hay nubes)'], choice: { options: ["isn't", "aren't", "doesn't"], answer: 0, tip: "It + isn't going to." } },
+  ],
 }

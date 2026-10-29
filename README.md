@@ -184,6 +184,7 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - La clase de mañana del profesor Garcia, Leo adulto (`src/components/LessonPlan.tsx`). El jefe GRIMM-BOT es un robot (`animal: 'robot'`).
 - La ciudad de 2056 (`src/data/cityFuture.ts`): misma distribución que la ciudad del presente. Se llega en el Sky Bus (`SKYBUS_TO_CITY_2056`). La ruta de los turistas (`src/components/TourPlan.tsx`): going to en negativo y preguntas.
 - Green Street en 2056 (`src/data/barrioFuture.ts`): misma distribución que el barrio del presente; la calle cumple 60 años. La fiesta (`src/components/PartyPlan.tsx`): preguntas con What / Where / When / Who + going to.
+- La granja de 2056 (`src/data/farmFuture.ts`): misma distribución que la granja del presente, con molino eólico, paneles solares y tractor robot. ¿Qué va a pasar? (`src/components/Predict.tsx`): predicciones con going to a partir de un dibujo.
 - La muletilla de Leo, "Hi, hi!": abre cada lección (`src/components/Lesson.tsx`); el desconocido la dice en su primera aparición.
 
 ## Explicaciones y repaso de cierre de A1

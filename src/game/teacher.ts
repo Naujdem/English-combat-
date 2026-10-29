@@ -14,6 +14,7 @@ import { CINEMA_PAST } from '../data/cinemaPast'
 import { SCHOOL_FUTURE } from '../data/schoolFuture'
 import { CITY_FUTURE } from '../data/cityFuture'
 import { BARRIO_FUTURE } from '../data/barrioFuture'
+import { FARM_FUTURE } from '../data/farmFuture'
 import { SCHOOL } from '../data/school'
 
 /**
@@ -560,6 +561,43 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
         defeated: add(b.defeated, ['barrio-future-boss']),
         recovered: add(b.recovered, ['going-to-wh']) as GameState['recovered'],
         outfits: add(b.outfits, ['chaqueta-60']),
+      }
+    },
+  },
+  {
+    id: 'future-farm-start',
+    label: 'Futuro · Granja 2056: recién llegado',
+    apply: (s) => {
+      const b = PRESETS[37].apply(s)
+      return { ...b, screen: 'explore', sceneId: 'farm-future', pos: { ...FARM_FUTURE.start }, opened: add(b.opened, ['barrio-future-epilogue', 'bus-farm-future']) }
+    },
+  },
+  {
+    id: 'farm-future-boss',
+    label: 'Futuro · Granja 2056: listo para el jefe',
+    apply: (s) => {
+      const b = PRESETS[38].apply(s)
+      return {
+        ...b,
+        pos: { x: 11, y: 5 },
+        defeated: add(b.defeated, ['farm-future-m1', 'farm-future-m2']),
+        keys: { ...b.keys, 'farm-future': 2 },
+        opened: add(b.opened, ['future-predict']),
+        seenLesson: add(b.seenLesson, ['farm-future', 'going-to-predict']),
+      }
+    },
+  },
+  {
+    id: 'future-farm-done',
+    label: 'Futuro · Granja 2056: terminada',
+    apply: (s) => {
+      const b = PRESETS[39].apply(s)
+      return {
+        ...b,
+        screen: 'epilogue',
+        defeated: add(b.defeated, ['farm-future-boss']),
+        recovered: add(b.recovered, ['going-to-predict']) as GameState['recovered'],
+        outfits: add(b.outfits, ['overol-solar']),
       }
     },
   },

@@ -212,6 +212,8 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       return { title: "Para negar: am not / isn't / aren't + going to:", parts: [S('Sujeto'), '+', V("isn't / aren't"), '+', K('going to'), '+', V('verbo'), '+', R('...')] }
     case 'going-to-wh':
       return { title: 'Palabra de pregunta + am / is / are + sujeto + going to + verbo:', parts: [K('What / Where / When'), '+', V('are / is'), '+', S('Sujeto'), '+', K('going to'), '+', V('verbo?')] }
+    case 'going-to-predict':
+      return { title: 'Ves señales de lo que va a pasar: Look! + sujeto + is / are + going to + verbo:', parts: [K('Look!'), '+', S('Sujeto'), '+', V('is / are'), '+', K('going to'), '+', V('verbo')] }
     case 'time':
       if (question) return { title: 'Para preguntar la hora:', parts: [K('What time'), '+', V('is'), '+', S('it?')] }
       return { title: 'at + hora · on + día · in + mes, estación o parte del día:', parts: [R('...'), '+', K('at / on / in'), '+', R('hora / día / mes')] }

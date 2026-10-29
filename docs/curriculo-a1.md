@@ -218,7 +218,7 @@ Cada jefe del futuro devuelve un fragmento de voz del futuro. Gramática central
 | Greenfield Academy | *going to* afirmativo + *tomorrow, tonight, next week* | ✅ la clase de mañana del profesor Garcia (Leo adulto), Theo (hijo de Maya), GRIMM-BOT; repaso con Tom y con Greg de 1996 |
 | Ciudad con buses que vuelan | *isn't going to*, *Are you going to...? Yes, I am* | ✅ ruta de los turistas con Marco (nieto de Rossi), W-8 el mesero robot, Chloe adulta, el alcalde Danny; repaso con Víctor y con Betty de 1996 |
 | Green Street en 2056 | *What / Where / When / Who are you going to...?* | ✅ fiesta de los 60 años con Emma adulta, Joey (hijo de Leo), Lucy adulta, Nick en tu casa; repaso con Olivia y con Sam de 1996 |
-| Granja con robots | predicciones: *It's going to rain* | pendiente |
+| Granja con robots | predicciones: *It's going to rain* | ✅ ¿qué va a pasar? con Rosie adulta, D-4 el dron pastor, Finn (hijo de Rosie), el abuelo Brown; repaso con Thunder y con Max de 1996 |
 | Torre Green Valley | *want to / would like to* + repaso de todo A1 | pendiente |
 
 Lo que no entra en A1 y queda para A2: pasado continuo, comparativos y *will*.

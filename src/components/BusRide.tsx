@@ -314,6 +314,31 @@ export const SKYBUS_TO_BARRIO_2056: BusTrip = {
   ],
 }
 
+/** En el Sky Bus de 2056: de Green Street a la granja con robots */
+export const SKYBUS_TO_FARM_2056: BusTrip = {
+  place: 'the farm',
+  placeEs: 'la granja de 2056',
+  price: '',
+  priceNum: '',
+  wrongPrices: ['', ''],
+  arrival: { text: '', es: '' },
+  sign: 'SKY BUS · FARM',
+  three: true,
+  art: 'skybus',
+  end: 'Bajar en la granja',
+  steps: [
+    { who: 'driver', text: "To the farm? OK! But look at the sky... those clouds are very black.", es: '¿A la granja? ¡Bueno! Pero miren el cielo... esas nubes están muy negras.' },
+    {
+      who: 'driver',
+      text: 'What is going to happen?',
+      es: '¿Qué va a pasar?',
+      choice: { options: ["It's going to rain!", 'It going to rain!', 'It rains yesterday!'], answer: 0, tip: "Ves nubes negras: It's going to rain." },
+    },
+    { who: 'driver', text: "Yes! It's going to rain. Don't worry, the Sky Bus has got a roof! Ha ha.", es: '¡Sí! Va a llover. No se preocupen, el Sky Bus tiene techo. ¡Ja, ja!' },
+    { who: 'leo', text: 'Look down! A big wind turbine, solar panels... and a robot tractor! Is that the old farm?', es: '¡Mira abajo! Un molino eólico grande, paneles solares... ¡y un tractor robot! ¿Esa es la granja vieja?' },
+  ],
+}
+
 export const BUS_TO_BARRIO: BusTrip = {
   place: 'Green Street',
   placeEs: 'Green Street, el barrio de Leo',

@@ -9,10 +9,10 @@ import { btn, btnGhost, Hearts, Overlay, Panel } from '../components/ui'
 import { ClockPieces, TimeClock } from '../components/TimeClock'
 import { Diary } from '../components/Diary'
 import { Flashcards } from '../components/Flashcards'
-import { BIKE_TO_FARM, BusRide, BUS_TO_BARRIO, BUS_TO_CITY, BUS_TO_OFFICE, CLOCK_TO_1996, CLOCK_TO_2056, SKYBUS_TO_CITY_2056, SKYBUS_TO_BARRIO_2056, WALK_TO_OLD_CITY, WALK_TO_GREEN_1996, WALK_TO_FARM_1996, WALK_TO_CINEMA_1996, type BusTrip } from '../components/BusRide'
+import { BIKE_TO_FARM, BusRide, BUS_TO_BARRIO, BUS_TO_CITY, BUS_TO_OFFICE, CLOCK_TO_1996, CLOCK_TO_2056, SKYBUS_TO_CITY_2056, SKYBUS_TO_BARRIO_2056, SKYBUS_TO_FARM_2056, WALK_TO_OLD_CITY, WALK_TO_GREEN_1996, WALK_TO_FARM_1996, WALK_TO_CINEMA_1996, type BusTrip } from '../components/BusRide'
 
 /** Cómo se llega la primera vez a cada lugar */
-const TRIPS: Record<string, BusTrip> = { city: BUS_TO_CITY, barrio: BUS_TO_BARRIO, farm: BIKE_TO_FARM, office: BUS_TO_OFFICE, 'school-past': CLOCK_TO_1996, 'city-past': WALK_TO_OLD_CITY, 'barrio-past': WALK_TO_GREEN_1996, 'farm-past': WALK_TO_FARM_1996, 'office-past': WALK_TO_CINEMA_1996, 'school-future': CLOCK_TO_2056, 'city-future': SKYBUS_TO_CITY_2056, 'barrio-future': SKYBUS_TO_BARRIO_2056 }
+const TRIPS: Record<string, BusTrip> = { city: BUS_TO_CITY, barrio: BUS_TO_BARRIO, farm: BIKE_TO_FARM, office: BUS_TO_OFFICE, 'school-past': CLOCK_TO_1996, 'city-past': WALK_TO_OLD_CITY, 'barrio-past': WALK_TO_GREEN_1996, 'farm-past': WALK_TO_FARM_1996, 'office-past': WALK_TO_CINEMA_1996, 'school-future': CLOCK_TO_2056, 'city-future': SKYBUS_TO_CITY_2056, 'barrio-future': SKYBUS_TO_BARRIO_2056, 'farm-future': SKYBUS_TO_FARM_2056 }
 import { ProgressView, Review } from '../components/Review'
 import { setSound, soundOn } from '../game/sfx'
 import { autoVoiceOn, setAutoVoice } from '../game/speech'
@@ -28,8 +28,10 @@ const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
-    state.defeated.includes('barrio-future-boss')
-      ? 'Recuperaste tres fragmentos de voz del futuro. La granja de 2056 se construirá pronto; mientras tanto, puedes repasar y visitar cualquier lugar.'
+    state.defeated.includes('farm-future-boss')
+      ? 'Recuperaste cuatro fragmentos de voz del futuro. La torre Green Valley se construirá pronto; mientras tanto, puedes repasar y visitar cualquier lugar.'
+      : state.defeated.includes('barrio-future-boss')
+      ? 'Recuperaste tres fragmentos de voz del futuro. Toma el Sky Bus hasta la granja de 2056.'
       : state.defeated.includes('city-future-boss')
       ? 'Recuperaste dos fragmentos de voz del futuro. Toma el Sky Bus hasta Green Street: cumple 60 años.'
       : state.defeated.includes('school-future-boss')

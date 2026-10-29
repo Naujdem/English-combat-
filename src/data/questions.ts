@@ -697,6 +697,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Nunca "What you are going to...": el am / is / are va antes del sujeto.',
     ],
   },
+  'going-to-predict': {
+    name: 'Predicciones con going to (It is going to rain)',
+    level: 'A1',
+    lesson: [
+      "Cuando ves señales de lo que va a pasar: Look at the clouds! It's going to rain.",
+      "Careful! You're going to fall! · The cow is going to eat the hat!",
+      'Palabras útiles: Look! · Careful! · soon (pronto).',
+    ],
+  },
   'past-simple': {
     name: 'Pasado simple',
     level: 'A2',

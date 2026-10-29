@@ -325,6 +325,22 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
       { text: 'When is Theo going to the Moon? Next year, he says! Ha ha.', es: '¿Cuándo va a ir Theo a la Luna? ¡El próximo año, dice! Ja, ja.' },
     ],
   },
+  // ── La granja en 2056 ──
+  'rosie-adult': {
+    name: 'Rosie',
+    // Rosie, la nieta del señor Brown, ahora es la dueña de la granja
+    look: { shirt: '#3b9d5d', hair: '#c0602a', skin: '#f6d3b3', gender: 'female', accessory: 'cap' },
+    doneLine: { text: "Look at the sky. It's going to rain... and the windmill is going to make a lot of energy! Ha ha.", es: 'Mira el cielo. Va a llover... ¡y el molino va a hacer mucha energía! Ja, ja.' },
+  },
+  'patel-old': {
+    name: 'Dr. Patel',
+    look: { shirt: '#f4efe4', hair: '#d0d0d0', skin: '#a0662e', gender: 'female', accessory: 'glasses' },
+    lines: [
+      { text: "I'm eighty, but I still visit the animals every week. That sheep is going to have a baby soon!", es: 'Tengo ochenta años, pero todavía visito a los animales cada semana. ¡Esa oveja va a tener un bebé pronto!' },
+      { text: 'When I was a girl, I helped Mrs. Brown with the chickens. Sixty years ago!', es: 'Cuando era niña, ayudaba a la señora Brown con las gallinas. ¡Hace sesenta años!' },
+      { text: "Look at the drone! It's going to bring the sheep back to the barn.", es: '¡Mira el dron! Va a traer las ovejas de vuelta al granero.' },
+    ],
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */
