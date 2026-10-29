@@ -46,6 +46,7 @@ import { LessonPlan } from '../components/LessonPlan'
 import { TourPlan } from '../components/TourPlan'
 import { PartyPlan } from '../components/PartyPlan'
 import { Predict } from '../components/Predict'
+import { Speech } from '../components/Speech'
 import { voiceOf, type Voice } from '../game/speech'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
@@ -385,6 +386,14 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           sub: 'Alguien levantó el teléfono hace poco... y no dijo nada.',
           say: 'phone box',
           tone: 'warn',
+        })
+        return
+      }
+      if (c === 'i' && scene.id === 'office-future') {
+        setMsg({
+          text: 'La pantalla de la sala dice: "Goodbye, Diana! Thank you for everything! Party at 5 p.m."',
+          sub: 'Hoy Diana, la señora Clark, se jubila.',
+          say: 'Goodbye, Diana! Thank you for everything!',
         })
         return
       }
@@ -957,6 +966,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'attendance') return <Attendance onClose={finish} />
             if (t.activity === 'sounds') return <SoundSacks onClose={finish} />
             if (t.activity === 'predict') return <Predict onClose={finish} />
+            if (t.activity === 'speech') return <Speech onClose={finish} />
             if (t.activity === 'party60') return <PartyPlan onClose={finish} />
             if (t.activity === 'tour') return <TourPlan onClose={finish} />
             if (t.activity === 'plan') return <LessonPlan onClose={finish} />

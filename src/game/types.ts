@@ -29,7 +29,7 @@ export type Interest = {
 export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle' | 'epilogue'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
-export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'going-to-wh' | 'going-to-predict' | 'past-simple' | 'future'
+export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'going-to-wh' | 'going-to-predict' | 'want-to' | 'past-simple' | 'future'
 
 /**
  * fill: completar el espacio en blanco.
@@ -61,7 +61,7 @@ export type Question = {
   hint?: string
 }
 
-export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio' | 'calle' | 'cafe' | 'tienda' | 'turismo' | 'casa-leo' | 'casa-maya' | 'parque' | 'casa' | 'granero' | 'corral' | 'campo' | 'casa-granja' | 'recepcion' | 'oficina' | 'reuniones' | 'direccion' | 'aula-vieja' | 'patio-viejo' | 'direccion-vieja' | 'calle-vieja' | 'tienda-vieja' | 'correo' | 'mercado' | 'obra' | 'casa-nueva' | 'caseta' | 'granero-viejo' | 'casa-vieja' | 'campo-viejo' | 'sala-cine' | 'vestibulo' | 'oficina-cine' | 'aula-futuro' | 'patio-futuro' | 'direccion-futuro' | 'calle-futuro' | 'turismo-futuro'
+export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio' | 'calle' | 'cafe' | 'tienda' | 'turismo' | 'casa-leo' | 'casa-maya' | 'parque' | 'casa' | 'granero' | 'corral' | 'campo' | 'casa-granja' | 'recepcion' | 'oficina' | 'reuniones' | 'direccion' | 'aula-vieja' | 'patio-viejo' | 'direccion-vieja' | 'calle-vieja' | 'tienda-vieja' | 'correo' | 'mercado' | 'obra' | 'casa-nueva' | 'caseta' | 'granero-viejo' | 'casa-vieja' | 'campo-viejo' | 'sala-cine' | 'vestibulo' | 'oficina-cine' | 'aula-futuro' | 'patio-futuro' | 'direccion-futuro' | 'calle-futuro' | 'turismo-futuro' | 'lobby-torre' | 'oficina-torre' | 'sala-torre' | 'cima-torre'
 
 export type EnemyDef = {
   id: string

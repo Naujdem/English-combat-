@@ -16,8 +16,8 @@ import { AnimalSprite } from '../components/Animals'
 
 const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
-type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana' | 'leoadult' | 'mayor' | 'marco' | 'nickold' | 'joeykid' | 'brownold' | 'rosieadult'
-type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana' | 'leoadult' | 'mayor' | 'marco' | 'nickold' | 'joeykid' | 'brownold' | 'rosieadult'
+type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana' | 'leoadult' | 'mayor' | 'marco' | 'nickold' | 'joeykid' | 'brownold' | 'rosieadult' | 'dianaold' | 'rayold'
+type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana' | 'leoadult' | 'mayor' | 'marco' | 'nickold' | 'joeykid' | 'brownold' | 'rosieadult' | 'dianaold' | 'rayold'
 type Step = {
   who: Who
   text: string
@@ -52,6 +52,7 @@ function buildSteps(s: GameState, sceneId: string): Step[] {
   if (sceneId === 'city-future') return cityFutureSteps(s)
   if (sceneId === 'barrio-future') return barrioFutureSteps(s)
   if (sceneId === 'farm-future') return farmFutureSteps(s)
+  if (sceneId === 'office-future') return towerFutureSteps(s)
   const name = s.hero.name
   const it = s.interest
   const iname = it.name
@@ -942,6 +943,57 @@ function farmFutureSteps(s: GameState): Step[] {
   ]
 }
 
+/**
+ * El final de A1: la torre Green Valley en 2056. Diana se despide, Ray encuentra lo que de verdad quería,
+ * y en la terraza el desconocido dice "Hi, hi"... la muletilla de Leo.
+ */
+function towerFutureSteps(s: GameState): Step[] {
+  const iname = s.interest.name
+  const cast: Cast[] = ['leo', 'interest']
+  const tower: Cast[] = ['dianaold', 'rayold', 'leo']
+  return [
+    { who: 'narrator', text: 'En la sala de reuniones todos esperan: Paula, Grace, LIFT-9... Diana, la señora Clark, se pone de pie con su discurso.', cast: tower },
+    { who: 'dianaold', text: "In 1996, I sold tickets in my father's cinema. Ray fixed the old projector every week. We were very happy there.", es: 'En 1996 vendía boletas en el cine de mi papá. Ray arreglaba el proyector viejo cada semana. Éramos muy felices allí.', cast: tower },
+    { who: 'dianaold', text: 'Tomorrow, Paula is going to be the new director. And I would like to thank you all... and two kids. They helped us sixty years ago, and they are here today!', es: 'Mañana Paula va a ser la nueva directora. Y me gustaría agradecerles a todos... y a dos niños. Nos ayudaron hace sesenta años, ¡y hoy están aquí!', cast: tower },
+    { who: 'rayold', text: "Diana... I'm sorry. For sixty years I wanted your chair. But I didn't want an office. I wanted my friends.", es: 'Diana... Lo siento. Durante sesenta años quise tu silla. Pero no quería una oficina. Quería a mis amigos.', cast: tower },
+    { who: 'dianaold', text: 'Ray, I want to ask you a question. Would you like to open the old cinema again... with me?', es: 'Ray, quiero hacerte una pregunta. ¿Te gustaría abrir el viejo cine otra vez... conmigo?', cast: tower },
+    {
+      who: 'hero',
+      text: 'Ray te mira. ¿Qué le dices?',
+      cast: tower,
+      choice: {
+        options: ['You want to say yes, Mr. Stone!', 'You want say yes, Mr. Stone!', 'You wants to say yes, Mr. Stone!'],
+        answer: 0,
+        tip: 'You + want to + verbo.',
+      },
+    },
+    { who: 'rayold', text: "Ha ha! Yes, Diana. I would like to. Very much.", es: '¡Ja, ja! Sí, Diana. Me gustaría. Muchísimo.', cast: tower },
+    { who: 'narrator', text: 'Sientes el último fragmento de tu voz del futuro. Cinco de cinco. Ahora puedes decir lo que quieres: I want to... I would like to...', cast },
+    { who: 'narrator', text: 'Leo y tú suben a la terraza de la torre. Desde allá se ve todo: la escuela, la ciudad, Green Street, la granja... Ya no llueve.', cast },
+    { who: 'narrator', text: 'Alguien está al borde de la terraza, mirando la ciudad. El abrigo oscuro. Esta vez no se esconde.', cast: ['interest'] },
+    { who: 'villain', text: 'Hi, hi... What a nice voice you have. And now it is complete.', es: 'Hola, hola... Qué bonita voz tienes. Y ahora está completa.', villain: true, cast: ['interest'] },
+    { who: 'villain', text: 'The present, the past, the future... You have got all your words now. The clock is ready... and so am I.', es: 'El presente, el pasado, el futuro... Ya tienes todas tus palabras. El reloj está listo... y yo también.', villain: true, cast: ['interest'] },
+    { who: 'narrator', text: 'Una luz blanca llena la terraza. Cuando abres los ojos, el desconocido ya no está. El reloj sigue en tu bolsillo... pero ahora marca una hora nueva.', cast },
+    { who: 'leo', text: "Wait... Did he say 'Hi, hi'? That's MY word! Nobody says 'Hi, hi'... only me!", es: 'Espera... ¿Dijo "Hi, hi"? ¡Esa es MI palabra! Nadie dice "Hi, hi"... ¡solo yo!', cast },
+    {
+      who: 'hero',
+      text: '¿Qué le dices a Leo?',
+      cast,
+      choice: {
+        options: ["I don't know... but I want to find out.", "I don't know... but I want find out.", "I not know... but I wants to find out."],
+        answer: 0,
+        tip: "I don't know + I want to + verbo.",
+      },
+    },
+    { who: 'interest', text: "Me too. We were in 1996, we are here in 2056... and next time, we are going to be ready.", es: 'Yo también. Estuvimos en 1996, estamos aquí en 2056... y la próxima vez vamos a estar listos.', cast },
+    {
+      who: 'narrator',
+      text: `¡Terminaste A1! Recuperaste las cinco piezas del reloj y los diez fragmentos de tu voz: cinco del pasado y cinco del futuro. Ya puedes hablar de hoy, contar lo que pasó y decir lo que vas a hacer y lo que quieres. Pero... ¿quién es el desconocido? ¿Y por qué dice "Hi, hi"? ${iname} y Leo te esperan en A2.`,
+      cast,
+    },
+  ]
+}
+
 export function Epilogue({ state, onDone }: { state: GameState; onDone: () => void }) {
   const city = state.sceneId === 'city'
   const barrio = state.sceneId === 'barrio'
@@ -956,6 +1008,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
   const cityFuture = state.sceneId === 'city-future'
   const barrioFuture = state.sceneId === 'barrio-future'
   const farmFuture = state.sceneId === 'farm-future'
+  const towerFuture = state.sceneId === 'office-future'
   const steps = buildSteps(state, state.sceneId)
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
@@ -997,6 +1050,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     joeykid: 'Joey',
     brownold: 'Grandpa Brown',
     rosieadult: 'Rosie',
+    dianaold: 'Ms. Clark',
+    rayold: 'Mr. Stone',
   }
 
   const voices: Record<Who, Voice> = {
@@ -1030,6 +1085,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     joeykid: 'male',
     brownold: 'male',
     rosieadult: 'female',
+    dianaold: 'female',
+    rayold: 'male',
   }
 
   function next() {
@@ -1044,8 +1101,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 overflow-y-auto px-4 py-6">
-      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{farmFuture ? 'Futuro · La granja de 2056' : barrioFuture ? 'Futuro · Green Street, 60 años' : cityFuture ? 'Futuro · La ciudad de 2056' : schoolFuture ? 'Futuro · Greenfield Academy, 2056' : cinemaPast ? 'Pasado · El viejo cine (final del pasado de A1)' : farmPast ? 'Pasado · La granja de 1996' : barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
-      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : farmFuture ? 'La granja con robots bajo la lluvia' : barrioFuture ? 'La fiesta de Green Street en 2056' : cityFuture ? 'La plaza de 2056 con la fuente vieja' : schoolFuture ? 'La escuela de vidrio en 2056' : cinemaPast ? 'La sala del viejo cine, 1996' : farmPast ? 'La granja con molino, 1996' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
+      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{towerFuture ? 'Futuro · La torre Green Valley' : farmFuture ? 'Futuro · La granja de 2056' : barrioFuture ? 'Futuro · Green Street, 60 años' : cityFuture ? 'Futuro · La ciudad de 2056' : schoolFuture ? 'Futuro · Greenfield Academy, 2056' : cinemaPast ? 'Pasado · El viejo cine (final del pasado de A1)' : farmPast ? 'Pasado · La granja de 1996' : barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
+      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : towerFuture ? 'La terraza de la torre, sobre la ciudad' : farmFuture ? 'La granja con robots bajo la lluvia' : barrioFuture ? 'La fiesta de Green Street en 2056' : cityFuture ? 'La plaza de 2056 con la fuente vieja' : schoolFuture ? 'La escuela de vidrio en 2056' : cinemaPast ? 'La sala del viejo cine, 1996' : farmPast ? 'La granja con molino, 1996' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
         {s.home ? (
           <g>
             <rect width="320" height="200" fill="#f1d9c0" />
@@ -1060,6 +1117,22 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             <rect x="214" y="86" width="92" height="18" rx="6" fill="#c8664e" />
             <rect x="250" y="20" width="44" height="58" rx="2" fill="#e8eef2" stroke="#b8c4cc" strokeWidth="2" />
             <line x1="250" y1="40" x2="294" y2="40" stroke="#b8c4cc" strokeWidth="2" />
+          </g>
+        ) : towerFuture ? (
+          <g>
+            <rect width="320" height="200" fill="#f2c48a" />
+            <circle cx="250" cy="70" r="22" fill="#f6d36b" />
+            <ellipse cx="80" cy="40" rx="34" ry="9" fill="#ffffff" opacity="0.7" />
+            {[[0, 96, 34], [38, 80, 26], [70, 104, 30], [190, 88, 28], [222, 70, 22], [270, 100, 50]].map(([x, y, w]) => <rect key={x} x={x} y={y} width={w} height={140 - y} fill="#8a7a9a" opacity="0.8" />)}
+            <rect x="110" y="112" width="34" height="28" fill="#c0504d" />
+            <polygon points="106,112 127,98 148,112" fill="#8b3a2b" />
+            <rect x="160" y="100" width="3" height="40" fill="#e4eef5" />
+            <g className="anim-spin-slow" style={{ transformOrigin: '161.5px 100px' }}>
+              {[0, 120, 240].map((a) => <rect key={a} x="160.5" y="86" width="2" height="14" rx="1" fill="#ffffff" transform={`rotate(${a} 161.5 100)`} />)}
+            </g>
+            <rect y="136" width="320" height="64" fill="#9aa6b2" />
+            <rect y="128" width="320" height="4" fill="#5a6672" />
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((k) => <rect key={k} x={k * 32} y="128" width="3" height="14" fill="#5a6672" />)}
           </g>
         ) : farmFuture ? (
           <g>
@@ -1303,6 +1376,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             : who === 'joeykid' ? ENEMIES['barrio-future-m1'].look
             : who === 'brownold' ? ENEMIES['farm-future-boss'].look
             : who === 'rosieadult' ? NPCS['rosie-adult'].look
+            : who === 'dianaold' ? NPCS['diana-old'].look
+            : who === 'rayold' ? ENEMIES['office-future-boss'].look
             : interest.look
           return (
             <g key={who} transform={`translate(${spots[k] + 64} 128) scale(-2 2)`}>

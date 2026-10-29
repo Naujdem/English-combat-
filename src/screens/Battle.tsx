@@ -24,8 +24,8 @@ import { AnimalSprite } from '../components/Animals'
 
 function Backdrop({ zone }: { zone: Zone }) {
   const wall =
-    zone === 'calle-futuro' ? '#cfe9f5' : zone === 'turismo-futuro' ? '#dce9f4' : zone === 'aula-futuro' || zone === 'direccion-futuro' ? '#e4eef5' : zone === 'patio-futuro' ? '#cfe9f5' : zone === 'sala-cine' ? '#2b1d24' : zone === 'vestibulo' ? '#8a2830' : zone === 'oficina-cine' ? '#d8c2a0' : zone === 'campo-viejo' ? '#cfe6f2' : zone === 'granero-viejo' ? '#b5523b' : zone === 'casa-vieja' ? '#e6d0a8' : zone === 'obra' ? '#cfe6f2' : zone === 'casa-nueva' ? '#e8d3b0' : zone === 'caseta' ? '#b89a70' : zone === 'calle-vieja' || zone === 'mercado' ? '#cfe6f2' : zone === 'tienda-vieja' ? '#c9a46a' : zone === 'correo' ? '#d9cdb4' : zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#a4553a' : zone === 'patio-viejo' ? '#d9c9a0' : zone === 'recepcion' || zone === 'oficina' ? '#e8ecf0' : zone === 'reuniones' ? '#ece6f4' : zone === 'direccion' ? '#f1e6d2' : zone === 'patio' || zone === 'calle' || zone === 'parque' || zone === 'campo' || zone === 'corral' ? '#bfe3f5' : zone === 'granero' ? '#b5523b' : zone === 'casa-granja' ? '#efd9b8' : zone === 'casa-leo' ? '#f3e2c4' : zone === 'casa-maya' ? '#dde6f4' : zone === 'casa' ? '#f1d9c0' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : zone === 'tienda' ? '#f1e6f4' : zone === 'turismo' ? '#dfeaf3' : '#efe5d3'
-  const ground = zone === 'calle-futuro' ? '#9aa6b2' : zone === 'turismo-futuro' ? '#b8c8d6' : zone === 'aula-futuro' || zone === 'direccion-futuro' ? '#b8c8d6' : zone === 'patio-futuro' ? '#9fcf8a' : zone === 'sala-cine' ? '#5a3a4a' : zone === 'vestibulo' ? '#c9a77a' : zone === 'oficina-cine' ? '#8b6a46' : zone === 'campo-viejo' ? '#a9c47e' : zone === 'granero-viejo' ? '#d9bd85' : zone === 'casa-vieja' ? '#a8743f' : zone === 'obra' ? '#c9b48a' : zone === 'casa-nueva' ? '#a8743f' : zone === 'caseta' ? '#8b6a46' : zone === 'calle-vieja' || zone === 'mercado' ? '#b8946a' : zone === 'tienda-vieja' ? '#8b5a2b' : zone === 'correo' ? '#9c7a52' : zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#8b5a2b' : zone === 'patio-viejo' ? '#c2a878' : zone === 'recepcion' || zone === 'oficina' ? '#9aa6b2' : zone === 'reuniones' ? '#a99cc0' : zone === 'direccion' ? '#8b5a2b' : zone === 'campo' ? '#9cc46e' : zone === 'corral' ? '#c9a46a' : zone === 'granero' ? '#dcc08a' : zone === 'casa-granja' ? '#b98c5a' : zone === 'patio' || zone === 'parque' ? '#8fbf6a' : zone === 'casa-leo' || zone === 'casa' ? '#b98c5a' : zone === 'casa-maya' ? '#a7b4c8' : zone === 'calle' ? '#b9b4ab' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : zone === 'tienda' ? '#cdb8d6' : zone === 'turismo' ? '#9fb3c6' : '#b98c5a'
+    zone === 'cima-torre' ? '#9fd3f0' : zone === 'lobby-torre' ? '#dce9f4' : zone === 'oficina-torre' ? '#e4eef5' : zone === 'sala-torre' ? '#e6e3f2' : zone === 'calle-futuro' ? '#cfe9f5' : zone === 'turismo-futuro' ? '#dce9f4' : zone === 'aula-futuro' || zone === 'direccion-futuro' ? '#e4eef5' : zone === 'patio-futuro' ? '#cfe9f5' : zone === 'sala-cine' ? '#2b1d24' : zone === 'vestibulo' ? '#8a2830' : zone === 'oficina-cine' ? '#d8c2a0' : zone === 'campo-viejo' ? '#cfe6f2' : zone === 'granero-viejo' ? '#b5523b' : zone === 'casa-vieja' ? '#e6d0a8' : zone === 'obra' ? '#cfe6f2' : zone === 'casa-nueva' ? '#e8d3b0' : zone === 'caseta' ? '#b89a70' : zone === 'calle-vieja' || zone === 'mercado' ? '#cfe6f2' : zone === 'tienda-vieja' ? '#c9a46a' : zone === 'correo' ? '#d9cdb4' : zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#a4553a' : zone === 'patio-viejo' ? '#d9c9a0' : zone === 'recepcion' || zone === 'oficina' ? '#e8ecf0' : zone === 'reuniones' ? '#ece6f4' : zone === 'direccion' ? '#f1e6d2' : zone === 'patio' || zone === 'calle' || zone === 'parque' || zone === 'campo' || zone === 'corral' ? '#bfe3f5' : zone === 'granero' ? '#b5523b' : zone === 'casa-granja' ? '#efd9b8' : zone === 'casa-leo' ? '#f3e2c4' : zone === 'casa-maya' ? '#dde6f4' : zone === 'casa' ? '#f1d9c0' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : zone === 'tienda' ? '#f1e6f4' : zone === 'turismo' ? '#dfeaf3' : '#efe5d3'
+  const ground = zone === 'cima-torre' ? '#5a6672' : zone === 'lobby-torre' ? '#b8c8d6' : zone === 'oficina-torre' ? '#9aa6b2' : zone === 'sala-torre' ? '#a99cc0' : zone === 'calle-futuro' ? '#9aa6b2' : zone === 'turismo-futuro' ? '#b8c8d6' : zone === 'aula-futuro' || zone === 'direccion-futuro' ? '#b8c8d6' : zone === 'patio-futuro' ? '#9fcf8a' : zone === 'sala-cine' ? '#5a3a4a' : zone === 'vestibulo' ? '#c9a77a' : zone === 'oficina-cine' ? '#8b6a46' : zone === 'campo-viejo' ? '#a9c47e' : zone === 'granero-viejo' ? '#d9bd85' : zone === 'casa-vieja' ? '#a8743f' : zone === 'obra' ? '#c9b48a' : zone === 'casa-nueva' ? '#a8743f' : zone === 'caseta' ? '#8b6a46' : zone === 'calle-vieja' || zone === 'mercado' ? '#b8946a' : zone === 'tienda-vieja' ? '#8b5a2b' : zone === 'correo' ? '#9c7a52' : zone === 'aula-vieja' || zone === 'direccion-vieja' ? '#8b5a2b' : zone === 'patio-viejo' ? '#c2a878' : zone === 'recepcion' || zone === 'oficina' ? '#9aa6b2' : zone === 'reuniones' ? '#a99cc0' : zone === 'direccion' ? '#8b5a2b' : zone === 'campo' ? '#9cc46e' : zone === 'corral' ? '#c9a46a' : zone === 'granero' ? '#dcc08a' : zone === 'casa-granja' ? '#b98c5a' : zone === 'patio' || zone === 'parque' ? '#8fbf6a' : zone === 'casa-leo' || zone === 'casa' ? '#b98c5a' : zone === 'casa-maya' ? '#a7b4c8' : zone === 'calle' ? '#b9b4ab' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : zone === 'tienda' ? '#cdb8d6' : zone === 'turismo' ? '#9fb3c6' : '#b98c5a'
   return (
     <g>
       <rect width="360" height="150" fill={wall} />
@@ -154,6 +154,49 @@ function Backdrop({ zone }: { zone: Zone }) {
           <rect x="106" y="24" width="148" height="64" fill="#2f7fbf" opacity="0.7" />
           <text x="180" y="52" textAnchor="middle" fontSize="12" fill="#7fe0ff" fontFamily="Fredoka, Nunito, system-ui, sans-serif">{zone === 'direccion-futuro' ? 'GRIMM-BOT' : 'I am going to...'}</text>
           <text x="180" y="72" textAnchor="middle" fontSize="11" fill="#d9f3ff" fontFamily="Fredoka, Nunito, system-ui, sans-serif">2056</text>
+        </>
+      )}
+      {(zone === 'lobby-torre' || zone === 'oficina-torre' || zone === 'sala-torre' || zone === 'cima-torre') && (
+        <>
+          {[[10, 70, 30], [50, 50, 26], [90, 84, 22], [214, 60, 30], [252, 36, 24], [292, 76, 30]].map(([x, y, w]) => <rect key={x} x={x} y={y} width={w} height={150 - y} fill="#8fb8cf" opacity="0.55" />)}
+          {[0, 1, 2, 3, 4, 5, 6].map((k) => <rect key={k} x={k * 52} y="0" width="3" height="150" fill="#9aa6b2" opacity="0.7" />)}
+          {zone === 'cima-torre' && (
+            <>
+              <ellipse cx="70" cy="30" rx="30" ry="10" fill="#ffffff" opacity="0.85" />
+              <ellipse cx="250" cy="22" rx="36" ry="10" fill="#ffffff" opacity="0.85" />
+              <rect x="60" y="92" width="110" height="16" rx="3" fill="#2d2d3a" />
+              <rect x="85" y="80" width="60" height="12" rx="2" fill="#e0a526" />
+              <text x="115" y="89.5" textAnchor="middle" fontSize="8" fill="#2d2d3a" fontFamily="Fredoka, Nunito, system-ui, sans-serif">DIRECTOR</text>
+            </>
+          )}
+          {zone === 'lobby-torre' && (
+            <>
+              <rect x="150" y="40" width="60" height="110" fill="#9aa6b2" />
+              <rect x="154" y="50" width="25" height="100" fill="#c9d3dc" />
+              <rect x="181" y="50" width="25" height="100" fill="#c9d3dc" />
+              <rect x="164" y="26" width="32" height="16" rx="3" fill="#1f3c58" />
+              <text x="180" y="38" textAnchor="middle" fontSize="11" fill="#7fe0ff" fontFamily="Fredoka, Nunito, system-ui, sans-serif">90 ▲</text>
+            </>
+          )}
+          {zone === 'sala-torre' && (
+            <>
+              <rect x="80" y="18" width="200" height="70" rx="4" fill="#1f3c58" />
+              <rect x="86" y="24" width="188" height="58" fill="#2f7fbf" opacity="0.7" />
+              <text x="180" y="50" textAnchor="middle" fontSize="13" fill="#7fe0ff" fontFamily="Fredoka, Nunito, system-ui, sans-serif">GOODBYE, DIANA!</text>
+              <text x="180" y="70" textAnchor="middle" fontSize="10" fill="#d9f3ff" fontFamily="Fredoka, Nunito, system-ui, sans-serif">Thank you for everything</text>
+            </>
+          )}
+          {zone === 'oficina-torre' && (
+            <>
+              {[40, 200].map((x) => (
+                <g key={x}>
+                  <rect x={x} y="100" width="90" height="12" fill="#5b7a99" />
+                  <rect x={x + 30} y="76" width="30" height="22" rx="2" fill="#1f3c58" />
+                  <rect x={x + 33} y="79" width="24" height="16" fill="#7fe0ff" opacity="0.6" />
+                </g>
+              ))}
+            </>
+          )}
         </>
       )}
       {zone === 'patio-futuro' && (

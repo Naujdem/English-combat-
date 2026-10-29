@@ -17,7 +17,7 @@ export type NpcTask = {
   shield?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech'
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
   vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
@@ -499,6 +499,20 @@ NPC_TASKS['rosie-adult'] = {
     es: '¡Puedes ver el futuro! Lluvia, una vaca con hambre, un robot en el estanque... Ja, ja. ¡Gracias!',
     sub: 'Rosie te da su permiso para entrar a la casa. Ahora el abuelo Brown ya no puede decir que no la conoces.',
     say: 'You can see the future! Thank you!',
+  },
+}
+
+// ── La torre Green Valley en 2056 ──
+NPC_TASKS['diana-old'] = {
+  done: 'future-speech',
+  lesson: 'want-to',
+  activity: 'speech',
+  steps: [],
+  reward: {
+    text: 'Diana: "The past, today, tomorrow... and a big thank you. It\'s a perfect speech!"',
+    es: 'El pasado, hoy, mañana... y un gran gracias. ¡Es un discurso perfecto!',
+    sub: 'Diana te da su permiso para subir a la dirección. Ahora el señor Stone ya no puede decir que no la ayudaste.',
+    say: "It's a perfect speech! Thank you!",
   },
 }
 

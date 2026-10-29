@@ -15,6 +15,7 @@ import { SCHOOL_FUTURE } from '../data/schoolFuture'
 import { CITY_FUTURE } from '../data/cityFuture'
 import { BARRIO_FUTURE } from '../data/barrioFuture'
 import { FARM_FUTURE } from '../data/farmFuture'
+import { TOWER_FUTURE } from '../data/towerFuture'
 import { SCHOOL } from '../data/school'
 
 /**
@@ -598,6 +599,43 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
         defeated: add(b.defeated, ['farm-future-boss']),
         recovered: add(b.recovered, ['going-to-predict']) as GameState['recovered'],
         outfits: add(b.outfits, ['overol-solar']),
+      }
+    },
+  },
+  {
+    id: 'future-tower-start',
+    label: 'Futuro · Torre 2056: recién llegado',
+    apply: (s) => {
+      const b = PRESETS[40].apply(s)
+      return { ...b, screen: 'explore', sceneId: 'office-future', pos: { ...TOWER_FUTURE.start }, opened: add(b.opened, ['farm-future-epilogue', 'bus-office-future']) }
+    },
+  },
+  {
+    id: 'office-future-boss',
+    label: 'Futuro · Torre 2056: listo para el jefe',
+    apply: (s) => {
+      const b = PRESETS[41].apply(s)
+      return {
+        ...b,
+        pos: { x: 12, y: 5 },
+        defeated: add(b.defeated, ['office-future-m1', 'office-future-m2']),
+        keys: { ...b.keys, 'office-future': 2 },
+        opened: add(b.opened, ['future-speech']),
+        seenLesson: add(b.seenLesson, ['office-future', 'want-to']),
+      }
+    },
+  },
+  {
+    id: 'future-tower-done',
+    label: 'Futuro · Torre 2056: terminada (fin de A1)',
+    apply: (s) => {
+      const b = PRESETS[42].apply(s)
+      return {
+        ...b,
+        screen: 'epilogue',
+        defeated: add(b.defeated, ['office-future-boss']),
+        recovered: add(b.recovered, ['want-to']) as GameState['recovered'],
+        outfits: add(b.outfits, ['traje-2056']),
       }
     },
   },

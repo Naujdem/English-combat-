@@ -706,6 +706,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Palabras útiles: Look! · Careful! · soon (pronto).',
     ],
   },
+  'want-to': {
+    name: 'Deseos: want to / would like to',
+    level: 'A1',
+    lesson: [
+      'Lo que quieres: I want to + verbo. Con he / she: she wants to.',
+      'Con más cortesía: I would like to (I\'d like to) + verbo. Would no cambia: she would like to.',
+      'Para invitar: Would you like to come? → Yes, I would. / Yes, I\'d like to!',
+    ],
+  },
   'past-simple': {
     name: 'Pasado simple',
     level: 'A2',

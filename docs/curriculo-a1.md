@@ -219,7 +219,7 @@ Cada jefe del futuro devuelve un fragmento de voz del futuro. Gramática central
 | Ciudad con buses que vuelan | *isn't going to*, *Are you going to...? Yes, I am* | ✅ ruta de los turistas con Marco (nieto de Rossi), W-8 el mesero robot, Chloe adulta, el alcalde Danny; repaso con Víctor y con Betty de 1996 |
 | Green Street en 2056 | *What / Where / When / Who are you going to...?* | ✅ fiesta de los 60 años con Emma adulta, Joey (hijo de Leo), Lucy adulta, Nick en tu casa; repaso con Olivia y con Sam de 1996 |
 | Granja con robots | predicciones: *It's going to rain* | ✅ ¿qué va a pasar? con Rosie adulta, D-4 el dron pastor, Finn (hijo de Rosie), el abuelo Brown; repaso con Thunder y con Max de 1996 |
-| Torre Green Valley | *want to / would like to* + repaso de todo A1 | pendiente |
+| Torre Green Valley | *want to / would like to* + repaso de todo A1 | ✅ el discurso de despedida de Diana (pasado, presente, futuro y gracias), Paula la nueva directora, LIFT-9 el robot del ascensor, el señor Stone (Ray) en la dirección; repaso con Rick y con Tony de 1996. Final de A1: el desconocido dice "Hi, hi" |
 
 Lo que no entra en A1 y queda para A2: pasado continuo, comparativos y *will*.
 

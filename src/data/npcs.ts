@@ -341,6 +341,23 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
       { text: "Look at the drone! It's going to bring the sheep back to the barn.", es: '¡Mira el dron! Va a traer las ovejas de vuelta al granero.' },
     ],
   },
+  // ── La torre Green Valley en 2056 ──
+  'diana-old': {
+    name: 'Ms. Clark',
+    // Diana, la señora Clark, el día que se jubila: las mismas gafas, el pelo blanco y su color morado
+    look: { shirt: '#7a4fa3', hair: '#e8e8e8', skin: '#f1c27d', gender: 'female', accessory: 'glasses' },
+    doneLine: { text: 'Thank you! Now I would like to say goodbye... with a big smile.', es: '¡Gracias! Ahora me gustaría despedirme... con una gran sonrisa.' },
+  },
+  'grace-old': {
+    name: 'Grace',
+    // Grace, la de las palomitas (1996) y la asistente (presente), ya mayor
+    look: { shirt: '#e07b39', hair: '#d0d0d0', skin: '#8d5524', gender: 'female' },
+    lines: [
+      { text: "In 1996 I sold popcorn in the old cinema. Then I answered the phones here. Now I'm retired... but I would like to stay for the party!", es: 'En 1996 vendía palomitas en el viejo cine. Después contestaba los teléfonos aquí. Ahora estoy jubilada... ¡pero me gustaría quedarme a la fiesta!' },
+      { text: 'Diana and I drink coffee here every morning. Tomorrow she is going to have a lot of free time!', es: 'Diana y yo tomamos café aquí todas las mañanas. ¡Mañana va a tener mucho tiempo libre!' },
+      { text: "Would you like a coffee? The robot makes it... but I bring it. Ha ha!", es: '¿Quieres un café? El robot lo prepara... pero yo lo traigo. ¡Ja, ja!' },
+    ],
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

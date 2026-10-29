@@ -47,6 +47,10 @@ export const FLOOR: Record<Zone, string> = {
   'direccion-futuro': '#d9e4ee',
   'calle-futuro': '#d9e2ea',
   'turismo-futuro': '#dce9f4',
+  'lobby-torre': '#e1e8ef',
+  'oficina-torre': '#e4eef5',
+  'sala-torre': '#e6e3f2',
+  'cima-torre': '#efe9dc',
 }
 
 const WALL = '#7a6a58'
@@ -112,6 +116,7 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   '1': { en: 'wind turbine', es: 'molino eólico' },
   '2': { en: 'solar panel', es: 'panel solar' },
   '3': { en: 'robot tractor', es: 'tractor robot' },
+  '4': { en: 'elevator', es: 'ascensor' },
 }
 
 export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: { c: string; x: number; y: number; floor: string; doorOpen: boolean; party?: boolean; still?: boolean }) {
@@ -725,6 +730,17 @@ export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: 
           <circle cx={X + 8} cy={Y + 25} r="5" fill="#2b2b2b" />
           <circle cx={X + 23} cy={Y + 26} r="4" fill="#2b2b2b" />
           <rect x={X + 6} y={Y + 9} width={2} height={4} fill="#7fe0ff" />
+        </g>
+      )
+    case '4':
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill={WALL} />
+          <rect x={X + 3} y={Y + 6} width={T - 6} height={T - 6} fill="#9aa6b2" />
+          <rect x={X + 5} y={Y + 8} width={10.5} height={T - 8} fill="#c9d3dc" />
+          <rect x={X + 16.5} y={Y + 8} width={10.5} height={T - 8} fill="#c9d3dc" />
+          <rect x={X + 10} y={Y + 1} width={12} height={5} rx="1" fill="#1f3c58" />
+          <path d={`M${X + 14} ${Y + 5} l2 -3 l2 3 z`} fill="#7fe0ff" />
         </g>
       )
     default:

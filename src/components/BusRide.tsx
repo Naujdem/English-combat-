@@ -339,6 +339,31 @@ export const SKYBUS_TO_FARM_2056: BusTrip = {
   ],
 }
 
+/** En el Sky Bus de 2056: de la granja a la torre Green Valley, el último lugar de A1 */
+export const SKYBUS_TO_TOWER_2056: BusTrip = {
+  place: 'Green Valley Tower',
+  placeEs: 'la torre Green Valley',
+  price: '',
+  priceNum: '',
+  wrongPrices: ['', ''],
+  arrival: { text: '', es: '' },
+  sign: 'SKY BUS · TOWER',
+  three: true,
+  art: 'skybus',
+  end: 'Bajar en la torre',
+  steps: [
+    { who: 'driver', text: 'Last stop: Green Valley Tower! It has got ninety floors. There is a seat next to the window.', es: '¡Última parada: la torre Green Valley! Tiene noventa pisos. Hay un asiento al lado de la ventana.' },
+    {
+      who: 'driver',
+      text: 'Would you like to sit next to the window?',
+      es: '¿Te gustaría sentarte al lado de la ventana?',
+      choice: { options: ["Yes, I'd like to. Thank you!", 'Yes, I like to sit window.', 'Yes, I would like sit.'], answer: 0, tip: "Para aceptar con cortesía: Yes, I'd like to." },
+    },
+    { who: 'driver', text: 'Here you are. Look: the tower is where the old office was. And sixty years ago, there was a cinema there!', es: 'Aquí tienes. Mira: la torre está donde estaba la oficina vieja. ¡Y hace sesenta años ahí había un cine!' },
+    { who: 'leo', text: "The cinema, the office... and now a glass tower. It's the last place. I want to see everything!", es: 'El cine, la oficina... y ahora una torre de cristal. Es el último lugar. ¡Quiero verlo todo!' },
+  ],
+}
+
 export const BUS_TO_BARRIO: BusTrip = {
   place: 'Green Street',
   placeEs: 'Green Street, el barrio de Leo',
