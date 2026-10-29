@@ -15,6 +15,7 @@ import { Chest, FLOOR, T, Tile, VOCAB, walkable } from '../components/Tiles'
 import { SpriteBody } from '../components/Sprite'
 import { DPad } from '../components/DPad'
 import { Joystick } from '../components/Joystick'
+import { useDesktop } from '../game/device'
 import { SpeakButton } from '../components/SpeakButton'
 import { ConversationView } from '../components/Conversation'
 import { FriendsPanel } from '../components/FriendsPanel'
@@ -65,6 +66,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   // La traducción de lo que dicen los personajes se ve solo si se pide
   const [showEs, setShowEs] = useState(false)
   // Controles: flechas o joystick, a elección (se recuerda en este dispositivo)
+  const desktop = useDesktop()
   const [controls, setControls] = useState<'dpad' | 'joystick'>(() => {
     try {
       return localStorage.getItem('english-combat-controls') === 'joystick' ? 'joystick' : 'dpad'
@@ -342,7 +344,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   }
 
   return (
-    <div className="relative mx-auto flex h-full max-w-md flex-col gap-2 overflow-y-auto px-3 py-2">
+    <div className={`relative mx-auto flex h-full flex-col gap-2 overflow-y-auto px-3 py-2 ${desktop ? 'max-w-5xl' : 'max-w-md'}`}>
       <header className="flex items-center justify-between gap-2">
         <button className={btnGhost} onClick={onWorld}>Mapa</button>
         <div className="flex items-center gap-3">
@@ -356,8 +358,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         <button className={btnGhost} onClick={() => setFriendsOpen(true)}>Amigos</button>
       </header>
 
+      {/* En PC: mapa grande a la izquierda y panel a la derecha. En el celular: una columna */}
+      <div className={desktop ? 'flex min-h-0 flex-1 items-start justify-center gap-5' : 'contents'}>
       {/* El mapa se achica en pantallas bajas para que no tape los controles */}
-      <div className="mx-auto w-full shrink-0 overflow-hidden rounded-2xl border-2 border-line bg-ink" style={{ maxWidth: 'min(100%, 44svh)' }}>
+      <div
+        className="mx-auto w-full shrink-0 overflow-hidden rounded-2xl border-2 border-line bg-ink"
+        style={{ maxWidth: desktop ? 'min(100%, calc(100svh - 110px))' : 'min(100%, 44svh)', ...(desktop ? { flex: '1 1 auto', margin: 0 } : {}) }}
+      >
         <svg viewBox={`0 0 ${VIEW * T} ${VIEW * T}`} className="block w-full" role="img" aria-label={`${scene.name}, vista desde arriba`}>
           <g style={{ transform: `translate(${-camX * T}px, ${-camY * T}px)`, transition: 'transform 180ms ease-out' }}>
             {tiles}
@@ -471,7 +478,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         </svg>
       </div>
 
-      <div className="flex flex-wrap items-center gap-1.5 text-[11px]" aria-label="Objetivos para el jefe">
+      <div className={desktop ? 'flex h-full w-80 shrink-0 flex-col gap-3' : 'contents'}>
+      <div className={`flex flex-wrap items-center gap-1.5 ${desktop ? 'text-xs' : 'text-[11px]'}`} aria-label="Objetivos para el jefe">
         <span className="font-semibold uppercase tracking-wide text-paper/50">Para el jefe:</span>
         {scene.chips(state).map((c) => (
           <span key={c.label} className={`rounded-full px-2 py-0.5 ${c.done ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
@@ -533,6 +541,11 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           </button>
           <OutfitButton state={state} update={update} />
         </div>
+        {desktop ? (
+          <p className="max-w-[10rem] text-right text-xs leading-snug text-paper/55">
+            Muévete con las flechas del teclado o <b>W A S D</b>. Camina hacia alguien para hablar.
+          </p>
+        ) : (
         <div className="flex flex-col items-end gap-1">
           <button
             className="rounded-full border border-line px-2.5 py-0.5 text-[11px] font-semibold text-paper/65"
@@ -550,6 +563,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           </button>
           {controls === 'dpad' ? <DPad onMove={move} disabled={blocked} /> : <Joystick onMove={move} disabled={blocked} />}
         </div>
+        )}
+      </div>
+      </div>
       </div>
 
       {talk && talkFriend && (

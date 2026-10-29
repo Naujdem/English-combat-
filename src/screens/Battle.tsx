@@ -354,7 +354,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const showQuestion = phase === 'ask' || phase === 'feedback' || phase === 'lost'
 
   return (
-    <div className="mx-auto flex h-full max-w-md flex-col gap-3 overflow-y-auto px-3 py-3">
+    <div className="mx-auto flex h-full max-w-md flex-col [@media(min-width:900px)_and_(pointer:fine)]:max-w-2xl gap-3 overflow-y-auto px-3 py-3">
       <div className="grid grid-cols-2 gap-2">
         <Panel className="px-3 py-2">
           <p className="truncate font-display text-[15px]">{state.hero.name}</p>

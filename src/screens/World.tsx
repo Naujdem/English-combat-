@@ -61,7 +61,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   }
 
   return (
-    <div className="relative mx-auto flex h-full max-w-md flex-col gap-3 px-3 py-3">
+    <div className="relative mx-auto flex h-full max-w-md flex-col [@media(min-width:900px)_and_(pointer:fine)]:max-w-2xl gap-3 px-3 py-3">
       <header className="flex items-center justify-between">
         <button className={btnGhost} onClick={onTitle}>Menú</button>
         <Hearts hp={state.hp} max={state.maxHp} />

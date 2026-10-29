@@ -15,6 +15,13 @@
 }
 
 html, body, #root { height: 100%; }
+/* En PC (pantalla ancha con ratón) todo se ve un poco más grande */
+@media (min-width: 900px) and (hover: hover) and (pointer: fine) {
+  html { font-size: 112.5%; }
+}
+@media (min-width: 1400px) and (hover: hover) and (pointer: fine) {
+  html { font-size: 125%; }
+}
 body {
   margin: 0;
   background: var(--color-ink);
