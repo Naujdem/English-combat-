@@ -89,7 +89,7 @@ export const CITY: SceneDef = {
   ],
   intro: {
     first:
-      'El desconocido escondió tus palabras en la ciudad. Tres personas tienen los pedazos de la llave de la oficina de turismo. Cruza la calle por la cebra, pídele un mapa a la oficial Rosa y lleva el café al guía.',
+      'Una pieza del reloj, con tus palabras, cayó en la ciudad. Tres personas tienen los pedazos de la llave de la oficina de turismo. Cruza la calle por la cebra, pídele un mapa a la oficial Rosa y lleva el café al guía.',
     later: 'Cruza Main Street por la cebra. Choca con personas para hablar y con objetos para ver su nombre en inglés.',
   },
 }
@@ -185,13 +185,13 @@ export const CITY_ENEMIES: Record<string, EnemyDef> = {
     look: { shirt: '#2f5d50', hair: '#6b6b6b', skin: '#e0ac69', accessory: 'cap' },
     before: [
       { text: 'Welcome to the city, tourist! I am Mr. Rossi, the best guide in town.', es: '¡Bienvenido a la ciudad, turista! Soy el señor Rossi, el mejor guía de la ciudad.' },
-      { text: 'A man in a dark coat gave me your words. Now every tourist goes to the wrong place! Ha ha!', es: 'Un hombre con abrigo oscuro me dio tus palabras. ¡Ahora todos los turistas van al lugar equivocado! ¡Ja, ja!' },
+      { text: 'Look at this shiny piece of a clock. I found it next to the fountain. It is MY treasure! Now every tourist goes to the wrong place! Ha ha!', es: 'Mira esta pieza brillante de un reloj. La encontré al lado de la fuente. ¡Es MI tesoro! ¡Ahora todos los turistas van al lugar equivocado! ¡Ja, ja!' },
       { text: 'Is there a bank here? How much is this? Answer me, if you can!', es: '¿Hay un banco aquí? ¿Cuánto cuesta esto? ¡Respóndeme, si puedes!' },
     ],
     after: [
-      { text: 'Where am I? Oh... my office. A man in a dark coat talked to me, and then... nothing.', es: '¿Dónde estoy? Oh... mi oficina. Un hombre con abrigo oscuro me habló, y luego... nada.' },
-      { text: 'He took a bus to a quiet neighborhood. Green Street, I think.', es: 'Tomó un autobús a un barrio tranquilo. Green Street, creo.' },
-      { text: 'Take this: it is a piece of a strange clock. And thank you for the coffee!', es: 'Toma esto: es una pieza de un reloj extraño. ¡Y gracias por el café!' },
+      { text: 'Where am I? Oh... my office. I touched a strange piece of metal, and then... nothing.', es: '¿Dónde estoy? Oh... mi oficina. Toqué un pedazo de metal extraño, y luego... nada.' },
+      { text: 'Yesterday a man in a dark coat asked me about it. His voice was very strange. Then he took a bus to a quiet neighborhood. Green Street, I think.', es: 'Ayer un hombre con abrigo oscuro me preguntó por él. Su voz era muy extraña. Luego tomó un autobús a un barrio tranquilo. Green Street, creo.' },
+      { text: 'Take this piece of the clock. It is yours. And thank you for the coffee!', es: 'Toma esta pieza del reloj. Es tuya. ¡Y gracias por el café!' },
     ],
     freed: { text: 'Welcome to the city! There is a great café next to the shop.', es: '¡Bienvenido a la ciudad! Hay un café genial al lado de la tienda.' },
   },

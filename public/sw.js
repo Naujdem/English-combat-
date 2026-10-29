@@ -1,6 +1,6 @@
 // Service worker de English Combat: guarda el juego en el teléfono para jugar sin internet.
 // Al publicar cambios grandes, sube el número de versión para limpiar la caché vieja.
-const CACHE = 'english-combat-v8'
+const CACHE = 'english-combat-v9'
 const CORE = ['/', '/index.html', '/manifest.webmanifest', '/icon.svg', '/icon-192.png', '/icon-512.png']
 
 self.addEventListener('install', (event) => {

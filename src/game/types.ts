@@ -39,7 +39,7 @@ export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | '
  * write: escribir con el teclado. Se generan solas: la palabra que falta (a partir
  *        de las de completar) o la oración completa (a partir de las de ordenar).
  */
-export type QuestionKind = 'fill' | 'fix' | 'order' | 'listen' | 'write'
+export type QuestionKind = 'fill' | 'fix' | 'order' | 'listen' | 'write' | 'speak'
 
 export type Question = {
   id: string
@@ -211,6 +211,8 @@ export type GameState = {
   mistakes: string[]
   /** Fichas de vocabulario guardadas desde las lecturas */
   cards: Card[]
+  /** Aciertos y errores por tema, para la pantalla de progreso */
+  stats: Partial<Record<TopicId, { ok: number; fail: number }>>
   /** Misión de objetos perdidos de la escuela */
   lostFound: { started: boolean; carrying: string | null; picked: string[]; returned: string[] }
   seenLesson: string[]

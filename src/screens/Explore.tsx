@@ -23,6 +23,7 @@ import { LOST_INTRO, LOST_ITEMS } from '../data/lostFound'
 import { NPCS } from '../data/npcs'
 import { Registration } from '../components/Registration'
 import { WhereIsIt } from '../components/WhereIsIt'
+import { sfx } from '../game/sfx'
 import { CoachSays } from '../components/CoachSays'
 import { Directions } from '../components/Directions'
 import { CafeOrder } from '../components/CafeOrder'
@@ -63,6 +64,11 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const lf = state.lostFound
   const lostOnMap = lf.started && scene.id === 'school' ? LOST_ITEMS.filter((it) => !lf.picked.includes(it.id)) : []
   const blocked = !!talk || friendsOpen || !!lesson || !!activity || notebook || !!ask
+
+  // Sonido al conseguir algo (llave, objeto, recompensa)
+  useEffect(() => {
+    if (msg?.tone === 'good') sfx('item')
+  }, [msg])
 
   const rows = scene.map.length
   const cols = scene.map[0].length

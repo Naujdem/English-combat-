@@ -174,7 +174,7 @@ export const SCHOOL_ENEMIES: Record<string, EnemyDef> = {
     ],
     after: [
       { text: 'Wait... I make mistakes? ... You are right.', es: 'Espera... ¿Me equivoco? ... Tienes razón.' },
-      { text: 'Take this key. This morning a stranger talked to Mr. Grimm. After that, he changed.', es: 'Toma esta llave. Esta mañana un desconocido habló con el profesor Grimm. Después de eso, cambió.' },
+      { text: 'Take this key. This morning Mr. Grimm found a shiny piece of metal on his desk. He touched it, and then he changed.', es: 'Toma esta llave. Esta mañana el profesor Grimm encontró un pedazo de metal brillante en su escritorio. Lo tocó, y luego cambió.' },
     ],
     freed: { text: 'Mistakes are OK. I am learning too!', es: 'Equivocarse está bien. ¡Yo también estoy aprendiendo!' },
   },
@@ -232,8 +232,8 @@ export const SCHOOL_ENEMIES: Record<string, EnemyDef> = {
     ],
     after: [
       { text: 'What... Where am I? My head...', es: '¿Qué... Dónde estoy? Mi cabeza...' },
-      { text: 'A stranger in a dark coat... He used your words to control me. I am so sorry.', es: 'Un desconocido con un abrigo oscuro... Usó tus palabras para controlarme. Lo siento mucho.' },
-      { text: 'Take your words back. And take this too: a piece of a strange clock. He dropped it.', es: 'Recupera tus palabras. Y toma esto también: una pieza de un reloj extraño. Él la dejó caer.' },
+      { text: 'This morning I found a strange piece of metal on my desk. I touched it, and everything went dark. I am so sorry.', es: 'Esta mañana encontré un pedazo de metal extraño en mi escritorio. Lo toqué, y todo se volvió oscuro. Lo siento mucho.' },
+      { text: 'It is a piece of a clock, and your words are in it. A man in a dark coat came and asked for it... with a very strange voice. Take it. It is yours.', es: 'Es una pieza de un reloj, y tus palabras están ahí. Un hombre con abrigo oscuro vino a pedirla... con una voz muy extraña. Tómala. Es tuya.' },
     ],
     freed: { text: 'Thank you, my student. Come to my class anytime!', es: 'Gracias, mi estudiante. ¡Ven a mi clase cuando quieras!' },
   },

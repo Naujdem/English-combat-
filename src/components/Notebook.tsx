@@ -3,6 +3,7 @@ import type { GameState, Question } from '../game/types'
 import type { Update } from '../game/store'
 import { questionById, TOPICS } from '../data/questions'
 import { QuestionCard } from './QuestionCard'
+import { recordAnswer } from '../game/helpers'
 import { btnGhost, btnPrimary, Overlay, Panel } from './ui'
 
 const SESSION = 6
@@ -36,6 +37,7 @@ export function Notebook({ state, update, onClose }: { state: GameState; update:
       setCleared((c) => c + 1)
       update((s) => ({ ...s, mistakes: s.mistakes.filter((id) => id !== q.id) }))
     }
+    update((s) => recordAnswer(s, q, ok))
   }
 
   function finish() {

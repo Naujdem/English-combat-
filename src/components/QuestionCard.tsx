@@ -7,6 +7,8 @@ import { useTeacher } from '../game/teacher'
 import { speak } from '../game/speech'
 import { sameAnswer } from '../game/text'
 import { tileStyle } from './Grammar'
+import { hear, micErrorText, speechScore } from '../game/mic'
+import { sfx } from '../game/sfx'
 
 /** Desordena índices 0..n-1 asegurando que no queden en el orden correcto */
 function shuffled(n: number): number[] {
@@ -25,6 +27,7 @@ function shuffled(n: number): number[] {
 export function correctSentence(q: Question): string {
   if (q.kind === 'write') return q.writeMode === 'blank' ? q.prompt.replace('___', q.options[0]) : q.options[0]
   if (q.kind === 'order') return q.options.join(' ')
+  if (q.kind === 'speak') return q.options[0]
   if (q.kind === 'fix' || q.kind === 'listen') return q.options[q.answer]
   return q.prompt.replace('___', q.options[q.answer])
 }
@@ -40,6 +43,7 @@ export function QuestionCard({
   hint,
   headerRight,
   colorTiles,
+  onSkip,
   onAnswer,
 }: {
   q: Question
@@ -50,6 +54,8 @@ export function QuestionCard({
   headerRight?: ReactNode
   /** Colorea las fichas al ordenar (sujeto, verbo, palabra clave): solo en práctica */
   colorTiles?: boolean
+  /** Para las preguntas de hablar: cambiar de pregunta sin castigo si no se puede usar el micrófono */
+  onSkip?: () => void
   onAnswer: (ok: boolean) => void
 }) {
   const kind = q.kind ?? 'fill'
@@ -62,6 +68,11 @@ export function QuestionCard({
   const [typed, setTyped] = useState('')
   const [writeError, setWriteError] = useState('')
   const ask = answered === null
+  // Hablar: intentos, lo que se escuchó y si el micrófono está activo
+  const [listening, setListening] = useState(false)
+  const [tries, setTries] = useState(0)
+  const [heard, setHeard] = useState<string | null>(null)
+  const [micError, setMicError] = useState<string | null>(null)
 
   // Las preguntas de escucha se leen solas al aparecer
   useEffect(() => {
@@ -91,7 +102,25 @@ export function QuestionCard({
 
   function finish(ok: boolean) {
     setAnswered(ok)
+    sfx(ok ? 'correct' : 'wrong')
     onAnswer(ok)
+  }
+
+  async function talk() {
+    if (!ask || listening) return
+    setMicError(null)
+    setHeard(null)
+    setListening(true)
+    const res = await hear().promise
+    setListening(false)
+    if (!res.ok) return setMicError(micErrorText(res.error))
+    const expected = q.options[0]
+    const best = res.heard.reduce((b, t) => (speechScore(t, expected) > speechScore(b, expected) ? t : b), res.heard[0] ?? '')
+    setHeard(best)
+    if (speechScore(best, expected) >= 0.75) return finish(true)
+    const n = tries + 1
+    setTries(n)
+    if (n >= 3) finish(false)
   }
 
   function choose(k: number) {
@@ -120,6 +149,8 @@ export function QuestionCard({
         ? 'Ordena la frase'
         : kind === 'listen'
           ? 'Escucha y elige'
+          : kind === 'speak'
+            ? 'Dilo en voz alta'
           : kind === 'write'
             ? q.writeMode === 'blank'
               ? 'Escribe la palabra que falta'
@@ -163,6 +194,43 @@ export function QuestionCard({
           <p className="text-sm text-paper/70">
             Toca la bocina para escuchar. Dos toques seguidos: más lento.
           </p>
+        </div>
+      )}
+
+      {kind === 'speak' && (
+        <div>
+          {q.prompt && <p className="text-sm text-paper/60">{q.prompt}</p>}
+          <div className="flex items-start gap-2">
+            <p className="flex-1 font-display text-[22px] leading-snug" data-testid="prompt">{q.options[0]}</p>
+            <SpeakButton text={q.options[0]} size="sm" label="Escuchar cómo se dice" />
+          </div>
+          {ask && (
+            <div className="mt-3 flex flex-col items-center gap-2">
+              <button
+                onClick={talk}
+                disabled={listening}
+                aria-label="Hablar"
+                className={`flex h-20 w-20 items-center justify-center rounded-full border-4 ${listening ? 'anim-bob border-danger bg-danger/20' : 'border-gold bg-gold/15'} transition active:scale-95`}
+              >
+                <svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="9" y="3" width="6" height="11" rx="3" fill="#f4efe4" />
+                  <path d="M6 11a6 6 0 0 0 12 0M12 17v4M8 21h8" fill="none" stroke="#f4efe4" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              </button>
+              <p className="text-sm text-paper/70">{listening ? 'Te escucho... di la frase en inglés' : 'Toca el micrófono y di la frase'}</p>
+            </div>
+          )}
+          {heard !== null && (
+            <p className={`mt-2 rounded-lg px-3 py-2 text-sm ${answered ? 'bg-hp/15 text-hp' : 'bg-panel-2 text-paper/85'}`}>
+              Te escuché: "{heard}"{ask && tries > 0 ? ` · Casi, inténtalo otra vez (${tries}/3).` : ''}
+            </p>
+          )}
+          {micError && <p className="mt-2 rounded-lg bg-danger/15 px-3 py-2 text-sm text-[#f3b0b0]">{micError}</p>}
+          {ask && onSkip && (
+            <button className="mt-2 w-full text-center text-sm font-semibold text-paper/60 underline underline-offset-4" onClick={onSkip}>
+              No puedo hablar ahora (cambiar de pregunta)
+            </button>
+          )}
         </div>
       )}
 
@@ -268,7 +336,7 @@ export function QuestionCard({
             </div>
           )}
         </>
-      ) : (
+      ) : kind === 'speak' ? null : (
         <div className={`mt-3 grid gap-2 ${kind === 'fill' ? 'grid-cols-3' : 'grid-cols-1'}`} data-testid="options">
           {q.options.map((o, k) => {
             const isAnswer = k === q.answer

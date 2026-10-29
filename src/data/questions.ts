@@ -1,5 +1,6 @@
 import type { Question, QuestionKind, TopicId } from '../game/types'
 import { canSpeak } from '../game/speech'
+import { canRecognize } from '../game/mic'
 
 /**
  * Banco de preguntas.
@@ -330,6 +331,21 @@ function toListen(q: Question): Question {
   }
 }
 
+/** Pregunta de hablar: decir en voz alta la frase correcta (de completar o de ordenar) */
+function toSpeak(q: Question): Question {
+  const sentence = q.kind === 'order' ? q.options.join(' ') : q.prompt.replace('___', q.options[q.answer])
+  return {
+    id: `S-${q.id}`,
+    topic: q.topic,
+    kind: 'speak',
+    prompt: q.kind === 'order' ? q.prompt : '',
+    options: [sentence],
+    answer: 0,
+    tags: q.tags,
+    tip: q.tip,
+  }
+}
+
 /** Pregunta de escribir la palabra que falta, a partir de una de completar */
 function toWriteBlank(q: Question): Question {
   return {
@@ -381,6 +397,7 @@ export function questionsFor(topics: TopicId[], kinds: QuestionKind[] = ['fill',
     if (kinds.includes('listen') && canSpeak && canListen(q)) list.push(toListen(q))
     if (kinds.includes('write') && canWriteBlank(q)) list.push(toWriteBlank(q))
     if (kinds.includes('write') && q.kind === 'order') list.push(toWriteSentence(q))
+    if (kinds.includes('speak') && canRecognize && (canListen(q) || q.kind === 'order') && !q.hint) list.push(toSpeak(q))
   }
   return list
 }
@@ -390,6 +407,10 @@ export function questionById(id: string): Question | undefined {
     const base = QUESTIONS.find((q) => q.id === id.slice(2))
     if (!base) return undefined
     return id.startsWith('W-') ? toWriteBlank(base) : toWriteSentence(base)
+  }
+  if (id.startsWith('S-')) {
+    const base = QUESTIONS.find((q) => q.id === id.slice(2))
+    return base && canRecognize ? toSpeak(base) : undefined
   }
   if (id.startsWith('L-')) {
     const base = QUESTIONS.find((q) => q.id === id.slice(2))

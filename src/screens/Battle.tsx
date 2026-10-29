@@ -9,7 +9,8 @@ import { GrammarPattern, RoleSentence } from '../components/Grammar'
 import { Practice } from '../components/Practice'
 import { sessionFor } from '../data/schedule'
 import { SpeakButton } from '../components/SpeakButton'
-import { SCENES, heroLook, perks } from '../game/helpers'
+import { SCENES, heroLook, perks, recordAnswer } from '../game/helpers'
+import { sfx } from '../game/sfx'
 import { SpriteBody } from '../components/Sprite'
 import { Bar, btnGhost, btnPrimary, Hearts, Panel } from '../components/ui'
 import { TimeClock } from '../components/TimeClock'
@@ -213,10 +214,14 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   function resolve(ok: boolean) {
     setCorrect(ok)
     // Cuaderno de errores: se anota lo que fallas y se borra cuando lo aciertas
-    update((s) => ({
-      ...s,
-      mistakes: ok ? s.mistakes.filter((id) => id !== q.id) : s.mistakes.includes(q.id) ? s.mistakes : [...s.mistakes, q.id],
-    }))
+    update((s) =>
+      recordAnswer(
+        { ...s, mistakes: ok ? s.mistakes.filter((id) => id !== q.id) : s.mistakes.includes(q.id) ? s.mistakes : [...s.mistakes, q.id] },
+        q,
+        ok,
+      ),
+    )
+    window.setTimeout(() => sfx(ok ? 'hit' : 'hurt'), 180)
     if (!ok) setFailed((f) => [...f, q.id])
     if (ok) {
       const left = battle.enemyHp - 1
@@ -245,6 +250,15 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
     setHitText({ who: 'hero', n: Date.now(), text: '-1' })
     update((s) => ({ ...s, hp: Math.max(0, hp) }))
     setPhase(hp <= 0 ? 'lost' : 'feedback')
+    if (hp <= 0) window.setTimeout(() => sfx('defeat'), 500)
+  }
+
+  /** Cambiar una pregunta de hablar por otra, sin castigo (no hay micrófono o no se puede hablar) */
+  function skipSpeak() {
+    const p = poolAt(battle.enemyHp)
+    const kinds = p.kinds.filter((k) => k !== 'speak')
+    setQ(pickQuestion(p.topics, kinds.length ? kinds : ['fill'], [...used, q.id], state.mistakes, p.tags ?? []))
+    setHint(false)
   }
 
   function nextQuestion() {
@@ -259,6 +273,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   }
 
   function win() {
+    sfx('victory')
     setLine(0)
     setShowEs(false)
     setPhase('after')
@@ -442,9 +457,10 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             q={q}
             speaker={enemy.person}
             hint={hint}
+            onSkip={phase === 'ask' ? skipSpeak : undefined}
             onAnswer={(ok) => phase === 'ask' && resolve(ok)}
             headerRight={
-              leoHint && phase === 'ask' ? (
+              leoHint && phase === 'ask' && q.kind !== 'speak' ? (
                 <button className="rounded-lg border border-hp/60 px-2 py-1 text-xs font-semibold text-hp disabled:opacity-40" onClick={() => setHint(true)} disabled={hint}>
                   Pista de Leo
                 </button>
@@ -583,7 +599,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               <div className="my-1 flex items-center gap-3 rounded-xl bg-panel-2 p-2">
                 <TimeClock pieces={state.relics} size={72} highlight={state.relics - 1} />
                 <p className="text-[15px]">
-                  <b className="text-gold">¡Pieza del reloj!</b> Tienes {Math.min(state.relics, WORLD.length)} de {WORLD.length}. {enemy.person} la tenía: el desconocido la dejó caer.
+                  <b className="text-gold">¡Pieza del reloj!</b> Tienes {Math.min(state.relics, WORLD.length)} de {WORLD.length}. {enemy.person} tenía esta pieza, y al tocarla se corrompió. Tú no te corrompes: es tu voz.
                 </p>
               </div>
               <p className="text-paper/75">También ganaste: {OUTFITS[enemy.reward ?? 'capa'].name}. Tus amigos tienen cosas nuevas que contarte.</p>

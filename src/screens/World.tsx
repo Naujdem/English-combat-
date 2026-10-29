@@ -9,6 +9,8 @@ import { ClockPieces, TimeClock } from '../components/TimeClock'
 import { Diary } from '../components/Diary'
 import { Flashcards } from '../components/Flashcards'
 import { BusRide, BUS_TO_CITY } from '../components/BusRide'
+import { ProgressView, Review } from '../components/Review'
+import { setSound, soundOn } from '../game/sfx'
 import { DIARY } from '../data/diary'
 import { dueCards } from '../game/cards'
 import type { Update } from '../game/store'
@@ -25,6 +27,9 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const [diary, setDiary] = useState(!!newDiary)
   const [cards, setCards] = useState(false)
   const [bus, setBus] = useState(false)
+  const [review, setReview] = useState(false)
+  const [progress, setProgress] = useState(false)
+  const [sound, setSoundState] = useState(soundOn())
   const hasDiary = DIARY.some((c) => state.opened.includes(c.unlock))
   const dueCount = dueCards(state.cards).length
 
@@ -57,7 +62,19 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       <header className="flex items-center justify-between">
         <button className={btnGhost} onClick={onTitle}>Menú</button>
         <Hearts hp={state.hp} max={state.maxHp} />
-        <button className={btnGhost} onClick={() => setFriends(true)}>Amigos</button>
+        <div className="flex items-center">
+          <button
+            className={`${btnGhost} px-2 text-xs`}
+            onClick={() => {
+              setSound(!sound)
+              setSoundState(!sound)
+            }}
+            aria-label={sound ? 'Silenciar sonidos' : 'Activar sonidos'}
+          >
+            {sound ? 'Sonido: sí' : 'Sonido: no'}
+          </button>
+          <button className={btnGhost} onClick={() => setFriends(true)}>Amigos</button>
+        </div>
       </header>
 
       <svg viewBox="0 0 360 380" className="w-full rounded-2xl border-2 border-line bg-[#24301f]" role="img" aria-label="Mapa del mundo">
@@ -117,6 +134,8 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       </button>
 
       <div className="grid grid-cols-2 gap-2">
+        <button className={btn} onClick={() => setReview(true)}>Repasar</button>
+        <button className={btn} onClick={() => setProgress(true)}>Mi progreso</button>
         <button className={btn} onClick={openDiary} disabled={!hasDiary}>Mi diario</button>
         <button className={btn} onClick={() => setCards(true)}>
           Fichas{dueCount > 0 ? ` (${dueCount})` : ''}
@@ -137,6 +156,17 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
           }}
         />
       )}
+      {review && <Review state={state} update={update} onClose={() => setReview(false)} />}
+      {progress && (
+        <ProgressView
+          state={state}
+          onClose={() => setProgress(false)}
+          onReview={() => {
+            setProgress(false)
+            setReview(true)
+          }}
+        />
+      )}
       {cards && <Flashcards state={state} update={update} onClose={() => setCards(false)} />}
 
       {clock && (
@@ -148,7 +178,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
             </div>
             <div className="my-3 flex justify-center"><TimeClock pieces={state.relics} size={150} /></div>
             <p className="text-[15px] text-paper/85">
-              El desconocido usa este reloj para viajar entre épocas y esconder tus palabras. Cada jefe guarda una pieza.
+              El reloj del desconocido explotó y sus piezas se llevaron pedazos de tu voz. Quien toca una pieza se corrompe; tú no, porque es tu voz. Cada jefe tiene una.
               {state.relics >= WORLD.length ? ' ¡Lo tienes completo! Ya puedes ir tras el desconocido.' : ' Con el reloj completo podrás alcanzar al desconocido y recuperar toda tu voz.'}
             </p>
             <div className="mt-3"><ClockPieces pieces={state.relics} /></div>

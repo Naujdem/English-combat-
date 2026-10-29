@@ -13,11 +13,13 @@ type StoryStep = { who: 'narrator' | 'stranger'; text: string; es?: string; stra
 function story(): StoryStep[] {
   return [
     { who: 'narrator', text: 'Un día cualquiera, llegas temprano a tu nueva escuela.' },
-    { who: 'stranger', text: 'Hello there... What a nice voice you have.', es: 'Hola... Qué linda voz tienes.', stranger: true },
+    { who: 'stranger', text: 'Hello there... What a nice voice you have.', es: 'Hola... Qué linda voz tienes. (Su voz es ronca, como si casi no pudiera hablar.)', stranger: true },
     { who: 'stranger', text: 'Your words are MINE now!', es: '¡Tus palabras ahora son MÍAS!', stranger: true, steal: true },
     { who: 'narrator', text: 'Intentas gritar, pero no sale ningún sonido.', stranger: true, mute: true },
-    { who: 'stranger', text: 'I hid your words across time. Find them... if you can! Ha ha ha!', es: 'Escondí tus palabras a través del tiempo. Encuéntralas... ¡si puedes! ¡Ja, ja, ja!', stranger: true, mute: true },
-    { who: 'narrator', text: 'El desconocido desaparece en una nube oscura.', mute: true },
+    { who: 'stranger', text: 'Now... back to my time!', es: 'Ahora... ¡de vuelta a mi tiempo!', stranger: true, mute: true },
+    { who: 'narrator', text: 'El desconocido levanta un reloj extraño. Brilla cada vez más fuerte... y explota. Pedazos brillantes salen volando por todas partes.', stranger: true, mute: true },
+    { who: 'stranger', text: 'No... NO! My clock!', es: 'No... ¡NO! ¡Mi reloj!', stranger: true, mute: true },
+    { who: 'narrator', text: 'El desconocido desaparece en una nube oscura. En el piso queda un brillo... y luego nada.', mute: true },
   ]
 }
 
@@ -30,7 +32,7 @@ const LEO_ARRIVES: LessonStep[] = [
     es: '¡Oye! ¿Estás bien?',
     choice: { options: ['(Asentir lentamente)', '(Salir corriendo)', '(Ignorarlo)'], answer: 0, tip: '"Are you OK?" significa "¿Estás bien?". Asentir es decir que sí.' },
   },
-  { who: 'leo', text: 'I am Leo. I saw everything! That stranger took your words.', es: 'Soy Leo. ¡Lo vi todo! Ese desconocido se llevó tus palabras.' },
+  { who: 'leo', text: 'I am Leo. I saw a big light from the hall! A stranger took your words?', es: 'Soy Leo. ¡Vi una luz enorme desde el pasillo! ¿Un desconocido se llevó tus palabras?' },
   { who: 'leo', text: "You can't talk, but you can write. Let's use the board!", es: 'No puedes hablar, pero puedes escribir. ¡Usemos la pizarra!' },
 ]
 

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { GameState, Question, TopicId } from '../game/types'
 import type { Update } from '../game/store'
 import { pickQuestion, questionById, TOPICS } from '../data/questions'
+import { recordAnswer } from '../game/helpers'
 import { FRIENDS } from '../data/friends'
 import { QuestionCard, correctSentence } from './QuestionCard'
 import { GrammarPattern, RoleSentence } from './Grammar'
@@ -18,17 +19,30 @@ const SIZE = 6
 export function Practice({
   state,
   update,
-  failed,
+  failed = [],
+  review,
   onClose,
 }: {
   state: GameState
   update: Update
   /** Preguntas falladas en el combate */
-  failed: string[]
+  failed?: string[]
+  /** Repaso fuera de la historia: el tema elegido */
+  review?: TopicId
   onClose: () => void
 }) {
   const [queue] = useState<Question[]>(() => {
-    const fromFight = [...new Set(failed)].map((id) => questionById(id)).filter((q): q is Question => !!q)
+    if (review) {
+      // Como en las apps de idiomas: primero armar frases, luego completar, al final corregir
+      const list: Question[] = []
+      const plan: Question['kind'][] = ['order', 'order', 'fill', 'fill', 'fix', 'order', 'fill', 'fix']
+      for (const k of plan) {
+        const q = pickQuestion([review], [k ?? 'fill'], list.map((x) => x.id), state.mistakes)
+        if (q && q.topic === review && !list.some((x) => x.id === q.id)) list.push(q)
+      }
+      return list
+    }
+    const fromFight = [...new Set(failed)].map((id) => questionById(id)).filter((q): q is Question => !!q && q.kind !== 'speak')
     const topics = [...new Set(fromFight.map((q) => q.topic))] as TopicId[]
     const list = fromFight.slice(0, 3)
     let guard = 0
@@ -51,6 +65,7 @@ export function Practice({
       setScore((n) => n + 1)
       update((s) => ({ ...s, mistakes: s.mistakes.filter((id) => id !== q.id) }))
     }
+    update((s) => recordAnswer(s, q, ok))
   }
 
   function next() {
@@ -66,8 +81,8 @@ export function Practice({
       <div className="mx-auto flex max-w-md flex-col gap-3 px-3 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-gold">Práctica con Leo</p>
-            <p className="font-display text-lg">{i < 0 ? 'Antes de volver a intentarlo' : done ? 'Resultado' : `Pregunta ${i + 1} de ${queue.length}`}</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-gold">{review ? `Repaso · ${TOPICS[review].name}` : 'Práctica con Leo'}</p>
+            <p className="font-display text-lg">{i < 0 ? (review ? 'La estructura' : 'Antes de volver a intentarlo') : done ? 'Resultado' : `Pregunta ${i + 1} de ${queue.length}`}</p>
           </div>
           <button className={btnGhost} onClick={onClose}>Salir</button>
         </div>
@@ -87,7 +102,11 @@ export function Practice({
               </div>
             </div>
             <p className="mt-3 text-[15px] text-paper/85">
-              Te costó: <b>{names}</b>. Mira la estructura y practica {queue.length} frases. Aquí no pierdes vida, y las palabras tienen colores para ayudarte.
+              {review ? (
+                <>Repaso de <b>{names}</b>. Mira la estructura y practica {queue.length} frases: primero armar frases, luego completar y corregir. Las palabras tienen colores para ayudarte.</>
+              ) : (
+                <>Te costó: <b>{names}</b>. Mira la estructura y practica {queue.length} frases. Aquí no pierdes vida, y las palabras tienen colores para ayudarte.</>
+              )}
             </p>
             <div className="mt-3 grid gap-2">
               {topics.map((t) => (
@@ -128,7 +147,13 @@ export function Practice({
               {score} de {queue.length} correctas
             </p>
             <p className="mt-1 text-[16px]">
-              {ready ? 'Leo: "You\'re ready! Try again!" Ya puedes volver a retarlo.' : 'Leo: "Good try! Practice a little more." Puedes repasar otra vez en tu cuaderno de errores.'}
+              {review
+                ? ready
+                  ? 'Leo: "Great job!" Dominas cada vez mejor este tema.'
+                  : 'Leo: "Good try! Practice a little more." Puedes repetir el repaso cuando quieras.'
+                : ready
+                  ? 'Leo: "You\'re ready! Try again!" Ya puedes volver a retarlo.'
+                  : 'Leo: "Good try! Practice a little more." Puedes repasar otra vez en tu cuaderno de errores.'}
             </p>
             <button className={`${btnPrimary} mt-4 w-full`} onClick={onClose} autoFocus>
               Volver

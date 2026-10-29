@@ -1,4 +1,4 @@
-import type { FriendDef, GameState, SceneDef } from './types'
+import type { FriendDef, GameState, Question, SceneDef } from './types'
 import type { SpriteLook } from '../components/Sprite'
 import { OUTFITS, SCHOOL } from '../data/school'
 import { CITY } from '../data/city'
@@ -37,4 +37,10 @@ export function perks(s: GameState) {
   return {
     leoHint: (s.talks.leo ?? 0) >= 1,
   }
+}
+
+/** Anota un acierto o un error del tema de la pregunta (pantalla de progreso) */
+export function recordAnswer(s: GameState, q: Question, ok: boolean): GameState {
+  const cur = s.stats[q.topic] ?? { ok: 0, fail: 0 }
+  return { ...s, stats: { ...s.stats, [q.topic]: ok ? { ...cur, ok: cur.ok + 1 } : { ...cur, fail: cur.fail + 1 } } }
 }
