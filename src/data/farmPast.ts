@@ -167,7 +167,7 @@ export const FARM_PAST_ENEMIES: Record<string, EnemyDef> = {
       { text: "This farm doesn't look the same because it is 1996! Moo... the white light again!", es: '¡Esta granja no se ve igual porque es 1996! Muu... ¡otra vez la luz blanca!' },
       { text: 'I am going home. Thank you... Moooo!', es: 'Me voy a casa. Gracias... ¡Muuuu!' },
     ],
-    bonus: { q: 'Before you go! Does Daisy live on this farm in 1996?', options: ["No, she doesn't.", "No, she don't.", 'Yes, she do.'], answer: 0, tip: "Con she: No, she doesn't." },
+    bonus: { q: 'Before you go! Does Daisy eat pizza?', options: ["No, she doesn't.", "No, she don't.", 'Yes, she do.'], answer: 0, tip: "Con she: No, she doesn't." },
   },
 
   'farm-past-boss': {

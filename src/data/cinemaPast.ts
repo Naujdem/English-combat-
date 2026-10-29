@@ -150,7 +150,7 @@ export const CINEMA_PAST_ENEMIES: Record<string, EnemyDef> = {
       { text: "It's half past nine, and the film starts on Monday at night. Oh! The white light again!", es: 'Son las nueve y media, y la película empieza el lunes en la noche. ¡Oh! ¡Otra vez la luz blanca!' },
       { text: 'I am going back to my office. Thank you! See you at Green Valley Company!', es: 'Vuelvo a mi oficina. ¡Gracias! ¡Nos vemos en Green Valley Company!' },
     ],
-    bonus: { q: 'Before you go! The film starts at 7:30. What time is it?', options: ["It's half past seven.", "It's seven and half.", "It's half to seven."], answer: 0, tip: '7:30 = half past seven.' },
+    bonus: { q: 'Before you go! The clock says 7:30. What time is it?', options: ["It's half past seven.", "It's seven and half.", "It's half to seven."], answer: 0, tip: '7:30 = half past seven.' },
   },
   'office-past-kevin': {
     ...BARRIO_ENEMIES['barrio-m1'],

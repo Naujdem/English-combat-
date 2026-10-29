@@ -144,7 +144,7 @@ export const BARRIO_ENEMIES: Record<string, EnemyDef> = {
       { text: "Take the piece of the key. And the next news: there is a birthday party in the park. It's Leo's!", es: 'Toma el pedazo de la llave. Y la siguiente noticia: hay una fiesta de cumpleaños en el parque. ¡Es la de Leo!' },
     ],
     freed: { text: 'Live from Green Street: a new neighbor is walking down the street. It is you!', es: 'En directo desde Green Street: un vecino nuevo está caminando por la calle. ¡Eres tú!' },
-    bonus: { q: 'Last question for my report. Look at the sky! What is the weather like?', options: ['It is shining.', 'The sun is shining.', 'The sun shining.'], answer: 1, tip: 'Sujeto + is + -ing: The sun is shining (el sol está brillando).' },
+    bonus: { q: 'Last question for my report. Look at the sky! What is the weather like?', options: ['The sun is shine.', 'The sun is shining.', 'The sun shining.'], answer: 1, tip: 'Sujeto + is + -ing: The sun is shining (el sol está brillando).' },
   },
   'barrio-m3': {
     id: 'barrio-m3',

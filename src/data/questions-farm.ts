@@ -60,4 +60,9 @@ export const FARM_QUESTIONS: Question[] = [
   { id: 'plo-01', topic: 'plurals', kind: 'order', prompt: 'Hay tres ovejas en el corral.', options: ['There', 'are', 'three', 'sheep', 'in', 'the', 'pen.'], answer: 0, tip: 'There are + three sheep (sheep no cambia).', tags: ['corral'] },
   { id: 'plo-02', topic: 'plurals', kind: 'order', prompt: 'Los ratones viven en el granero.', options: ['The', 'mice', 'live', 'in', 'the', 'barn.'], answer: 0, tip: 'The mice + live + in the barn.', tags: ['granero'] },
   { id: 'plo-03', topic: 'plurals', kind: 'order', prompt: 'Los niños tienen dos gansos.', options: ['The', 'children', 'have', 'got', 'two', 'geese.'], answer: 0, tip: 'The children + have got + two geese.', tags: ['campo'] },
+  // Estaciones en la granja (presente simple)
+  { id: 'fs-01', topic: 'present-simple', tags: ['campo'], prompt: "It's very cold, and the trees haven't got leaves. It's ___.", options: ['winter', 'summer', 'spring'], answer: 0, tip: 'Winter = invierno: hace frío.' },
+  { id: 'fs-02', topic: 'present-simple', tags: ['campo'], prompt: 'Flowers grow and baby animals are born in ___.', options: ['spring', 'winter', 'autumn'], answer: 0, tip: 'Spring = primavera.' },
+  { id: 'fs-03', topic: 'present-simple', tags: ['campo'], prompt: 'In ___, the leaves fall from the trees.', options: ['autumn', 'spring', 'summer'], answer: 0, tip: 'Autumn = otoño: las hojas caen.' },
+  { id: 'fs-04', topic: 'present-simple', tags: ['campo'], prompt: "It's very hot in ___. The cows sleep under the trees.", options: ['summer', 'winter', 'autumn'], answer: 0, tip: 'Summer = verano: hace calor.' },
 ]

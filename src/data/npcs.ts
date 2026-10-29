@@ -247,7 +247,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'Mr. Garcia',
     // Leo adulto, el profesor de inglés: la misma piel y el mismo pelo, con gafas y camisa de profesor
     look: { shirt: '#2f5d50', hair: '#2d2d3a', skin: '#e0ac69', accessory: 'glasses' },
-    doneLine: { text: 'Hi, hi! On my tenth birthday somebody gave me a card: "Be brave. Use your voice." I never knew who. Now I say it to all my students.', es: '¡Hola, hola! En mi cumpleaños número diez alguien me dio una tarjeta: "Sé valiente. Usa tu voz". Nunca supe quién. Ahora se lo digo a todos mis estudiantes.' },
+    doneLine: { text: 'Hi, hi! On my fifteenth birthday somebody gave me a card: "Be brave. Use your voice." I never knew who. Now I say it to all my students.', es: '¡Hola, hola! En mi cumpleaños número quince alguien me dio una tarjeta: "Sé valiente. Usa tu voz". Nunca supe quién. Ahora se lo digo a todos mis estudiantes.' },
   },
   zoe: {
     name: 'Zoe',

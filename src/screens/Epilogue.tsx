@@ -764,7 +764,7 @@ function schoolFutureSteps(s: GameState): Step[] {
     },
     { who: 'leoadult', text: 'Be brave, and use your voice, kids. That is my lesson for today... and for every day.', es: 'Sean valientes y usen su voz, chicos. Esa es mi lección de hoy... y de todos los días.', cast: both },
     { who: 'interest', text: 'Mr. Garcia, do you have a best friend?', es: 'Señor Garcia, ¿usted tiene un mejor amigo?', cast: both },
-    { who: 'leoadult', text: 'Yes! My best friend lives in another city now. But every Sunday we are going to play old video games together. Ha ha!', es: '¡Sí! Mi mejor amigo vive en otra ciudad ahora. Pero todos los domingos vamos a jugar videojuegos viejos juntos. ¡Ja, ja!', cast: both },
+    { who: 'leoadult', text: 'Yes! My best friend lives in another city now. But this Sunday we are going to play old video games together, like every Sunday. Ha ha!', es: '¡Sí! Mi mejor amigo vive en otra ciudad ahora. Pero todos los domingos vamos a jugar videojuegos viejos juntos. ¡Ja, ja!', cast: both },
     { who: 'interest', text: 'Old video games... like you two!', es: 'Videojuegos viejos... ¡como ustedes dos!', cast },
     { who: 'narrator', text: 'Sientes algo cálido en la garganta: un fragmento de tu voz del futuro vuelve a ti. Ahora puedes hablar de tus planes: I am going to...', cast },
     { who: 'narrator', text: 'Leo corre a ver el robot de limpieza. Por la ventana del aula, alguien con abrigo oscuro mira la clase desde lejos. Habla muy bajito.', cast: ['interest'] },
