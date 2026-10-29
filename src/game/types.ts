@@ -29,7 +29,7 @@ export type Interest = {
 export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle' | 'epilogue'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
-export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'past-simple' | 'future'
+export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'going-to-wh' | 'past-simple' | 'future'
 
 /**
  * fill: completar el espacio en blanco.

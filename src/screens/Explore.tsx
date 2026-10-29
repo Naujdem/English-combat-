@@ -44,6 +44,7 @@ import { Mystery } from '../components/Mystery'
 import { Timeline } from '../components/Timeline'
 import { LessonPlan } from '../components/LessonPlan'
 import { TourPlan } from '../components/TourPlan'
+import { PartyPlan } from '../components/PartyPlan'
 import { voiceOf, type Voice } from '../game/speech'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
@@ -954,6 +955,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'planner') return <Planner onClose={finish} />
             if (t.activity === 'attendance') return <Attendance onClose={finish} />
             if (t.activity === 'sounds') return <SoundSacks onClose={finish} />
+            if (t.activity === 'party60') return <PartyPlan onClose={finish} />
             if (t.activity === 'tour') return <TourPlan onClose={finish} />
             if (t.activity === 'plan') return <LessonPlan onClose={finish} />
             if (t.activity === 'timeline') return <Timeline onClose={finish} />

@@ -17,7 +17,7 @@ export type NpcTask = {
   shield?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60'
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
   vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
@@ -471,6 +471,20 @@ NPC_TASKS.marco = {
     es: '¡Perfecto! Los turistas no se van a perder hoy. ¡Mi abuelo va a estar orgulloso!',
     sub: 'La ruta está lista. El alcalde ya no puede decir que no ayudaste a los turistas.',
     say: "Perfect! The tourists aren't going to get lost today.",
+  },
+}
+
+// ── Green Street en 2056 ──
+NPC_TASKS['emma-adult'] = {
+  done: 'future-party',
+  lesson: 'going-to-wh',
+  activity: 'party60',
+  steps: [],
+  reward: {
+    text: 'Emma: "Basketball, photos, Theo, the big tree, five o\'clock... The party is going to be perfect!"',
+    es: 'Baloncesto, fotos, Theo, el árbol grande, las cinco... ¡La fiesta va a ser perfecta!',
+    sub: 'La lista de la fiesta está lista. Ahora Nick ya no puede decir que no ayudaste a los vecinos.',
+    say: 'The party is going to be perfect!',
   },
 }
 

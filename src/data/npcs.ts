@@ -292,6 +292,39 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
       { text: "Are you going to have a black coffee? Mr. Rossi always had a black coffee at ten.", es: '¿Vas a tomar un café negro? El señor Rossi siempre tomaba un café negro a las diez.' },
     ],
   },
+  // ── Green Street en 2056 ──
+  'leo-home': {
+    name: 'Mr. Garcia',
+    // Leo adulto en su casa (la casa que construyó el abuelo Joe)
+    look: { shirt: '#2f5d50', hair: '#2d2d3a', skin: '#e0ac69', accessory: 'glasses' },
+    lines: [
+      { text: 'Hi, hi again! This is my house. My grandpa Joe built it with his hands in 1996.', es: '¡Hola, hola otra vez! Esta es mi casa. Mi abuelo Joe la construyó con sus manos en 1996.' },
+      { text: "What am I going to say at the party? I'm going to talk about my best friend... and about being brave.", es: '¿Qué voy a decir en la fiesta? Voy a hablar de mi mejor amigo... y de ser valiente.' },
+      { text: 'Every night I read a story to Joey. Tonight we are going to read a story about a magic clock!', es: 'Todas las noches le leo un cuento a Joey. ¡Esta noche vamos a leer un cuento sobre un reloj mágico!' },
+    ],
+  },
+  'emma-adult': {
+    name: 'Emma',
+    // La hermana de Leo, treinta años después: organiza la fiesta de los 60 años de la calle
+    look: { shirt: '#3b9d5d', hair: '#2b1d14', skin: '#e0ac69', gender: 'female', accessory: 'glasses' },
+    doneLine: { text: 'The party is going to be amazing! I am going to play the guitar, like when I was a girl.', es: '¡La fiesta va a ser increíble! Voy a tocar la guitarra, como cuando era niña.' },
+  },
+  'maya-adult': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    lines: [
+      { text: "Hi! I'm Theo's mom. What am I going to cook for the party? My famous sandwiches, of course!", es: '¡Hola! Soy la mamá de Theo. ¿Qué voy a cocinar para la fiesta? ¡Mis famosos sándwiches, claro!' },
+      { text: 'Leo and I are going to sit together at the party. Like at school, thirty years ago!', es: 'Leo y yo nos vamos a sentar juntos en la fiesta. ¡Como en la escuela, hace treinta años!' },
+    ],
+  },
+  'rojas-old': {
+    name: 'Mr. Rojas',
+    look: { shirt: '#e07b39', hair: '#e8e8e8', skin: '#c68642', accessory: 'glasses' },
+    lines: [
+      { text: "I'm eighty-five, but I still love cooking. Where am I going to put the food? On the big table in the park!", es: 'Tengo ochenta y cinco años, pero todavía me encanta cocinar. ¿Dónde voy a poner la comida? ¡En la mesa grande del parque!' },
+      { text: 'When is Theo going to the Moon? Next year, he says! Ha ha.', es: '¿Cuándo va a ir Theo a la Luna? ¡El próximo año, dice! Ja, ja.' },
+    ],
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

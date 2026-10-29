@@ -688,6 +688,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Con going to no se usa do / does: Is she going to come? (no "Does she going...").',
     ],
   },
+  'going-to-wh': {
+    name: 'Preguntas de planes (What / Where / When are you going to...?)',
+    level: 'A1',
+    lesson: [
+      'Palabra de pregunta + am / is / are + sujeto + going to + verbo: What are you going to do?',
+      'What (qué) · Where (dónde) · When (cuándo) · Who (quién) · What time (a qué hora) · How (cómo) · Why (por qué).',
+      'Nunca "What you are going to...": el am / is / are va antes del sujeto.',
+    ],
+  },
   'past-simple': {
     name: 'Pasado simple',
     level: 'A2',

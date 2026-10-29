@@ -289,6 +289,31 @@ export const SKYBUS_TO_CITY_2056: BusTrip = {
   ],
 }
 
+/** En el Sky Bus de 2056: de la ciudad a Green Street, que cumple 60 años */
+export const SKYBUS_TO_BARRIO_2056: BusTrip = {
+  place: 'Green Street',
+  placeEs: 'Green Street en 2056',
+  price: '',
+  priceNum: '',
+  wrongPrices: ['', ''],
+  arrival: { text: '', es: '' },
+  sign: 'SKY BUS · GREEN ST.',
+  three: true,
+  art: 'skybus',
+  end: 'Bajar en Green Street',
+  steps: [
+    {
+      who: 'driver',
+      text: 'Hello again! Where are you going to go now?',
+      es: '¡Hola otra vez! ¿A dónde van a ir ahora?',
+      choice: { options: ['We are going to go to Green Street.', 'We going to Green Street.', 'Where we are going to Green Street.'], answer: 0, tip: 'We + are going to + go...' },
+    },
+    { who: 'driver', text: 'Green Street! It is going to be sixty years old this weekend. There is going to be a big party in the park!', es: '¡Green Street! Este fin de semana cumple sesenta años. ¡Va a haber una gran fiesta en el parque!' },
+    { who: 'leo', text: 'My street! What is it going to look like? Are my house and the park still there?', es: '¡Mi calle! ¿Cómo se va a ver? ¿Mi casa y el parque siguen ahí?' },
+    { who: 'narrator', text: 'El Sky Bus baja entre árboles enormes. Las casas son las mismas... pero más viejas, con paneles solares en el techo.', es: '' },
+  ],
+}
+
 export const BUS_TO_BARRIO: BusTrip = {
   place: 'Green Street',
   placeEs: 'Green Street, el barrio de Leo',

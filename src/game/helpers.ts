@@ -12,9 +12,10 @@ import { FARM_PAST } from '../data/farmPast'
 import { CINEMA_PAST } from '../data/cinemaPast'
 import { SCHOOL_FUTURE } from '../data/schoolFuture'
 import { CITY_FUTURE } from '../data/cityFuture'
+import { BARRIO_FUTURE } from '../data/barrioFuture'
 import { FRIENDS, interestFriend } from '../data/friends'
 
-export const SCENES: Record<string, SceneDef> = { [SCHOOL.id]: SCHOOL, [CITY.id]: CITY, [BARRIO.id]: BARRIO, [FARM.id]: FARM, [OFFICE.id]: OFFICE, [SCHOOL_PAST.id]: SCHOOL_PAST, [CITY_PAST.id]: CITY_PAST, [BARRIO_PAST.id]: BARRIO_PAST, [FARM_PAST.id]: FARM_PAST, [CINEMA_PAST.id]: CINEMA_PAST, [SCHOOL_FUTURE.id]: SCHOOL_FUTURE, [CITY_FUTURE.id]: CITY_FUTURE }
+export const SCENES: Record<string, SceneDef> = { [SCHOOL.id]: SCHOOL, [CITY.id]: CITY, [BARRIO.id]: BARRIO, [FARM.id]: FARM, [OFFICE.id]: OFFICE, [SCHOOL_PAST.id]: SCHOOL_PAST, [CITY_PAST.id]: CITY_PAST, [BARRIO_PAST.id]: BARRIO_PAST, [FARM_PAST.id]: FARM_PAST, [CINEMA_PAST.id]: CINEMA_PAST, [SCHOOL_FUTURE.id]: SCHOOL_FUTURE, [CITY_FUTURE.id]: CITY_FUTURE, [BARRIO_FUTURE.id]: BARRIO_FUTURE }
 
 export function heroLook(s: GameState, extra: Partial<SpriteLook> = {}): SpriteLook {
   const outfit = OUTFITS[s.outfit] ?? OUTFITS.base
