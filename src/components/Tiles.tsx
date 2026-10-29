@@ -45,6 +45,8 @@ export const FLOOR: Record<Zone, string> = {
   'aula-futuro': '#e4eef5',
   'patio-futuro': '#9fcf8a',
   'direccion-futuro': '#d9e4ee',
+  'calle-futuro': '#d9e2ea',
+  'turismo-futuro': '#dce9f4',
 }
 
 const WALL = '#7a6a58'
@@ -105,6 +107,8 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   q: { en: 'glass wall', es: 'pared de vidrio' },
   i: { en: 'smart board', es: 'pizarra digital' },
   t: { en: 'cleaning robot', es: 'robot de limpieza' },
+  E: { en: 'flying car', es: 'carro volador' },
+  Z: { en: 'statue', es: 'estatua' },
 }
 
 export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: { c: string; x: number; y: number; floor: string; doorOpen: boolean; party?: boolean; still?: boolean }) {
@@ -660,6 +664,31 @@ export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: 
           <ellipse cx={X + 16} cy={Y + 18} rx="7" ry="3" fill="#9aa6b2" />
           <circle cx={X + 12} cy={Y + 18} r="1.2" fill="#7fe0ff" />
           <circle cx={X + 20} cy={Y + 18} r="1.2" fill="#7fe0ff" />
+        </g>
+      )
+    case 'E':
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill="#4f4f57" />
+          <ellipse cx={X + 16} cy={Y + 28} rx="11" ry="2.5" fill="#7fe0ff" opacity="0.5" />
+          <g className="anim-bob">
+            <rect x={X + 2} y={Y + 8} width={T - 4} height={14} rx="7" fill="#5d8fd4" />
+            <rect x={X + 9} y={Y + 5} width={T - 18} height={9} rx="4" fill="#cfe9f5" />
+            <rect x={X + 4} y={Y + 18} width={6} height={3} rx="1.5" fill="#7fe0ff" />
+            <rect x={X + 22} y={Y + 18} width={6} height={3} rx="1.5" fill="#7fe0ff" />
+          </g>
+        </g>
+      )
+    case 'Z':
+      return (
+        <g>
+          {base}
+          <rect x={X + 6} y={Y + 22} width={20} height={8} fill="#9a9a9a" />
+          <rect x={X + 8} y={Y + 20} width={16} height={3} fill="#b5b5b5" />
+          <circle cx={X + 16} cy={Y + 7} r="4.5" fill="#b5b5b5" />
+          <path d={`M${X + 11} ${Y + 6} h10 v-2 h-10 z`} fill="#8d8d8d" />
+          <rect x={X + 12} y={Y + 11} width={8} height={9} rx="2" fill="#a9a9a9" />
+          <path d={`M${X + 20} ${Y + 13} l5 -4`} stroke="#a9a9a9" strokeWidth="2.5" strokeLinecap="round" />
         </g>
       )
     default:

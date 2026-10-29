@@ -679,6 +679,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Palabras de futuro: tomorrow · tonight · next week · next year · one day.',
     ],
   },
+  'going-to-neg': {
+    name: 'Going to: negativo y preguntas',
+    level: 'A1',
+    lesson: [
+      "Negativo: I'm not going to · he / she / it isn't going to · you / we / they aren't going to.",
+      'Pregunta: Am I / Is she / Are you going to + verbo? → Yes, I am. · No, she isn\'t.',
+      'Con going to no se usa do / does: Is she going to come? (no "Does she going...").',
+    ],
+  },
   'past-simple': {
     name: 'Pasado simple',
     level: 'A2',

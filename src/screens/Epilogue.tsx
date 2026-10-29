@@ -16,8 +16,8 @@ import { AnimalSprite } from '../components/Animals'
 
 const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
-type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana' | 'leoadult'
-type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana' | 'leoadult'
+type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana' | 'leoadult' | 'mayor' | 'marco'
+type Cast = 'leo' | 'maya' | 'interest' | 'nick' | 'mom' | 'rosie' | 'farmer' | 'clark' | 'greg' | 'principal' | 'tony' | 'bianca' | 'carmen' | 'hill' | 'joey' | 'martha' | 'billy' | 'priya' | 'clarkdad' | 'diana' | 'leoadult' | 'mayor' | 'marco'
 type Step = {
   who: Who
   text: string
@@ -49,6 +49,7 @@ function buildSteps(s: GameState, sceneId: string): Step[] {
   if (sceneId === 'farm-past') return farmPastSteps(s)
   if (sceneId === 'office-past') return cinemaPastSteps(s)
   if (sceneId === 'school-future') return schoolFutureSteps(s)
+  if (sceneId === 'city-future') return cityFutureSteps(s)
   const name = s.hero.name
   const it = s.interest
   const iname = it.name
@@ -786,6 +787,54 @@ function schoolFutureSteps(s: GameState): Step[] {
   ]
 }
 
+/**
+ * Final de la ciudad en 2056: Danny, el despistado, es el alcalde; Marco es el nieto de Tony Rossi.
+ * El desconocido esperó todo el día en la parada vieja a un amigo que "no va a venir".
+ */
+function cityFutureSteps(s: GameState): Step[] {
+  const iname = s.interest.name
+  const cast: Cast[] = ['leo', 'interest']
+  const city: Cast[] = ['mayor', 'marco', 'leo']
+  return [
+    { who: 'narrator', text: 'El alcalde sale de su oficina. Marco, el guía holograma, aparece a su lado con un brillo azul.', cast: city },
+    { who: 'mayor', text: "Thank you, kids. I'm not going to close the streets. And I'm not going to get lost again... I hope! Ha ha.", es: 'Gracias, chicos. No voy a cerrar las calles. Y no me voy a perder otra vez... ¡eso espero! Ja, ja.', cast: city },
+    { who: 'marco', text: "Mayor Danny always gets lost in his own city! My grandpa Tony always said: 'Danny, the bank is on Main Street!'", es: '¡El alcalde Danny siempre se pierde en su propia ciudad! Mi abuelo Tony siempre decía: "¡Danny, el banco está en Main Street!".', cast: city },
+    { who: 'leo', text: 'DANNY? The boy who always asked "Is there a bank here?" He is the MAYOR now?!', es: '¿DANNY? ¿El que siempre preguntaba "¿Hay un banco aquí?"? ¿¡Ahora es el ALCALDE!?', cast },
+    {
+      who: 'hero',
+      text: '¿Qué le respondes a Leo?',
+      cast,
+      choice: {
+        options: ["Yes! And he isn't going to get lost again!", "Yes! And he not going to get lost again!", "Yes! And he doesn't going to get lost again!"],
+        answer: 0,
+        tip: "Negativo con he: isn't going to.",
+      },
+    },
+    { who: 'interest', text: 'And the statue is Tony! The delivery boy from 1996... He was the best guide in town.', es: '¡Y la estatua es Tony! El repartidor de 1996... Fue el mejor guía de la ciudad.', cast },
+    { who: 'narrator', text: 'Sientes algo cálido en la garganta: otro fragmento de tu voz del futuro. Ahora puedes negar y preguntar: I\'m not going to... Are you going to...?', cast },
+    { who: 'narrator', text: 'Leo se sube al Sky Bus para mirar la ciudad desde arriba. En la parada vieja, alguien con abrigo oscuro sigue sentado. Habla muy bajito.', cast: ['interest'] },
+    { who: 'villain', text: "Are you going to wait for your friends... always? I waited. Here. All day. Nobody came.", es: '¿Vas a esperar siempre a tus amigos? Yo esperé. Aquí. Todo el día. Nadie vino.', villain: true, cast: ['interest'] },
+    { who: 'villain', text: 'Your next words are on Green Street. The trees are very big now... I remember when they were small. Go.', es: 'Tus siguientes palabras están en Green Street. Ahora los árboles son muy grandes... Recuerdo cuando eran pequeños. Ve.', villain: true, cast: ['interest'] },
+    { who: 'narrator', text: `El Sky Bus vuelve a bajar. Cuando ${iname} mira la parada, está vacía.`, cast },
+    {
+      who: 'hero',
+      text: `¿Qué le preguntas a ${iname}?`,
+      cast,
+      choice: {
+        options: ['Is he going to follow us to Green Street?', 'Does he going to follow us to Green Street?', 'He is going follow us to Green Street?'],
+        answer: 0,
+        tip: 'Pregunta: Is he going to + verbo?',
+      },
+    },
+    { who: 'interest', text: "Yes, he is. I'm sure. But we aren't going to stop. Right?", es: 'Sí. Estoy seguro. Pero no vamos a parar. ¿Cierto?', cast },
+    {
+      who: 'narrator',
+      text: "Fin: La ciudad de 2056. Recuperaste going to en negativo y en preguntas. Tu viaje por el futuro sigue en Green Street...",
+      cast,
+    },
+  ]
+}
+
 export function Epilogue({ state, onDone }: { state: GameState; onDone: () => void }) {
   const city = state.sceneId === 'city'
   const barrio = state.sceneId === 'barrio'
@@ -797,6 +846,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
   const farmPast = state.sceneId === 'farm-past'
   const cinemaPast = state.sceneId === 'office-past'
   const schoolFuture = state.sceneId === 'school-future'
+  const cityFuture = state.sceneId === 'city-future'
   const steps = buildSteps(state, state.sceneId)
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
@@ -832,6 +882,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     clarkdad: 'Mr. Clark',
     diana: 'Diana',
     leoadult: 'Mr. Garcia',
+    mayor: 'Mayor Danny',
+    marco: 'Marco',
   }
 
   const voices: Record<Who, Voice> = {
@@ -859,6 +911,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     clarkdad: 'male',
     diana: 'female',
     leoadult: 'male',
+    mayor: 'male',
+    marco: 'male',
   }
 
   function next() {
@@ -873,8 +927,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 overflow-y-auto px-4 py-6">
-      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{schoolFuture ? 'Futuro · Greenfield Academy, 2056' : cinemaPast ? 'Pasado · El viejo cine (final del pasado de A1)' : farmPast ? 'Pasado · La granja de 1996' : barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
-      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : schoolFuture ? 'La escuela de vidrio en 2056' : cinemaPast ? 'La sala del viejo cine, 1996' : farmPast ? 'La granja con molino, 1996' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
+      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{cityFuture ? 'Futuro · La ciudad de 2056' : schoolFuture ? 'Futuro · Greenfield Academy, 2056' : cinemaPast ? 'Pasado · El viejo cine (final del pasado de A1)' : farmPast ? 'Pasado · La granja de 1996' : barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
+      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : cityFuture ? 'La plaza de 2056 con la fuente vieja' : schoolFuture ? 'La escuela de vidrio en 2056' : cinemaPast ? 'La sala del viejo cine, 1996' : farmPast ? 'La granja con molino, 1996' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
         {s.home ? (
           <g>
             <rect width="320" height="200" fill="#f1d9c0" />
@@ -889,6 +943,17 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             <rect x="214" y="86" width="92" height="18" rx="6" fill="#c8664e" />
             <rect x="250" y="20" width="44" height="58" rx="2" fill="#e8eef2" stroke="#b8c4cc" strokeWidth="2" />
             <line x1="250" y1="40" x2="294" y2="40" stroke="#b8c4cc" strokeWidth="2" />
+          </g>
+        ) : cityFuture ? (
+          <g>
+            <rect width="320" height="200" fill="#cfe9f5" />
+            {[0, 1, 2, 3, 4].map((k) => <rect key={k} x={6 + k * 64} y={14 + (k % 2) * 24} width="48" height={140 - (k % 2) * 24} fill="#8fb8cf" opacity="0.75" />)}
+            <g className="anim-bob"><rect x="200" y="20" width="70" height="20" rx="10" fill="#5d8fd4" /><rect x="216" y="13" width="36" height="12" rx="6" fill="#cfe9f5" /></g>
+            <rect x="120" y="108" width="80" height="26" rx="6" fill="#a9c4d6" />
+            <path d="M136 108 q24 -30 48 0" fill="#7fe0ff" opacity="0.6" />
+            <rect x="236" y="96" width="22" height="38" fill="#a9a9a9" />
+            <circle cx="247" cy="88" r="9" fill="#b5b5b5" />
+            <rect y="134" width="320" height="66" fill="#9aa6b2" />
           </g>
         ) : schoolFuture ? (
           <g>
@@ -1088,6 +1153,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             : who === 'clarkdad' ? ENEMIES['office-past-boss'].look
             : who === 'diana' ? NPCS.diana.look
             : who === 'leoadult' ? NPCS['leo-adult'].look
+            : who === 'mayor' ? ENEMIES['city-future-boss'].look
+            : who === 'marco' ? NPCS.marco.look
             : interest.look
           return (
             <g key={who} transform={`translate(${spots[k] + 64} 128) scale(-2 2)`}>

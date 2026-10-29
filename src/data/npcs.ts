@@ -258,6 +258,40 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
       { text: "Look! The old bell. My grandma says it is from 1996. We are going to ring it at the party next week!", es: '¡Mira! La campana vieja. Mi abuela dice que es de 1996. ¡La vamos a tocar en la fiesta de la próxima semana!' },
     ],
   },
+  // ── La ciudad en 2056 ──
+  marco: {
+    name: 'Marco',
+    // El guía holograma: nieto de Tony Rossi, con la misma gorra
+    look: { shirt: '#7fe0ff', hair: '#3b2a1a', skin: '#e0ac69', accessory: 'cap' },
+    doneLine: { text: "My grandpa Tony was the best guide in town. I'm not going to be the second best! Ha ha.", es: 'Mi abuelo Tony fue el mejor guía de la ciudad. ¡No voy a ser el segundo mejor! Ja, ja.' },
+  },
+  'park-old': {
+    name: 'Mr. Park',
+    look: { shirt: '#2f6fd0', hair: '#cfcfcf', skin: '#f1c27d', accessory: 'cap' },
+    lines: [
+      { text: "I drove the city bus for forty years. Now the buses fly! I'm going to retire next year.", es: 'Manejé el bus de la ciudad cuarenta años. ¡Ahora los buses vuelan! Me voy a retirar el próximo año.' },
+      { text: "Are you going to take the Sky Bus? Don't look down! Ha ha.", es: '¿Vas a tomar el Sky Bus? ¡No mires hacia abajo! Ja, ja.' },
+      { text: 'A man in a dark coat sat at this old bus stop all day yesterday. He was not going anywhere.', es: 'Ayer un hombre con abrigo oscuro estuvo todo el día en esta parada vieja. No iba a ninguna parte.' },
+    ],
+  },
+  'rosa-chief': {
+    name: 'Chief Rosa',
+    // La oficial Rosa, ahora jefa de la policía
+    look: { shirt: '#1f3c88', hair: '#bdbdbd', skin: '#c68642', gender: 'female', accessory: 'cap' },
+    lines: [
+      { text: "I'm the chief of police now. Are you going to cross the street? Use the crosswalk, please!", es: 'Ahora soy la jefa de la policía. ¿Vas a cruzar la calle? ¡Usa la cebra, por favor!' },
+      { text: "Thirty years ago I gave maps to tourists. Now they aren't going to need maps: they have holo-glasses!", es: 'Hace treinta años les daba mapas a los turistas. ¡Ahora no van a necesitar mapas: tienen gafas holográficas!' },
+      { text: "When I was a little girl, I helped a lost dog in 1996. Ha ha, that's a long story.", es: 'Cuando era niña, ayudé a un perro perdido en 1996. Ja, ja, es una larga historia.' },
+    ],
+  },
+  'lily-adult': {
+    name: 'Lily',
+    look: { shirt: '#8b5a2b', hair: '#d9822b', skin: '#f6d3b3', gender: 'female', accessory: 'glasses' },
+    lines: [
+      { text: "This is my café now! The robots are going to bring your order. I'm not going to write your name on the cup... the robot is!", es: '¡Ahora este café es mío! Los robots te van a traer el pedido. Yo no voy a escribir tu nombre en el vaso... ¡el robot sí!' },
+      { text: "Are you going to have a black coffee? Mr. Rossi always had a black coffee at ten.", es: '¿Vas a tomar un café negro? El señor Rossi siempre tomaba un café negro a las diez.' },
+    ],
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

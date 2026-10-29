@@ -12,6 +12,7 @@ import { BARRIO_PAST } from '../data/barrioPast'
 import { FARM_PAST } from '../data/farmPast'
 import { CINEMA_PAST } from '../data/cinemaPast'
 import { SCHOOL_FUTURE } from '../data/schoolFuture'
+import { CITY_FUTURE } from '../data/cityFuture'
 import { SCHOOL } from '../data/school'
 
 /**
@@ -484,6 +485,43 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
         defeated: add(b.defeated, ['school-future-boss']),
         recovered: add(b.recovered, ['going-to']) as GameState['recovered'],
         outfits: add(b.outfits, ['traje-plata']),
+      }
+    },
+  },
+  {
+    id: 'future-city-start',
+    label: 'Futuro · Ciudad 2056: recién llegado',
+    apply: (s) => {
+      const b = PRESETS[31].apply(s)
+      return { ...b, screen: 'explore', sceneId: 'city-future', pos: { ...CITY_FUTURE.start }, opened: add(b.opened, ['school-future-epilogue', 'bus-city-future']) }
+    },
+  },
+  {
+    id: 'city-future-boss',
+    label: 'Futuro · Ciudad 2056: listo para el jefe',
+    apply: (s) => {
+      const b = PRESETS[32].apply(s)
+      return {
+        ...b,
+        pos: { x: 10, y: 12 },
+        defeated: add(b.defeated, ['city-future-m1', 'city-future-m2']),
+        keys: { ...b.keys, 'city-future': 2 },
+        opened: add(b.opened, ['future-tour']),
+        seenLesson: add(b.seenLesson, ['city-future', 'going-to-neg']),
+      }
+    },
+  },
+  {
+    id: 'future-city-done',
+    label: 'Futuro · Ciudad 2056: terminada',
+    apply: (s) => {
+      const b = PRESETS[33].apply(s)
+      return {
+        ...b,
+        screen: 'epilogue',
+        defeated: add(b.defeated, ['city-future-boss']),
+        recovered: add(b.recovered, ['going-to-neg']) as GameState['recovered'],
+        outfits: add(b.outfits, ['gafas-holo']),
       }
     },
   },

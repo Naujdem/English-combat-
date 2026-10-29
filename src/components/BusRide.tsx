@@ -18,7 +18,7 @@ export type BusTrip = { place: string; placeEs: string; price: string; priceNum:
   /** Pasos propios para un viaje en autobús */
   steps?: Step[]
   /** Viaje con el reloj del tiempo (otro dibujo) */
-  art?: 'clock' | 'walk' | 'future'
+  art?: 'clock' | 'walk' | 'future' | 'skybus'
   /** Para art 'walk': lo que se ve al fondo */
   scenery?: 'market' | 'build' | 'windmill' | 'cinema'
   /** Texto del botón final */
@@ -263,6 +263,32 @@ export const CLOCK_TO_2056: BusTrip = {
   ],
 }
 
+/** En el Sky Bus de 2056: de la escuela a la ciudad. El conductor es el señor Park, ya mayor */
+export const SKYBUS_TO_CITY_2056: BusTrip = {
+  place: 'the city',
+  placeEs: 'la ciudad de 2056',
+  price: '',
+  priceNum: '',
+  wrongPrices: ['', ''],
+  arrival: { text: '', es: '' },
+  sign: 'SKY BUS · CITY',
+  three: true,
+  art: 'skybus',
+  end: 'Bajar del Sky Bus',
+  steps: [
+    { who: 'narrator', text: 'Un bus azul baja del cielo sin hacer ruido. Las puertas se abren solas.', es: '' },
+    { who: 'driver', text: "Welcome to the Sky Bus! Wait... are you going to the city? I'm Mr. Park. I drove the old bus for forty years!", es: '¡Bienvenidos al Sky Bus! Esperen... ¿van a la ciudad? Soy el señor Park. ¡Manejé el bus viejo cuarenta años!' },
+    {
+      who: 'driver',
+      text: 'Are you going to pay with your phone?',
+      es: '¿Van a pagar con el teléfono?',
+      choice: { options: ["No, we aren't. We haven't got phones!", "No, we not going.", "No, we don't going to."], answer: 0, tip: "Respuesta corta en negativo: No, we aren't." },
+    },
+    { who: 'driver', text: "Ha ha! No phones? OK, the ride is free for you today. Sit down. We aren't going to drive... we are going to FLY!", es: '¡Ja, ja! ¿Sin teléfono? Bueno, hoy el viaje es gratis. Siéntense. No vamos a manejar... ¡vamos a VOLAR!' },
+    { who: 'leo', text: 'Look down! The city! And the old fountain is still there!', es: '¡Mira abajo! ¡La ciudad! ¡Y la fuente vieja sigue ahí!' },
+  ],
+}
+
 export const BUS_TO_BARRIO: BusTrip = {
   place: 'Green Street',
   placeEs: 'Green Street, el barrio de Leo',
@@ -331,12 +357,27 @@ export function BusRide({ trip, hero, friend, friendName = '', onDone }: { trip:
   return (
     <div className="absolute inset-0 z-40 overflow-y-auto bg-ink">
       <div className="mx-auto flex max-w-md flex-col gap-3 px-3 py-6">
-        <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{trip.art === 'clock' || trip.art === 'future' ? 'Viaje en el tiempo' : trip.art === 'walk' ? 'A pie' : trip.bike ? 'En bicicleta' : 'En el autobús'}</p>
+        <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{trip.art === 'clock' || trip.art === 'future' ? 'Viaje en el tiempo' : trip.art === 'walk' ? 'A pie' : trip.art === 'skybus' ? 'En el Sky Bus' : trip.bike ? 'En bicicleta' : 'En el autobús'}</p>
         <svg viewBox="0 0 320 170" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={`Autobús a ${trip.placeEs}`}>
           <rect width="320" height="170" fill="#bfe3f5" />
           <rect y="128" width="320" height="42" fill="#6b6b73" />
           {Array.from({ length: 6 }).map((_, k) => <rect key={k} x={k * 60 + 8} y="148" width="30" height="4" fill="#f2d16b" />)}
-          {trip.art === 'future' ? (
+          {trip.art === 'skybus' ? (
+            <g>
+              <rect width="320" height="170" fill="#cfe9f5" />
+              {[0, 1, 2, 3, 4].map((k) => <rect key={k} x={10 + k * 66} y={40 + (k % 2) * 20} width="40" height={130 - (k % 2) * 20} fill="#8fb8cf" opacity="0.7" />)}
+              <g className={moving ? 'anim-bob' : undefined}>
+                <ellipse cx="160" cy="140" rx="120" ry="6" fill="#7fe0ff" opacity="0.4" />
+                <rect x="30" y="50" width="260" height="78" rx="30" fill="#5d8fd4" />
+                {[0, 1, 2, 3].map((k) => <rect key={k} x={52 + k * 50} y="62" width="42" height="36" rx="8" fill="#e4f4fb" />)}
+                <g transform="translate(58 68) scale(1.05)"><SpriteBody look={hero} /></g>
+                <g transform="translate(108 68) scale(1.05)"><SpriteBody look={FRIENDS.leo.look} /></g>
+                {trip.three && friend && <g transform="translate(158 68) scale(1.05)"><SpriteBody look={friend} /></g>}
+                <g transform="translate(208 68) scale(1.05)"><SpriteBody look={{ ...NPCS.driver.look, hair: '#cfcfcf' }} /></g>
+                <text x="160" y="118" textAnchor="middle" fontSize="10" fontWeight="700" fill="#e4f4fb" fontFamily="Fredoka, Nunito, system-ui, sans-serif">{trip.sign}</text>
+              </g>
+            </g>
+          ) : trip.art === 'future' ? (
             <g>
               <rect width="320" height="170" fill="#cfe9f5" />
               <rect y="120" width="320" height="50" fill="#9fcf8a" />

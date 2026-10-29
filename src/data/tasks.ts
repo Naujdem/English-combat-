@@ -17,7 +17,7 @@ export type NpcTask = {
   shield?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour'
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
   vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
@@ -457,6 +457,20 @@ NPC_TASKS['leo-adult'] = {
     es: '¡Hola, hola! Qué buen plan. Mañana va a ser una clase maravillosa. ¡Gracias!',
     sub: 'El plan de clase está listo. GRIMM-BOT ya no puede decir que no ayudaste al profesor.',
     say: 'Hi, hi! What a great plan. Tomorrow is going to be a wonderful class. Thank you!',
+  },
+}
+
+// ── La ciudad en 2056 ──
+NPC_TASKS.marco = {
+  done: 'future-tour',
+  lesson: 'going-to-neg',
+  activity: 'tour',
+  steps: [],
+  reward: {
+    text: 'Marco: "Perfect! The tourists aren\'t going to get lost today. My grandpa is going to be proud!"',
+    es: '¡Perfecto! Los turistas no se van a perder hoy. ¡Mi abuelo va a estar orgulloso!',
+    sub: 'La ruta está lista. El alcalde ya no puede decir que no ayudaste a los turistas.',
+    say: "Perfect! The tourists aren't going to get lost today.",
   },
 }
 

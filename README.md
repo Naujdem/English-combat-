@@ -182,6 +182,7 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 
 - Se abre al terminar el cine: pestaña Futuro en el mapa y viaje `CLOCK_TO_2056`. Mapa en `src/data/schoolFuture.ts`, preguntas en `src/data/questions-future.ts`.
 - La clase de mañana del profesor Garcia, Leo adulto (`src/components/LessonPlan.tsx`). El jefe GRIMM-BOT es un robot (`animal: 'robot'`).
+- La ciudad de 2056 (`src/data/cityFuture.ts`): misma distribución que la ciudad del presente. Se llega en el Sky Bus (`SKYBUS_TO_CITY_2056`). La ruta de los turistas (`src/components/TourPlan.tsx`): going to en negativo y preguntas.
 - La muletilla de Leo, "Hi, hi!": abre cada lección (`src/components/Lesson.tsx`); el desconocido la dice en su primera aparición.
 
 ## Explicaciones y repaso de cierre de A1

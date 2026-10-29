@@ -14,7 +14,7 @@ import { Practice } from './Practice'
 import { btn, btnGhost, Panel } from './ui'
 
 /** Temas de A1 en el orden en que aparecen en el juego */
-export const A1_ORDER: TopicId[] = ['greetings', 'to-be', 'possessives', 'prepositions', 'imperatives', 'there-is', 'demonstratives', 'ordering', 'present-simple', 'likes', 'can', 'present-continuous', 'have-got', 'do-does', 'plurals', 'time', 'object-pronouns', 'could-you', 'was-were', 'past-regular', 'past-irregular', 'past-did', 'past-time', 'going-to']
+export const A1_ORDER: TopicId[] = ['greetings', 'to-be', 'possessives', 'prepositions', 'imperatives', 'there-is', 'demonstratives', 'ordering', 'present-simple', 'likes', 'can', 'present-continuous', 'have-got', 'do-does', 'plurals', 'time', 'object-pronouns', 'could-you', 'was-were', 'past-regular', 'past-irregular', 'past-did', 'past-time', 'going-to', 'going-to-neg']
 
 export function mastery(s: GameState, t: TopicId) {
   const st = s.stats[t] ?? { ok: 0, fail: 0 }
