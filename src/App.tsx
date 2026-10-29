@@ -8,6 +8,7 @@ import { Explore } from './screens/Explore'
 import { Battle } from './screens/Battle'
 import { Epilogue } from './screens/Epilogue'
 import { TeacherPanel } from './components/TeacherPanel'
+import { WordProvider } from './components/Words'
 import { ENEMIES } from './data/enemies'
 
 export default function App() {
@@ -98,7 +99,9 @@ export default function App() {
 
   return (
     <main className="relative h-full w-full overflow-hidden">
-      {screen}
+      <WordProvider state={state} update={update}>
+        {screen}
+      </WordProvider>
       <TeacherPanel state={state} update={update} />
       {flash > 0 && state.screen === 'explore' && (
         <div key={flash} className="anim-wipe pointer-events-none absolute inset-0 z-50 bg-paper" />

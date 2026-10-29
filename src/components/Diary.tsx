@@ -20,6 +20,7 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
   const [quiz, setQuiz] = useState<number | null>(null)
   const [solved, setSolved] = useState(false)
   const [tip, setTip] = useState<string | null>(null)
+  const [wordsView, setWordsView] = useState(false)
 
   if (!chapter) {
     return (
@@ -84,6 +85,58 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
 
   return (
     <div className="absolute inset-0 z-40 overflow-y-auto bg-ink">
+      {wordsView && (
+        <div className="absolute inset-0 z-10 overflow-y-auto bg-ink">
+          <div className="mx-auto flex max-w-md flex-col gap-3 px-3 py-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-gold">Palabras del capítulo</p>
+                <p className="font-display text-lg">{chapter.title}</p>
+              </div>
+              <button className={btnGhost} onClick={() => setWordsView(false)}>Volver</button>
+            </div>
+            <p className="text-sm text-paper/65">Todo el vocabulario que viste en este lugar. Escúchalo y guarda en tus fichas las palabras que quieras repasar.</p>
+            <button
+              className={btn}
+              onClick={() =>
+                update((s) => {
+                  const have = new Set(s.cards.map((c) => c.id))
+                  const add = chapter.words.flatMap((g) => g.words).filter(([en]) => !have.has(en.toLowerCase())).map(([en, es]) => newCard(en, es))
+                  return { ...s, cards: [...s.cards, ...add] }
+                })
+              }
+            >
+              Guardar todas en fichas
+            </button>
+            {chapter.words.map((g) => (
+              <Panel key={g.title}>
+                <p className="font-display text-lg text-gold">{g.title}</p>
+                <ul className="mt-1 grid gap-1">
+                  {g.words.map(([en, es]) => {
+                    const saved = state.cards.some((c) => c.id === en.toLowerCase())
+                    return (
+                      <li key={en} className="flex items-center gap-2 border-b border-line/50 py-1 last:border-0">
+                        <SpeakButton text={en} size="sm" />
+                        <span className="flex-1">
+                          <span className="font-display text-[17px]">{en}</span>
+                          <span className="text-sm text-paper/60"> · {es}</span>
+                        </span>
+                        <button
+                          className={`rounded-lg border px-2 py-1 text-xs font-semibold ${saved ? 'border-hp/50 text-hp' : 'border-line text-paper/80'}`}
+                          disabled={saved}
+                          onClick={() => update((s) => (s.cards.some((c) => c.id === en.toLowerCase()) ? s : { ...s, cards: [...s.cards, newCard(en, es)] }))}
+                        >
+                          {saved ? '✓ Guardada' : 'Guardar'}
+                        </button>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </Panel>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="mx-auto flex max-w-md flex-col gap-3 px-3 py-4">
         <div className="flex items-center justify-between">
           <div>
@@ -107,6 +160,10 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
             </button>
           ))}
         </div>
+
+        <button className={`${btn} py-2 text-sm`} onClick={() => setWordsView(true)}>
+          Palabras del capítulo ({chapter.words.reduce((n, g) => n + g.words.length, 0)})
+        </button>
 
         <p className="text-sm text-paper/70">{version.frame}</p>
 

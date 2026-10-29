@@ -7,6 +7,7 @@ import { pickQuestion, questionById, TOPICS } from '../data/questions'
 import { QuestionCard, correctSentence } from '../components/QuestionCard'
 import { GrammarPattern, RoleSentence } from '../components/Grammar'
 import { Practice } from '../components/Practice'
+import { Tappable } from '../components/Words'
 import { sessionFor } from '../data/schedule'
 import { SpeakButton } from '../components/SpeakButton'
 import { SCENES, heroLook, perks, recordAnswer } from '../game/helpers'
@@ -422,7 +423,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             <p className="font-display text-lg text-gold">{enemy.kind !== 'minion' || phase === 'after' ? enemy.person : enemy.name}</p>
             <SpeakButton text={story.text} size="sm" />
           </div>
-          <p key={`${phase}-${line}`} className="anim-fade-in text-[17px] leading-relaxed">"{story.text}"</p>
+          <p key={`${phase}-${line}`} className="anim-fade-in text-[17px] leading-relaxed">"<Tappable text={story.text} />"</p>
           {showEs && story.es && <p className="mt-1 text-sm text-paper/60">{story.es}</p>}
           <div className="mt-3 flex items-center justify-between">
             {story.es ? (
@@ -474,7 +475,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
                 <p className="font-display text-lg text-[#c9b3ee]">{enemy.person} cambia...</p>
                 <SpeakButton text={interlude.text} size="sm" />
               </div>
-              <p className="text-[16px] leading-snug">"{interlude.text}"</p>
+              <p className="text-[16px] leading-snug">"<Tappable text={interlude.text} />"</p>
               {interlude.es && <p className="mt-1 text-sm text-paper/60">{interlude.es}</p>}
               <div className="mt-3 flex justify-end">
                 <button className={btnPrimary} onClick={nextQuestion} autoFocus>Siguiente fase</button>

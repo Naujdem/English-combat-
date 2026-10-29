@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { GameState } from '../game/types'
 import { SpriteBody } from '../components/Sprite'
 import { SpeakButton } from '../components/SpeakButton'
+import { Tappable } from '../components/Words'
 import { btn, btnGhost, btnPrimary, Panel } from '../components/ui'
 import { FRIENDS, interestFriend } from '../data/friends'
 import { heroLook } from '../game/helpers'
@@ -196,7 +197,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
           </div>
         )}
         <p key={i} className={`anim-fade-in text-[17px] leading-relaxed ${s.who === 'narrator' ? 'italic text-paper/85' : ''}`}>
-          {s.who === 'hero' && solved ? `"${s.choice!.options[s.choice!.answer]}"` : s.text}
+          {s.who === 'hero' && solved ? `"${s.choice!.options[s.choice!.answer]}"` : s.who === 'narrator' || s.who === 'hero' ? s.text : <Tappable text={s.text} />}
         </p>
         {!hideEs && s.es && <p className="mt-1 text-sm text-paper/60">{s.es}</p>}
 

@@ -20,7 +20,8 @@ export type DiaryVersion = {
   lines: DiaryLine[]
   questions: DiaryQuestion[]
 }
-export type DiaryChapter = { id: string; title: string; unlock: string; versions: DiaryVersion[] }
+export type WordGroup = { title: string; words: [string, string][] }
+export type DiaryChapter = { id: string; title: string; unlock: string; versions: DiaryVersion[]; words: WordGroup[] }
 
 export const TENSE_INFO: Record<Tense, { name: string; color: string }> = {
   p: { name: 'Pasado', color: '#e0a526' },
@@ -33,6 +34,19 @@ export const DIARY: DiaryChapter[] = [
     id: 'school',
     title: 'Capítulo 1: La escuela',
     unlock: 'school-epilogue',
+    // Todo el vocabulario del capítulo, para repasarlo y guardarlo en las fichas
+    words: [
+      { title: 'Información personal', words: [['name', 'nombre'], ['age', 'edad'], ['country', 'país'], ['nationality', 'nacionalidad'], ['address', 'dirección'], ['phone number', 'número de teléfono'], ['email', 'correo electrónico']] },
+      { title: 'El aula', words: [['teacher', 'profesor'], ['student', 'estudiante'], ['classroom', 'salón de clase'], ['desk', 'pupitre'], ['chair', 'silla'], ['board', 'pizarra'], ['window', 'ventana'], ['door', 'puerta'], ['homework', 'tarea'], ['test', 'examen']] },
+      { title: 'Útiles escolares', words: [['book', 'libro'], ['notebook', 'cuaderno'], ['pen', 'bolígrafo'], ['pencil', 'lápiz'], ['ruler', 'regla'], ['scissors', 'tijeras'], ['bag', 'mochila'], ['chalk', 'tiza']] },
+      { title: 'Lugares de la escuela', words: [['bathroom', 'baño'], ['cafeteria', 'cafetería'], ['library', 'biblioteca'], ["teachers' room", 'sala de profesores'], ["secretary's office", 'secretaría'], ['playground', 'patio']] },
+      { title: 'Materias y horario', words: [['Maths', 'matemáticas'], ['Science', 'ciencias'], ['English', 'inglés'], ['History', 'historia'], ['P.E.', 'educación física'], ['Art', 'arte'], ['Music', 'música'], ['lunch', 'almuerzo'], ['schedule', 'horario'], ["o'clock", 'en punto']] },
+      { title: 'Días de la semana', words: [['Monday', 'lunes'], ['Tuesday', 'martes'], ['Wednesday', 'miércoles'], ['Thursday', 'jueves'], ['Friday', 'viernes']] },
+      { title: 'Deportes', words: [['football', 'fútbol'], ['basketball', 'baloncesto'], ['tennis', 'tenis'], ['ball', 'pelota'], ['team', 'equipo'], ['player', 'jugador'], ['coach', 'entrenador'], ['whistle', 'silbato'], ['run', 'correr'], ['jump', 'saltar'], ['swim', 'nadar'], ['win', 'ganar']] },
+      { title: '¿Dónde está?', words: [['in', 'dentro de'], ['on', 'sobre'], ['under', 'debajo de'], ['next to', 'al lado de'], ['between', 'entre'], ['in front of', 'delante de'], ['behind', 'detrás de']] },
+      { title: 'Órdenes', words: [['open', 'abrir'], ['close', 'cerrar'], ['sit down', 'sentarse'], ['stand up', 'ponerse de pie'], ['listen', 'escuchar'], ['be quiet', 'hacer silencio'], ["don't run", 'no corras']] },
+      { title: 'Saludos y despedidas', words: [['hello', 'hola'], ['good morning', 'buenos días'], ['good afternoon', 'buenas tardes'], ['good night', 'buenas noches'], ['goodbye', 'adiós'], ['see you tomorrow', 'nos vemos mañana'], ['nice to meet you', 'mucho gusto']] },
+    ],
     versions: [
       {
         id: 'school-past',

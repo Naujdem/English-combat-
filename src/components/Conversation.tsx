@@ -4,6 +4,7 @@ import { SpriteIcon } from './Sprite'
 import { heroLook } from '../game/helpers'
 import { btn, btnPrimary, Panel } from './ui'
 import { SpeakButton } from './SpeakButton'
+import { Tappable } from './Words'
 
 function EffectChip({ effect }: { effect: ChatOption['effect'] }) {
   if (effect > 0)
@@ -78,7 +79,7 @@ export function ConversationView({
         <>
           <div className="flex items-start gap-2">
             <p key={i} className={`anim-fade-in flex-1 text-[17px] leading-relaxed ${line.who === 'narrator' ? 'italic text-paper/80' : ''}`}>
-              {line.text}
+              {line.who === 'friend' ? <Tappable text={line.text} /> : line.text}
             </p>
             {line.who === 'friend' && <SpeakButton text={line.text} size="sm" />}
           </div>

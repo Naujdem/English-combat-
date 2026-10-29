@@ -27,7 +27,8 @@ export function mastery(s: GameState, t: TopicId) {
 
 /** Un tema se puede repasar cuando ya apareció en la historia */
 function unlocked(s: GameState, t: TopicId, teacher: boolean) {
-  return teacher || s.seenLesson.includes(t) || s.recovered.includes(t) || (s.stats[t]?.ok ?? 0) + (s.stats[t]?.fail ?? 0) > 0
+  // Solo después de que Leo dio la lección del tema en la historia
+  return teacher || s.seenLesson.includes(t)
 }
 
 function Bar({ value, color }: { value: number; color: string }) {
@@ -64,8 +65,8 @@ export function Review({ state, update, onClose }: { state: GameState; update: U
         </div>
         <p className="text-sm text-paper/65">Fuera de la historia: mira la estructura, vuelve a ver la explicación de Leo o practica sin perder vida.</p>
 
-        {A1_ORDER.map((t, k) => {
-          const open = unlocked(state, t, teacher)
+        {A1_ORDER.filter((t) => unlocked(state, t, teacher)).map((t, k) => {
+          const open = true
           const m = mastery(state, t)
           return (
             <Panel key={t} className={open ? '' : 'opacity-60'}>
@@ -94,6 +95,9 @@ export function Review({ state, update, onClose }: { state: GameState; update: U
             </Panel>
           )
         })}
+        {A1_ORDER.some((t) => !unlocked(state, t, teacher)) && (
+          <p className="px-1 text-center text-sm text-paper/55">Aparecerán más temas cuando Leo te los enseñe en la historia.</p>
+        )}
       </div>
     </div>
   )
@@ -101,6 +105,8 @@ export function Review({ state, update, onClose }: { state: GameState; update: U
 
 /** Mi progreso: lugares, piezas, temas y repaso */
 export function ProgressView({ state, onClose, onReview }: { state: GameState; onClose: () => void; onReview: () => void }) {
+  const teacher = useTeacher().on
+  const shown = A1_ORDER.filter((t) => unlocked(state, t, teacher))
   const bosses = WORLD.filter((n) => n.sceneId)
   const places = WORLD.filter((n) => Object.values(ENEMIES).some((e) => e.kind === 'boss' && e.id.startsWith(n.id) && state.defeated.includes(e.id))).length
   const minions = Object.values(ENEMIES).filter((e) => e.kind === 'minion' && state.defeated.includes(e.id)).length
@@ -146,8 +152,8 @@ export function ProgressView({ state, onClose, onReview }: { state: GameState; o
           <p className="font-display text-lg">Temas</p>
           <p className="text-sm text-paper/60">Según tus respuestas en combates, prácticas y el cuaderno.</p>
           <div className="mt-3 grid gap-3">
-            {A1_ORDER.map((t, k) => {
-              const m = all.at(k)!
+            {shown.map((t) => {
+              const m = mastery(state, t)
               return (
                 <div key={t}>
                   <div className="mb-1 flex items-center justify-between gap-2 text-sm">
@@ -162,6 +168,9 @@ export function ProgressView({ state, onClose, onReview }: { state: GameState; o
               )
             })}
           </div>
+          {shown.length < A1_ORDER.length && (
+            <p className="mt-3 text-sm text-paper/55">Y {A1_ORDER.length - shown.length} temas más por descubrir en la historia.</p>
+          )}
           <button className={`${btn} mt-4 w-full border-gold`} onClick={onReview}>Repasar un tema</button>
         </Panel>
       </div>

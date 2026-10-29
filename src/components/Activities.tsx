@@ -6,6 +6,7 @@ import { DAYS, HOURS, SESSIONS, type Session } from '../data/schedule'
 type Word = { en: string; es: string }
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
 import { SpeakButton } from './SpeakButton'
+import { Tappable } from './Words'
 
 function sample<T>(list: T[], n: number): T[] {
   const a = [...list]
@@ -208,7 +209,7 @@ export function ReadingActivity({
           {r.text.map((p, k) => (
             <div key={k} className={`flex items-start gap-2 ${k ? 'mt-2' : ''}`}>
               <p className="flex-1">
-                {p}
+                <Tappable text={p} />
                 {showEs && <span className="mt-0.5 block text-sm text-paper/60">{r.es[k]}</span>}
               </p>
               <SpeakButton text={p} size="sm" />

@@ -14,6 +14,7 @@ import { SPORTS_VOCAB } from '../data/activities'
 import { Chest, FLOOR, T, Tile, VOCAB, walkable } from '../components/Tiles'
 import { SpriteBody } from '../components/Sprite'
 import { DPad } from '../components/DPad'
+import { Joystick } from '../components/Joystick'
 import { SpeakButton } from '../components/SpeakButton'
 import { ConversationView } from '../components/Conversation'
 import { FriendsPanel } from '../components/FriendsPanel'
@@ -24,6 +25,7 @@ import { NPCS } from '../data/npcs'
 import { Registration } from '../components/Registration'
 import { WhereIsIt } from '../components/WhereIsIt'
 import { sfx } from '../game/sfx'
+import { Tappable } from '../components/Words'
 import { CoachSays } from '../components/CoachSays'
 import { Directions } from '../components/Directions'
 import { CafeOrder } from '../components/CafeOrder'
@@ -58,6 +60,14 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | 'sports' | 'timetable' | 'where' | 'coach' | 'directions' | 'cafe' | null>(null)
   const boardNext = nextSession(state.opened, state.defeated)
   const npcTurn = useRef<Record<string, number>>({})
+  // Controles: flechas o joystick, a elección (se recuerda en este dispositivo)
+  const [controls, setControls] = useState<'dpad' | 'joystick'>(() => {
+    try {
+      return localStorage.getItem('english-combat-controls') === 'joystick' ? 'joystick' : 'dpad'
+    } catch {
+      return 'dpad'
+    }
+  })
   const [notebook, setNotebook] = useState(false)
   // Preguntar "Is this your...?" mientras llevas un objeto perdido
   const [ask, setAsk] = useState<{ itemId: string; npcId: string; npcName: string } | null>(null)
@@ -323,7 +333,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   }
 
   return (
-    <div className="relative mx-auto flex h-full max-w-md flex-col gap-2 px-3 py-2">
+    <div className="relative mx-auto flex h-full max-w-md flex-col gap-2 overflow-y-auto px-3 py-2">
       <header className="flex items-center justify-between gap-2">
         <button className={btnGhost} onClick={onWorld}>Mapa</button>
         <div className="flex items-center gap-3">
@@ -337,7 +347,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         <button className={btnGhost} onClick={() => setFriendsOpen(true)}>Amigos</button>
       </header>
 
-      <div className="overflow-hidden rounded-2xl border-2 border-line bg-ink">
+      {/* El mapa se achica en pantallas bajas para que no tape los controles */}
+      <div className="mx-auto w-full shrink-0 overflow-hidden rounded-2xl border-2 border-line bg-ink" style={{ maxWidth: 'min(100%, 44svh)' }}>
         <svg viewBox={`0 0 ${VIEW * T} ${VIEW * T}`} className="block w-full" role="img" aria-label={`${scene.name}, vista desde arriba`}>
           <g style={{ transform: `translate(${-camX * T}px, ${-camY * T}px)`, transition: 'transform 180ms ease-out' }}>
             {tiles}
@@ -468,11 +479,21 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         </div>
       )}
 
-      <div className="min-h-[76px]">
+      <div className="min-h-[76px] shrink-0">
         {msg ? (
           <Panel className={`anim-fade-in py-3 ${msg.tone === 'good' ? 'border-hp/70' : msg.tone === 'warn' ? 'border-gold/70' : ''}`}>
             <div className="flex items-start gap-2">
-              <p className="flex-1 text-[16px] font-semibold">{msg.text}</p>
+              <p className="flex-1 text-[16px] font-semibold">
+                {msg.say && msg.text.includes(msg.say) ? (
+                  <>
+                    {msg.text.slice(0, msg.text.indexOf(msg.say))}
+                    <Tappable text={msg.say} />
+                    {msg.text.slice(msg.text.indexOf(msg.say) + msg.say.length)}
+                  </>
+                ) : (
+                  msg.text
+                )}
+              </p>
               {msg.say && <SpeakButton text={msg.say} size="sm" />}
             </div>
             {msg.sub && <p className="mt-0.5 text-sm text-paper/70">{msg.sub}</p>}
@@ -484,7 +505,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         )}
       </div>
 
-      <div className="mt-auto flex items-end justify-between pb-2">
+      <div className="mt-auto flex shrink-0 items-end justify-between pb-2">
         <div className="flex flex-col gap-2">
           <button className={`${btn} relative px-3 text-sm`} onClick={() => setNotebook(true)}>
             Cuaderno
@@ -496,7 +517,23 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           </button>
           <OutfitButton state={state} update={update} />
         </div>
-        <DPad onMove={move} disabled={blocked} />
+        <div className="flex flex-col items-end gap-1">
+          <button
+            className="rounded-full border border-line px-2.5 py-0.5 text-[11px] font-semibold text-paper/65"
+            onClick={() => {
+              const next = controls === 'dpad' ? 'joystick' : 'dpad'
+              setControls(next)
+              try {
+                localStorage.setItem('english-combat-controls', next)
+              } catch {
+                /* sin almacenamiento */
+              }
+            }}
+          >
+            {controls === 'dpad' ? 'Usar joystick' : 'Usar flechas'}
+          </button>
+          {controls === 'dpad' ? <DPad onMove={move} disabled={blocked} /> : <Joystick onMove={move} disabled={blocked} />}
+        </div>
       </div>
 
       {talk && talkFriend && (

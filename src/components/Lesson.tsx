@@ -5,6 +5,7 @@ import { btn, btnGhost, btnPrimary, Panel } from './ui'
 import { heroLook } from '../game/helpers'
 import { FRIENDS } from '../data/friends'
 import { SpeakButton } from './SpeakButton'
+import { Tappable } from './Words'
 import { GrammarPattern, RoleSentence } from './Grammar'
 
 export const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
@@ -103,7 +104,7 @@ export function Lesson({
           key={i}
           className={`anim-fade-in leading-relaxed ${s.who === 'narrator' ? 'text-[17px] italic text-paper/85' : s.who === 'board' ? 'font-display text-[22px]' : 'text-[17px]'}`}
         >
-          {text}
+          {s.who === 'leo' ? <Tappable text={text} /> : text}
         </p>
         {!hideEs && s.es && <p className="mt-1 text-sm text-paper/60">{s.es}</p>}
 
