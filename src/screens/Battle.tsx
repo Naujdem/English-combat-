@@ -553,8 +553,9 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const [fbReady, setFbReady] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
   // Preguntas falladas: vuelven al final del combate. A la tercera vez que fallas la misma, Leo la explica
-  const [retry, setRetry] = useState<Question[]>([])
-  const [fails, setFails] = useState<Record<string, number>>({})
+  // Cada fallo deja un "pendiente" con cuántas veces se falló; al volver, sale una pregunta parecida
+  const [retry, setRetry] = useState<{ q: Question; n: number }[]>([])
+  const [slotFails, setSlotFails] = useState(0)
   const [explain, setExplain] = useState(false)
   const wrongShown = (phase === 'feedback' || phase === 'lost') && !correct && (explain || phase === 'lost')
   const quietWrong = phase === 'feedback' && !correct && !explain
@@ -583,9 +584,9 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
     window.setTimeout(() => sfx(ok ? 'hit' : 'hurt'), 180)
     if (!ok) {
       setFailed((f) => [...f, q.id])
-      const n = (fails[q.id] ?? 0) + 1
-      setFails((f) => ({ ...f, [q.id]: n }))
-      setRetry((r) => [...r, q])
+      const n = slotFails + 1
+      setSlotFails(n)
+      setRetry((r) => [...r, { q, n }])
       setExplain(n >= 3)
     }
     if (ok) {
@@ -626,15 +627,36 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
     setHint(false)
   }
 
+  /**
+   * Para repetir una pregunta fallada: otra del mismo tema y tipo (si hay una sin usar);
+   * si no, la misma con las opciones en otro orden. Así no se acierta solo por descarte.
+   */
+  function similar(missed: Question, usedIds: string[]): Question {
+    const p = poolAt(state.battle?.enemyHp ?? battle.enemyHp)
+    const kind = missed.kind ?? 'fill'
+    const alt = pickQuestion([missed.topic], [kind], [...usedIds, missed.id], [], p.tags ?? [])
+    const fresh = alt && alt.id !== missed.id && !usedIds.includes(alt.id) && (alt.kind ?? 'fill') === kind && !!alt.audio === !!missed.audio
+    if (fresh) return alt
+    if (kind === 'order' || kind === 'write' || kind === 'speak') return missed
+    let idx = missed.options.map((_, k) => k)
+    for (let t = 0; t < 6 && idx.every((v, k) => v === k); t++) idx = mixed(missed.options, `${missed.id}-${Date.now()}-${t}`).map(([, k]) => k)
+    return { ...missed, options: idx.map((k) => missed.options[k]), answer: idx.indexOf(missed.answer) }
+  }
+
   function nextQuestion() {
     const nextUsed = [...used, q.id]
     setUsed(nextUsed)
     const left = state.battle?.enemyHp ?? battle.enemyHp
     // Las falladas salen al final: cuando lo que le queda al enemigo alcanza justo para repetirlas todas
     if (retry.length > 0 && left <= retry.length) {
-      setQ(retry[0])
+      const { q: missed, n } = retry[0]
+      setQ(similar(missed, nextUsed))
+      setSlotFails(n)
       setRetry(retry.slice(1))
-    } else setQ(pick(left, nextUsed))
+    } else {
+      setQ(pick(left, nextUsed))
+      setSlotFails(0)
+    }
     setExplain(false)
     setInterlude(null)
     setCorrect(false)
@@ -876,12 +898,12 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
 
       {showQuestion && (
         <Panel className={`anim-fade-in ${phase === 'ask' ? 'border-gold/60 shadow-[0_0_0_3px_rgba(224,165,38,0.12)]' : ''}`}>
-          {phase === 'ask' && (fails[q.id] ?? 0) > 0 && (
+          {phase === 'ask' && slotFails > 0 && (
             <p className="mb-2 rounded-lg bg-danger/15 px-2 py-1 text-xs font-semibold text-[#f3b0b0]">
-              Otra vez esta pregunta: la fallaste {fails[q.id] === 1 ? 'una vez' : `${fails[q.id]} veces`}.{fails[q.id] === 2 ? ' Si fallas de nuevo, Leo te la explica.' : ''}
+              Otra vez: una pregunta como la que fallaste {slotFails === 1 ? 'una vez' : `${slotFails} veces`}.{slotFails === 2 ? ' Si fallas de nuevo, Leo te la explica.' : ''}
             </p>
           )}
-          {wasMistake && phase === 'ask' && !fails[q.id] && (
+          {wasMistake && phase === 'ask' && !slotFails && (
             <p className="mb-2 rounded-lg bg-gold/10 px-2 py-1 text-xs font-semibold text-gold">Esta pregunta está en tu cuaderno de errores</p>
           )}
           <QuestionCard
@@ -891,7 +913,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             hint={hint}
             onSkip={phase === 'ask' ? skipSpeak : undefined}
             onAnswer={(ok) => phase === 'ask' && resolve(ok)}
-            reveal={(fails[q.id] ?? 0) >= 2}
+            reveal={slotFails >= 2}
             headerRight={
               leoHint && phase === 'ask' && q.kind !== 'speak' ? (
                 <button className="rounded-lg border border-hp/60 px-2 py-1 text-xs font-semibold text-hp disabled:opacity-40" onClick={() => setHint(true)} disabled={hint}>
@@ -921,7 +943,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               <div className="flex items-center justify-between gap-2">
                 <p className="text-sm font-semibold text-[#f3b0b0]">
                   No es correcto. Esta pregunta volverá al final del combate.
-                  <span className="block text-xs font-normal text-paper/60">Fallos: {fails[q.id] ?? 1} de 3. A la tercera, Leo te la explica.</span>
+                  <span className="block text-xs font-normal text-paper/60">Fallos: {slotFails || 1} de 3. A la tercera, Leo te la explica.</span>
                 </p>
                 <button className={btnPrimary} onClick={nextQuestion} autoFocus>Seguir</button>
               </div>
