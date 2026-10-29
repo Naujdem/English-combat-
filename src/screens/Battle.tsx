@@ -19,6 +19,7 @@ import { Bar, btnGhost, btnPrimary, Hearts, Panel } from '../components/ui'
 import { TimeClock } from '../components/TimeClock'
 import { PRESENT_NODES } from '../data/world'
 import { useTeacher } from '../game/teacher'
+import { useDesktop } from '../game/device'
 import { AnimalSprite } from '../components/Animals'
 
 
@@ -507,6 +508,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const ent = scene.entities.find((e) => 'id' in e && e.id === enemy.id)
   const zone = ent ? scene.zoneAt(ent.x, ent.y) : 'aula'
   const leoHint = perks(state).leoHint
+  const desktop = useDesktop()
   const metLeo = 'leo' in state.talks || 'leo' in state.friendship
 
   const [phase, setPhase] = useState<Phase>('story')
@@ -713,8 +715,42 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
 
   const showQuestion = phase === 'ask' || phase === 'feedback' || phase === 'lost'
 
+  const feedback = (
+<div className={`anim-slide-up w-full overflow-y-auto ${desktop ? '' : 'max-h-[60vh] max-w-md'} rounded-2xl border-2 border-gold/60 bg-panel p-3 shadow-[0_-8px_24px_rgba(0,0,0,0.45)]`} role="dialog" aria-label="Explicación de Leo">
+              {blocked && <p className="mb-1 text-sm font-semibold text-[#9cc0f0]">Tu escudo de palabras bloqueó el golpe.</p>}
+              <LeoCoach key={q.id} q={q} metLeo={metLeo} tags={poolAt(battle.enemyHp).tags} />
+              <p className="mt-2 text-xs text-paper/50">Se anotó en tu cuaderno de errores.</p>
+              <div className="mt-3 flex justify-end">
+                {phase === 'lost' ? (
+                  <button className={btnPrimary} onClick={leave} autoFocus>{enemy.kind === 'trainer' ? 'Intentar otra vez' : 'Volver a intentarlo'}</button>
+                ) : (
+                  <button className={btnPrimary} onClick={nextQuestion} autoFocus>Seguir</button>
+                )}
+              </div>
+              {phase === 'lost' && (
+                <p className="mt-2 text-xs text-paper/60">
+                  {enemy.kind === 'trainer'
+                    ? 'Leo: "Don\'t worry, it\'s just practice!" Vuelves a empezar con la vida llena.'
+                    : 'Te quedaste sin energía. Volverás a la entrada con la vida llena.'}
+                </p>
+              )}
+              {phase === 'lost' && failed.length > 0 && (
+                <div className="mt-3 rounded-xl border-2 border-hp/50 bg-hp/10 p-3">
+                  <p className="text-sm font-semibold text-hp">Sugerencia de Leo</p>
+                  <p className="mt-0.5 text-[15px] leading-snug">
+                    "Let's practice first!" Te costó{' '}
+                    <b>{listTopics(failed)}</b>. Practica conmigo sin perder vida y luego vuelve a intentarlo.
+                  </p>
+                  <button className={`${btnPrimary} mt-2 w-full`} onClick={() => setPractice(true)}>Practicar con Leo</button>
+                </div>
+              )}
+            </div>
+  )
+
   return (
-    <div ref={rootRef} className={`mx-auto flex h-full max-w-md flex-col [@media(min-width:900px)_and_(pointer:fine)]:max-w-2xl gap-3 overflow-y-auto px-3 py-3 ${fbReady ? 'pb-[62vh]' : ''}`}>
+    <div ref={rootRef} className={`mx-auto flex h-full flex-col gap-3 overflow-y-auto px-3 py-3 ${desktop ? 'max-w-6xl' : 'max-w-md'} ${fbReady && !desktop ? 'pb-[62vh]' : ''}`}>
+      <div className={desktop ? 'grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-start gap-5' : 'contents'}>
+      <div className={desktop ? 'sticky top-0 flex flex-col gap-3' : 'contents'}>
       <div className="grid shrink-0 grid-cols-2 gap-2">
         <Panel className="px-3 py-1.5">
           <p className="truncate font-display text-[15px]">{state.hero.name}</p>
@@ -736,9 +772,8 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
 
       <div className="relative shrink-0 overflow-hidden rounded-2xl border-2 border-line">
         <svg
-          viewBox="0 0 360 220"
-          preserveAspectRatio="xMidYMax slice"
-          className={`block w-full transition-[height] duration-300 ${showQuestion ? 'h-[clamp(88px,17vh,130px)]' : 'h-auto'}`}
+          viewBox={showQuestion && !desktop ? '0 58 360 162' : '0 0 360 220'}
+          className="block w-full"
           role="img"
           aria-label={`Combate contra ${enemy.name}`}
         >
@@ -782,6 +817,8 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         {phase === 'story' && line === 0 && <div className="anim-wipe pointer-events-none absolute inset-0 bg-paper" />}
       </div>
 
+      </div>
+      <div className={desktop ? 'flex flex-col gap-3' : 'contents'}>
       {(phase === 'story' || phase === 'after') && story && (
         <Panel className="anim-fade-in">
           <div className="flex items-center justify-between gap-2">
@@ -943,38 +980,11 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         </Panel>
       )}
 
-          {wrongShown && fbReady && (
-            <div className="fixed inset-x-0 bottom-0 z-30 flex justify-center px-2 pb-2">
-            <div className="anim-slide-up max-h-[60vh] w-full max-w-md overflow-y-auto rounded-2xl border-2 border-gold/60 bg-panel p-3 shadow-[0_-8px_24px_rgba(0,0,0,0.45)]" role="dialog" aria-label="Explicación de Leo">
-              {blocked && <p className="mb-1 text-sm font-semibold text-[#9cc0f0]">Tu escudo de palabras bloqueó el golpe.</p>}
-              <LeoCoach key={q.id} q={q} metLeo={metLeo} tags={poolAt(battle.enemyHp).tags} />
-              <p className="mt-2 text-xs text-paper/50">Se anotó en tu cuaderno de errores.</p>
-              <div className="mt-3 flex justify-end">
-                {phase === 'lost' ? (
-                  <button className={btnPrimary} onClick={leave} autoFocus>{enemy.kind === 'trainer' ? 'Intentar otra vez' : 'Volver a intentarlo'}</button>
-                ) : (
-                  <button className={btnPrimary} onClick={nextQuestion} autoFocus>Seguir</button>
-                )}
-              </div>
-              {phase === 'lost' && (
-                <p className="mt-2 text-xs text-paper/60">
-                  {enemy.kind === 'trainer'
-                    ? 'Leo: "Don\'t worry, it\'s just practice!" Vuelves a empezar con la vida llena.'
-                    : 'Te quedaste sin energía. Volverás a la entrada con la vida llena.'}
-                </p>
-              )}
-              {phase === 'lost' && failed.length > 0 && (
-                <div className="mt-3 rounded-xl border-2 border-hp/50 bg-hp/10 p-3">
-                  <p className="text-sm font-semibold text-hp">Sugerencia de Leo</p>
-                  <p className="mt-0.5 text-[15px] leading-snug">
-                    "Let's practice first!" Te costó{' '}
-                    <b>{listTopics(failed)}</b>. Practica conmigo sin perder vida y luego vuelve a intentarlo.
-                  </p>
-                  <button className={`${btnPrimary} mt-2 w-full`} onClick={() => setPractice(true)}>Practicar con Leo</button>
-                </div>
-              )}
-            </div>
-            </div>
+      {wrongShown && fbReady && desktop && feedback}
+      </div>
+      </div>
+          {wrongShown && fbReady && !desktop && (
+            <div className="fixed inset-x-0 bottom-0 z-30 flex justify-center px-2 pb-2">{feedback}</div>
           )}
 
       {practice && (
