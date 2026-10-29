@@ -5,7 +5,7 @@ import { btnPrimary } from './ui'
 import { SpeakButton } from './SpeakButton'
 import { useTeacher } from '../game/teacher'
 import { speak } from '../game/speech'
-import { sameAnswer } from '../game/text'
+import { normalizeAnswer, sameAnswer } from '../game/text'
 import { sentenceRoles, tileStyle } from './Grammar'
 import { Tappable } from './Words'
 import { hear, micErrorText, speechScore } from '../game/mic'
@@ -135,7 +135,19 @@ export function QuestionCard({
     if (!typed.trim()) return setWriteError('Escribe tu respuesta primero.')
     // En la palabra que falta también vale la forma negativa (is → is not / isn't)
     const expected = q.options[0]
-    finish(sameAnswer(typed, expected) || (q.writeMode === 'blank' && sameAnswer(typed, `${expected} not`)))
+    if (q.writeMode !== 'blank') return finish(sameAnswer(typed, expected))
+    // También vale escribir la frase completa (o un trozo que incluya la palabra que falta)
+    const [before, after] = q.prompt.split('___')
+    const pre = normalizeAnswer(before).split(' ').filter(Boolean)
+    const mid = normalizeAnswer(expected).split(' ')
+    const post = normalizeAnswer(after ?? '').split(' ').filter(Boolean)
+    const all = [...pre, ...mid, ...post]
+    const t = normalizeAnswer(typed)
+    // Un trozo seguido de la frase que contenga el espacio vacío completo
+    let piece = false
+    for (let a = 0; a <= pre.length; a++)
+      for (let b = pre.length + mid.length; b <= all.length; b++) if (all.slice(a, b).join(' ') === t) piece = true
+    finish(sameAnswer(typed, expected) || sameAnswer(typed, `${expected} not`) || piece)
   }
 
   function checkOrder() {
@@ -294,7 +306,7 @@ export function QuestionCard({
             autoCorrect="off"
             autoComplete="off"
             spellCheck={false}
-            placeholder={q.writeMode === 'blank' ? 'La palabra que falta' : 'Escribe aquí en inglés'}
+            placeholder={q.writeMode === 'blank' ? 'La palabra que falta (o la frase entera)' : 'Escribe aquí en inglés'}
             className={`mt-3 w-full rounded-xl border-2 bg-ink px-3 py-2.5 font-display text-[18px] outline-none ${
               ask ? 'border-line focus:border-gold' : answered ? 'border-hp' : 'border-danger'
             }`}

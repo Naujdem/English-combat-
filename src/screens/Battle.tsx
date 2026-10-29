@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { mixed } from '../game/mix'
 import { voiceOf } from '../game/speech'
 import type { GameState, Question, TopicId, Zone } from '../game/types'
@@ -547,6 +547,16 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   // Preguntas falladas en este combate: Leo propone practicarlas si pierdes
   const [failed, setFailed] = useState<string[]>([])
   const [practice, setPractice] = useState(false)
+  // Al fallar: primero se ve el golpe; la explicación de Leo sube desde abajo un momento después
+  const [fbReady, setFbReady] = useState(false)
+  const rootRef = useRef<HTMLDivElement>(null)
+  const wrongShown = (phase === 'feedback' || phase === 'lost') && !correct
+  useEffect(() => {
+    if (!wrongShown) return setFbReady(false)
+    rootRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+    const t = window.setTimeout(() => setFbReady(true), 850)
+    return () => window.clearTimeout(t)
+  }, [wrongShown])
 
   function animate(setter: (v: string) => void, cls: string) {
     setter('')
@@ -704,7 +714,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const showQuestion = phase === 'ask' || phase === 'feedback' || phase === 'lost'
 
   return (
-    <div className="mx-auto flex h-full max-w-md flex-col [@media(min-width:900px)_and_(pointer:fine)]:max-w-2xl gap-3 overflow-y-auto px-3 py-3">
+    <div ref={rootRef} className={`mx-auto flex h-full max-w-md flex-col [@media(min-width:900px)_and_(pointer:fine)]:max-w-2xl gap-3 overflow-y-auto px-3 py-3 ${fbReady ? 'pb-[62vh]' : ''}`}>
       <div className="grid shrink-0 grid-cols-2 gap-2">
         <Panel className="px-3 py-1.5">
           <p className="truncate font-display text-[15px]">{state.hero.name}</p>
@@ -846,37 +856,6 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               <button className={btnPrimary} onClick={nextQuestion} autoFocus>Seguir</button>
             </div>
           )}
-          {(phase === 'feedback' || phase === 'lost') && !correct && (
-            <div className="anim-fade-in mt-3 rounded-xl bg-panel-2 p-3">
-              {blocked && <p className="mb-1 text-sm font-semibold text-[#9cc0f0]">Tu escudo de palabras bloqueó el golpe.</p>}
-              <LeoCoach key={q.id} q={q} metLeo={metLeo} tags={poolAt(battle.enemyHp).tags} />
-              <p className="mt-2 text-xs text-paper/50">Se anotó en tu cuaderno de errores.</p>
-              <div className="mt-3 flex justify-end">
-                {phase === 'lost' ? (
-                  <button className={btnPrimary} onClick={leave} autoFocus>{enemy.kind === 'trainer' ? 'Intentar otra vez' : 'Volver a intentarlo'}</button>
-                ) : (
-                  <button className={btnPrimary} onClick={nextQuestion} autoFocus>Seguir</button>
-                )}
-              </div>
-              {phase === 'lost' && (
-                <p className="mt-2 text-xs text-paper/60">
-                  {enemy.kind === 'trainer'
-                    ? 'Leo: "Don\'t worry, it\'s just practice!" Vuelves a empezar con la vida llena.'
-                    : 'Te quedaste sin energía. Volverás a la entrada con la vida llena.'}
-                </p>
-              )}
-              {phase === 'lost' && failed.length > 0 && (
-                <div className="mt-3 rounded-xl border-2 border-hp/50 bg-hp/10 p-3">
-                  <p className="text-sm font-semibold text-hp">Sugerencia de Leo</p>
-                  <p className="mt-0.5 text-[15px] leading-snug">
-                    "Let's practice first!" Te costó{' '}
-                    <b>{listTopics(failed)}</b>. Practica conmigo sin perder vida y luego vuelve a intentarlo.
-                  </p>
-                  <button className={`${btnPrimary} mt-2 w-full`} onClick={() => setPractice(true)}>Practicar con Leo</button>
-                </div>
-              )}
-            </div>
-          )}
         </Panel>
       )}
 
@@ -963,6 +942,40 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
           <button className={`${btnPrimary} mt-4 w-full`} onClick={leave} autoFocus>{enemy.kind === 'trainer' ? 'Ir al mapa' : 'Continuar'}</button>
         </Panel>
       )}
+
+          {wrongShown && fbReady && (
+            <div className="fixed inset-x-0 bottom-0 z-30 flex justify-center px-2 pb-2">
+            <div className="anim-slide-up max-h-[60vh] w-full max-w-md overflow-y-auto rounded-2xl border-2 border-gold/60 bg-panel p-3 shadow-[0_-8px_24px_rgba(0,0,0,0.45)]" role="dialog" aria-label="Explicación de Leo">
+              {blocked && <p className="mb-1 text-sm font-semibold text-[#9cc0f0]">Tu escudo de palabras bloqueó el golpe.</p>}
+              <LeoCoach key={q.id} q={q} metLeo={metLeo} tags={poolAt(battle.enemyHp).tags} />
+              <p className="mt-2 text-xs text-paper/50">Se anotó en tu cuaderno de errores.</p>
+              <div className="mt-3 flex justify-end">
+                {phase === 'lost' ? (
+                  <button className={btnPrimary} onClick={leave} autoFocus>{enemy.kind === 'trainer' ? 'Intentar otra vez' : 'Volver a intentarlo'}</button>
+                ) : (
+                  <button className={btnPrimary} onClick={nextQuestion} autoFocus>Seguir</button>
+                )}
+              </div>
+              {phase === 'lost' && (
+                <p className="mt-2 text-xs text-paper/60">
+                  {enemy.kind === 'trainer'
+                    ? 'Leo: "Don\'t worry, it\'s just practice!" Vuelves a empezar con la vida llena.'
+                    : 'Te quedaste sin energía. Volverás a la entrada con la vida llena.'}
+                </p>
+              )}
+              {phase === 'lost' && failed.length > 0 && (
+                <div className="mt-3 rounded-xl border-2 border-hp/50 bg-hp/10 p-3">
+                  <p className="text-sm font-semibold text-hp">Sugerencia de Leo</p>
+                  <p className="mt-0.5 text-[15px] leading-snug">
+                    "Let's practice first!" Te costó{' '}
+                    <b>{listTopics(failed)}</b>. Practica conmigo sin perder vida y luego vuelve a intentarlo.
+                  </p>
+                  <button className={`${btnPrimary} mt-2 w-full`} onClick={() => setPractice(true)}>Practicar con Leo</button>
+                </div>
+              )}
+            </div>
+            </div>
+          )}
 
       {practice && (
         <Practice
