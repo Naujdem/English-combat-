@@ -6,7 +6,8 @@ import { SpeakButton } from './SpeakButton'
 import { useTeacher } from '../game/teacher'
 import { speak } from '../game/speech'
 import { sameAnswer } from '../game/text'
-import { tileStyle } from './Grammar'
+import { sentenceRoles, tileStyle } from './Grammar'
+import { Tappable } from './Words'
 import { hear, micErrorText, speechScore } from '../game/mic'
 import { sfx } from '../game/sfx'
 
@@ -171,8 +172,10 @@ export function QuestionCard({
 
       {kind === 'fill' && (
         <div className="flex items-start gap-2">
-          <p className="flex-1 font-display text-[22px] leading-snug" data-testid="prompt">{filled}</p>
-          {answered && <SpeakButton text={filled} size="sm" />}
+          <p className="flex-1 font-display text-[22px] leading-relaxed" data-testid="prompt" aria-label={filled}>
+            <BlankSentence prompt={q.prompt} answer={q.options[q.answer]} topic={q.topic} shown={answered !== null} ok={answered === true} picked={picked !== null ? q.options[picked] : null} />
+          </p>
+          <SpeakButton text={answered !== null ? filled : q.prompt.replace('___', '...')} size="sm" />
         </div>
       )}
       {kind === 'fill' && q.hint && <p className="mt-0.5 text-sm text-paper/60">Pista: {q.hint}</p>}
@@ -180,15 +183,24 @@ export function QuestionCard({
       {kind === 'fix' && (
         <>
           <p className="text-sm text-paper/60">{speaker ?? 'El enemigo'} dice:</p>
-          <div className="flex items-start gap-2">
+          <div className={`mt-1 flex items-start gap-2 rounded-xl border-2 px-3 py-2 ${ask ? 'border-danger/60 bg-danger/10' : 'border-line bg-panel-2'}`}>
+            <span className="mt-1 text-lg font-bold text-danger" aria-hidden="true">✗</span>
             <p
-              className={`flex-1 font-display text-[22px] leading-snug ${ask ? 'text-[#f3b0b0]' : 'text-paper/50 line-through decoration-danger'}`}
+              className={`flex-1 font-display text-[21px] leading-snug ${ask ? 'text-[#f3b0b0]' : 'text-paper/50 line-through decoration-danger'}`}
               data-testid="prompt"
             >
-              "{q.prompt}"
+              "<Tappable text={q.prompt} />"
             </p>
           </div>
-          <p className="mt-2 text-sm text-paper/70">¿Cuál es la forma correcta?</p>
+          {ask ? (
+            <p className="mt-2 text-sm text-paper/70">¿Cuál es la forma correcta?</p>
+          ) : (
+            <div className="anim-fade-in mt-2 flex items-start gap-2 rounded-xl border-2 border-hp bg-hp/15 px-3 py-2">
+              <span className="mt-1 text-lg font-bold text-hp" aria-hidden="true">✓</span>
+              <p className="flex-1 font-display text-[21px] leading-snug text-paper">{q.options[q.answer]}</p>
+              <SpeakButton text={q.options[q.answer]} size="sm" />
+            </div>
+          )}
         </>
       )}
 
@@ -307,28 +319,43 @@ export function QuestionCard({
         <>
           <p className="text-sm text-paper/60">Escribe en inglés:</p>
           <p className="font-display text-[20px] leading-snug" data-testid="prompt">{q.prompt}</p>
+          <div className="mt-3 flex items-center justify-between text-xs text-paper/55">
+            <span>Tu frase · {placed.length} de {q.options.length} palabras</span>
+            {ask && (
+              <span className="flex gap-1">
+                <button className="rounded-md border border-line px-2 py-0.5 font-semibold text-paper/75 disabled:opacity-30" onClick={() => setPlaced(placed.slice(0, -1))} disabled={!placed.length}>↶ Deshacer</button>
+                <button className="rounded-md border border-line px-2 py-0.5 font-semibold text-paper/75 disabled:opacity-30" onClick={() => setPlaced([])} disabled={!placed.length}>Borrar</button>
+              </span>
+            )}
+          </div>
           <div
-            className={`mt-3 flex min-h-[52px] flex-wrap items-center gap-1.5 rounded-xl border-2 border-dashed p-2 ${
-              ask ? 'border-line' : answered ? 'border-hp bg-hp/10' : 'border-danger bg-danger/10'
+            className={`mt-1 flex min-h-[56px] flex-wrap items-center gap-1.5 rounded-xl border-2 p-2 ${
+              ask ? 'border-gold/50 bg-ink' : answered ? 'border-hp bg-hp/10' : 'border-danger bg-danger/10'
             }`}
             aria-label="Tu frase"
           >
-            {placed.length === 0 && <span className="px-1 text-sm text-paper/40">Toca las palabras en orden</span>}
-            {placed.map((i, k) => (
-              <button
-                key={`${i}-${k}`}
-                style={colorTiles ? tileStyle(q.options, i, q.topic) : undefined}
-                className="rounded-lg bg-gold px-2.5 py-1.5 font-display text-[17px] font-medium text-ink"
-                onClick={() => ask && setPlaced(placed.filter((_, j) => j !== k))}
-                disabled={!ask}
-              >
-                {q.options[i]}
-              </button>
-            ))}
+            {placed.length === 0 && <span className="px-1 text-sm text-paper/40">Toca las palabras de abajo en orden</span>}
+            {placed.map((i, k) => {
+              // Al fallar: cada palabra en su sitio se marca en verde, y las que no, en rojo
+              const right = q.options[i] === q.options[k]
+              const mark = answered === false ? (right ? 'ring-2 ring-hp' : 'ring-2 ring-danger line-through decoration-2') : ''
+              return (
+                <button
+                  key={`${i}-${k}`}
+                  style={colorTiles ? tileStyle(q.options, i, q.topic) : undefined}
+                  className={`rounded-lg bg-gold px-2.5 py-1.5 font-display text-[17px] font-medium text-ink ${mark}`}
+                  onClick={() => ask && setPlaced(placed.filter((_, j) => j !== k))}
+                  disabled={!ask}
+                >
+                  {q.options[i]}
+                </button>
+              )
+            })}
           </div>
           {ask ? (
             <>
-              <div className="mt-2 flex flex-wrap gap-1.5" data-testid="word-bank">
+              <p className="mt-3 text-xs text-paper/55">Palabras</p>
+              <div className="mt-1 flex flex-wrap gap-1.5 rounded-xl bg-panel-2/60 p-2" data-testid="word-bank">
                 {order.map((i) =>
                   placed.includes(i) ? null : (
                     <button
@@ -355,7 +382,11 @@ export function QuestionCard({
             </div>
           )}
         </>
-      ) : kind === 'speak' ? null : (
+      ) : kind === 'speak' ? null : kind === 'fix' && !ask ? (
+        picked !== null && picked !== q.answer ? (
+          <p className="mt-2 text-sm text-paper/60">Elegiste: <span className="text-[#f3b0b0] line-through">{q.options[picked]}</span></p>
+        ) : null
+      ) : (
         <div className={`mt-3 grid gap-2 ${kind === 'fill' ? 'grid-cols-3' : 'grid-cols-1'}`} data-testid="options">
           {q.options.map((o, k) => {
             const isAnswer = k === q.answer
@@ -385,5 +416,49 @@ export function QuestionCard({
         <p className="mt-2 rounded-lg border border-gold/40 bg-gold/10 px-3 py-1.5 text-sm text-gold">Profe: {correctSentence(q)}</p>
       )}
     </div>
+  )
+}
+
+/**
+ * La frase de completar: el espacio vacío se ve como una casilla, y el sujeto va en azul.
+ * Al responder, la casilla muestra la respuesta correcta (y la que elegiste, si fallaste).
+ */
+function BlankSentence({ prompt, answer, topic, shown, ok, picked }: { prompt: string; answer: string; topic: Question['topic']; shown: boolean; ok: boolean; picked: string | null }) {
+  const tokens = prompt.split(' ')
+  const filled = prompt.replace('___', answer).split(' ')
+  const roles = sentenceRoles(filled, topic)
+  const extra = answer.split(' ').length - 1
+  let j = 0
+  return (
+    <>
+      {tokens.map((tok, k) => {
+        const at = j
+        if (tok.includes('___')) {
+          j += 1 + extra
+          const [pre, post] = tok.split('___')
+          return (
+            <span key={k}>
+              {pre}
+              {shown ? (
+                <span className={`rounded-md px-1.5 ${ok ? 'bg-hp/25 text-hp' : 'bg-hp/25 text-hp'}`}>
+                  {!ok && picked && <span className="mr-1 text-danger line-through decoration-2">{picked}</span>}
+                  {answer}
+                </span>
+              ) : (
+                <span className="inline-block min-w-[3.2em] translate-y-[2px] rounded-md border-2 border-dashed border-gold bg-gold/10 text-center text-gold" aria-label="espacio en blanco">?</span>
+              )}
+              {post}{k < tokens.length - 1 ? ' ' : ''}
+            </span>
+          )
+        }
+        j += 1
+        const subj = roles.at(at) === 'subj'
+        return (
+          <span key={k} className={subj ? 'text-[#8cc4f5] underline decoration-[#3b8bd6] decoration-2 underline-offset-4' : undefined}>
+            <Tappable text={tok} />{k < tokens.length - 1 ? ' ' : ''}
+          </span>
+        )
+      })}
+    </>
   )
 }

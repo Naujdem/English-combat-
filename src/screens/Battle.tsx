@@ -6,8 +6,8 @@ import type { Update } from '../game/store'
 import { OUTFITS } from '../data/school'
 import { ENEMIES } from '../data/enemies'
 import { pickQuestion, questionById, TOPICS } from '../data/questions'
-import { QuestionCard, correctSentence } from '../components/QuestionCard'
-import { GrammarPattern, RoleSentence } from '../components/Grammar'
+import { QuestionCard } from '../components/QuestionCard'
+import { LeoCoach } from '../components/LeoCoach'
 import { Practice } from '../components/Practice'
 import { Tappable } from '../components/Words'
 import { sessionFor } from '../data/schedule'
@@ -705,8 +705,8 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col [@media(min-width:900px)_and_(pointer:fine)]:max-w-2xl gap-3 overflow-y-auto px-3 py-3">
-      <div className="grid grid-cols-2 gap-2">
-        <Panel className="px-3 py-2">
+      <div className="grid shrink-0 grid-cols-2 gap-2">
+        <Panel className="px-3 py-1.5">
           <p className="truncate font-display text-[15px]">{state.hero.name}</p>
           <div className="mt-1 flex items-center gap-2">
             <Hearts hp={state.hp} max={state.maxHp} />
@@ -717,15 +717,21 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             )}
           </div>
         </Panel>
-        <Panel className="px-3 py-2">
+        <Panel className="px-3 py-1.5">
           <p className="truncate font-display text-[15px]">{enemy.name}</p>
-          <div className="mt-2"><Bar value={battle.enemyHp} max={enemy.hp} color={enemy.kind === 'boss' ? '#a07cd0' : enemy.kind === 'trainer' ? '#3b9d5d' : '#d64545'} label="Vida del enemigo" /></div>
+          <div className="mt-1.5"><Bar value={battle.enemyHp} max={enemy.hp} color={enemy.kind === 'boss' ? '#a07cd0' : enemy.kind === 'trainer' ? '#3b9d5d' : '#d64545'} label="Vida del enemigo" /></div>
           {enemy.phases && <p className="mt-1 text-[11px] text-paper/50">Fase {phaseAt(battle.enemyHp) + 1} de {enemy.phases.length}</p>}
         </Panel>
       </div>
 
       <div className="relative shrink-0 overflow-hidden rounded-2xl border-2 border-line">
-        <svg viewBox="0 0 360 220" className="block w-full" role="img" aria-label={`Combate contra ${enemy.name}`}>
+        <svg
+          viewBox="0 0 360 220"
+          preserveAspectRatio="xMidYMax slice"
+          className={`block w-full transition-[height] duration-300 ${showQuestion ? 'h-[clamp(88px,17vh,130px)]' : 'h-auto'}`}
+          role="img"
+          aria-label={`Combate contra ${enemy.name}`}
+        >
           <Backdrop zone={zone} />
           <g transform="translate(26 92) scale(3.8)">
             <g className={heroAnim} onAnimationEnd={() => setHeroAnim('')}>
@@ -798,7 +804,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       )}
 
       {showQuestion && (
-        <Panel className="anim-fade-in">
+        <Panel className={`anim-fade-in ${phase === 'ask' ? 'border-gold/60 shadow-[0_0_0_3px_rgba(224,165,38,0.12)]' : ''}`}>
           {wasMistake && phase === 'ask' && (
             <p className="mb-2 rounded-lg bg-gold/10 px-2 py-1 text-xs font-semibold text-gold">Esta pregunta está en tu cuaderno de errores</p>
           )}
@@ -843,16 +849,8 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
           {(phase === 'feedback' || phase === 'lost') && !correct && (
             <div className="anim-fade-in mt-3 rounded-xl bg-panel-2 p-3">
               {blocked && <p className="mb-1 text-sm font-semibold text-[#9cc0f0]">Tu escudo de palabras bloqueó el golpe.</p>}
-              <p className="text-sm font-semibold text-gold">{metLeo ? 'Pista de Leo' : 'Pista'}</p>
-              <p className="mt-0.5 text-[15px] leading-snug">{q.tip}</p>
-              <div className="mt-2">
-                <GrammarPattern topic={q.topic} sentence={correctSentence(q)} compact />
-              </div>
-              <div className="mt-2 flex flex-wrap items-center gap-2">
-                <span className="text-xs text-paper/60">Así es:</span>
-                <RoleSentence text={correctSentence(q)} topic={q.topic} size="sm" />
-              </div>
-              <p className="mt-1 text-xs text-paper/50">Se anotó en tu cuaderno de errores.</p>
+              <LeoCoach key={q.id} q={q} metLeo={metLeo} tags={poolAt(battle.enemyHp).tags} />
+              <p className="mt-2 text-xs text-paper/50">Se anotó en tu cuaderno de errores.</p>
               <div className="mt-3 flex justify-end">
                 {phase === 'lost' ? (
                   <button className={btnPrimary} onClick={leave} autoFocus>{enemy.kind === 'trainer' ? 'Intentar otra vez' : 'Volver a intentarlo'}</button>
