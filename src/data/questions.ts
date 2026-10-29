@@ -7,6 +7,8 @@ import { OFFICE_QUESTIONS } from './questions-office'
 import { EXTRA_QUESTIONS } from './questions-extra'
 import { PAST_QUESTIONS } from './questions-past'
 import { FUTURE_QUESTIONS } from './questions-future'
+import { LISTEN_QUESTIONS } from './questions-listen'
+import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
  * Banco de preguntas.
@@ -331,6 +333,8 @@ export const QUESTIONS: Question[] = [
   // ── A1 en pasado
   ...PAST_QUESTIONS,
   ...FUTURE_QUESTIONS,
+  // ── Escucha real (comprensión)
+  ...LISTEN_QUESTIONS,
 ]
 
 
@@ -367,11 +371,13 @@ function toSpeak(q: Question): Question {
 
 /** Pregunta de escribir la palabra que falta, a partir de una de completar */
 function toWriteBlank(q: Question): Question {
+  const base = pastBase(q)
   return {
     id: `W-${q.id}`,
     topic: q.topic,
     kind: 'write',
     writeMode: 'blank',
+    hint: base ? `verbo: ${base}` : undefined,
     prompt: q.prompt,
     options: [q.options[q.answer]],
     answer: 0,
@@ -401,7 +407,26 @@ function toWriteSentence(q: Question): Question {
  */
 function canWriteBlank(q: Question) {
   const a = q.options[q.answer]
-  return canListen(q) && (q.topic === 'to-be' || q.topic === 'greetings') && !/not|'/i.test(a)
+  if (!canListen(q) || /not|'/i.test(a)) return false
+  if (q.topic === 'to-be' || q.topic === 'greetings') return true
+  // going to: am / is / are delante de going to tienen una sola respuesta
+  if (q.topic.startsWith('going-to') && ['am', 'is', 'are'].includes(a) && /___ going to/.test(q.prompt)) return true
+  // Pasado: se escribe el verbo, con el verbo base como pista (go → went)
+  return !!pastBase(q)
+}
+
+/** Verbo base de una pregunta de pasado (went → go, stopped → stop), o null si no se puede saber */
+export function pastBase(q: Question): string | null {
+  if (q.topic !== 'past-irregular' && q.topic !== 'past-regular') return null
+  const a = q.options[q.answer].toLowerCase()
+  if (!/^[a-z]+$/.test(a)) return null
+  const irr = IRREGULAR_VERBS.find((v) => v.past === a)
+  if (irr) return irr.base
+  if (MORE_IRREGULAR_PASTS.includes(a)) return null
+  if (!a.endsWith('ed')) return null
+  const opts = q.options.map((o) => o.toLowerCase())
+  const cands = [a.endsWith('ied') ? `${a.slice(0, -3)}y` : '', a.slice(0, -2), a.slice(0, -1), a.slice(0, -3)].filter(Boolean)
+  return cands.find((c) => opts.includes(c)) ?? null
 }
 
 function canListen(q: Question) {
@@ -412,6 +437,7 @@ export function questionsFor(topics: TopicId[], kinds: QuestionKind[] = ['fill',
   const list: Question[] = []
   for (const q of QUESTIONS) {
     if (!topics.includes(q.topic)) continue
+    if (q.audio && !canSpeak) continue
     if (kinds.includes(q.kind ?? 'fill')) list.push(q)
     if (kinds.includes('listen') && canSpeak && canListen(q)) list.push(toListen(q))
     if (kinds.includes('write') && canWriteBlank(q)) list.push(toWriteBlank(q))
@@ -442,10 +468,15 @@ export function questionById(id: string): Question | undefined {
  * Devuelve una pregunta aleatoria evitando las ya usadas en este combate.
  * Las preguntas del cuaderno de errores salen con más frecuencia hasta que se acierten.
  */
-export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: string[], mistakes: string[] = [], tags: string[] = []): Question {
+export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: string[], mistakes: string[] = [], tags: string[] = [], focus?: 'produce' | 'hear'): Question {
   const pool = questionsFor(topics, kinds)
   const fresh = pool.filter((q) => !used.includes(q.id))
-  const list = fresh.length > 0 ? fresh : pool
+  let list = fresh.length > 0 ? fresh : pool
+  // En combate: cada tanto se pide producir (escribir u ordenar) o escuchar de verdad
+  if (focus) {
+    const want = list.filter((q) => (focus === 'hear' ? !!q.audio : q.kind === 'write' || q.kind === 'order'))
+    if (want.length) list = want
+  }
   const pending = list.filter((q) => mistakes.includes(q.id))
   if (pending.length > 0 && Math.random() < 0.45) return pending[Math.floor(Math.random() * pending.length)]
   // Primero se elige el tipo de pregunta al azar, para que haya variedad

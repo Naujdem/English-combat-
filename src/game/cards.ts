@@ -14,6 +14,10 @@ export type Card = {
   interval: number
   ease: number
   reps: number
+  /** Mazo: el lugar donde se ganó (palabras clave del escenario o frases corregidas) */
+  deck?: string
+  /** word: palabra o expresión · phrase: frase corregida en combate */
+  type?: 'word' | 'phrase'
 }
 
 export type Grade = 'again' | 'hard' | 'good' | 'easy'
@@ -21,8 +25,8 @@ export type Grade = 'again' | 'hard' | 'good' | 'easy'
 const MIN = 60 * 1000
 const DAY = 24 * 60 * MIN
 
-export function newCard(front: string, back: string, example?: string): Card {
-  return { id: front.toLowerCase(), front, back, example, due: Date.now(), interval: 0, ease: 2.5, reps: 0 }
+export function newCard(front: string, back: string, example?: string, extra: { id?: string; deck?: string; type?: 'word' | 'phrase'; due?: number } = {}): Card {
+  return { id: extra.id ?? front.toLowerCase(), front, back, example, due: extra.due ?? Date.now(), interval: 0, ease: 2.5, reps: 0, deck: extra.deck, type: extra.type ?? 'word' }
 }
 
 /** Cuánto falta para el siguiente repaso con cada botón: [ms, intervalo en días] */

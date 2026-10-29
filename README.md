@@ -201,3 +201,10 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 
 - `src/data/collection.ts`: 13 logros (con premios de atuendo) y el álbum del tiempo (una carta por personaje, con un espacio por época; los espacios "Viajero" se ganan venciendo a los ecos).
 - `src/components/Achievements.tsx`: la ventana de logros y álbum, desde el mapa del mundo. `App.tsx` avisa cada logro nuevo una sola vez (se guarda en `opened` como `logro-<id>`).
+
+## Repaso, producción, escucha y exámenes
+
+- Fichas: al terminar cada lugar se guardan sus palabras clave (`src/data/keywords.ts`, un mazo por lugar). Cada frase corregida en combate (preguntas de corregir) se guarda como ficha de frase y vuelve al día siguiente (`recordAnswer` en `src/game/helpers.ts`). En las fichas se filtra por palabras o frases.
+- Producción: en combate, una de cada tres preguntas pide escribir u ordenar. Las preguntas de pasado se pueden escribir con el verbo base como pista (`pastBase` en `src/data/questions.ts`), y las de going to con am / is / are.
+- Escucha real: `src/data/questions-listen.ts` (se oye un mensaje sin verlo y se responde una pregunta). La segunda pregunta de cada combate busca una de estas.
+- Exámenes de época: `src/components/EraExam.tsx`. Al terminar el presente, el pasado y el futuro, el jugador escribe 4 frases propias; se revisa la estructura pedida y los errores típicos, y se comparan con las de Leo. Se guardan en `writings`.

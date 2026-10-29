@@ -16,6 +16,7 @@ import { BARRIO_FUTURE } from '../data/barrioFuture'
 import { FARM_FUTURE } from '../data/farmFuture'
 import { TOWER_FUTURE } from '../data/towerFuture'
 import { FRIENDS, interestFriend } from '../data/friends'
+import { newCard } from './cards'
 
 export const SCENES: Record<string, SceneDef> = { [SCHOOL.id]: SCHOOL, [CITY.id]: CITY, [BARRIO.id]: BARRIO, [FARM.id]: FARM, [OFFICE.id]: OFFICE, [SCHOOL_PAST.id]: SCHOOL_PAST, [CITY_PAST.id]: CITY_PAST, [BARRIO_PAST.id]: BARRIO_PAST, [FARM_PAST.id]: FARM_PAST, [CINEMA_PAST.id]: CINEMA_PAST, [SCHOOL_FUTURE.id]: SCHOOL_FUTURE, [CITY_FUTURE.id]: CITY_FUTURE, [BARRIO_FUTURE.id]: BARRIO_FUTURE, [FARM_FUTURE.id]: FARM_FUTURE, [TOWER_FUTURE.id]: TOWER_FUTURE }
 
@@ -55,5 +56,14 @@ export function perks(s: GameState) {
 /** Anota un acierto o un error del tema de la pregunta (pantalla de progreso) */
 export function recordAnswer(s: GameState, q: Question, ok: boolean): GameState {
   const cur = s.stats[q.topic] ?? { ok: 0, fail: 0 }
-  return { ...s, stats: { ...s.stats, [q.topic]: ok ? { ...cur, ok: cur.ok + 1 } : { ...cur, fail: cur.fail + 1 } } }
+  const next = { ...s, stats: { ...s.stats, [q.topic]: ok ? { ...cur, ok: cur.ok + 1 } : { ...cur, fail: cur.fail + 1 } } }
+  // Cada frase que corriges en combate se guarda como ficha (vuelve a salir mañana para repasarla)
+  if (q.kind === 'fix') {
+    const id = `F-${q.id}`
+    if (!s.cards.some((c) => c.id === id)) {
+      const card = newCard(`"${q.prompt}"`, q.options[q.answer], q.tip, { id, deck: SCENES[s.sceneId]?.name, type: 'phrase', due: Date.now() + 20 * 60 * 60 * 1000 })
+      return { ...next, cards: [...s.cards, card] }
+    }
+  }
+  return next
 }

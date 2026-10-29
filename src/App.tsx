@@ -13,6 +13,8 @@ import { ENEMIES } from './data/enemies'
 import { ACHIEVEMENTS, achieved } from './data/collection'
 import { OUTFITS } from './data/school'
 import { sfx } from './game/sfx'
+import { KEYWORDS } from './data/keywords'
+import { newCard } from './game/cards'
 
 /** Un capítulo terminado cuyo final todavía no se vio (por si se cerró el juego en medio) */
 function pendingEpilogue(s: ReturnType<typeof useGameState>['state']) {
@@ -24,7 +26,7 @@ function pendingEpilogue(s: ReturnType<typeof useGameState>['state']) {
 export default function App() {
   const { state, update, setState } = useGameState()
   const [flash, setFlash] = useState(0)
-  const [toast, setToast] = useState<string[]>([])
+  const [toast, setToast] = useState<{ kind: 'logro' | 'fichas'; text: string }[]>([])
 
   // Logros nuevos: se avisan una vez (se guardan en opened como logro-<id>) y entregan su premio
   useEffect(() => {
@@ -37,7 +39,26 @@ export default function App() {
       outfits: [...s.outfits, ...fresh.map((a) => a.reward).filter((r): r is string => !!r && !s.outfits.includes(r))],
     }))
     sfx('item')
-    setToast((t) => [...t, ...fresh.map((a) => (a.reward ? `${a.name} · Premio: ${OUTFITS[a.reward].name}` : a.name))])
+    setToast((t) => [...t, ...fresh.map((a) => ({ kind: 'logro' as const, text: a.reward ? `${a.name} · Premio: ${OUTFITS[a.reward].name}` : a.name }))])
+  }, [state, update])
+
+  // Al terminar un escenario, sus palabras clave entran solas a las fichas (un mazo por lugar)
+  useEffect(() => {
+    if (state.screen === 'title' || state.screen === 'intro') return
+    const ready = Object.keys(KEYWORDS).filter((id) => SCENES[id]?.epilogue && state.opened.includes(SCENES[id].epilogue!) && !state.opened.includes(`deck-${id}`))
+    if (!ready.length) return
+    update((s) => {
+      const have = new Set(s.cards.map((c) => c.id))
+      const cards = [...s.cards]
+      for (const id of ready)
+        for (const [en, es, ex] of KEYWORDS[id]) {
+          if (have.has(en.toLowerCase())) continue
+          have.add(en.toLowerCase())
+          cards.push(newCard(en, es, ex, { deck: SCENES[id].name }))
+        }
+      return { ...s, cards, opened: [...s.opened, ...ready.map((id) => `deck-${id}`)] }
+    })
+    setToast((t) => [...t, { kind: 'fichas' as const, text: ready.length > 2 ? `Palabras clave de ${ready.length} lugares: ya están en tus fichas para repasar.` : `Palabras clave de ${ready.map((id) => SCENES[id].name).join(' y ')}: ya están en tus fichas para repasar.` }])
   }, [state, update])
 
   useEffect(() => {
@@ -140,9 +161,17 @@ export default function App() {
       {toast.length > 0 && (
         <div className="pointer-events-none absolute inset-x-0 top-3 z-50 flex justify-center px-3" role="status">
           <div className="anim-fade-in max-w-sm rounded-2xl border-2 border-gold bg-panel px-4 py-2 shadow-lg">
-            <p className="font-display text-[15px] text-gold">★ ¡Logro desbloqueado!</p>
-            {toast.slice(0, 3).map((t) => <p key={t} className="text-sm text-paper/85">{t}</p>)}
-            {toast.length > 3 && <p className="text-xs text-paper/60">y {toast.length - 3} más: míralos en Logros y álbum</p>}
+            {(['logro', 'fichas'] as const).map((k) => {
+              const items = toast.filter((t) => t.kind === k)
+              if (!items.length) return null
+              return (
+                <div key={k}>
+                  <p className="font-display text-[15px] text-gold">{k === 'logro' ? '★ ¡Logro desbloqueado!' : '🗂 Fichas nuevas'}</p>
+                  {items.slice(0, 3).map((t) => <p key={t.text} className="text-sm text-paper/85">{t.text}</p>)}
+                  {items.length > 3 && <p className="text-xs text-paper/60">y {items.length - 3} más</p>}
+                </div>
+              )
+            })}
           </div>
         </div>
       )}

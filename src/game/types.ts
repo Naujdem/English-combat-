@@ -59,6 +59,9 @@ export type Question = {
   writeMode?: 'blank' | 'sentence'
   /** Pista en español bajo la frase (no se lee en voz alta), p. ej. "(debajo)" */
   hint?: string
+  /** Escucha real: lo que se oye (sin verlo); prompt es la pregunta de comprensión */
+  audio?: string
+  voice?: 'female' | 'male'
 }
 
 export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio' | 'calle' | 'cafe' | 'tienda' | 'turismo' | 'casa-leo' | 'casa-maya' | 'parque' | 'casa' | 'granero' | 'corral' | 'campo' | 'casa-granja' | 'recepcion' | 'oficina' | 'reuniones' | 'direccion' | 'aula-vieja' | 'patio-viejo' | 'direccion-vieja' | 'calle-vieja' | 'tienda-vieja' | 'correo' | 'mercado' | 'obra' | 'casa-nueva' | 'caseta' | 'granero-viejo' | 'casa-vieja' | 'campo-viejo' | 'sala-cine' | 'vestibulo' | 'oficina-cine' | 'aula-futuro' | 'patio-futuro' | 'direccion-futuro' | 'calle-futuro' | 'turismo-futuro' | 'lobby-torre' | 'oficina-torre' | 'sala-torre' | 'cima-torre'
@@ -240,4 +243,6 @@ export type GameState = {
   lostFound: { started: boolean; carrying: string | null; picked: string[]; returned: string[] }
   seenLesson: string[]
   battle: { enemyId: string; enemyHp: number; returnTo: { x: number; y: number } } | null
+  /** Frases propias de los exámenes de cada época (presente, pasado, futuro) */
+  writings?: Record<string, string[]>
 }

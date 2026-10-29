@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 export const btn =
   'rounded-xl border-2 border-line bg-panel-2 px-4 py-2.5 font-display text-[17px] font-medium text-paper transition active:scale-[0.97] hover:border-gold/70 disabled:opacity-40 disabled:active:scale-100'
 export const btnPrimary =
-  'rounded-xl border-2 border-gold bg-gold px-4 py-2.5 font-display text-[17px] font-semibold text-ink transition active:scale-[0.97] hover:brightness-105'
+  'rounded-xl border-2 border-gold bg-gold px-4 py-2.5 font-display text-[17px] font-semibold text-ink transition active:scale-[0.97] hover:brightness-105 disabled:opacity-40 disabled:active:scale-100'
 export const btnGhost =
   'rounded-lg px-3 py-1.5 text-sm font-semibold text-paper/80 transition hover:bg-white/5 active:scale-[0.97]'
 

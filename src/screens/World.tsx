@@ -24,6 +24,7 @@ import { interestFriend } from '../data/friends'
 import { useDesktop } from '../game/device'
 import { Achievements } from '../components/Achievements'
 import { ACHIEVEMENTS, achieved } from '../data/collection'
+import { EraExam, EXAMS, type EraId } from '../components/EraExam'
 
 const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } as const
 
@@ -61,6 +62,9 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const [diary, setDiary] = useState(!!newDiary)
   const [cards, setCards] = useState(false)
   const [logros, setLogros] = useState(false)
+  const [exam, setExam] = useState<EraId | null>(null)
+  const exams = (Object.keys(EXAMS) as EraId[]).filter((e) => state.opened.includes(EXAMS[e].unlock))
+  const pendingExam = exams.find((e) => !state.writings?.[e])
   // Viaje en autobús la primera vez que se va a un lugar (ciudad o barrio)
   const [bus, setBus] = useState<string | null>(null)
   const [review, setReview] = useState(false)
@@ -203,6 +207,20 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         </span>
       </button>
 
+      {exams.length > 0 && (
+        <div className={`rounded-2xl border-2 px-3 py-2 ${pendingExam ? 'border-gold bg-gold/10' : 'border-line'}`}>
+          <p className="font-display text-[16px] text-gold">✍ Exámenes de época</p>
+          <p className="text-sm text-paper/70">{pendingExam ? 'Escribe 4 frases tuyas sobre lo que pasó. No hay una sola respuesta.' : 'Tus frases de cada época.'}</p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {exams.map((e) => (
+              <button key={e} className={`${btn} px-3 py-1.5 text-[15px]`} onClick={() => setExam(e)}>
+                {state.writings?.[e] ? '✓ ' : ''}{EXAMS[e].title.replace('Examen del ', '').replace(/^./, (c) => c.toUpperCase())}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="grid grid-cols-2 gap-2">
         <button className={btn} onClick={() => setReview(true)}>Repasar</button>
         <button className={btn} onClick={() => setProgress(true)}>Mi progreso</button>
@@ -274,6 +292,17 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       )}
       {cards && <Flashcards state={state} update={update} onClose={() => setCards(false)} />}
       {logros && <Achievements state={state} onClose={() => setLogros(false)} />}
+      {exam && (
+        <EraExam
+          era={exam}
+          saved={state.writings?.[exam]}
+          onClose={() => setExam(null)}
+          onSave={(lines) => {
+            update((s) => ({ ...s, writings: { ...(s.writings ?? {}), [exam]: lines } }))
+            setExam(null)
+          }}
+        />
+      )}
 
       {clock && (
         <Overlay onClose={() => setClock(false)}>

@@ -531,7 +531,10 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   }
   function pick(hpLeft: number, usedIds: string[]) {
     const p = poolAt(hpLeft)
-    return pickQuestion(p.topics, p.kinds, usedIds, state.mistakes, p.tags ?? [])
+    // La segunda pregunta busca una escucha real; una de cada tres pide escribir u ordenar
+    const n = usedIds.length
+    const focus = n === 1 ? 'hear' : n % 3 === 2 ? 'produce' : undefined
+    return pickQuestion(p.topics, p.kinds, usedIds, state.mistakes, p.tags ?? [], focus)
   }
   const [interlude, setInterlude] = useState<{ text: string; es?: string } | null>(null)
   const [q, setQ] = useState<Question>(() => pick(battle.enemyHp, []))

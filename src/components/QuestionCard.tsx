@@ -77,10 +77,10 @@ export function QuestionCard({
   // Las preguntas de escucha se leen solas al aparecer
   useEffect(() => {
     if (kind === 'listen') {
-      const t = window.setTimeout(() => speak(q.prompt), 350)
+      const t = window.setTimeout(() => speak(q.audio ?? q.prompt, false, q.voice ?? 'neutral'), 350)
       return () => window.clearTimeout(t)
     }
-  }, [kind, q.prompt])
+  }, [kind, q.prompt, q.audio, q.voice])
 
   // Pista de Leo: quita una opción incorrecta, o coloca la primera palabra al ordenar
   useEffect(() => {
@@ -148,12 +148,16 @@ export function QuestionCard({
       : kind === 'order'
         ? 'Ordena la frase'
         : kind === 'listen'
-          ? 'Escucha y elige'
+          ? q.audio
+            ? 'Escucha y responde'
+            : 'Escucha y elige'
           : kind === 'speak'
             ? 'Dilo en voz alta'
           : kind === 'write'
             ? q.writeMode === 'blank'
-              ? 'Escribe la palabra que falta'
+              ? q.hint?.startsWith('verbo:')
+                ? 'Escribe el verbo en pasado'
+                : 'Escribe la palabra que falta'
               : 'Escribe la oración en inglés'
             : TOPICS[q.topic].name
   const filled = kind === 'fill' && answered ? q.prompt.replace('___', q.options[q.answer]) : q.prompt
@@ -188,12 +192,24 @@ export function QuestionCard({
         </>
       )}
 
-      {kind === 'listen' && (
+      {kind === 'listen' && !q.audio && (
         <div className="flex items-center gap-3">
           <SpeakButton text={q.prompt} size="lg" label="Escuchar la frase" />
           <p className="text-sm text-paper/70">
             Toca la bocina para escuchar. Dos toques seguidos: más lento.
           </p>
+        </div>
+      )}
+      {kind === 'listen' && q.audio && (
+        <div>
+          <div className="flex items-center gap-3">
+            <SpeakButton text={q.audio} size="lg" label="Escuchar el mensaje" voice={q.voice} />
+            <p className="text-sm text-paper/70">Escucha sin leer. Puedes repetir; con dos toques va más lento.</p>
+          </div>
+          <p className="mt-2 font-display text-[20px] leading-snug" data-testid="prompt">{q.prompt}</p>
+          {!ask && (
+            <p className="mt-1 rounded-lg bg-panel-2 px-3 py-1.5 text-sm text-paper/75">Se escuchaba: "{q.audio}"</p>
+          )}
         </div>
       )}
 
@@ -242,9 +258,12 @@ export function QuestionCard({
           }}
         >
           {q.writeMode === 'blank' ? (
-            <p className="font-display text-[22px] leading-snug" data-testid="prompt">
-              {answered ? q.prompt.replace('___', q.options[0]) : q.prompt}
-            </p>
+            <>
+              <p className="font-display text-[22px] leading-snug" data-testid="prompt">
+                {answered ? q.prompt.replace('___', q.options[0]) : q.prompt}
+              </p>
+              {q.hint && <p className="mt-0.5 text-sm text-gold/90">({q.hint})</p>}
+            </>
           ) : (
             <>
               <p className="text-sm text-paper/60">Lee la frase y escríbela en inglés:</p>
