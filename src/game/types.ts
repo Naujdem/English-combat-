@@ -27,7 +27,7 @@ export type Interest = {
 export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle' | 'epilogue'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
-export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'past-simple' | 'future'
+export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'past-simple' | 'future'
 
 /**
  * fill: completar el espacio en blanco.
@@ -59,7 +59,7 @@ export type Question = {
   hint?: string
 }
 
-export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio' | 'calle' | 'cafe' | 'tienda' | 'turismo'
+export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio' | 'calle' | 'cafe' | 'tienda' | 'turismo' | 'casa-leo' | 'casa-maya' | 'parque' | 'casa'
 
 export type EnemyDef = {
   id: string
@@ -82,7 +82,7 @@ export type EnemyDef = {
   tags?: string[]
   /** Fases del combate (para jefes). Cada fase tiene su vida, temas y una frase al empezar */
   phases?: { hp: number; topics: TopicId[]; kinds: QuestionKind[]; tags?: string[]; line?: StoryLine }[]
-  look: { shirt: string; hair: string; skin: string; accessory?: 'cap' | 'mortarboard' | 'glasses' }
+  look: { shirt: string; hair: string; skin: string; accessory?: 'cap' | 'mortarboard' | 'glasses'; gender?: Gender }
   /** Lo que dice antes del combate */
   before: StoryLine[]
   /** Lo que dice al ser vencido */
@@ -130,6 +130,8 @@ export type SceneDef = {
   intro: { first: string; later: string }
   /** Si existe, al vencer al jefe se muestra el final del capítulo hasta que este id esté en `opened` */
   epilogue?: string
+  /** Lo que se dice al chocar con la puerta cerrada del jefe */
+  door?: { text: string; sub: string }
 }
 
 export type Requirement = { id: string; name: string; line: StoryLine }

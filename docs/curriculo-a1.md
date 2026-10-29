@@ -33,7 +33,7 @@ Pendiente de decidir: si A2 y B1 usan los mismos cinco lugares (crecen con el ju
 |---|---|---|---|---|
 | 1 ✅ | **Escuela** | — | Quién soy y dónde estoy | to be, posesivos, preposiciones de lugar, imperativos |
 | 2 ✅ | **Ciudad** | Autobús desde la escuela | Moverme, comprar y pedir | there is/are, a/an, plurales, this/these, some/any, how much/many, Can I have...? |
-| 3 ⬜ | **Barrio** (casas de amigos, parque y la casa del protagonista) | Otro autobús desde la ciudad | La vida de la gente: rutinas, gustos, familia | presente simple afirmativo (I work / she works), like + -ing, can, presente continuo, have got, frecuencia |
+| 3 ✅ | **Barrio** (casas de amigos, parque y la casa del protagonista) | Otro autobús desde la ciudad | La vida de la gente: rutinas, gustos, familia | presente simple afirmativo (I work / she works), like + -ing, can, presente continuo, have got, frecuencia |
 | 4 ⬜ | **Granja** | Desde el barrio | Cómo funciona un lugar | presente simple negativo y preguntas (do/does), plurales irregulares |
 | 5 ⬜ | **Oficina** | Desde la granja | Organizar el tiempo | la hora completa, at/on/in, pronombres de objeto, Could you...? |
 
@@ -65,12 +65,12 @@ El orden de la tabla es el orden en que aparece en el juego.
 | 12 | Contables e incontables, some / any | some water, any apples? | a water | Ciudad: café | ✅ |
 | 13 | How much / how many | How much is it? How many apples? | How many money? | Ciudad: café y tienda | ✅ |
 | 14 | Can I have...? (pedir) | Can I have a juice, please? | I want juice. | Ciudad: café | ✅ |
-| 15 | Present simple afirmativo (I / he / she) | She goes to school. I work. | She go to school. | Barrio: casas de amigos y jefe | ⬜ |
-| 16 | Like / love / hate + -ing | Maya loves reading. | I like eat pizza. | Barrio: casa de Maya, parque | ⬜ |
-| 17 | Can / can't (habilidad) | I can swim. Can you dance? | I can to swim. | Barrio: parque | ⬜ |
-| 18 | Present continuous (lo que pasa ahora) | Ben is playing football. | Ben playing football. | Barrio: parque | ⬜ |
-| 19 | Have got | I have got two brothers. | I have got a brothers. | Barrio: casa del protagonista | ⬜ |
-| 20 | Adverbios de frecuencia | I always get up at 7. | I get up always at 7. | Barrio: casa del protagonista y jefe | ⬜ |
+| 15 | Present simple afirmativo (I / he / she) | She goes to school. I work. | She go to school. | Barrio: casas de amigos y jefe | ✅ |
+| 16 | Like / love / hate + -ing | Maya loves reading. | I like eat pizza. | Barrio: casa de Maya, parque | ✅ |
+| 17 | Can / can't (habilidad) | I can swim. Can you dance? | I can to swim. | Barrio: parque | ✅ |
+| 18 | Present continuous (lo que pasa ahora) | Ben is playing football. | Ben playing football. | Barrio: parque | ✅ |
+| 19 | Have got | I have got two brothers. | I have got a brothers. | Barrio: casa del protagonista | ✅ |
+| 20 | Adverbios de frecuencia | I always get up at 7. | I get up always at 7. | Barrio: casa del protagonista y jefe | ✅ |
 | 21 | Present simple negativo y preguntas | Does the cow eat grass? It doesn't fly. | Does she lives here? | Granja | ⬜ |
 | 22 | Plurales irregulares | sheep, mice, geese, children | two sheeps | Granja | ⬜ |
 | 23 | La hora completa | It's half past eight. | It's eight and half. | Oficina | ⬜ |
@@ -95,15 +95,15 @@ El orden de la tabla es el orden en que aparece en el juego.
 | Comida y bebida | juice, water, bread, sandwich, apple, coffee | Ciudad: café | ✅ |
 | Números 13–100 y precios | fifteen, fifty, ten dollars | Ciudad: café y tienda | ✅ |
 | Ropa y colores | T-shirt, shoes, jacket, dress, red, blue | Ciudad: tienda | ✅ |
-| Rutinas diarias | get up, have breakfast, go to work, go to bed | Barrio: casas y casa del protagonista | ⬜ |
+| Rutinas diarias | get up, have breakfast, go to work, go to bed | Barrio: casas y casa del protagonista | ✅ |
 | Partes del día | morning, afternoon, evening, night | Barrio | ⬜ |
-| Gustos y tiempo libre | read, listen to music, watch films, dance | Barrio: casa de Maya y parque | ⬜ |
+| Gustos y tiempo libre | read, listen to music, watch films, dance | Barrio: casa de Maya y parque | ✅ |
 | Mascotas | dog, cat, bird, fish | Barrio: parque y casa de Leo | ⬜ |
 | Clima | sunny, rainy, hot, cold | Barrio: parque | ⬜ |
-| Meses, fechas y ordinales | January…, first, second, My birthday is on... | Barrio: cumpleaños de Leo | ⬜ |
-| Celebraciones e invitaciones | Happy birthday! Do you want to come? gift | Barrio: cumpleaños de Leo | ⬜ |
-| Familia | mother, father, brother, sister, grandparents | Barrio: casa de Leo (his/her) y casa del protagonista (my) | ⬜ |
-| Casa y muebles | kitchen, bedroom, living room, bed, sofa | Barrio: casa del protagonista | ⬜ |
+| Meses, fechas y ordinales | January…, first, second, My birthday is on... | Barrio: cumpleaños de Leo | ✅ |
+| Celebraciones e invitaciones | Happy birthday! Do you want to come? gift | Barrio: cumpleaños de Leo | ✅ |
+| Familia | mother, father, brother, sister, grandparents | Barrio: casa de Leo (his/her) y casa del protagonista (my) | ✅ |
+| Casa y muebles | kitchen, bedroom, living room, bed, sofa | Barrio: casa del protagonista | ✅ |
 | Animales de granja | cow, horse, sheep, chicken, pig, goose | Granja | ⬜ |
 | Cuerpo | head, eyes, legs, arms, tail | Granja (animales) | ⬜ |
 | Estaciones | spring, summer, autumn, winter | Granja | ⬜ |
@@ -128,12 +128,12 @@ El orden de la tabla es el orden en que aparece en el juego.
 | Pedir disculpas | Ciudad: alguien choca contigo | ⬜ |
 | Pedir comida y bebida | Ciudad: café | ✅ |
 | Comprar y preguntar precios | Ciudad: tienda | ✅ |
-| Hablar de la rutina de otros | Barrio: casas de amigos | ⬜ |
-| Expresar gustos | Barrio: casa de Maya, parque | ⬜ |
-| Hablar de habilidades | Barrio: parque | ⬜ |
-| Describir lo que pasa ahora | Barrio: parque | ⬜ |
-| Invitar, aceptar y felicitar | Barrio: cumpleaños de Leo | ⬜ |
-| Hablar de la propia familia y la casa | Barrio: casa del protagonista | ⬜ |
+| Hablar de la rutina de otros | Barrio: casas de amigos | ✅ |
+| Expresar gustos | Barrio: casa de Maya, parque | ✅ |
+| Hablar de habilidades | Barrio: parque | ✅ |
+| Describir lo que pasa ahora | Barrio: parque | ✅ |
+| Invitar, aceptar y felicitar | Barrio: cumpleaños de Leo | ✅ |
+| Hablar de la propia familia y la casa | Barrio: casa del protagonista | ✅ |
 | Describir cómo funciona un lugar | Granja | ⬜ |
 | Preguntar y decir la hora | Oficina | ⬜ |
 | Concertar una cita | Oficina | ⬜ |
@@ -168,6 +168,8 @@ Historia: el desconocido hechizó el barrio y la gente olvidó su rutina.
 - **Cumpleaños de Leo** (evento): invitación, meses, fechas y ordinales, *Happy birthday!*, regalos.
 - **Casa del protagonista** (final del barrio): la familia del protagonista, la casa y los muebles (*There is a sofa in the living room*), *have got*, su rutina en primera persona con adverbios de frecuencia.
 - **Jefe:** el hermano o la hermana mayor del protagonista, hechizado/a. Habla de la rutina de la familia sin la -s (*Mom go to work at 8* ✗). Pelea de presente simple y frecuencia.
+
+**Construido (✅):** Green Street con la casa de Leo (la señora García: rutinas y la invitación), la casa de Maya (el señor Rojas: gustos con -ing, da una galleta-escudo), el parque con la fiesta de Leo (el abuelo Joe: fechas, *Happy birthday!* y la foto de tu familia), esbirros Kevin (*can*), Olivia la reportera (presente continuo) y el señor Hill (gustos), y tu casa en 25 Park Street con tu hermano mayor Nick como jefe (presente simple, frecuencia y *have got*). Requisitos del jefe: invitación y foto de familia. Final del capítulo 3 con el regalo de "L" (*Use your voice*) y diario del barrio. Pendiente para más adelante: partes del día, mascotas y clima con más práctica (por ahora solo aparecen de pasada).
 
 ### Granja
 - Animales y plurales irregulares (*one sheep, two sheep*).

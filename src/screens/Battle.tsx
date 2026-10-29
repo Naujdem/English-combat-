@@ -21,8 +21,8 @@ import { useTeacher } from '../game/teacher'
 
 function Backdrop({ zone }: { zone: Zone }) {
   const wall =
-    zone === 'patio' || zone === 'calle' ? '#bfe3f5' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : zone === 'tienda' ? '#f1e6f4' : zone === 'turismo' ? '#dfeaf3' : '#efe5d3'
-  const ground = zone === 'patio' ? '#8fbf6a' : zone === 'calle' ? '#b9b4ab' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : zone === 'tienda' ? '#cdb8d6' : zone === 'turismo' ? '#9fb3c6' : '#b98c5a'
+    zone === 'patio' || zone === 'calle' || zone === 'parque' ? '#bfe3f5' : zone === 'casa-leo' ? '#f3e2c4' : zone === 'casa-maya' ? '#dde6f4' : zone === 'casa' ? '#f1d9c0' : zone === 'bano' ? '#dfeef2' : zone === 'sala' ? '#e6dcef' : zone === 'tienda' ? '#f1e6f4' : zone === 'turismo' ? '#dfeaf3' : '#efe5d3'
+  const ground = zone === 'patio' || zone === 'parque' ? '#8fbf6a' : zone === 'casa-leo' || zone === 'casa' ? '#b98c5a' : zone === 'casa-maya' ? '#a7b4c8' : zone === 'calle' ? '#b9b4ab' : zone === 'bano' ? '#b8d3dc' : zone === 'sala' ? '#b8a7c6' : zone === 'tienda' ? '#cdb8d6' : zone === 'turismo' ? '#9fb3c6' : '#b98c5a'
   return (
     <g>
       <rect width="360" height="150" fill={wall} />
@@ -56,6 +56,39 @@ function Backdrop({ zone }: { zone: Zone }) {
           ))}
           <rect y="140" width="360" height="12" fill="#8d8d8d" />
           {[0, 1, 2, 3, 4, 5].map((k) => <rect key={k} x={10 + k * 62} y="182" width="34" height="5" fill="#f2d16b" opacity="0.8" />)}
+        </>
+      )}
+      {zone === 'parque' && (
+        <>
+          <ellipse cx="90" cy="40" rx="34" ry="12" fill="#ffffff" opacity="0.85" />
+          <circle cx="310" cy="38" r="18" fill="#f6d36b" />
+          {[30, 250].map((x) => (
+            <g key={x}>
+              <rect x={x + 26} y="90" width="12" height="62" fill="#7a5230" />
+              <circle cx={x + 32} cy="80" r="34" fill="#3b8a3e" />
+            </g>
+          ))}
+          <rect x="140" y="112" width="80" height="10" rx="2" fill="#f4efe4" />
+          <rect x="146" y="100" width="22" height="14" rx="2" fill="#e88aa8" />
+          <rect x="180" y="102" width="14" height="12" fill="#2f6fd0" />
+          <rect x="146" y="122" width="4" height="28" fill="#8d7c68" />
+          <rect x="210" y="122" width="4" height="28" fill="#8d7c68" />
+          {['#d64545', '#e0a526', '#3b9d5d'].map((c, k) => (
+            <path key={c} d={`M${150 + k * 22} 30 l10 0 l-5 9 z`} fill={c} />
+          ))}
+          <line x1="140" y1="30" x2="216" y2="30" stroke="#8d7c68" />
+        </>
+      )}
+      {(zone === 'casa-leo' || zone === 'casa-maya' || zone === 'casa') && (
+        <>
+          <rect x="30" y="24" width="60" height="56" fill="#9fd3f0" stroke="#8d7c68" strokeWidth="4" />
+          <rect x="150" y="30" width="56" height="42" rx="3" fill={zone === 'casa' ? '#f4efe4' : '#e8dcc8'} stroke="#7a5230" strokeWidth="4" />
+          <circle cx="170" cy="48" r="7" fill="#e0ac69" />
+          <circle cx="188" cy="50" r="6" fill="#f1c27d" />
+          <rect x="160" y="56" width="36" height="12" rx="3" fill={zone === 'casa' ? '#3a3a5a' : '#d4537e'} />
+          <rect x="240" y="96" width="100" height="46" rx="8" fill={zone === 'casa-maya' ? '#5b7a99' : '#b5523b'} />
+          <rect x="240" y="86" width="100" height="18" rx="6" fill={zone === 'casa-maya' ? '#6f8fae' : '#c8664e'} />
+          {zone === 'casa-maya' && [0, 1, 2, 3].map((k) => <rect key={k} x={40 + k * 14} y="98" width="10" height="44" fill={['#d64545', '#2f6fd0', '#e0a526', '#3b9d5d'][k]} />)}
         </>
       )}
       {zone === 'cafe' && (

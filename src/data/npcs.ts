@@ -83,6 +83,43 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
       { text: 'The coach is strict, but he is very nice.', es: 'El entrenador es estricto, pero es muy amable.' },
     ],
   },
+  // ── Green Street (barrio) ──
+  garcia: {
+    name: 'Mrs. Garcia',
+    // La mamá de Leo: rutinas de la familia (presente simple) y la invitación al cumpleaños
+    look: { shirt: '#d4537e', hair: '#2b1d14', skin: '#e0ac69', gender: 'female' },
+    doneLine: { text: 'See you at the party! It starts at four o\'clock.', es: '¡Nos vemos en la fiesta! Empieza a las cuatro.' },
+  },
+  emma: {
+    name: 'Emma',
+    look: { shirt: '#3b9d5d', hair: '#2b1d14', skin: '#e0ac69', gender: 'female' },
+    lines: [
+      { text: "Hi! I'm Emma, Leo's sister. I play the guitar every afternoon.", es: '¡Hola! Soy Emma, la hermana de Leo. Toco la guitarra todas las tardes.' },
+      { text: 'Leo always gets up late. Mom is always angry! Ha ha.', es: 'Leo siempre se levanta tarde. ¡Mamá siempre se enoja! Ja, ja.' },
+      { text: 'Our dog is called Rocky. He sleeps in the garden.', es: 'Nuestro perro se llama Rocky. Duerme en el jardín.' },
+    ],
+  },
+  rojas: {
+    name: 'Mr. Rojas',
+    // El papá de Maya: gustos con like / love / hate + -ing
+    look: { shirt: '#e07b39', hair: '#1f1f1f', skin: '#c68642', accessory: 'glasses' },
+    doneLine: { text: 'I love cooking for Maya and her friends. Come back for dinner!', es: 'Me encanta cocinar para Maya y sus amigos. ¡Vuelve a cenar!' },
+  },
+  joe: {
+    name: 'Grandpa Joe',
+    // El abuelo de Leo: la fiesta de cumpleaños (fechas, Happy birthday) y la foto de tu familia
+    look: { shirt: '#8b5a2b', hair: '#e8e8e8', skin: '#f1c27d', accessory: 'glasses' },
+    doneLine: { text: 'I always take photos at parties. Smile!', es: 'Siempre tomo fotos en las fiestas. ¡Sonríe!' },
+  },
+  lucy: {
+    name: 'Lucy',
+    look: { shirt: '#e0a526', hair: '#d9822b', skin: '#f6d3b3', gender: 'female' },
+    lines: [
+      { text: 'Look! The dog is running after the ball!', es: '¡Mira! ¡El perro está corriendo detrás de la pelota!' },
+      { text: 'I am waiting for my mom. She is buying ice cream.', es: 'Estoy esperando a mi mamá. Está comprando helado.' },
+      { text: 'The sun is shining today. I love playing in the park!', es: 'Hoy brilla el sol. ¡Me encanta jugar en el parque!' },
+    ],
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

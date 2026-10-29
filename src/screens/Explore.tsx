@@ -31,6 +31,7 @@ import { CoachSays } from '../components/CoachSays'
 import { Directions } from '../components/Directions'
 import { CafeOrder } from '../components/CafeOrder'
 import { MiniTalk } from '../components/MiniTalk'
+import { NPC_TASKS } from '../data/tasks'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
 const VIEW = 11
@@ -56,7 +57,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [friendsOpen, setFriendsOpen] = useState(false)
   // Lección de Leo que se muestra antes de un combate con un tema nuevo
   // (o antes de una actividad que enseña un tema nuevo)
-  const [lesson, setLesson] = useState<{ topics: TopicId[]; enemyId?: string; then?: 'where' | 'coach' | 'directions' | 'cafe' } | null>(null)
+  const [lesson, setLesson] = useState<{ topics: TopicId[]; enemyId?: string; then?: 'where' | 'coach' | 'directions' | 'cafe'; task?: string } | null>(null)
+  // Tarea de un personaje (charla corta con elecciones), ver data/tasks.ts
+  const [task, setTask] = useState<string | null>(null)
   const firstVisit = !state.seenLesson.includes(scene.id)
   const doorOpen = bossDoorOpen(state, scene)
   const keys = state.keys[scene.id] ?? 0
@@ -79,7 +82,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [ask, setAsk] = useState<{ itemId: string; npcId: string; npcName: string } | null>(null)
   const lf = state.lostFound
   const lostOnMap = lf.started && scene.id === 'school' ? LOST_ITEMS.filter((it) => !lf.picked.includes(it.id)) : []
-  const blocked = !!talk || friendsOpen || !!lesson || !!activity || notebook || !!ask
+  const blocked = !!talk || friendsOpen || !!lesson || !!activity || notebook || !!ask || !!task
 
   // Sonido al conseguir algo (llave, objeto, recompensa)
   useEffect(() => {
@@ -111,6 +114,17 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
     (e: Entity) => {
       if (e.type === 'npc') {
         const npc = NPCS[e.id]
+        const t = NPC_TASKS[e.id]
+        if (t && !state.opened.includes(t.done)) {
+          if (t.requires && !state.opened.includes(t.requires.id)) {
+            setMsg({ text: t.requires.text, es: t.requires.es, sub: t.requires.sub, tone: 'warn' })
+            return
+          }
+          setMsg(null)
+          if (t.lesson && !state.seenLesson.includes(t.lesson)) setLesson({ topics: [t.lesson], task: e.id })
+          else setTask(e.id)
+          return
+        }
         if (e.id === 'secretary' && !state.opened.includes('school-registration')) {
           setMsg(null)
           setActivity('registration')
@@ -280,8 +294,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       if (facing !== state.facing) update((s) => ({ ...s, facing }))
       if (c === 'X') {
         setMsg({
-          text: 'La puerta de la sala de profesores está cerrada.',
-          sub: `Necesitas ${scene.keysNeeded} llaves. Los estudiantes que guardan tus palabras las tienen.`,
+          text: scene.door?.text ?? 'La puerta de la sala de profesores está cerrada.',
+          sub: scene.door?.sub ?? `Necesitas ${scene.keysNeeded} llaves. Los estudiantes que guardan tus palabras las tienen.`,
           tone: 'warn',
         })
         return
@@ -420,7 +434,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   (e.id === 'ana' && !state.opened.includes('school-supplies')) ||
                   (e.id === 'rosa' && !state.opened.includes('city-map')) ||
                   (e.id === 'lily' && !state.opened.includes('city-coffee')) ||
-                  (e.id === 'mia' && !state.opened.includes('city-sorry'))
+                  (e.id === 'mia' && !state.opened.includes('city-sorry')) ||
+                  (!!NPC_TASKS[e.id] && !state.opened.includes(NPC_TASKS[e.id].done) && (!NPC_TASKS[e.id].requires || state.opened.includes(NPC_TASKS[e.id].requires!.id)))
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
                     <SpriteBody look={NPCS[e.id].look} />
@@ -797,6 +812,28 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         </Overlay>
       )}
 
+      {task && NPC_TASKS[task] && (
+        <Overlay>
+          <MiniTalk
+            name={NPCS[task].name}
+            look={NPCS[task].look}
+            steps={NPC_TASKS[task].steps}
+            onClose={(done) => {
+              const t = NPC_TASKS[task]
+              setTask(null)
+              if (!done) return
+              update((s) => ({
+                ...s,
+                opened: s.opened.includes(t.done) ? s.opened : [...s.opened, t.done],
+                items: t.shield ? { ...s.items, shield: Math.min(2, s.items.shield + 1) } : s.items,
+                outfits: t.outfit && !s.outfits.includes(t.outfit) ? [...s.outfits, t.outfit] : s.outfits,
+              }))
+              setMsg({ text: t.reward.text, es: t.reward.es, sub: t.reward.sub, say: t.reward.say, tone: 'good' })
+            }}
+          />
+        </Overlay>
+      )}
+
       {friendsOpen && <FriendsPanel state={state} onClose={() => setFriendsOpen(false)} />}
 
       {notebook && <Notebook state={state} update={update} onClose={() => setNotebook(false)} />}
@@ -845,11 +882,12 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             steps={lesson.topics.flatMap((t) => (LESSONS[t] ?? []).map((st) => ({ ...st, topic: t })))}
             title={lesson.enemyId ? 'Leo te alcanza antes del combate' : 'Leo te ayuda'}
             onDone={() => {
-              const { topics, enemyId, then } = lesson
+              const { topics, enemyId, then, task: taskId } = lesson
               update((s) => ({ ...s, seenLesson: [...s.seenLesson, ...topics.filter((t) => !s.seenLesson.includes(t))] }))
               setLesson(null)
               if (enemyId) onBattle(enemyId)
               else if (then) setActivity(then)
+              else if (taskId) setTask(taskId)
             }}
           />
         </div>

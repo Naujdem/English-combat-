@@ -39,8 +39,16 @@ too=también, demasiado;tourist=turista;towel=toalla;tree=árbol;tuesday=martes;
 very=muy;voice=voz;wait=esperar;waiter=mesero;wall=pared;want=querer;wash=lavar;water=agua;we=nosotros;wednesday=miércoles;welcome=bienvenido;wet=mojado;what=qué;when=cuándo;where=dónde;
 whistle=silbato;white=blanco;who=quién;whose=de quién;why=por qué;window=ventana;with=con;word=palabra;words=palabras;work=trabajar, trabajo;write=escribir;year=año;years=años;yellow=amarillo;
 yes=sí;yesterday=ayer;you=tú, usted, ustedes;young=joven;your=tu, su (de usted);yours=tuyo;
+always=siempre;usually=normalmente;sometimes=a veces;often=a menudo;early=temprano;garden=jardín;gardening=jardinería;cook=cocinar;guitar=guitarra;piano=piano;neighbor=vecino;neighbors=vecinos;
+ride=montar (ride a bike = montar en bici);fly=volar;grandpa=abuelo;grandma=abuela;grandparents=abuelos;parents=padres;baby=bebé;cry=llorar;sleep=dormir;drive=manejar;language=idioma;languages=idiomas;
+doctor=médico;invitation=invitación;gift=regalo;may=mayo (también: poder);january=enero;february=febrero;march=marzo;april=abril;june=junio;july=julio;august=agosto;september=septiembre;
+october=octubre;november=noviembre;december=diciembre;fifth=quinto;second=segundo;third=tercero;fourth=cuarto;hoodie=sudadera;sofa=sofá;fridge=nevera;kitchen=cocina;bedroom=cuarto, dormitorio;
+living=vivir (living room = sala);sun=sol;shine=brillar;rain=llover, lluvia;weather=clima;umbrella=paraguas;report=reportaje, informe;news=noticias;noise=ruido;hobby=pasatiempo;energy=energía;
+breaking=de última hora (breaking news);sing=cantar;song=canción;dance=bailar;draw=dibujar;watch=mirar, ver;tv=televisión;bike=bicicleta;everybody=todo el mundo;nobody=nadie;remember=recordar;
+brave=valiente;hate=odiar;hurt=doler;minutes=minutos;wonderful=maravilloso;young=joven;photo=foto;photos=fotos;smile=sonreír;letter=letra, carta;strange=extraño;mean=significar;
+fifteen=quince;enjoy=disfrutar;peruvian=peruano;everything=todo;alone=solo;floor=suelo, piso;nothing=nada;mine=mío;teach=enseñar;high=alto;walk=caminar;wait=esperar;waiting=esperando;
 i'm=yo soy, yo estoy;you're=tú eres, tú estás;he's=él es, él está;she's=ella es, ella está;it's=es, está;we're=nosotros somos;they're=ellos son;that's=eso es;let's=vamos a;what's=qué es;
-don't=no (no hagas);doesn't=no (con he/she/it);didn't=no (en pasado);won't=no va a
+don't=no (no hagas);doesn't=no (con he/she/it);didn't=no (en pasado);won't=no va a;can't=no puede;haven't=no tiene (have got);hasn't=no tiene (has got);got=(have got = tener)
 `
 
 const BASE: Record<string, string> = Object.fromEntries(

@@ -2,9 +2,10 @@ import type { FriendDef, GameState, Question, SceneDef } from './types'
 import type { SpriteLook } from '../components/Sprite'
 import { OUTFITS, SCHOOL } from '../data/school'
 import { CITY } from '../data/city'
+import { BARRIO } from '../data/barrio'
 import { FRIENDS, interestFriend } from '../data/friends'
 
-export const SCENES: Record<string, SceneDef> = { [SCHOOL.id]: SCHOOL, [CITY.id]: CITY }
+export const SCENES: Record<string, SceneDef> = { [SCHOOL.id]: SCHOOL, [CITY.id]: CITY, [BARRIO.id]: BARRIO }
 
 export function heroLook(s: GameState, extra: Partial<SpriteLook> = {}): SpriteLook {
   const outfit = OUTFITS[s.outfit] ?? OUTFITS.base

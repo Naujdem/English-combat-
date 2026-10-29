@@ -19,10 +19,32 @@ const VERB = new Set([
   'am', 'is', 'are', "isn't", "aren't", 'be', 'can', "can't", 'do', 'does', "don't", "doesn't", 'have', 'has', 'go', 'goes', 'turn', 'open', 'close',
   'sit', 'stand', 'listen', 'pass', 'drink', 'wash', 'run', 'jump', 'stop', 'give', 'take', 'eat', 'read', 'play', 'need', 'want', 'like', 'love',
   'loves', 'work', 'works', 'live', 'lives', 'speak', 'help', 'bring', 'kick', 'call', 'send', 'look', 'meet', 'was', 'were', 'excuse',
+  'got', "haven't", "hasn't", "am", "'m",
 ])
+
+/** Verbos del presente simple, gustos y presente continuo: se agregan con su forma -s y su forma -ing */
+const MORE_VERBS = [
+  'get', 'work', 'play', 'live', 'eat', 'watch', 'cook', 'read', 'sleep', 'swim', 'run', 'dance', 'sing', 'ride', 'fly', 'drive', 'walk', 'study',
+  'brush', 'sit', 'make', 'take', 'wait', 'listen', 'rain', 'shine', 'help', 'cry', 'speak', 'write', 'jump', 'love', 'like', 'hate', 'draw',
+  'buy', 'find', 'remember', 'say', 'know', 'teach', 'wash', 'go', 'do', 'have', 'stand', 'drink', 'look', 'snow', 'garden', 'shop', 'smile',
+]
+function third(v: string) {
+  if (v === 'have') return 'has'
+  if (/[^aeiou]y$/.test(v)) return v.slice(0, -1) + 'ies'
+  if (/(s|sh|ch|x|o)$/.test(v)) return v + 'es'
+  return v + 's'
+}
+function ing(v: string) {
+  if (v === 'lie') return 'lying'
+  if (/[^e]e$/.test(v)) return v.slice(0, -1) + 'ing'
+  if (['run', 'swim', 'get', 'sit', 'shop'].includes(v)) return v + v.at(-1) + 'ing'
+  return v + 'ing'
+}
+for (const v of MORE_VERBS) [v, third(v), ing(v)].forEach((f) => VERB.add(f))
 const KEY = new Set([
   'my', 'your', 'his', 'her', 'its', 'our', 'their', 'this', 'that', 'these', 'those', 'a', 'an', 'some', 'any', 'in', 'on', 'under', 'next', 'to',
   'between', 'behind', 'front', 'of', 'not', 'what', 'where', 'who', 'when', 'how', 'much', 'many', 'please',
+  'always', 'usually', 'sometimes', 'often', 'never',
 ])
 
 /** Papel de una palabra en la frase, para colorearla */
@@ -42,13 +64,15 @@ export function wordRole(word: string, topic?: TopicId): Role {
     if (topic === 'greetings') return ['what', 'where', 'how', 'who', 'my', 'your'].includes(w) ? 'key' : 'rest'
     if (topic === 'to-be') return w === 'not' ? 'key' : 'rest'
     if (topic === 'imperatives') return w === 'please' ? 'key' : 'rest'
+    if (topic === 'present-simple') return ['always', 'usually', 'sometimes', 'often', 'never', 'not'].includes(w) ? 'key' : 'rest'
+    if (topic === 'present-continuous' || topic === 'have-got') return ['not', 'what', 'where'].includes(w) ? 'key' : 'rest'
   }
   return 'rest'
 }
 
 const QWORDS = new Set(['what', 'where', 'who', 'when', 'how', 'excuse'])
 /** Verbos que también pueden ser adjetivos: después del verbo principal no se colorean */
-const AMBIG = new Set(['open', 'close', 'like', 'look', 'call', 'work', 'love', 'read', 'stop', 'play', 'run'])
+const AMBIG = new Set(['open', 'close', 'like', 'look', 'call', 'work', 'love', 'read', 'stop', 'play', 'run', 'garden', 'shop', 'watch', 'rain', 'snow', 'smile', 'walk', 'drink', 'cook', 'dance', 'help', 'study', 'draw', 'ride', 'sleep', 'swim', 'hate'])
 const norm = (w: string) => w.toLowerCase().replace(/[’`]/g, "'").replace(/[^a-z']/g, '')
 
 /**
@@ -114,6 +138,28 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       return { title: 'Cerca: this / these · Lejos: that / those. Una cosa: is · Varias: are', parts: [K('this / that / these / those'), '+', R('cosa'), '+', V('is / are'), '+', R('...')] }
     case 'ordering':
       return { title: 'Para pedir con amabilidad:', parts: [S('Can I'), '+', V('have'), '+', K('a / an / some'), '+', R('cosa'), '+', K('please?')] }
+    case 'present-simple':
+      if (question) return { title: 'Para preguntar: do (I, you, we, they) o does (he, she, it):', parts: [V('Do / Does'), '+', S('Sujeto'), '+', V('verbo'), '+', R('...?')] }
+      if (negative) return { title: "Para negar: don't o doesn't, y el verbo sin -s:", parts: [S('Sujeto'), '+', V("don't / doesn't"), '+', V('verbo'), '+', R('...')] }
+      if (/\b(always|usually|sometimes|often|never)\b/i.test(sentence))
+        return { title: 'La frecuencia va antes del verbo (pero después de am / is / are):', parts: [S('Sujeto'), '+', K('always / never'), '+', V('verbo (-s)'), '+', R('...')] }
+      return { title: 'Rutinas: con he, she, it el verbo lleva -s (works, goes, studies):', parts: [S('Sujeto'), '+', V('verbo (-s)'), '+', R('...')] }
+    case 'likes':
+      if (negative) return { title: "Para decir que no te gusta:", parts: [S('Sujeto'), '+', V("don't / doesn't like"), '+', V('verbo-ing'), '+', R('...')] }
+      if (question) return { title: 'Para preguntar por gustos:', parts: [V('Do / Does'), '+', S('Sujeto'), '+', V('like'), '+', V('verbo-ing'), '+', R('...?')] }
+      return { title: 'Después de like, love y hate el verbo va con -ing:', parts: [S('Sujeto'), '+', V('like / love / hate (-s)'), '+', V('verbo-ing'), '+', R('...')] }
+    case 'can':
+      if (question) return { title: 'Para preguntar, can va primero:', parts: [V('Can'), '+', S('Sujeto'), '+', V('verbo'), '+', R('...?')] }
+      if (negative) return { title: "Para negar: can't + verbo, sin to:", parts: [S('Sujeto'), '+', V("can't"), '+', V('verbo'), '+', R('...')] }
+      return { title: 'Después de can va el verbo solo: sin to y sin -s:', parts: [S('Sujeto'), '+', V('can'), '+', V('verbo'), '+', R('...')] }
+    case 'present-continuous':
+      if (question) return { title: 'Para preguntar qué está pasando:', parts: [K('What'), '+', V('am / is / are'), '+', S('Sujeto'), '+', V('verbo-ing?')] }
+      if (negative) return { title: 'Para negar, not va después de am / is / are:', parts: [S('Sujeto'), '+', V('am / is / are'), '+', K('not'), '+', V('verbo-ing'), '+', R('...')] }
+      return { title: 'Lo que pasa ahora: no olvides am / is / are:', parts: [S('Sujeto'), '+', V('am / is / are'), '+', V('verbo-ing'), '+', R('...')] }
+    case 'have-got':
+      if (question) return { title: 'Para preguntar, have o has va primero:', parts: [V('Have / Has'), '+', S('Sujeto'), '+', V('got'), '+', R('...?')] }
+      if (negative) return { title: "Para negar: haven't got o hasn't got:", parts: [S('Sujeto'), '+', V("haven't / hasn't"), '+', V('got'), '+', R('...')] }
+      return { title: 'I, you, we, they: have got · he, she, it: has got:', parts: [S('Sujeto'), '+', V('have / has'), '+', V('got'), '+', R('cosa')] }
     default:
       return { title: 'Usa esta estructura:', parts: [S('Sujeto'), '+', V('Verbo'), '+', R('...')] }
   }

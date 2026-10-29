@@ -190,6 +190,45 @@ export const DIARY: DiaryChapter[] = [
       },
     ],
   },
+  {
+    id: 'barrio',
+    title: 'Capítulo 3: Green Street',
+    unlock: 'barrio-epilogue',
+    words: [
+      { title: 'Familia', words: [['mother / mom', 'madre / mamá'], ['father / dad', 'padre / papá'], ['brother', 'hermano'], ['sister', 'hermana'], ['grandpa', 'abuelo'], ['grandma', 'abuela'], ['parents', 'padres'], ['family', 'familia'], ['neighbor', 'vecino']] },
+      { title: 'Rutinas', words: [['get up', 'levantarse'], ['have breakfast', 'desayunar'], ['go to work', 'ir al trabajo'], ['go to school', 'ir a la escuela'], ['have dinner', 'cenar'], ['watch TV', 'ver televisión'], ['go to bed', 'acostarse'], ['every day', 'todos los días']] },
+      { title: 'Frecuencia', words: [['always', 'siempre'], ['usually', 'normalmente'], ['sometimes', 'a veces'], ['never', 'nunca']] },
+      { title: 'Gustos y pasatiempos', words: [['like', 'gustar'], ['love', 'encantar'], ['hate', 'odiar'], ['reading', 'leer'], ['cooking', 'cocinar'], ['dancing', 'bailar'], ['swimming', 'nadar'], ['listening to music', 'escuchar música'], ['playing the guitar', 'tocar la guitarra'], ['gardening', 'la jardinería']] },
+      { title: 'Habilidades y ahora mismo', words: [['can', 'poder, saber'], ["can't", 'no poder'], ['ride a bike', 'montar en bicicleta'], ['run', 'correr'], ['fly', 'volar'], ['It is raining.', 'Está lloviendo.'], ['The sun is shining.', 'Brilla el sol.'], ['What are you doing?', '¿Qué estás haciendo?']] },
+      { title: 'Casa', words: [['house', 'casa'], ['living room', 'sala'], ['kitchen', 'cocina'], ['bedroom', 'cuarto'], ['garden', 'jardín'], ['sofa', 'sofá'], ['fridge', 'nevera'], ['photo', 'foto'], ['have got', 'tener']] },
+      { title: 'Cumpleaños y fechas', words: [['birthday', 'cumpleaños'], ['Happy birthday!', '¡Feliz cumpleaños!'], ['party', 'fiesta'], ['gift', 'regalo'], ['invitation', 'invitación'], ['May', 'mayo'], ['July', 'julio'], ['December', 'diciembre'], ['first, second, third', 'primero, segundo, tercero'], ['fifth', 'quinto']] },
+    ],
+    versions: [
+      {
+        id: 'barrio-present',
+        tense: 'n',
+        tab: 'Presente',
+        title: 'My story: Green Street',
+        frame: 'Lo que pasó en Green Street, contado en presente.',
+        lines: [
+          { en: 'Leo [lives]n on Green Street. I [live]n there too, on Park Street!', es: 'Leo vive en Green Street. ¡Yo también vivo allá, en Park Street!' },
+          { en: "Leo's mom [gets]n up at six. His dad [works]n in a hospital, and his sister Emma [plays]n the guitar.", es: 'La mamá de Leo se levanta a las seis. Su papá trabaja en un hospital, y su hermana Emma toca la guitarra.' },
+          { en: "Maya's dad [loves]n cooking. Maya [loves]n reading, but she [hates]n getting up early.", es: 'Al papá de Maya le encanta cocinar. A Maya le encanta leer, pero odia levantarse temprano.' },
+          { en: 'Today [is]n Leo\'s birthday. There [is]n a party in the park.', es: 'Hoy es el cumpleaños de Leo. Hay una fiesta en el parque.' },
+          { en: 'My brother Nick [has]n a piece of the clock. He [says]n everything without -s!', es: 'Mi hermano Nick tiene una pieza del reloj. ¡Dice todo sin -s!' },
+          { en: 'Grandpa Joe [gives]n me a photo of my family, and Nick [remembers]n me.', es: 'El abuelo Joe me da una foto de mi familia, y Nick me recuerda.' },
+          { en: 'A gift from "L" [says]n: "Use your voice." Leo [doesn\'t]n understand.', es: 'Un regalo de "L" dice: "Usa tu voz". Leo no entiende.' },
+          { en: 'Now I [have]n three pieces of the clock. Tomorrow we [go]n to the farm.', es: 'Ahora tengo tres piezas del reloj. Mañana vamos a la granja.' },
+        ],
+        questions: [
+          { q: "Where does Leo's dad work?", options: ['In a bank.', 'In a hospital.', 'On a farm.'], answer: 1, tip: 'El texto dice: "His dad works in a hospital".' },
+          { q: 'What does Maya love?', options: ['Reading.', 'Getting up early.', 'Cooking.'], answer: 0, tip: 'El texto dice: "Maya loves reading".' },
+          { q: 'Where is the party?', options: ['In my house.', 'At school.', 'In the park.'], answer: 2, tip: 'El texto dice: "There is a party in the park".' },
+          { q: 'What does the gift from "L" say?', options: ['Happy new year.', 'Use your voice.', 'Go to the farm.'], answer: 1, tip: 'El texto dice: "Use your voice".' },
+        ],
+      },
+    ],
+  },
 ]
 
 /** Diccionario de las palabras de los diarios (inglés → español) */
@@ -211,6 +250,11 @@ export const DICT: Record<string, string> = {
   the: 'el, la, los, las', then: 'luego', there: 'allá', they: 'ellos', things: 'cosas', to: 'a, para', today: 'hoy', together: 'juntos', tom: 'Tom (nombre)', tomorrow: 'mañana (el día siguiente)',
   took: 'se llevó (take)', travel: 'viajar', under: 'bajo, debajo de', uniform: 'uniforme', very: 'muy', voice: 'voz', was: 'era, fue, estaba (to be)', we: 'nosotros',
   week: 'semana', whistle: 'silbato', win: 'ganar', won: 'gané (win)', words: 'palabras', ha: 'ja (risa)', order: 'pedir', writes: 'escribe (write)', sends: 'manda (send)', lives: 'vive (live)', know: 'conocer, saber', streets: 'calles', tourists: 'turistas', guide: 'guía', wrong: 'equivocado', place: 'lugar', cup: 'vaso', cake: 'pastel', juice: 'jugo', map: 'mapa', officer: 'oficial', big: 'grande', fountain: 'fuente', shop: 'tienda', clothes: 'ropa', café: 'café', green: 'verde', street: 'calle', coffee: 'café (bebida)', go: 'ir', broken: 'roto', machine: 'máquina', inside: 'dentro de', time: 'tiempo, época', this: 'este, esta', teacher: 'profesor', them: 'a ellos, los', keep: 'guardar', later: 'después',
+  live: 'vivir, vivo', too: 'también', gets: 'se levanta (get up)', up: 'arriba (get up = levantarse)', six: 'seis', works: 'trabaja (work)', hospital: 'hospital',
+  sister: 'hermana', emma: 'Emma (nombre)', plays: 'toca, juega (play)', guitar: 'guitarra', loves: 'le encanta (love)', cooking: 'cocinar', reading: 'leer', hates: 'odia (hate)', getting: 'levantarse (get up)',
+  early: 'temprano', birthday: 'cumpleaños', party: 'fiesta', park: 'parque', brother: 'hermano', nick: 'Nick (nombre)', says: 'dice (say)', everything: 'todo', without: 'sin',
+  grandpa: 'abuelo', joe: 'Joe (nombre)', photo: 'foto', family: 'familia', remembers: 'recuerda (remember)', gift: 'regalo', use: 'usar', "doesn't": 'no (con he, she, it)',
+  understand: 'entender', three: 'tres', farm: 'granja', "leo's": 'de Leo', "maya's": 'de Maya', dad: 'papá', mom: 'mamá', maya: 'Maya (nombre)', she: 'ella', her: 'su (de ella)',
   "school's": 'de la escuela', ana: 'Ana (nombre)', story: 'historia', plan: 'plan', "stranger's": 'del desconocido',
 }
 

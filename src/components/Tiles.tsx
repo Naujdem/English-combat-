@@ -14,6 +14,10 @@ export const FLOOR: Record<Zone, string> = {
   cafe: '#ecd2b0',
   tienda: '#eadff0',
   turismo: '#d9e6f0',
+  'casa-leo': '#f0e0c8',
+  'casa-maya': '#e3e8f5',
+  parque: '#8fbf6a',
+  casa: '#f3dcc6',
 }
 
 const WALL = '#7a6a58'
@@ -49,6 +53,9 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   R: { en: 'clothes rack', es: 'perchero de ropa' },
   Q: { en: 'mirror', es: 'espejo' },
   O: { en: 'desk', es: 'escritorio' },
+  A: { en: 'sofa', es: 'sofá' },
+  J: { en: 'fridge', es: 'nevera' },
+  k: { en: 'birthday cake', es: 'pastel de cumpleaños' },
 }
 
 export function Tile({ c, x, y, floor, doorOpen }: { c: string; x: number; y: number; floor: string; doorOpen: boolean }) {
@@ -320,6 +327,46 @@ export function Tile({ c, x, y, floor, doorOpen }: { c: string; x: number; y: nu
           <circle cx={X + 16} cy={Y + 12} r={8} fill="#3b9d5d" />
           <circle cx={X + 11} cy={Y + 15} r={5} fill="#2f8a4e" />
           <circle cx={X + 21} cy={Y + 15} r={5} fill="#2f8a4e" />
+        </g>
+      )
+    case 'A':
+      return (
+        <g>
+          {base}
+          <rect x={X + 2} y={Y + 8} width={T - 4} height={18} rx="4" fill="#b5523b" />
+          <rect x={X + 2} y={Y + 6} width={T - 4} height={8} rx="3" fill="#c8664e" />
+          <rect x={X + 5} y={Y + 15} width={10} height={7} rx="2" fill="#d97c63" />
+          <rect x={X + 17} y={Y + 15} width={10} height={7} rx="2" fill="#d97c63" />
+        </g>
+      )
+    case 'J':
+      return (
+        <g>
+          {base}
+          <rect x={X + 7} y={Y + 1} width={18} height={29} rx="2" fill="#e8eef2" stroke="#b8c4cc" strokeWidth="1.2" />
+          <line x1={X + 7} y1={Y + 11} x2={X + 25} y2={Y + 11} stroke="#b8c4cc" strokeWidth="1.2" />
+          <rect x={X + 21} y={Y + 4} width={2} height={5} rx="1" fill="#8d9aa3" />
+          <rect x={X + 21} y={Y + 14} width={2} height={7} rx="1" fill="#8d9aa3" />
+        </g>
+      )
+    case 'k':
+      return (
+        <g>
+          {base}
+          <rect x={X + 1} y={Y + 9} width={T - 2} height={15} rx="2" fill="#f4efe4" stroke="#d64545" strokeWidth="1" strokeDasharray="3 2" />
+          {y % 2 === 1 ? (
+            <>
+              <rect x={X + 8} y={Y + 4} width={16} height={11} rx="2" fill="#e88aa8" />
+              <rect x={X + 8} y={Y + 4} width={16} height={3} rx="1" fill="#f4efe4" />
+              <rect x={X + 15} y={Y} width={2} height={5} fill="#e0a526" />
+            </>
+          ) : (
+            <>
+              <rect x={X + 6} y={Y + 5} width={12} height={10} rx="1" fill="#2f6fd0" />
+              <rect x={X + 11} y={Y + 5} width={2} height={10} fill="#e0a526" />
+              <circle cx={X + 24} cy={Y + 10} r="4" fill="#3b9d5d" />
+            </>
+          )}
         </g>
       )
     default:

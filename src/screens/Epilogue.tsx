@@ -8,10 +8,12 @@ import { FRIENDS, interestFriend } from '../data/friends'
 import { heroLook } from '../game/helpers'
 import { TimeClock } from '../components/TimeClock'
 import { WORLD } from '../data/world'
+import { ENEMIES } from '../data/enemies'
 
 const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
-type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero'
+type Who = 'narrator' | 'leo' | 'maya' | 'interest' | 'villain' | 'hero' | 'nick'
+type Cast = 'leo' | 'maya' | 'interest' | 'nick'
 type Step = {
   who: Who
   text: string
@@ -22,7 +24,7 @@ type Step = {
   /** Muestra el reloj del tiempo en la escena */
   clock?: boolean
   /** Quién más aparece en la escena */
-  cast?: ('leo' | 'maya' | 'interest')[]
+  cast?: Cast[]
 }
 
 /**
@@ -32,6 +34,7 @@ type Step = {
  */
 function buildSteps(s: GameState, sceneId: string): Step[] {
   if (sceneId === 'city') return citySteps(s)
+  if (sceneId === 'barrio') return barrioSteps(s)
   const name = s.hero.name
   const it = s.interest
   const iname = it.name
@@ -184,8 +187,82 @@ function citySteps(s: GameState): Step[] {
   ]
 }
 
+/**
+ * Final del capítulo 3: Nick vuelve a ser él mismo, la fiesta de Leo sigue en el parque.
+ * Repasa presente simple, have got y can. El regalo misterioso de "L" y la voz ronca
+ * que sabe el nombre de Leo.
+ */
+function barrioSteps(s: GameState): Step[] {
+  const name = s.hero.name
+  const iname = s.interest.name
+  const cast: Cast[] = ['leo', 'maya', 'interest']
+  const withNick: Cast[] = ['nick', 'leo', 'interest']
+  return [
+    { who: 'narrator', text: `Nick y tú salen de la casa. En el parque, la fiesta de Leo sigue: Leo, Maya y ${iname} los esperan al lado del pastel.`, cast: withNick },
+    { who: 'leo', text: `${name}! Is that your brother? Is he OK now?`, es: `¡${name}! ¿Ese es tu hermano? ¿Ya está bien?`, cast: withNick },
+    {
+      who: 'hero',
+      text: 'Presenta a Nick.',
+      cast: withNick,
+      choice: {
+        options: ['Yes! Leo, this is my brother Nick. He likes playing basketball.', 'Yes! Leo, this is my brother Nick. He like play basketball.', 'Yes! Leo, these is my brother Nick.'],
+        answer: 0,
+        tip: 'This is + persona. Y con "he": likes + verbo con -ing.',
+      },
+    },
+    { who: 'nick', text: "Hi, Leo! Happy birthday! Sorry... I don't remember this morning. My head hurts.", es: '¡Hola, Leo! ¡Feliz cumpleaños! Perdón... no recuerdo esta mañana. Me duele la cabeza.', cast: withNick },
+    { who: 'maya', text: 'Look at the clock! There are three pieces now. And the light is brighter!', es: '¡Miren el reloj! Ahora hay tres piezas. ¡Y la luz brilla más!', cast, clock: true },
+    { who: 'leo', text: 'Now, my gift! The gift from "L". Let\'s open it!', es: '¡Ahora, mi regalo! El regalo de "L". ¡Abrámoslo!', cast },
+    { who: 'narrator', text: 'Dentro hay una tarjeta vieja. La letra es temblorosa. Leo la lee en voz alta.', cast },
+    { who: 'leo', text: '"Happy birthday, Leo. Be brave. Use your voice." ... Use my voice? What does it mean?', es: '"Feliz cumpleaños, Leo. Sé valiente. Usa tu voz." ... ¿Usar mi voz? ¿Qué significa?', cast },
+    {
+      who: 'hero',
+      text: '¿Qué le respondes a Leo?',
+      cast,
+      choice: {
+        options: ["I don't know. But you always help me, Leo.", "I doesn't know. But you always helps me.", "I don't know. But you help always me."],
+        answer: 0,
+        tip: 'Con "I" y "you" el verbo va sin -s, y always va antes del verbo: you always help.',
+      },
+    },
+    { who: 'narrator', text: 'Leo se agacha a recoger el papel de regalo. Entonces, una voz ronca suena detrás del árbol.', cast },
+    { who: 'villain', text: 'Happy birthday... Leo.', es: 'Feliz cumpleaños... Leo.', villain: true, cast },
+    { who: 'villain', text: 'And you... three pieces. The next piece is at the farm. The animals are waiting for you.', es: 'Y tú... tres piezas. La siguiente pieza está en la granja. Los animales te están esperando.', villain: true, cast },
+    { who: 'narrator', text: 'Leo levanta la cabeza. Detrás del árbol no hay nadie.', cast },
+    { who: 'leo', text: 'Did you hear that? That voice... He knows my name! How?', es: '¿Oyeron eso? Esa voz... ¡Sabe mi nombre! ¿Cómo?', cast },
+    { who: 'interest', text: 'He is going to the farm. We can take the old road tomorrow.', es: 'Va a la granja. Mañana podemos tomar el camino viejo.', cast },
+    {
+      who: 'hero',
+      text: `¿Qué le respondes a ${iname}?`,
+      cast,
+      choice: {
+        options: ['Yes! We can go together.', 'Yes! We can to go together.', 'Yes! We cans go together.'],
+        answer: 0,
+        tip: 'can + verbo, sin "to" y sin -s: we can go.',
+      },
+    },
+    { who: 'nick', text: 'The farm? I have got a bike. You can take it. And be careful, OK?', es: '¿La granja? Tengo una bicicleta. Puedes llevártela. Y ten cuidado, ¿sí?', cast: withNick },
+    {
+      who: 'hero',
+      text: '¿Cómo le respondes a Nick?',
+      cast: withNick,
+      choice: {
+        options: ['Thank you, Nick! See you at home!', 'You are welcome, Nick!', 'Happy birthday, Nick!'],
+        answer: 0,
+        tip: 'Nick te presta su bicicleta: agradece con "Thank you!".',
+      },
+    },
+    {
+      who: 'narrator',
+      text: 'Fin del capítulo 3: Green Street. Recuperaste el presente simple y las rutinas, los gustos con -ing, can, el presente continuo y have got. Tu viaje sigue en la granja... Esa noche, en tu propia casa, escribes en tu diario.',
+      cast,
+    },
+  ]
+}
+
 export function Epilogue({ state, onDone }: { state: GameState; onDone: () => void }) {
   const city = state.sceneId === 'city'
+  const barrio = state.sceneId === 'barrio'
   const steps = buildSteps(state, state.sceneId)
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
@@ -203,6 +280,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
     interest: state.interest.name,
     villain: '???',
     hero: state.hero.name,
+    nick: 'Nick',
   }
 
   function next() {
@@ -217,9 +295,33 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 overflow-y-auto px-4 py-6">
-      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
-      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
-        {city ? (
+      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
+      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
+        {barrio ? (
+          <g>
+            <rect width="320" height="200" fill="#bfe3f5" />
+            <circle cx="280" cy="34" r="18" fill="#f6d36b" />
+            <rect x="20" y="44" width="80" height="76" fill="#f0d27a" />
+            <polygon points="12,46 60,16 108,46" fill="#b5523b" />
+            <rect x="50" y="84" width="20" height="36" fill="#7a5230" />
+            <rect x="120" y="54" width="70" height="66" fill="#d6e0ee" />
+            <polygon points="112,56 155,28 198,56" fill="#5b7a99" />
+            <rect x="145" y="88" width="18" height="32" fill="#5b7a99" />
+            <rect x="216" y="82" width="10" height="40" fill="#7a5230" />
+            <circle cx="221" cy="72" r="26" fill="#3b8a3e" />
+            <line x1="0" y1="22" x2="200" y2="30" stroke="#8d7c68" />
+            {['#d64545', '#e0a526', '#3b9d5d', '#2f6fd0', '#d4537e', '#e0a526', '#3b9d5d'].map((c, k) => (
+              <path key={k} d={`M${12 + k * 28} ${22.5 + k * 1.1} l10 0.4 l-5.5 9 z`} fill={c} />
+            ))}
+            <rect y="120" width="320" height="80" fill="#8fbf6a" />
+            <rect x="230" y="126" width="76" height="8" rx="2" fill="#f4efe4" />
+            <rect x="240" y="112" width="22" height="15" rx="2" fill="#e88aa8" />
+            <rect x="250" y="106" width="2" height="7" fill="#e0a526" />
+            <rect x="272" y="116" width="14" height="11" fill="#2f6fd0" />
+            <rect x="234" y="134" width="4" height="20" fill="#8d7c68" />
+            <rect x="298" y="134" width="4" height="20" fill="#8d7c68" />
+          </g>
+        ) : city ? (
           <g>
             <rect width="320" height="200" fill="#f0c48c" />
             <rect width="320" height="120" fill="#e5a37a" />
@@ -257,7 +359,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
           <SpriteBody look={heroLook(state)} />
         </g>
         {shown.map((who, k) => {
-          const look = who === 'leo' ? FRIENDS.leo.look : who === 'maya' ? FRIENDS.maya.look : interest.look
+          const look = who === 'leo' ? FRIENDS.leo.look : who === 'maya' ? FRIENDS.maya.look : who === 'nick' ? ENEMIES['barrio-boss'].look : interest.look
           return (
             <g key={who} transform={`translate(${spots[k] + 64} 128) scale(-2 2)`}>
               <SpriteBody look={look} />

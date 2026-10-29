@@ -11,7 +11,7 @@ import { NPCS } from '../data/npcs'
  */
 type Step = { who: 'narrator' | 'leo' | 'driver'; text: string; es: string; choice?: { options: string[]; answer: number; tip: string } }
 
-export type BusTrip = { place: string; placeEs: string; price: string; priceNum: string; wrongPrices: [string, string]; arrival: { text: string; es: string } }
+export type BusTrip = { place: string; placeEs: string; price: string; priceNum: string; wrongPrices: [string, string]; arrival: { text: string; es: string }; sign: string; intro?: string }
 
 export const BUS_TO_CITY: BusTrip = {
   place: 'the city',
@@ -20,17 +20,29 @@ export const BUS_TO_CITY: BusTrip = {
   priceNum: '$2',
   wrongPrices: ['$12', '$20'],
   arrival: { text: 'Look! There is a big fountain, and there are a lot of shops!', es: '¡Mira! ¡Hay una fuente grande y hay muchas tiendas!' },
+  sign: 'CITY BUS',
+}
+
+export const BUS_TO_BARRIO: BusTrip = {
+  place: 'Green Street',
+  placeEs: 'Green Street, el barrio de Leo',
+  price: 'three dollars',
+  priceNum: '$3',
+  wrongPrices: ['$13', '$30'],
+  arrival: { text: 'This is my street! My house is the yellow one. And look: your house is next to the park!', es: '¡Esta es mi calle! Mi casa es la amarilla. Y mira: ¡tu casa está al lado del parque!' },
+  sign: 'GREEN ST.',
+  intro: 'Al día siguiente, después de clase, Leo y tú toman otro autobús. Van a Green Street: Leo vive allá... y tú también, en Park Street.',
 }
 
 function steps(t: BusTrip): Step[] {
   return [
-    { who: 'narrator', text: `Al día siguiente, Leo y tú van a la parada de autobús. Van a ${t.placeEs}.`, es: '' },
+    { who: 'narrator', text: t.intro ?? `Al día siguiente, Leo y tú van a la parada de autobús. Van a ${t.placeEs}.`, es: '' },
     { who: 'leo', text: "Here is the bus! Let's buy our tickets.", es: '¡Aquí está el autobús! Compremos los boletos.' },
     {
       who: 'driver',
       text: 'Good morning! Where are you going?',
       es: '¡Buenos días! ¿A dónde van?',
-      choice: { options: [`To ${t.place}, please.`, `In ${t.place}, please.`, `${t.place[0].toUpperCase()}${t.place.slice(1)} is me.`], answer: 0, tip: 'Para decir a dónde vas: To + lugar. "To the city, please."' },
+      choice: { options: [`To ${t.place}, please.`, `In ${t.place}, please.`, `${t.place[0].toUpperCase()}${t.place.slice(1)} is me.`], answer: 0, tip: `Para decir a dónde vas: To + lugar. "To ${t.place}, please."` },
     },
     {
       who: 'driver',
@@ -50,7 +62,7 @@ function steps(t: BusTrip): Step[] {
       es: '¿Me da el dinero, por favor?',
       choice: { options: ['Here are you.', 'You are here.', 'Here you are.'], answer: 2, tip: 'Al entregar algo se dice: Here you are.' },
     },
-    { who: 'driver', text: 'Thank you! Sit down, please. Next stop: the city!', es: '¡Gracias! Siéntense, por favor. Próxima parada: ¡la ciudad!' },
+    { who: 'driver', text: `Thank you! Sit down, please. Next stop: ${t.place}!`, es: `¡Gracias! Siéntense, por favor. Próxima parada: ¡${t.placeEs}!` },
     { who: 'leo', text: t.arrival.text, es: t.arrival.es },
   ]
 }
@@ -77,7 +89,7 @@ export function BusRide({ trip, hero, onDone }: { trip: BusTrip; hero: SpriteLoo
     <div className="absolute inset-0 z-40 overflow-y-auto bg-ink">
       <div className="mx-auto flex max-w-md flex-col gap-3 px-3 py-6">
         <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">En el autobús</p>
-        <svg viewBox="0 0 320 170" className="w-full rounded-2xl border-2 border-line" role="img" aria-label="Autobús de la ciudad">
+        <svg viewBox="0 0 320 170" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={`Autobús a ${trip.placeEs}`}>
           <rect width="320" height="170" fill="#bfe3f5" />
           <rect y="128" width="320" height="42" fill="#6b6b73" />
           {Array.from({ length: 6 }).map((_, k) => <rect key={k} x={k * 60 + 8} y="148" width="30" height="4" fill="#f2d16b" />)}
@@ -91,7 +103,7 @@ export function BusRide({ trip, hero, onDone }: { trip: BusTrip; hero: SpriteLoo
             <g transform="translate(252 66) scale(1.05)"><SpriteBody look={NPCS.driver.look} /></g>
             <circle cx="70" cy="132" r="12" fill="#2b2b2b" />
             <circle cx="250" cy="132" r="12" fill="#2b2b2b" />
-            <text x="150" y="122" textAnchor="middle" fontSize="10" fontWeight="700" fill="#2b241c" fontFamily="Fredoka, Nunito, system-ui, sans-serif">CITY BUS</text>
+            <text x="150" y="122" textAnchor="middle" fontSize="10" fontWeight="700" fill="#2b241c" fontFamily="Fredoka, Nunito, system-ui, sans-serif">{trip.sign}</text>
           </g>
         </svg>
 

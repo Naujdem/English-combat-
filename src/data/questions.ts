@@ -1,6 +1,7 @@
 import type { Question, QuestionKind, TopicId } from '../game/types'
 import { canSpeak } from '../game/speech'
 import { canRecognize } from '../game/mic'
+import { BARRIO_QUESTIONS } from './questions-barrio'
 
 /**
  * Banco de preguntas.
@@ -312,6 +313,8 @@ export const QUESTIONS: Question[] = [
   { id: 'oro-01', topic: 'ordering', tags: ['cafe'], kind: 'order', prompt: '¿Me da un jugo, por favor?', options: ['Can', 'I', 'have', 'a', 'juice,', 'please?'], answer: 0, tip: 'Can I have + a juice + please?' },
   { id: 'oro-02', topic: 'ordering', tags: ['cafe'], kind: 'order', prompt: '¿Hay leche?', options: ['Is', 'there', 'any', 'milk?'], answer: 0, tip: 'Is there any + cosa que no se cuenta?' },
   { id: 'oro-03', topic: 'ordering', tags: ['cafe'], kind: 'order', prompt: 'Aquí tiene.', options: ['Here', 'you', 'are.'], answer: 0, tip: '"Here you are" se dice al entregar algo.' },
+  // ── Barrio (Green Street): presente simple, gustos, can, presente continuo, have got
+  ...BARRIO_QUESTIONS,
 ]
 
 
@@ -516,9 +519,49 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
     ],
   },
   'present-simple': {
-    name: 'Presente simple',
+    name: 'Presente simple y rutinas',
     level: 'A1',
-    lesson: ['Próximamente.'],
+    lesson: [
+      'Para rutinas y cosas que siempre pasan: I get up at seven. She works in a hospital.',
+      'Con he, she, it el verbo lleva -s: works, plays · -es después de -s, -sh, -ch, -o: goes, watches · consonante + y → -ies: studies.',
+      'Frecuencia antes del verbo: I always / usually / sometimes / never eat breakfast. Con to be, después: I am never late.',
+    ],
+  },
+  likes: {
+    name: 'Gustos: like, love, hate + -ing',
+    level: 'A1',
+    lesson: [
+      'Para gustos: like (gustar), love (encantar), hate (odiar) + verbo con -ing: I love reading.',
+      'Con he, she, it: she likes dancing · Negativo: I don\'t like / he doesn\'t like cooking.',
+      'Reglas del -ing: dance → dancing (sin e) · run → running · swim → swimming.',
+    ],
+  },
+  can: {
+    name: 'Can / can\'t (habilidades)',
+    level: 'A1',
+    lesson: [
+      'Can = poder, saber hacer algo: I can swim. · Can\'t = no poder: I can\'t drive.',
+      'Can es igual con todos y el verbo va solo, sin "to" y sin -s: she can sing.',
+      'Pregunta: Can you dance? → Yes, I can. / No, I can\'t.',
+    ],
+  },
+  'present-continuous': {
+    name: 'Presente continuo (lo que pasa ahora)',
+    level: 'A1',
+    lesson: [
+      'Para lo que pasa en este momento: am / is / are + verbo con -ing.',
+      'The dog is running. The children are playing. I am reading.',
+      'Pregunta: What are you doing? · Negativo: He isn\'t sleeping.',
+    ],
+  },
+  'have-got': {
+    name: 'Have got (familia y cosas)',
+    level: 'A1',
+    lesson: [
+      'Para decir lo que tienes: I have got a dog. She has got two brothers.',
+      'I, you, we, they → have got · he, she, it → has got.',
+      'Pregunta: Have you got a pet? → Yes, I have. / No, I haven\'t.',
+    ],
   },
   'past-simple': {
     name: 'Pasado simple',

@@ -31,6 +31,9 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 | `docs/curriculo-a1.md` | Currículo A1: objetivos, gramática, vocabulario y funciones |
 | `src/data/school.ts` | Mapa de la escuela, enemigos y atuendos |
 | `src/data/city.ts` | Mapa de la ciudad, enemigos y requisitos del jefe |
+| `src/data/barrio.ts` | Mapa de Green Street (barrio), enemigos y requisitos del jefe |
+| `src/data/tasks.ts` | Tareas de personajes que no pelean (charla corta con elecciones y, si hace falta, lección de Leo antes) |
+| `src/data/questions-barrio.ts` | Preguntas del barrio: presente simple, gustos, can, presente continuo, have got |
 | `src/data/enemies.ts` | Junta los enemigos de todos los escenarios |
 | `src/data/friends.ts` | Amigos (Leo, Maya) y el interés especial: momentos de historia y charlas casuales |
 | `src/data/activities.ts` | Repaso de vocabulario de la biblioteca |
@@ -48,7 +51,7 @@ Para revisar el juego sin jugarlo entero: en la pantalla de inicio, toca 5 veces
 
 - Mostrar la respuesta correcta en los combates y botón "Ganar (profe)" para saltar combates.
 - Saltar lecciones, vida 20, llenar vida, 2 escudos.
-- Saltar a estados preparados: escuela lista para el jefe, escuela terminada, ciudad recién llegado, ciudad lista para el jefe.
+- Saltar a estados preparados: escuela lista para el jefe, escuela terminada, ciudad recién llegado, ciudad lista para el jefe, barrio recién llegado, barrio listo para el jefe y barrio terminado.
 - Aparecer junto a cualquier personaje del escenario.
 
 Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del código, así que sirve para que los estudiantes no lo activen por accidente, no como seguridad.
@@ -137,6 +140,16 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - Voz automática: las frases en inglés se leen solas al aparecer (`auto` en `SpeakButton`). Se apaga en Ajustes, en el mapa del mundo, junto con los sonidos.
 
 ## Siguientes pasos sugeridos
+
+## El barrio (Green Street)
+
+- Se llega en otro autobús desde el mapa del mundo (boleto de *three dollars*). El protagonista vive aquí, en 25 Park Street, al lado del parque.
+- Casa de Leo: la señora García enseña la rutina de su familia (presente simple con -s y frecuencia) y da la invitación al cumpleaños.
+- Casa de Maya: el señor Rojas, gustos con *like / love / hate + -ing*; regala una galleta que da un escudo.
+- Parque: la fiesta de Leo. El abuelo Joe (pide la invitación) practica fechas y *Happy birthday!* y da la foto de tu familia. Hay un regalo misterioso firmado "L".
+- Esbirros: Kevin (*can*), Olivia la reportera (presente continuo) y el señor Hill (gustos). Jefe: Nick, el hermano mayor, que habla sin la -s; antes del combate Leo enseña *have got*.
+- Las tareas de personajes nuevos se definen como datos en `src/data/tasks.ts`, sin tocar la pantalla de exploración.
+- En PC (pantalla ancha con ratón) el mapa es grande con un panel al lado, no hay flechas en pantalla y se juega con el teclado.
 
 - El plan completo está en `docs/curriculo-a1.md`: primera vuelta A1 en presente (Escuela → Ciudad → Barrio con la casa del protagonista → Granja → Oficina), y luego los mismos lugares en pasado y futuro, todavía en A1, con el reloj completo. A2 y B1 repiten el esquema presente → pasado → futuro.
 - Pendientes pequeños de la escuela: deletrear en la secretaría, *whose* en objetos perdidos y preguntas con *who/what/where/when*.

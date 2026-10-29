@@ -3,6 +3,7 @@ import type { GameState } from './types'
 import { LESSONS } from '../data/lessons'
 import { SESSIONS } from '../data/schedule'
 import { CITY } from '../data/city'
+import { BARRIO } from '../data/barrio'
 import { SCHOOL } from '../data/school'
 
 /**
@@ -131,6 +132,44 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
         relics: Math.max(2, b.relics),
         recovered: add(b.recovered, ['there-is', 'demonstratives', 'ordering']) as GameState['recovered'],
         outfits: add(b.outfits, ['gorra']),
+      }
+    },
+  },
+  {
+    id: 'barrio-start',
+    label: 'Barrio: recién llegado',
+    apply: (s) => {
+      const b = PRESETS[4].apply(s)
+      return { ...b, screen: 'explore', sceneId: 'barrio', pos: { ...BARRIO.start }, opened: add(b.opened, ['city-epilogue', 'diary-open-city', 'bus-barrio']) }
+    },
+  },
+  {
+    id: 'barrio-boss',
+    label: 'Barrio: listo para el jefe',
+    apply: (s) => {
+      const b = PRESETS[5].apply(s)
+      return {
+        ...b,
+        pos: { x: 12, y: 10 },
+        defeated: add(b.defeated, ['barrio-m1', 'barrio-m2', 'barrio-m3']),
+        keys: { ...b.keys, barrio: 3 },
+        opened: add(b.opened, ['barrio-invite', 'barrio-photo', 'barrio-likes']),
+        seenLesson: add(b.seenLesson, ['barrio', 'present-simple', 'likes', 'can', 'present-continuous']),
+      }
+    },
+  },
+  {
+    id: 'barrio-done',
+    label: 'Barrio: terminado (ver el final)',
+    apply: (s) => {
+      const b = PRESETS[6].apply(s)
+      return {
+        ...b,
+        screen: 'epilogue',
+        defeated: add(b.defeated, ['barrio-boss']),
+        relics: Math.max(3, b.relics),
+        recovered: add(b.recovered, ['present-simple', 'likes', 'can', 'present-continuous', 'have-got']) as GameState['recovered'],
+        outfits: add(b.outfits, ['sudadera']),
       }
     },
   },

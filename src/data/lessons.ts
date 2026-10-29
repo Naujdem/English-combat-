@@ -119,4 +119,56 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'Is there ___ cake?', board: ['some → frases', 'any → preguntas'], choice: { options: ['a', 'some', 'any'], answer: 2, tip: 'En preguntas: any.' } },
     { who: 'leo', text: "When they give you something, they say: Here you are. And you say: Thank you!", es: 'Cuando te entregan algo dicen "Here you are". Y tú dices "Thank you!".', board: ['Here you are.', 'Thank you!'] },
   ],
+
+  'present-simple': [
+    { who: 'leo', text: 'Welcome to my street! Here, people have routines: things they do every day.', es: '¡Bienvenido a mi calle! Aquí la gente tiene rutinas: cosas que hace todos los días.', board: ['Present simple', '= rutinas'] },
+    { who: 'leo', text: 'With I, you, we and they, the verb is simple: I get up at seven. We have dinner at eight.', es: 'Con I, you, we y they el verbo va tal cual: Me levanto a las siete. Cenamos a las ocho.', board: ['I / you / we / they + verbo', 'I get up at seven.'] },
+    { who: 'board', text: 'We ___ in a small house.', board: ['I / you / we / they + verbo', 'I get up at seven.'], choice: { options: ['live', 'lives', 'living'], answer: 0, tip: 'Con "we" el verbo va sin -s.' } },
+    { who: 'leo', text: 'But with HE, SHE and IT, add -S! My dad works. My sister plays the guitar.', es: 'Pero con he, she e it, ¡agrega -s! Mi papá trabaja. Mi hermana toca la guitarra.', board: ['he / she / it + verbo-s', 'My dad works.'] },
+    { who: 'board', text: 'My mom ___ in a bank.', board: ['he / she / it + verbo-s', 'My dad works.'], choice: { options: ['work', 'works', 'working'], answer: 1, tip: '"My mom" es "she": works.' } },
+    { who: 'leo', text: 'After -s, -sh, -ch and -o, add -ES: go → goes, watch → watches. And study → studies.', es: 'Después de -s, -sh, -ch y -o se agrega -es. Y consonante + y cambia a -ies.', board: ['go → goes · watch → watches', 'study → studies'] },
+    { who: 'board', text: 'Leo ___ to school by bus.', board: ['go → goes · watch → watches', 'study → studies'], choice: { options: ['go', 'gos', 'goes'], answer: 2, tip: 'go con he, she, it: goes.' } },
+    { who: 'leo', text: 'How often? Always, usually, sometimes, never. They go BEFORE the verb: I always eat breakfast.', es: '¿Con qué frecuencia? Siempre, normalmente, a veces, nunca. Van ANTES del verbo.', board: ['always · usually · sometimes · never', 'I always eat breakfast.'] },
+    { who: 'leo', text: 'But with TO BE, they go AFTER: I am never late. Ha ha... I am always late!', es: 'Pero con TO BE van DESPUÉS: Nunca llego tarde. Ja, ja... ¡yo siempre llego tarde!', board: ['to be + never', 'I am never late.'] },
+    { who: 'board', text: 'She ___ breakfast. She is always hungry at school!', board: ['always · usually · sometimes · never', 'to be + never'], choice: { options: ['never eats', 'eats never', 'never eat'], answer: 0, tip: 'never va antes del verbo, y con "she" el verbo lleva -s: never eats.' } },
+  ],
+
+  likes: [
+    { who: 'leo', text: 'Maya and her dad love talking about hobbies. Let\'s learn to say what you like!', es: 'A Maya y a su papá les encanta hablar de pasatiempos. ¡Aprendamos a decir lo que te gusta!', board: ['like · love · hate', 'gustar · encantar · odiar'] },
+    { who: 'leo', text: 'After like, love and hate, the verb takes -ING: I like reading. I love dancing.', es: 'Después de like, love y hate el verbo lleva -ing: Me gusta leer. Me encanta bailar.', board: ['like + verbo-ing', 'I like reading.'] },
+    { who: 'board', text: 'I love ___ to music.', board: ['like + verbo-ing', 'I like reading.'], choice: { options: ['listen', 'listening', 'listens'], answer: 1, tip: 'Después de love: listening.' } },
+    { who: 'leo', text: 'Careful with the -ing: dance → dancing (no E). Run → running, swim → swimming (double letter).', es: 'Cuidado: dance → dancing (sin e). Run → running, swim → swimming (letra doble).', board: ['dance → dancing', 'run → running · swim → swimming'] },
+    { who: 'board', text: 'Do you like ___?', board: ['dance → dancing', 'run → running · swim → swimming'], choice: { options: ['swiming', 'swimming', 'swim'], answer: 1, tip: 'swim → swimming, con doble m.' } },
+    { who: 'leo', text: 'With he and she, LIKE takes -S: Maya likes drawing. To say no: I don\'t like, he doesn\'t like.', es: 'Con he y she, like lleva -s. Para negar: I don\'t like, he doesn\'t like.', board: ['she likes · he doesn\'t like', "I don't like cooking."] },
+    { who: 'board', text: 'Mr. Hill ___ like noise.', board: ['she likes · he doesn\'t like', "I don't like cooking."], choice: { options: ["don't", "doesn't", 'not'], answer: 1, tip: "Con he: doesn't like." } },
+  ],
+
+  can: [
+    { who: 'leo', text: 'In the park, everybody shows what they CAN do. CAN means you are able to do something.', es: 'En el parque todos muestran lo que pueden hacer. CAN significa que eres capaz de hacer algo.', board: ['can = poder, saber', "can't = no poder"] },
+    { who: 'leo', text: 'After CAN, use the simple verb. No TO, no -S: I can swim. She can sing.', es: 'Después de can va el verbo solo: sin "to" y sin -s.', board: ['can + verbo', 'She can sing.'] },
+    { who: 'board', text: 'He can ___ very fast.', board: ['can + verbo', 'She can sing.'], choice: { options: ['run', 'runs', 'to run'], answer: 0, tip: 'can + verbo solo: can run.' } },
+    { who: 'leo', text: "For NO, say CAN'T: Fish can't walk. I can't drive.", es: "Para negar: can't. Los peces no pueden caminar. No sé manejar.", board: ["can't + verbo", "I can't drive."] },
+    { who: 'leo', text: 'To ask, CAN goes first: Can you dance? Yes, I can. No, I can\'t.', es: 'Para preguntar, can va primero.', board: ['Can you dance?', "Yes, I can. / No, I can't."] },
+    { who: 'board', text: '___ you ride a bike?', board: ['Can you dance?', "Yes, I can. / No, I can't."], choice: { options: ['Do', 'Can', 'Are'], answer: 1, tip: 'Pregunta de habilidad: Can you...?' } },
+  ],
+
+  'present-continuous': [
+    { who: 'leo', text: 'Look around! Things are happening right now. For that, we use AM, IS, ARE + -ING.', es: '¡Mira alrededor! Están pasando cosas ahora mismo. Para eso usamos am, is, are + -ing.', board: ['am / is / are + verbo-ing', '= está pasando ahora'] },
+    { who: 'leo', text: 'The dog is running. The children are playing. I am watching them.', es: 'El perro está corriendo. Los niños están jugando. Yo los estoy mirando.', board: ['The dog is running.', 'The kids are playing.'] },
+    { who: 'board', text: 'Look! The kids ___ playing football.', board: ['The dog is running.', 'The kids are playing.'], choice: { options: ['is', 'are', 'am'], answer: 1, tip: '"The kids" son varios: are playing.' } },
+    { who: 'board', text: 'The baby is ___.', board: ['am / is / are + verbo-ing', '= está pasando ahora'], choice: { options: ['sleep', 'sleeps', 'sleeping'], answer: 2, tip: 'is + verbo con -ing.' } },
+    { who: 'leo', text: 'Do not forget AM, IS or ARE! "The kids playing" is wrong. "The kids ARE playing" is right.', es: '¡No olvides am, is o are! "The kids playing" está mal.', board: ['✗ The kids playing.', '✓ The kids are playing.'] },
+    { who: 'leo', text: 'The weather too: It is raining. It is snowing. The sun is shining!', es: 'El clima también: Está lloviendo. Está nevando. ¡Está brillando el sol!', board: ['It is raining.', 'The sun is shining.'] },
+    { who: 'leo', text: 'To ask: What are you doing? → I am reading.', es: 'Para preguntar: ¿Qué estás haciendo? → Estoy leyendo.', board: ['What are you doing?', 'I am reading.'] },
+  ],
+
+  'have-got': [
+    { who: 'leo', text: 'This is your house! To talk about your family and your things, use HAVE GOT.', es: '¡Esta es tu casa! Para hablar de tu familia y tus cosas se usa HAVE GOT.', board: ['have got = tener', 'I have got a brother.'] },
+    { who: 'leo', text: 'I, you, we, they: HAVE GOT. He, she, it: HAS GOT. I have got a dog. Leo has got a sister.', es: 'I, you, we, they: have got. He, she, it: has got.', board: ['I / you / we / they → have got', 'he / she / it → has got'] },
+    { who: 'board', text: 'Your brother ___ got a bike.', board: ['I / you / we / they → have got', 'he / she / it → has got'], choice: { options: ['have', 'has', 'is'], answer: 1, tip: '"Your brother" es "he": has got.' } },
+    { who: 'leo', text: "To say no: I haven't got a cat. She hasn't got any brothers.", es: "Para negar: haven't got / hasn't got.", board: ["haven't got · hasn't got", "I haven't got a cat."] },
+    { who: 'leo', text: 'To ask, HAVE goes first: Have you got a pet? Yes, I have. No, I haven\'t.', es: 'Para preguntar, have va primero.', board: ['Have you got a pet?', "Yes, I have. / No, I haven't."] },
+    { who: 'board', text: '___ you got a sister?', board: ['Have you got a pet?', "Yes, I have. / No, I haven't."], choice: { options: ['Do', 'Have', 'Has'], answer: 1, tip: 'Con you: Have you got...?' } },
+    { who: 'leo', text: 'Your brother is in there. He says everything without -S! Remember: he goes, she works, it has got.', es: 'Tu hermano está ahí dentro. ¡Dice todo sin -s! Recuerda: he goes, she works, it has got.', board: ['he goes · she works', 'it has got'] },
+  ],
 }
