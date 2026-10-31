@@ -74,7 +74,7 @@ function base(s: GameState): GameState {
     hp: s.maxHp,
     // Cada atajo parte de cero en los escenarios, para que no se mezcle con lo que ya se jugó
     defeated: s.defeated.filter((d) => !SCENE_PREFIX.test(d)),
-    opened: s.opened.filter((o) => !SCENE_PREFIX.test(o) && !/^(bus-|diary-open-)/.test(o)),
+    opened: s.opened.filter((o) => !SCENE_PREFIX.test(o) && !/^(bus-|diary-open-|diary-notified-)/.test(o)),
     keys: {},
     relics: 0,
     recovered: s.recovered.filter((t) => t === 'greetings'),

@@ -225,16 +225,28 @@ Lo que no entra en A1 y queda para A2: pasado continuo, comparativos y *will*.
 
 ## 8. Diario al final de cada capítulo
 
-Al terminar un capítulo se abre el diario (`src/data/diary.ts`): la misma historia del capítulo en cuatro versiones, cada una con 4 preguntas de comprensión.
+El diario (`src/data/diary.ts`) tiene un capítulo por lugar, y cada capítulo cuenta ese lugar en sus tres épocas con cuatro páginas. Cada página tiene 4 preguntas de comprensión.
 
-- **Pasado:** el diario de esa noche (*Dear diary, today was...*).
-- **Presente:** la misma historia contada como si pasara ahora.
-- **Futuro:** el plan que el desconocido escribió la noche anterior (*I am going to take the student's voice*). La última pregunta compara su plan con lo que pasó de verdad.
-- **Mezcla:** una semana después, con pasado, presente y futuro juntos.
+| Página | Qué cuenta | Quién la escribe | Se abre con |
+|---|---|---|---|
+| Presente | La visita de hoy | El protagonista, esa noche, en presente | `X-epilogue` |
+| Pasado | La visita a 1996 | El protagonista, esa noche, al volver (*Dear diary*) | `X-past-epilogue` |
+| Futuro | La visita a 2056 | Una hoja encontrada, escrita la noche anterior por alguien del lugar | `X-future-epilogue` |
+| Mezcla | Qué fue de cada persona y lugar en las tres épocas | El protagonista, al terminar el lugar en 2056 | `X-future-epilogue` |
+
+Hojas de 2056: el plan del desconocido (escuela, la única que no escribe alguien del lugar), la ruta de turistas de Marco (ciudad), la lista de Emma para la fiesta (Green Street), la libreta de Rosie (granja) y las notas del discurso de Diana (torre). La última pregunta de cada hoja compara el plan con lo que pasó de verdad.
+
+Reglas de escritura:
+
+- Solo hechos que ya están en el juego; el protagonista solo escribe lo que vio, oyó o encontró.
+- El desconocido aparece cuando Leo no está o no mira; si lo cuenta otro personaje, el diario lo dice como algo que esa persona contó.
+- El misterio no se resuelve: las páginas juntan pistas que el juego ya da y terminan en preguntas.
+- Las mezclas no repiten lo que pasó: cada línea une por lo menos dos épocas de una persona, un objeto o un lugar.
+- Cada página usa la gramática que el jugador ya vio al abrirla (la de 1996 de la escuela, solo *was / were*; la de 2056 de la escuela, solo *going to* afirmativo).
 
 Ayudas: "Ver verbos" colorea cada verbo según su tiempo; cada palabra se puede tocar para ver su traducción y guardarla en las fichas tipo Anki (repaso espaciado, exportables en CSV para SimulaPro o Anki).
 
-El diario se lee aunque el jugador todavía no haya estudiado el pasado o el futuro: leer entiende más de lo que se produce, y la traducción, los colores y el diccionario lo apoyan. Así el diario adelanta lo que viene en las vueltas del pasado y del futuro.
+Avisos: cuando se abre una página, el diario se abre solo una vez y empieza en esa página. La pestaña dice "Nueva" hasta que se lee, y el menú cuenta las páginas nuevas. Las páginas que faltan dicen cuándo se abren. En modo profesor se ven todas.
 
 ## 9. Pendientes pequeños en la escuela
 
