@@ -8,6 +8,7 @@ import { EXTRA_QUESTIONS } from './questions-extra'
 import { PAST_QUESTIONS } from './questions-past'
 import { FUTURE_QUESTIONS } from './questions-future'
 import { LISTEN_QUESTIONS } from './questions-listen'
+import { TERRAZA_QUESTIONS } from './questions-terraza'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -333,6 +334,8 @@ export const QUESTIONS: Question[] = [
   // ── A1 en pasado
   ...PAST_QUESTIONS,
   ...FUTURE_QUESTIONS,
+  // ── Final de A1: el desconocido en la terraza
+  ...TERRAZA_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]

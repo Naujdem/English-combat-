@@ -6,7 +6,7 @@ import { SpeakButton } from '../components/SpeakButton'
 import { Tappable } from '../components/Words'
 import { btn, btnGhost, btnPrimary, Panel } from '../components/ui'
 import { FRIENDS, interestFriend } from '../data/friends'
-import { heroLook } from '../game/helpers'
+import { heroLook, SCENES } from '../game/helpers'
 import { TimeClock } from '../components/TimeClock'
 import { PRESENT_NODES } from '../data/world'
 import { ENEMIES } from '../data/enemies'
@@ -31,6 +31,14 @@ type Step = {
   cast?: Cast[]
   /** Escena en casa del protagonista (si no, el fondo del capítulo) */
   home?: boolean
+  /** Escena de vuelta en el presente (fondo de la oficina de hoy) */
+  present?: boolean
+  /** El protagonista está herido: 'down' en el suelo, 'up' de pie con dolor */
+  hurt?: 'down' | 'up'
+  /** Destello de energía en la escena */
+  flash?: boolean
+  /** Pantalla de cierre de campaña (fin de A1) */
+  finale?: boolean
 }
 
 /**
@@ -948,8 +956,11 @@ function farmFutureSteps(s: GameState): Step[] {
  * y en la terraza el desconocido dice "Hi, hi"... la muletilla de Leo.
  */
 function towerFutureSteps(s: GameState): Step[] {
+  // Después del combate en la terraza sigue la segunda parte del final
+  if (s.defeated.includes('office-future-stranger')) return towerAftermathSteps(s)
   const iname = s.interest.name
   const cast: Cast[] = ['leo', 'interest']
+  const alone: Cast[] = ['interest']
   const tower: Cast[] = ['dianaold', 'rayold', 'leo']
   return [
     { who: 'narrator', text: 'En la sala de reuniones todos esperan: Paula, Grace, LIFT-9... Diana, la señora Clark, se pone de pie con su discurso.', cast: tower },
@@ -969,29 +980,43 @@ function towerFutureSteps(s: GameState): Step[] {
     },
     { who: 'rayold', text: "Ha ha! Yes, Diana. I would like to. Very much.", es: '¡Ja, ja! Sí, Diana. Me gustaría. Muchísimo.', cast: tower },
     { who: 'narrator', text: 'Sientes el último fragmento de tu voz del futuro. Cinco de cinco. Ahora puedes decir lo que quieres: I want to... I would like to...', cast },
-    { who: 'narrator', text: `Leo, ${iname} y tú suben a la terraza de la torre. Desde allá se ve todo: la escuela, la ciudad, Green Street, la granja... Ya no llueve.`, cast },
-    { who: 'narrator', text: 'Alguien está al borde de la terraza, mirando la ciudad. El abrigo oscuro. Esta vez no se esconde.', cast: ['interest'] },
-    { who: 'villain', text: 'Hi, hi... What a nice voice you have. And now it is complete.', es: 'Hola, hola... Qué bonita voz tienes. Y ahora está completa.', villain: true, cast: ['interest'] },
-    { who: 'villain', text: 'The present, the past, the future... You have got all your words now. The clock is ready... and so am I.', es: 'El presente, el pasado, el futuro... Ya tienes todas tus palabras. El reloj está listo... y yo también.', villain: true, cast: ['interest'] },
-    { who: 'narrator', text: 'Una luz blanca llena la terraza. Cuando abres los ojos, el desconocido ya no está. El reloj sigue en tu bolsillo... pero ahora marca una hora nueva.', cast },
-    { who: 'leo', text: "'Hi, hi'... He said 'Hi, hi'. Why?", es: '«Hi, hi»... Dijo «Hi, hi». ¿Por qué?', cast },
-    { who: 'narrator', text: 'Leo se queda mirando el lugar vacío. Por un momento parece que va a decir algo más... pero no lo dice.', cast },
-    {
-      who: 'hero',
-      text: '¿Qué le dices a Leo?',
-      cast,
-      choice: {
-        options: ["I don't know... but I want to find out.", "I don't know... but I want find out.", "I not know... but I wants to find out."],
-        answer: 0,
-        tip: "I don't know + I want to + verbo.",
-      },
-    },
-    { who: 'interest', text: "Me too. We were in 1996, we are here in 2056... and next time, we are going to be ready.", es: 'Yo también. Estuvimos en 1996, estamos aquí en 2056... y la próxima vez vamos a estar listos.', cast },
-    {
-      who: 'narrator',
-      text: `¡Terminaste A1! Recuperaste las cinco piezas del reloj y los diez fragmentos de tu voz: cinco del pasado y cinco del futuro. Ya puedes hablar de hoy, contar lo que pasó y decir lo que vas a hacer y lo que quieres. Tu diario tiene dos páginas nuevas: las notas del discurso de Diana y una mezcla de las tres épocas. Pero... ¿quién es el desconocido? ¿Y por qué dice "Hi, hi"? ${iname} y Leo te esperan en A2.`,
-      cast,
-    },
+    // Leo se separa antes de la terraza
+    { who: 'narrator', text: `Leo, ${iname} y tú van al ascensor para subir a la terraza. Las puertas se abren y se cierran solas, una y otra vez.`, cast },
+    { who: 'leo', text: "Wait! Something is wrong with the elevator. I'll check it. You go ahead. I'll meet you upstairs.", es: '¡Esperen! Algo anda mal con el ascensor. Voy a revisarlo. Sigan ustedes. Nos vemos arriba.', cast },
+    { who: 'narrator', text: `${iname} y tú suben por las escaleras hasta la terraza de la torre. Desde allá se ve todo: la escuela, la ciudad, Green Street, la granja... Ya no llueve.`, cast: alone },
+    { who: 'narrator', text: 'Alguien está al borde de la terraza, mirando la ciudad. El abrigo oscuro. Esta vez no se esconde.', cast: alone },
+    { who: 'villain', text: 'Hi, hi... What a nice voice you have. And now it is complete.', es: 'Hola, hola... Qué bonita voz tienes. Y ahora está completa.', villain: true, cast: alone },
+    { who: 'villain', text: 'The present, the past, the future... You have got all your words now. The clock is ready... and so am I.', es: 'El presente, el pasado, el futuro... Ya tienes todas tus palabras. El reloj está listo... y yo también.', villain: true, cast: alone },
+    { who: 'villain', text: 'Give me the clock. Now.', es: 'Dame el reloj. Ahora.', villain: true, cast: alone, clock: true },
+    { who: 'narrator', text: `Guardas el reloj y das un paso atrás. ${iname} se pone a tu lado. El desconocido levanta la mano y el aire de la terraza empieza a temblar.`, villain: true, cast: alone },
+  ]
+}
+
+/**
+ * Final de A1, segunda parte (después del combate en la terraza): el desconocido hiere al protagonista,
+ * roba el núcleo central del reloj y escapa. La distorsión del tiempo los devuelve al presente y van al hospital.
+ * Los cinco fragmentos de voz y las piezas se conservan.
+ */
+function towerAftermathSteps(s: GameState): Step[] {
+  const iname = s.interest.name
+  const alone: Cast[] = ['interest']
+  const hurt = s.hero.gender === 'female' ? 'herida' : 'herido'
+  return [
+    { who: 'narrator', text: 'El desconocido retrocede hasta el borde de la terraza. Respira despacio y te mira en silencio.', villain: true, cast: alone },
+    { who: 'villain', text: 'Your voice is strong now. Very strong. But I need that clock.', es: 'Tu voz es fuerte ahora. Muy fuerte. Pero necesito ese reloj.', villain: true, cast: alone },
+    { who: 'narrator', text: 'De su mano sale una descarga de energía morada. Te golpea de lleno y caes al suelo. Un dolor fuerte te sube por la pierna.', villain: true, flash: true, hurt: 'down', cast: alone },
+    { who: 'narrator', text: 'El desconocido se agacha, abre el reloj y saca su núcleo central: la pequeña pieza que brillaba en el centro. Las cinco piezas y tus fragmentos de voz se quedan contigo... pero el corazón del reloj, no.', villain: true, hurt: 'down', cast: alone },
+    { who: 'villain', text: 'Keep your words. They are yours. This... is mine.', es: 'Quédate con tus palabras. Son tuyas. Esto... es mío.', villain: true, hurt: 'down', cast: alone },
+    { who: 'narrator', text: 'Una luz oscura lo envuelve y desaparece. Sin su núcleo, el reloj empieza a girar sin control. Todo da vueltas...', flash: true, hurt: 'down', cast: alone },
+    { who: 'narrator', text: `Cuando abres los ojos, estás en el presente, en la oficina de Green Valley Company. La distorsión del tiempo los trajo de vuelta. Intentas moverte, pero la pierna no te responde. ${iname} corre hacia ti.`, present: true, hurt: 'down', cast: alone },
+    { who: 'interest', text: 'Hey! Are you OK?', es: '¡Oye! ¿Estás bien?', present: true, hurt: 'down', cast: alone },
+    { who: 'interest', text: "Don't move! You're hurt!", es: `¡No te muevas! ¡Estás ${hurt}!`, present: true, hurt: 'down', cast: alone },
+    { who: 'narrator', text: `${iname} te ayuda a levantarte. Pasas un brazo sobre sus hombros: no puedes apoyar bien la pierna.`, present: true, hurt: 'up', cast: alone },
+    { who: 'interest', text: 'Can you walk?', es: '¿Puedes caminar?', present: true, hurt: 'up', cast: alone },
+    { who: 'narrator', text: 'Das un paso... y casi te caes.', present: true, hurt: 'up', cast: alone },
+    { who: 'interest', text: 'We have to go to the hospital. Now.', es: 'Tenemos que ir al hospital. Ya.', present: true, hurt: 'up', cast: alone },
+    { who: 'narrator', text: `${iname} y tú salen despacio a la calle, paso a paso, hacia el hospital.`, present: true, hurt: 'up', cast: alone },
+    { who: 'narrator', text: 'ENGLISH COMBAT · A1 COMPLETED', finale: true },
   ]
 }
 
@@ -1019,6 +1044,9 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
   const last = i === steps.length - 1
   const waiting = !!s.choice && !solved
   const interest = interestFriend(state.interest, state.hero.name)
+  // Si el final sigue con un combate, el último botón lo empieza
+  const duel = SCENES[state.sceneId]?.duel
+  const duelNext = !!duel && !state.defeated.includes(duel)
 
   const names: Record<Who, string> = {
     narrator: '',
@@ -1099,11 +1127,30 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
 
   const shown = s.cast ?? []
   const spots = shown.length === 3 ? [88, 150, 212] : [110, 190]
+  // Fondo de la oficina de hoy: el final de la oficina, o una escena de vuelta en el presente
+  const officeBg = office || !!s.present
+  const towerBg = towerFuture && !s.present
+
+  if (s.finale) {
+    return (
+      <div className="mx-auto flex h-full max-w-md flex-col items-center justify-center gap-5 overflow-y-auto px-4 py-6 text-center">
+        <div className="anim-pop w-full rounded-2xl border-2 border-gold bg-panel px-5 py-8">
+          <p className="font-display text-3xl tracking-wide text-gold">ENGLISH COMBAT</p>
+          <p className="mt-1 font-display text-2xl text-paper">A1 COMPLETED</p>
+          <p className="mt-4 text-[17px] italic text-paper/85">The first battle is over. The journey continues.</p>
+          <div className="mx-auto my-6 h-px w-24 bg-line" />
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-paper/60">Chapter 2</p>
+          <p className="mt-1 font-display text-2xl text-gold">A2 — THE HOSPITAL</p>
+        </div>
+        <button className={`${btnPrimary} w-full`} onClick={next} autoFocus>Ir al mapa</button>
+      </div>
+    )
+  }
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 overflow-y-auto px-4 py-6">
-      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{towerFuture ? 'Futuro · La torre Green Valley' : farmFuture ? 'Futuro · La granja de 2056' : barrioFuture ? 'Futuro · Green Street, 60 años' : cityFuture ? 'Futuro · La ciudad de 2056' : schoolFuture ? 'Futuro · Greenfield Academy, 2056' : cinemaPast ? 'Pasado · El viejo cine (final del pasado de A1)' : farmPast ? 'Pasado · La granja de 1996' : barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
-      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : towerFuture ? 'La terraza de la torre, sobre la ciudad' : farmFuture ? 'La granja con robots bajo la lluvia' : barrioFuture ? 'La fiesta de Green Street en 2056' : cityFuture ? 'La plaza de 2056 con la fuente vieja' : schoolFuture ? 'La escuela de vidrio en 2056' : cinemaPast ? 'La sala del viejo cine, 1996' : farmPast ? 'La granja con molino, 1996' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
+      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{towerFuture && s.present ? 'Presente · De vuelta del futuro' : towerFuture ? 'Futuro · La torre Green Valley' : farmFuture ? 'Futuro · La granja de 2056' : barrioFuture ? 'Futuro · Green Street, 60 años' : cityFuture ? 'Futuro · La ciudad de 2056' : schoolFuture ? 'Futuro · Greenfield Academy, 2056' : cinemaPast ? 'Pasado · El viejo cine (final del pasado de A1)' : farmPast ? 'Pasado · La granja de 1996' : barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
+      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : s.present ? 'La oficina, en el presente' : towerFuture ? 'La terraza de la torre, sobre la ciudad' : farmFuture ? 'La granja con robots bajo la lluvia' : barrioFuture ? 'La fiesta de Green Street en 2056' : cityFuture ? 'La plaza de 2056 con la fuente vieja' : schoolFuture ? 'La escuela de vidrio en 2056' : cinemaPast ? 'La sala del viejo cine, 1996' : farmPast ? 'La granja con molino, 1996' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
         {s.home ? (
           <g>
             <rect width="320" height="200" fill="#f1d9c0" />
@@ -1119,7 +1166,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             <rect x="250" y="20" width="44" height="58" rx="2" fill="#e8eef2" stroke="#b8c4cc" strokeWidth="2" />
             <line x1="250" y1="40" x2="294" y2="40" stroke="#b8c4cc" strokeWidth="2" />
           </g>
-        ) : towerFuture ? (
+        ) : towerBg ? (
           <g>
             <rect width="320" height="200" fill="#f2c48a" />
             <circle cx="250" cy="70" r="22" fill="#f6d36b" />
@@ -1259,7 +1306,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             <rect x="260" y="68" width="43" height="5" fill="#6b4423" />
             <path d="M272 98 q10 -24 20 0 z" fill="#c9a83a" stroke="#8a6210" strokeWidth="1.5" />
           </g>
-        ) : office ? (
+        ) : officeBg ? (
           <g>
             <rect width="320" height="200" fill="#e8ecf0" />
             {[0, 1, 2].map((k) => (
@@ -1346,8 +1393,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
           </g>
         )}
 
-        <g transform="translate(10 128) scale(2)">
-          <SpriteBody look={heroLook(state)} />
+        <g transform={s.hurt === 'down' ? 'translate(4 196) rotate(-90) scale(2)' : 'translate(10 128) scale(2)'}>
+          <SpriteBody look={heroLook(state)} mood={s.hurt ? 'hurt' : 'normal'} />
         </g>
         {shown.map((who, k) => {
           const look =
@@ -1386,6 +1433,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             </g>
           )
         })}
+        {s.flash && <rect key={`flash-${i}`} width="320" height="200" fill="#b9a3e8" opacity="0.75" className="anim-wipe" />}
         {s.villain && (
           <g className="anim-appear">
             <path d="M282 196 L288 136 Q300 118 312 136 L318 196 Z" fill="#2d2440" />
@@ -1441,7 +1489,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
           ) : <span />}
           {!waiting && (
             <button className={btnPrimary} onClick={next} autoFocus>
-              {last ? 'Ir al mapa' : 'Siguiente'}
+              {last ? (duelNext ? '¡A pelear!' : 'Ir al mapa') : 'Siguiente'}
             </button>
           )}
         </div>

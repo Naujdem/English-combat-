@@ -639,6 +639,22 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
       }
     },
   },
+  {
+    id: 'office-future-stranger',
+    label: 'Futuro · Torre 2056: combate contra el desconocido',
+    apply: (s) => {
+      const b = PRESETS[43].apply(s)
+      return { ...b, screen: 'battle', battle: { enemyId: 'office-future-stranger', enemyHp: 12, returnTo: { ...b.pos } } }
+    },
+  },
+  {
+    id: 'future-tower-stranger-done',
+    label: 'Futuro · Torre 2056: después del desconocido (hospital, cierre de A1)',
+    apply: (s) => {
+      const b = PRESETS[43].apply(s)
+      return { ...b, screen: 'epilogue', defeated: add(b.defeated, ['office-future-stranger']) }
+    },
+  },
 ]
 
 /** Marca todas las lecciones como vistas (para no repetirlas al revisar) */

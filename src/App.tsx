@@ -138,14 +138,21 @@ export default function App() {
         <Epilogue
           state={state}
           onDone={() =>
-            update((s) => ({
+            update((s) => {
+              // Final con combate en medio: al terminar la primera parte empieza el combate (y el final sigue después)
+              const duel = SCENES[s.sceneId]?.duel
+              if (duel && !s.defeated.includes(duel)) {
+                return { ...s, hp: s.maxHp, screen: 'battle', battle: { enemyId: duel, enemyHp: ENEMIES[duel].hp, returnTo: { ...s.pos } } }
+              }
+              return {
               ...s,
               opened: (() => {
                 const id = SCENES[s.sceneId].epilogue ?? 'school-epilogue'
                 return s.opened.includes(id) ? s.opened : [...s.opened, id]
               })(),
               screen: 'world',
-            }))
+              }
+            })
           }
         />
       )

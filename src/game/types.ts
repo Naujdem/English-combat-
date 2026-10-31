@@ -88,7 +88,14 @@ export type EnemyDef = {
   /** Etiquetas preferidas: la mayoría de sus preguntas salen de aquí */
   tags?: string[]
   /** Fases del combate (para jefes). Cada fase tiene su vida, temas y una frase al empezar */
-  phases?: { hp: number; topics: TopicId[]; kinds: QuestionKind[]; tags?: string[]; line?: StoryLine }[]
+  phases?: { hp: number; topics: TopicId[]; kinds: QuestionKind[]; tags?: string[]; line?: StoryLine; title?: string }[]
+  /**
+   * Enfrentamiento que no se gana del todo: al bajarle la vida el enemigo retrocede. No da fragmento,
+   * pieza, temas ni atuendo; si pierdes, vuelves a intentarlo ahí mismo con la vida llena.
+   */
+  standoff?: boolean
+  /** Fondo del combate cuando el enemigo no está en el mapa del escenario */
+  zone?: Zone
   look: { shirt: string; hair: string; skin: string; accessory?: 'cap' | 'mortarboard' | 'glasses'; gender?: Gender }
   /** Si es un animal corrompido (granja), se dibuja como ese animal */
   animal?: AnimalKind
@@ -141,6 +148,11 @@ export type SceneDef = {
   intro: { first: string; later: string }
   /** Si existe, al vencer al jefe se muestra el final del capítulo hasta que este id esté en `opened` */
   epilogue?: string
+  /**
+   * Combate dentro del final: el final se corta en dos. Al terminar la primera parte empieza este combate,
+   * y al ganarlo sigue la segunda parte. El final solo se marca como visto al terminar la segunda.
+   */
+  duel?: string
   /** Época: si no es el presente, el jefe devuelve un fragmento de voz en vez de una pieza del reloj */
   era?: 'Pasado' | 'Futuro'
   /** Lo que se dice al chocar con la puerta cerrada del jefe */

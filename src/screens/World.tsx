@@ -32,7 +32,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
     state.defeated.includes('office-future-boss')
-      ? '¡Terminaste A1! Tu voz está completa: presente, pasado y futuro. A2 se construirá pronto; mientras tanto, puedes repasar y visitar cualquier lugar.'
+      ? '¡Terminaste A1! Tus cinco piezas y tus fragmentos de voz siguen contigo, pero el desconocido se llevó el núcleo del reloj. Tu historia sigue en A2, en el hospital. A2 se construirá pronto; mientras tanto, puedes repasar y visitar cualquier lugar.'
       : state.defeated.includes('farm-future-boss')
       ? 'Recuperaste cuatro fragmentos de voz del futuro. Toma el Sky Bus hasta la torre Green Valley: el último lugar de A1.'
       : state.defeated.includes('barrio-future-boss')

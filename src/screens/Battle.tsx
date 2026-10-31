@@ -506,7 +506,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const enemy = ENEMIES[battle.enemyId]
   const scene = SCENES[state.sceneId]
   const ent = scene.entities.find((e) => 'id' in e && e.id === enemy.id)
-  const zone = ent ? scene.zoneAt(ent.x, ent.y) : 'aula'
+  const zone = ent ? scene.zoneAt(ent.x, ent.y) : enemy.zone ?? 'aula'
   const leoHint = perks(state).leoHint
   const desktop = useDesktop()
   const metLeo = 'leo' in state.talks || 'leo' in state.friendship
@@ -682,6 +682,8 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         }
       }
       const base = { ...s, defeated: [...s.defeated, enemy.id], hp: s.maxHp }
+      // El desconocido solo retrocede: no da fragmento, pieza, temas ni atuendo
+      if (enemy.standoff) return base
       if (enemy.echo) return { ...base, items: { ...s.items, shield: Math.min(2, s.items.shield + 1) } }
       if (enemy.optional) {
         const r = enemy.reward
@@ -715,6 +717,22 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       }
       update((s) => ({ ...s, battle: null, screen: 'world' }))
       onExit()
+      return
+    }
+    if (phase === 'lost' && enemy.standoff) {
+      // Combate de la historia: no se sale del final. Se vuelve a empezar ahí mismo con la vida llena
+      update((s) => ({ ...s, hp: s.maxHp, battle: s.battle ? { ...s.battle, enemyHp: enemy.hp } : null }))
+      const nextUsed = [...used, q.id]
+      setUsed(nextUsed)
+      setRetry([])
+      setSlotFails(0)
+      setQ(pick(enemy.hp, nextUsed))
+      setExplain(false)
+      setInterlude(null)
+      setCorrect(false)
+      setBlocked(false)
+      setHint(false)
+      setPhase('ask')
       return
     }
     if (phase === 'lost') {
@@ -777,7 +795,9 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
                 <p className="mt-2 text-xs text-paper/60">
                   {enemy.kind === 'trainer'
                     ? 'Leo: "Don\'t worry, it\'s just practice!" Vuelves a empezar con la vida llena.'
-                    : 'Te quedaste sin energía. Volverás a la entrada con la vida llena.'}
+                    : enemy.standoff
+                      ? 'Te quedaste sin energía. Respira: vuelves a intentarlo aquí mismo, con la vida llena.'
+                      : 'Te quedaste sin energía. Volverás a la entrada con la vida llena.'}
                 </p>
               )}
               {phase === 'lost' && failed.length > 0 && (
@@ -812,7 +832,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         <Panel className="px-3 py-1.5">
           <p className="truncate font-display text-[15px]">{enemy.name}</p>
           <div className="mt-1.5"><Bar value={battle.enemyHp} max={enemy.hp} color={enemy.kind === 'boss' ? '#a07cd0' : enemy.kind === 'trainer' ? '#3b9d5d' : '#d64545'} label="Vida del enemigo" /></div>
-          {enemy.phases && <p className="mt-1 text-[11px] text-paper/50">Fase {phaseAt(battle.enemyHp) + 1} de {enemy.phases.length}</p>}
+          {enemy.phases && <p className="mt-1 text-[11px] text-paper/50">Fase {phaseAt(battle.enemyHp) + 1} de {enemy.phases.length}{enemy.phases[phaseAt(battle.enemyHp)].title ? ` · ${enemy.phases[phaseAt(battle.enemyHp)].title}` : ''}</p>}
         </Panel>
       </div>
 
@@ -1008,8 +1028,12 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
 
       {phase === 'won' && (
         <Panel className="anim-pop border-gold">
-          <p className="font-display text-2xl text-gold">{enemy.kind === 'trainer' ? '¡Entrenamiento completo!' : '¡Victoria!'}</p>
-          {enemy.kind === 'trainer' ? (
+          <p className="font-display text-2xl text-gold">{enemy.kind === 'trainer' ? '¡Entrenamiento completo!' : enemy.standoff ? '¡Lo hiciste retroceder!' : '¡Victoria!'}</p>
+          {enemy.standoff ? (
+            <p className="mt-1 text-[16px]">
+              El desconocido da un paso atrás. No está vencido... pero ahora sabe que tu voz es fuerte: pasado, presente y futuro.
+            </p>
+          ) : enemy.kind === 'trainer' ? (
             <p className="mt-1 text-[16px]">
               Leo ahora es tu amigo. Si fallas en un combate, te dará una pista. Tu aventura empieza en la escuela.
             </p>
