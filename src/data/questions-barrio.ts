@@ -108,6 +108,20 @@ export const BARRIO_QUESTIONS: Question[] = [
   { id: 'pco-03', topic: 'present-continuous', kind: 'order', prompt: '¿Qué estás haciendo?', options: ['What', 'are', 'you', 'doing?'], answer: 0, tip: 'What + are + you + doing?', tags: ['barrio'] },
   { id: 'pco-04', topic: 'present-continuous', kind: 'order', prompt: 'Estoy esperando el autobús.', options: ['I', 'am', 'waiting', 'for', 'the', 'bus.'], answer: 0, tip: 'I + am + waiting for...', tags: ['barrio'] },
 
+  // ── How often y expresiones de frecuencia (Bloque 4) ────
+  { id: 'hof-01', topic: 'present-simple', prompt: '___ do you play football? — Twice a week.', options: ['How often', 'How many', 'How much'], answer: 0, tip: 'Para preguntar con qué frecuencia: How often...?', tags: ['parque'] },
+  { id: 'hof-02', topic: 'present-simple', prompt: 'How often do you ___ your grandma? — Every Sunday.', options: ['visits', 'visit', 'visiting'], answer: 1, tip: 'How often do you + verbo simple: visit.', tags: ['casa'] },
+  { id: 'hof-03', topic: 'present-simple', prompt: 'I visit my cousins ___ a month.', options: ['one', 'first', 'once'], answer: 2, tip: 'Una vez = once: once a month. Dos veces = twice.', tags: ['casa'] },
+  { id: 'hof-04', topic: 'present-simple', prompt: 'Maya reads ___ day.', options: ['every', 'all', 'everys'], answer: 0, tip: 'Todos los días = every day (every + palabra en singular).', tags: ['casa-maya'] },
+  { id: 'hof-05', topic: 'present-simple', prompt: 'Ben ___ watches TV. He hates it!', options: ['always', 'never', 'usually'], answer: 1, tip: 'Si lo odia, no lo ve nunca: never.', tags: ['barrio'] },
+  { id: 'hof-06', topic: 'present-simple', prompt: 'How often ___ you go to the park? — Sometimes.', options: ['are', 'does', 'do'], answer: 2, tip: 'Con you: How often do you...?', tags: ['parque'] },
+
+  { id: 'hoff-01', topic: 'present-simple', kind: 'fix', prompt: 'How many often do you play?', options: ['How often you play?', 'How often do you play?', 'How often are you play?'], answer: 1, tip: 'Sin "many": How often + do you + verbo?', tags: ['parque'] },
+  { id: 'hoff-02', topic: 'present-simple', kind: 'fix', prompt: 'I go to the park every days!', options: ['I go to the park every day.', 'I goes to the park every day.', 'I go to the park all days.'], answer: 0, tip: 'Después de every la palabra va en singular: every day.', tags: ['parque'] },
+
+  { id: 'hofo-01', topic: 'present-simple', kind: 'order', prompt: '¿Con qué frecuencia lees?', options: ['How', 'often', 'do', 'you', 'read?'], answer: 0, tip: 'How often + do + you + verbo?', tags: ['casa-maya'] },
+  { id: 'hofo-02', topic: 'present-simple', kind: 'order', prompt: 'Visito a mi abuela una vez a la semana.', options: ['I', 'visit', 'my', 'grandma', 'once', 'a', 'week.'], answer: 0, tip: 'La expresión de frecuencia va al final: ... once a week.', tags: ['casa'] },
+
   // ── Have got (familia y cosas) ──────────────────────────
   { id: 'hg-01', topic: 'have-got', prompt: 'I ___ got two brothers.', options: ['have', 'has', 'am'], answer: 0, tip: 'Con I, you, we, they: have got.', tags: ['casa'] },
   { id: 'hg-02', topic: 'have-got', prompt: 'Leo ___ got a dog.', options: ['have', 'has', 'is'], answer: 1, tip: 'Con he, she, it: has got.', tags: ['casa-leo'] },
@@ -128,4 +142,12 @@ export const BARRIO_QUESTIONS: Question[] = [
   { id: 'hgo-02', topic: 'have-got', kind: 'order', prompt: 'Leo tiene un perro.', options: ['Leo', 'has', 'got', 'a', 'dog.'], answer: 0, tip: 'Leo + has got + cosa.', tags: ['casa-leo'] },
   { id: 'hgo-03', topic: 'have-got', kind: 'order', prompt: '¿Tienes una mascota?', options: ['Have', 'you', 'got', 'a', 'pet?'], answer: 0, tip: 'Have + you + got...?', tags: ['casa'] },
   { id: 'hgo-04', topic: 'have-got', kind: 'order', prompt: 'Mi casa tiene un jardín.', options: ['My', 'house', 'has', 'got', 'a', 'garden.'], answer: 0, tip: 'My house + has got...', tags: ['casa'] },
+  // ── Have / has sin got (Bloque 4) ───────────────────────
+  { id: 'hv-01', topic: 'have-got', prompt: 'Maya ___ a new bike.', options: ['has', 'have', 'is'], answer: 0, tip: 'Con he, she, it: has (= has got).', tags: ['casa-maya'] },
+  { id: 'hv-02', topic: 'have-got', prompt: 'I ___ a big family.', options: ['has', 'am', 'have'], answer: 2, tip: 'Con I, you, we, they: have (= have got).', tags: ['casa'] },
+  { id: 'hv-03', topic: 'have-got', prompt: "Leo's dad ___ a red car.", options: ['have', 'has', 'haves'], answer: 1, tip: '"Leo\'s dad" es "he": has.', tags: ['casa-leo'] },
+  { id: 'hvf-01', topic: 'have-got', kind: 'fix', prompt: 'She have a cat!', options: ['She haves a cat.', 'She is have a cat.', 'She has a cat.'], answer: 2, tip: 'Con she: has. Nunca "haves".', tags: ['casa-maya'] },
+  { id: 'hvf-02', topic: 'have-got', kind: 'fix', prompt: 'My dog have a ball!', options: ['My dog has a ball.', 'My dog haves a ball.', 'My dog is has a ball.'], answer: 0, tip: '"My dog" es "it": has.', tags: ['parque'] },
+  { id: 'hvo-01', topic: 'have-got', kind: 'order', prompt: 'Ben tiene dos gatos.', options: ['Ben', 'has', 'two', 'cats.'], answer: 0, tip: 'Ben + has + cosa.', tags: ['parque'] },
+
 ]

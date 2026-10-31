@@ -192,7 +192,7 @@ export const FARM_ENEMIES: Record<string, EnemyDef> = {
       },
       {
         hp: 3,
-        topics: ['do-does', 'plurals', 'present-simple'],
+        topics: ['do-does', 'plurals', 'present-simple', 'have-got'],
         kinds: ['fill', 'order', 'listen', 'fix', 'write'],
         tags: ['casa-granja', 'campo'],
         line: { text: 'Do the cows... does the farmer... What do I do every day? I... I milk the cows!', es: '¿Las vacas... el granjero...? ¿Qué hago todos los días? Yo... ¡yo ordeño las vacas!' },

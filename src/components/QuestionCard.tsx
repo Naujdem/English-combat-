@@ -152,7 +152,10 @@ export function QuestionCard({
     let piece = false
     for (let a = 0; a <= pre.length; a++)
       for (let b = pre.length + mid.length; b <= all.length; b++) if (all.slice(a, b).join(' ') === t) piece = true
-    finish(sameAnswer(typed, expected) || sameAnswer(typed, `${expected} not`) || piece)
+    // Después de "Yes," la respuesta corta es afirmativa: "Yes, I am not" no vale
+    const afterYes = /\byes\b[^.?!—]*$/i.test(before)
+    const negOk = !afterYes && sameAnswer(typed, `${expected} not`)
+    finish(sameAnswer(typed, expected) || negOk || piece)
   }
 
   function checkOrder() {
