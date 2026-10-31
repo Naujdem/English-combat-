@@ -77,6 +77,7 @@ grammar=gramática;explain=explicar;serious=serio;club=club;common=común (in co
 opposite=enfrente de;flowers=flores;born=nacer (are born = nacen);other=otro;side=lado;
 weekend=fin de semana;lobby=recepción, vestíbulo;memory=memoria;politely=con cortesía;panels=paneles;
 want=querer;wants=quiere;wanted=quería, quise (want);would=(would like = me gustaría);like=gustar, como;elevator=ascensor;speech=discurso;director=director, directora;retire=jubilarse;retired=jubilado;goodbye=adiós;floors=pisos;floor=piso;tower=torre;suit=traje;chair=silla;habits=costumbres;whoever=quienquiera que;especially=especialmente;nervous=nervioso;popcorn=palomitas;
+groups=grupos;group=grupo;tour=recorrido, visita guiada;outside=afuera;terrace=terraza;
 `
 
 const BASE: Record<string, string> = Object.fromEntries(

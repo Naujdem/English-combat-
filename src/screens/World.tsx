@@ -16,7 +16,7 @@ const TRIPS: Record<string, BusTrip> = { city: BUS_TO_CITY, barrio: BUS_TO_BARRI
 import { ProgressView, Review } from '../components/Review'
 import { setSound, soundOn } from '../game/sfx'
 import { autoVoiceOn, setAutoVoice } from '../game/speech'
-import { DIARY } from '../data/diary'
+import { DIARY, pageNotified, pageSeen, unlockedPages } from '../data/diary'
 import { dueCards } from '../game/cards'
 import type { Update } from '../game/store'
 import { heroLook } from '../game/helpers'
@@ -57,9 +57,11 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   )
   const [friends, setFriends] = useState(false)
   const [clock, setClock] = useState(false)
-  // Al terminar un capítulo, el diario se abre solo la primera vez
-  const newDiary = DIARY.find((c) => state.opened.includes(c.unlock) && !state.opened.includes(`diary-open-${c.id}`))
-  const [diary, setDiary] = useState(!!newDiary)
+  // Cuando se abre una página del diario (al terminar un lugar en cualquier época), el diario se abre solo una vez
+  const pages = unlockedPages(state.opened)
+  const freshPage = pages.some((p) => !pageNotified(state.opened, p.chapter, p.version))
+  const newPages = pages.filter((p) => !pageSeen(state.opened, p.chapter, p.version)).length
+  const [diary, setDiary] = useState(freshPage)
   const [cards, setCards] = useState(false)
   const [logros, setLogros] = useState(false)
   const [exam, setExam] = useState<EraId | null>(null)
@@ -76,7 +78,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const hasDiary = DIARY.some((c) => state.opened.includes(c.unlock))
   const dueCount = dueCards(state.cards).length
 
-  const menuAlert = dueCount > 0 || !!pendingExam || !!newDiary
+  const menuAlert = dueCount > 0 || !!pendingExam || newPages > 0
   /** Cierra el menú y abre lo elegido */
   function go(open: () => void) {
     setMenu(false)
@@ -88,7 +90,14 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   }
   function closeDiary() {
     setDiary(false)
-    if (newDiary) update((s) => ({ ...s, opened: [...s.opened, `diary-open-${newDiary.id}`] }))
+    // Ya se avisó de todas las páginas abiertas; las que no se leyeron siguen marcadas como nuevas
+    update((s) => {
+      const add = [
+        ...unlockedPages(s.opened).map((p) => `diary-notified-${p.version.id}`),
+        ...DIARY.filter((c) => s.opened.includes(c.unlock)).map((c) => `diary-open-${c.id}`),
+      ].filter((x) => !s.opened.includes(x))
+      return add.length ? { ...s, opened: [...s.opened, ...add] } : s
+    })
   }
   const here = WORLD.find((n) => n.sceneId === state.sceneId) ?? WORLD[0]
   // Épocas: el pasado aparece cuando el reloj está completo (o en modo profesor)
@@ -315,7 +324,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
               )}
               <div className="grid grid-cols-2 gap-2">
                 <MenuRow icon="🗂" stack title="Fichas" sub={dueCount > 0 ? `${dueCount} para repasar` : `${state.cards.length} guardadas`} badge={dueCount > 0} onClick={() => go(() => setCards(true))} />
-                <MenuRow icon="📖" stack title="Mi diario" sub={newDiary ? 'Capítulo nuevo' : hasDiary ? 'Releer capítulos' : 'Aún vacío'} badge={!!newDiary} disabled={!hasDiary} onClick={() => go(openDiary)} />
+                <MenuRow icon="📖" stack title="Mi diario" sub={newPages > 1 ? `${newPages} páginas nuevas` : newPages === 1 ? 'Página nueva' : hasDiary ? 'Releer capítulos' : 'Aún vacío'} badge={newPages > 0} disabled={!hasDiary} onClick={() => go(openDiary)} />
                 <MenuRow icon="🔁" stack title="Repasar" sub="Temas y errores" onClick={() => go(() => setReview(true))} />
                 <MenuRow icon="📊" stack title="Mi progreso" sub="Aciertos por tema" onClick={() => go(() => setProgress(true))} />
               </div>

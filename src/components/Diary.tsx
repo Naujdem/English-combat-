@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { mixed } from '../game/mix'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
-import { DIARY, fillNames, lookup, normWord, TENSE_INFO, type DiaryChapter, type Tense } from '../data/diary'
+import { DIARY, fillNames, LOCKED_HINT, lookup, normWord, pageSeen, TENSE_INFO, type DiaryChapter, type DiaryVersion, type Tense } from '../data/diary'
 import { translate } from '../data/glossary'
 import { newCard } from '../game/cards'
 import { useTeacher } from '../game/teacher'
@@ -10,14 +10,26 @@ import { SpeakButton } from './SpeakButton'
 import { btn, btnGhost, btnPrimary, Overlay, Panel } from './ui'
 
 /**
- * Diario del capítulo. La misma historia en pasado, presente y futuro, y una mezcla.
- * Se puede tocar cualquier palabra para ver su traducción y guardarla en las fichas.
+ * Diario del capítulo: cada lugar en cuatro páginas (presente, 1996, 2056 y una mezcla de las tres épocas).
+ * Se abre en la primera página nueva. Se puede tocar cualquier palabra para ver su traducción y guardarla en las fichas.
  */
 export function Diary({ state, update, onClose }: { state: GameState; update: Update; onClose: () => void }) {
+  const teacher = useTeacher().on
   const chapters = DIARY.filter((c) => state.opened.includes(c.unlock))
-  const [ci, setCi] = useState(chapters.length - 1)
+  // Solo se leen las páginas ya abiertas: el presente al terminar el lugar, y 1996 y 2056 al viajar (o en modo profesor)
+  const visible = (c: DiaryChapter) => c.versions.filter((x) => !x.unlock || teacher || state.opened.includes(x.unlock))
+  const isNew = (c: DiaryChapter, x: DiaryVersion) => (!x.unlock || state.opened.includes(x.unlock)) && !pageSeen(state.opened, c, x)
+  // El diario se abre en la primera página nueva; si no hay, en el último capítulo
+  const [start] = useState(() => {
+    for (let k = 0; k < chapters.length; k++) {
+      const j = visible(chapters[k]).findIndex((x) => isNew(chapters[k], x))
+      if (j >= 0) return { ci: k, v: j }
+    }
+    return { ci: chapters.length - 1, v: 0 }
+  })
+  const [ci, setCi] = useState(start.ci)
   const chapter: DiaryChapter | undefined = chapters[ci]
-  const [v, setV] = useState(0)
+  const [v, setV] = useState(start.v)
   const [showEs, setShowEs] = useState(false)
   const [verbs, setVerbs] = useState(false)
   const [word, setWord] = useState<{ raw: string; sentence: string } | null>(null)
@@ -25,9 +37,18 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
   const [solved, setSolved] = useState(false)
   const [tip, setTip] = useState<string | null>(null)
   const [wordsView, setWordsView] = useState(false)
-  const teacher = useTeacher().on
+  const versions = chapter ? visible(chapter) : []
+  const version: DiaryVersion | undefined = versions[Math.min(v, versions.length - 1)]
 
-  if (!chapter) {
+  // La página que se está leyendo deja de ser nueva
+  const shownId = version?.id
+  useEffect(() => {
+    if (!shownId) return
+    const id = `diary-seen-${shownId}`
+    update((s) => (s.opened.includes(id) ? s : { ...s, opened: [...s.opened, id] }))
+  }, [shownId, update])
+
+  if (!chapter || !version) {
     return (
       <Overlay onClose={onClose}>
         <Panel>
@@ -38,11 +59,8 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
     )
   }
 
-  // Solo se leen los tiempos que ya se estudiaron: en A1 primero el presente;
-  // pasado y futuro se abren al viajar en el tiempo (o en modo profesor)
-  const versions = chapter.versions.filter((x) => !x.unlock || teacher || state.opened.includes(x.unlock))
-  const hidden = chapter.versions.length - versions.length
-  const version = versions[Math.min(v, versions.length - 1)]
+  const page: DiaryVersion = version
+  const hidden = chapter.versions.filter((x) => !versions.includes(x))
   const name = state.hero.name
   const iname = state.interest.name
   const fill = (t: string) => fillNames(t, name, iname)
@@ -51,7 +69,7 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
 
   function pick(k: number) {
     if (quiz === null || solved) return
-    const q = version.questions[quiz]
+    const q = page.questions[quiz]
     if (k === q.answer) {
       setSolved(true)
       setTip(null)
@@ -61,11 +79,11 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
   function nextQuestion() {
     setSolved(false)
     setTip(null)
-    if (quiz! + 1 < version.questions.length) setQuiz(quiz! + 1)
+    if (quiz! + 1 < page.questions.length) setQuiz(quiz! + 1)
     else {
-      setQuiz(version.questions.length)
+      setQuiz(page.questions.length)
       update((s) => {
-        const id = `diary-${version.id}`
+        const id = `diary-${page.id}`
         if (s.opened.includes(id)) return s
         // La primera vez que se completa cada versión, un escudo de palabras
         return { ...s, opened: [...s.opened, id], items: { ...s.items, shield: Math.min(2, s.items.shield + 1) } }
@@ -171,6 +189,7 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
                 }}
               >
                 {c.title.split(':')[0]}
+                {c.versions.some((x) => isNew(c, x)) && <span className="ml-1 text-gold">•</span>}
               </button>
             ))}
           </div>
@@ -187,6 +206,7 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
               style={x.tense !== 'mix' ? { color: k === v ? TENSE_INFO[x.tense].color : undefined } : undefined}
             >
               {done(x.id) ? '✓ ' : ''}{x.tab}
+              {isNew(chapter, x) && <span className="block text-[10px] font-bold uppercase tracking-wide text-gold">Nueva</span>}
             </button>
           ))}
         </div>
@@ -195,7 +215,11 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
           Palabras del capítulo ({chapter.words.reduce((n, g) => n + g.words.length, 0)})
         </button>
 
-        {hidden > 0 && <p className="text-xs text-paper/55">Esta historia también se puede leer en pasado y en futuro. Esas versiones se abrirán cuando viajes en el tiempo con el reloj.</p>}
+        {hidden.length > 0 && (
+          <p className="text-xs text-paper/55">
+            Páginas que faltan en este capítulo: {hidden.map((x) => `${x.tab} (se abre ${LOCKED_HINT[x.tense]})`).join(' · ')}.
+          </p>
+        )}
 
         <p className="text-sm text-paper/70">{version.frame}</p>
 
@@ -286,12 +310,14 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
             <p className="font-display text-xl text-gold">¡Lectura completa!</p>
             <p className="mt-1 text-[15px]">
               {v < versions.length - 1
-                ? `Ahora lee la misma historia en ${versions[v + 1].tab.toLowerCase()} y compara cómo cambian los verbos.`
-                : 'Leíste la historia en todos los tiempos. ¡Muy bien!'}
+                ? `Sigue con la página ${versions[v + 1].tab}: mira cómo cambian los verbos y la historia de este lugar.`
+                : hidden.length > 0
+                ? 'Leíste todas las páginas abiertas de este capítulo. Las demás se abren cuando viajes en el tiempo.'
+                : 'Leíste las cuatro páginas de este capítulo. ¡Muy bien!'}
             </p>
-            <p className="mt-1 text-sm text-paper/65">La primera vez que completas cada versión ganas un escudo de palabras (máximo 2).</p>
+            <p className="mt-1 text-sm text-paper/65">La primera vez que completas cada página ganas un escudo de palabras (máximo 2).</p>
             {v < versions.length - 1 && (
-              <button className={`${btnPrimary} mt-3 w-full`} onClick={() => switchVersion(v + 1)}>Leer en {versions[v + 1].tab.toLowerCase()}</button>
+              <button className={`${btnPrimary} mt-3 w-full`} onClick={() => switchVersion(v + 1)}>Leer la página {versions[v + 1].tab}</button>
             )}
           </Panel>
         )}

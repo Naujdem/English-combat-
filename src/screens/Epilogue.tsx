@@ -528,7 +528,7 @@ function schoolPastSteps(s: GameState): Step[] {
     },
     {
       who: 'narrator',
-      text: 'Fin: La escuela de 1996. Recuperaste was / were y there was / there were. Ahora tu diario también se puede leer en pasado. Tu viaje por el pasado sigue en la ciudad vieja...',
+      text: 'Fin: La escuela de 1996. Recuperaste was / were y there was / there were. Tu diario de la escuela tiene una página nueva de 1996. Tu viaje por el pasado sigue en la ciudad vieja...',
       cast,
     },
   ]
@@ -784,7 +784,7 @@ function schoolFutureSteps(s: GameState): Step[] {
     { who: 'interest', text: '"He WAS a good teacher"... Why "was"? Mr. Garcia IS a teacher...', es: '"Era un buen profesor"... ¿Por qué "era"? El señor Garcia ES profesor...', cast },
     {
       who: 'narrator',
-      text: 'Fin: La escuela de 2056. Recuperaste going to para hablar de planes. En tu diario de la escuela apareció una hoja nueva: el plan del desconocido. Tu viaje por el futuro sigue en la ciudad...',
+      text: 'Fin: La escuela de 2056. Recuperaste going to para hablar de planes. En tu diario de la escuela hay dos páginas nuevas: una hoja que se le cayó al desconocido junto a la ventana (¡su plan!) y una mezcla de las tres épocas. Tu viaje por el futuro sigue en la ciudad...',
       cast,
     },
   ]
@@ -832,7 +832,7 @@ function cityFutureSteps(s: GameState): Step[] {
     { who: 'interest', text: "Yes, he is. I'm sure. But we aren't going to stop. Right?", es: 'Sí. Estoy seguro. Pero no vamos a parar. ¿Cierto?', cast },
     {
       who: 'narrator',
-      text: "Fin: La ciudad de 2056. Recuperaste going to en negativo y en preguntas. Tu viaje por el futuro sigue en Green Street...",
+      text: "Fin: La ciudad de 2056. Recuperaste going to en negativo y en preguntas. Tu diario de la ciudad tiene dos páginas nuevas: el plan de Marco para los turistas y una mezcla de las tres épocas. Tu viaje por el futuro sigue en Green Street...",
       cast,
     },
   ]
@@ -888,7 +888,7 @@ function barrioFutureSteps(s: GameState): Step[] {
     { who: 'leo', text: "We are going to go to the farm! But first... we are going to eat some cake!", es: '¡Vamos a ir a la granja! Pero primero... ¡vamos a comer pastel!', cast },
     {
       who: 'narrator',
-      text: 'Fin: Green Street en 2056. Recuperaste las preguntas de planes con What, Where, When y Who. Tu viaje por el futuro sigue en la granja...',
+      text: 'Fin: Green Street en 2056. Recuperaste las preguntas de planes con What, Where, When y Who. Tu diario de Green Street tiene dos páginas nuevas: la lista de Emma para la fiesta y una mezcla de las tres épocas. Tu viaje por el futuro sigue en la granja...',
       cast,
     },
   ]
@@ -937,7 +937,7 @@ function farmFutureSteps(s: GameState): Step[] {
     { who: 'interest', text: "I know. And we are going to be there. Together.", es: 'Lo sé. Y vamos a estar ahí. Juntos.', cast },
     {
       who: 'narrator',
-      text: 'Fin: La granja de 2056. Recuperaste las predicciones con going to. Solo falta un lugar: la torre Green Valley. El final de A1 te espera...',
+      text: 'Fin: La granja de 2056. Recuperaste las predicciones con going to. Tu diario de la granja tiene dos páginas nuevas: la libreta de Rosie y una mezcla de las tres épocas. Solo falta un lugar: la torre Green Valley. El final de A1 te espera...',
       cast,
     },
   ]
@@ -989,7 +989,7 @@ function towerFutureSteps(s: GameState): Step[] {
     { who: 'interest', text: "Me too. We were in 1996, we are here in 2056... and next time, we are going to be ready.", es: 'Yo también. Estuvimos en 1996, estamos aquí en 2056... y la próxima vez vamos a estar listos.', cast },
     {
       who: 'narrator',
-      text: `¡Terminaste A1! Recuperaste las cinco piezas del reloj y los diez fragmentos de tu voz: cinco del pasado y cinco del futuro. Ya puedes hablar de hoy, contar lo que pasó y decir lo que vas a hacer y lo que quieres. Pero... ¿quién es el desconocido? ¿Y por qué dice "Hi, hi"? ${iname} y Leo te esperan en A2.`,
+      text: `¡Terminaste A1! Recuperaste las cinco piezas del reloj y los diez fragmentos de tu voz: cinco del pasado y cinco del futuro. Ya puedes hablar de hoy, contar lo que pasó y decir lo que vas a hacer y lo que quieres. Tu diario tiene dos páginas nuevas: las notas del discurso de Diana y una mezcla de las tres épocas. Pero... ¿quién es el desconocido? ¿Y por qué dice "Hi, hi"? ${iname} y Leo te esperan en A2.`,
       cast,
     },
   ]
