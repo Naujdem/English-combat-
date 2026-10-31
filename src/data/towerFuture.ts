@@ -128,11 +128,11 @@ export const TOWER_FUTURE_ENEMIES: Record<string, EnemyDef> = {
     tags: ['lobby-torre'],
     look: { shirt: '#9aa6b2', hair: '#e0a526', skin: '#d9e2ea' },
     before: [
-      { text: 'BEEP! Welcome to Green Valley Tower! Where you would like go? Would you like going up? You want to the floor nine?', es: '¡BIP! ¡Bienvenidos a la torre Green Valley! ¿A dónde le "gustaría ir"? ¿Le gustaría subir? ¿Quiere el piso nueve? (Se equivoca: Where you would like go, Would you like going, You want to the floor).' },
+      { text: 'BEEP! Welcome to Green Valley Tower! Where you would like go? Would you like going up? You want to the floor ninety?', es: '¡BIP! ¡Bienvenidos a la torre Green Valley! ¿A dónde le "gustaría ir"? ¿Le gustaría subir? ¿Quiere el piso noventa? (Se equivoca: Where you would like go, Would you like going, You want to the floor).' },
       { text: 'Half of a key is in my memory box. You would like it? Answer me first. BEEP!', es: 'La mitad de una llave está en mi caja de memoria. ¿La quiere? Primero respóndame. ¡BIP!' },
     ],
     after: [
-      { text: 'BEEP. Where would you like to go? Would you like to go up? Do you want to go to floor nine? System OK!', es: 'BIP. ¿A dónde le gustaría ir? ¿Le gustaría subir? ¿Quiere ir al piso nueve? ¡Sistema bien!' },
+      { text: 'BEEP. Where would you like to go? Would you like to go up? Do you want to go to floor ninety? System OK!', es: 'BIP. ¿A dónde le gustaría ir? ¿Le gustaría subir? ¿Quiere ir al piso noventa? ¡Sistema bien!' },
       { text: "Take the key. The director's office is on the top floor. Mr. Stone is there... and he doesn't want to leave. BEEP!", es: 'Tome la llave. La oficina de la dirección está en el último piso. El señor Stone está allá... y no quiere salir. ¡BIP!' },
     ],
     freed: { text: 'BEEP! Would you like to go up or down? I like up. Up is fun!', es: '¡BIP! ¿Le gustaría subir o bajar? A mí me gusta subir. ¡Subir es divertido!' },
@@ -165,14 +165,14 @@ export const TOWER_FUTURE_ENEMIES: Record<string, EnemyDef> = {
     echo: true,
     tags: ['oficina-torre'],
     before: [
-      { text: 'Hey! Where is my bike? Yesterday I deliver bread in a small town, and today I walk up nine floors of a glass tower!', es: '¡Oye! ¿Dónde está mi bici? Ayer "entrego" pan en un pueblo pequeño, ¡y hoy "subo" nueve pisos de una torre de cristal! (Otra vez se equivoca con el pasado: deliver, walk).' },
+      { text: 'Hey! Where is my bike? Yesterday I deliver bread in a small town, and today I walk up ninety floors of a glass tower!', es: '¡Oye! ¿Dónde está mi bici? Ayer "entrego" pan en un pueblo pequeño, ¡y hoy "subo" noventa pisos de una torre de cristal! (Otra vez se equivoca con el pasado: deliver, walk).' },
       { text: 'A white light took me. Answer me fast, and maybe I can go home!', es: 'Una luz blanca me llevó. ¡Respóndeme rápido y tal vez pueda volver a casa!' },
     ],
     after: [
-      { text: 'Yesterday I delivered bread. Today I walked up nine floors! Ha ha. Nobody is going to believe me.', es: 'Ayer entregué pan. ¡Hoy subí nueve pisos! Ja, ja. Nadie me va a creer.' },
+      { text: 'Yesterday I delivered bread. Today I walked up ninety floors! Ha ha. Nobody is going to believe me.', es: 'Ayer entregué pan. ¡Hoy subí noventa pisos! Ja, ja. Nadie me va a creer.' },
       { text: 'The light! I am going home. Bye, tower!', es: '¡La luz! Me voy a casa. ¡Adiós, torre!' },
     ],
-    bonus: { q: 'Before you go! Yesterday Tony ___ up nine floors.', options: ['walked', 'walk', 'walks'], answer: 0, tip: 'Yesterday = pasado: walked.' },
+    bonus: { q: 'Before you go! Yesterday Tony ___ up ninety floors.', options: ['walked', 'walk', 'walks'], answer: 0, tip: 'Yesterday = pasado: walked.' },
   },
 
   'office-future-boss': {
