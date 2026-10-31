@@ -895,7 +895,7 @@ function barrioFutureSteps(s: GameState): Step[] {
 }
 
 /**
- * Final de la granja en 2056: el abuelo Brown recuerda a los dos niños que lo ayudaron con el molino en 1996.
+ * Final de la granja en 2056: el abuelo Brown recuerda a los tres niños que lo ayudaron con el molino en 1996.
  * El desconocido, bajo la lluvia: "Nobody can hear you in the rain."
  */
 function farmFutureSteps(s: GameState): Step[] {
@@ -906,7 +906,7 @@ function farmFutureSteps(s: GameState): Step[] {
     { who: 'narrator', text: 'El abuelo Brown sale al porche. Empieza a llover. Rosie corre hacia él con un paraguas.', cast: farm },
     { who: 'brownold', text: "Rosie, I'm sorry. The robots aren't going to break anything. You are a great farmer.", es: 'Rosie, lo siento. Los robots no van a romper nada. Eres una gran granjera.', cast: farm },
     { who: 'rosieadult', text: "Thank you, Grandpa. And look: with this wind, the turbine is going to make a lot of energy today!", es: 'Gracias, abuelo. Y mira: con este viento, el molino va a hacer mucha energía hoy.', cast: farm },
-    { who: 'brownold', text: 'Sixty years ago, two kids helped me with the old windmill. A boy with a green shirt... and you. You look exactly like them!', es: 'Hace sesenta años, dos niños me ayudaron con el molino viejo. Un niño con camiseta verde... y tú. ¡Se parecen idénticos!', cast: farm },
+    { who: 'brownold', text: 'Sixty years ago, three kids helped me with the old windmill. A boy with a green shirt... and you two. You look exactly like them!', es: 'Hace sesenta años, tres niños me ayudaron con el molino viejo. Un niño con camiseta verde... y ustedes dos. ¡Se parecen idénticos!', cast: farm },
     { who: 'leo', text: 'Because we ARE those kids! Ha ha... Wait. Mr. Brown remembers US?', es: '¡Porque SOMOS esos niños! Ja, ja... Espera. ¿El señor Brown se acuerda de NOSOTROS?', cast },
     {
       who: 'hero',
@@ -954,7 +954,7 @@ function towerFutureSteps(s: GameState): Step[] {
   return [
     { who: 'narrator', text: 'En la sala de reuniones todos esperan: Paula, Grace, LIFT-9... Diana, la señora Clark, se pone de pie con su discurso.', cast: tower },
     { who: 'dianaold', text: "In 1996, I sold tickets in my father's cinema. Ray fixed the old projector every week. We were very happy there.", es: 'En 1996 vendía boletas en el cine de mi papá. Ray arreglaba el proyector viejo cada semana. Éramos muy felices allí.', cast: tower },
-    { who: 'dianaold', text: 'Tomorrow, Paula is going to be the new director. And I would like to thank you all... and two kids. They helped us sixty years ago, and they are here today!', es: 'Mañana Paula va a ser la nueva directora. Y me gustaría agradecerles a todos... y a dos niños. Nos ayudaron hace sesenta años, ¡y hoy están aquí!', cast: tower },
+    { who: 'dianaold', text: 'Tomorrow, Paula is going to be the new director. And I would like to thank you all... and three kids. They helped us sixty years ago, and they are here today!', es: 'Mañana Paula va a ser la nueva directora. Y me gustaría agradecerles a todos... y a tres niños. Nos ayudaron hace sesenta años, ¡y hoy están aquí!', cast: tower },
     { who: 'rayold', text: "Diana... I'm sorry. For sixty years I wanted your chair. But I didn't want an office. I wanted my friends.", es: 'Diana... Lo siento. Durante sesenta años quise tu silla. Pero no quería una oficina. Quería a mis amigos.', cast: tower },
     { who: 'dianaold', text: 'Ray, I want to ask you a question. Would you like to open the old cinema again... with me?', es: 'Ray, quiero hacerte una pregunta. ¿Te gustaría abrir el viejo cine otra vez... conmigo?', cast: tower },
     {
@@ -969,12 +969,13 @@ function towerFutureSteps(s: GameState): Step[] {
     },
     { who: 'rayold', text: "Ha ha! Yes, Diana. I would like to. Very much.", es: '¡Ja, ja! Sí, Diana. Me gustaría. Muchísimo.', cast: tower },
     { who: 'narrator', text: 'Sientes el último fragmento de tu voz del futuro. Cinco de cinco. Ahora puedes decir lo que quieres: I want to... I would like to...', cast },
-    { who: 'narrator', text: 'Leo y tú suben a la terraza de la torre. Desde allá se ve todo: la escuela, la ciudad, Green Street, la granja... Ya no llueve.', cast },
+    { who: 'narrator', text: `Leo, ${iname} y tú suben a la terraza de la torre. Desde allá se ve todo: la escuela, la ciudad, Green Street, la granja... Ya no llueve.`, cast },
     { who: 'narrator', text: 'Alguien está al borde de la terraza, mirando la ciudad. El abrigo oscuro. Esta vez no se esconde.', cast: ['interest'] },
     { who: 'villain', text: 'Hi, hi... What a nice voice you have. And now it is complete.', es: 'Hola, hola... Qué bonita voz tienes. Y ahora está completa.', villain: true, cast: ['interest'] },
     { who: 'villain', text: 'The present, the past, the future... You have got all your words now. The clock is ready... and so am I.', es: 'El presente, el pasado, el futuro... Ya tienes todas tus palabras. El reloj está listo... y yo también.', villain: true, cast: ['interest'] },
     { who: 'narrator', text: 'Una luz blanca llena la terraza. Cuando abres los ojos, el desconocido ya no está. El reloj sigue en tu bolsillo... pero ahora marca una hora nueva.', cast },
-    { who: 'leo', text: "Wait... Did he say 'Hi, hi'? That's MY word! Nobody says 'Hi, hi'... only me!", es: 'Espera... ¿Dijo "Hi, hi"? ¡Esa es MI palabra! Nadie dice "Hi, hi"... ¡solo yo!', cast },
+    { who: 'leo', text: "'Hi, hi'... He said 'Hi, hi'. Why?", es: '«Hi, hi»... Dijo «Hi, hi». ¿Por qué?', cast },
+    { who: 'narrator', text: 'Leo se queda mirando el lugar vacío. Por un momento parece que va a decir algo más... pero no lo dice.', cast },
     {
       who: 'hero',
       text: '¿Qué le dices a Leo?',

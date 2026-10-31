@@ -19,7 +19,7 @@ const ROUNDS: Round[] = [
   { part: 'Today', partEs: 'El presente', before: 'Every morning, Grace and I', after: 'coffee in the café.', options: ['drink', 'drinks', 'drank'], answer: 0, tip: 'Grace and I = we: drink.' },
   { part: 'Tomorrow', partEs: 'El futuro', before: 'Tomorrow, Paula', after: 'going to be the new director.', options: ['is', 'are', 'am'], answer: 0, tip: 'Paula (she): is going to.' },
   { part: 'Tomorrow', partEs: 'El futuro', before: "And I'm going to", after: 'a lot of books!', options: ['read', 'reads', 'reading'], answer: 0, tip: 'going to + verbo simple: read.' },
-  { part: 'Thank you', partEs: 'El agradecimiento', before: 'I would like', after: 'thank you all.', options: ['to', '—', 'for'], answer: 0, tip: 'would like + to + verbo: I would like to thank...' },
+  { part: 'Thank you', partEs: 'El agradecimiento', before: 'I would like', after: 'thank you all.', options: ['to', 'of', 'for'], answer: 0, tip: 'would like + to + verbo: I would like to thank...' },
   { part: 'Thank you', partEs: 'El agradecimiento', before: 'And Ray... I want', after: 'you a question.', options: ['to ask', 'ask', 'asking'], answer: 0, tip: 'want + to + verbo: I want to ask...' },
 ]
 

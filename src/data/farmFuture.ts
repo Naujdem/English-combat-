@@ -210,7 +210,7 @@ export const FARM_FUTURE_ENEMIES: Record<string, EnemyDef> = {
       { text: "Last night a man in a dark coat sat on my porch. He looked at the sky and asked: 'Is it going to rain?' I said yes. He said: 'Good. Rain is loud... nobody can hear you in the rain.'", es: 'Anoche un hombre con abrigo oscuro se sentó en mi porche. Miró el cielo y preguntó: "¿Va a llover?". Le dije que sí. Dijo: "Bien. La lluvia es ruidosa... nadie te puede oír en la lluvia".' },
       { text: 'This piece of metal is yours. And take these solar overalls: they are going to keep you warm!', es: 'Este pedazo de metal es tuyo. Y toma este overol solar: ¡te va a mantener caliente!' },
     ],
-    freed: { text: "Sixty years ago I fixed the windmill with two kids... and they looked like you! Ha ha. Strange, no?", es: 'Hace sesenta años arreglé el molino con dos niños... ¡y se parecían a ustedes! Ja, ja. Raro, ¿no?' },
+    freed: { text: "Sixty years ago I fixed the windmill with three kids... and they looked like you! Ha ha. Strange, no?", es: 'Hace sesenta años arreglé el molino con tres niños... ¡y se parecían a ustedes! Ja, ja. Raro, ¿no?' },
     farewell: {
       q: 'Goodbye, kids! Look at the sky. What is going to happen?',
       options: ["It's going to rain! Goodbye!", 'It going to rain! Goodbye!', 'It rains tomorrow yesterday!'],
