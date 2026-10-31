@@ -153,6 +153,18 @@ export const PAST_QUESTIONS: Question[] = [
   { id: 'pdo-03', topic: 'past-did', kind: 'order', prompt: '¿Qué comiste ayer?', options: ['What', 'did', 'you', 'eat', 'yesterday?'], answer: 0, tip: 'What + did + you + eat + ...?', tags: ['casa-vieja'] },
   { id: 'pdo-04', topic: 'past-did', kind: 'order', prompt: 'Los ratones no durmieron.', options: ['The', 'mice', "didn't", 'sleep.'], answer: 0, tip: "The mice + didn't + sleep.", tags: ['granero-viejo'] },
   { id: 'pdo-05', topic: 'past-did', kind: 'order', prompt: '¿Dónde jugó Tom?', options: ['Where', 'did', 'Tom', 'play?'], answer: 0, tip: 'Where + did + Tom + play?', tags: ['granero-viejo'] },
+  // ── Preguntas con palabra en pasado: sujeto y objeto (Bloque 4) ──
+  { id: 'pd-23', topic: 'past-did', prompt: 'Who ___ the rope? — The mice did!', options: ['did ate', 'ate', 'eated'], answer: 1, tip: 'Si "who" es quien hizo la acción (el sujeto), no se usa did: Who ate...?', tags: ['granero-viejo'] },
+  { id: 'pd-24', topic: 'past-did', prompt: 'Who ___ you see in the barn? — I saw Tom.', options: ['did', 'was', 'do'], answer: 0, tip: 'Aquí "who" es a quién viste (el objeto): Who did you see?', tags: ['granero-viejo'] },
+  { id: 'pd-25', topic: 'past-did', prompt: 'What ___ last night? — The windmill stopped.', options: ['did happened', 'happened', 'happen'], answer: 1, tip: '"What" es el sujeto (lo que pasó): What happened? Sin did.', tags: ['campo-viejo'] },
+  { id: 'pd-26', topic: 'past-did', prompt: 'When ___ the mice come? — Last night.', options: ['were', 'do', 'did'], answer: 2, tip: 'When + did + sujeto + verbo simple: When did the mice come?', tags: ['campo-viejo'] },
+  { id: 'pd-27', topic: 'past-did', prompt: 'Why ___ the windmill stop? — The mice ate the rope.', options: ['did', 'was', 'does'], answer: 0, tip: 'Why + did + sujeto + verbo simple: Why did the windmill stop?', tags: ['campo-viejo'] },
+
+  { id: 'pdf-09', topic: 'past-did', kind: 'fix', prompt: 'Who did broke the windmill?', options: ['Who breaked the windmill?', 'Who broke the windmill?', 'Who was break the windmill?'], answer: 1, tip: 'Who como sujeto: sin did y con el verbo en pasado (break → broke): Who broke...?', tags: ['campo-viejo'] },
+  { id: 'pdf-10', topic: 'past-did', kind: 'fix', prompt: "Why you didn't milk the cows?", options: ["Why didn't you milk the cows?", "Why didn't you milked the cows?", "Why you not milked the cows?"], answer: 0, tip: "Why + didn't + sujeto + verbo simple.", tags: ['granero-viejo'] },
+
+  { id: 'pdo-06', topic: 'past-did', kind: 'order', prompt: '¿Por qué ladró Max?', options: ['Why', 'did', 'Max', 'bark?'], answer: 0, tip: 'Why + did + Max + verbo simple?', tags: ['granero-viejo'] },
+
   // ── Expresiones de tiempo en pasado: el viejo cine (1996) ──
   { id: 'pt-01', topic: 'past-time', prompt: 'I saw that film two days ___.', options: ['ago', 'last', 'before'], answer: 0, tip: 'Tiempo + ago: two days ago (hace dos días).', tags: ['sala-cine'] },
   { id: 'pt-02', topic: 'past-time', prompt: 'We went to the cinema ___ week.', options: ['last', 'the last', 'ago'], answer: 0, tip: 'Last week, sin "the".', tags: ['vestibulo'] },

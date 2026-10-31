@@ -36,6 +36,14 @@ export const FARM_QUESTIONS: Question[] = [
   { id: 'ddo-04', topic: 'do-does', kind: 'order', prompt: '¿Te gustan los animales?', options: ['Do', 'you', 'like', 'animals?'], answer: 0, tip: 'Do + you + like...?', tags: ['granero'] },
   { id: 'ddo-05', topic: 'do-does', kind: 'order', prompt: '¿Dónde vive el granjero?', options: ['Where', 'does', 'the', 'farmer', 'live?'], answer: 0, tip: 'Where + does + the farmer + live?', tags: ['casa-granja'] },
 
+  // ── Have / has con do / does (Bloque 4) ─────────────────
+  { id: 'dd-15', topic: 'do-does', prompt: '___ the farmer have a tractor?', options: ['Do', 'Does', 'Has'], answer: 1, tip: '"The farmer" es "he": Does the farmer have...?', tags: ['casa-granja'] },
+  { id: 'dd-16', topic: 'do-does', prompt: 'Do you have a horse? — No, I ___.', options: ["don't", "doesn't", 'am not'], answer: 0, tip: "Si la pregunta es con do, se responde con do: No, I don't.", tags: ['campo'] },
+  { id: 'dd-17', topic: 'do-does', prompt: 'A chicken ___ have teeth.', options: ["don't", "doesn't", "isn't"], answer: 1, tip: "\"A chicken\" es \"it\": doesn't have.", tags: ['corral'] },
+  { id: 'ddf-09', topic: 'do-does', kind: 'fix', prompt: 'Do she have a dog?', options: ['Does she has a dog?', 'Does she have a dog?', 'Do she has a dog?'], answer: 1, tip: 'Con she: Does + have (nunca "has" después de does).', tags: ['casa-granja'] },
+  { id: 'ddf-10', topic: 'do-does', kind: 'fix', prompt: "The farmer doesn't has a car!", options: ["The farmer don't have a car.", "The farmer not has a car.", "The farmer doesn't have a car."], answer: 2, tip: "Después de doesn't va have, no has.", tags: ['campo'] },
+  { id: 'ddo-06', topic: 'do-does', kind: 'order', prompt: '¿Tienes un perro?', options: ['Do', 'you', 'have', 'a', 'dog?'], answer: 0, tip: 'Do + you + have + ...?', tags: ['casa-granja'] },
+
   // ── Plurales (regulares e irregulares) ──────────────────
   { id: 'pl-01', topic: 'plurals', prompt: 'One sheep, two ___.', options: ['sheeps', 'sheep', 'sheepes'], answer: 1, tip: '"Sheep" no cambia en plural: one sheep, two sheep.', tags: ['corral'] },
   { id: 'pl-02', topic: 'plurals', prompt: 'One goose, three ___.', options: ['gooses', 'geese', 'goose'], answer: 1, tip: 'Plural irregular: goose → geese.', tags: ['campo'] },

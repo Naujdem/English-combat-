@@ -433,13 +433,21 @@ function canListen(q: Question) {
   return (q.kind ?? 'fill') === 'fill' && q.prompt.split('___').length === 2
 }
 
+/** Palabras que suenan igual: si dos opciones son de un mismo grupo, no se pueden distinguir de oído */
+const HOMOPHONES = [['its', "it's"], ['your', "you're"], ['there', 'their', "they're"], ['to', 'two', 'too'], ['for', 'four'], ['whose', "who's"], ['hear', 'here'], ['no', 'know'], ['right', 'write'], ['buy', 'by', 'bye']]
+
+function soundsAlike(q: Question) {
+  const opts = q.options.map((o) => o.toLowerCase().replace(/[’`´]/g, "'"))
+  return HOMOPHONES.some((g) => opts.filter((o) => g.includes(o)).length >= 2)
+}
+
 export function questionsFor(topics: TopicId[], kinds: QuestionKind[] = ['fill', 'fix', 'order', 'listen', 'write']): Question[] {
   const list: Question[] = []
   for (const q of QUESTIONS) {
     if (!topics.includes(q.topic)) continue
     if (q.audio && !canSpeak) continue
     if (kinds.includes(q.kind ?? 'fill')) list.push(q)
-    if (kinds.includes('listen') && canSpeak && canListen(q)) list.push(toListen(q))
+    if (kinds.includes('listen') && canSpeak && canListen(q) && !soundsAlike(q)) list.push(toListen(q))
     if (kinds.includes('write') && canWriteBlank(q)) list.push(toWriteBlank(q))
     if (kinds.includes('write') && q.kind === 'order') list.push(toWriteSentence(q))
     if (kinds.includes('speak') && canRecognize && (canListen(q) || q.kind === 'order') && !q.hint) list.push(toSpeak(q))
