@@ -6,7 +6,7 @@ import { TOPICS } from '../data/questions'
 import { SpriteBody } from '../components/Sprite'
 import { FriendsPanel } from '../components/FriendsPanel'
 import { btn, btnGhost, btnPrimary, Hearts, Overlay, Panel } from '../components/ui'
-import { ClockPieces, TimeClock } from '../components/TimeClock'
+import { ClockPieces, coreStolen, TimeClock } from '../components/TimeClock'
 import { Diary } from '../components/Diary'
 import { Flashcards } from '../components/Flashcards'
 import { BIKE_TO_FARM, BusRide, BUS_TO_BARRIO, BUS_TO_CITY, BUS_TO_OFFICE, CLOCK_TO_1996, CLOCK_TO_2056, SKYBUS_TO_CITY_2056, SKYBUS_TO_BARRIO_2056, SKYBUS_TO_FARM_2056, SKYBUS_TO_TOWER_2056, WALK_TO_OLD_CITY, WALK_TO_GREEN_1996, WALK_TO_FARM_1996, WALK_TO_CINEMA_1996, type BusTrip } from '../components/BusRide'
@@ -285,10 +285,10 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
               <p className="font-display text-xl text-gold">Reloj del tiempo</p>
               <button className={btnGhost} onClick={() => setClock(false)}>Cerrar</button>
             </div>
-            <div className="my-3 flex justify-center"><TimeClock pieces={state.relics} size={150} /></div>
+            <div className="my-3 flex justify-center"><TimeClock pieces={state.relics} size={150} coreless={coreStolen(state.defeated)} /></div>
             <p className="text-[15px] text-paper/85">
               El reloj del desconocido explotó y sus piezas se llevaron pedazos de tu voz. Quien toca una pieza se corrompe; tú no, porque es tu voz. Cada jefe tiene una.
-              {state.relics >= PRESENT_NODES.length ? ' ¡Lo tienes completo! Ya puedes ir tras el desconocido.' : ' Con el reloj completo podrás alcanzar al desconocido y recuperar toda tu voz.'}
+              {coreStolen(state.defeated) ? ' Tienes las cinco piezas y tus fragmentos de voz, pero el desconocido se llevó el núcleo: el centro del reloj quedó vacío.' : state.relics >= PRESENT_NODES.length ? ' ¡Lo tienes completo! Ya puedes ir tras el desconocido.' : ' Con el reloj completo podrás alcanzar al desconocido y recuperar toda tu voz.'}
             </p>
             <div className="mt-3"><ClockPieces pieces={state.relics} /></div>
           </Panel>
@@ -308,7 +308,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
               Palabras recuperadas: {state.recovered.length ? `${state.recovered.length} temas · la última: ${TOPICS[state.recovered[state.recovered.length - 1]].name}` : 'ninguna'}
             </p>
             <div className="mt-3 grid gap-2">
-              <MenuRow icon={<TimeClock pieces={state.relics} size={34} />} title="Reloj del tiempo" sub={`Piezas ${Math.min(state.relics, PRESENT_NODES.length)}/${PRESENT_NODES.length}${pastOpen ? ` · Pasado ${pastFragments}/${nodesOf('Pasado').length}` : ''}${futureOpen ? ` · Futuro ${futureFragments}/${nodesOf('Futuro').length}` : ''}`} onClick={() => go(() => setClock(true))} />
+              <MenuRow icon={<TimeClock pieces={state.relics} size={34} coreless={coreStolen(state.defeated)} />} title="Reloj del tiempo" sub={`Piezas ${Math.min(state.relics, PRESENT_NODES.length)}/${PRESENT_NODES.length}${pastOpen ? ` · Pasado ${pastFragments}/${nodesOf('Pasado').length}` : ''}${futureOpen ? ` · Futuro ${futureFragments}/${nodesOf('Futuro').length}` : ''}`} onClick={() => go(() => setClock(true))} />
               {exams.length > 0 && (
                 <div className={`rounded-xl border-2 px-3 py-2 ${pendingExam ? 'border-gold bg-gold/10' : 'border-line'}`}>
                   <p className="font-display text-[16px]">✍ Exámenes de época {pendingExam && <span className="ml-1 rounded-full bg-gold px-2 text-xs text-ink">nuevo</span>}</p>

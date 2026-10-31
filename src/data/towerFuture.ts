@@ -237,9 +237,10 @@ export const TOWER_FUTURE_ENEMIES: Record<string, EnemyDef> = {
     person: '???',
     kind: 'boss',
     standoff: true,
+    onlyTags: true,
     zone: 'cima-torre',
     hp: 12,
-    topics: ['was-were', 'past-regular', 'past-irregular', 'past-did', 'past-time', 'to-be', 'present-simple', 'do-does', 'can', 'have-got', 'present-continuous', 'going-to', 'going-to-neg', 'going-to-wh'],
+    topics: ['was-were', 'past-regular', 'past-irregular', 'past-did', 'past-time', 'to-be', 'present-simple', 'do-does', 'can', 'have-got', 'present-continuous', 'going-to', 'going-to-neg', 'going-to-wh', 'want-to'],
     kinds: ['fill', 'fix', 'order', 'listen', 'write'],
     tags: ['terraza'],
     phases: [
@@ -255,7 +256,7 @@ export const TOWER_FUTURE_ENEMIES: Record<string, EnemyDef> = {
       {
         hp: 4,
         title: 'The Future',
-        topics: ['going-to', 'going-to-neg', 'going-to-wh'],
+        topics: ['going-to', 'going-to-neg', 'going-to-wh', 'want-to'],
         kinds: ['fill', 'fix', 'order', 'listen', 'write'],
         tags: ['terraza'],
         line: { text: 'And the future? What are you going to do... without the clock?', es: '¿Y el futuro? ¿Qué vas a hacer... sin el reloj?' },
@@ -264,12 +265,11 @@ export const TOWER_FUTURE_ENEMIES: Record<string, EnemyDef> = {
     // Una sombra: abrigo oscuro, la cara en penumbra. Sin rasgos que lo identifiquen
     look: { shirt: '#2d2440', hair: '#15111f', skin: '#5b5070' },
     before: [
-      { text: 'Hi, hi... You want to keep the clock? Then show me your words.', es: 'Hola, hola... ¿Quieres quedarte con el reloj? Entonces muéstrame tus palabras.' },
       { text: 'The past, the present and the future. Answer me... if you can.', es: 'El pasado, el presente y el futuro. Respóndeme... si puedes.' },
     ],
     after: [
-      { text: 'Hmm... You are good. At the school you had no voice. And now... listen to you.', es: 'Mmm... Eres bueno. En la escuela no tenías voz. Y ahora... escúchate.' },
-      { text: 'You learned a lot. More than I thought. But a voice is not enough.', es: 'Aprendiste mucho. Más de lo que pensaba. Pero una voz no es suficiente.' },
+      { text: 'Not bad. You have learned a lot.', es: 'Nada mal. Has aprendido mucho.' },
+      { text: "But you still don't understand. This is not the end.", es: 'Pero todavía no entiendes. Esto no es el final.' },
     ],
     freed: { text: 'Hi, hi...', es: 'Hola, hola...' },
   },

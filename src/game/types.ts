@@ -94,6 +94,8 @@ export type EnemyDef = {
    * pieza, temas ni atuendo; si pierdes, vuelves a intentarlo ahí mismo con la vida llena.
    */
   standoff?: boolean
+  /** Solo pregunta de sus etiquetas (si hay preguntas con ellas): no mezcla preguntas de otros escenarios */
+  onlyTags?: boolean
   /** Fondo del combate cuando el enemigo no está en el mapa del escenario */
   zone?: Zone
   look: { shirt: string; hair: string; skin: string; accessory?: 'cap' | 'mortarboard' | 'glasses'; gender?: Gender }

@@ -6,7 +6,10 @@ const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } 
  * El reloj del tiempo: una pieza por cada jefe (una por escenario del mapa).
  * La pieza k pertenece a WORLD[k]. Las que faltan se ven vacías y punteadas.
  */
-export function TimeClock({ pieces, size = 96, highlight }: { pieces: number; size?: number; highlight?: number }) {
+/** El núcleo del reloj fue robado al final de A1 (el desconocido en la terraza) */
+export const coreStolen = (defeated: string[]) => defeated.includes('office-future-stranger')
+
+export function TimeClock({ pieces, size = 96, highlight, coreless }: { pieces: number; size?: number; highlight?: number; coreless?: boolean }) {
   const n = PRESENT_NODES.length
   const r = 40
   const wedge = (k: number) => {
@@ -18,7 +21,7 @@ export function TimeClock({ pieces, size = 96, highlight }: { pieces: number; si
   }
   const complete = pieces >= n
   return (
-    <svg viewBox="0 0 100 100" width={size} height={size} role="img" aria-label={`Reloj del tiempo: ${Math.min(pieces, n)} de ${n} piezas`}>
+    <svg viewBox="0 0 100 100" width={size} height={size} role="img" aria-label={`Reloj del tiempo: ${Math.min(pieces, n)} de ${n} piezas${coreless ? ', sin núcleo' : ''}`}>
       <circle cx="50" cy="50" r="47" fill="#1f1a14" stroke="#e0a526" strokeWidth="2.5" />
       {PRESENT_NODES.map((node, k) => {
         const owned = k < pieces
@@ -38,10 +41,17 @@ export function TimeClock({ pieces, size = 96, highlight }: { pieces: number; si
         const a = (h / 12) * Math.PI * 2
         return <circle key={h} cx={50 + 44 * Math.sin(a)} cy={50 - 44 * Math.cos(a)} r={h % 3 === 0 ? 1.8 : 0.9} fill="#e0a526" />
       })}
-      <circle cx="50" cy="50" r="12" fill="#2b241c" stroke="#e0a526" strokeWidth="1.5" />
-      <line x1="50" y1="50" x2="50" y2="41" stroke="#f4efe4" strokeWidth="2" strokeLinecap="round" />
-      <line x1="50" y1="50" x2="57" y2="50" stroke="#f4efe4" strokeWidth="1.6" strokeLinecap="round" />
-      <circle cx="50" cy="50" r="2" fill={complete ? '#e0a526' : '#f4efe4'} />
+      {coreless ? (
+        // Sin núcleo: el centro queda vacío (hueco oscuro con borde punteado, sin agujas)
+        <circle cx="50" cy="50" r="12" fill="#0d0b08" stroke="#8d7c68" strokeWidth="1.2" strokeDasharray="2.5 2" />
+      ) : (
+        <>
+          <circle cx="50" cy="50" r="12" fill="#2b241c" stroke="#e0a526" strokeWidth="1.5" />
+          <line x1="50" y1="50" x2="50" y2="41" stroke="#f4efe4" strokeWidth="2" strokeLinecap="round" />
+          <line x1="50" y1="50" x2="57" y2="50" stroke="#f4efe4" strokeWidth="1.6" strokeLinecap="round" />
+          <circle cx="50" cy="50" r="2" fill={complete ? '#e0a526' : '#f4efe4'} />
+        </>
+      )}
     </svg>
   )
 }

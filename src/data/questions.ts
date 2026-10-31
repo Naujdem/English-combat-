@@ -479,8 +479,13 @@ export function questionById(id: string): Question | undefined {
  * Devuelve una pregunta aleatoria evitando las ya usadas en este combate.
  * Las preguntas del cuaderno de errores salen con más frecuencia hasta que se acierten.
  */
-export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: string[], mistakes: string[] = [], tags: string[] = [], focus?: 'produce' | 'hear'): Question {
-  const pool = questionsFor(topics, kinds)
+export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: string[], mistakes: string[] = [], tags: string[] = [], focus?: 'produce' | 'hear', onlyTags = false): Question {
+  let pool = questionsFor(topics, kinds)
+  // Enemigos de una escena cerrada: solo preguntas con sus etiquetas, si las hay
+  if (onlyTags && tags.length) {
+    const own = pool.filter((q) => q.tags?.some((t) => tags.includes(t)))
+    if (own.length) pool = own
+  }
   const fresh = pool.filter((q) => !used.includes(q.id))
   let list = fresh.length > 0 ? fresh : pool
   // En combate: cada tanto se pide producir (escribir u ordenar) o escuchar de verdad

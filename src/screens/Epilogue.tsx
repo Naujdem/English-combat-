@@ -7,7 +7,7 @@ import { Tappable } from '../components/Words'
 import { btn, btnGhost, btnPrimary, Panel } from '../components/ui'
 import { FRIENDS, interestFriend } from '../data/friends'
 import { heroLook, SCENES } from '../game/helpers'
-import { TimeClock } from '../components/TimeClock'
+import { coreStolen, TimeClock } from '../components/TimeClock'
 import { PRESENT_NODES } from '../data/world'
 import { ENEMIES } from '../data/enemies'
 import type { Voice } from '../game/speech'
@@ -33,6 +33,8 @@ type Step = {
   home?: boolean
   /** Escena de vuelta en el presente (fondo de la oficina de hoy) */
   present?: boolean
+  /** Llegada a la entrada del hospital (fondo propio, cierre de A1) */
+  hospital?: boolean
   /** El protagonista está herido: 'down' en el suelo, 'up' de pie con dolor */
   hurt?: 'down' | 'up'
   /** Destello de energía en la escena */
@@ -985,9 +987,11 @@ function towerFutureSteps(s: GameState): Step[] {
     { who: 'leo', text: "Wait! Something is wrong with the elevator. I'll check it. You go ahead. I'll meet you upstairs.", es: '¡Esperen! Algo anda mal con el ascensor. Voy a revisarlo. Sigan ustedes. Nos vemos arriba.', cast },
     { who: 'narrator', text: `${iname} y tú suben por las escaleras hasta la terraza de la torre. Desde allá se ve todo: la escuela, la ciudad, Green Street, la granja... Ya no llueve.`, cast: alone },
     { who: 'narrator', text: 'Alguien está al borde de la terraza, mirando la ciudad. El abrigo oscuro. Esta vez no se esconde.', cast: alone },
-    { who: 'villain', text: 'Hi, hi... What a nice voice you have. And now it is complete.', es: 'Hola, hola... Qué bonita voz tienes. Y ahora está completa.', villain: true, cast: alone },
-    { who: 'villain', text: 'The present, the past, the future... You have got all your words now. The clock is ready... and so am I.', es: 'El presente, el pasado, el futuro... Ya tienes todas tus palabras. El reloj está listo... y yo también.', villain: true, cast: alone },
-    { who: 'villain', text: 'Give me the clock. Now.', es: 'Dame el reloj. Ahora.', villain: true, cast: alone, clock: true },
+    { who: 'villain', text: 'Hi, hi...', es: 'Hola, hola...', villain: true, cast: alone },
+    { who: 'villain', text: 'Look at you. You have got your voice back.', es: 'Mírate. Recuperaste tu voz.', villain: true, cast: alone },
+    { who: 'villain', text: 'You visited the past. You came back to the present. And now you are here, in the future.', es: 'Visitaste el pasado. Volviste al presente. Y ahora estás aquí, en el futuro.', villain: true, cast: alone },
+    { who: 'villain', text: 'Your little journey is over. But mine is just beginning.', es: 'Tu pequeño viaje terminó. Pero el mío apenas comienza.', villain: true, cast: alone },
+    { who: 'villain', text: 'Give me the clock.', es: 'Dame el reloj.', villain: true, cast: alone, clock: true },
     { who: 'narrator', text: `Guardas el reloj y das un paso atrás. ${iname} se pone a tu lado. El desconocido levanta la mano y el aire de la terraza empieza a temblar.`, villain: true, cast: alone },
   ]
 }
@@ -1003,10 +1007,8 @@ function towerAftermathSteps(s: GameState): Step[] {
   const hurt = s.hero.gender === 'female' ? 'herida' : 'herido'
   return [
     { who: 'narrator', text: 'El desconocido retrocede hasta el borde de la terraza. Respira despacio y te mira en silencio.', villain: true, cast: alone },
-    { who: 'villain', text: 'Your voice is strong now. Very strong. But I need that clock.', es: 'Tu voz es fuerte ahora. Muy fuerte. Pero necesito ese reloj.', villain: true, cast: alone },
     { who: 'narrator', text: 'De su mano sale una descarga de energía morada. Te golpea de lleno y caes al suelo. Un dolor fuerte te sube por la pierna.', villain: true, flash: true, hurt: 'down', cast: alone },
     { who: 'narrator', text: 'El desconocido se agacha, abre el reloj y saca su núcleo central: la pequeña pieza que brillaba en el centro. Las cinco piezas y tus fragmentos de voz se quedan contigo... pero el corazón del reloj, no.', villain: true, hurt: 'down', cast: alone },
-    { who: 'villain', text: 'Keep your words. They are yours. This... is mine.', es: 'Quédate con tus palabras. Son tuyas. Esto... es mío.', villain: true, hurt: 'down', cast: alone },
     { who: 'narrator', text: 'Una luz oscura lo envuelve y desaparece. Sin su núcleo, el reloj empieza a girar sin control. Todo da vueltas...', flash: true, hurt: 'down', cast: alone },
     { who: 'narrator', text: `Cuando abres los ojos, estás en el presente, en la oficina de Green Valley Company. La distorsión del tiempo los trajo de vuelta. Intentas moverte, pero la pierna no te responde. ${iname} corre hacia ti.`, present: true, hurt: 'down', cast: alone },
     { who: 'interest', text: 'Hey! Are you OK?', es: '¡Oye! ¿Estás bien?', present: true, hurt: 'down', cast: alone },
@@ -1016,6 +1018,7 @@ function towerAftermathSteps(s: GameState): Step[] {
     { who: 'narrator', text: 'Das un paso... y casi te caes.', present: true, hurt: 'up', cast: alone },
     { who: 'interest', text: 'We have to go to the hospital. Now.', es: 'Tenemos que ir al hospital. Ya.', present: true, hurt: 'up', cast: alone },
     { who: 'narrator', text: `${iname} y tú salen despacio a la calle, paso a paso, hacia el hospital.`, present: true, hurt: 'up', cast: alone },
+    { who: 'narrator', text: `Por fin llegan a la entrada del hospital. Las puertas de vidrio se abren. ${iname} te sostiene del brazo y entran juntos.`, present: true, hospital: true, hurt: 'up', cast: alone },
     { who: 'narrator', text: 'ENGLISH COMBAT · A1 COMPLETED', finale: true },
   ]
 }
@@ -1128,7 +1131,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
   const shown = s.cast ?? []
   const spots = shown.length === 3 ? [88, 150, 212] : [110, 190]
   // Fondo de la oficina de hoy: el final de la oficina, o una escena de vuelta en el presente
-  const officeBg = office || !!s.present
+  const officeBg = office || (!!s.present && !s.hospital)
   const towerBg = towerFuture && !s.present
 
   if (s.finale) {
@@ -1149,8 +1152,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 overflow-y-auto px-4 py-6">
-      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{towerFuture && s.present ? 'Presente · De vuelta del futuro' : towerFuture ? 'Futuro · La torre Green Valley' : farmFuture ? 'Futuro · La granja de 2056' : barrioFuture ? 'Futuro · Green Street, 60 años' : cityFuture ? 'Futuro · La ciudad de 2056' : schoolFuture ? 'Futuro · Greenfield Academy, 2056' : cinemaPast ? 'Pasado · El viejo cine (final del pasado de A1)' : farmPast ? 'Pasado · La granja de 1996' : barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
-      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : s.present ? 'La oficina, en el presente' : towerFuture ? 'La terraza de la torre, sobre la ciudad' : farmFuture ? 'La granja con robots bajo la lluvia' : barrioFuture ? 'La fiesta de Green Street en 2056' : cityFuture ? 'La plaza de 2056 con la fuente vieja' : schoolFuture ? 'La escuela de vidrio en 2056' : cinemaPast ? 'La sala del viejo cine, 1996' : farmPast ? 'La granja con molino, 1996' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
+      <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{towerFuture && s.hospital ? 'Presente · La entrada del hospital' : towerFuture && s.present ? 'Presente · De vuelta del futuro' : towerFuture ? 'Futuro · La torre Green Valley' : farmFuture ? 'Futuro · La granja de 2056' : barrioFuture ? 'Futuro · Green Street, 60 años' : cityFuture ? 'Futuro · La ciudad de 2056' : schoolFuture ? 'Futuro · Greenfield Academy, 2056' : cinemaPast ? 'Pasado · El viejo cine (final del pasado de A1)' : farmPast ? 'Pasado · La granja de 1996' : barrioPast ? 'Pasado · Green Street en 1996' : cityPast ? 'Pasado · La ciudad de 1996' : schoolPast ? 'Pasado · La escuela de 1996' : office ? 'Capítulo 5 · Final de A1' : farm ? 'Capítulo 4 · Final' : barrio ? 'Capítulo 3 · Final' : city ? 'Capítulo 2 · Final' : 'Capítulo 1 · Final'}</p>
+      <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label={s.home ? 'Tu casa' : s.hospital ? 'La entrada del hospital' : s.present ? 'La oficina, en el presente' : towerFuture ? 'La terraza de la torre, sobre la ciudad' : farmFuture ? 'La granja con robots bajo la lluvia' : barrioFuture ? 'La fiesta de Green Street en 2056' : cityFuture ? 'La plaza de 2056 con la fuente vieja' : schoolFuture ? 'La escuela de vidrio en 2056' : cinemaPast ? 'La sala del viejo cine, 1996' : farmPast ? 'La granja con molino, 1996' : barrioPast ? 'Green Street en construcción, 1996' : cityPast ? 'El mercado de la ciudad en 1996' : schoolPast ? 'La escuela de ladrillo en 1996' : office ? 'La oficina' : farm ? 'La granja' : barrio ? 'Fiesta en el parque de Green Street' : city ? 'Plaza de la ciudad' : 'Entrada de la escuela'}>
         {s.home ? (
           <g>
             <rect width="320" height="200" fill="#f1d9c0" />
@@ -1306,6 +1309,25 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
             <rect x="260" y="68" width="43" height="5" fill="#6b4423" />
             <path d="M272 98 q10 -24 20 0 z" fill="#c9a83a" stroke="#8a6210" strokeWidth="1.5" />
           </g>
+        ) : s.hospital ? (
+          <g>
+            <rect width="320" height="200" fill="#f2c79a" />
+            <rect width="320" height="70" fill="#e9a77a" />
+            <rect x="70" y="30" width="230" height="110" fill="#eef2f4" />
+            <rect x="70" y="30" width="230" height="8" fill="#c9d3da" />
+            {[0, 1, 2, 3].map((k) => <rect key={k} x={84 + k * 54} y="48" width="34" height="22" fill="#9fd3f0" stroke="#b8c4cc" strokeWidth="2" />)}
+            <rect x="150" y="12" width="96" height="20" rx="4" fill="#ffffff" stroke="#c0392b" strokeWidth="2" />
+            <rect x="158" y="17" width="10" height="10" fill="#c0392b" />
+            <rect x="161" y="14" width="4" height="16" fill="#c0392b" />
+            <rect x="156" y="20" width="14" height="4" fill="#c0392b" />
+            <text x="208" y="27" textAnchor="middle" fontSize="11" fontWeight="700" fill="#c0392b" fontFamily={FONT}>HOSPITAL</text>
+            <rect x="196" y="84" width="72" height="56" fill="#3a4a58" />
+            <rect x="198" y="86" width="33" height="54" fill="#cfe9f5" opacity="0.85" />
+            <rect x="233" y="86" width="33" height="54" fill="#cfe9f5" opacity="0.85" />
+            <rect x="186" y="78" width="92" height="6" fill="#c9d3da" />
+            <rect y="140" width="320" height="60" fill="#c8c2b6" />
+            <rect x="180" y="140" width="104" height="8" fill="#b0a99c" />
+          </g>
         ) : officeBg ? (
           <g>
             <rect width="320" height="200" fill="#e8ecf0" />
@@ -1445,7 +1467,7 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
       </svg>
       {s.clock && (
         <div className="anim-pop -mt-2 flex items-center justify-center gap-3">
-          <TimeClock pieces={Math.max(1, state.relics)} size={84} />
+          <TimeClock pieces={Math.max(1, state.relics)} size={84} coreless={coreStolen(state.defeated)} />
           <p className="text-sm text-paper/75">Reloj del tiempo: {Math.max(1, state.relics)} de {PRESENT_NODES.length} piezas{cinemaPast ? ' · 5 de 5 fragmentos de voz del pasado' : ''}</p>
         </div>
       )}

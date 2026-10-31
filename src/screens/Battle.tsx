@@ -16,7 +16,7 @@ import { SCENES, heroLook, perks, recordAnswer } from '../game/helpers'
 import { sfx } from '../game/sfx'
 import { SpriteBody } from '../components/Sprite'
 import { Bar, btnGhost, btnPrimary, Hearts, Panel } from '../components/ui'
-import { TimeClock } from '../components/TimeClock'
+import { coreStolen, TimeClock } from '../components/TimeClock'
 import { PRESENT_NODES } from '../data/world'
 import { useTeacher } from '../game/teacher'
 import { useDesktop } from '../game/device'
@@ -536,7 +536,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
     // La segunda pregunta busca una escucha real; una de cada tres pide escribir u ordenar
     const n = usedIds.length
     const focus = n === 1 ? 'hear' : n % 3 === 2 ? 'produce' : undefined
-    return pickQuestion(p.topics, p.kinds, usedIds, state.mistakes, p.tags ?? [], focus)
+    return pickQuestion(p.topics, p.kinds, usedIds, state.mistakes, p.tags ?? [], focus, enemy.onlyTags)
   }
   const [interlude, setInterlude] = useState<{ text: string; es?: string } | null>(null)
   const [q, setQ] = useState<Question>(() => pick(battle.enemyHp, []))
@@ -623,7 +623,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   function skipSpeak() {
     const p = poolAt(battle.enemyHp)
     const kinds = p.kinds.filter((k) => k !== 'speak')
-    setQ(pickQuestion(p.topics, kinds.length ? kinds : ['fill'], [...used, q.id], state.mistakes, p.tags ?? []))
+    setQ(pickQuestion(p.topics, kinds.length ? kinds : ['fill'], [...used, q.id], state.mistakes, p.tags ?? [], undefined, enemy.onlyTags))
     setHint(false)
   }
 
@@ -634,7 +634,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   function similar(missed: Question, usedIds: string[]): Question {
     const p = poolAt(state.battle?.enemyHp ?? battle.enemyHp)
     const kind = missed.kind ?? 'fill'
-    const alt = pickQuestion([missed.topic], [kind], [...usedIds, missed.id], [], p.tags ?? [])
+    const alt = pickQuestion([missed.topic], [kind], [...usedIds, missed.id], [], p.tags ?? [], undefined, enemy.onlyTags)
     const fresh = alt && alt.id !== missed.id && !usedIds.includes(alt.id) && (alt.kind ?? 'fill') === kind && !!alt.audio === !!missed.audio
     if (fresh) return alt
     if (kind === 'order' || kind === 'write' || kind === 'speak') return missed
@@ -1055,7 +1055,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
                 </div>
               ) : (
               <div className="my-1 flex items-center gap-3 rounded-xl bg-panel-2 p-2">
-                <TimeClock pieces={state.relics} size={72} highlight={state.relics - 1} />
+                <TimeClock pieces={state.relics} size={72} highlight={state.relics - 1} coreless={coreStolen(state.defeated)} />
                 <p className="text-[15px]">
                   <b className="text-gold">¡Pieza del reloj!</b> Tienes {Math.min(state.relics, PRESENT_NODES.length)} de {PRESENT_NODES.length}. {enemy.person} tenía esta pieza, y al tocarla se corrompió. Tú no te corrompes: es tu voz.
                 </p>
