@@ -69,7 +69,38 @@ export const FRIENDS: Record<string, FriendDef> = {
           { who: 'friend', text: 'We are friends now. See you after class!', es: 'Ya somos amigos. ¡Nos vemos después de clase!' },
         ],
       },
-      { requires: 'present-simple', level: 'A1', title: 'Rutina de juego', lines: [] },
+      {
+        requires: 'present-simple',
+        level: 'A1',
+        title: 'Rutina de juego',
+        lines: [
+          { who: 'friend', text: 'Hey! Your English is great now. I am proud of you!', es: '¡Oye! Tu inglés ya es genial. ¡Estoy orgulloso de ti!' },
+          {
+            who: 'friend',
+            text: 'Every day after school, I do my homework and then I play my RPG. And you? Tell me about your afternoons!',
+            es: 'Todos los días después de clase hago la tarea y luego juego mi RPG. ¿Y tú? ¡Cuéntame de tus tardes!',
+            options: [
+              { text: 'I always do my homework first. Then I play video games!', reply: 'Ha ha, the perfect routine!', es: 'Ja, ja, ¡la rutina perfecta!', effect: 2 },
+              { text: 'I usually watch TV and eat a snack.', reply: 'Nice! A relaxed afternoon.', es: '¡Bien! Una tarde tranquila.', effect: 1 },
+              { text: 'I plays video games every afternoon.', reply: 'Ha ha, with "I" there is no -s: I PLAY. But cool!', es: 'Ja, ja, con "I" no va -s: I PLAY. ¡Pero genial!', effect: 0 },
+              nonsense('My afternoon is a cat.', "A cat? Ha ha, I don't understand.", '¿Un gato? Ja, ja, no entiendo.'),
+            ],
+          },
+          {
+            who: 'friend',
+            text: 'My sister Emma plays the guitar every afternoon. It is very loud! I sometimes help her with her English homework, too. I love explaining grammar... Is that strange?',
+            es: 'Mi hermana Emma toca la guitarra todas las tardes. ¡Suena muy fuerte! A veces también la ayudo con su tarea de inglés. Me encanta explicar gramática... ¿Es raro?',
+            options: [
+              { text: 'No! You always help me. You are a great teacher!', reply: 'A teacher? Me? Ha ha... maybe one day.', es: '¿Un profesor? ¿Yo? Ja, ja... quizás algún día.', effect: 2 },
+              { text: 'A little strange... but it is cool.', reply: 'Ha ha, thanks... I think!', es: 'Ja, ja, gracias... ¡creo!', effect: 1 },
+              { text: 'No! You explains very well.', reply: 'Ha ha, with "you" there is no -s: you EXPLAIN. But thank you!', es: 'Ja, ja, con "you" no va -s: you EXPLAIN. ¡Pero gracias!', effect: 0 },
+              nonsense('The guitar eats grammar.', "The guitar? Ha ha, I don't understand.", '¿La guitarra? Ja, ja, no entiendo.'),
+            ],
+          },
+          { who: 'narrator', text: 'Leo smiles. For a second, he looks very serious.', es: 'Leo sonríe. Por un segundo, se ve muy serio.' },
+          { who: 'friend', text: "OK, no more grammar. Let's play!", es: 'Bueno, no más gramática. ¡A jugar!' },
+        ],
+      },
       { requires: 'past-simple', level: 'A2', title: 'La partida de ayer', lines: [] },
     ],
     casual: [
@@ -193,7 +224,36 @@ export const FRIENDS: Record<string, FriendDef> = {
           { who: 'friend', text: 'We are food friends now!', es: '¡Ahora somos amigos de comida!' },
         ],
       },
-      { requires: 'present-simple', level: 'A1', title: '¿Qué desayunas?', lines: [] },
+      {
+        requires: 'present-simple',
+        level: 'A1',
+        title: '¿Qué desayunas?',
+        lines: [
+          { who: 'friend', text: 'Good morning! Ugh... I hate getting up early.', es: '¡Buenos días! Uf... odio levantarme temprano.' },
+          {
+            who: 'friend',
+            text: 'I always wake up late, so my dad makes my breakfast. He loves cooking! Every morning he makes arepas with cheese. And you? Tell me about your breakfast!',
+            es: 'Siempre me despierto tarde, así que mi papá me hace el desayuno. ¡Le encanta cocinar! Todas las mañanas hace arepas con queso. ¿Y tú? ¡Cuéntame de tu desayuno!',
+            options: [
+              { text: 'I usually eat eggs and bread, and I drink hot chocolate.', reply: 'Hot chocolate! The best breakfast.', es: '¡Chocolate caliente! El mejor desayuno.', effect: 2 },
+              { text: 'I sometimes eat fruit. I am never very hungry in the morning.', reply: 'Never hungry? Ha ha, you are not like me!', es: '¿Nunca tienes hambre? Ja, ja, ¡no eres como yo!', effect: 1 },
+              { text: 'My mom make eggs every day.', reply: 'Ha ha, "my mom MAKES". With she, add -s! Yum!', es: 'Ja, ja, "my mom MAKES". Con she, ¡agrega -s! ¡Qué rico!', effect: 0 },
+              nonsense('My breakfast plays the guitar.', "Your breakfast? Ha ha, I don't understand.", '¿Tu desayuno? Ja, ja, no entiendo.'),
+            ],
+          },
+          {
+            who: 'friend',
+            text: 'My secret: I eat my breakfast on the bus. Every day! And I always have an extra sandwich in my bag. Here, take it!',
+            es: 'Mi secreto: me como el desayuno en el bus. ¡Todos los días! Y siempre tengo un sándwich extra en la mochila. ¡Toma, es para ti!',
+            options: [
+              { text: 'Thank you, Maya! You are always so kind.', reply: 'Ha ha! Food friends forever!', es: '¡Ja, ja! ¡Amigos de comida para siempre!', effect: 2 },
+              { text: 'Thanks! I love your sandwiches.', reply: 'I know! Everybody loves them.', es: '¡Lo sé! A todo el mundo le encantan.', effect: 1 },
+              { text: 'Thanks! You makes the best sandwiches.', reply: 'Ha ha, "you MAKE", no -s! But it\'s true.', es: 'Ja, ja, "you MAKE", ¡sin -s! Pero es verdad.', effect: 0 },
+              nonsense('The sandwich is my teacher.', "Your teacher? Ha ha, I don't understand.", '¿Tu profesor? Ja, ja, no entiendo.'),
+            ],
+          },
+        ],
+      },
     ],
     casual: [
       {
@@ -245,6 +305,7 @@ export const FRIENDS: Record<string, FriendDef> = {
 export function interestFriend(interest: Interest, heroName = ''): FriendDef {
   const he = interest.gender === 'female' ? 'She' : 'He'
   const his = interest.gender === 'female' ? 'Her' : 'His'
+  const hisLow = his.toLowerCase()
   const romance = interest.mode === 'romance'
   const n = interest.name
   return {
@@ -302,7 +363,61 @@ export function interestFriend(interest: Interest, heroName = ''): FriendDef {
           },
         ],
       },
-      { requires: 'present-simple', level: 'A1', title: romance ? 'Gustos en común' : 'Compañeros de estudio', lines: [] },
+      {
+        requires: 'present-simple',
+        level: 'A1',
+        title: romance ? 'Gustos en común' : 'Compañeros de estudio',
+        // No depende del lugar: este momento puede salir en cualquier mapa y época
+        lines: [
+          { who: 'narrator', text: `${n} always has a book in ${hisLow} bag. Today it is a book about the stars.`, es: `${n} siempre lleva un libro en la mochila. Hoy es un libro sobre las estrellas.` },
+          {
+            who: 'friend',
+            text: romance
+              ? 'Oh, hi! I read every afternoon. I love reading about the stars. Every night I look at the sky from my window. What are your hobbies?'
+              : 'Oh, hi! I study every afternoon. I always read about the stars. What are your hobbies?',
+            es: romance
+              ? '¡Oh, hola! Todas las tardes me pongo a leer. Me encanta leer sobre las estrellas. Todas las noches miro el cielo desde mi ventana. ¿Cuáles son tus pasatiempos?'
+              : '¡Oh, hola! Estudio todas las tardes. Siempre leo sobre las estrellas. ¿Cuáles son tus pasatiempos?',
+            options: [
+              {
+                text: 'I love reading too! I usually read at night.',
+                reply: romance ? 'Really? We have a lot in common...' : 'Great! A reading club of two!',
+                es: romance ? '¿En serio? Tenemos mucho en común...' : '¡Genial! ¡Un club de lectura de dos!',
+                effect: 2,
+              },
+              { text: 'I like playing video games with Leo.', reply: 'Ha ha, Leo plays games all day!', es: 'Ja, ja, ¡Leo juega todo el día!', effect: 1 },
+              { text: 'I loves the stars too!', reply: 'Ha ha, with "I" it\'s "I LOVE". But I\'m happy!', es: 'Ja, ja, con "I" es "I LOVE". ¡Pero me alegra!', effect: 0 },
+              nonsense('The window reads me.', "The window? I don't understand...", '¿La ventana? No entiendo...'),
+            ],
+          },
+          {
+            who: 'friend',
+            text: romance ? 'Sometimes I look at the stars and I think about you... I mean, about the sky!' : 'You are a good study partner. You always ask good questions.',
+            es: romance ? 'A veces miro las estrellas y pienso en ti... ¡digo, en el cielo!' : 'Es genial estudiar contigo. Siempre haces buenas preguntas.',
+          },
+          {
+            who: 'friend',
+            text: romance ? 'Can we read together every Friday?' : 'Can we study together every Friday?',
+            es: romance ? '¿Podemos leer juntos todos los viernes?' : '¿Podemos estudiar juntos todos los viernes?',
+            options: [
+              {
+                text: 'Yes! I love that idea.',
+                reply: romance ? "Then it's our Friday plan!" : 'Great! Study partners!',
+                es: romance ? '¡Entonces es nuestro plan de los viernes!' : '¡Genial! ¡Colegas de estudio!',
+                effect: 2,
+              },
+              { text: 'Maybe. I usually help Maya on Fridays.', reply: 'Oh... OK. Maybe on Saturdays?', es: 'Oh... bueno. ¿Quizás los sábados?', effect: 1 },
+              romance
+                ? { text: 'Yes, we reads together!', reply: 'Ha ha, "we READ". Yes, we read together!', es: 'Ja, ja, "we READ". ¡Sí, leemos juntos!', effect: 0 }
+                : { text: 'Yes, we studies together!', reply: 'Ha ha, "we STUDY". Yes, we study together!', es: 'Ja, ja, "we STUDY". ¡Sí, estudiamos juntos!', effect: 0 },
+              nonsense('Friday is a pizza.', "A pizza? Ha ha, I don't understand.", '¿Una pizza? Ja, ja, no entiendo.'),
+            ],
+          },
+          romance
+            ? { who: 'narrator', text: `${his} cheeks are red. Your cheeks are red too.`, es: 'Tiene las mejillas rojas. Tú también.' }
+            : { who: 'friend', text: 'See you on Friday!', es: '¡Nos vemos el viernes!' },
+        ],
+      },
       { requires: 'future', level: 'B1', title: romance ? 'Planes juntos' : 'Planes de futuro', lines: [] },
     ],
     casual: [

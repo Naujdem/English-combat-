@@ -72,6 +72,8 @@ i'm=yo soy, yo estoy;you're=tú eres, tú estás;he's=él es, él está;she's=el
 don't=no (no hagas);doesn't=no (con he/she/it);didn't=no (en pasado);won't=no va a;can't=no puede;haven't=no tiene (have got);hasn't=no tiene (has got);got=(have got = tener)
 clouds=nubes;cloud=nube;tractor=tractor;roof=techo;solar=solar;wind=viento;turbine=turbina (wind turbine = molino eólico);lick=lamer;ninety=noventa;porch=porche;warm=cálido, tibio;exactly=exactamente;tower=torre;chick=pollito;battery=batería;drone=dron;forever=para siempre;together=juntos;loud=ruidoso, fuerte;begin=empezar;end=terminar, final;happen=pasar, suceder;
 fault=culpa;once=una vez (for once = por una vez);breathe=respirar;
+wake=despertarse (wake up);snack=algo de comer, merienda;fruit=fruta;chocolate=chocolate (hot chocolate = chocolate caliente);arepa=arepa;extra=extra, de más;relaxed=tranquilo, relajado;
+grammar=gramática;explain=explicar;serious=serio;club=club;common=común (in common = en común);cheek=mejilla;ugh=uf (queja);
 opposite=enfrente de;flowers=flores;born=nacer (are born = nacen);other=otro;side=lado;
 weekend=fin de semana;lobby=recepción, vestíbulo;memory=memoria;politely=con cortesía;panels=paneles;
 want=querer;wants=quiere;wanted=quería, quise (want);would=(would like = me gustaría);like=gustar, como;elevator=ascensor;speech=discurso;director=director, directora;retire=jubilarse;retired=jubilado;goodbye=adiós;floors=pisos;floor=piso;tower=torre;suit=traje;chair=silla;habits=costumbres;whoever=quienquiera que;especially=especialmente;nervous=nervioso;popcorn=palomitas;
