@@ -12,7 +12,7 @@ export const TERRAZA_QUESTIONS: Question[] = [
   // ── Fase 1 · The Past: was/were, pasado regular e irregular, did/didn't, ago ──
   { id: 'tz-p01', topic: 'was-were', prompt: 'Last night the man in the dark coat ___ on this terrace.', options: ['was', 'were', 'is'], answer: 0, tip: 'Last night = pasado. Con he (the man): was.', tags: ['terraza'] },
   { id: 'tz-p02', topic: 'was-were', prompt: 'In 1996 we ___ in the old cinema.', options: ['were', 'was', 'are'], answer: 0, tip: 'In 1996 = pasado. Con we: were.', tags: ['terraza'] },
-  { id: 'tz-p03', topic: 'past-did', prompt: '___ you follow me to the farm?', options: ['Did', 'Do', 'Were'], answer: 0, tip: 'Pregunta en pasado: Did + sujeto + verbo simple (follow).', tags: ['terraza'] },
+  { id: 'tz-p03', topic: 'past-did', prompt: '___ you follow me to the farm yesterday?', options: ['Did', 'Do', 'Were'], answer: 0, tip: 'Pregunta en pasado: Did + sujeto + verbo simple (follow).', tags: ['terraza'] },
   { id: 'tz-p04', topic: 'past-did', prompt: "No, I ___ follow you. You followed me!", options: ["didn't", "don't", "wasn't"], answer: 0, tip: "Negativo en pasado: didn't + verbo simple.", tags: ['terraza'] },
   { id: 'tz-p05', topic: 'past-irregular', prompt: 'Yesterday we ___ to the old farm.', options: ['went', 'goed', 'go'], answer: 0, tip: 'go es irregular: el pasado es went.', tags: ['terraza'] },
   { id: 'tz-p06', topic: 'past-time', prompt: 'I came to this tower two days ___.', options: ['ago', 'before', 'last'], answer: 0, tip: 'Tiempo + ago: two days ago (hace dos días).', tags: ['terraza'] },

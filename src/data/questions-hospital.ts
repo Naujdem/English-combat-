@@ -25,7 +25,7 @@ export const HOSPITAL_QUESTIONS: Question[] = [
   // ── Corregir al enemigo ──
   { id: 'hs-f1', topic: 'should-must', kind: 'fix', prompt: 'You must to rest now!', options: ['You must rest now!', 'You musts rest now!', 'You must resting now!'], answer: 0, tip: 'Después de must no va to: You must rest.', tags: T },
   { id: 'hs-f2', topic: 'should-must', kind: 'fix', prompt: 'You should drinks more water.', options: ['You should drink more water.', 'You should to drink more water.', 'You shoulds drink more water.'], answer: 0, tip: 'Después de should el verbo va solo, sin -s: should drink.', tags: T },
-  { id: 'hs-f3', topic: 'should-must', kind: 'fix', prompt: 'The doctor have to work tonight.', options: ['The doctor has to work tonight.', 'The doctor have work tonight.', 'The doctor has work tonight.'], answer: 0, tip: 'The doctor (she / he) → has to + verbo.', tags: T },
+  { id: 'hs-f3', topic: 'should-must', kind: 'fix', prompt: 'The doctor have to work tonight.', options: ['The doctor has to work tonight.', 'The doctor have work tonight.', 'The doctor has to works tonight.'], answer: 0, tip: 'The doctor (she / he) → has to + verbo.', tags: T },
   { id: 'hs-f4', topic: 'should-must', kind: 'fix', prompt: 'Does I have to stay here?', options: ['Do I have to stay here?', 'Do I has to stay here?', 'Must I to stay here?'], answer: 0, tip: 'Con I la pregunta es con Do: Do I have to...?', tags: T },
   { id: 'hs-f5', topic: 'should-must', kind: 'fix', prompt: "You don't should walk fast with that leg.", options: ["You shouldn't walk fast with that leg.", "You should not to walk fast with that leg.", "You doesn't should walk fast with that leg."], answer: 0, tip: "Negativo de should: shouldn't (sin don't).", tags: T },
 
