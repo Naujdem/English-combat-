@@ -14,6 +14,7 @@ import { A2_CITY_QUESTIONS } from './questions-a2-city'
 import { A2_WORKSHOP_QUESTIONS } from './questions-a2-workshop'
 import { A2_LIBRARY_QUESTIONS } from './questions-a2-library'
 import { A2_FARM_PAST_QUESTIONS } from './a2FarmPast'
+import { A2_FARM_QUESTIONS } from './questions-a2-farm'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -346,6 +347,7 @@ export const QUESTIONS: Question[] = [
   ...A2_WORKSHOP_QUESTIONS,
   ...A2_LIBRARY_QUESTIONS,
   ...A2_FARM_PAST_QUESTIONS,
+  ...A2_FARM_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
