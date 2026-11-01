@@ -8,6 +8,7 @@ import { EXTRA_QUESTIONS } from './questions-extra'
 import { PAST_QUESTIONS } from './questions-past'
 import { FUTURE_QUESTIONS } from './questions-future'
 import { LISTEN_QUESTIONS } from './questions-listen'
+import { TERRAZA_QUESTIONS } from './questions-terraza'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -333,6 +334,8 @@ export const QUESTIONS: Question[] = [
   // ── A1 en pasado
   ...PAST_QUESTIONS,
   ...FUTURE_QUESTIONS,
+  // ── Final de A1: el desconocido en la terraza
+  ...TERRAZA_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -476,8 +479,13 @@ export function questionById(id: string): Question | undefined {
  * Devuelve una pregunta aleatoria evitando las ya usadas en este combate.
  * Las preguntas del cuaderno de errores salen con más frecuencia hasta que se acierten.
  */
-export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: string[], mistakes: string[] = [], tags: string[] = [], focus?: 'produce' | 'hear'): Question {
-  const pool = questionsFor(topics, kinds)
+export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: string[], mistakes: string[] = [], tags: string[] = [], focus?: 'produce' | 'hear', onlyTags = false): Question {
+  let pool = questionsFor(topics, kinds)
+  // Enemigos de una escena cerrada: solo preguntas con sus etiquetas, si las hay
+  if (onlyTags && tags.length) {
+    const own = pool.filter((q) => q.tags?.some((t) => tags.includes(t)))
+    if (own.length) pool = own
+  }
   const fresh = pool.filter((q) => !used.includes(q.id))
   let list = fresh.length > 0 ? fresh : pool
   // En combate: cada tanto se pide producir (escribir u ordenar) o escuchar de verdad

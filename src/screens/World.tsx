@@ -6,7 +6,7 @@ import { TOPICS } from '../data/questions'
 import { SpriteBody } from '../components/Sprite'
 import { FriendsPanel } from '../components/FriendsPanel'
 import { btn, btnGhost, btnPrimary, Hearts, Overlay, Panel } from '../components/ui'
-import { ClockPieces, TimeClock } from '../components/TimeClock'
+import { ClockPieces, coreStolen, TimeClock } from '../components/TimeClock'
 import { Diary } from '../components/Diary'
 import { Flashcards } from '../components/Flashcards'
 import { BIKE_TO_FARM, BusRide, BUS_TO_BARRIO, BUS_TO_CITY, BUS_TO_OFFICE, CLOCK_TO_1996, CLOCK_TO_2056, SKYBUS_TO_CITY_2056, SKYBUS_TO_BARRIO_2056, SKYBUS_TO_FARM_2056, SKYBUS_TO_TOWER_2056, WALK_TO_OLD_CITY, WALK_TO_GREEN_1996, WALK_TO_FARM_1996, WALK_TO_CINEMA_1996, type BusTrip } from '../components/BusRide'
@@ -18,13 +18,17 @@ import { setSound, soundOn } from '../game/sfx'
 import { autoVoiceOn, setAutoVoice } from '../game/speech'
 import { DIARY, pageNotified, pageSeen, unlockedPages } from '../data/diary'
 import { dueCards } from '../game/cards'
-import type { Update } from '../game/store'
-import { heroLook } from '../game/helpers'
+import { isA2Unlocked, type Update } from '../game/store'
+import { heroLook, SCENES } from '../game/helpers'
 import { interestFriend } from '../data/friends'
+import { clockCoreMissing } from '../data/a2Hospital'
 import { useDesktop } from '../game/device'
 import { Achievements } from '../components/Achievements'
 import { ACHIEVEMENTS, achieved } from '../data/collection'
 import { EraExam, EXAMS, type EraId } from '../components/EraExam'
+
+/** Primera escena de A2 (no está en el mapa del mundo para no cambiar el reloj ni los conteos de A1) */
+const A2_START = 'a2-hospital'
 
 const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } as const
 
@@ -32,7 +36,9 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
     state.defeated.includes('office-future-boss')
-      ? '¡Terminaste A1! Tu voz está completa: presente, pasado y futuro. A2 se construirá pronto; mientras tanto, puedes repasar y visitar cualquier lugar.'
+      ? coreStolen(state.defeated)
+        ? '¡Terminaste A1! Tus cinco piezas y tus fragmentos de voz siguen contigo, pero el desconocido se llevó el núcleo del reloj. Tu historia sigue en A2, en el hospital; también puedes repasar y visitar cualquier lugar de A1.'
+        : '¡Terminaste A1! Tu voz está completa: presente, pasado y futuro. A2 empieza en el hospital; también puedes repasar y visitar cualquier lugar de A1.'
       : state.defeated.includes('farm-future-boss')
       ? 'Recuperaste cuatro fragmentos de voz del futuro. Toma el Sky Bus hasta la torre Green Valley: el último lugar de A1.'
       : state.defeated.includes('barrio-future-boss')
@@ -75,6 +81,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const [sound, setSoundState] = useState(soundOn())
   const [voice, setVoiceState] = useState(autoVoiceOn())
   const [settings, setSettings] = useState(false)
+  const coreMissing = clockCoreMissing(state) || coreStolen(state.defeated)
   const hasDiary = DIARY.some((c) => state.opened.includes(c.unlock))
   const dueCount = dueCards(state.cards).length
 
@@ -208,6 +215,11 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       </Panel>
 
       <button className={btnPrimary} onClick={() => tap(here)}>Entrar a {here.name}</button>
+      {isA2Unlocked(state) && SCENES[A2_START] && (
+        <button className={btnPrimary} onClick={() => onEnter(A2_START)}>
+          {state.sceneId === A2_START ? 'Volver al hospital (A2)' : 'Ir al hospital (A2)'}
+        </button>
+      )}
       </div>
       </div>
 
@@ -285,10 +297,10 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
               <p className="font-display text-xl text-gold">Reloj del tiempo</p>
               <button className={btnGhost} onClick={() => setClock(false)}>Cerrar</button>
             </div>
-            <div className="my-3 flex justify-center"><TimeClock pieces={state.relics} size={150} /></div>
+            <div className="my-3 flex justify-center"><TimeClock pieces={state.relics} size={150} coreMissing={coreMissing} /></div>
             <p className="text-[15px] text-paper/85">
               El reloj del desconocido explotó y sus piezas se llevaron pedazos de tu voz. Quien toca una pieza se corrompe; tú no, porque es tu voz. Cada jefe tiene una.
-              {state.relics >= PRESENT_NODES.length ? ' ¡Lo tienes completo! Ya puedes ir tras el desconocido.' : ' Con el reloj completo podrás alcanzar al desconocido y recuperar toda tu voz.'}
+              {coreMissing ? ' Las cinco piezas siguen en su lugar... pero el centro del reloj está vacío.' : state.relics >= PRESENT_NODES.length ? ' ¡Lo tienes completo! Ya puedes ir tras el desconocido.' : ' Con el reloj completo podrás alcanzar al desconocido y recuperar toda tu voz.'}
             </p>
             <div className="mt-3"><ClockPieces pieces={state.relics} /></div>
           </Panel>
@@ -308,7 +320,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
               Palabras recuperadas: {state.recovered.length ? `${state.recovered.length} temas · la última: ${TOPICS[state.recovered[state.recovered.length - 1]].name}` : 'ninguna'}
             </p>
             <div className="mt-3 grid gap-2">
-              <MenuRow icon={<TimeClock pieces={state.relics} size={34} />} title="Reloj del tiempo" sub={`Piezas ${Math.min(state.relics, PRESENT_NODES.length)}/${PRESENT_NODES.length}${pastOpen ? ` · Pasado ${pastFragments}/${nodesOf('Pasado').length}` : ''}${futureOpen ? ` · Futuro ${futureFragments}/${nodesOf('Futuro').length}` : ''}`} onClick={() => go(() => setClock(true))} />
+              <MenuRow icon={<TimeClock pieces={state.relics} size={34} coreMissing={coreMissing} />} title="Reloj del tiempo" sub={`Piezas ${Math.min(state.relics, PRESENT_NODES.length)}/${PRESENT_NODES.length}${pastOpen ? ` · Pasado ${pastFragments}/${nodesOf('Pasado').length}` : ''}${futureOpen ? ` · Futuro ${futureFragments}/${nodesOf('Futuro').length}` : ''}`} onClick={() => go(() => setClock(true))} />
               {exams.length > 0 && (
                 <div className={`rounded-xl border-2 px-3 py-2 ${pendingExam ? 'border-gold bg-gold/10' : 'border-line'}`}>
                   <p className="font-display text-[16px]">✍ Exámenes de época {pendingExam && <span className="ml-1 rounded-full bg-gold px-2 text-xs text-ink">nuevo</span>}</p>

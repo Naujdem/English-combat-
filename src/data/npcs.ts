@@ -6,7 +6,11 @@ type Line = { text: string; es: string }
  * Personajes que no pelean. Los que tienen `lines` dicen una frase distinta cada vez
  * que les hablas (estudiantes de ambiente). Otros abren una actividad.
  */
-export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: Line; lines?: Line[] }> = {
+/**
+ * interest: el personaje es la persona especial (nombre y aspecto elegidos por el jugador).
+ * after: el personaje solo aparece en el mapa cuando este id está en `opened`.
+ */
+export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: Line; lines?: Line[]; interest?: boolean; after?: string }> = {
   secretary: {
     name: 'Mrs. Lopez',
     look: { shirt: '#6a8caf', hair: '#3b2a1a', skin: '#e0ac69', gender: 'female', accessory: 'glasses' },
@@ -357,6 +361,30 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
       { text: 'Diana and I drink coffee here every morning. Tomorrow she is going to have a lot of free time!', es: 'Diana y yo tomamos café aquí todas las mañanas. ¡Mañana va a tener mucho tiempo libre!' },
       { text: "Would you like a coffee? The robot makes it... but I bring it. Ha ha!", es: '¿Quieres un café? El robot lo prepara... pero yo lo traigo. ¡Ja, ja!' },
     ],
+  },
+  // ── A2-01, hospital. Nombres y apariencias provisionales (no canónicos) ──
+  'a2-doctor': {
+    name: 'The doctor',
+    look: { shirt: '#eef3f6', hair: '#3b2a1a', skin: '#c68642', gender: 'female', accessory: 'glasses' },
+    doneLine: { text: 'Rest a little, and drink some water. See you later!', es: 'Descansa un poco y toma algo de agua. ¡Hasta luego!' },
+  },
+  'a2-friend': {
+    name: 'Your friend',
+    look: { shirt: '#3b9d5d', hair: '#2b1d12', skin: '#e0ac69' },
+    doneLine: { text: "Take it easy, OK? I'm right here.", es: 'Tómalo con calma, ¿sí? Aquí estoy.' },
+  },
+  // A2-02: la persona especial (nombre y aspecto del jugador). Aparece cuando vuelve al hospital
+  'a2-interest': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    after: 'a2-02-core',
+    doneLine: { text: 'Rest a little, {name}. I am right here.', es: 'Descansa un poco, {name}. Aquí estoy.' },
+  },
+  'a2-receptionist': {
+    name: 'The receptionist',
+    look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },
+    doneLine: { text: 'Take care, and have a nice day!', es: '¡Cuídate y que tengas un buen día!' },
   },
 }
 

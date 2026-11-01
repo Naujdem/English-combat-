@@ -23,6 +23,9 @@ import { Notebook } from '../components/Notebook'
 import { LostAsk } from '../components/LostAsk'
 import { LOST_INTRO, LOST_ITEMS } from '../data/lostFound'
 import { NPCS } from '../data/npcs'
+import { fillNames } from '../data/diary'
+import { interestFriend } from '../data/friends'
+import { OneMoreRound } from '../components/OneMoreRound'
 import { Registration } from '../components/Registration'
 import { WhereIsIt } from '../components/WhereIsIt'
 import { sfx } from '../game/sfx'
@@ -82,6 +85,14 @@ type Talk = {
 }
 
 export function Explore({ state, update, onBattle, onWorld }: { state: GameState; update: Update; onBattle: (enemyId: string) => void; onWorld: () => void }) {
+  // Textos de las tareas con {name} / {iname}, y personajes con el nombre y el aspecto que eligió el jugador (la persona especial)
+  const fill = (t: string) => fillNames(t, state.hero.name, state.interest.name)
+  const npcOf = (id: string) => {
+    const n = NPCS[id]
+    if (!n?.interest) return n
+    const f = interestFriend(state.interest)
+    return { ...n, name: f.name, look: f.look }
+  }
   const scene = SCENES[state.sceneId]
   const [msg, setMsg] = useState<Msg | null>(null)
   const [talk, setTalk] = useState<Talk | null>(null)
@@ -101,6 +112,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   )
   const firstVisit = !state.seenLesson.includes(scene.id)
   const doorOpen = bossDoorOpen(state, scene)
+  const hasBoss = scene.entities.some((e) => e.type === 'boss')
   const keys = state.keys[scene.id] ?? 0
   const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | 'sports' | 'timetable' | 'where' | 'coach' | 'directions' | 'cafe' | 'sorry' | null>(null)
   const boardNext = nextSession(state.opened, state.defeated)
@@ -136,6 +148,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       scene.entities.filter((e) => {
         // Los enemigos vencidos se quedan en el mapa como estudiantes normales
         if (e.type === 'chest') return !state.opened.includes(e.id)
+        // Personajes que solo aparecen después de cierto momento de la historia
+        if (e.type === 'npc' && NPCS[e.id]?.after && !state.opened.includes(NPCS[e.id].after!)) return false
         // Los esbirros que vinieron del presente vuelven a su tiempo al ser vencidos
         if (e.type === 'enemy' && ENEMIES[e.id]?.echo && state.defeated.includes(e.id)) return false
         return true
@@ -156,7 +170,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const interact = useCallback(
     (e: Entity) => {
       if (e.type === 'npc') {
-        const npc = NPCS[e.id]
+        const npc = npcOf(e.id)
         const pend = taskOf(e.id, state.opened)
         if (pend && !pend.blocked) {
           const t = pend.task
@@ -172,7 +186,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         }
         if (pend?.blocked && pend.task.requires?.text) {
           const req = pend.task.requires
-          setMsg({ text: req.text, es: req.es, sub: req.sub, tone: 'warn' })
+          setMsg({ text: fill(req.text), es: fill(req.es), sub: fill(req.sub), tone: 'warn' })
           return
         }
         if (e.id === 'secretary' && !state.opened.includes('school-registration')) {
@@ -211,7 +225,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           const line = npc.lines[k % npc.lines.length]
           setMsg({ text: `${npc.name}: "${line.text}"`, es: line.es, say: line.text })
         } else if (npc.doneLine) {
-          setMsg({ text: `${npc.name}: "${npc.doneLine.text}"`, es: npc.doneLine.es, say: npc.doneLine.text })
+          setMsg({ text: `${npc.name}: "${fill(npc.doneLine.text)}"`, es: fill(npc.doneLine.es), say: fill(npc.doneLine.text) })
         }
         return
       }
@@ -424,6 +438,12 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         }
         return
       }
+      // Objetos examinables de la escena (por posición); si no hay, se muestra el vocabulario de siempre
+      const ex = scene.examine?.[`${nx},${ny}`]
+      if (ex) {
+        setMsg({ ...ex })
+        return
+      }
       const v = VOCAB[c]
       if (v && c !== '#') setMsg({ text: `${v.en[0].toUpperCase()}${v.en.slice(1)}`, sub: `= ${v.es}`, say: v.en })
     },
@@ -551,7 +571,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    <SpriteBody look={NPCS[e.id].look} />
+                    <SpriteBody look={npcOf(e.id).look} />
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -607,8 +627,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       </div>
 
       <div className={desktop ? 'flex h-full w-80 shrink-0 flex-col gap-3' : 'contents'}>
-      <div className={`flex flex-wrap items-center gap-1.5 ${desktop ? 'text-xs' : 'text-[11px]'}`} aria-label="Objetivos para el jefe">
-        <span className="font-semibold uppercase tracking-wide text-paper/50">Para el jefe:</span>
+      <div className={`flex flex-wrap items-center gap-1.5 ${desktop ? 'text-xs' : 'text-[11px]'}`} aria-label={hasBoss ? 'Objetivos para el jefe' : 'Objetivos'}>
+        <span className="font-semibold uppercase tracking-wide text-paper/50">{hasBoss ? 'Para el jefe:' : 'Objetivos:'}</span>
         {scene.chips(state).map((c) => (
           <span key={c.label} className={`rounded-full px-2 py-0.5 ${c.done ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
             {c.done && !/\d/.test(c.label) ? '✓ ' : ''}{c.label}
@@ -959,7 +979,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 items: t.shield ? { ...s.items, shield: Math.min(2, s.items.shield + 1) } : s.items,
                 outfits: t.outfit && !s.outfits.includes(t.outfit) ? [...s.outfits, t.outfit] : s.outfits,
               }))
-              setMsg({ text: t.reward.text, es: t.reward.es, sub: t.reward.sub, say: t.reward.say, tone: 'good' })
+              setMsg({ text: fill(t.reward.text), es: t.reward.es && fill(t.reward.es), sub: fill(t.reward.sub), say: t.reward.say && fill(t.reward.say), tone: 'good' })
             }
             if (t.activity === 'guess') return <GuessAnimal onClose={finish} />
             if (t.activity === 'pens') return <AnimalPens onClose={finish} />
@@ -969,6 +989,10 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'predict') return <Predict onClose={finish} />
             if (t.activity === 'speech') return <Speech onClose={finish} />
             if (t.activity === 'clocks') return <BrokenClocks onClose={finish} />
+            if (t.activity === 'round' && t.round) {
+              const who = npcOf(t.npc ?? task)
+              return <OneMoreRound name={who.name} look={who.look} items={t.round.items} lines={t.round.lines} onClose={finish} />
+            }
             if (t.activity === 'party60') return <PartyPlan onClose={finish} />
             if (t.activity === 'tour') return <TourPlan onClose={finish} />
             if (t.activity === 'plan') return <LessonPlan onClose={finish} />
@@ -977,8 +1001,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'verbs') return <VerbBook state={state} update={update} onClose={finish} />
             if (t.activity === 'vocab' && t.vocab)
               return <VocabActivity state={state} words={t.vocab.words} place={t.vocab.place} title={t.vocab.title} rewardText={t.reward.sub} onClose={finish} />
-            const who = NPCS[t.npc ?? task]
-            return <MiniTalk name={who.name} look={who.look} steps={t.steps} onClose={finish} />
+            const who = npcOf(t.npc ?? task)
+            const steps = t.steps.map((st) => ({
+              text: fill(st.text),
+              es: fill(st.es),
+              choice: st.choice && { ...st.choice, ask: fill(st.choice.ask), options: st.choice.options.map(fill), tip: fill(st.choice.tip) },
+            }))
+            return <MiniTalk name={who.name} look={who.look} steps={steps} onClose={finish} />
           })()}
         </Overlay>
       )}

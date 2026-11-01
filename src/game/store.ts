@@ -2,8 +2,17 @@ import { useCallback, useEffect, useState } from 'react'
 import type { GameState } from './types'
 import { SCHOOL } from '../data/school'
 import { STORY_POINTS } from './social'
+import { SCENES } from './helpers'
 
 const KEY = 'english-combat-save-v1'
+/** Copia de la última partida válida cargada, por si algo sale mal al seguir jugando */
+const BACKUP_KEY = 'english-combat-save-v1-backup'
+
+/** Jefe final de A1 (torre Green Valley, futuro). Vencerlo desbloquea A2 */
+export const A1_FINAL_BOSS = 'office-future-boss'
+/** Prefijo obligatorio para los identificadores de A2 (escenas, jefes, puertas...) */
+export const A2_PREFIX = 'a2-'
+export const isA2Unlocked = (s: GameState) => s.defeated.includes(A1_FINAL_BOSS)
 
 export function newGame(): GameState {
   return {
@@ -41,6 +50,12 @@ export function loadSave(): GameState | null {
     if (!raw) return null
     const data = JSON.parse(raw) as GameState
     if (data.version !== 1) return null
+    // Respaldo intacto antes de ajustar o volver a guardar la partida
+    try {
+      localStorage.setItem(BACKUP_KEY, raw)
+    } catch {
+      /* sin espacio para el respaldo: se sigue cargando normalmente */
+    }
     // Partidas anteriores guardaban el nivel de amistad en vez de puntos
     if (!data.talks) {
       data.talks = { ...data.friendship }
@@ -51,6 +66,12 @@ export function loadSave(): GameState | null {
     if (!data.cards) data.cards = []
     if (!data.stats) data.stats = {}
     if (!data.lostFound) data.lostFound = { started: false, carrying: null, picked: [], returned: [] }
+    // Escena que ya no existe: se lleva al jugador a la escuela sin tocar su progreso
+    if (!SCENES[data.sceneId]) {
+      data.sceneId = SCHOOL.id
+      data.pos = { ...SCHOOL.start }
+      data.battle = null
+    }
     return data
   } catch {
     return null
