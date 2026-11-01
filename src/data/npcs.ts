@@ -10,7 +10,7 @@ type Line = { text: string; es: string }
  * interest: el personaje es la persona especial (nombre y aspecto elegidos por el jugador).
  * after: el personaje solo aparece en el mapa cuando este id está en `opened`.
  */
-export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: Line; lines?: Line[]; interest?: boolean; after?: string }> = {
+export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: Line; lines?: Line[]; interest?: boolean; after?: string; until?: string }> = {
   secretary: {
     name: 'Mrs. Lopez',
     look: { shirt: '#6a8caf', hair: '#3b2a1a', skin: '#e0ac69', gender: 'female', accessory: 'glasses' },
@@ -387,6 +387,31 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
     after: 'a2-02-pieces',
     doneLine: { text: 'You should rest a little. I have to stay with you. Doctor\'s orders!', es: 'Deberías descansar un poco. Tengo que quedarme contigo. ¡Órdenes de la médica!' },
+  },
+  // ── A2-03, la ciudad: Leo y tu amigo (mismo aspecto que en el hospital) ──
+  'a2-03-leo': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    doneLine: { text: "I usually walk here on Sundays. Let's enjoy the day!", es: 'Normalmente camino por aquí los domingos. ¡Disfrutemos el día!' },
+  },
+  'a2-03-friend': {
+    name: 'Your friend',
+    look: { shirt: '#3b9d5d', hair: '#2b1d12', skin: '#e0ac69' },
+    doneLine: { text: "What a day! Let's do it again sometime.", es: '¡Qué día! Repitámoslo alguna vez.' },
+  },
+  // La persona especial (nombre y aspecto del jugador) te acompaña en la ciudad
+  'a2-03-interest': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: "It's so nice to be outside again, {name}!", es: '¡Qué bueno estar afuera otra vez, {name}!' },
+  },
+  // El mesero del café: aparece al aceptar la invitación y, tras la charla, se convierte en el eco
+  'a2-03-waiter': {
+    name: 'The waiter',
+    look: { shirt: '#2b2b2b', hair: '#3b2a1a', skin: '#e0ac69' },
+    after: 'a2-03-invite',
+    until: 'a2-03-pressure',
   },
   'a2-receptionist': {
     name: 'The receptionist',

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { mixed } from '../game/mix'
 import { voiceOf } from '../game/speech'
 import type { SpriteLook } from './Sprite'
@@ -10,7 +10,11 @@ import { btn, btnGhost, btnPrimary, Panel } from './ui'
 /** Una charla corta con un personaje: frases y elecciones con una sola respuesta correcta */
 export type MiniStep = { text: string; es: string; choice?: { ask: string; options: string[]; answer: number; tip: string } }
 
-export function MiniTalk({ name, look, steps, onClose }: { name: string; look: SpriteLook; steps: MiniStep[]; onClose: (done: boolean) => void }) {
+/**
+ * pressure (opcional, Dialogue Under Pressure): segundos para cada elección. Si se acaba el tiempo
+ * no se pierde vida: el personaje se impacienta y el tiempo vuelve a empezar.
+ */
+export function MiniTalk({ name, look, steps, onClose, pressure }: { name: string; look: SpriteLook; steps: MiniStep[]; onClose: (done: boolean) => void; pressure?: number }) {
   const [i, setI] = useState(0)
   const [solved, setSolved] = useState(false)
   const [tip, setTip] = useState<string | null>(null)
@@ -18,10 +22,26 @@ export function MiniTalk({ name, look, steps, onClose }: { name: string; look: S
   const s = steps[i]
   const last = i === steps.length - 1
   const waiting = !!s.choice && !solved
+  const [left, setLeft] = useState(pressure ?? 0)
+  const [late, setLate] = useState(false)
+
+  useEffect(() => {
+    if (!pressure || !waiting) return
+    setLeft(pressure)
+    const id = setInterval(() => {
+      setLeft((n) => {
+        if (n > 1) return n - 1
+        setLate(true)
+        return pressure
+      })
+    }, 1000)
+    return () => clearInterval(id)
+  }, [pressure, waiting, i])
 
   function next() {
     setSolved(false)
     setTip(null)
+    setLate(false)
     if (last) onClose(true)
     else setI(i + 1)
   }
@@ -38,6 +58,12 @@ export function MiniTalk({ name, look, steps, onClose }: { name: string; look: S
       </p>
       {showEs && <p className="mt-1 text-sm text-paper/60">{s.es}</p>}
       {s.choice && !solved && <p className="mt-3 text-sm text-paper/75">{s.choice.ask}</p>}
+      {waiting && !!pressure && (
+        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-paper/10">
+          <div className={`h-full transition-all duration-1000 ease-linear ${left <= 3 ? 'bg-danger' : 'bg-gold'}`} style={{ width: `${(left / pressure) * 100}%` }} />
+        </div>
+      )}
+      {waiting && late && <p className="anim-fade-in mt-2 text-sm text-gold">¡Rápido! {name} está esperando tu respuesta...</p>}
       {waiting && (
         <div className="mt-2 grid gap-2">
           {mixed(s.choice!.options).map(([o, k]) => (

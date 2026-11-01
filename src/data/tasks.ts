@@ -1,6 +1,7 @@
 import type { TopicId } from '../game/types'
 import type { MiniStep } from '../components/MiniTalk'
 import type { RoundItem, RoundLines } from '../components/OneMoreRound'
+import type { SequenceStep } from '../components/SequenceMaster'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -20,11 +21,17 @@ export type NpcTask = {
   heal?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
   practice?: TopicId
+  /** Para activity 'practice': preguntas fijas en orden (si no, se eligen al azar del tema) */
+  practiceIds?: string[]
+  /** Para activity 'sequence' (Sequence Master): los pasos en el orden correcto (salen desordenados) */
+  sequence?: { title: string; intro: SequenceStep; steps: SequenceStep[] }
+  /** Dialogue Under Pressure: segundos para cada elección de la charla */
+  pressure?: number
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
   vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
@@ -904,6 +911,168 @@ NPC_TASKS['a2-02-practice'] = {
     es: '¡Muy bien! Oye... mira a ese hombre del pasillo. Algo le pasa.',
     sub: 'Un eco corrompido apareció al final del pasillo: da consejos con errores. Corrígelo con should, must y have to.',
     say: 'Something is wrong with him.',
+  },
+}
+
+// ── A2-03 — Day in the City (alcance mínimo, escena en data/a2City.ts) ──
+// Orden: Leo (llega) → Leo (lección + práctica) → tu amigo (invitación) → el mesero (charla con presión)
+//        → el eco del café (combate en 2 fases) → tu amigo (Sequence Master) → tu amigo (cierre con anomalía).
+NPC_TASKS['a2-03-leo'] = {
+  done: 'a2-03-arrive',
+  steps: [
+    {
+      text: "{name}! You're out of the hospital! The doctor says you can walk now. How about spending the day in the city?",
+      es: '¡{name}! ¡Saliste del hospital! La médica dice que ya puedes caminar. ¿Qué tal si pasamos el día en la ciudad?',
+      choice: { ask: '¿Qué le respondes?', options: ["Good idea! Let's go!", "Good idea! Let's going!", "Good idea! Let's to go!"], answer: 0, tip: "Let's + verbo tal cual: let's go." },
+    },
+    {
+      text: "Great! But first, a quick lesson. In the city you make plans with friends. Let me show you how.",
+      es: '¡Genial! Pero primero, una lección rápida. En la ciudad haces planes con amigos. Te enseño cómo.',
+      choice: { ask: '¿Qué le dices?', options: ['OK, teach me!', 'OK, teach to me!', 'OK, teaches me!'], answer: 0, tip: 'Petición: el verbo tal cual (teach) + me.' },
+    },
+  ],
+  reward: {
+    text: 'Leo: "Talk to me when you are ready for the lesson."',
+    es: 'Háblame cuando estés listo para la lección.',
+    sub: "Habla otra vez con Leo: te enseña let's, how about, would you like y la frecuencia.",
+    say: 'Talk to me when you are ready.',
+  },
+}
+
+// La lección de Leo (tema invitations) y la práctica guiada (7 frases)
+NPC_TASKS['a2-03-practice'] = {
+  npc: 'a2-03-leo',
+  done: 'a2-03-practice',
+  lesson: 'invitations',
+  activity: 'practice',
+  practice: 'invitations',
+  // 4 frases de antes + 2 de ordenar + 1 de escribir una invitación
+  practiceIds: ['a2-03-o1', 'a2-03-f1', 'a2-03-o2', 'a2-03-x1', 'a2-03-o3', 'a2-03-o4', 'T-a2-03-o5'],
+  steps: [],
+  reward: {
+    text: 'Leo: "Well done! Look, your friend is on the street. Go and say hi!"',
+    es: '¡Bien hecho! Mira, tu amigo está en la calle. ¡Ve a saludarlo!',
+    sub: 'Tu amigo te espera en la calle, junto a la cebra.',
+    say: 'Go and say hi!',
+  },
+}
+
+NPC_TASKS['a2-03-friend'] = {
+  done: 'a2-03-invite',
+  requires: {
+    id: 'a2-03-practice',
+    text: 'Your friend: "Hey! Leo is looking for you. Talk to him first!"',
+    es: '¡Oye! Leo te está buscando. ¡Habla primero con él!',
+    sub: 'Leo está en la calle, cerca de la parada.',
+  },
+  steps: [
+    {
+      text: "Hi! You look much better! Would you like to have a coffee with me at the café?",
+      es: '¡Hola! ¡Te ves mucho mejor! ¿Te gustaría tomar un café conmigo en el café?',
+      choice: { ask: 'Aceptas la invitación. ¿Qué le dices?', options: ["Sure! I'd love to.", "Sure! I'd love.", "Sure! I love to."], answer: 0, tip: "Para aceptar: I'd love to (I would love to)." },
+    },
+    {
+      text: 'Great! I go there a lot. And you? How often do you drink coffee?',
+      es: '¡Genial! Yo voy mucho. ¿Y tú? ¿Con qué frecuencia tomas café?',
+      choice: { ask: '¿Qué le respondes?', options: ['I sometimes drink coffee in the morning.', 'I drink sometimes coffee in the morning.', 'I sometimes drinks coffee in the morning.'], answer: 0, tip: 'La frecuencia va antes del verbo, y con I sin -s: I sometimes drink.' },
+    },
+    {
+      text: "Me too! Oh... look at the waiter. He usually smiles, but today he looks strange.",
+      es: '¡Yo también! Oh... mira al mesero. Normalmente sonríe, pero hoy se ve raro.',
+      choice: { ask: '¿Qué le dices?', options: ["How about going and talking to him?", "How about go and talk to him?", "How about to go and talk to him?"], answer: 0, tip: 'How about + verbo con -ing: going, talking.' },
+    },
+  ],
+  reward: {
+    text: 'Your friend: "Let\'s go in. Be careful with the waiter..."',
+    es: 'Entremos. Cuidado con el mesero...',
+    sub: 'Entra al café y habla con el mesero. ¡Responde rápido!',
+    say: 'Be careful!',
+  },
+}
+
+// Dialogue Under Pressure: el mesero habla rápido y espera tu respuesta (aceptar, rechazar, aclarar)
+NPC_TASKS['a2-03-waiter'] = {
+  done: 'a2-03-pressure',
+  pressure: 12,
+  steps: [
+    {
+      text: 'Good morning! Quick, quick! Would you like a table by the window?',
+      es: '¡Buenos días! ¡Rápido, rápido! ¿Quieren una mesa junto a la ventana?',
+      choice: { ask: 'Acepta la mesa.', options: ['Yes, please. That would be great.', 'Yes, please. That would being great.', 'Yes, please. That will great.'], answer: 0, tip: 'Para aceptar con cortesía: Yes, please. That would be great.' },
+    },
+    {
+      text: 'How about our special purple coffee? You must try it! Everybody drinks it today!',
+      es: '¿Qué tal nuestro café morado especial? ¡Tienes que probarlo! ¡Hoy todos lo toman!',
+      choice: { ask: 'Ese café no te gusta nada. Recházalo con amabilidad.', options: ["No, thank you. I'd like a black coffee, please.", "No, thank you. I like a black coffee, please.", "No, thanks you. I'd like a black coffee, please."], answer: 0, tip: "Rechaza y pide otra cosa: No, thank you. I'd like... please." },
+    },
+    {
+      text: 'Blackcoffeeforyouandpurplecoffeeforyourfriendandyoumustpaynowandstayforever!',
+      es: '(Habla tan rápido que no se entiende nada.)',
+      choice: { ask: 'No entendiste nada. Pide que lo repita.', options: ['Sorry, can you say that again, please?', 'Sorry, can you say again that, please?', 'Sorry, you can say that again, please?'], answer: 0, tip: 'Para aclarar: Sorry, can you say that again, please?' },
+    },
+    {
+      text: 'Stay... forever... You MUST stay!',
+      es: 'Quédense... para siempre... ¡DEBEN quedarse!',
+    },
+  ],
+  reward: {
+    text: 'The waiter\'s eyes are purple now!',
+    es: '¡Los ojos del mesero ahora son morados!',
+    sub: 'El mesero se corrompió. Choca con él para el combate: primero reglas, luego invitaciones.',
+    say: 'You must stay!',
+  },
+}
+
+// Sequence Master: ordenar el plan del día (los pasos salen desordenados)
+NPC_TASKS['a2-03-plan'] = {
+  npc: 'a2-03-friend',
+  done: 'a2-03-plan',
+  activity: 'sequence',
+  requires: {
+    id: 'a2-03-echo',
+    text: 'Your friend: "The waiter looks strange. Go to the café and help him!"',
+    es: 'El mesero se ve raro. ¡Ve al café y ayúdalo!',
+    sub: 'El mesero está en el café.',
+  },
+  sequence: {
+    title: 'Plan del día',
+    intro: { en: "You helped the waiter! Let's plan the rest of the day. At twelve we have lunch, at two we walk in the park, at four we visit the shop, and at six we go home.", es: '¡Ayudaste al mesero! Planeemos el resto del día. A las doce almorzamos, a las dos caminamos por el parque, a las cuatro vamos a la tienda y a las seis volvemos a casa.' },
+    steps: [
+      { en: 'First, we have lunch at twelve.', es: 'Primero, almorzamos a las doce.' },
+      { en: 'Then, we walk in the park at two.', es: 'Luego, caminamos por el parque a las dos.' },
+      { en: 'After that, we visit the shop at four.', es: 'Después, vamos a la tienda a las cuatro.' },
+      { en: 'Finally, we go home at six.', es: 'Por último, volvemos a casa a las seis.' },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Your friend: "Perfect plan! Wait... do you hear that?"',
+    es: '¡Plan perfecto! Espera... ¿oyes eso?',
+    sub: 'Habla otra vez con tu amigo.',
+    say: 'Perfect plan!',
+  },
+}
+
+// Cierre: una pequeña anomalía (sin revelar nada de B1/B2)
+NPC_TASKS['a2-03-close'] = {
+  npc: 'a2-03-friend',
+  done: 'a2-03-close',
+  steps: [
+    {
+      text: 'Look at the clock in the plaza! It stopped... and now its hands are moving backwards!',
+      es: '¡Mira el reloj de la plaza! Se detuvo... ¡y ahora sus manecillas van hacia atrás!',
+      choice: { ask: 'Miras tu reloj: el centro vacío brilla un segundo. ¿Qué dices?', options: ['That is strange. My clock is shining too!', 'That is strange. My clock shining too!', 'That are strange. My clock is shining too!'], answer: 0, tip: 'Algo que pasa ahora: is + verbo con -ing (is shining).' },
+    },
+    {
+      text: "Now it's normal again. Maybe it was nothing... Come on, let's enjoy the day!",
+      es: 'Ya está normal otra vez. Quizá no fue nada... Vamos, ¡disfrutemos el día!',
+    },
+  ],
+  reward: {
+    text: 'Your friend: "Let\'s enjoy the day!"',
+    es: '¡Disfrutemos el día!',
+    sub: 'A2-03 completada. Por un segundo, el centro vacío de tu reloj brilló con una luz morada... y luego nada.',
+    say: "Let's enjoy the day!",
   },
 }
 

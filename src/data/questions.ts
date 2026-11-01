@@ -10,6 +10,7 @@ import { FUTURE_QUESTIONS } from './questions-future'
 import { LISTEN_QUESTIONS } from './questions-listen'
 import { TERRAZA_QUESTIONS } from './questions-terraza'
 import { HOSPITAL_QUESTIONS } from './questions-hospital'
+import { A2_CITY_QUESTIONS } from './questions-a2-city'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -338,6 +339,7 @@ export const QUESTIONS: Question[] = [
   // ── Final de A1: el desconocido en la terraza
   ...TERRAZA_QUESTIONS,
   ...HOSPITAL_QUESTIONS,
+  ...A2_CITY_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -774,6 +776,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       "Regla fuerte: must + verbo → You must take this medicine. · Prohibido: mustn't.",
       "Obligación: have to / has to (he, she, it) + verbo · No es necesario: don't / doesn't have to.",
       'Salud: a headache · a stomachache · a fever · a cough · a sore throat.',
+    ],
+  },
+  invitations: {
+    name: 'Invitaciones y frecuencia: let\'s / how about / would you like',
+    level: 'A2',
+    lesson: [
+      "Proponer: Let's + verbo → Let's go! · How about + verbo con -ing → How about having a coffee?",
+      'Invitar: Would you like to + verbo? → Would you like to come?',
+      "Aceptar: Sure! / Good idea! / I'd love to. · Rechazar: Sorry, I can't. I have to...",
+      'Frecuencia: always · usually · sometimes · never, antes del verbo (I usually walk) y después de be (I am never late).',
     ],
   },
   'past-simple': {
