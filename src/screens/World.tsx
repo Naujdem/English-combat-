@@ -22,7 +22,7 @@ import { isA2Unlocked, type Update } from '../game/store'
 import { heroLook, SCENES } from '../game/helpers'
 import { interestFriend } from '../data/friends'
 import { clockCoreMissing } from '../data/a2Hospital'
-import { A2_CITY_ID, A2_03_PLAN, isA2CityUnlocked } from '../data/a2City'
+import { A2_CITY_ID, A2_03_CLOSE, isA2CityUnlocked } from '../data/a2City'
 import { useDesktop } from '../game/device'
 import { Achievements } from '../components/Achievements'
 import { ACHIEVEMENTS, achieved } from '../data/collection'
@@ -36,7 +36,7 @@ const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
-    isA2CityUnlocked(state) && !state.opened.includes(A2_03_PLAN)
+    isA2CityUnlocked(state) && !state.opened.includes(A2_03_CLOSE)
       ? 'A2-03 · Day in the City: saliste del hospital. Leo te espera en la ciudad.'
       : state.defeated.includes('office-future-boss')
       ? coreStolen(state.defeated)

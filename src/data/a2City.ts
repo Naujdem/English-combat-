@@ -3,8 +3,8 @@ import { A2_ECHO } from './a2Hospital'
 
 /**
  * A2-03 — Day in the City (alcance mínimo). Copia ligera del mapa de la ciudad de A1, sin jefe ni llaves.
- * Orden: Leo (llega) → Leo (lección + práctica) → tu amigo (invitación al café) → el eco del café (combate)
- *        → tu amigo (plan del día, Sequence Master ligero) → pequeña anomalía.
+ * Orden: Leo (llega) → Leo (lección + práctica) → tu amigo (invitación al café) → el mesero (charla con presión)
+ *        → el eco del café (combate en 2 fases) → tu amigo (Sequence Master: plan del día) → tu amigo (cierre con anomalía).
  * Se activa al vencer el eco del hospital (A2-02). Tareas en data/tasks.ts.
  */
 const MAP = [
@@ -36,8 +36,10 @@ export const A2_CITY_ID = 'a2-03-city'
 export const A2_03_ARRIVE = 'a2-03-arrive'
 export const A2_03_PRACTICE = 'a2-03-practice'
 export const A2_03_INVITE = 'a2-03-invite'
+export const A2_03_PRESSURE = 'a2-03-pressure'
 export const A2_03_ECHO = 'a2-03-echo'
 export const A2_03_PLAN = 'a2-03-plan'
+export const A2_03_CLOSE = 'a2-03-close'
 
 /** A2-03 se abre al vencer el eco del hospital */
 export const isA2CityUnlocked = (s: GameState) => s.defeated.includes(A2_ECHO)
@@ -49,15 +51,27 @@ export const A2_CITY_ENEMIES: Record<string, EnemyDef> = {
     person: 'Mr. Bell',
     kind: 'minion',
     echo: true,
-    hp: 5,
-    topics: ['invitations', 'should-must'],
+    hp: 6,
+    topics: ['should-must', 'invitations'],
     kinds: ['fill', 'fix', 'order', 'write'],
     tags: ['a2-city'],
+    // Dos fases cortas: primero reglas y consejos, luego invitaciones y hábitos
+    phases: [
+      { hp: 3, title: 'Rules', topics: ['should-must'], kinds: ['fill', 'fix', 'order', 'write'], tags: ['a2-city'] },
+      {
+        hp: 3,
+        title: 'Invitations',
+        topics: ['invitations'],
+        kinds: ['fill', 'fix', 'order', 'write'],
+        tags: ['a2-city'],
+        line: { text: "OK, no rules! Let's sit here forever! How about drink purple coffee? I always am here, you never leaves!", es: '¡Bueno, sin reglas! ¡Sentémonos aquí para siempre! ¿Qué tal tomar café morado? ¡Siempre estoy aquí, tú nunca te vas! (Ahora mezcla invitaciones y frecuencia).' },
+      },
+    ],
     onlyTags: true,
     zone: 'cafe',
     look: { shirt: '#2b2b2b', hair: '#3b2a1a', skin: '#c9b8d8' },
     before: [
-      { text: 'Would you like drink a coffee? You must to order now! How about sit here? I never am late!', es: '¿Quieres tomar un café? ¡Debes pedir ya! ¿Qué tal si te sientas aquí? ¡Nunca llego tarde! (Todo lo dice mal: like drink, must to, how about sit, never am).' },
+      { text: 'You must to order now! You should drinks the purple coffee! Everybody have to stay!', es: '¡Debes pedir ya! ¡Deberías tomar el café morado! ¡Todos tienen que quedarse! (Todo lo dice mal: must to, should drinks, everybody have to).' },
       { text: 'Nobody leaves my café! Sit down and drink the purple coffee!', es: '¡Nadie sale de mi café! ¡Siéntate y toma el café morado!' },
     ],
     after: [
@@ -81,8 +95,9 @@ export const A2_CITY: SceneDef = {
   entities: [
     { type: 'npc', id: 'a2-03-leo', x: 9, y: 10 },
     { type: 'npc', id: 'a2-03-friend', x: 5, y: 9 },
-    // El combate del café: aparece cuando tu amigo te invita
-    { type: 'enemy', id: A2_03_ECHO, x: 4, y: 2, after: A2_03_INVITE },
+    // El mesero (charla con presión) y, en su lugar, el eco del café (combate)
+    { type: 'npc', id: 'a2-03-waiter', x: 4, y: 2 },
+    { type: 'enemy', id: A2_03_ECHO, x: 4, y: 2, after: A2_03_PRESSURE },
   ],
   labels: [
     { text: 'Café', x: 3, y: 4 },
@@ -96,13 +111,15 @@ export const A2_CITY: SceneDef = {
   },
   requirements: [],
   chips: (s) => [
-    { label: 'A2-03 · Day in the City', done: s.opened.includes(A2_03_PLAN) },
+    { label: 'A2-03 · Day in the City', done: s.opened.includes(A2_03_CLOSE) },
     { label: 'Leo', done: s.opened.includes(A2_03_ARRIVE) },
     { label: 'Lección de Leo', done: s.seenLesson.includes('invitations') },
     { label: 'Práctica', done: s.opened.includes(A2_03_PRACTICE) },
     { label: 'Invitación', done: s.opened.includes(A2_03_INVITE) },
-    { label: 'El café', done: s.defeated.includes(A2_03_ECHO) },
+    { label: 'En el café', done: s.opened.includes(A2_03_PRESSURE) },
+    { label: 'El mesero', done: s.defeated.includes(A2_03_ECHO) },
     { label: 'Plan del día', done: s.opened.includes(A2_03_PLAN) },
+    { label: 'Cierre', done: s.opened.includes(A2_03_CLOSE) },
   ],
   intro: {
     first: 'Saliste del hospital. Hace un día bonito en la ciudad y Leo te espera en la calle para pasar el día juntos.',

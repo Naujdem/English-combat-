@@ -10,7 +10,7 @@ type Line = { text: string; es: string }
  * interest: el personaje es la persona especial (nombre y aspecto elegidos por el jugador).
  * after: el personaje solo aparece en el mapa cuando este id está en `opened`.
  */
-export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: Line; lines?: Line[]; interest?: boolean; after?: string }> = {
+export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: Line; lines?: Line[]; interest?: boolean; after?: string; until?: string }> = {
   secretary: {
     name: 'Mrs. Lopez',
     look: { shirt: '#6a8caf', hair: '#3b2a1a', skin: '#e0ac69', gender: 'female', accessory: 'glasses' },
@@ -398,6 +398,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'Your friend',
     look: { shirt: '#3b9d5d', hair: '#2b1d12', skin: '#e0ac69' },
     doneLine: { text: "What a day! Let's do it again sometime.", es: '¡Qué día! Repitámoslo alguna vez.' },
+  },
+  // El mesero del café: aparece al aceptar la invitación y, tras la charla, se convierte en el eco
+  'a2-03-waiter': {
+    name: 'The waiter',
+    look: { shirt: '#2b2b2b', hair: '#3b2a1a', skin: '#e0ac69' },
+    after: 'a2-03-invite',
+    until: 'a2-03-pressure',
   },
   'a2-receptionist': {
     name: 'The receptionist',

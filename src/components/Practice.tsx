@@ -22,6 +22,7 @@ export function Practice({
   failed = [],
   review,
   guided,
+  ids,
   onClose,
   onDone,
 }: {
@@ -33,11 +34,14 @@ export function Practice({
   review?: TopicId
   /** Práctica guiada de la historia (después de una lección de Leo), no un repaso */
   guided?: boolean
+  /** Lista fija de preguntas (ids, también W-/T- para escribir); si se indica, reemplaza la elección al azar */
+  ids?: string[]
   onClose: () => void
   /** Al terminar todas las preguntas (si no se indica, se usa onClose) */
   onDone?: () => void
 }) {
   const [queue] = useState<Question[]>(() => {
+    if (ids?.length) return ids.map((id) => questionById(id)).filter((q): q is Question => !!q)
     if (review) {
       // Como en las apps de idiomas: primero armar frases, luego completar, al final corregir
       const list: Question[] = []

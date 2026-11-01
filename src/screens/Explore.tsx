@@ -46,6 +46,7 @@ import { SoundSacks } from '../components/SoundSacks'
 import { VerbBook } from '../components/VerbBook'
 import { Mystery } from '../components/Mystery'
 import { Timeline } from '../components/Timeline'
+import { SequenceMaster } from '../components/SequenceMaster'
 import { LessonPlan } from '../components/LessonPlan'
 import { TourPlan } from '../components/TourPlan'
 import { PartyPlan } from '../components/PartyPlan'
@@ -151,6 +152,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         if (e.type === 'chest') return !state.opened.includes(e.id)
         // Personajes que solo aparecen después de cierto momento de la historia
         if (e.type === 'npc' && NPCS[e.id]?.after && !state.opened.includes(NPCS[e.id].after!)) return false
+        // Personajes que se van en cierto momento (el mesero del café se convierte en el eco)
+        if (e.type === 'npc' && NPCS[e.id]?.until && state.opened.includes(NPCS[e.id].until!)) return false
         if (e.type === 'enemy' && e.after && !state.opened.includes(e.after)) return false
         // Los esbirros que vinieron del presente vuelven a su tiempo al ser vencidos
         if (e.type === 'enemy' && ENEMIES[e.id]?.echo && state.defeated.includes(e.id)) return false
@@ -985,7 +988,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
 
       {task && NPC_TASKS[task]?.activity === 'practice' && NPC_TASKS[task].practice && (
         // Práctica guiada con Leo (pantalla completa): al terminarla se marca la tarea
-        <Practice state={state} update={update} review={NPC_TASKS[task].practice} guided onClose={() => finishTask(task, false)} onDone={() => finishTask(task, true)} />
+        <Practice state={state} update={update} review={NPC_TASKS[task].practice} ids={NPC_TASKS[task].practiceIds} guided onClose={() => finishTask(task, false)} onDone={() => finishTask(task, true)} />
       )}
 
       {task && NPC_TASKS[task] && NPC_TASKS[task].activity !== 'practice' && (
@@ -1020,6 +1023,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'tour') return <TourPlan onClose={finish} />
             if (t.activity === 'plan') return <LessonPlan onClose={finish} />
             if (t.activity === 'timeline') return <Timeline onClose={finish} />
+            if (t.activity === 'sequence' && t.sequence) return <SequenceMaster title={t.sequence.title} intro={t.sequence.intro} steps={t.sequence.steps} onClose={finish} />
             if (t.activity === 'mystery') return <Mystery onClose={finish} />
             if (t.activity === 'verbs') return <VerbBook state={state} update={update} onClose={finish} />
             if (t.activity === 'vocab' && t.vocab)
@@ -1030,7 +1034,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               es: fill(st.es),
               choice: st.choice && { ...st.choice, ask: fill(st.choice.ask), options: st.choice.options.map(fill), tip: fill(st.choice.tip) },
             }))
-            return <MiniTalk name={who.name} look={who.look} steps={steps} onClose={finish} />
+            return <MiniTalk name={who.name} look={who.look} steps={steps} onClose={finish} pressure={t.pressure} />
           })()}
         </Overlay>
       )}
