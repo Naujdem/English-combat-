@@ -1076,20 +1076,20 @@ NPC_TASKS['a2-03-close'] = {
   },
 }
 
-// ── A2-04 — Daniel's Workshop (alcance mínimo con jefe, escena en data/a2Workshop.ts) ──
-// Orden: Leo (llega) → Leo (lección + práctica) → Daniel (charla con presión) → Leo (Sequence Master: arreglar la radio)
-//        → Daniel corrompido (jefe en 2 fases) → Leo (cierre con el fragmento y una pista).
+// ── A2-04 — Mr. Hale's Workshop (alcance mínimo con jefe, escena en data/a2Workshop.ts) ──
+// Orden: Leo (llega) → Leo (lección + práctica) → Mr. Hale (charla con presión) → Leo (Sequence Master: arreglar la radio)
+//        → Mr. Hale corrompido (jefe en 2 fases) → Leo (cierre con el fragmento y una pista).
 NPC_TASKS['a2-04-leo'] = {
   done: 'a2-04-arrive',
   steps: [
     {
-      text: '{name}, the clock in the plaza moved backwards... So I called Daniel. He repairs clocks, radios, bikes... everything! This is his workshop.',
-      es: '{name}, el reloj de la plaza fue hacia atrás... Así que llamé a Daniel. Arregla relojes, radios, bicicletas... ¡todo! Este es su taller.',
-      choice: { ask: 'Quieres que Daniel mire tu reloj. ¿Qué le pides a Leo?', options: ['Great! Could you introduce me to him?', 'Great! Could you introducing me to him?', 'Great! Could you to introduce me to him?'], answer: 0, tip: 'Could you + verbo tal cual: Could you introduce...?' },
+      text: '{name}, the clock in the plaza moved backwards... So I called Mr. Hale. He repairs clocks, radios, bikes... everything! This is his workshop.',
+      es: '{name}, el reloj de la plaza fue hacia atrás... Así que llamé al señor Hale. Arregla relojes, radios, bicicletas... ¡todo! Este es su taller.',
+      choice: { ask: 'Quieres que el señor Hale mire tu reloj. ¿Qué le pides a Leo?', options: ['Great! Could you introduce me to him?', 'Great! Could you introducing me to him?', 'Great! Could you to introduce me to him?'], answer: 0, tip: 'Could you + verbo tal cual: Could you introduce...?' },
     },
     {
-      text: 'Sure! But Daniel is very busy, and he talks fast. In a workshop you ask for things politely. Let me teach you first.',
-      es: '¡Claro! Pero Daniel está muy ocupado y habla rápido. En un taller las cosas se piden con cortesía. Déjame enseñarte primero.',
+      text: 'Sure! But Mr. Hale is very busy, and he talks fast. In a workshop you ask for things politely. Let me teach you first.',
+      es: '¡Claro! Pero el señor Hale está muy ocupado y habla rápido. En un taller las cosas se piden con cortesía. Déjame enseñarte primero.',
       choice: { ask: '¿Qué le dices?', options: ['OK. Can you teach me now?', 'OK. Can you teaching me now?', 'OK. Can you teaches me now?'], answer: 0, tip: 'Can you + verbo tal cual: Can you teach...?' },
     },
   ],
@@ -1112,20 +1112,20 @@ NPC_TASKS['a2-04-practice'] = {
   practiceIds: ['a2-04-r1', 'a2-04-r3', 'a2-04-i2', 'a2-04-r5', 'T-a2-04-r7'],
   steps: [],
   reward: {
-    text: 'Leo: "Well done! Daniel is at the workbench. Go and talk to him... and be quick!"',
-    es: '¡Bien hecho! Daniel está en la mesa de trabajo. Ve a hablar con él... ¡y sé rápido!',
-    sub: 'Daniel está junto a las mesas de trabajo. Habla rápido: tiene mucha prisa.',
+    text: 'Leo: "Well done! Mr. Hale is at the workbench. Go and talk to him... and be quick!"',
+    es: '¡Bien hecho! El señor Hale está en la mesa de trabajo. Ve a hablar con él... ¡y sé rápido!',
+    sub: 'El señor Hale está junto a las mesas de trabajo. Habla rápido: tiene mucha prisa.',
     say: 'Be quick!',
   },
 }
 
-// Dialogue Under Pressure: Daniel tiene prisa; pides que mire tu reloj, pides ayuda y que repita más despacio
-NPC_TASKS['a2-04-daniel'] = {
+// Dialogue Under Pressure: Mr. Hale tiene prisa; pides que mire tu reloj, pides ayuda y que repita más despacio
+NPC_TASKS['a2-04-hale'] = {
   done: 'a2-04-pressure',
   pressure: 12,
   requires: {
     id: 'a2-04-practice',
-    text: 'Daniel: "Sorry, I\'m very busy right now! Talk to Leo first."',
+    text: 'Mr. Hale: "Sorry, I\'m very busy right now! Talk to Leo first."',
     es: 'Perdón, ¡ahora estoy muy ocupado! Habla primero con Leo.',
     sub: 'Leo está en el taller, cerca de las cajas de herramientas.',
   },
@@ -1151,9 +1151,9 @@ NPC_TASKS['a2-04-daniel'] = {
     },
   ],
   reward: {
-    text: 'Daniel: "I have to fix this old radio today!"',
+    text: 'Mr. Hale: "I have to fix this old radio today!"',
     es: '¡Tengo que arreglar esta radio vieja hoy!',
-    sub: 'Las notas de Daniel se cayeron. Habla con Leo para ordenar los pasos de la reparación.',
+    sub: 'Las notas del señor Hale se cayeron. Habla con Leo para ordenar los pasos de la reparación.',
     say: 'I have to fix this old radio today!',
   },
 }
@@ -1165,13 +1165,13 @@ NPC_TASKS['a2-04-sequence'] = {
   activity: 'sequence',
   requires: {
     id: 'a2-04-pressure',
-    text: 'Leo: "Go and talk to Daniel. He is at the workbench."',
-    es: 'Ve a hablar con Daniel. Está en la mesa de trabajo.',
-    sub: 'Daniel está junto a las mesas de trabajo.',
+    text: 'Leo: "Go and talk to Mr. Hale. He is at the workbench."',
+    es: 'Ve a hablar con el señor Hale. Está en la mesa de trabajo.',
+    sub: 'El señor Hale está junto a las mesas de trabajo.',
   },
   sequence: {
     title: 'Arreglar la radio',
-    intro: { en: "Daniel's notes are on the floor. Let's put the steps in order: turn off the radio, open the back, change the old battery, and test it.", es: 'Las notas de Daniel están en el piso. Ordenemos los pasos: apagar la radio, abrir la parte de atrás, cambiar la batería vieja y probarla.' },
+    intro: { en: "Mr. Hale's notes are on the floor. Let's put the steps in order: turn off the radio, open the back, change the old battery, and test it.", es: 'Las notas del señor Hale están en el piso. Ordenemos los pasos: apagar la radio, abrir la parte de atrás, cambiar la batería vieja y probarla.' },
     steps: [
       { en: 'First, turn off the radio.', es: 'Primero, apaga la radio.' },
       { en: 'Then, open the back of the radio.', es: 'Luego, abre la parte de atrás de la radio.' },
@@ -1181,10 +1181,10 @@ NPC_TASKS['a2-04-sequence'] = {
   },
   steps: [],
   reward: {
-    text: 'Leo: "The radio is on! But... look at Daniel. That purple light is in his hands!"',
-    es: '¡La radio funciona! Pero... mira a Daniel. ¡Esa luz morada está en sus manos!',
-    sub: 'Daniel se corrompió. Choca con él para el combate: primero peticiones, luego instrucciones.',
-    say: 'Look at Daniel!',
+    text: 'Leo: "The radio is on! But... look at Mr. Hale. That purple light is in his hands!"',
+    es: '¡La radio funciona! Pero... mira al señor Hale. ¡Esa luz morada está en sus manos!',
+    sub: 'El señor Hale se corrompió. Choca con él para el combate: primero peticiones, luego instrucciones.',
+    say: 'Look at Mr. Hale!',
   },
 }
 
@@ -1193,10 +1193,10 @@ NPC_TASKS['a2-04-close'] = {
   npc: 'a2-04-leo',
   done: 'a2-04-close',
   requires: {
-    id: 'a2-04-daniel-boss',
-    text: 'Leo: "Daniel needs help! Could you stop him? Be careful!"',
-    es: '¡Daniel necesita ayuda! ¿Podrías detenerlo? ¡Ten cuidado!',
-    sub: 'Daniel está corrompido junto a las mesas de trabajo.',
+    id: 'a2-04-hale-boss',
+    text: 'Leo: "Mr. Hale needs help! Could you stop him? Be careful!"',
+    es: '¡El señor Hale necesita ayuda! ¿Podrías detenerlo? ¡Ten cuidado!',
+    sub: 'El señor Hale está corrompido junto a las mesas de trabajo.',
   },
   steps: [
     {

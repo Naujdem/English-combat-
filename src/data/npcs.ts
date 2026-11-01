@@ -413,7 +413,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'a2-03-invite',
     until: 'a2-03-pressure',
   },
-  // ── A2-04, el taller de Daniel: Leo, la persona especial y Daniel (antes de corromperse) ──
+  // ── A2-04, el taller del señor Hale: Leo, la persona especial y Mr. Hale (antes de corromperse) ──
   'a2-04-leo': {
     name: 'Leo',
     look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
@@ -425,9 +425,9 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     interest: true,
     doneLine: { text: 'So many tools! Could you show me the wrench, {name}?', es: '¡Cuántas herramientas! ¿Me muestras la llave inglesa, {name}?' },
   },
-  // Daniel trabaja en la mesa; tras arreglar la radio (Sequence Master) se corrompe y pasa a ser el jefe
-  'a2-04-daniel': {
-    name: 'Daniel',
+  // Mr. Hale trabaja en la mesa; tras arreglar la radio (Sequence Master) se corrompe y pasa a ser el jefe
+  'a2-04-hale': {
+    name: 'Mr. Hale',
     look: { shirt: '#3b5a7a', hair: '#2b1d12', skin: '#e0ac69', gender: 'male' },
     until: 'a2-04-sequence',
     doneLine: { text: 'Sorry, I have to finish this radio. Could you ask Leo for my notes?', es: 'Perdón, tengo que terminar esta radio. ¿Podrías pedirle mis notas a Leo?' },

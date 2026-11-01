@@ -38,7 +38,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
     isA2WorkshopUnlocked(state) && !state.opened.includes(A2_04_CLOSE)
-      ? "A2-04 · Daniel's Workshop: después del reloj extraño de la plaza, Leo te espera en el taller de Daniel."
+      ? "A2-04 · Mr. Hale's Workshop: después del reloj extraño de la plaza, Leo te espera en el taller del señor Hale."
       : isA2CityUnlocked(state) && !state.opened.includes(A2_03_CLOSE)
       ? 'A2-03 · Day in the City: saliste del hospital. Leo te espera en la ciudad.'
       : state.defeated.includes('office-future-boss')
@@ -233,7 +233,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       )}
       {isA2WorkshopUnlocked(state) && SCENES[A2_WORKSHOP_ID] && (
         <button className={btnPrimary} onClick={() => onEnter(A2_WORKSHOP_ID)}>
-          {state.sceneId === A2_WORKSHOP_ID ? 'Volver al taller de Daniel (A2-04)' : 'Ir al taller de Daniel (A2-04)'}
+          {state.sceneId === A2_WORKSHOP_ID ? 'Volver al taller del señor Hale (A2-04)' : 'Ir al taller del señor Hale (A2-04)'}
         </button>
       )}
       </div>

@@ -2,9 +2,9 @@ import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import { A2_03_CLOSE } from './a2City'
 
 /**
- * A2-04 — Daniel's Workshop (alcance mínimo con jefe). Taller pequeño: zona de trabajo, herramientas y oficina.
- * Orden: Leo (llega) → Leo (lección + práctica) → Daniel (charla con presión) → Leo (Sequence Master: arreglar la radio)
- *        → Daniel corrompido (jefe en 2 fases) → Leo (cierre con el fragmento y una pista).
+ * A2-04 — Mr. Hale's Workshop (alcance mínimo con jefe). Taller pequeño: zona de trabajo, herramientas y oficina.
+ * Orden: Leo (llega) → Leo (lección + práctica) → Mr. Hale (charla con presión) → Leo (Sequence Master: arreglar la radio)
+ *        → Mr. Hale corrompido (jefe en 2 fases) → Leo (cierre con el fragmento y una pista).
  * Se activa al terminar A2-03. Tareas en data/tasks.ts.
  */
 const MAP = [
@@ -30,7 +30,7 @@ export const A2_04_ARRIVE = 'a2-04-arrive'
 export const A2_04_PRACTICE = 'a2-04-practice'
 export const A2_04_PRESSURE = 'a2-04-pressure'
 export const A2_04_SEQUENCE = 'a2-04-sequence'
-export const A2_04_BOSS = 'a2-04-daniel-boss'
+export const A2_04_BOSS = 'a2-04-hale-boss'
 export const A2_04_CLOSE = 'a2-04-close'
 
 /** A2-04 se abre al terminar A2-03 */
@@ -39,8 +39,8 @@ export const isA2WorkshopUnlocked = (s: GameState) => s.opened.includes(A2_03_CL
 export const A2_WORKSHOP_ENEMIES: Record<string, EnemyDef> = {
   [A2_04_BOSS]: {
     id: A2_04_BOSS,
-    name: 'Daniel, el mecánico corrompido',
-    person: 'Daniel',
+    name: 'Mr. Hale, el mecánico corrompido',
+    person: 'Mr. Hale',
     kind: 'boss',
     hp: 8,
     topics: ['requests', 'instructions'],
@@ -86,7 +86,7 @@ export const A2_WORKSHOP_ENEMIES: Record<string, EnemyDef> = {
 
 export const A2_WORKSHOP: SceneDef = {
   id: A2_WORKSHOP_ID,
-  name: 'El taller de Daniel · A2',
+  name: 'El taller del señor Hale · A2',
   topics: [],
   map: MAP,
   start: { x: 6, y: 8 },
@@ -97,8 +97,8 @@ export const A2_WORKSHOP: SceneDef = {
     { type: 'npc', id: 'a2-04-leo', x: 4, y: 6 },
     // La persona especial te acompaña (solo una frase, sin tarea)
     { type: 'npc', id: 'a2-04-interest', x: 9, y: 8 },
-    // Daniel trabaja en la mesa (charla con presión) y, tras arreglar la radio, se corrompe en el mismo sitio
-    { type: 'npc', id: 'a2-04-daniel', x: 4, y: 3 },
+    // Mr. Hale trabaja en la mesa (charla con presión) y, tras arreglar la radio, se corrompe en el mismo sitio
+    { type: 'npc', id: 'a2-04-hale', x: 4, y: 3 },
     { type: 'enemy', id: A2_04_BOSS, x: 4, y: 3, after: A2_04_SEQUENCE },
   ],
   labels: [
@@ -109,21 +109,21 @@ export const A2_WORKSHOP: SceneDef = {
   zoneAt,
   examine: {
     '6,3': { text: 'An old radio on the workbench. A little purple light is blinking inside...', sub: 'Una radio vieja en la mesa de trabajo. Adentro parpadea una lucecita morada...', say: 'An old radio on the workbench.', tone: 'warn' },
-    '10,1': { text: "Daniel's desk. A note: \"Please fix it.\" There is no name.", sub: 'El escritorio de Daniel. Una nota: "Por favor, arréglela". No tiene nombre.', say: 'Please fix it.' },
+    '10,1': { text: "Mr. Hale's desk. A note: \"Please fix it.\" There is no name.", sub: 'El escritorio del señor Hale. Una nota: "Por favor, arréglela". No tiene nombre.', say: 'Please fix it.' },
   },
   requirements: [],
   chips: (s) => [
-    { label: "A2-04 · Daniel's Workshop", done: s.opened.includes(A2_04_CLOSE) },
+    { label: "A2-04 · Mr. Hale's Workshop", done: s.opened.includes(A2_04_CLOSE) },
     { label: 'Leo', done: s.opened.includes(A2_04_ARRIVE) },
     { label: 'Lección de Leo', done: s.seenLesson.includes('requests') },
     { label: 'Práctica', done: s.opened.includes(A2_04_PRACTICE) },
-    { label: 'Daniel', done: s.opened.includes(A2_04_PRESSURE) },
+    { label: 'Mr. Hale', done: s.opened.includes(A2_04_PRESSURE) },
     { label: 'Arreglar la radio', done: s.opened.includes(A2_04_SEQUENCE) },
-    { label: 'Jefe: Daniel', done: s.defeated.includes(A2_04_BOSS) },
+    { label: 'Jefe: Mr. Hale', done: s.defeated.includes(A2_04_BOSS) },
     { label: 'Cierre', done: s.opened.includes(A2_04_CLOSE) },
   ],
   intro: {
-    first: 'Después del reloj extraño de la plaza, Leo te trae al taller de Daniel: él arregla relojes, radios y bicicletas.',
-    later: 'El taller de Daniel en A2. Sigue los objetivos bajo el mapa.',
+    first: 'Después del reloj extraño de la plaza, Leo te trae al taller del señor Hale: él arregla relojes, radios y bicicletas.',
+    later: 'El taller del señor Hale en A2. Sigue los objetivos bajo el mapa.',
   },
 }

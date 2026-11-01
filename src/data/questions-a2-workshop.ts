@@ -1,10 +1,10 @@
 import type { Question } from '../game/types'
 
 /**
- * A2-04 · Daniel's Workshop.
+ * A2-04 · Mr. Hale's Workshop.
  * Peticiones corteses (Can / Could / Would you mind...?) y instrucciones con responsabilidades (First, Then, After that,
  * Finally · It's my job to · be responsible for · have to). La práctica de Leo usa una lista fija (ver data/tasks.ts);
- * el jefe Daniel pregunta solo de aquí (etiqueta a2-workshop): fase 1 peticiones, fase 2 instrucciones.
+ * el jefe Mr. Hale pregunta solo de aquí (etiqueta a2-workshop): fase 1 peticiones, fase 2 instrucciones.
  */
 const T = ['a2-workshop']
 
@@ -27,7 +27,7 @@ export const A2_WORKSHOP_QUESTIONS: Question[] = [
   { id: 'a2-04-i4', topic: 'instructions', kind: 'fix', prompt: 'After that, checks the wires.', options: ['After that, check the wires.', 'After that, checking the wires.', 'After that, to checks the wires.'], answer: 0, tip: 'Instrucción: el verbo sin -s: check.', tags: T },
   { id: 'a2-04-i5', topic: 'instructions', kind: 'order', prompt: 'Por último, prueba la radio.', options: ['Finally,', 'test', 'the', 'radio.'], answer: 0, tip: 'El último paso: Finally, + verbo.', tags: T },
   { id: 'a2-04-i6', topic: 'instructions', prompt: "It's my job ___ the tools every evening.", options: ['to clean', 'clean', 'cleaning'], answer: 0, tip: "It's my job + to + verbo: to clean.", tags: T },
-  { id: 'a2-04-i7', topic: 'instructions', prompt: 'Daniel is responsible ___ the workshop.', options: ['for', 'of', 'to'], answer: 0, tip: 'Responsable de algo: responsible for.', tags: T },
+  { id: 'a2-04-i7', topic: 'instructions', prompt: 'Mr. Hale is responsible ___ the workshop.', options: ['for', 'of', 'to'], answer: 0, tip: 'Responsable de algo: responsible for.', tags: T },
   { id: 'a2-04-i8', topic: 'instructions', prompt: 'In the workshop we ___ to wear gloves. It is the rule.', options: ['have', 'has', 'having'], answer: 0, tip: 'Con we: have to + verbo.', tags: T },
   { id: 'a2-04-i9', topic: 'instructions', kind: 'fix', prompt: 'She is responsible of the tools.', options: ['She is responsible for the tools.', 'She responsible for the tools.', 'She is responsible to the tools.'], answer: 0, tip: 'Responsable de algo: be + responsible for.', tags: T },
 ]
