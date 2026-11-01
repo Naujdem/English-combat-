@@ -8,6 +8,8 @@ import type { Question } from '../game/types'
  */
 const R = ['a2-library', 'a2-library-reg']
 const I = ['a2-library', 'a2-library-irr']
+/** Solo el lector corrompido (esbirro ligero antes del eco de tinta) */
+const LR = ['a2-library-reader']
 
 export const A2_LIBRARY_QUESTIONS: Question[] = [
   // ── Pasado regular: verbo + -ed ──
@@ -35,4 +37,14 @@ export const A2_LIBRARY_QUESTIONS: Question[] = [
   { id: 'a2-05-c2', topic: 'past-simple', prompt: 'I read this book ___ week.', options: ['last', 'yesterday', 'ago'], answer: 0, tip: 'La semana pasada: last week (sin "the").', tags: I },
   { id: 'a2-05-c3', topic: 'past-simple', prompt: 'This book is ___ than the library.', options: ['older', 'more old', 'oldest'], answer: 0, tip: 'Adjetivo corto + -er + than: older than.', tags: I },
   { id: 'a2-05-c4', topic: 'past-simple', kind: 'fix', prompt: 'The library is more big than the café.', options: ['The library is bigger than the café.', 'The library is more bigger than the café.', 'The library is big than the café.'], answer: 0, tip: 'big → bigger than (se dobla la g, sin "more").', tags: I },
+
+  // ── El lector corrompido (esbirro ligero): Past Simple regular e irregular ──
+  { id: 'a2-05-l1', topic: 'past-simple', prompt: 'Last night I ___ a book about the moon.', options: ['read', 'readed', 'reads'], answer: 0, tip: 'read es irregular: en pasado se escribe igual (read) y suena "red".', tags: LR },
+  { id: 'a2-05-l2', topic: 'past-simple', prompt: 'She ___ the old map in the library yesterday.', options: ['found', 'finded', 'finds'], answer: 0, tip: 'find es irregular: find → found.', tags: LR },
+  { id: 'a2-05-l3', topic: 'past-simple', prompt: 'We ___ for two hours at the reading table.', options: ['studied', 'studyed', 'study'], answer: 0, tip: 'study: consonante + y → -ied: studied.', tags: LR },
+  { id: 'a2-05-l4', topic: 'past-simple', kind: 'fix', prompt: 'He keeped the book for a month.', options: ['He kept the book for a month.', 'He keep the book for a month.', 'He kepted the book for a month.'], answer: 0, tip: 'keep es irregular: keep → kept.', tags: LR },
+  { id: 'a2-05-l5', topic: 'past-simple', kind: 'fix', prompt: 'I goed to the library last Monday.', options: ['I went to the library last Monday.', 'I go to the library last Monday.', 'I wented to the library last Monday.'], answer: 0, tip: 'go es irregular: go → went.', tags: LR },
+  { id: 'a2-05-l6', topic: 'past-simple', kind: 'fix', prompt: 'They stoped at the front desk.', options: ['They stopped at the front desk.', 'They stop at the front desk.', 'They stopping at the front desk.'], answer: 0, tip: 'stop: vocal + consonante final, se dobla: stopped.', tags: LR },
+  { id: 'a2-05-l7', topic: 'past-simple', kind: 'order', prompt: 'Ayer devolví dos libros.', options: ['Yesterday', 'I', 'returned', 'two', 'books.'], answer: 0, tip: 'Yesterday + I + verbo en pasado (returned).', tags: LR },
+  { id: 'a2-05-l8', topic: 'past-simple', kind: 'order', prompt: 'La semana pasada escribí una carta.', options: ['Last', 'week', 'I', 'wrote', 'a', 'letter.'], answer: 0, tip: 'write es irregular: write → wrote.', tags: LR },
 ]
