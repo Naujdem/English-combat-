@@ -71,7 +71,8 @@ for (const e of Object.values(ENEMIES)) {
 type Sentence = { text: string; correct: boolean; where: string; checkWrong: boolean }
 const sentences: Sentence[] = []
 const add = (text: string, correct: boolean, where: string, checkWrong = true) => {
-  const t = text.replace(/\s+/g, ' ').trim()
+  // Sin pistas en español entre paréntesis y sin espacio antes de contracciones (It ___ → It 's)
+  const t = text.replace(/\s*\([^)]*\)/g, '').replace(/ (?='(s|re|m|ll|ve|d)\b)/g, '').replace(/\s+/g, ' ').trim()
   if (t) sentences.push({ text: t, correct, where, checkWrong })
 }
 
@@ -103,7 +104,8 @@ for (const [id, t] of Object.entries(NPC_TASKS)) {
 }
 
 // Reglas de estilo que solo meten ruido (comillas, guiones, mayúscula inicial en fragmentos...)
-const DISABLED = ['EN_QUOTES', 'DASH_RULE', 'WHITESPACE_RULE', 'COMMA_PARENTHESIS_WHITESPACE', 'UPPERCASE_SENTENCE_START', 'PUNCTUATION_PARAGRAPH_END', 'EN_UNPAIRED_QUOTES', 'EN_UNPAIRED_BRACKETS', 'SENTENCE_FRAGMENT', 'I_LOWERCASE']
+// ENGLISH_WORD_REPEAT_BEGINNING_RULE salta solo porque se envían muchas frases juntas; las comas antes de "and" son estilo
+const DISABLED = ['ENGLISH_WORD_REPEAT_BEGINNING_RULE', 'COMMA_COMPOUND_SENTENCE', 'COMMA_COMPOUND_SENTENCE_2', 'EN_QUOTES', 'DASH_RULE', 'WHITESPACE_RULE', 'COMMA_PARENTHESIS_WHITESPACE', 'UPPERCASE_SENTENCE_START', 'PUNCTUATION_PARAGRAPH_END', 'EN_UNPAIRED_QUOTES', 'EN_UNPAIRED_BRACKETS', 'SENTENCE_FRAGMENT', 'I_LOWERCASE']
 
 type LTMatch = { offset: number; length: number; message: string; rule: { id: string; issueType?: string }; replacements: { value: string }[] }
 

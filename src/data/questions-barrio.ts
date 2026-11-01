@@ -63,8 +63,8 @@ export const BARRIO_QUESTIONS: Question[] = [
 
   // ── Can / can't (habilidad) ─────────────────────────────
   { id: 'cn-01', topic: 'can', prompt: 'I can ___ very fast.', options: ['run', 'to run', 'running'], answer: 0, tip: 'Después de can va el verbo solo, sin "to": can run.', tags: ['parque'] },
-  { id: 'cn-02', topic: 'can', prompt: 'Fish can swim, but they ___ walk.', options: ["don't", "can't", 'not can'], answer: 1, tip: 'El negativo de can es can\'t (cannot).', tags: ['parque'] },
-  { id: 'cn-03', topic: 'can', prompt: '___ you ride a bike?', options: ['Do', 'Are', 'Can'], answer: 2, tip: 'Para preguntar por una habilidad: Can you...?', tags: ['parque'] },
+  { id: 'cn-02', topic: 'can', prompt: 'Fish can swim, but they ___ walk.', options: ["aren't", "can't", 'not can'], answer: 1, tip: 'El negativo de can es can\'t (cannot).', tags: ['parque'] },
+  { id: 'cn-03', topic: 'can', prompt: '___ you ride a bike?', options: ['Is', 'Are', 'Can'], answer: 2, tip: 'Para preguntar por una habilidad: Can you...?', tags: ['parque'] },
   { id: 'cn-04', topic: 'can', prompt: 'Can your sister swim? — Yes, she ___.', options: ['can', 'does', 'is'], answer: 0, tip: 'La respuesta corta repite can: Yes, she can.', tags: ['parque'] },
   { id: 'cn-05', topic: 'can', prompt: 'Kevin ___ play the piano.', options: ['cans', 'can', 'can to'], answer: 1, tip: 'Can no cambia nunca: I can, he can, she can. Nunca "cans".', tags: ['parque'] },
   { id: 'cn-06', topic: 'can', prompt: 'Babies can\'t ___.', options: ['to drive', 'driving', 'drive'], answer: 2, tip: 'Después de can\'t va el verbo solo: can\'t drive.', tags: ['barrio'] },

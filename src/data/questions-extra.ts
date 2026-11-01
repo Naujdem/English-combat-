@@ -21,12 +21,12 @@ export const EXTRA_QUESTIONS: Question[] = [
   { id: 'who-02', topic: 'to-be', kind: 'order', prompt: '¿Cuándo es tu cumpleaños?', options: ['When', 'is', 'your', 'birthday?'], answer: 0, tip: 'When + is + your birthday?', tags: ['aula'] },
 
   // ── Conectores: and, but, or ────────────────────────────
-  { id: 'ab-01', topic: 'likes', prompt: "I like tea, ___ I don't like coffee.", options: ['and', 'but', 'or'], answer: 1, tip: 'Para contrastar (sí... pero no...): but.', tags: ['barrio'] },
+  { id: 'ab-01', topic: 'likes', prompt: "I like tea, ___ I don't like coffee.", options: ['or', 'but', 'is'], answer: 1, tip: 'Para contrastar (sí... pero no...): but.', tags: ['barrio'] },
   { id: 'ab-02', topic: 'likes', prompt: 'Maya likes reading ___ drawing.', options: ['and', 'but', 'or'], answer: 0, tip: 'Para sumar dos cosas: and.', tags: ['casa-maya'] },
-  { id: 'ab-03', topic: 'likes', prompt: 'Do you want juice ___ water?', options: ['but', 'and', 'or'], answer: 2, tip: 'Para elegir entre dos cosas: or.', tags: ['barrio'] },
+  { id: 'ab-03', topic: 'likes', prompt: 'Do you want juice ___ water? — Juice, please.', options: ['but', 'and', 'or'], answer: 2, tip: 'Para elegir entre dos cosas: or.', tags: ['barrio'] },
   { id: 'ab-04', topic: 'likes', prompt: "Kevin can swim, ___ he can't fly.", options: ['or', 'but', 'and'], answer: 1, tip: 'Contraste: but.', tags: ['parque'] },
   { id: 'ab-05', topic: 'likes', prompt: 'Leo loves games ___ music.', options: ['and', 'or', 'but'], answer: 0, tip: 'Las dos cosas le encantan: and.', tags: ['casa-leo'] },
-  { id: 'ab-06', topic: 'likes', prompt: 'Is your cat black ___ white?', options: ['and', 'but', 'or'], answer: 2, tip: 'Pregunta para elegir: or.', tags: ['barrio'] },
+  { id: 'ab-06', topic: 'likes', prompt: 'Is your cat big ___ small?', options: ['and', 'but', 'or'], answer: 2, tip: 'Pregunta para elegir: or.', tags: ['barrio'] },
   { id: 'abf-01', topic: 'likes', kind: 'fix', prompt: "I love pizza or I don't like salad!", options: ["I love pizza, but I don't like salad.", "I love pizza and I don't like salad or.", "I love pizza or I like salad."], answer: 0, tip: 'Dos ideas opuestas se unen con but.', tags: ['barrio'] },
   { id: 'abo-01', topic: 'likes', kind: 'order', prompt: 'Me gusta leer, pero odio cocinar.', options: ['I', 'like', 'reading,', 'but', 'I', 'hate', 'cooking.'], answer: 0, tip: 'I like reading, but I hate cooking.', tags: ['casa-maya'] },
 ]
