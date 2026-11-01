@@ -11,6 +11,7 @@ import { LISTEN_QUESTIONS } from './questions-listen'
 import { TERRAZA_QUESTIONS } from './questions-terraza'
 import { HOSPITAL_QUESTIONS } from './questions-hospital'
 import { A2_CITY_QUESTIONS } from './questions-a2-city'
+import { A2_WORKSHOP_QUESTIONS } from './questions-a2-workshop'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -340,6 +341,7 @@ export const QUESTIONS: Question[] = [
   ...TERRAZA_QUESTIONS,
   ...HOSPITAL_QUESTIONS,
   ...A2_CITY_QUESTIONS,
+  ...A2_WORKSHOP_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -786,6 +788,25 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Invitar: Would you like to + verbo? → Would you like to come?',
       "Aceptar: Sure! / Good idea! / I'd love to. · Rechazar: Sorry, I can't. I have to...",
       'Frecuencia: always · usually · sometimes · never, antes del verbo (I usually walk) y después de be (I am never late).',
+    ],
+  },
+  requests: {
+    name: 'Peticiones corteses: can / could / would you mind',
+    level: 'A2',
+    lesson: [
+      'Pedir: Can you + verbo...? → Can you pass me the hammer? · Más cortés: Could you + verbo...?',
+      'Muy cortés: Would you mind + verbo con -ing...? → Would you mind holding the ladder?',
+      "Aceptar: Sure, no problem! / Of course! · Rechazar: Sorry, I can't. I'm busy.",
+      'Taller: a hammer · a screwdriver · a wrench · a ladder · gloves · a toolbox · a workbench.',
+    ],
+  },
+  instructions: {
+    name: 'Instrucciones y responsabilidades: first / then / after that',
+    level: 'A2',
+    lesson: [
+      'Pasos en orden: First, ... · Then, ... · After that, ... · Finally, ...',
+      'En las instrucciones el verbo va tal cual: First, turn off the machine.',
+      "Responsabilidades: It's my job to + verbo · be responsible for + algo · have to / has to + verbo.",
     ],
   },
   'past-simple': {

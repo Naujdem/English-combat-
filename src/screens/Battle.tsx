@@ -684,6 +684,8 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       const base = { ...s, defeated: [...s.defeated, enemy.id], hp: s.maxHp }
       // El desconocido solo retrocede: no da fragmento, pieza, temas ni atuendo
       if (enemy.standoff) return base
+      // Jefe de A2: libera una anomalía (fragmento) en vez de pieza del reloj, temas o atuendo
+      if (enemy.release) return base
       if (enemy.echo) return { ...base, items: { ...s.items, shield: Math.min(2, s.items.shield + 1) } }
       if (enemy.optional) {
         const r = enemy.reward
@@ -1037,6 +1039,12 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
             <p className="mt-1 text-[16px]">
               Leo ahora es tu amigo. Si fallas en un combate, te dará una pista. Tu aventura empieza en la escuela.
             </p>
+          ) : enemy.release ? (
+            <div className="my-1 rounded-xl bg-panel-2 p-3 text-[15px]">
+              <b className="text-gold">{enemy.release.title}</b> {enemy.release.text}
+            </div>
+          ) : enemy.echo ? (
+            <p className="mt-1 text-[16px]">{enemy.person} vuelve a ser como antes. Ganaste un escudo.</p>
           ) : enemy.optional ? (
             <p className="mt-1 text-[16px]">{enemy.person} te regaló un atuendo nuevo. Póntelo desde Atuendos.</p>
           ) : enemy.kind === 'minion' ? (
