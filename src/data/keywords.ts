@@ -186,6 +186,17 @@ export const KEYWORDS: Record<string, Keyword[]> = {
     ['turn off', 'apagar', 'First, turn off the radio.'],
     ['be careful', 'ten cuidado', 'Be careful! The tools are sharp.'],
   ],
+  'a2-05-library': [
+    ['library', 'biblioteca', 'Yesterday I went to the city library.'],
+    ['librarian', 'bibliotecario, bibliotecaria', 'Mrs. Okafor is the librarian.'],
+    ['went (go)', 'fue, fui', 'Last week we went to the library.'],
+    ['saw (see)', 'vio, vi', 'The reader saw a purple light.'],
+    ['bought (buy)', 'compró, compré', 'A man bought an old book.'],
+    ['wrote (write)', 'escribió, escribí', 'The reader wrote a note.'],
+    ['last week', 'la semana pasada', 'Someone returned the book last week.'],
+    ['bookmark', 'separador', 'There was a bookmark in the old book.'],
+    ['older than', 'más viejo que', 'This book is older than the library.'],
+  ],
 }
 
 /** Escenarios sin final de capítulo (A2): el id de `opened` que los da por terminados */
@@ -193,4 +204,5 @@ export const KEYWORD_DONE: Record<string, string> = {
   'a2-hospital': 'a2-02-pieces',
   'a2-03-city': 'a2-03-close',
   'a2-04-workshop': 'a2-04-close',
+  'a2-05-library': 'a2-05-close',
 }

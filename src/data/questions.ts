@@ -12,6 +12,7 @@ import { TERRAZA_QUESTIONS } from './questions-terraza'
 import { HOSPITAL_QUESTIONS } from './questions-hospital'
 import { A2_CITY_QUESTIONS } from './questions-a2-city'
 import { A2_WORKSHOP_QUESTIONS } from './questions-a2-workshop'
+import { A2_LIBRARY_QUESTIONS } from './questions-a2-library'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -342,6 +343,7 @@ export const QUESTIONS: Question[] = [
   ...HOSPITAL_QUESTIONS,
   ...A2_CITY_QUESTIONS,
   ...A2_WORKSHOP_QUESTIONS,
+  ...A2_LIBRARY_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -426,7 +428,7 @@ function canWriteBlank(q: Question) {
 
 /** Verbo base de una pregunta de pasado (went → go, stopped → stop), o null si no se puede saber */
 export function pastBase(q: Question): string | null {
-  if (q.topic !== 'past-irregular' && q.topic !== 'past-regular') return null
+  if (q.topic !== 'past-irregular' && q.topic !== 'past-regular' && q.topic !== 'past-simple') return null
   const a = q.options[q.answer].toLowerCase()
   if (!/^[a-z]+$/.test(a)) return null
   const irr = IRREGULAR_VERBS.find((v) => v.past === a)
@@ -810,9 +812,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
     ],
   },
   'past-simple': {
-    name: 'Pasado simple',
+    name: 'Pasado simple: regulares, irregulares y conectores',
     level: 'A2',
-    lesson: ['Próximamente.'],
+    lesson: [
+      'Regulares: verbo + -ed → visited, listened · si termina en -e, solo -d (arrived) · consonante + y → -ied (studied) · stop → stopped.',
+      'Irregulares comunes: go → went · see → saw · buy → bought · eat → ate · write → wrote · hear → heard · give → gave.',
+      'El pasado es igual para todas las personas: I went, she went, they went.',
+      'Cuándo: yesterday · last week · last night · two days ago. Para contar en orden: First, ... Then, ... After that, ... Finally, ...',
+      'Comparar: adjetivo corto + -er + than → older than, bigger than (sin "more").',
+    ],
   },
   future: {
     name: 'Futuro',

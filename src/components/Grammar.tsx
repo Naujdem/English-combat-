@@ -228,6 +228,9 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
     case 'requests':
       if (negative) return { title: "Para decir que no con amabilidad: Sorry, I can't. + la razón:", parts: [K("Sorry, I can't."), '+', R("I'm busy...")] }
       return { title: 'Para pedir: Can / Could + you + verbo? · Would you mind + verbo con -ing?', parts: [K('Can / Could you · Would you mind'), '+', V('verbo / verbo-ing'), '+', R('...'), '+', K('please?')] }
+    case 'past-simple':
+      if (/\bthan\b/i.test(sentence)) return { title: 'Para comparar: adjetivo corto + -er + than (older, bigger):', parts: [S('Sujeto'), '+', V('is / was'), '+', K('older / bigger'), '+', K('than'), '+', R('...')] }
+      return { title: 'Pasado: regulares + -ed (visited) · irregulares con su forma (went, saw) · yesterday / last week:', parts: [S('Sujeto'), '+', V('verbo en pasado'), '+', R('...'), '+', K('yesterday / last week')] }
     case 'instructions':
       return { title: "Pasos en orden con el verbo tal cual · It's my job to + verbo · responsible for:", parts: [K('First / Then / After that / Finally'), '+', V('verbo'), '+', R('...')] }
     case 'time':

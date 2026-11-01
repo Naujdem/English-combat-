@@ -1217,6 +1217,141 @@ NPC_TASKS['a2-04-close'] = {
   },
 }
 
+// ── A2-05 — Words That Don't Belong (biblioteca, presente; escena en data/a2Library.ts) ──
+// Orden: Leo (llega) → Leo (lección de Past Simple + práctica) → Mrs. Okafor (testimonio) → Mrs. Okafor (Reconstruct the Story)
+//        → el eco de tinta (jefe ligero en 2 fases) → Leo (cierre con el fragmento y una pista).
+NPC_TASKS['a2-05-leo'] = {
+  done: 'a2-05-arrive',
+  steps: [
+    {
+      text: "{name}, Mr. Hale's note had no name. So yesterday I called the library. Mrs. Okafor said strange things happened here!",
+      es: '{name}, la nota del señor Hale no tenía nombre. Así que ayer llamé a la biblioteca. ¡La señora Okafor dijo que aquí pasaron cosas raras!',
+      choice: { ask: 'Quieres saber qué pasó. ¿Qué le preguntas a Leo?', options: ['Really? What happened yesterday?', 'Really? What happen yesterday?', 'Really? What did happened yesterday?'], answer: 0, tip: 'Pregunta por el sujeto: What happened...? (sin did).' },
+    },
+    {
+      text: 'Some words in the books changed. People here talk about the past all day, so first... a little lesson!',
+      es: 'Algunas palabras de los libros cambiaron. Aquí la gente habla del pasado todo el día, así que primero... ¡una pequeña lección!',
+      choice: { ask: '¿Qué le dices?', options: ['OK! I studied a lot last week.', 'OK! I studyed a lot last week.', 'OK! I study a lot last week.'], answer: 0, tip: 'study → studied (y cambia a i).' },
+    },
+  ],
+  reward: {
+    text: 'Leo: "Talk to me when you are ready for the lesson."',
+    es: 'Háblame cuando estés listo para la lección.',
+    sub: 'Habla otra vez con Leo: te enseña el pasado simple, los conectores de tiempo y a comparar.',
+    say: 'Talk to me when you are ready.',
+  },
+}
+
+// La lección de Leo (tema past-simple) y la práctica guiada: completar, ordenar, corregir, escribir y conectar
+NPC_TASKS['a2-05-practice'] = {
+  npc: 'a2-05-leo',
+  done: 'a2-05-practice',
+  lesson: 'past-simple',
+  activity: 'practice',
+  practice: 'past-simple',
+  practiceIds: ['a2-05-r1', 'a2-05-i5', 'a2-05-i3', 'W-a2-05-i1', 'a2-05-c1'],
+  steps: [],
+  reward: {
+    text: 'Leo: "Well done! Mrs. Okafor is at the front desk. Ask her what happened."',
+    es: '¡Bien hecho! La señora Okafor está en el mostrador. Pregúntale qué pasó.',
+    sub: 'Mrs. Okafor, la bibliotecaria, está frente al mostrador.',
+    say: 'Ask her what happened.',
+  },
+}
+
+// El testimonio de la bibliotecaria, en pasado
+NPC_TASKS['a2-05-librarian'] = {
+  done: 'a2-05-testimony',
+  requires: {
+    id: 'a2-05-practice',
+    text: 'Mrs. Okafor: "Welcome! Please talk to your friend Leo first. He is by the shelves."',
+    es: '¡Bienvenido! Por favor habla primero con tu amigo Leo. Está junto a las estanterías.',
+    sub: 'Leo está cerca de las estanterías.',
+  },
+  steps: [
+    {
+      text: "Hello! You are Leo's friend. I'm Mrs. Okafor. Thank you for coming. Yesterday was a very strange day here.",
+      es: '¡Hola! Eres el amigo de Leo. Soy la señora Okafor. Gracias por venir. Ayer fue un día muy raro aquí.',
+      choice: { ask: 'Pídele que te cuente.', options: ['What did you see?', 'What did you saw?', 'What you saw?'], answer: 0, tip: 'Pregunta en pasado: did + verbo simple (see, no saw).' },
+    },
+    {
+      text: 'A reader opened an old book about clocks. Then the words started to change: "goed", "buyed", "eated"... Words that don\'t belong!',
+      es: 'Un lector abrió un libro viejo sobre relojes. Luego las palabras empezaron a cambiar: "goed", "buyed", "eated"... ¡Palabras que no pertenecen!',
+      choice: { ask: 'Miras el libro desde lejos. ¿Qué dices?', options: ['That book is older than the library!', 'That book is more old than the library!', 'That book is oldest than the library!'], answer: 0, tip: 'Comparar: old → older than.' },
+    },
+    {
+      text: 'The reader wrote everything in a note. But look... the lines are all mixed up now!',
+      es: 'El lector escribió todo en una nota. Pero mira... ¡ahora las líneas están todas revueltas!',
+    },
+  ],
+  reward: {
+    text: 'Mrs. Okafor: "Could you put the story in order?"',
+    es: '¿Podrías ordenar la historia?',
+    sub: 'Habla otra vez con Mrs. Okafor para reconstruir la nota del lector.',
+    say: 'Could you put the story in order?',
+  },
+}
+
+// Reconstruct the Story (Sequence Master): ordenar el testimonio del lector
+NPC_TASKS['a2-05-sequence'] = {
+  npc: 'a2-05-librarian',
+  done: 'a2-05-sequence',
+  activity: 'sequence',
+  requires: {
+    id: 'a2-05-testimony',
+    text: 'Mrs. Okafor: "Please, talk to me first."',
+    es: 'Por favor, habla conmigo primero.',
+    sub: 'Mrs. Okafor está frente al mostrador.',
+  },
+  sequence: {
+    title: 'Reconstruct the Story',
+    intro: { en: "The reader's note is mixed up. Let's put what happened yesterday in order.", es: 'La nota del lector está revuelta. Ordenemos lo que pasó ayer.' },
+    steps: [
+      { en: 'Yesterday morning, I arrived at the library at nine.', es: 'Ayer en la mañana llegué a la biblioteca a las nueve.' },
+      { en: 'First, I took an old book about clocks from the shelf.', es: 'Primero, tomé un libro viejo sobre relojes de la estantería.' },
+      { en: 'Then, I saw a little purple light between the pages.', es: 'Luego, vi una lucecita morada entre las páginas.' },
+      { en: 'After that, the words changed: "goed", "buyed", "eated"!', es: 'Después, las palabras cambiaron: "goed", "buyed", "eated".' },
+      { en: 'Finally, I closed the book and called Mrs. Okafor.', es: 'Por último, cerré el libro y llamé a la señora Okafor.' },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "The story is complete! But... look at the reading table. The ink is moving!"',
+    es: '¡La historia está completa! Pero... mira la mesa de lectura. ¡La tinta se mueve!',
+    sub: 'Un eco de tinta salió del libro viejo junto a la mesa de lectura. Choca con él: primero pasados regulares, luego irregulares.',
+    say: 'The ink is moving!',
+  },
+}
+
+// Cierre: el fragmento liberado y una pista breve (sin revelar nada de B1/B2)
+NPC_TASKS['a2-05-close'] = {
+  npc: 'a2-05-leo',
+  done: 'a2-05-close',
+  requires: {
+    id: 'a2-05-ink-echo',
+    text: 'Leo: "The ink is everywhere! Could you stop it? Be careful!"',
+    es: '¡La tinta está por todas partes! ¿Podrías detenerla? ¡Ten cuidado!',
+    sub: 'El eco de tinta está junto a la mesa de lectura.',
+  },
+  steps: [
+    {
+      text: 'Look, there was a bookmark in the old book. Someone returned it last week... and there is a drawing of a clock on it. It looks like yours!',
+      es: 'Mira, había un separador en el libro viejo. Alguien lo devolvió la semana pasada... y tiene el dibujo de un reloj. ¡Se parece al tuyo!',
+      choice: { ask: 'Comparas el dibujo con tu reloj. ¿Qué dices?', options: ['Yes! But the drawing was bigger than my clock.', 'Yes! But the drawing was more big than my clock.', 'Yes! But the drawing were bigger than my clock.'], answer: 0, tip: 'big → bigger than · the drawing → was.' },
+    },
+    {
+      text: 'An old radio, an old book... The purple lights hide in old things. We found two. Let\'s keep looking!',
+      es: 'Una radio vieja, un libro viejo... Las luces moradas se esconden en cosas viejas. Encontramos dos. ¡Sigamos buscando!',
+    },
+  ],
+  reward: {
+    text: 'Leo: "We found two. Let\'s keep looking!"',
+    es: 'Encontramos dos. ¡Sigamos buscando!',
+    sub: 'A2-05 completada. Guardaste otro fragmento morado y el separador con el dibujo del reloj.',
+    say: "Let's keep looking!",
+  },
+}
+
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */
 export function taskOf(npcId: string, opened: string[]): { id: string; task: NpcTask; blocked: boolean } | null {
   for (const [id, t] of Object.entries(NPC_TASKS)) {
