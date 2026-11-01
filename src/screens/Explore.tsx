@@ -23,6 +23,7 @@ import { Notebook } from '../components/Notebook'
 import { LostAsk } from '../components/LostAsk'
 import { LOST_INTRO, LOST_ITEMS } from '../data/lostFound'
 import { NPCS } from '../data/npcs'
+import { OneMoreRound } from '../components/OneMoreRound'
 import { Registration } from '../components/Registration'
 import { WhereIsIt } from '../components/WhereIsIt'
 import { sfx } from '../game/sfx'
@@ -976,6 +977,10 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'predict') return <Predict onClose={finish} />
             if (t.activity === 'speech') return <Speech onClose={finish} />
             if (t.activity === 'clocks') return <BrokenClocks onClose={finish} />
+            if (t.activity === 'round' && t.round) {
+              const who = NPCS[t.npc ?? task]
+              return <OneMoreRound name={who.name} look={who.look} items={t.round.items} lines={t.round.lines} onClose={finish} />
+            }
             if (t.activity === 'party60') return <PartyPlan onClose={finish} />
             if (t.activity === 'tour') return <TourPlan onClose={finish} />
             if (t.activity === 'plan') return <LessonPlan onClose={finish} />

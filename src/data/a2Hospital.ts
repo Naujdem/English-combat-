@@ -1,28 +1,43 @@
-import type { SceneDef, Zone } from '../game/types'
+import type { GameState, SceneDef, Zone } from '../game/types'
 
 /**
  * A2-01 — A New Beginning. Habitación del hospital donde despierta el protagonista justo después del final de A1.
  * Primera versión: solo la habitación explorable (sin personajes, diálogos ni enemigos todavía).
  * Leyenda nueva:  5  cama de hospital
  * Tu cama (1,3), la mesa de noche (1,4, mesa K), el expediente médico (1,2, gabinete F) y las ventanas se pueden examinar.
- * El tamaño (12×12) es mayor que la cámara (11 casillas) para que la vista no quede vacía.
+ * Una sola escena con tres zonas: la habitación (arriba a la izquierda, como en la primera versión), la recepción
+ * (arriba a la derecha) y el pasillo que las une (abajo). Se amplió solo hacia la derecha y hacia abajo,
+ * así las posiciones de la habitación guardadas antes siguen siendo válidas.
+ * Personajes: la médica (habitación), tu amigo (pasillo) y la recepcionista. Sus tareas están en data/tasks.ts.
  */
 const MAP = [
-  '############',
-  '#W...##...W#',
-  '#F.....p...#',
-  '#5.........#',
-  '#K.........#',
-  '#..........#',
-  '#5.........#',
-  '#5.........#',
-  '#........A.#',
-  '#p.......A.#',
-  '#....d.....#',
-  '############',
+  '######################',
+  '#W...##...W#.p.....p.#',
+  '#F.....p...#..CCCCC..#',
+  '#5.........#.........#',
+  '#K.........#.........#',
+  '#..........#.H.....H.#',
+  '#5.........#.H.....H.#',
+  '#5.........#.........#',
+  '#........A.#.........#',
+  '#p.......A.#.p.....p.#',
+  '#....d.....#.........#',
+  '#####d##########d#####',
+  '#....................#',
+  '#..p.....H....H...p..#',
+  '#....................#',
+  '######################',
 ]
-/** Se reutiliza un piso existente (claro, limpio) para no ampliar las zonas */
-const zoneAt = (): Zone => 'aula-futuro'
+/** Se reutilizan pisos existentes para no ampliar las zonas */
+function zoneAt(x: number, y: number): Zone {
+  if (y >= 12) return 'lobby-torre'
+  if (x >= 12) return 'recepcion'
+  return 'aula-futuro'
+}
+
+/** Al hablar con la médica, el protagonista descubre que el centro del reloj está vacío */
+export const A2_CORE_MISSING = 'a2-01-doctor'
+export const clockCoreMissing = (s: GameState) => s.opened.includes(A2_CORE_MISSING)
 
 export const A2_HOSPITAL: SceneDef = {
   id: 'a2-hospital',
@@ -33,9 +48,15 @@ export const A2_HOSPITAL: SceneDef = {
   // Sin jefe todavía: la puerta del jefe apunta a un muro y no hace falta ninguna llave
   bossDoor: { x: 0, y: 0 },
   keysNeeded: 0,
-  entities: [],
+  entities: [
+    { type: 'npc', id: 'a2-doctor', x: 4, y: 4 },
+    { type: 'npc', id: 'a2-friend', x: 7, y: 13 },
+    { type: 'npc', id: 'a2-receptionist', x: 16, y: 3 },
+  ],
   labels: [
     { text: 'Habitación', x: 6, y: 1 },
+    { text: 'Recepción', x: 16, y: 1 },
+    { text: 'Pasillo', x: 11, y: 14 },
   ],
   zoneAt,
   examine: {
@@ -46,9 +67,15 @@ export const A2_HOSPITAL: SceneDef = {
     '10,1': { text: 'You can see the city through the window.', sub: 'Puedes ver la ciudad por la ventana.', say: 'You can see the city through the window.' },
   },
   requirements: [],
-  chips: () => [{ label: 'A2-01 · A New Beginning', done: false }],
+  chips: (s) => [
+    { label: 'A2-01 · A New Beginning', done: s.opened.includes('a2-01-belongings') },
+    { label: 'Médica', done: s.opened.includes('a2-01-doctor') },
+    { label: 'Tu amigo', done: s.opened.includes('a2-01-friend') },
+    { label: 'One More Round!', done: s.opened.includes('a2-01-round') },
+    { label: 'Pertenencias', done: s.opened.includes('a2-01-belongings') },
+  ],
   intro: {
-    first: 'Abres los ojos en la habitación de un hospital. Todo terminó en la torre Green Valley... ¿o no? Muévete un poco para despertarte.',
-    later: 'La habitación del hospital. A2 empieza aquí.',
+    first: 'Abres los ojos en la habitación de un hospital. Todo terminó en la torre Green Valley... ¿o no? Muévete un poco para despertarte: la médica está junto a tu cama.',
+    later: 'El hospital: tu habitación, el pasillo y la recepción. Habla con la médica, con tu amigo y pide tus pertenencias en la recepción.',
   },
 }

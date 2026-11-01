@@ -1,5 +1,6 @@
 import type { TopicId } from '../game/types'
 import type { MiniStep } from '../components/MiniTalk'
+import type { RoundItem } from '../components/OneMoreRound'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -17,7 +18,9 @@ export type NpcTask = {
   shield?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round'
+  /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió */
+  round?: { items: RoundItem[]; lines: Record<'intro' | 'ask' | 'win' | 'lose', { text: string; es: string }> }
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
   vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
@@ -532,6 +535,132 @@ NPC_TASKS['diana-old'] = {
     es: 'El pasado, hoy, mañana... y un gran gracias. ¡Es un discurso perfecto!',
     sub: 'Diana te da su permiso para subir a la dirección. Ahora el señor Stone ya no puede decir que no la ayudaste.',
     say: "It's a perfect speech! Thank you!",
+  },
+}
+
+// ── A2-01 — A New Beginning (hospital). Orden: médico → amigo (charla) → amigo (One More Round!) → recepción ──
+NPC_TASKS['a2-doctor'] = {
+  done: 'a2-01-doctor',
+  steps: [
+    {
+      text: "Oh, you're awake! Good morning. I'm your doctor. How are you feeling today?",
+      es: '¡Oh, ya despertaste! Buenos días. Soy tu médica. ¿Cómo te sientes hoy?',
+      choice: { ask: '¿Qué le respondes?', options: ["I'm feeling a bit tired, but I'm OK.", "I feeling a bit tired, but I'm OK.", "I'm feel a bit tired, but I'm OK."], answer: 0, tip: 'Para decir cómo te sientes ahora: I am (I\'m) + verbo con -ing: I\'m feeling...' },
+    },
+    {
+      text: "That's normal. You need to rest a little more. Do you remember anything?",
+      es: 'Es normal. Necesitas descansar un poco más. ¿Recuerdas algo?',
+      choice: { ask: '¿Qué le dices?', options: ['Not really. I only remember a white light.', 'Not really. I only remembers a white light.', 'Not really. I am only remember a white light.'], answer: 0, tip: 'Con "I" el verbo va sin -s y sin "am": I remember.' },
+    },
+    {
+      text: 'This old clock was with you when you arrived. Here you are. It looks very special.',
+      es: 'Este reloj viejo estaba contigo cuando llegaste. Aquí tienes. Se ve muy especial.',
+      choice: { ask: 'Miras el reloj. Las cinco piezas siguen ahí... pero algo falta. ¿Qué dices?', options: ['Wait... the center of the clock is empty!', 'Wait... the center of the clock are empty!', 'Wait... the center of the clock empty!'], answer: 0, tip: '"The center" es uno solo: the center is.' },
+    },
+    {
+      text: "Hmm, I'm sorry. I don't know anything about clocks. Oh, your friend is waiting for you in the hallway.",
+      es: 'Mmm, lo siento. No sé nada de relojes. Ah, tu amigo te está esperando en el pasillo.',
+      choice: { ask: '¿Qué le respondes?', options: ['Thank you, doctor. I can go and see my friend now.', 'Thank you, doctor. I can to go and see my friend now.', 'Thank you, doctor. I can going to see my friend now.'], answer: 0, tip: 'Después de "can" va el verbo tal cual, sin "to": I can go.' },
+    },
+  ],
+  reward: {
+    text: 'The doctor: "Take it easy, OK?"',
+    es: 'Tómalo con calma, ¿sí?',
+    sub: 'Las cinco piezas del reloj siguen en su lugar, pero el centro está vacío. Tu amigo te espera en el pasillo.',
+    say: 'Take it easy, OK?',
+  },
+}
+
+NPC_TASKS['a2-friend'] = {
+  done: 'a2-01-friend',
+  requires: {
+    id: 'a2-01-doctor',
+    text: 'Your friend: "Hey! Go and talk to the doctor first. I can wait!"',
+    es: '¡Oye! Ve a hablar primero con la médica. ¡Yo puedo esperar!',
+    sub: 'La médica está en tu habitación.',
+  },
+  steps: [
+    {
+      text: "There you are! I was so worried about you. How do you feel?",
+      es: '¡Ahí estás! Estaba muy preocupado por ti. ¿Cómo te sientes?',
+      choice: { ask: '¿Qué le respondes?', options: ["Much better, thanks. It's good to see you!", "Much better, thanks. It's good see you!", "Much better, thanks. Is good to see you!"], answer: 0, tip: "It's good to see you: it is + good + to + verbo." },
+    },
+    {
+      text: 'I came this morning, but you were asleep. The nurses were very nice to me.',
+      es: 'Vine esta mañana, pero estabas durmiendo. Las enfermeras fueron muy amables conmigo.',
+      choice: { ask: '¿Qué le dices?', options: ['Thanks for coming. That was really kind of you.', 'Thanks for come. That was really kind of you.', 'Thanks for coming. That were really kind of you.'], answer: 0, tip: 'Thanks for + verbo con -ing (coming). "That" va con was.' },
+    },
+    {
+      text: "Hey, do you remember our old game? I put some things on a table, and you find what moved. Let's play one more round!",
+      es: 'Oye, ¿te acuerdas de nuestro viejo juego? Pongo unas cosas en una mesa y tú encuentras lo que se movió. ¡Juguemos una ronda más!',
+      choice: { ask: '¿Qué le respondes?', options: ["OK, let's play!", "OK, let's playing!", 'OK, lets to play!'], answer: 0, tip: "Let's + verbo tal cual: let's play." },
+    },
+  ],
+  reward: {
+    text: 'Your friend: "Great! Talk to me when you are ready."',
+    es: '¡Genial! Háblame cuando quieras.',
+    sub: 'Habla otra vez con tu amigo para jugar One More Round!',
+    say: 'Great! Talk to me when you are ready.',
+  },
+}
+
+NPC_TASKS['a2-friend-round'] = {
+  npc: 'a2-friend',
+  done: 'a2-01-round',
+  activity: 'round',
+  steps: [],
+  round: {
+    items: [
+      { id: 'cup', icon: '☕', en: 'cup', es: 'taza' },
+      { id: 'book', icon: '📕', en: 'book', es: 'libro' },
+      { id: 'apple', icon: '🍎', en: 'apple', es: 'manzana' },
+      { id: 'phone', icon: '📱', en: 'phone', es: 'teléfono' },
+    ],
+    lines: {
+      intro: { text: 'Look at the table carefully. Where are the cup, the book, the apple and the phone?', es: 'Mira la mesa con atención. ¿Dónde están la taza, el libro, la manzana y el teléfono?' },
+      ask: { text: 'OK, open your eyes! One thing moved. Which one?', es: '¡Bien, abre los ojos! Una cosa se movió. ¿Cuál?' },
+      win: { text: 'Yes! The {item} moved. Your memory is still amazing!', es: '¡Sí! La cosa que se movió fue: {item}. ¡Tu memoria sigue siendo increíble!' },
+      lose: { text: "Oh no, it was the {item}! Don't worry, you're still tired. One more round?", es: 'Ay, no, era: {item}. No te preocupes, todavía necesitas descansar. ¿Otra ronda?' },
+    },
+  },
+  reward: {
+    text: 'Your friend: "Now let\'s get your things. The reception is at the end of the hallway."',
+    es: 'Ahora vamos por tus cosas. La recepción está al final del pasillo.',
+    sub: 'Pide tus pertenencias en la recepción.',
+    say: "Now let's get your things.",
+  },
+}
+
+NPC_TASKS['a2-receptionist'] = {
+  done: 'a2-01-belongings',
+  requires: {
+    id: 'a2-01-round',
+    text: 'The receptionist: "Hello! Please wait a moment. Talk to your friend first."',
+    es: '¡Hola! Espera un momento, por favor. Habla primero con tu amigo.',
+    sub: 'Tu amigo está en el pasillo.',
+  },
+  steps: [
+    {
+      text: 'Good afternoon! How can I help you?',
+      es: '¡Buenas tardes! ¿En qué te puedo ayudar?',
+      choice: { ask: '¿Qué le pides?', options: ['Could I have my things, please?', 'Could I having my things, please?', 'I could have my things, please?'], answer: 0, tip: 'Para pedir con cortesía: Could I have... please?' },
+    },
+    {
+      text: 'Of course. Just a moment, please... Here you are: your bag and your jacket.',
+      es: 'Claro. Un momento, por favor... Aquí tienes: tu bolso y tu chaqueta.',
+      choice: { ask: '¿Qué le dices?', options: ['Thank you very much!', "You're welcome!", 'Excuse me!'], answer: 0, tip: 'Te entrega algo, así que agradeces: Thank you very much!' },
+    },
+    {
+      text: 'Please check your bag. Is everything there?',
+      es: 'Por favor revisa tu bolso. ¿Está todo?',
+      choice: { ask: 'Revisas el bolso. ¿Qué respondes?', options: ['Yes, everything is here.', 'Yes, everything are here.', 'Yes, all is here.'], answer: 0, tip: '"Everything" va con is: everything is here.' },
+    },
+  ],
+  reward: {
+    text: 'The receptionist: "Take care, and have a nice day!"',
+    es: '¡Cuídate y que tengas un buen día!',
+    sub: 'Recibiste tus pertenencias: tu bolso y tu chaqueta.',
+    say: 'Take care, and have a nice day!',
   },
 }
 

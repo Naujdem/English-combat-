@@ -358,6 +358,22 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
       { text: "Would you like a coffee? The robot makes it... but I bring it. Ha ha!", es: '¿Quieres un café? El robot lo prepara... pero yo lo traigo. ¡Ja, ja!' },
     ],
   },
+  // ── A2-01, hospital. Nombres y apariencias provisionales (no canónicos) ──
+  'a2-doctor': {
+    name: 'The doctor',
+    look: { shirt: '#eef3f6', hair: '#3b2a1a', skin: '#c68642', gender: 'female', accessory: 'glasses' },
+    doneLine: { text: 'Rest a little, and drink some water. See you later!', es: 'Descansa un poco y toma algo de agua. ¡Hasta luego!' },
+  },
+  'a2-friend': {
+    name: 'Your friend',
+    look: { shirt: '#3b9d5d', hair: '#2b1d12', skin: '#e0ac69' },
+    doneLine: { text: "Let's get your things at the reception. I'm right behind you!", es: 'Vamos por tus cosas a la recepción. ¡Voy justo detrás de ti!' },
+  },
+  'a2-receptionist': {
+    name: 'The receptionist',
+    look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },
+    doneLine: { text: 'Take care, and have a nice day!', es: '¡Cuídate y que tengas un buen día!' },
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */
