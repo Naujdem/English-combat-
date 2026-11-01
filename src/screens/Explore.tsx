@@ -179,6 +179,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       opened: s.opened.includes(t.done) ? s.opened : [...s.opened, t.done],
       items: t.shield ? { ...s.items, shield: Math.min(2, s.items.shield + 1) } : s.items,
       outfits: t.outfit && !s.outfits.includes(t.outfit) ? [...s.outfits, t.outfit] : s.outfits,
+      hp: t.heal ? s.maxHp : s.hp,
     }))
     setMsg({ text: fill(t.reward.text), es: t.reward.es && fill(t.reward.es), sub: fill(t.reward.sub), say: t.reward.say && fill(t.reward.say), tone: 'good' })
   }

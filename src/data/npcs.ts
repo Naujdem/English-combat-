@@ -383,7 +383,8 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // A2-02: Leo se quedó en el ascensor al final de A1. Llega al hospital cuando la persona especial lo llama
   'a2-leo': {
     name: 'Leo',
-    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    // Misma piel y pelo que Leo en A1; camisa naranja y gafas para no confundirlo con tu amigo (verde)
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
     after: 'a2-02-pieces',
     doneLine: { text: 'You should rest a little. I have to stay with you. Doctor\'s orders!', es: 'Deberías descansar un poco. Tengo que quedarme contigo. ¡Órdenes de la médica!' },
   },

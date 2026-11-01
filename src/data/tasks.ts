@@ -16,6 +16,8 @@ export type NpcTask = {
   steps: MiniStep[]
   reward: { text: string; es?: string; sub: string; say?: string }
   shield?: boolean
+  /** Al completarla, la vida vuelve al máximo */
+  heal?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
   activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice'
@@ -862,6 +864,8 @@ NPC_TASKS['a2-02-pieces'] = {
 // Leo llega al hospital (punto de progresión: a2-02-leo). No cuenta qué le pasó: eso queda para después
 NPC_TASKS['a2-leo'] = {
   done: 'a2-02-leo',
+  // Leo llega: el protagonista se recupera (la vida vuelve al máximo antes de la lección y el combate)
+  heal: true,
   steps: [
     {
       text: '{name}! There you are! I came as fast as I could.',
