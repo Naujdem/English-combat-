@@ -1434,9 +1434,10 @@ NPC_TASKS['a2-05-close'] = {
   },
 }
 
-// ── A2-06 — A Tradition at Risk (granja de los River; escena en data/a2FarmPast.ts). Sin combate ──
-// Orden: Leo (lección past-simple-comparatives + práctica mixta) → el abuelo → el vecino joven → el vecino (Dialogue Under Pressure)
-//        → Elena (Reconstruct the Story: descartar eventos falsos + ordenar los verdaderos) → Elena (diálogo final) → Elena (cierre).
+// ── A2-06 — A Tradition at Risk (granja de los River; escena, esbirro y eco en data/a2FarmPast.ts) ──
+// Orden: Leo (lección past-simple-comparatives + práctica mixta) → el ayudante corrompido (puerta de la casa) → el abuelo → el vecino joven → el vecino (Dialogue Under Pressure)
+//        → Elena (Reconstruct the Story: descartar eventos falsos + ordenar los verdaderos) → Elena (diálogo final)
+//        → el eco de la carrera (junto al río) → Elena (cierre).
 NPC_TASKS['a2-06-leo'] = {
   done: 'a2-06-practice',
   lesson: 'past-simple-comparatives',
@@ -1447,7 +1448,7 @@ NPC_TASKS['a2-06-leo'] = {
   reward: {
     text: "Leo: \"Now you can listen to Elena's family. Use the Past Simple to tell what happened and comparatives when they compare ideas.\"",
     es: 'Ahora puedes escuchar a la familia de Elena. Usa el pasado simple para contar lo que pasó y los comparativos cuando comparen ideas.',
-    sub: 'Habla con el abuelo en la casa familiar y luego con el vecino joven en el establo.',
+    sub: 'Alguien bloquea la puerta de la casa familiar: libera el paso y habla con el abuelo; luego con el vecino joven en el establo.',
     say: "Now you can listen to Elena's family.",
   },
 }
@@ -1722,22 +1723,22 @@ NPC_TASKS['a2-06-elena'] = {
     },
   ],
   reward: {
-    text: 'Elena: "Wait, please. I have something for you."',
-    es: 'Espera, por favor. Tengo algo para ti.',
-    sub: 'Habla otra vez con Elena.',
-    say: 'I have something for you.',
+    text: 'Elena: "Wait... look at the river! Something strange is there. Be careful!"',
+    es: 'Espera... ¡mira el río! Ahí hay algo extraño. ¡Ten cuidado!',
+    sub: 'Un eco apareció junto al río. Enfréntalo y luego vuelve con Elena.',
+    say: 'Look at the river!',
   },
 }
 
-// Cierre: Elena entrega el trozo del estandarte
+// Cierre: Elena entrega el trozo del estandarte (tras vencer al eco de la carrera; taskOf mira opened + defeated)
 NPC_TASKS['a2-06-close'] = {
   npc: 'a2-06-elena',
   done: 'a2-06-close',
   requires: {
-    id: 'a2-06-elena-talk',
-    text: 'Elena: "Tell me what you think happened."',
-    es: 'Dime qué crees que pasó.',
-    sub: 'Habla con Elena.',
+    id: 'a2-06-race-echo',
+    text: 'Elena: "The echo is still by the river! Please, stop it first."',
+    es: '¡El eco sigue junto al río! Por favor, detenlo primero.',
+    sub: 'El eco de la carrera está junto al río.',
   },
   steps: [
     {
