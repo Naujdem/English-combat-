@@ -14,9 +14,10 @@ import { CITY_FUTURE_ENEMIES } from './cityFuture'
 import { BARRIO_FUTURE_ENEMIES } from './barrioFuture'
 import { FARM_FUTURE_ENEMIES } from './farmFuture'
 import { TOWER_FUTURE_ENEMIES } from './towerFuture'
+import { A2_HOSPITAL_ENEMIES } from './a2Hospital'
 
 /** Todos los enemigos del juego, de todos los escenarios */
-const ALL: Record<string, EnemyDef> = { ...SCHOOL_ENEMIES, ...CITY_ENEMIES, ...BARRIO_ENEMIES, ...FARM_ENEMIES, ...OFFICE_ENEMIES, ...SCHOOL_PAST_ENEMIES, ...CITY_PAST_ENEMIES, ...BARRIO_PAST_ENEMIES, ...FARM_PAST_ENEMIES, ...CINEMA_PAST_ENEMIES, ...SCHOOL_FUTURE_ENEMIES, ...CITY_FUTURE_ENEMIES, ...BARRIO_FUTURE_ENEMIES, ...FARM_FUTURE_ENEMIES, ...TOWER_FUTURE_ENEMIES }
+const ALL: Record<string, EnemyDef> = { ...SCHOOL_ENEMIES, ...CITY_ENEMIES, ...BARRIO_ENEMIES, ...FARM_ENEMIES, ...OFFICE_ENEMIES, ...SCHOOL_PAST_ENEMIES, ...CITY_PAST_ENEMIES, ...BARRIO_PAST_ENEMIES, ...FARM_PAST_ENEMIES, ...CINEMA_PAST_ENEMIES, ...SCHOOL_FUTURE_ENEMIES, ...CITY_FUTURE_ENEMIES, ...BARRIO_FUTURE_ENEMIES, ...FARM_FUTURE_ENEMIES, ...TOWER_FUTURE_ENEMIES, ...A2_HOSPITAL_ENEMIES }
 
 /**
  * Esbirros y jefes también piden hablar: decir la frase en voz alta.

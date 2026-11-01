@@ -21,7 +21,9 @@ export function Practice({
   update,
   failed = [],
   review,
+  guided,
   onClose,
+  onDone,
 }: {
   state: GameState
   update: Update
@@ -29,7 +31,11 @@ export function Practice({
   failed?: string[]
   /** Repaso fuera de la historia: el tema elegido */
   review?: TopicId
+  /** Práctica guiada de la historia (después de una lección de Leo), no un repaso */
+  guided?: boolean
   onClose: () => void
+  /** Al terminar todas las preguntas (si no se indica, se usa onClose) */
+  onDone?: () => void
 }) {
   const [queue] = useState<Question[]>(() => {
     if (review) {
@@ -81,7 +87,7 @@ export function Practice({
       <div className="mx-auto flex max-w-md flex-col gap-3 px-3 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-gold">{review ? `Repaso · ${TOPICS[review].name}` : 'Práctica con Leo'}</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-gold">{review && !guided ? `Repaso · ${TOPICS[review].name}` : 'Práctica con Leo'}</p>
             <p className="font-display text-lg">{i < 0 ? (review ? 'La estructura' : 'Antes de volver a intentarlo') : done ? 'Resultado' : `Pregunta ${i + 1} de ${queue.length}`}</p>
           </div>
           <button className={btnGhost} onClick={onClose}>Salir</button>
@@ -102,7 +108,9 @@ export function Practice({
               </div>
             </div>
             <p className="mt-3 text-[15px] text-paper/85">
-              {review ? (
+              {guided ? (
+                <>Ahora practica <b>{names}</b>: {queue.length} frases. Primero armar frases, luego completar y corregir. Aquí no pierdes vida.</>
+              ) : review ? (
                 <>Repaso de <b>{names}</b>. Mira la estructura y practica {queue.length} frases: primero armar frases, luego completar y corregir. Las palabras tienen colores para ayudarte.</>
               ) : (
                 <>Te costó: <b>{names}</b>. Mira la estructura y practica {queue.length} frases. Aquí no pierdes vida, y las palabras tienen colores para ayudarte.</>
@@ -147,7 +155,11 @@ export function Practice({
               {score} de {queue.length} correctas
             </p>
             <p className="mt-1 text-[16px]">
-              {review
+              {guided
+                ? ready
+                  ? 'Leo: "Great job! You\'re ready." Ya sabes dar consejos y entender las reglas.'
+                  : 'Leo: "Good try! You can review it later in your notebook." Puedes repasar este tema cuando quieras.'
+                : review
                 ? ready
                   ? 'Leo: "Great job!" Dominas cada vez mejor este tema.'
                   : 'Leo: "Good try! Practice a little more." Puedes repetir el repaso cuando quieras.'
@@ -155,8 +167,8 @@ export function Practice({
                   ? 'Leo: "You\'re ready! Try again!" Ya puedes volver a retarlo.'
                   : 'Leo: "Good try! Practice a little more." Puedes repasar otra vez en tu cuaderno de errores.'}
             </p>
-            <button className={`${btnPrimary} mt-4 w-full`} onClick={onClose} autoFocus>
-              Volver
+            <button className={`${btnPrimary} mt-4 w-full`} onClick={onDone ?? onClose} autoFocus>
+              {guided ? 'Seguir' : 'Volver'}
             </button>
           </Panel>
         )}

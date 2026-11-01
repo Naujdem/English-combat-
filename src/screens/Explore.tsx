@@ -26,6 +26,7 @@ import { NPCS } from '../data/npcs'
 import { fillNames } from '../data/diary'
 import { interestFriend } from '../data/friends'
 import { OneMoreRound } from '../components/OneMoreRound'
+import { Practice } from '../components/Practice'
 import { Registration } from '../components/Registration'
 import { WhereIsIt } from '../components/WhereIsIt'
 import { sfx } from '../game/sfx'
@@ -150,6 +151,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         if (e.type === 'chest') return !state.opened.includes(e.id)
         // Personajes que solo aparecen después de cierto momento de la historia
         if (e.type === 'npc' && NPCS[e.id]?.after && !state.opened.includes(NPCS[e.id].after!)) return false
+        if (e.type === 'enemy' && e.after && !state.opened.includes(e.after)) return false
         // Los esbirros que vinieron del presente vuelven a su tiempo al ser vencidos
         if (e.type === 'enemy' && ENEMIES[e.id]?.echo && state.defeated.includes(e.id)) return false
         return true
@@ -166,6 +168,20 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       ),
     [scene, doorOpen, partyReady, windmillStill],
   )
+
+  /** Termina la tarea de un personaje: si se completó, se guarda su `done` y se muestra su recompensa */
+  function finishTask(id: string, done: boolean) {
+    const t = NPC_TASKS[id]
+    setTask(null)
+    if (!done || !t) return
+    update((s) => ({
+      ...s,
+      opened: s.opened.includes(t.done) ? s.opened : [...s.opened, t.done],
+      items: t.shield ? { ...s.items, shield: Math.min(2, s.items.shield + 1) } : s.items,
+      outfits: t.outfit && !s.outfits.includes(t.outfit) ? [...s.outfits, t.outfit] : s.outfits,
+    }))
+    setMsg({ text: fill(t.reward.text), es: t.reward.es && fill(t.reward.es), sub: fill(t.reward.sub), say: t.reward.say && fill(t.reward.say), tone: 'good' })
+  }
 
   const interact = useCallback(
     (e: Entity) => {
@@ -672,7 +688,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           </Panel>
         ) : (
           <p className="px-1 pt-2 text-sm text-paper/55">
-            {firstVisit ? scene.intro.first : scene.intro.later}
+            {fill(firstVisit ? scene.intro.first : scene.intro.later)}
           </p>
         )}
       </div>
@@ -966,21 +982,16 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         </Overlay>
       )}
 
-      {task && NPC_TASKS[task] && (
+      {task && NPC_TASKS[task]?.activity === 'practice' && NPC_TASKS[task].practice && (
+        // Práctica guiada con Leo (pantalla completa): al terminarla se marca la tarea
+        <Practice state={state} update={update} review={NPC_TASKS[task].practice} guided onClose={() => finishTask(task, false)} onDone={() => finishTask(task, true)} />
+      )}
+
+      {task && NPC_TASKS[task] && NPC_TASKS[task].activity !== 'practice' && (
         <Overlay>
           {(() => {
             const t = NPC_TASKS[task]
-            const finish = (done: boolean) => {
-              setTask(null)
-              if (!done) return
-              update((s) => ({
-                ...s,
-                opened: s.opened.includes(t.done) ? s.opened : [...s.opened, t.done],
-                items: t.shield ? { ...s.items, shield: Math.min(2, s.items.shield + 1) } : s.items,
-                outfits: t.outfit && !s.outfits.includes(t.outfit) ? [...s.outfits, t.outfit] : s.outfits,
-              }))
-              setMsg({ text: fill(t.reward.text), es: t.reward.es && fill(t.reward.es), sub: fill(t.reward.sub), say: t.reward.say && fill(t.reward.say), tone: 'good' })
-            }
+            const finish = (done: boolean) => finishTask(task, done)
             if (t.activity === 'guess') return <GuessAnimal onClose={finish} />
             if (t.activity === 'pens') return <AnimalPens onClose={finish} />
             if (t.activity === 'planner') return <Planner onClose={finish} />
@@ -991,7 +1002,18 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'clocks') return <BrokenClocks onClose={finish} />
             if (t.activity === 'round' && t.round) {
               const who = npcOf(t.npc ?? task)
-              return <OneMoreRound name={who.name} look={who.look} items={t.round.items} lines={t.round.lines} onClose={finish} />
+              return (
+                <OneMoreRound
+                  name={who.name}
+                  look={who.look}
+                  items={t.round.items}
+                  lines={t.round.lines}
+                  hp={state.hp}
+                  maxHp={state.maxHp}
+                  onHurt={() => update((s) => ({ ...s, hp: Math.max(1, s.hp - 1) }))}
+                  onClose={finish}
+                />
+              )
             }
             if (t.activity === 'party60') return <PartyPlan onClose={finish} />
             if (t.activity === 'tour') return <TourPlan onClose={finish} />
