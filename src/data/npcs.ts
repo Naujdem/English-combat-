@@ -6,7 +6,11 @@ type Line = { text: string; es: string }
  * Personajes que no pelean. Los que tienen `lines` dicen una frase distinta cada vez
  * que les hablas (estudiantes de ambiente). Otros abren una actividad.
  */
-export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: Line; lines?: Line[] }> = {
+/**
+ * interest: el personaje es la persona especial (nombre y aspecto elegidos por el jugador).
+ * after: el personaje solo aparece en el mapa cuando este id está en `opened`.
+ */
+export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: Line; lines?: Line[]; interest?: boolean; after?: string }> = {
   secretary: {
     name: 'Mrs. Lopez',
     look: { shirt: '#6a8caf', hair: '#3b2a1a', skin: '#e0ac69', gender: 'female', accessory: 'glasses' },
@@ -368,6 +372,14 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'Your friend',
     look: { shirt: '#3b9d5d', hair: '#2b1d12', skin: '#e0ac69' },
     doneLine: { text: "Let's get your things at the reception. I'm right behind you!", es: 'Vamos por tus cosas a la recepción. ¡Voy justo detrás de ti!' },
+  },
+  // A2-02: la persona especial (nombre y aspecto del jugador). Aparece cuando vuelve al hospital
+  'a2-interest': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    after: 'a2-02-core',
+    doneLine: { text: 'Rest a little, {name}. I am right here.', es: 'Descansa un poco, {name}. Aquí estoy.' },
   },
   'a2-receptionist': {
     name: 'The receptionist',

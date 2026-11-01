@@ -599,6 +599,81 @@ export const DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // ── A2-02 — Pieces of Yesterday: los recuerdos que el protagonista recuperó en el hospital ──
+  {
+    id: 'a2-02',
+    title: 'A2 · Pieces of Yesterday',
+    unlock: 'a2-02-pieces',
+    words: [
+      { title: 'En el hospital', words: [['hospital', 'hospital'], ['doctor', 'médico, médica'], ['reception', 'recepción'], ['receptionist', 'recepcionista'], ['hallway', 'pasillo'], ['leg', 'pierna'], ['hurt', 'doler, herir'], ['rest', 'descansar'], ['pale', 'pálido']] },
+      { title: 'La torre', words: [['elevator', 'ascensor'], ['stairs', 'escaleras'], ['terrace', 'terraza'], ['edge', 'borde'], ['dark coat', 'abrigo oscuro'], ['center', 'centro']] },
+      { title: 'Verbos en pasado', words: [['went', 'fue, fui (go)'], ['brought', 'trajo (bring)'], ['stayed', 'se quedó (stay)'], ['took', 'tomó, se llevó (take)'], ['hit', 'golpeó (hit)'], ['fell', 'se cayó (fall)'], ['found', 'encontró (find)'], ['disappeared', 'desapareció (disappear)'], ['remembered', 'recordó (remember)']] },
+      { title: 'Ordenar lo que pasó', words: [['first', 'primero'], ['next', 'después'], ['then', 'luego'], ['after that', 'después de eso'], ['in the end', 'al final'], ['last night', 'anoche'], ['yesterday', 'ayer']] },
+    ],
+    versions: [
+      {
+        id: 'a2-02-mine',
+        tense: 'p',
+        tab: 'Mis recuerdos',
+        title: 'Pieces of Yesterday',
+        frame: 'Lo escribes en el hospital, con todo lo que recordaste hoy. Los recuerdos volvieron poco a poco: el ascensor, la terraza, el reloj.',
+        lines: [
+          { en: 'Yesterday, Leo, {iname} and I [went]p to the tower. We [wanted]p to go up to the terrace.', es: 'Ayer, Leo, {iname} y yo fuimos a la torre. Queríamos subir a la terraza.' },
+          { en: 'The elevator [was]p strange. Its doors [were opening]p and [closing]p again and again.', es: 'El ascensor estaba raro. Sus puertas se abrían y se cerraban una y otra vez.' },
+          { en: 'Leo [stayed]p to check it. {iname} and I [went]p up the stairs.', es: 'Leo se quedó a revisarlo. {iname} y yo subimos por las escaleras.' },
+          { en: 'A man in a dark coat [was standing]p at the edge of the terrace. He [was looking]p at the city.', es: 'Un hombre con abrigo oscuro estaba al borde de la terraza. Estaba mirando la ciudad.' },
+          { en: 'We [fought]p. Then he [raised]p his hand, and a purple light [hit]p me. I [fell]p.', es: 'Peleamos. Luego levantó la mano y una luz morada me golpeó. Me caí.' },
+          { en: 'He [opened]p my clock and [took]p the center. The five pieces [stayed]p with me.', es: 'Abrió mi reloj y se llevó el centro. Las cinco piezas se quedaron conmigo.' },
+          { en: 'A dark light [took]p him away. After that, everything [was spinning]p.', es: 'Una luz oscura se lo llevó. Después de eso, todo daba vueltas.' },
+          { en: 'In the end, we [were]p back in the present. I [couldn\'t]p walk well, so {iname} [helped]p me to the hospital.', es: 'Al final estábamos de vuelta en el presente. Yo no podía caminar bien, así que {iname} me ayudó a llegar al hospital.' },
+        ],
+        questions: [
+          { q: 'What was wrong with the elevator?', options: ['Its doors were opening and closing.', 'It was very fast.', 'It was full of people.'], answer: 0, tip: 'El diario dice: "Its doors were opening and closing again and again".' },
+          { q: 'Who stayed to check the elevator?', options: ['Leo.', '{iname}.', 'The man in the dark coat.'], answer: 0, tip: 'El diario dice: "Leo stayed to check it".' },
+          { q: 'What was the man doing on the terrace?', options: ['He was looking at the city.', 'He was checking the elevator.', 'He was walking to the hospital.'], answer: 0, tip: 'El diario dice: "He was looking at the city".' },
+          { q: 'What did the man take?', options: ['The center of the clock.', 'The five pieces.', 'My bag.'], answer: 0, tip: 'El diario dice: "He took the center. The five pieces stayed with me".' },
+        ],
+      },
+      {
+        id: 'a2-02-theirs',
+        tense: 'p',
+        tab: 'Otra mirada',
+        title: "{iname}'s memories",
+        frame: 'Lo que te contó la persona que te acompañó al hospital. Sus recuerdos y los tuyos encajan como piezas.',
+        lines: [
+          { en: 'When we [arrived]p on the terrace, the stranger [was waiting]p for us.', es: 'Cuando llegamos a la terraza, el desconocido nos estaba esperando.' },
+          { en: 'I [was standing]p next to {name}. I [wanted]p to help, but everything [happened]p so fast.', es: 'Yo estaba al lado de {name}. Quería ayudar, pero todo pasó muy rápido.' },
+          { en: 'He [took]p the center of the clock and [disappeared]p in a dark light.', es: 'Se llevó el centro del reloj y desapareció en una luz oscura.' },
+          { en: 'Then we [were]p back in the office. {name} [couldn\'t]p walk, so we [came]p to the hospital slowly, step by step.', es: 'Luego estábamos de vuelta en la oficina. {name} no podía caminar, así que vinimos al hospital despacio, paso a paso.' },
+          { en: 'I [stayed]p all night. I [called]p {name}\'s mom. She [was]p very worried.', es: 'Me quedé toda la noche. Llamé a la mamá de {name}. Estaba muy preocupada.' },
+          { en: 'I [didn\'t see]p Leo after the elevator. I [don\'t know]n where he [is]n.', es: 'No vi a Leo después del ascensor. No sé dónde está.' },
+        ],
+        questions: [
+          { q: 'What was the stranger doing when they arrived?', options: ['He was waiting for them.', 'He was sleeping.', 'He was checking the elevator.'], answer: 0, tip: 'El texto dice: "the stranger was waiting for us".' },
+          { q: 'How did they come to the hospital?', options: ['Slowly, step by step.', 'By bus.', 'In the elevator.'], answer: 0, tip: 'El texto dice: "we came to the hospital slowly, step by step".' },
+          { q: 'Who did {iname} call?', options: ["{name}'s mom.", 'Leo.', 'The doctor.'], answer: 0, tip: 'El texto dice que llamó a tu mamá: "I called... mom".' },
+        ],
+      },
+      {
+        id: 'a2-02-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'Yesterday, today and tomorrow',
+        frame: 'Pasado, presente y futuro en una misma página: lo que pasó, cómo estás hoy y lo que vas a hacer.',
+        lines: [
+          { en: 'Yesterday I [was]p on the terrace of the tower. Today I [am]n in the hospital.', es: 'Ayer estaba en la terraza de la torre. Hoy estoy en el hospital.' },
+          { en: 'My leg [hurt]p a lot last night. Now it [hurts]n a little.', es: 'Anoche me dolía mucho la pierna. Ahora me duele un poco.' },
+          { en: 'The clock [has]n five pieces, but the center [is]n empty.', es: 'El reloj tiene cinco piezas, pero el centro está vacío.' },
+          { en: 'Where [is]n Leo? Nobody [saw]p him after the elevator.', es: '¿Dónde está Leo? Nadie lo vio después del ascensor.' },
+          { en: 'Tomorrow I [am going to call]f my mom, and I [am going to look]f for the center of the clock.', es: 'Mañana voy a llamar a mi mamá y voy a buscar el centro del reloj.' },
+        ],
+        questions: [
+          { q: 'How does the leg feel now?', options: ['It hurts a little.', 'It hurt a lot.', "It doesn't hurt at all."], answer: 0, tip: 'Ahora (presente): "Now it hurts a little".' },
+          { q: 'What is {name} going to look for?', options: ['The center of the clock.', 'A new bag.', 'The doctor.'], answer: 0, tip: 'Futuro: "I am going to look for the center of the clock".' },
+        ],
+      },
+    ],
+  },
 ]
 
 /** Diccionario de las palabras de los diarios (inglés → español) */

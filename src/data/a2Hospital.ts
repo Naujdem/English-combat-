@@ -39,6 +39,17 @@ function zoneAt(x: number, y: number): Zone {
 export const A2_CORE_MISSING = 'a2-01-doctor'
 export const clockCoreMissing = (s: GameState) => s.opened.includes(A2_CORE_MISSING)
 
+/** A2-02 — Pieces of Yesterday: las seis etapas */
+const A2_02_CHIPS = (s: GameState) => [
+  { label: 'A2-02 · Pieces of Yesterday', done: s.opened.includes('a2-02-pieces') },
+  { label: 'Something Is Missing', done: s.opened.includes('a2-02-missing') },
+  { label: 'The Elevator', done: s.opened.includes('a2-02-elevator') },
+  { label: 'The Stranger', done: s.opened.includes('a2-02-stranger') },
+  { label: 'The Missing Core', done: s.opened.includes('a2-02-core') },
+  { label: 'Comparing Memories', done: s.opened.includes('a2-02-compare') },
+  { label: 'Pieces of Yesterday', done: s.opened.includes('a2-02-pieces') },
+]
+
 export const A2_HOSPITAL: SceneDef = {
   id: 'a2-hospital',
   name: 'Hospital · Habitación',
@@ -52,6 +63,8 @@ export const A2_HOSPITAL: SceneDef = {
     { type: 'npc', id: 'a2-doctor', x: 4, y: 4 },
     { type: 'npc', id: 'a2-friend', x: 7, y: 13 },
     { type: 'npc', id: 'a2-receptionist', x: 16, y: 3 },
+    // A2-02: la persona especial aparece en el pasillo cuando vuelve al hospital
+    { type: 'npc', id: 'a2-interest', x: 15, y: 12 },
   ],
   labels: [
     { text: 'Habitación', x: 6, y: 1 },
@@ -67,7 +80,8 @@ export const A2_HOSPITAL: SceneDef = {
     '10,1': { text: 'You can see the city through the window.', sub: 'Puedes ver la ciudad por la ventana.', say: 'You can see the city through the window.' },
   },
   requirements: [],
-  chips: (s) => [
+  // Al terminar A2-01 se muestran los objetivos de A2-02
+  chips: (s) => s.opened.includes('a2-01-belongings') ? A2_02_CHIPS(s) : [
     { label: 'A2-01 · A New Beginning', done: s.opened.includes('a2-01-belongings') },
     { label: 'Médica', done: s.opened.includes('a2-01-doctor') },
     { label: 'Tu amigo', done: s.opened.includes('a2-01-friend') },

@@ -664,6 +664,255 @@ NPC_TASKS['a2-receptionist'] = {
   },
 }
 
+// ── A2-02 — Pieces of Yesterday (hospital, después de A2-01) ──
+// Los recuerdos son internos: los elige el protagonista en las preguntas («¿Qué recuerdas?»); el reloj no los muestra.
+// Orden: amigo (Something Is Missing) → recepción (The Elevator) → médica (The Stranger) → amigo (The Missing Core)
+//        → persona especial (Comparing Memories) → persona especial (Pieces of Yesterday)
+NPC_TASKS['a2-02-missing'] = {
+  npc: 'a2-friend',
+  done: 'a2-02-missing',
+  requires: {
+    id: 'a2-01-belongings',
+    text: 'Your friend: "Let\'s get your things at the reception first!"',
+    es: '¡Primero vamos por tus cosas a la recepción!',
+    sub: 'La recepción está al final del pasillo.',
+  },
+  steps: [
+    {
+      text: "OK, you have your bag and your jacket. But you look worried. What's wrong?",
+      es: 'Bueno, ya tienes tu bolso y tu chaqueta. Pero algo te preocupa. ¿Qué pasa?',
+      choice: { ask: 'Revisas todo otra vez. Las cosas están ahí, pero algo falta... ¿Qué le dices?', options: ["Something is missing. I can't remember yesterday.", "Something is missing. I can't remembered yesterday.", "Something are missing. I can't remember yesterday."], answer: 0, tip: 'Después de "can\'t" va el verbo tal cual: I can\'t remember. "Something" va con is.' },
+    },
+    {
+      text: 'Really? What did you do yesterday? Do you remember anything?',
+      es: '¿En serio? ¿Qué hiciste ayer? ¿Recuerdas algo?',
+      choice: { ask: 'Intentas recordar. ¿Qué respondes?', options: ['I went to the tower with my friends.', 'I goed to the tower with my friends.', 'I go to the tower with my friends yesterday.'], answer: 0, tip: 'Para contar lo que pasó ayer se usa el pasado simple. Go es irregular: went.' },
+    },
+    {
+      text: 'And then? What happened after that?',
+      es: '¿Y luego? ¿Qué pasó después?',
+      choice: { ask: 'Después de eso todo está en blanco. ¿Qué dices?', options: ["I don't know. I didn't see what happened next.", "I don't know. I didn't saw what happened next.", "I don't know. I not see what happened next."], answer: 0, tip: "Negativo en pasado: didn't + verbo tal cual (didn't see)." },
+    },
+    {
+      text: 'Hmm. The people at the reception know who brought you here. Ask them!',
+      es: 'Mmm. En la recepción saben quién te trajo. ¡Pregúntales!',
+      choice: { ask: '¿Qué le respondes?', options: ["Good idea. I'm going to ask them.", "Good idea. I going to ask them.", "Good idea. I'm go to ask them."], answer: 0, tip: 'Para un plan: am / is / are + going to + verbo.' },
+    },
+  ],
+  reward: {
+    text: 'Your friend: "I can wait here. Go!"',
+    es: 'Yo te espero aquí. ¡Ve!',
+    sub: 'Algo falta en tus recuerdos de ayer. Pregunta en la recepción quién te trajo.',
+    say: 'I can wait here. Go!',
+  },
+}
+
+NPC_TASKS['a2-02-elevator'] = {
+  npc: 'a2-receptionist',
+  done: 'a2-02-elevator',
+  requires: {
+    id: 'a2-02-missing',
+    text: 'The receptionist: "Take care, and have a nice day!"',
+    es: '¡Cuídate y que tengas un buen día!',
+    sub: 'Tu amigo quiere hablar contigo en el pasillo.',
+  },
+  steps: [
+    {
+      text: 'Hello again! Is everything OK with your things?',
+      es: '¡Hola otra vez! ¿Todo bien con tus cosas?',
+      choice: { ask: '¿Qué le preguntas?', options: ['Yes, thanks. Who brought me here last night?', 'Yes, thanks. Who did bring me here last night?', 'Yes, thanks. Who bringed me here last night?'], answer: 0, tip: 'Cuando "who" es el sujeto, no se usa did: Who brought me...? Bring es irregular: brought.' },
+    },
+    {
+      text: 'Let me check... You arrived late last night with {iname}. {iname} stayed here all night.',
+      es: 'Déjame ver... Llegaste anoche, tarde, con {iname}. {iname} se quedó aquí toda la noche.',
+      choice: { ask: '¿Qué le preguntas?', options: ['Where is {iname} now?', 'Where {iname} is now?', 'Where are {iname} now?'], answer: 0, tip: 'Pregunta con where: Where + is + la persona?' },
+    },
+    {
+      text: '{iname} went home this morning. Oh, sorry, that is the elevator again. The doors open and close all the time!',
+      es: '{iname} se fue a casa esta mañana. Ay, perdón, otra vez el ascensor. ¡Las puertas se abren y se cierran todo el tiempo!',
+      choice: { ask: 'Miras el ascensor. Las puertas se abren y se cierran solas... y de pronto recuerdas otro ascensor, en la torre. ¿Qué recuerdas?', options: ['Leo was checking the elevator, and we went up the stairs.', 'Leo were checking the elevator, and we went up the stairs.', 'Leo was check the elevator, and we goed up the stairs.'], answer: 0, tip: 'Algo que estaba pasando: was + verbo con -ing (Leo was checking). Go en pasado: went.' },
+    },
+    {
+      text: 'Are you OK? You look pale.',
+      es: '¿Estás bien? Tienes mala cara.',
+      choice: { ask: 'Todavía piensas en Leo y en el ascensor. ¿Qué le respondes?', options: ["I'm OK. I just remembered something.", "I'm OK. I just remembering something.", "I'm OK. I just remember something yesterday."], answer: 0, tip: 'Algo que acaba de pasar: pasado simple (remembered).' },
+    },
+  ],
+  reward: {
+    text: 'The receptionist: "Please rest a little. Oh, and the doctor wants to check your leg. She is in your room."',
+    es: 'Descansa un poco, por favor. Ah, y la médica quiere revisarte la pierna. Está en tu habitación.',
+    sub: 'Recordaste el ascensor: Leo se quedó revisándolo y ustedes subieron por las escaleras. La médica te espera en tu habitación.',
+    say: 'The doctor wants to check your leg.',
+  },
+}
+
+NPC_TASKS['a2-02-stranger'] = {
+  npc: 'a2-doctor',
+  done: 'a2-02-stranger',
+  requires: {
+    id: 'a2-02-elevator',
+    text: 'The doctor: "Rest a little, and drink some water. See you later!"',
+    es: 'Descansa un poco y toma algo de agua. ¡Hasta luego!',
+    sub: 'Sigue los objetivos de A2-02 bajo el mapa.',
+  },
+  steps: [
+    {
+      text: "Let's look at your leg. Does it still hurt?",
+      es: 'Veamos tu pierna. ¿Todavía te duele?',
+      choice: { ask: '¿Qué le respondes?', options: ['Yes, a little. It hurt a lot last night.', 'Yes, a little. It hurted a lot last night.', 'Yes, a little. It hurts a lot last night.'], answer: 0, tip: 'Hurt es irregular: hurt - hurt. "Last night" pide pasado.' },
+    },
+    {
+      text: 'How did it happen? Did you fall?',
+      es: '¿Cómo pasó? ¿Te caíste?',
+      choice: { ask: 'Cierras los ojos. Recuerdas la terraza de la torre... y a alguien al borde. ¿Qué recuerdas?', options: ['A man in a dark coat was standing on the terrace.', 'A man in a dark coat were standing on the terrace.', 'A man in a dark coat was stand on the terrace.'], answer: 0, tip: 'Para describir una escena del pasado: was + verbo con -ing (was standing).' },
+    },
+    {
+      text: 'Hmm... Take your time.',
+      es: 'Mmm... Tómate tu tiempo.',
+      choice: { ask: 'El recuerdo sigue. ¿Qué pasó después?', options: ['He raised his hand, and a purple light hit me.', 'He raise his hand, and a purple light hitted me.', 'He raised his hand, and a purple light hitting me.'], answer: 0, tip: 'Pasado simple para acciones seguidas: raised, hit (hit es irregular: hit - hit).' },
+    },
+    {
+      text: 'You were lucky. Nothing is broken, but you need to walk slowly for a few days.',
+      es: 'Tuviste suerte. No hay nada roto, pero necesitas caminar despacio unos días.',
+      choice: { ask: 'Abres los ojos. No quieres preocuparla. ¿Qué le dices?', options: ["Thank you, doctor. I fell, but I'm OK now.", "Thank you, doctor. I falled, but I'm OK now.", "Thank you, doctor. I fall yesterday, but I'm OK now."], answer: 0, tip: 'Fall es irregular: fell.' },
+    },
+  ],
+  reward: {
+    text: 'The doctor: "Walk slowly, OK? Your friend is asking about you in the hallway."',
+    es: 'Camina despacio, ¿sí? Tu amigo pregunta por ti en el pasillo.',
+    sub: 'Recordaste al desconocido en la terraza: levantó la mano y una luz morada te golpeó. Tu amigo te espera en el pasillo.',
+    say: 'Walk slowly, OK?',
+  },
+}
+
+NPC_TASKS['a2-02-core'] = {
+  npc: 'a2-friend',
+  done: 'a2-02-core',
+  requires: {
+    id: 'a2-02-stranger',
+    text: 'Your friend: "Did you ask at the reception? I can wait here."',
+    es: '¿Ya preguntaste en la recepción? Yo te espero aquí.',
+    sub: 'Sigue los objetivos de A2-02 bajo el mapa.',
+  },
+  steps: [
+    {
+      text: "Hey, can I see your clock? It's beautiful. Where did you get it?",
+      es: 'Oye, ¿puedo ver tu reloj? Es precioso. ¿De dónde lo sacaste?',
+      choice: { ask: '¿Qué le respondes?', options: ['I found the pieces in different places.', 'I finded the pieces in different places.', 'I find the pieces in different places last year.'], answer: 0, tip: 'Find es irregular: found.' },
+    },
+    {
+      text: 'Five pieces... But what was in the center? Was it always empty?',
+      es: 'Cinco piezas... ¿Pero qué había en el centro? ¿Siempre estuvo vacío?',
+      choice: { ask: 'Miras el hueco del centro y llega el recuerdo: tú en el suelo de la terraza, y el desconocido agachado junto a ti. ¿Qué recuerdas?', options: ['He opened the clock and took the center.', 'He opened the clock and taked the center.', 'He was open the clock and took the center.'], answer: 0, tip: 'Take es irregular: took. Open es regular: opened.' },
+    },
+    {
+      text: "Are you OK? You're very quiet.",
+      es: '¿Estás bien? No dices nada.',
+      choice: { ask: 'El recuerdo continúa. ¿Qué pasó con las cinco piezas?', options: ['The five pieces stayed with me, but the center disappeared with him.', 'The five pieces stayed with me, but the center disappear with him.', 'The five pieces stay with me, but the center disappeared with him.'], answer: 0, tip: 'Las dos acciones ya pasaron: stayed y disappeared (verbos regulares, con -ed).' },
+    },
+    {
+      text: 'Hey... look! {iname} is back. {iname} is in the hallway.',
+      es: 'Oye... ¡mira! {iname} volvió. Está en el pasillo.',
+      choice: { ask: '¿Qué dices?', options: ['Great! I need to talk to {iname}.', 'Great! I need talk to {iname}.', 'Great! I needs to talk to {iname}.'], answer: 0, tip: 'Need + to + verbo: I need to talk.' },
+    },
+  ],
+  reward: {
+    text: 'Your friend: "Go! I can wait here."',
+    es: '¡Ve! Yo te espero aquí.',
+    sub: 'Recordaste cómo desapareció el centro del reloj. {iname} acaba de llegar al pasillo.',
+    say: 'Go! I can wait here.',
+  },
+}
+
+NPC_TASKS['a2-interest'] = {
+  done: 'a2-02-compare',
+  steps: [
+    {
+      text: '{name}! You are awake! How is your leg?',
+      es: '¡{name}! ¡Ya despertaste! ¿Cómo sigue tu pierna?',
+      choice: { ask: '¿Qué le respondes?', options: ['Better, thanks. You brought me here last night, right?', 'Better, thanks. You bringed me here last night, right?', 'Better, thanks. You bring me here last night, right?'], answer: 0, tip: 'Bring es irregular: brought.' },
+    },
+    {
+      text: "Yes. You couldn't walk, so we came here slowly, step by step.",
+      es: 'Sí. No podías caminar, así que vinimos despacio, paso a paso.',
+      choice: { ask: 'Comparas sus recuerdos con los tuyos. ¿Qué le cuentas?', options: ['I remember the elevator. Leo stayed there, and we went up the stairs.', 'I remember the elevator. Leo stay there, and we go up the stairs.', 'I remember the elevator. Leo stayed there, and we goed up the stairs.'], answer: 0, tip: 'Pasado simple: stayed (regular) y went (go es irregular).' },
+    },
+    {
+      text: 'That is right. When we arrived on the terrace, the stranger was waiting for us.',
+      es: 'Así es. Cuando llegamos a la terraza, el desconocido nos estaba esperando.',
+      choice: { ask: '¿Qué le preguntas?', options: ['What were you doing when he attacked me?', 'What was you doing when he attacked me?', 'What were you do when he attacked me?'], answer: 0, tip: 'Pregunta en pasado continuo: What + were + you + verbo con -ing? Con "you" va were.' },
+    },
+    {
+      text: 'I was standing next to you. I wanted to help, but everything happened so fast. He took the center of the clock and disappeared in a dark light.',
+      es: 'Estaba a tu lado. Quería ayudar, pero todo pasó muy rápido. Se llevó el centro del reloj y desapareció en una luz oscura.',
+      choice: { ask: '¿Qué le dices?', options: ['Thank you for staying with me.', 'Thank you for stay with me.', 'Thank you to stay with me.'], answer: 0, tip: 'Thank you for + verbo con -ing (staying).' },
+    },
+    {
+      text: 'Then everything was spinning... and we were back in the office, in the present.',
+      es: 'Luego todo daba vueltas... y estábamos de vuelta en la oficina, en el presente.',
+      choice: { ask: '¿Qué le preguntas sobre Leo?', options: ['Did you see Leo after the elevator?', 'Did you saw Leo after the elevator?', 'You did see Leo after the elevator?'], answer: 0, tip: 'Pregunta en pasado: Did + you + verbo tal cual (see).' },
+    },
+    {
+      text: "No, I didn't. I don't know where Leo is. But I called your mom last night. She was very worried.",
+      es: 'No. No sé dónde está Leo. Pero anoche llamé a tu mamá. Estaba muy preocupada.',
+      choice: { ask: '¿Qué le respondes?', options: ["Thanks. I'm going to call her now.", 'Thanks. I going to call her now.', "Thanks. I'm go to call her now."], answer: 0, tip: 'Para un plan: be going to + verbo (I\'m going to call).' },
+    },
+  ],
+  reward: {
+    text: '{iname}: "Let\'s put the pieces of yesterday together. Talk to me when you are ready."',
+    es: 'Juntemos las piezas de ayer. Háblame cuando quieras.',
+    sub: 'Compararon sus recuerdos. Habla otra vez con {iname} para ordenar lo que pasó ayer.',
+    say: "Let's put the pieces of yesterday together.",
+  },
+}
+
+NPC_TASKS['a2-02-pieces'] = {
+  npc: 'a2-interest',
+  done: 'a2-02-pieces',
+  steps: [
+    {
+      text: "OK. Let's start at the beginning. What happened first?",
+      es: 'Bien. Empecemos por el principio. ¿Qué pasó primero?',
+      choice: { ask: 'Ordena lo que pasó ayer. ¿Qué pasó primero?', options: ['We went to the elevator, and the doors opened and closed again and again.', 'The stranger took the center of the clock.', 'We walked to the hospital.'], answer: 0, tip: 'Primero fue el ascensor: sus puertas se abrían y se cerraban solas.' },
+    },
+    {
+      text: 'And next?',
+      es: '¿Y después?',
+      choice: { ask: '¿Qué pasó después?', options: ['Leo stayed to check the elevator, and we went up the stairs.', 'We were back in the office.', 'A purple light hit me.'], answer: 0, tip: 'Leo se quedó en el ascensor y ustedes subieron por las escaleras.' },
+    },
+    {
+      text: 'What did we see on the terrace?',
+      es: '¿Qué vimos en la terraza?',
+      choice: { ask: '¿Qué había en la terraza?', options: ['The stranger was standing at the edge, looking at the city.', 'Leo was waiting for us on the terrace.', 'The doctor was standing on the terrace.'], answer: 0, tip: 'El desconocido estaba al borde, mirando la ciudad. Leo se había quedado en el ascensor.' },
+    },
+    {
+      text: 'Then what happened?',
+      es: '¿Y luego qué pasó?',
+      choice: { ask: '¿Qué pasó luego?', options: ['We fought, and then a purple light hit me.', 'We walked to the hospital.', 'We went to the elevator.'], answer: 0, tip: 'Pelearon con el desconocido y después la luz morada te golpeó.' },
+    },
+    {
+      text: 'And after that?',
+      es: '¿Y después de eso?',
+      choice: { ask: '¿Qué pasó después de eso?', options: ['He took the center of the clock, and a dark light took him away.', 'Leo went up the stairs.', 'The stranger gave me the clock.'], answer: 0, tip: 'Se llevó el centro del reloj y desapareció en una luz oscura.' },
+    },
+    {
+      text: 'And in the end?',
+      es: '¿Y al final?',
+      choice: { ask: '¿Cómo terminó todo?', options: ['We were back in the present, and we walked to the hospital.', 'We went to the elevator.', 'Leo took us to the hospital.'], answer: 0, tip: 'Volvieron al presente y caminaron despacio hasta el hospital.' },
+    },
+    {
+      text: 'Now we have all the pieces of yesterday. Write them in your diary, OK?',
+      es: 'Ahora tenemos todas las piezas de ayer. Escríbelas en tu diario, ¿sí?',
+    },
+  ],
+  reward: {
+    text: '{iname}: "We have all the pieces of yesterday now."',
+    es: 'Ya tenemos todas las piezas de ayer.',
+    sub: 'A2-02 completada. Tu diario tiene un capítulo nuevo: Pieces of Yesterday. Ábrelo desde el mapa.',
+    say: 'We have all the pieces of yesterday now.',
+  },
+}
+
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */
 export function taskOf(npcId: string, opened: string[]): { id: string; task: NpcTask; blocked: boolean } | null {
   for (const [id, t] of Object.entries(NPC_TASKS)) {
