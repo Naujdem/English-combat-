@@ -388,6 +388,17 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'a2-02-pieces',
     doneLine: { text: 'You should rest a little. I have to stay with you. Doctor\'s orders!', es: 'Deberías descansar un poco. Tengo que quedarme contigo. ¡Órdenes de la médica!' },
   },
+  // ── A2-03, la ciudad: Leo y tu amigo (mismo aspecto que en el hospital) ──
+  'a2-03-leo': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    doneLine: { text: "I usually walk here on Sundays. Let's enjoy the day!", es: 'Normalmente camino por aquí los domingos. ¡Disfrutemos el día!' },
+  },
+  'a2-03-friend': {
+    name: 'Your friend',
+    look: { shirt: '#3b9d5d', hair: '#2b1d12', skin: '#e0ac69' },
+    doneLine: { text: "What a day! Let's do it again sometime.", es: '¡Qué día! Repitámoslo alguna vez.' },
+  },
   'a2-receptionist': {
     name: 'The receptionist',
     look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },

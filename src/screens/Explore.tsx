@@ -188,7 +188,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
     (e: Entity) => {
       if (e.type === 'npc') {
         const npc = npcOf(e.id)
-        const pend = taskOf(e.id, state.opened)
+        const pend = taskOf(e.id, [...state.opened, ...state.defeated])
         if (pend && !pend.blocked) {
           const t = pend.task
           setMsg(null)
@@ -583,7 +583,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   (e.id === 'lily' && !state.opened.includes('city-coffee')) ||
                   (e.id === 'mia' && !state.opened.includes('city-sorry')) ||
                   (() => {
-                    const p = taskOf(e.id, state.opened)
+                    const p = taskOf(e.id, [...state.opened, ...state.defeated])
                     return !!p && !p.blocked
                   })()
                 return (
