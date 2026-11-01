@@ -2,6 +2,7 @@ import type { TopicId } from '../game/types'
 import type { MiniStep } from '../components/MiniTalk'
 import type { RoundItem, RoundLines } from '../components/OneMoreRound'
 import type { SequenceStep } from '../components/SequenceMaster'
+import type { ReconstructItem } from '../components/Reconstruct'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -21,7 +22,7 @@ export type NpcTask = {
   heal?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -29,7 +30,9 @@ export type NpcTask = {
   /** Para activity 'practice': preguntas fijas en orden (si no, se eligen al azar del tema) */
   practiceIds?: string[]
   /** Para activity 'sequence' (Sequence Master): los pasos en el orden correcto (salen desordenados) */
-  sequence?: { title: string; intro: SequenceStep; steps: SequenceStep[] }
+  sequence?: { title: string; intro: SequenceStep; steps: SequenceStep[]; hint?: string }
+  /** Para activity 'reconstruct' (Reconstruct the Story): contrastar pistas con una nota corrompida y elegir la frase verdadera */
+  reconstruct?: { title: string; intro: { en: string; es: string }; items: ReconstructItem[] }
   /** Dialogue Under Pressure: segundos para cada elección de la charla */
   pressure?: number
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
@@ -1218,8 +1221,8 @@ NPC_TASKS['a2-04-close'] = {
 }
 
 // ── A2-05 — Words That Don't Belong (biblioteca, presente; escena en data/a2Library.ts) ──
-// Orden: Leo (llega) → Leo (lección de Past Simple + práctica) → Mrs. Okafor (testimonio) → Mrs. Okafor (Reconstruct the Story)
-//        → el eco de tinta (jefe ligero en 2 fases) → Leo (cierre con el fragmento y una pista).
+// Orden: Leo (llega) → Leo (lección de Past Simple + práctica) → Mrs. Okafor (testimonio) → Mrs. Okafor (Reconstruct the Story:
+//        contrastar pistas) → Mrs. Okafor (Sequence Master: ordenar la nota) → el eco de tinta (jefe ligero en 2 fases) → Leo (cierre con el fragmento y una pista).
 NPC_TASKS['a2-05-leo'] = {
   done: 'a2-05-arrive',
   steps: [
@@ -1280,32 +1283,99 @@ NPC_TASKS['a2-05-librarian'] = {
       choice: { ask: 'Miras el libro desde lejos. ¿Qué dices?', options: ['That book is older than the library!', 'That book is more old than the library!', 'That book is oldest than the library!'], answer: 0, tip: 'Comparar: old → older than.' },
     },
     {
-      text: 'The reader wrote everything in a note. But look... the lines are all mixed up now!',
-      es: 'El lector escribió todo en una nota. Pero mira... ¡ahora las líneas están todas revueltas!',
+      text: 'The reader wrote everything in a note. But the ink changed it... Some facts are wrong now, and the lines are mixed up!',
+      es: 'El lector escribió todo en una nota. Pero la tinta la cambió... Ahora algunos datos están mal y las líneas están revueltas.',
     },
   ],
   reward: {
-    text: 'Mrs. Okafor: "Could you put the story in order?"',
-    es: '¿Podrías ordenar la historia?',
-    sub: 'Habla otra vez con Mrs. Okafor para reconstruir la nota del lector.',
-    say: 'Could you put the story in order?',
+    text: 'Mrs. Okafor: "Here are my notes, the library record and the returns card. Could you find the truth?"',
+    es: 'Aquí están mis apuntes, el registro de la biblioteca y la tarjeta de devoluciones. ¿Podrías encontrar la verdad?',
+    sub: 'Habla otra vez con Mrs. Okafor: compara las pistas con la nota del lector (Reconstruct the Story).',
+    say: 'Could you find the truth?',
   },
 }
 
-// Reconstruct the Story (Sequence Master): ordenar el testimonio del lector
-NPC_TASKS['a2-05-sequence'] = {
+// Reconstruct the Story: contrastar cada línea de la nota corrompida con una pista y elegir la frase verdadera
+NPC_TASKS['a2-05-reconstruct'] = {
   npc: 'a2-05-librarian',
-  done: 'a2-05-sequence',
-  activity: 'sequence',
+  done: 'a2-05-reconstruct',
+  activity: 'reconstruct',
   requires: {
     id: 'a2-05-testimony',
     text: 'Mrs. Okafor: "Please, talk to me first."',
     es: 'Por favor, habla conmigo primero.',
     sub: 'Mrs. Okafor está frente al mostrador.',
   },
+  reconstruct: {
+    title: 'What really happened?',
+    intro: { en: "The ink changed the reader's note. Read each clue and choose what really happened.", es: 'La tinta cambió la nota del lector. Lee cada pista y elige lo que pasó de verdad.' },
+    items: [
+      {
+        source: 'Mrs. Okafor',
+        clue: { en: 'The reader came in at nine. I opened the door for him.', es: 'El lector entró a las nueve. Yo le abrí la puerta.' },
+        claim: { en: 'The reader arrive at ten.', es: 'El lector "llega" a las diez.' },
+        options: ['The reader arrived at nine.', 'The reader arrived at ten.', 'The reader arrive at nine.'],
+        answer: 0,
+        tip: 'Llegó a las nueve, y arrive → arrived.',
+      },
+      {
+        source: 'Library record',
+        clue: { en: 'Book: "Old Clocks". Shelf 3. Taken at 9:15.', es: 'Libro: "Relojes viejos". Estante 3. Tomado a las 9:15.' },
+        claim: { en: 'He taked a book about cars.', es: '"Tomó" un libro sobre carros.' },
+        options: ['He took a book about clocks.', 'He took a book about cars.', 'He taked a book about clocks.'],
+        answer: 0,
+        tip: 'El libro era sobre relojes, y take → took (irregular).',
+      },
+      {
+        source: 'Mrs. Okafor',
+        clue: { en: 'He told me: "The light was small and purple."', es: 'Él me dijo: "La luz era pequeña y morada".' },
+        claim: { en: 'He seed a big green light.', es: '"Vio" una luz verde y grande.' },
+        options: ['He saw a small purple light.', 'He saw a big green light.', 'He seed a small purple light.'],
+        answer: 0,
+        tip: 'La luz era pequeña y morada, y see → saw (irregular).',
+      },
+      {
+        source: 'The old book',
+        clue: { en: 'Page 12: "Yesterday I goed to the shop and buyed a clock."', es: 'Página 12: "Ayer *fui a la tienda y *compré un reloj" (con errores).' },
+        claim: { en: 'The pictures in the book changed.', es: 'Los dibujos del libro cambiaron.' },
+        options: ['The words in the book changed.', 'The pictures in the book changed.', 'The words in the book changeed.'],
+        answer: 0,
+        tip: 'Cambiaron las palabras, y change → changed (solo -d).',
+      },
+      {
+        source: 'Returns card',
+        clue: { en: 'Returned last week. No name.', es: 'Devuelto la semana pasada. Sin nombre.' },
+        claim: { en: 'Someone returned the book yesterday.', es: 'Alguien devolvió el libro ayer.' },
+        options: ['Someone returned the book last week.', 'Someone returned the book yesterday.', 'Someone return the book last week.'],
+        answer: 0,
+        tip: 'Fue la semana pasada (last week), y return → returned.',
+      },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Mrs. Okafor: "Now we know the truth. But the lines of the note are still mixed up..."',
+    es: 'Ahora sabemos la verdad. Pero las líneas de la nota siguen revueltas...',
+    sub: 'Habla otra vez con Mrs. Okafor para poner la nota en orden (Sequence Master).',
+    say: 'Now we know the truth.',
+  },
+}
+
+// Sequence Master: poner en orden la nota ya corregida
+NPC_TASKS['a2-05-sequence'] = {
+  npc: 'a2-05-librarian',
+  done: 'a2-05-sequence',
+  activity: 'sequence',
+  requires: {
+    id: 'a2-05-reconstruct',
+    text: 'Mrs. Okafor: "First, let\'s find the truth. Talk to me."',
+    es: 'Primero, encontremos la verdad. Habla conmigo.',
+    sub: 'Mrs. Okafor está frente al mostrador.',
+  },
   sequence: {
-    title: 'Reconstruct the Story',
-    intro: { en: "The reader's note is mixed up. Let's put what happened yesterday in order.", es: 'La nota del lector está revuelta. Ordenemos lo que pasó ayer.' },
+    title: "Put the reader's note in order",
+    hint: 'Mira las palabras de orden: Yesterday morning, First, Then, After that, Finally.',
+    intro: { en: "The facts are right now, but the lines are mixed up. Let's put what happened yesterday in order.", es: 'Los datos ya están bien, pero las líneas están revueltas. Ordenemos lo que pasó ayer.' },
     steps: [
       { en: 'Yesterday morning, I arrived at the library at nine.', es: 'Ayer en la mañana llegué a la biblioteca a las nueve.' },
       { en: 'First, I took an old book about clocks from the shelf.', es: 'Primero, tomé un libro viejo sobre relojes de la estantería.' },

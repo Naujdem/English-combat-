@@ -4,7 +4,7 @@ import { A2_04_CLOSE } from './a2Workshop'
 /**
  * A2-05 — Words That Don't Belong (biblioteca, presente). Estanterías, mesa de lectura y mostrador.
  * Orden: Leo (llega) → Leo (lección de Past Simple + práctica) → Mrs. Okafor (testimonio en pasado)
- *        → Mrs. Okafor (Reconstruct the Story: ordenar la nota del lector) → el eco de tinta (jefe ligero, 2 fases cortas)
+ *        → Mrs. Okafor (Reconstruct the Story: contrastar pistas) → Mrs. Okafor (Sequence Master: ordenar la nota) → el eco de tinta (jefe ligero, 2 fases cortas)
  *        → Leo (cierre con el fragmento y una pista).
  * Se activa al terminar A2-04. Tareas en data/tasks.ts.
  */
@@ -29,6 +29,7 @@ export const A2_LIBRARY_ID = 'a2-05-library'
 export const A2_05_ARRIVE = 'a2-05-arrive'
 export const A2_05_PRACTICE = 'a2-05-practice'
 export const A2_05_TESTIMONY = 'a2-05-testimony'
+export const A2_05_RECONSTRUCT = 'a2-05-reconstruct'
 export const A2_05_SEQUENCE = 'a2-05-sequence'
 export const A2_05_BOSS = 'a2-05-ink-echo'
 export const A2_05_CLOSE = 'a2-05-close'
@@ -117,7 +118,8 @@ export const A2_LIBRARY: SceneDef = {
     { label: 'Lección de Leo', done: s.seenLesson.includes('past-simple') },
     { label: 'Práctica', done: s.opened.includes(A2_05_PRACTICE) },
     { label: 'Mrs. Okafor', done: s.opened.includes(A2_05_TESTIMONY) },
-    { label: 'Reconstruir la historia', done: s.opened.includes(A2_05_SEQUENCE) },
+    { label: 'Reconstruct the Story', done: s.opened.includes(A2_05_RECONSTRUCT) },
+    { label: 'Ordenar la nota', done: s.opened.includes(A2_05_SEQUENCE) },
     { label: 'Jefe: el eco de tinta', done: s.defeated.includes(A2_05_BOSS) },
     { label: 'Cierre', done: s.opened.includes(A2_05_CLOSE) },
   ],

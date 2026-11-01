@@ -48,6 +48,7 @@ import { VerbBook } from '../components/VerbBook'
 import { Mystery } from '../components/Mystery'
 import { Timeline } from '../components/Timeline'
 import { SequenceMaster } from '../components/SequenceMaster'
+import { Reconstruct } from '../components/Reconstruct'
 import { LessonPlan } from '../components/LessonPlan'
 import { TourPlan } from '../components/TourPlan'
 import { PartyPlan } from '../components/PartyPlan'
@@ -1040,7 +1041,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'tour') return <TourPlan onClose={finish} />
             if (t.activity === 'plan') return <LessonPlan onClose={finish} />
             if (t.activity === 'timeline') return <Timeline onClose={finish} />
-            if (t.activity === 'sequence' && t.sequence) return <SequenceMaster title={t.sequence.title} intro={t.sequence.intro} steps={t.sequence.steps} onClose={finish} />
+            if (t.activity === 'sequence' && t.sequence) return <SequenceMaster title={t.sequence.title} intro={t.sequence.intro} steps={t.sequence.steps} hint={t.sequence.hint} onClose={finish} />
+            if (t.activity === 'reconstruct' && t.reconstruct) return <Reconstruct title={t.reconstruct.title} intro={t.reconstruct.intro} items={t.reconstruct.items} onClose={finish} />
             if (t.activity === 'mystery') return <Mystery onClose={finish} />
             if (t.activity === 'verbs') return <VerbBook state={state} update={update} onClose={finish} />
             if (t.activity === 'vocab' && t.vocab)
