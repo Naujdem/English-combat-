@@ -19,10 +19,11 @@ import { A2_HOSPITAL } from '../data/a2Hospital'
 import { A2_CITY } from '../data/a2City'
 import { A2_WORKSHOP } from '../data/a2Workshop'
 import { A2_LIBRARY } from '../data/a2Library'
+import { A2_FARM_PAST } from '../data/a2FarmPast'
 import { FRIENDS, interestFriend } from '../data/friends'
 import { newCard } from './cards'
 
-export const SCENES: Record<string, SceneDef> = { [SCHOOL.id]: SCHOOL, [CITY.id]: CITY, [BARRIO.id]: BARRIO, [FARM.id]: FARM, [OFFICE.id]: OFFICE, [SCHOOL_PAST.id]: SCHOOL_PAST, [CITY_PAST.id]: CITY_PAST, [BARRIO_PAST.id]: BARRIO_PAST, [FARM_PAST.id]: FARM_PAST, [CINEMA_PAST.id]: CINEMA_PAST, [SCHOOL_FUTURE.id]: SCHOOL_FUTURE, [CITY_FUTURE.id]: CITY_FUTURE, [BARRIO_FUTURE.id]: BARRIO_FUTURE, [FARM_FUTURE.id]: FARM_FUTURE, [TOWER_FUTURE.id]: TOWER_FUTURE, [A2_HOSPITAL.id]: A2_HOSPITAL, [A2_CITY.id]: A2_CITY, [A2_WORKSHOP.id]: A2_WORKSHOP, [A2_LIBRARY.id]: A2_LIBRARY }
+export const SCENES: Record<string, SceneDef> = { [SCHOOL.id]: SCHOOL, [CITY.id]: CITY, [BARRIO.id]: BARRIO, [FARM.id]: FARM, [OFFICE.id]: OFFICE, [SCHOOL_PAST.id]: SCHOOL_PAST, [CITY_PAST.id]: CITY_PAST, [BARRIO_PAST.id]: BARRIO_PAST, [FARM_PAST.id]: FARM_PAST, [CINEMA_PAST.id]: CINEMA_PAST, [SCHOOL_FUTURE.id]: SCHOOL_FUTURE, [CITY_FUTURE.id]: CITY_FUTURE, [BARRIO_FUTURE.id]: BARRIO_FUTURE, [FARM_FUTURE.id]: FARM_FUTURE, [TOWER_FUTURE.id]: TOWER_FUTURE, [A2_HOSPITAL.id]: A2_HOSPITAL, [A2_CITY.id]: A2_CITY, [A2_WORKSHOP.id]: A2_WORKSHOP, [A2_LIBRARY.id]: A2_LIBRARY, [A2_FARM_PAST.id]: A2_FARM_PAST }
 
 export function heroLook(s: GameState, extra: Partial<SpriteLook> = {}): SpriteLook {
   const outfit = OUTFITS[s.outfit] ?? OUTFITS.base

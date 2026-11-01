@@ -25,6 +25,7 @@ import { clockCoreMissing } from '../data/a2Hospital'
 import { A2_CITY_ID, A2_03_CLOSE, isA2CityUnlocked } from '../data/a2City'
 import { A2_WORKSHOP_ID, A2_04_CLOSE, isA2WorkshopUnlocked } from '../data/a2Workshop'
 import { A2_LIBRARY_ID, A2_05_CLOSE, isA2LibraryUnlocked } from '../data/a2Library'
+import { A2_FARM_PAST_ID, A2_06_CLOSE, isA2FarmPastUnlocked } from '../data/a2FarmPast'
 import { useDesktop } from '../game/device'
 import { Achievements } from '../components/Achievements'
 import { ACHIEVEMENTS, achieved } from '../data/collection'
@@ -38,7 +39,9 @@ const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
-    isA2LibraryUnlocked(state) && !state.opened.includes(A2_05_CLOSE)
+    isA2FarmPastUnlocked(state) && !state.opened.includes(A2_06_CLOSE)
+      ? 'A2-06 · A Tradition at Risk: Leo te espera en la granja de la familia River. Elena quiere recuperar una vieja tradición.'
+      : isA2LibraryUnlocked(state) && !state.opened.includes(A2_05_CLOSE)
       ? "A2-05 · Words That Don't Belong: Leo te espera en la biblioteca de la ciudad. Ayer pasaron cosas raras con las palabras de los libros."
       : isA2WorkshopUnlocked(state) && !state.opened.includes(A2_04_CLOSE)
       ? "A2-04 · Mr. Hale's Workshop: después del reloj extraño de la plaza, Leo te espera en el taller del señor Hale."
@@ -242,6 +245,11 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       {isA2LibraryUnlocked(state) && SCENES[A2_LIBRARY_ID] && (
         <button className={btnPrimary} onClick={() => onEnter(A2_LIBRARY_ID)}>
           {state.sceneId === A2_LIBRARY_ID ? 'Volver a la biblioteca (A2-05)' : 'Ir a la biblioteca (A2-05)'}
+        </button>
+      )}
+      {isA2FarmPastUnlocked(state) && SCENES[A2_FARM_PAST_ID] && (
+        <button className={btnPrimary} onClick={() => onEnter(A2_FARM_PAST_ID)}>
+          {state.sceneId === A2_FARM_PAST_ID ? 'Volver a la granja de los River (A2-06)' : 'Ir a la granja de los River (A2-06)'}
         </button>
       )}
       </div>
