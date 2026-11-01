@@ -1121,7 +1121,7 @@ NPC_TASKS['a2-04-practice'] = {
   reward: {
     text: 'Leo: "Well done! Mr. Hale is at the workbench. Go and talk to him... and be quick!"',
     es: '¡Bien hecho! El señor Hale está en la mesa de trabajo. Ve a hablar con él... ¡y sé rápido!',
-    sub: 'El señor Hale está junto a las mesas de trabajo. Habla rápido: tiene mucha prisa.',
+    sub: 'Un aprendiz raro bloquea el paso al taller: choca con él para el combate. Luego habla rápido con el señor Hale.',
     say: 'Be quick!',
   },
 }
