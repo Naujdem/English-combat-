@@ -143,6 +143,11 @@ export default function App() {
           state={state}
           onDone={() =>
             update((s) => {
+              // Final con combate en medio: al terminar la primera parte empieza el combate (y el final sigue después)
+              const duel = SCENES[s.sceneId]?.duel
+              if (duel && !s.defeated.includes(duel)) {
+                return { ...s, hp: s.maxHp, screen: 'battle', battle: { enemyId: duel, enemyHp: ENEMIES[duel].hp, returnTo: { ...s.pos } } }
+              }
               const id = SCENES[s.sceneId].epilogue ?? 'school-epilogue'
               const opened = s.opened.includes(id) ? s.opened : [...s.opened, id]
               // Final de A1: A2 empieza en el hospital justo después

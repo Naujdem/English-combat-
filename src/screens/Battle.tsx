@@ -16,7 +16,7 @@ import { SCENES, heroLook, perks, recordAnswer } from '../game/helpers'
 import { sfx } from '../game/sfx'
 import { SpriteBody } from '../components/Sprite'
 import { Bar, btnGhost, btnPrimary, Hearts, Panel } from '../components/ui'
-import { TimeClock } from '../components/TimeClock'
+import { coreStolen, TimeClock } from '../components/TimeClock'
 import { PRESENT_NODES } from '../data/world'
 import { useTeacher } from '../game/teacher'
 import { useDesktop } from '../game/device'
@@ -506,7 +506,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   const enemy = ENEMIES[battle.enemyId]
   const scene = SCENES[state.sceneId]
   const ent = scene.entities.find((e) => 'id' in e && e.id === enemy.id)
-  const zone = ent ? scene.zoneAt(ent.x, ent.y) : 'aula'
+  const zone = ent ? scene.zoneAt(ent.x, ent.y) : enemy.zone ?? 'aula'
   const leoHint = perks(state).leoHint
   const desktop = useDesktop()
   const metLeo = 'leo' in state.talks || 'leo' in state.friendship
@@ -536,7 +536,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
     // La segunda pregunta busca una escucha real; una de cada tres pide escribir u ordenar
     const n = usedIds.length
     const focus = n === 1 ? 'hear' : n % 3 === 2 ? 'produce' : undefined
-    return pickQuestion(p.topics, p.kinds, usedIds, state.mistakes, p.tags ?? [], focus)
+    return pickQuestion(p.topics, p.kinds, usedIds, state.mistakes, p.tags ?? [], focus, enemy.onlyTags)
   }
   const [interlude, setInterlude] = useState<{ text: string; es?: string } | null>(null)
   const [q, setQ] = useState<Question>(() => pick(battle.enemyHp, []))
@@ -623,7 +623,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   function skipSpeak() {
     const p = poolAt(battle.enemyHp)
     const kinds = p.kinds.filter((k) => k !== 'speak')
-    setQ(pickQuestion(p.topics, kinds.length ? kinds : ['fill'], [...used, q.id], state.mistakes, p.tags ?? []))
+    setQ(pickQuestion(p.topics, kinds.length ? kinds : ['fill'], [...used, q.id], state.mistakes, p.tags ?? [], undefined, enemy.onlyTags))
     setHint(false)
   }
 
@@ -634,7 +634,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   function similar(missed: Question, usedIds: string[]): Question {
     const p = poolAt(state.battle?.enemyHp ?? battle.enemyHp)
     const kind = missed.kind ?? 'fill'
-    const alt = pickQuestion([missed.topic], [kind], [...usedIds, missed.id], [], p.tags ?? [])
+    const alt = pickQuestion([missed.topic], [kind], [...usedIds, missed.id], [], p.tags ?? [], undefined, enemy.onlyTags)
     const fresh = alt && alt.id !== missed.id && !usedIds.includes(alt.id) && (alt.kind ?? 'fill') === kind && !!alt.audio === !!missed.audio
     if (fresh) return alt
     if (kind === 'order' || kind === 'write' || kind === 'speak') return missed
@@ -682,6 +682,8 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         }
       }
       const base = { ...s, defeated: [...s.defeated, enemy.id], hp: s.maxHp }
+      // El desconocido solo retrocede: no da fragmento, pieza, temas ni atuendo
+      if (enemy.standoff) return base
       if (enemy.echo) return { ...base, items: { ...s.items, shield: Math.min(2, s.items.shield + 1) } }
       if (enemy.optional) {
         const r = enemy.reward
@@ -715,6 +717,22 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       }
       update((s) => ({ ...s, battle: null, screen: 'world' }))
       onExit()
+      return
+    }
+    if (phase === 'lost' && enemy.standoff) {
+      // Combate de la historia: no se sale del final. Se vuelve a empezar ahí mismo con la vida llena
+      update((s) => ({ ...s, hp: s.maxHp, battle: s.battle ? { ...s.battle, enemyHp: enemy.hp } : null }))
+      const nextUsed = [...used, q.id]
+      setUsed(nextUsed)
+      setRetry([])
+      setSlotFails(0)
+      setQ(pick(enemy.hp, nextUsed))
+      setExplain(false)
+      setInterlude(null)
+      setCorrect(false)
+      setBlocked(false)
+      setHint(false)
+      setPhase('ask')
       return
     }
     if (phase === 'lost') {
@@ -777,7 +795,9 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
                 <p className="mt-2 text-xs text-paper/60">
                   {enemy.kind === 'trainer'
                     ? 'Leo: "Don\'t worry, it\'s just practice!" Vuelves a empezar con la vida llena.'
-                    : 'Te quedaste sin energía. Volverás a la entrada con la vida llena.'}
+                    : enemy.standoff
+                      ? 'Te quedaste sin energía. Respira: vuelves a intentarlo aquí mismo, con la vida llena.'
+                      : 'Te quedaste sin energía. Volverás a la entrada con la vida llena.'}
                 </p>
               )}
               {phase === 'lost' && failed.length > 0 && (
@@ -812,7 +832,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         <Panel className="px-3 py-1.5">
           <p className="truncate font-display text-[15px]">{enemy.name}</p>
           <div className="mt-1.5"><Bar value={battle.enemyHp} max={enemy.hp} color={enemy.kind === 'boss' ? '#a07cd0' : enemy.kind === 'trainer' ? '#3b9d5d' : '#d64545'} label="Vida del enemigo" /></div>
-          {enemy.phases && <p className="mt-1 text-[11px] text-paper/50">Fase {phaseAt(battle.enemyHp) + 1} de {enemy.phases.length}</p>}
+          {enemy.phases && <p className="mt-1 text-[11px] text-paper/50">Fase {phaseAt(battle.enemyHp) + 1} de {enemy.phases.length}{enemy.phases[phaseAt(battle.enemyHp)].title ? ` · ${enemy.phases[phaseAt(battle.enemyHp)].title}` : ''}</p>}
         </Panel>
       </div>
 
@@ -1008,8 +1028,12 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
 
       {phase === 'won' && (
         <Panel className="anim-pop border-gold">
-          <p className="font-display text-2xl text-gold">{enemy.kind === 'trainer' ? '¡Entrenamiento completo!' : '¡Victoria!'}</p>
-          {enemy.kind === 'trainer' ? (
+          <p className="font-display text-2xl text-gold">{enemy.kind === 'trainer' ? '¡Entrenamiento completo!' : enemy.standoff ? '¡Lo hiciste retroceder!' : '¡Victoria!'}</p>
+          {enemy.standoff ? (
+            <p className="mt-1 text-[16px]">
+              El desconocido da un paso atrás. No está vencido... pero ahora sabe que tu voz es fuerte: pasado, presente y futuro.
+            </p>
+          ) : enemy.kind === 'trainer' ? (
             <p className="mt-1 text-[16px]">
               Leo ahora es tu amigo. Si fallas en un combate, te dará una pista. Tu aventura empieza en la escuela.
             </p>
@@ -1031,7 +1055,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
                 </div>
               ) : (
               <div className="my-1 flex items-center gap-3 rounded-xl bg-panel-2 p-2">
-                <TimeClock pieces={state.relics} size={72} highlight={state.relics - 1} />
+                <TimeClock pieces={state.relics} size={72} highlight={state.relics - 1} coreMissing={coreStolen(state.defeated)} />
                 <p className="text-[15px]">
                   <b className="text-gold">¡Pieza del reloj!</b> Tienes {Math.min(state.relics, PRESENT_NODES.length)} de {PRESENT_NODES.length}. {enemy.person} tenía esta pieza, y al tocarla se corrompió. Tú no te corrompes: es tu voz.
                 </p>

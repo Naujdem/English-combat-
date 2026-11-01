@@ -6,7 +6,7 @@ import { TOPICS } from '../data/questions'
 import { SpriteBody } from '../components/Sprite'
 import { FriendsPanel } from '../components/FriendsPanel'
 import { btn, btnGhost, btnPrimary, Hearts, Overlay, Panel } from '../components/ui'
-import { ClockPieces, TimeClock } from '../components/TimeClock'
+import { ClockPieces, coreStolen, TimeClock } from '../components/TimeClock'
 import { Diary } from '../components/Diary'
 import { Flashcards } from '../components/Flashcards'
 import { BIKE_TO_FARM, BusRide, BUS_TO_BARRIO, BUS_TO_CITY, BUS_TO_OFFICE, CLOCK_TO_1996, CLOCK_TO_2056, SKYBUS_TO_CITY_2056, SKYBUS_TO_BARRIO_2056, SKYBUS_TO_FARM_2056, SKYBUS_TO_TOWER_2056, WALK_TO_OLD_CITY, WALK_TO_GREEN_1996, WALK_TO_FARM_1996, WALK_TO_CINEMA_1996, type BusTrip } from '../components/BusRide'
@@ -36,7 +36,9 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
     state.defeated.includes('office-future-boss')
-      ? '¡Terminaste A1! Tu voz está completa: presente, pasado y futuro. A2 empieza en el hospital; también puedes repasar y visitar cualquier lugar de A1.'
+      ? coreStolen(state.defeated)
+        ? '¡Terminaste A1! Tus cinco piezas y tus fragmentos de voz siguen contigo, pero el desconocido se llevó el núcleo del reloj. Tu historia sigue en A2, en el hospital; también puedes repasar y visitar cualquier lugar de A1.'
+        : '¡Terminaste A1! Tu voz está completa: presente, pasado y futuro. A2 empieza en el hospital; también puedes repasar y visitar cualquier lugar de A1.'
       : state.defeated.includes('farm-future-boss')
       ? 'Recuperaste cuatro fragmentos de voz del futuro. Toma el Sky Bus hasta la torre Green Valley: el último lugar de A1.'
       : state.defeated.includes('barrio-future-boss')
@@ -79,7 +81,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const [sound, setSoundState] = useState(soundOn())
   const [voice, setVoiceState] = useState(autoVoiceOn())
   const [settings, setSettings] = useState(false)
-  const coreMissing = clockCoreMissing(state)
+  const coreMissing = clockCoreMissing(state) || coreStolen(state.defeated)
   const hasDiary = DIARY.some((c) => state.opened.includes(c.unlock))
   const dueCount = dueCards(state.cards).length
 

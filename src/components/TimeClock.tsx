@@ -6,6 +6,9 @@ const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } 
  * El reloj del tiempo: una pieza por cada jefe (una por escenario del mapa).
  * La pieza k pertenece a WORLD[k]. Las que faltan se ven vacías y punteadas.
  */
+/** El núcleo del reloj fue robado al final de A1 (el desconocido en la terraza) */
+export const coreStolen = (defeated: string[]) => defeated.includes('office-future-stranger')
+
 export function TimeClock({ pieces, size = 96, highlight, coreMissing = false }: { pieces: number; size?: number; highlight?: number; coreMissing?: boolean }) {
   const n = PRESENT_NODES.length
   const r = 40
