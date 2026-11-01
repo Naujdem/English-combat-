@@ -1076,6 +1076,147 @@ NPC_TASKS['a2-03-close'] = {
   },
 }
 
+// ── A2-04 — Mr. Hale's Workshop (alcance mínimo con jefe, escena en data/a2Workshop.ts) ──
+// Orden: Leo (llega) → Leo (lección + práctica) → Mr. Hale (charla con presión) → Leo (Sequence Master: arreglar la radio)
+//        → Mr. Hale corrompido (jefe en 2 fases) → Leo (cierre con el fragmento y una pista).
+NPC_TASKS['a2-04-leo'] = {
+  done: 'a2-04-arrive',
+  steps: [
+    {
+      text: '{name}, the clock in the plaza moved backwards... So I called Mr. Hale. He repairs clocks, radios, bikes... everything! This is his workshop.',
+      es: '{name}, el reloj de la plaza fue hacia atrás... Así que llamé al señor Hale. Arregla relojes, radios, bicicletas... ¡todo! Este es su taller.',
+      choice: { ask: 'Quieres que el señor Hale mire tu reloj. ¿Qué le pides a Leo?', options: ['Great! Could you introduce me to him?', 'Great! Could you introducing me to him?', 'Great! Could you to introduce me to him?'], answer: 0, tip: 'Could you + verbo tal cual: Could you introduce...?' },
+    },
+    {
+      text: 'Sure! But Mr. Hale is very busy, and he talks fast. In a workshop you ask for things politely. Let me teach you first.',
+      es: '¡Claro! Pero el señor Hale está muy ocupado y habla rápido. En un taller las cosas se piden con cortesía. Déjame enseñarte primero.',
+      choice: { ask: '¿Qué le dices?', options: ['OK. Can you teach me now?', 'OK. Can you teaching me now?', 'OK. Can you teaches me now?'], answer: 0, tip: 'Can you + verbo tal cual: Can you teach...?' },
+    },
+  ],
+  reward: {
+    text: 'Leo: "Talk to me when you are ready for the lesson."',
+    es: 'Háblame cuando estés listo para la lección.',
+    sub: 'Habla otra vez con Leo: te enseña peticiones corteses, instrucciones y palabras del taller.',
+    say: 'Talk to me when you are ready.',
+  },
+}
+
+// La lección de Leo (tema requests: peticiones, instrucciones, responsabilidades y herramientas) y la práctica guiada (5 frases)
+NPC_TASKS['a2-04-practice'] = {
+  npc: 'a2-04-leo',
+  done: 'a2-04-practice',
+  lesson: 'requests',
+  activity: 'practice',
+  practice: 'requests',
+  // completar, ordenar, completar instrucción, corregir y escribir una petición
+  practiceIds: ['a2-04-r1', 'a2-04-r3', 'a2-04-i2', 'a2-04-r5', 'T-a2-04-r7'],
+  steps: [],
+  reward: {
+    text: 'Leo: "Well done! Mr. Hale is at the workbench. Go and talk to him... and be quick!"',
+    es: '¡Bien hecho! El señor Hale está en la mesa de trabajo. Ve a hablar con él... ¡y sé rápido!',
+    sub: 'El señor Hale está junto a las mesas de trabajo. Habla rápido: tiene mucha prisa.',
+    say: 'Be quick!',
+  },
+}
+
+// Dialogue Under Pressure: Mr. Hale tiene prisa; pides que mire tu reloj, pides ayuda y que repita más despacio
+NPC_TASKS['a2-04-hale'] = {
+  done: 'a2-04-pressure',
+  pressure: 12,
+  requires: {
+    id: 'a2-04-practice',
+    text: 'Mr. Hale: "Sorry, I\'m very busy right now! Talk to Leo first."',
+    es: 'Perdón, ¡ahora estoy muy ocupado! Habla primero con Leo.',
+    sub: 'Leo está en el taller, cerca de las cajas de herramientas.',
+  },
+  steps: [
+    {
+      text: "Hi! Leo's friend, right? Sorry, I'm in a hurry! Quick, what do you need?",
+      es: '¡Hola! Eres el amigo de Leo, ¿verdad? Perdón, ¡tengo prisa! Rápido, ¿qué necesitas?',
+      choice: { ask: 'Pídele con cortesía que mire tu reloj.', options: ['Could you look at my clock, please?', 'Could you looking at my clock, please?', 'Could you to look at my clock, please?'], answer: 0, tip: 'Could you + verbo tal cual + please?' },
+    },
+    {
+      text: 'Your clock? Hmm, the center is empty... Strange! OK, but first help me. My hands are busy!',
+      es: '¿Tu reloj? Mmm, el centro está vacío... ¡Qué raro! Bueno, pero primero ayúdame. ¡Tengo las manos ocupadas!',
+      choice: { ask: 'Necesitas que sostenga la escalera un momento. Pídelo con mucha cortesía.', options: ['Would you mind holding the ladder for me?', 'Would you mind hold the ladder for me?', 'Would you mind to hold the ladder for me?'], answer: 0, tip: 'Would you mind + verbo con -ing: holding.' },
+    },
+    {
+      text: 'Firstturnofftheradiothenopentheboxafterthatchangethebatteryandfinally...',
+      es: '(Habla tan rápido que no se entiende nada.)',
+      choice: { ask: 'No entendiste nada. Pide que lo diga más despacio.', options: ['Sorry, could you say that more slowly, please?', 'Sorry, could you saying that more slowly, please?', 'Sorry, you could say that more slowly, please?'], answer: 0, tip: 'Para aclarar: Sorry, could you say that more slowly, please?' },
+    },
+    {
+      text: 'Oh no... my notes! The steps are all on the floor. Leo, could you help?',
+      es: 'Oh, no... ¡mis notas! Los pasos están todos en el piso. Leo, ¿podrías ayudar?',
+    },
+  ],
+  reward: {
+    text: 'Mr. Hale: "I have to fix this old radio today!"',
+    es: '¡Tengo que arreglar esta radio vieja hoy!',
+    sub: 'Las notas del señor Hale se cayeron. Habla con Leo para ordenar los pasos de la reparación.',
+    say: 'I have to fix this old radio today!',
+  },
+}
+
+// Sequence Master: ordenar los pasos para arreglar la radio (salen desordenados)
+NPC_TASKS['a2-04-sequence'] = {
+  npc: 'a2-04-leo',
+  done: 'a2-04-sequence',
+  activity: 'sequence',
+  requires: {
+    id: 'a2-04-pressure',
+    text: 'Leo: "Go and talk to Mr. Hale. He is at the workbench."',
+    es: 'Ve a hablar con el señor Hale. Está en la mesa de trabajo.',
+    sub: 'El señor Hale está junto a las mesas de trabajo.',
+  },
+  sequence: {
+    title: 'Arreglar la radio',
+    intro: { en: "Mr. Hale's notes are on the floor. Let's put the steps in order: turn off the radio, open the back, change the old battery, and test it.", es: 'Las notas del señor Hale están en el piso. Ordenemos los pasos: apagar la radio, abrir la parte de atrás, cambiar la batería vieja y probarla.' },
+    steps: [
+      { en: 'First, turn off the radio.', es: 'Primero, apaga la radio.' },
+      { en: 'Then, open the back of the radio.', es: 'Luego, abre la parte de atrás de la radio.' },
+      { en: 'After that, change the old battery.', es: 'Después, cambia la batería vieja.' },
+      { en: 'Finally, turn it on and test it.', es: 'Por último, enciéndela y pruébala.' },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "The radio is on! But... look at Mr. Hale. That purple light is in his hands!"',
+    es: '¡La radio funciona! Pero... mira al señor Hale. ¡Esa luz morada está en sus manos!',
+    sub: 'El señor Hale se corrompió. Choca con él para el combate: primero peticiones, luego instrucciones.',
+    say: 'Look at Mr. Hale!',
+  },
+}
+
+// Cierre: el fragmento liberado y una pista breve (sin revelar nada de B1/B2)
+NPC_TASKS['a2-04-close'] = {
+  npc: 'a2-04-leo',
+  done: 'a2-04-close',
+  requires: {
+    id: 'a2-04-hale-boss',
+    text: 'Leo: "Mr. Hale needs help! Could you stop him? Be careful!"',
+    es: '¡El señor Hale necesita ayuda! ¿Podrías detenerlo? ¡Ten cuidado!',
+    sub: 'El señor Hale está corrompido junto a las mesas de trabajo.',
+  },
+  steps: [
+    {
+      text: 'A man in a dark coat, and he never said a word... Do you remember the stranger on the terrace?',
+      es: 'Un hombre con abrigo oscuro que nunca dijo una palabra... ¿Recuerdas al desconocido de la terraza?',
+      choice: { ask: 'Miras la piedrita morada. ¿Qué le dices a Leo?', options: ['Yes. Could you help me find him?', 'Yes. Could you helping me find him?', 'Yes. Could you to help me find him?'], answer: 0, tip: 'Could you + verbo tal cual: Could you help...?' },
+    },
+    {
+      text: "Of course! First, we keep the stone safe. Then, we look for more purple lights. It's our job now!",
+      es: '¡Por supuesto! Primero, guardamos bien la piedra. Luego, buscamos más luces moradas. ¡Ahora ese es nuestro trabajo!',
+    },
+  ],
+  reward: {
+    text: 'Leo: "It\'s our job now!"',
+    es: '¡Ahora es nuestro trabajo!',
+    sub: 'A2-04 completada. Guardaste el fragmento morado: cerca de él, el centro vacío de tu reloj vibra un poco.',
+    say: "It's our job now!",
+  },
+}
+
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */
 export function taskOf(npcId: string, opened: string[]): { id: string; task: NpcTask; blocked: boolean } | null {
   for (const [id, t] of Object.entries(NPC_TASKS)) {

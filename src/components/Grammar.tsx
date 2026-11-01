@@ -225,6 +225,11 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
     case 'invitations':
       if (question) return { title: 'Para invitar: Would + you + like to + verbo? · How about + verbo con -ing?', parts: [K('Would you like to / How about'), '+', V('verbo / verbo-ing'), '+', R('...?')] }
       return { title: "Let's + verbo · la frecuencia (always, usually, sometimes, never) va antes del verbo:", parts: [S('Sujeto'), '+', K('always / usually / sometimes / never'), '+', V('verbo'), '+', R('...')] }
+    case 'requests':
+      if (negative) return { title: "Para decir que no con amabilidad: Sorry, I can't. + la razón:", parts: [K("Sorry, I can't."), '+', R("I'm busy...")] }
+      return { title: 'Para pedir: Can / Could + you + verbo? · Would you mind + verbo con -ing?', parts: [K('Can / Could you · Would you mind'), '+', V('verbo / verbo-ing'), '+', R('...'), '+', K('please?')] }
+    case 'instructions':
+      return { title: "Pasos en orden con el verbo tal cual · It's my job to + verbo · responsible for:", parts: [K('First / Then / After that / Finally'), '+', V('verbo'), '+', R('...')] }
     case 'time':
       if (question) return { title: 'Para preguntar la hora:', parts: [K('What time'), '+', V('is'), '+', S('it?')] }
       return { title: 'at + hora · on + día · in + mes, estación o parte del día:', parts: [R('...'), '+', K('at / on / in'), '+', R('hora / día / mes')] }

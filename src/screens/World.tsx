@@ -23,6 +23,7 @@ import { heroLook, SCENES } from '../game/helpers'
 import { interestFriend } from '../data/friends'
 import { clockCoreMissing } from '../data/a2Hospital'
 import { A2_CITY_ID, A2_03_CLOSE, isA2CityUnlocked } from '../data/a2City'
+import { A2_WORKSHOP_ID, A2_04_CLOSE, isA2WorkshopUnlocked } from '../data/a2Workshop'
 import { useDesktop } from '../game/device'
 import { Achievements } from '../components/Achievements'
 import { ACHIEVEMENTS, achieved } from '../data/collection'
@@ -36,7 +37,9 @@ const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
-    isA2CityUnlocked(state) && !state.opened.includes(A2_03_CLOSE)
+    isA2WorkshopUnlocked(state) && !state.opened.includes(A2_04_CLOSE)
+      ? "A2-04 · Mr. Hale's Workshop: después del reloj extraño de la plaza, Leo te espera en el taller del señor Hale."
+      : isA2CityUnlocked(state) && !state.opened.includes(A2_03_CLOSE)
       ? 'A2-03 · Day in the City: saliste del hospital. Leo te espera en la ciudad.'
       : state.defeated.includes('office-future-boss')
       ? coreStolen(state.defeated)
@@ -226,6 +229,11 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       {isA2CityUnlocked(state) && SCENES[A2_CITY_ID] && (
         <button className={btnPrimary} onClick={() => onEnter(A2_CITY_ID)}>
           {state.sceneId === A2_CITY_ID ? 'Volver a la ciudad (A2-03)' : 'Ir a la ciudad (A2-03)'}
+        </button>
+      )}
+      {isA2WorkshopUnlocked(state) && SCENES[A2_WORKSHOP_ID] && (
+        <button className={btnPrimary} onClick={() => onEnter(A2_WORKSHOP_ID)}>
+          {state.sceneId === A2_WORKSHOP_ID ? 'Volver al taller del señor Hale (A2-04)' : 'Ir al taller del señor Hale (A2-04)'}
         </button>
       )}
       </div>

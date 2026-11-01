@@ -51,6 +51,7 @@ export const FLOOR: Record<Zone, string> = {
   'oficina-torre': '#e4eef5',
   'sala-torre': '#e6e3f2',
   'cima-torre': '#efe9dc',
+  taller: '#cfc6b8',
 }
 
 const WALL = '#7a6a58'
@@ -118,6 +119,9 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   '3': { en: 'robot tractor', es: 'tractor robot' },
   '4': { en: 'elevator', es: 'ascensor' },
   '5': { en: 'bed', es: 'cama' },
+  '6': { en: 'tools: a hammer, a screwdriver and a wrench', es: 'herramientas: un martillo, un destornillador y una llave inglesa' },
+  '7': { en: 'workbench', es: 'mesa de trabajo' },
+  '8': { en: 'toolbox', es: 'caja de herramientas' },
 }
 
 export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: { c: string; x: number; y: number; floor: string; doorOpen: boolean; party?: boolean; still?: boolean }) {
@@ -742,6 +746,42 @@ export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: 
           <rect x={X + 16.5} y={Y + 8} width={10.5} height={T - 8} fill="#c9d3dc" />
           <rect x={X + 10} y={Y + 1} width={12} height={5} rx="1" fill="#1f3c58" />
           <path d={`M${X + 14} ${Y + 5} l2 -3 l2 3 z`} fill="#7fe0ff" />
+        </g>
+      )
+    case '6':
+      // Pared de herramientas: martillo, destornillador y llave inglesa colgados
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill={WALL} />
+          <rect x={X + 2} y={Y + 4} width={T - 4} height={T - 8} fill="#a8865c" />
+          <rect x={X + 6} y={Y + 8} width={3} height={14} fill="#6b4423" />
+          <rect x={X + 3} y={Y + 7} width={9} height={4} rx="1" fill="#5f646b" />
+          <rect x={X + 15} y={Y + 8} width={2} height={10} fill="#9da3aa" />
+          <rect x={X + 14} y={Y + 17} width={4} height={6} rx="1" fill="#d64545" />
+          <rect x={X + 23} y={Y + 9} width={2.5} height={14} fill="#8a8f96" />
+          <circle cx={X + 24.2} cy={Y + 9} r={3} fill="none" stroke="#8a8f96" strokeWidth="2" />
+        </g>
+      )
+    case '7':
+      // Mesa de trabajo de madera con una tuerca y un tornillo
+      return (
+        <g>
+          {base}
+          <rect x={X + 1} y={Y + 6} width={T - 2} height={16} fill="#9c6b3c" stroke="#6b4423" strokeWidth="1.2" />
+          <rect x={X + 3} y={Y + 22} width={3} height={8} fill="#6b4423" />
+          <rect x={X + T - 6} y={Y + 22} width={3} height={8} fill="#6b4423" />
+          <circle cx={X + 10} cy={Y + 13} r={3} fill="#9da3aa" stroke="#5f646b" strokeWidth="1" />
+          <rect x={X + 18} y={Y + 11} width={8} height={2.5} fill="#5f646b" />
+        </g>
+      )
+    case '8':
+      // Caja de herramientas roja
+      return (
+        <g>
+          {base}
+          <rect x={X + 4} y={Y + 12} width={T - 8} height={14} rx="2" fill="#c0392b" stroke="#7a2e2e" strokeWidth="1.2" />
+          <rect x={X + 4} y={Y + 17} width={T - 8} height={2} fill="#7a2e2e" />
+          <path d={`M ${X + 11} ${Y + 12} V ${Y + 7} H ${X + 21} V ${Y + 12}`} fill="none" stroke="#5f646b" strokeWidth="2.5" />
         </g>
       )
     case '5':
