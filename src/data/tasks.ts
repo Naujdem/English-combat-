@@ -992,7 +992,7 @@ NPC_TASKS['a2-03-friend'] = {
   reward: {
     text: 'Your friend: "Let\'s go in. Be careful with the waiter..."',
     es: 'Entremos. Cuidado con el mesero...',
-    sub: 'Entra al café y habla con el mesero. ¡Responde rápido!',
+    sub: 'Ve al café: alguien raro bloquea la puerta. Choca con ella para el combate y luego habla con el mesero.',
     say: 'Be careful!',
   },
 }
