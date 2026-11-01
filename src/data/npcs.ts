@@ -371,7 +371,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   'a2-friend': {
     name: 'Your friend',
     look: { shirt: '#3b9d5d', hair: '#2b1d12', skin: '#e0ac69' },
-    doneLine: { text: "Let's get your things at the reception. I'm right behind you!", es: 'Vamos por tus cosas a la recepción. ¡Voy justo detrás de ti!' },
+    doneLine: { text: "Take it easy, OK? I'm right here.", es: 'Tómalo con calma, ¿sí? Aquí estoy.' },
   },
   // A2-02: la persona especial (nombre y aspecto del jugador). Aparece cuando vuelve al hospital
   'a2-interest': {

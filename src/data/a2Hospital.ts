@@ -90,6 +90,6 @@ export const A2_HOSPITAL: SceneDef = {
   ],
   intro: {
     first: 'Abres los ojos en la habitación de un hospital. Todo terminó en la torre Green Valley... ¿o no? Muévete un poco para despertarte: la médica está junto a tu cama.',
-    later: 'El hospital: tu habitación, el pasillo y la recepción. Habla con la médica, con tu amigo y pide tus pertenencias en la recepción.',
+    later: 'El hospital: tu habitación, el pasillo y la recepción. Sigue los objetivos bajo el mapa.',
   },
 }

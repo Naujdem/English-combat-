@@ -723,13 +723,13 @@ NPC_TASKS['a2-02-elevator'] = {
       choice: { ask: '¿Qué le preguntas?', options: ['Yes, thanks. Who brought me here last night?', 'Yes, thanks. Who did bring me here last night?', 'Yes, thanks. Who bringed me here last night?'], answer: 0, tip: 'Cuando "who" es el sujeto, no se usa did: Who brought me...? Bring es irregular: brought.' },
     },
     {
-      text: 'Let me check... You arrived late last night with {iname}. {iname} stayed here all night.',
-      es: 'Déjame ver... Llegaste anoche, tarde, con {iname}. {iname} se quedó aquí toda la noche.',
-      choice: { ask: '¿Qué le preguntas?', options: ['Where is {iname} now?', 'Where {iname} is now?', 'Where are {iname} now?'], answer: 0, tip: 'Pregunta con where: Where + is + la persona?' },
+      text: 'Let me check... You arrived late last night with {iname}.',
+      es: 'Déjame ver... Llegaste anoche, tarde, con {iname}.',
+      choice: { ask: '¿Qué le dices?', options: ['Thank you. I need to talk to {iname}.', 'Thank you. I need talk to {iname}.', 'Thank you. I needs to talk to {iname}.'], answer: 0, tip: 'Need + to + verbo: I need to talk.' },
     },
     {
-      text: '{iname} went home this morning. Oh, sorry, that is the elevator again. The doors open and close all the time!',
-      es: '{iname} se fue a casa esta mañana. Ay, perdón, otra vez el ascensor. ¡Las puertas se abren y se cierran todo el tiempo!',
+      text: 'Oh, sorry, that is the elevator again. The doors open and close all the time!',
+      es: 'Ay, perdón, otra vez el ascensor. ¡Las puertas se abren y se cierran todo el tiempo!',
       choice: { ask: 'Miras el ascensor. Las puertas se abren y se cierran solas... y de pronto recuerdas otro ascensor, en la torre. ¿Qué recuerdas?', options: ['Leo was checking the elevator, and we went up the stairs.', 'Leo were checking the elevator, and we went up the stairs.', 'Leo was check the elevator, and we goed up the stairs.'], answer: 0, tip: 'Algo que estaba pasando: was + verbo con -ing (Leo was checking). Go en pasado: went.' },
     },
     {
@@ -811,15 +811,15 @@ NPC_TASKS['a2-02-core'] = {
       choice: { ask: 'El recuerdo continúa. ¿Qué pasó con las cinco piezas?', options: ['The five pieces stayed with me, but the center disappeared with him.', 'The five pieces stayed with me, but the center disappear with him.', 'The five pieces stay with me, but the center disappeared with him.'], answer: 0, tip: 'Las dos acciones ya pasaron: stayed y disappeared (verbos regulares, con -ed).' },
     },
     {
-      text: 'Hey... look! {iname} is back. {iname} is in the hallway.',
-      es: 'Oye... ¡mira! {iname} volvió. Está en el pasillo.',
+      text: 'Hey... look! {iname} is here, in the hallway.',
+      es: 'Oye... ¡mira! {iname} está aquí, en el pasillo.',
       choice: { ask: '¿Qué dices?', options: ['Great! I need to talk to {iname}.', 'Great! I need talk to {iname}.', 'Great! I needs to talk to {iname}.'], answer: 0, tip: 'Need + to + verbo: I need to talk.' },
     },
   ],
   reward: {
     text: 'Your friend: "Go! I can wait here."',
     es: '¡Ve! Yo te espero aquí.',
-    sub: 'Recordaste cómo desapareció el centro del reloj. {iname} acaba de llegar al pasillo.',
+    sub: 'Recordaste cómo desapareció el centro del reloj. {iname} está en el pasillo.',
     say: 'Go! I can wait here.',
   },
 }
@@ -853,9 +853,9 @@ NPC_TASKS['a2-interest'] = {
       choice: { ask: '¿Qué le preguntas sobre Leo?', options: ['Did you see Leo after the elevator?', 'Did you saw Leo after the elevator?', 'You did see Leo after the elevator?'], answer: 0, tip: 'Pregunta en pasado: Did + you + verbo tal cual (see).' },
     },
     {
-      text: "No, I didn't. I don't know where Leo is. But I called your mom last night. She was very worried.",
-      es: 'No. No sé dónde está Leo. Pero anoche llamé a tu mamá. Estaba muy preocupada.',
-      choice: { ask: '¿Qué le respondes?', options: ["Thanks. I'm going to call her now.", 'Thanks. I going to call her now.', "Thanks. I'm go to call her now."], answer: 0, tip: 'Para un plan: be going to + verbo (I\'m going to call).' },
+      text: "No, I didn't. I don't know where Leo is.",
+      es: 'No. No sé dónde está Leo.',
+      choice: { ask: '¿Qué le respondes?', options: ['I hope he is OK.', 'I hope he are OK.', 'I hope he OK.'], answer: 0, tip: 'Con "he" va "is": I hope he is OK.' },
     },
   ],
   reward: {

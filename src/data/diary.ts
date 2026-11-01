@@ -645,13 +645,12 @@ export const DIARY: DiaryChapter[] = [
           { en: 'I [was standing]p next to {name}. I [wanted]p to help, but everything [happened]p so fast.', es: 'Yo estaba al lado de {name}. Quería ayudar, pero todo pasó muy rápido.' },
           { en: 'He [took]p the center of the clock and [disappeared]p in a dark light.', es: 'Se llevó el centro del reloj y desapareció en una luz oscura.' },
           { en: 'Then we [were]p back in the office. {name} [couldn\'t]p walk, so we [came]p to the hospital slowly, step by step.', es: 'Luego estábamos de vuelta en la oficina. {name} no podía caminar, así que vinimos al hospital despacio, paso a paso.' },
-          { en: 'I [stayed]p all night. I [called]p {name}\'s mom. She [was]p very worried.', es: 'Me quedé toda la noche. Llamé a la mamá de {name}. Estaba muy preocupada.' },
           { en: 'I [didn\'t see]p Leo after the elevator. I [don\'t know]n where he [is]n.', es: 'No vi a Leo después del ascensor. No sé dónde está.' },
         ],
         questions: [
           { q: 'What was the stranger doing when they arrived?', options: ['He was waiting for them.', 'He was sleeping.', 'He was checking the elevator.'], answer: 0, tip: 'El texto dice: "the stranger was waiting for us".' },
           { q: 'How did they come to the hospital?', options: ['Slowly, step by step.', 'By bus.', 'In the elevator.'], answer: 0, tip: 'El texto dice: "we came to the hospital slowly, step by step".' },
-          { q: 'Who did {iname} call?', options: ["{name}'s mom.", 'Leo.', 'The doctor.'], answer: 0, tip: 'El texto dice que llamó a tu mamá: "I called... mom".' },
+          { q: 'Where did {iname} last see Leo?', options: ['At the elevator.', 'On the terrace.', 'In the hospital.'], answer: 0, tip: 'El texto dice: "I didn\'t see Leo after the elevator".' },
         ],
       },
       {
@@ -664,8 +663,8 @@ export const DIARY: DiaryChapter[] = [
           { en: 'Yesterday I [was]p on the terrace of the tower. Today I [am]n in the hospital.', es: 'Ayer estaba en la terraza de la torre. Hoy estoy en el hospital.' },
           { en: 'My leg [hurt]p a lot last night. Now it [hurts]n a little.', es: 'Anoche me dolía mucho la pierna. Ahora me duele un poco.' },
           { en: 'The clock [has]n five pieces, but the center [is]n empty.', es: 'El reloj tiene cinco piezas, pero el centro está vacío.' },
-          { en: 'Where [is]n Leo? Nobody [saw]p him after the elevator.', es: '¿Dónde está Leo? Nadie lo vio después del ascensor.' },
-          { en: 'Tomorrow I [am going to call]f my mom, and I [am going to look]f for the center of the clock.', es: 'Mañana voy a llamar a mi mamá y voy a buscar el centro del reloj.' },
+          { en: 'Where [is]n Leo? We [didn\'t see]p him after the elevator.', es: '¿Dónde está Leo? No lo vimos después del ascensor.' },
+          { en: 'Tomorrow I [am going to look]f for the center of the clock.', es: 'Mañana voy a buscar el centro del reloj.' },
         ],
         questions: [
           { q: 'How does the leg feel now?', options: ['It hurts a little.', 'It hurt a lot.', "It doesn't hurt at all."], answer: 0, tip: 'Ahora (presente): "Now it hurts a little".' },
