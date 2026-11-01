@@ -13,7 +13,7 @@ import { ENEMIES } from './data/enemies'
 import { ACHIEVEMENTS, achieved } from './data/collection'
 import { OUTFITS } from './data/school'
 import { sfx } from './game/sfx'
-import { KEYWORDS } from './data/keywords'
+import { KEYWORDS, KEYWORD_DONE } from './data/keywords'
 import { newCard } from './game/cards'
 
 /** Epílogo de la torre de 2056 (final de A1) y primera escena de A2 */
@@ -49,7 +49,8 @@ export default function App() {
   // Al terminar un escenario, sus palabras clave entran solas a las fichas (un mazo por lugar)
   useEffect(() => {
     if (state.screen === 'title' || state.screen === 'intro') return
-    const ready = Object.keys(KEYWORDS).filter((id) => SCENES[id]?.epilogue && state.opened.includes(SCENES[id].epilogue!) && !state.opened.includes(`deck-${id}`))
+    const doneOf = (id: string) => SCENES[id]?.epilogue ?? KEYWORD_DONE[id]
+    const ready = Object.keys(KEYWORDS).filter((id) => SCENES[id] && doneOf(id) && state.opened.includes(doneOf(id)) && !state.opened.includes(`deck-${id}`))
     if (!ready.length) return
     update((s) => {
       const have = new Set(s.cards.map((c) => c.id))

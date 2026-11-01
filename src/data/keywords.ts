@@ -155,4 +155,42 @@ export const KEYWORDS: Record<string, Keyword[]> = {
     ['retire', 'jubilarse', 'Diana is going to retire.'],
     ['goodbye', 'adiós, despedida', 'I would like to say goodbye.'],
   ],
+  // A2: escenarios sin final de capítulo; sus fichas se crean al cumplir su objetivo final (KEYWORD_DONE)
+  'a2-hospital': [
+    ['should', 'debería', 'You should rest for a few days.'],
+    ['must', 'debes, tienes que', 'You must walk slowly for a few days.'],
+    ['hurt', 'doler, herir', 'My leg hurt a lot last night.'],
+    ['was standing', 'estaba de pie', 'A man in a dark coat was standing at the edge of the terrace.'],
+    ['took', 'se llevó (take)', 'He took the center of the clock.'],
+    ['fell', 'se cayó (fall)', 'A purple light hit me, and I fell.'],
+    ['hallway', 'pasillo', 'Your friend is waiting in the hallway.'],
+    ['after that', 'después de eso', 'After that, everything was spinning.'],
+  ],
+  'a2-03-city': [
+    ['Would you like to...?', '¿Te gustaría...?', 'Would you like to have a coffee with me?'],
+    ["I'd love to.", 'Me encantaría.', "A coffee? Yes, I'd love to!"],
+    ['How about...?', '¿Qué tal si...?', 'How about the park after lunch?'],
+    ['How often...?', '¿Con qué frecuencia...?', 'How often do you drink coffee?'],
+    ['once a week', 'una vez a la semana', 'I go to the café once a week.'],
+    ['sometimes', 'a veces', 'I sometimes walk in the park.'],
+    ['backwards', 'hacia atrás', 'The hands of the clock are moving backwards!'],
+    ['plan', 'plan, planear', "Let's make a plan for the day."],
+  ],
+  'a2-04-workshop': [
+    ['Could you...?', '¿Podría(s)...?', 'Could you pass me the screwdriver, please?'],
+    ['Can you...?', '¿Puedes...?', 'Can you hold this for me?'],
+    ['Would you mind...?', '¿Te importaría...?', 'Would you mind turning off the radio?'],
+    ['workshop', 'taller', 'Mr. Hale fixes clocks in his workshop.'],
+    ['screwdriver', 'destornillador', 'The screwdriver is on the workbench.'],
+    ['wrench', 'llave inglesa', 'Could you give me the wrench?'],
+    ['turn off', 'apagar', 'First, turn off the radio.'],
+    ['be careful', 'ten cuidado', 'Be careful! The tools are sharp.'],
+  ],
+}
+
+/** Escenarios sin final de capítulo (A2): el id de `opened` que los da por terminados */
+export const KEYWORD_DONE: Record<string, string> = {
+  'a2-hospital': 'a2-02-pieces',
+  'a2-03-city': 'a2-03-close',
+  'a2-04-workshop': 'a2-04-close',
 }
