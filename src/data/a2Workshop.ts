@@ -3,7 +3,7 @@ import { A2_03_CLOSE } from './a2City'
 
 /**
  * A2-04 — Mr. Hale's Workshop (alcance mínimo con jefe). Taller pequeño: zona de trabajo, herramientas y oficina.
- * Orden: Leo (llega) → Leo (lección + práctica) → Mr. Hale (charla con presión) → Leo (Sequence Master: arreglar la radio)
+ * Orden: Leo (llega) → Leo (lección + práctica) → Mr. Hale (charla con presión) → Leo (Fix the Radio: arreglar la radio)
  *        → Mr. Hale corrompido (jefe en 2 fases) → Leo (cierre con el fragmento y una pista).
  * Se activa al terminar A2-03. Tareas en data/tasks.ts.
  */
@@ -90,7 +90,7 @@ export const A2_WORKSHOP: SceneDef = {
   topics: [],
   map: MAP,
   start: { x: 6, y: 8 },
-  // El jefe aparece en el mapa como enemigo (tras el Sequence Master): no hay puerta ni llaves
+  // El jefe aparece en el mapa como enemigo (tras Fix the Radio): no hay puerta ni llaves
   bossDoor: { x: 0, y: 0 },
   keysNeeded: 0,
   entities: [

@@ -2,6 +2,7 @@ import type { TopicId } from '../game/types'
 import type { MiniStep } from '../components/MiniTalk'
 import type { RoundItem, RoundLines } from '../components/OneMoreRound'
 import type { SequenceStep } from '../components/SequenceMaster'
+import type { FixStep } from '../components/FixRadio'
 import type { ReconstructItem } from '../components/Reconstruct'
 
 /**
@@ -22,7 +23,7 @@ export type NpcTask = {
   heal?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -31,6 +32,8 @@ export type NpcTask = {
   practiceIds?: string[]
   /** Para activity 'sequence' (Sequence Master): los pasos en el orden correcto (salen desordenados) */
   sequence?: { title: string; intro: SequenceStep; steps: SequenceStep[]; hint?: string }
+  /** Para activity 'fixradio' (Fix the Radio): instrucciones paso a paso; el jugador toca la pieza de cada paso */
+  fixradio?: { title: string; intro: { en: string; es: string }; steps: FixStep[] }
   /** Para activity 'reconstruct' (Reconstruct the Story): contrastar pistas con una nota corrompida y elegir la frase verdadera */
   reconstruct?: { title: string; intro: { en: string; es: string }; items: ReconstructItem[] }
   /** Dialogue Under Pressure: segundos para cada elección de la charla */
@@ -1080,7 +1083,7 @@ NPC_TASKS['a2-03-close'] = {
 }
 
 // ── A2-04 — Mr. Hale's Workshop (alcance mínimo con jefe, escena en data/a2Workshop.ts) ──
-// Orden: Leo (llega) → Leo (lección + práctica) → Mr. Hale (charla con presión) → Leo (Sequence Master: arreglar la radio)
+// Orden: Leo (llega) → Leo (lección + práctica) → Mr. Hale (charla con presión) → Leo (Fix the Radio: arreglar la radio)
 //        → Mr. Hale corrompido (jefe en 2 fases) → Leo (cierre con el fragmento y una pista).
 NPC_TASKS['a2-04-leo'] = {
   done: 'a2-04-arrive',
@@ -1156,30 +1159,31 @@ NPC_TASKS['a2-04-hale'] = {
   reward: {
     text: 'Mr. Hale: "I have to fix this old radio today!"',
     es: '¡Tengo que arreglar esta radio vieja hoy!',
-    sub: 'Las notas del señor Hale se cayeron. Habla con Leo para ordenar los pasos de la reparación.',
+    sub: 'Las notas del señor Hale se cayeron. Habla con Leo: él lee las notas y tú arreglas la radio paso a paso.',
     say: 'I have to fix this old radio today!',
   },
 }
 
-// Sequence Master: ordenar los pasos para arreglar la radio (salen desordenados)
+// Fix the Radio: seguir las instrucciones del señor Hale y tocar la pieza de cada paso
 NPC_TASKS['a2-04-sequence'] = {
   npc: 'a2-04-leo',
   done: 'a2-04-sequence',
-  activity: 'sequence',
+  activity: 'fixradio',
   requires: {
     id: 'a2-04-pressure',
     text: 'Leo: "Go and talk to Mr. Hale. He is at the workbench."',
     es: 'Ve a hablar con el señor Hale. Está en la mesa de trabajo.',
     sub: 'El señor Hale está junto a las mesas de trabajo.',
   },
-  sequence: {
+  fixradio: {
     title: 'Arreglar la radio',
-    intro: { en: "Mr. Hale's notes are on the floor. Let's put the steps in order: turn off the radio, open the back, change the old battery, and test it.", es: 'Las notas del señor Hale están en el piso. Ordenemos los pasos: apagar la radio, abrir la parte de atrás, cambiar la batería vieja y probarla.' },
+    intro: { en: "Mr. Hale's radio is in pieces. I can read his notes. Listen and do it step by step.", es: 'La radio del señor Hale está en pedazos. Puedo leer sus notas. Escucha y hazlo paso a paso.' },
     steps: [
-      { en: 'First, turn off the radio.', es: 'Primero, apaga la radio.' },
-      { en: 'Then, open the back of the radio.', es: 'Luego, abre la parte de atrás de la radio.' },
-      { en: 'After that, change the old battery.', es: 'Después, cambia la batería vieja.' },
-      { en: 'Finally, turn it on and test it.', es: 'Por último, enciéndela y pruébala.' },
+      { en: 'First, please put the new battery in the radio.', es: 'Primero, por favor, pon la batería nueva en la radio.', piece: 'battery', tip: 'Battery = batería (la pieza verde con +).' },
+      { en: 'Then, put in the two screws to close the battery box.', es: 'Luego, pon los dos tornillos para cerrar la caja de la batería.', piece: 'screws', tip: 'Screws = tornillos (las dos piezas pequeñas de metal).' },
+      { en: 'Next, could you put the dial on the front?', es: 'Después, ¿podrías poner la perilla del dial al frente?', piece: 'dial', tip: 'Dial = la perilla redonda para cambiar la emisora.' },
+      { en: 'After that, put the antenna on top.', es: 'Luego de eso, pon la antena arriba.', piece: 'antenna', tip: 'Antenna = antena (la varilla larga).' },
+      { en: 'Finally, turn on the radio!', es: '¡Por último, enciende la radio!', piece: 'switch', tip: 'Turn on = encender: toca el interruptor OFF de la radio.' },
     ],
   },
   steps: [],
