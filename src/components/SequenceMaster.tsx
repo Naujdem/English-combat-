@@ -12,7 +12,7 @@ export type SequenceStep = { en: string; es: string }
  * Sequence Master (versión simple, A2-03): los pasos salen desordenados y el jugador
  * los toca en orden. Feedback inmediato en cada toque; al ordenarlos todos se puede cerrar.
  */
-export function SequenceMaster({ title, intro, steps, onClose }: { title: string; intro: SequenceStep; steps: SequenceStep[]; onClose: (done: boolean) => void }) {
+export function SequenceMaster({ title, intro, steps, hint, onClose }: { title: string; intro: SequenceStep; steps: SequenceStep[]; hint?: string; onClose: (done: boolean) => void }) {
   const shuffled = useMemo(() => mixed(steps, title), [steps, title])
   const [placed, setPlaced] = useState<number[]>([])
   const [wrong, setWrong] = useState<number | null>(null)
@@ -65,7 +65,7 @@ export function SequenceMaster({ title, intro, steps, onClose }: { title: string
           </div>
         </>
       )}
-      {wrong !== null && !done && <p className="anim-fade-in mt-3 rounded-lg bg-danger/15 px-3 py-2 text-sm text-[#f3b0b0]">Ese no va ahí. Mira las horas del plan.</p>}
+      {wrong !== null && !done && <p className="anim-fade-in mt-3 rounded-lg bg-danger/15 px-3 py-2 text-sm text-[#f3b0b0]">Ese no va ahí. {hint ?? 'Mira las horas del plan.'}</p>}
       {done && <p className="anim-fade-in mt-3 rounded-lg bg-hp/15 px-3 py-2 text-sm text-hp">¡Plan perfecto! Todo en orden.</p>}
 
       <div className="mt-4 flex items-center justify-between gap-2">

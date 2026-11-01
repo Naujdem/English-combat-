@@ -432,6 +432,23 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     until: 'a2-04-sequence',
     doneLine: { text: 'Sorry, I have to finish this radio. Could you ask Leo for my notes?', es: 'Perdón, tengo que terminar esta radio. ¿Podrías pedirle mis notas a Leo?' },
   },
+  // ── A2-05, la biblioteca: Leo, la persona especial y Mrs. Okafor (la bibliotecaria) ──
+  'a2-05-leo': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    doneLine: { text: 'Two little stones now... Yesterday we found one, today another. We need to keep them safe.', es: 'Ya son dos piedritas... Ayer encontramos una, hoy otra. Tenemos que guardarlas bien.' },
+  },
+  'a2-05-interest': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: 'I read this book last year, {name}. I loved it!', es: 'Leí este libro el año pasado, {name}. ¡Me encantó!' },
+  },
+  'a2-05-librarian': {
+    name: 'Mrs. Okafor',
+    look: { shirt: '#3a7a5a', hair: '#1a1a1a', skin: '#8d5524', gender: 'female', accessory: 'glasses' },
+    doneLine: { text: 'The books are quiet again. Thank you! Come back and read with us anytime.', es: 'Los libros están tranquilos otra vez. ¡Gracias! Vuelve a leer con nosotros cuando quieras.' },
+  },
   'a2-receptionist': {
     name: 'The receptionist',
     look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },

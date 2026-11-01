@@ -85,6 +85,7 @@ should=debería, deberías;shouldn't=no deberías;soda=gaseosa;sore=adolorido (s
 backwards=hacia atrás;done=hecho, terminado;finally=por fin, finalmente;normal=normal;rule=regla;sometime=algún día, en algún momento;i'd=yo quisiera (I'd like = I would like);follow=seguir;climb=subir, trepar;
 hale=Hale (nombre);instruction=instrucción;mind=importar (Would you mind...? = ¿Te importaría...?);off=apagado (turn off = apagar);request=petición;responsible=responsable;responsibility=responsabilidad;
 safe=seguro, a salvo;screwdriver=destornillador;step=paso;tool=herramienta;toolbox=caja de herramientas;workbench=mesa de trabajo;workshop=taller;wrench=llave inglesa;glove=guante;hammer=martillo;ladder=escalera (de mano);cafe=café (lugar);hold=sostener, agarrar;shone=brilló (shine);disappear=desaparecer;
+librarian=bibliotecario, bibliotecaria;bookmark=separador (de libro);borrow=pedir prestado;return=devolver, regresar;shelf=estante, repisa;belong=pertenecer;ink=tinta;testimony=testimonio, declaración;reader=lector, lectora;record=registro;visitor=visitante;heard=oyó, oí (hear);older=más viejo (old);bigger=más grande (big);than=que (para comparar);okafor=Okafor (nombre);mixed=mezclado (mixed up = revuelto);
 `
 
 const BASE: Record<string, string> = Object.fromEntries(

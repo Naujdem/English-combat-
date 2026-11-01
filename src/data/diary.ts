@@ -739,6 +739,39 @@ export const DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // ── A2-05 — Words That Don't Belong ──
+  {
+    id: 'a2-05',
+    title: "A2 · Words That Don't Belong",
+    unlock: 'a2-05-close',
+    words: [
+      { title: 'Pasado regular', words: [['visited', 'visitó, visité'], ['listened', 'escuchó, escuché'], ['studied', 'estudió, estudié'], ['stopped', 'se detuvo, detuve'], ['arrived', 'llegó, llegué'], ['returned', 'devolvió, devolví']] },
+      { title: 'Pasado irregular', words: [['went', 'fue, fui (go)'], ['saw', 'vio, vi (see)'], ['bought', 'compró (buy)'], ['ate', 'comió (eat)'], ['wrote', 'escribió (write)'], ['heard', 'oyó (hear)']] },
+      { title: 'La biblioteca', words: [['library', 'biblioteca'], ['librarian', 'bibliotecario, bibliotecaria'], ['shelf', 'estante'], ['bookmark', 'separador'], ['last week', 'la semana pasada'], ['older than', 'más viejo que']] },
+    ],
+    versions: [
+      {
+        id: 'a2-05-library',
+        tense: 'p',
+        tab: 'La biblioteca',
+        title: "Words that don't belong",
+        frame: 'Lo escribes en la noche, con los dos fragmentos morados sobre la mesa.',
+        lines: [
+          { en: 'Today Leo and I [went]p to the city library. Mrs. Okafor, the librarian, [was]p very worried.', es: 'Hoy Leo y yo fuimos a la biblioteca de la ciudad. La señora Okafor, la bibliotecaria, estaba muy preocupada.' },
+          { en: 'Yesterday a reader [opened]p an old book, and the words [changed]p: "goed", "buyed", "eated".', es: 'Ayer un lector abrió un libro viejo y las palabras cambiaron: "goed", "buyed", "eated".' },
+          { en: 'The reader\'s note [was]p mixed up, so we [put]p the story in order.', es: 'La nota del lector estaba revuelta, así que ordenamos la historia.' },
+          { en: 'Then the ink [came]p out of the book. We [stopped]p it with the right words.', es: 'Luego la tinta salió del libro. La detuvimos con las palabras correctas.' },
+          { en: 'In the book there [was]p a bookmark with a drawing of a clock. It [is]n bigger than my clock.', es: 'En el libro había un separador con el dibujo de un reloj. Es más grande que mi reloj.' },
+          { en: 'Now I [have]n two purple stones. We [are going to keep]f looking.', es: 'Ahora tengo dos piedritas moradas. Vamos a seguir buscando.' },
+        ],
+        questions: [
+          { q: 'Who is Mrs. Okafor?', options: ['The librarian.', 'The mechanic.', 'The doctor.'], answer: 0, tip: 'El diario dice: "Mrs. Okafor, the librarian".' },
+          { q: 'What happened to the words in the book?', options: ['They changed.', 'They disappeared.', 'They became bigger.'], answer: 0, tip: 'El diario dice: "the words changed".' },
+          { q: 'What was in the book?', options: ['A bookmark with a drawing of a clock.', 'A purple radio.', 'A note from Leo.'], answer: 0, tip: 'El diario dice: "a bookmark with a drawing of a clock".' },
+        ],
+      },
+    ],
+  },
 ]
 
 /** Diccionario de las palabras de los diarios (inglés → español) */
