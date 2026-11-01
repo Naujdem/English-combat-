@@ -1552,7 +1552,7 @@ NPC_TASKS['a2-06-debate'] = {
         text: 'The banner disappeared. Nobody knows where it is. Why bring the race back?',
         es: 'El estandarte desapareció. Nadie sabe dónde está. ¿Para qué recuperar la carrera?',
         options: [
-          { en: 'Elena found a piece of the banner. The tradition is not completely lost.', es: 'Elena encontró un trozo del estandarte. La tradición no está completamente perdida.', value: 'good', reply: { text: 'A piece of the banner? I didn\'t know that. Interesting...', es: '¿Un trozo del estandarte? No lo sabía. Interesante...' } },
+          { en: 'The banner is lost, but the tradition is not completely dead.', es: 'El estandarte está perdido, pero la tradición no está completamente muerta.', value: 'good', reply: { text: 'Maybe... but a tradition without the banner is not the same.', es: 'Quizá... pero una tradición sin el estandarte no es lo mismo.' } },
           { en: 'Maybe we can look for it.', es: 'Quizá podemos buscarlo.', value: 'neutral', reply: { text: 'Look for it? Where? Many people looked for it before.', es: '¿Buscarlo? ¿Dónde? Mucha gente lo buscó antes.' } },
           { en: 'You probably hid it.', es: 'Seguro tú lo escondiste.', value: 'bad', reply: { text: "Me? I didn't hide anything! I helped with the horses every year.", es: '¿Yo? ¡No escondí nada! Ayudé con los caballos cada año.' } },
         ],
