@@ -1030,6 +1030,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   look={who.look}
                   items={t.round.items}
                   lines={t.round.lines}
+                  visual={t.round.visual}
                   hp={state.hp}
                   maxHp={state.maxHp}
                   onHurt={() => update((s) => ({ ...s, hp: Math.max(1, s.hp - 1) }))}
