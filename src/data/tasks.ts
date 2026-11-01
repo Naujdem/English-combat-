@@ -4,6 +4,7 @@ import type { RoundItem, RoundLines } from '../components/OneMoreRound'
 import type { SequenceStep } from '../components/SequenceMaster'
 import type { FixStep } from '../components/FixRadio'
 import type { ReconstructItem } from '../components/Reconstruct'
+import type { DebateEndings, DebateTurn } from '../components/DebateTalk'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -23,7 +24,7 @@ export type NpcTask = {
   heal?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -36,6 +37,8 @@ export type NpcTask = {
   fixradio?: { title: string; intro: { en: string; es: string }; steps: FixStep[] }
   /** Para activity 'reconstruct' (Reconstruct the Story): contrastar pistas con una nota corrompida y elegir la frase verdadera */
   reconstruct?: { title: string; intro: { en: string; es: string }; items: ReconstructItem[] }
+  /** Para activity 'debate' (Dialogue Under Pressure, versión de debate): turnos con respuesta buena / neutral / mala y tres desenlaces */
+  debate?: { title: string; turns: DebateTurn[]; endings: DebateEndings }
   /** Dialogue Under Pressure: segundos para cada elección de la charla */
   pressure?: number
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
@@ -1432,7 +1435,7 @@ NPC_TASKS['a2-05-close'] = {
 }
 
 // ── A2-06 — A Tradition at Risk (granja de los River; escena en data/a2FarmPast.ts). Sin combate ──
-// Orden: Leo (lección past-simple-comparatives + práctica mixta) → el abuelo → el vecino joven
+// Orden: Leo (lección past-simple-comparatives + práctica mixta) → el abuelo → el vecino joven → el vecino (Dialogue Under Pressure)
 //        → Elena (Reconstruct the Story: descartar eventos falsos + ordenar los verdaderos) → Elena (diálogo final) → Elena (cierre).
 NPC_TASKS['a2-06-leo'] = {
   done: 'a2-06-practice',
@@ -1506,8 +1509,83 @@ NPC_TASKS['a2-06-neighbor'] = {
     },
   ],
   reward: {
-    text: 'Neighbor: "Elena is in the square. Tell her what you think."',
-    es: 'Elena está en la plaza. Dile lo que piensas.',
+    text: 'Neighbor: "Do you want to bring the race back too? Then convince me."',
+    es: '¿Tú también quieres recuperar la carrera? Entonces convénceme.',
+    sub: 'Habla otra vez con el vecino: defiende la tradición (Dialogue Under Pressure).',
+    say: 'Then convince me.',
+  },
+}
+
+// Dialogue Under Pressure: defender la tradición ante el vecino. 5 turnos, sin respuestas incorrectas; el desenlace depende de las buenas
+NPC_TASKS['a2-06-debate'] = {
+  npc: 'a2-06-neighbor',
+  done: 'a2-06-debate',
+  activity: 'debate',
+  requires: {
+    id: 'a2-06-neighbor-talk',
+    text: 'Neighbor: "Did you talk to the grandfather? Talk to him first."',
+    es: '¿Hablaste con el abuelo? Habla primero con él.',
+    sub: 'El abuelo está en la casa familiar.',
+  },
+  debate: {
+    title: 'Defend the tradition',
+    turns: [
+      {
+        text: 'The race was more expensive than it was useful. We should forget it.',
+        es: 'La carrera era más cara que útil. Deberíamos olvidarla.',
+        options: [
+          { en: 'It was more important for the family than the money.', es: 'Era más importante para la familia que el dinero.', value: 'good', reply: { text: 'More important than the money? Hmm... maybe for the family, yes.', es: '¿Más importante que el dinero? Mmm... quizá para la familia, sí.' } },
+          { en: 'It was expensive, yes.', es: 'Era cara, sí.', value: 'neutral', reply: { text: 'You see? Even you think so.', es: '¿Ves? Hasta tú lo piensas.' } },
+          { en: 'You only think about money.', es: 'Solo piensas en el dinero.', value: 'bad', reply: { text: "That's not fair. Somebody has to think about it!", es: 'Eso no es justo. ¡Alguien tiene que pensar en eso!' } },
+        ],
+      },
+      {
+        text: "Five years ago the grandfather became ill. After that, everything stopped. It's better this way.",
+        es: 'Hace cinco años el abuelo se enfermó. Después de eso, todo se detuvo. Es mejor así.',
+        options: [
+          { en: 'The race stopped because someone lost the banner, not only because he was ill.', es: 'La carrera se detuvo porque alguien perdió el estandarte, no solo porque él se enfermó.', value: 'good', reply: { text: "The banner... You're right. That was a big problem too.", es: 'El estandarte... Tienes razón. Ese también fue un gran problema.' } },
+          { en: 'Yes, he became ill.', es: 'Sí, se enfermó.', value: 'neutral', reply: { text: 'Yes. And nobody organized it after that.', es: 'Sí. Y nadie la organizó después de eso.' } },
+          { en: "That's a bad excuse.", es: 'Esa es una mala excusa.', value: 'bad', reply: { text: 'An excuse? He was very ill! Be careful with your words.', es: '¿Una excusa? ¡Estuvo muy enfermo! Cuidado con tus palabras.' } },
+        ],
+      },
+      {
+        text: 'The banner disappeared. Nobody knows where it is. Why bring the race back?',
+        es: 'El estandarte desapareció. Nadie sabe dónde está. ¿Para qué recuperar la carrera?',
+        options: [
+          { en: 'Elena found a piece of the banner. The tradition is not completely lost.', es: 'Elena encontró un trozo del estandarte. La tradición no está completamente perdida.', value: 'good', reply: { text: 'A piece of the banner? I didn\'t know that. Interesting...', es: '¿Un trozo del estandarte? No lo sabía. Interesante...' } },
+          { en: 'Maybe we can look for it.', es: 'Quizá podemos buscarlo.', value: 'neutral', reply: { text: 'Look for it? Where? Many people looked for it before.', es: '¿Buscarlo? ¿Dónde? Mucha gente lo buscó antes.' } },
+          { en: 'You probably hid it.', es: 'Seguro tú lo escondiste.', value: 'bad', reply: { text: "Me? I didn't hide anything! I helped with the horses every year.", es: '¿Yo? ¡No escondí nada! Ayudé con los caballos cada año.' } },
+        ],
+      },
+      {
+        text: "Elena wants to bring it back, but the other farms don't care anymore.",
+        es: 'Elena quiere recuperarla, pero a las otras granjas ya no les importa.',
+        options: [
+          { en: 'Some people still remember. The race was bigger than you think.', es: 'Algunas personas todavía la recuerdan. La carrera era más grande de lo que crees.', value: 'good', reply: { text: 'Bigger than I think? Well... my father talked about it a lot.', es: '¿Más grande de lo que creo? Bueno... mi papá hablaba mucho de ella.' } },
+          { en: 'We can ask them.', es: 'Podemos preguntarles.', value: 'neutral', reply: { text: 'You can ask. But I think they will say no.', es: 'Puedes preguntar. Pero creo que dirán que no.' } },
+          { en: "You don't know what they think.", es: 'No sabes lo que piensan.', value: 'bad', reply: { text: 'And you do? You are not from here.', es: '¿Y tú sí? Tú no eres de aquí.' } },
+        ],
+      },
+      {
+        text: 'Fine. Tell me why the tradition should continue.',
+        es: 'Está bien. Dime por qué la tradición debería continuar.',
+        options: [
+          { en: 'Because it kept the families together. It was more than a race.', es: 'Porque mantenía unidas a las familias. Era más que una carrera.', value: 'good', reply: { text: 'More than a race... Yes. Everybody came to the square that day.', es: 'Más que una carrera... Sí. Ese día todos venían a la plaza.' } },
+          { en: 'Because Elena wants it.', es: 'Porque Elena la quiere.', value: 'neutral', reply: { text: 'Elena wants a lot of things.', es: 'Elena quiere muchas cosas.' } },
+          { en: 'Because I say so.', es: 'Porque yo lo digo.', value: 'bad', reply: { text: "Because you say so? That's not a reason.", es: '¿Porque tú lo dices? Esa no es una razón.' } },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: "Hmm... maybe the race was more important than I thought. Talk to Elena. I won't stop you.", es: 'Mmm... quizá la carrera era más importante de lo que pensaba. Habla con Elena. No te voy a detener.' },
+      mid: { text: "I still think it's better to stop, but... do what you want. Just don't make it expensive again.", es: 'Sigo pensando que es mejor dejarla, pero... haz lo que quieras. Solo no la hagas cara otra vez.' },
+      low: { text: "I don't want to talk about this anymore. Go talk to Elena if you want, but I won't help.", es: 'Ya no quiero hablar de esto. Ve a hablar con Elena si quieres, pero no voy a ayudar.' },
+    },
+  },
+  steps: [],
+  reward: {
+    text: 'Neighbor: "Elena is in the square."',
+    es: 'Elena está en la plaza.',
     sub: 'Habla con Elena en la plaza: reconstruye la historia.',
     say: 'Elena is in the square.',
   },
@@ -1519,9 +1597,9 @@ NPC_TASKS['a2-06-reconstruct'] = {
   done: 'a2-06-reconstruct',
   activity: 'reconstruct',
   requires: {
-    id: 'a2-06-neighbor-talk',
-    text: 'Elena: "Hi! Please, listen to my grandfather and our young neighbor first."',
-    es: '¡Hola! Por favor, escucha primero a mi abuelo y a nuestro vecino joven.',
+    id: 'a2-06-debate',
+    text: 'Elena: "Hi! Please, talk to my grandfather and our young neighbor first."',
+    es: '¡Hola! Por favor, habla primero con mi abuelo y con nuestro vecino joven.',
     sub: 'El abuelo está en la casa familiar; el vecino, en el establo.',
   },
   reconstruct: {

@@ -4,7 +4,7 @@ import { A2_05_CLOSE } from './a2Library'
 /**
  * A2-06 — A Tradition at Risk (la granja de la familia River). Versión mínima, sin combate.
  * Mapa adaptado de la granja de A1: establo (arriba izquierda), casa familiar (arriba derecha) y plaza (abajo).
- * Orden: Leo (lección past-simple-comparatives + práctica mixta) → el abuelo (casa) → el vecino joven (establo)
+ * Orden: Leo (lección past-simple-comparatives + práctica mixta) → el abuelo (casa) → el vecino joven (establo) → el vecino (Dialogue Under Pressure)
  *        → Elena (Reconstruct the Story: descartar lo falso + ordenar lo verdadero) → Elena (diálogo final)
  *        → Elena (cierre: el trozo del estandarte).
  * Se activa al terminar A2-05. Tareas en data/tasks.ts, lección en data/lessons.ts.
@@ -38,6 +38,7 @@ export const A2_FARM_PAST_ID = 'a2-06-farm'
 export const A2_06_PRACTICE = 'a2-06-practice'
 export const A2_06_GRANDFATHER = 'a2-06-grandfather-talk'
 export const A2_06_NEIGHBOR = 'a2-06-neighbor-talk'
+export const A2_06_DEBATE = 'a2-06-debate'
 export const A2_06_RECONSTRUCT = 'a2-06-reconstruct'
 export const A2_06_ORDER = 'a2-06-order'
 export const A2_06_ELENA = 'a2-06-elena-talk'
@@ -92,6 +93,7 @@ export const A2_FARM_PAST: SceneDef = {
     { label: 'Práctica', done: s.opened.includes(A2_06_PRACTICE) },
     { label: 'Hablar con el abuelo', done: s.opened.includes(A2_06_GRANDFATHER) },
     { label: 'Hablar con el vecino', done: s.opened.includes(A2_06_NEIGHBOR) },
+    { label: 'Defender la tradición', done: s.opened.includes(A2_06_DEBATE) },
     { label: 'Reconstruct the Story', done: s.opened.includes(A2_06_ORDER) },
     { label: 'Diálogo final con Elena', done: s.opened.includes(A2_06_ELENA) },
     { label: 'Cierre: el trozo del estandarte', done: s.opened.includes(A2_06_CLOSE) },
