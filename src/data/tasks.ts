@@ -25,7 +25,7 @@ export type NpcTask = {
   /** En vez de la charla, abre un juego propio */
   activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
-  round?: { items: RoundItem[]; lines: RoundLines }
+  round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
   practice?: TopicId
   /** Para activity 'practice': preguntas fijas en orden (si no, se eligen al azar del tema) */
@@ -628,14 +628,15 @@ NPC_TASKS['a2-friend-round'] = {
   activity: 'round',
   steps: [],
   round: {
+    visual: 'room',
     items: [
-      { id: 'cup', icon: '☕', en: 'cup', es: 'taza' },
-      { id: 'book', icon: '📕', en: 'book', es: 'libro' },
+      { id: 'water', icon: '🥛', en: 'water', es: 'agua' },
+      { id: 'pills', icon: '💊', en: 'pills', es: 'pastillas' },
       { id: 'apple', icon: '🍎', en: 'apple', es: 'manzana' },
-      { id: 'phone', icon: '📱', en: 'phone', es: 'teléfono' },
+      { id: 'book', icon: '📕', en: 'book', es: 'libro' },
     ],
     lines: {
-      intro: { text: "Before we get your things, let's check your memory. Look carefully: the cup, the book, the apple and the phone.", es: 'Antes de ir por tus cosas, revisemos tu memoria. Mira con atención: la taza, el libro, la manzana y el teléfono.' },
+      intro: { text: "Before we get your things, let's check your memory. Look carefully at your room: the water, the pills, the apple and the book.", es: 'Antes de ir por tus cosas, revisemos tu memoria. Mira bien tu habitación: el agua, las pastillas, la manzana y el libro.' },
       ask: { text: 'OK, open your eyes! One thing moved. Which one?', es: '¡Bien, abre los ojos! Una cosa se movió. ¿Cuál?' },
       name: { text: 'Yes, that one moved! And what is it in English?', es: '¡Sí, esa se movió! ¿Y cómo se dice en inglés?' },
       win: { text: 'Yes! The {item}. Your memory is still amazing!', es: '¡Sí! {item}. ¡Tu memoria sigue siendo increíble!' },
