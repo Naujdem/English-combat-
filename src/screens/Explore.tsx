@@ -101,6 +101,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   )
   const firstVisit = !state.seenLesson.includes(scene.id)
   const doorOpen = bossDoorOpen(state, scene)
+  const hasBoss = scene.entities.some((e) => e.type === 'boss')
   const keys = state.keys[scene.id] ?? 0
   const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | 'sports' | 'timetable' | 'where' | 'coach' | 'directions' | 'cafe' | 'sorry' | null>(null)
   const boardNext = nextSession(state.opened, state.defeated)
@@ -424,6 +425,12 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         }
         return
       }
+      // Objetos examinables de la escena (por posición); si no hay, se muestra el vocabulario de siempre
+      const ex = scene.examine?.[`${nx},${ny}`]
+      if (ex) {
+        setMsg({ ...ex })
+        return
+      }
       const v = VOCAB[c]
       if (v && c !== '#') setMsg({ text: `${v.en[0].toUpperCase()}${v.en.slice(1)}`, sub: `= ${v.es}`, say: v.en })
     },
@@ -607,8 +614,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       </div>
 
       <div className={desktop ? 'flex h-full w-80 shrink-0 flex-col gap-3' : 'contents'}>
-      <div className={`flex flex-wrap items-center gap-1.5 ${desktop ? 'text-xs' : 'text-[11px]'}`} aria-label="Objetivos para el jefe">
-        <span className="font-semibold uppercase tracking-wide text-paper/50">Para el jefe:</span>
+      <div className={`flex flex-wrap items-center gap-1.5 ${desktop ? 'text-xs' : 'text-[11px]'}`} aria-label={hasBoss ? 'Objetivos para el jefe' : 'Objetivos'}>
+        <span className="font-semibold uppercase tracking-wide text-paper/50">{hasBoss ? 'Para el jefe:' : 'Objetivos:'}</span>
         {scene.chips(state).map((c) => (
           <span key={c.label} className={`rounded-full px-2 py-0.5 ${c.done ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
             {c.done && !/\d/.test(c.label) ? '✓ ' : ''}{c.label}

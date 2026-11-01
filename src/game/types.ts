@@ -145,6 +145,8 @@ export type SceneDef = {
   era?: 'Pasado' | 'Futuro'
   /** Lo que se dice al chocar con la puerta cerrada del jefe */
   door?: { text: string; sub: string }
+  /** Objetos examinables por posición ("x,y"): al chocar con esa casilla se muestra este texto en vez del vocabulario */
+  examine?: Record<string, { text: string; sub?: string; say?: string; tone?: 'info' | 'good' | 'warn' }>
 }
 
 export type Requirement = { id: string; name: string; line: StoryLine }
