@@ -23,7 +23,8 @@ import { Notebook } from '../components/Notebook'
 import { LostAsk } from '../components/LostAsk'
 import { LOST_INTRO, LOST_ITEMS } from '../data/lostFound'
 import { NPCS } from '../data/npcs'
-import { fillNames } from '../data/diary'
+import { DIARY, fillNames, unlockedPages } from '../data/diary'
+import { Diary } from '../components/Diary'
 import { interestFriend } from '../data/friends'
 import { OneMoreRound } from '../components/OneMoreRound'
 import { Practice } from '../components/Practice'
@@ -104,6 +105,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [lesson, setLesson] = useState<{ topics: TopicId[]; enemyId?: string; then?: 'where' | 'coach' | 'directions' | 'cafe'; task?: string } | null>(null)
   // Tarea de un personaje (charla corta con elecciones), ver data/tasks.ts
   const [task, setTask] = useState<string | null>(null)
+  // Al cerrar un escenario sin final de capítulo (A2), su página del diario se abre sola aquí, como en A1
+  const [diary, setDiary] = useState(false)
   // Misión de la fiesta de Leo (barrio): lo que falta y a quién se le está preguntando
   const [party, setParty] = useState<{ id: string; name: string; voice: Voice } | null>(null)
   // La mesa de la fiesta se llena cuando ya está todo
@@ -185,6 +188,20 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       hp: t.heal ? s.maxHp : s.hp,
     }))
     setMsg({ text: fill(t.reward.text), es: t.reward.es && fill(t.reward.es), sub: fill(t.reward.sub), say: t.reward.say && fill(t.reward.say), tone: 'good' })
+
+    if (DIARY.some((c) => c.unlock === t.done) && !state.opened.includes(t.done)) setDiary(true)
+  }
+
+  /** Igual que en el mapa: al cerrar, el diario ya avisó de las páginas abiertas */
+  function closeDiary() {
+    setDiary(false)
+    update((s) => {
+      const add = [
+        ...unlockedPages(s.opened).map((p) => `diary-notified-${p.version.id}`),
+        ...DIARY.filter((c) => s.opened.includes(c.unlock)).map((c) => `diary-open-${c.id}`),
+      ].filter((x) => !s.opened.includes(x))
+      return add.length ? { ...s, opened: [...s.opened, ...add] } : s
+    })
   }
 
   const interact = useCallback(
@@ -1081,6 +1098,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         </Overlay>
       )}
 
+      {diary && <Diary state={state} update={update} onClose={closeDiary} />}
       {lesson && (
         <div className="absolute inset-0 z-40 overflow-y-auto bg-ink">
           <Lesson

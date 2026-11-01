@@ -673,6 +673,72 @@ export const DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // ── A2-03 — Day in the City ──
+  {
+    id: 'a2-03',
+    title: 'A2 · Day in the City',
+    unlock: 'a2-03-close',
+    words: [
+      { title: 'Invitaciones', words: [['Would you like to...?', '¿Te gustaría...?'], ["I'd love to.", 'Me encantaría.'], ['How about...?', '¿Qué tal si...?'], ["Let's...", 'Vamos a...'], ["Sorry, I can't.", 'Lo siento, no puedo.']] },
+      { title: 'Frecuencia', words: [['How often...?', '¿Con qué frecuencia...?'], ['every day', 'todos los días'], ['once a week', 'una vez a la semana'], ['twice a week', 'dos veces a la semana'], ['sometimes', 'a veces'], ['a lot', 'mucho']] },
+      { title: 'En el café', words: [['table', 'mesa'], ['window', 'ventana'], ['waiter', 'mesero'], ['plaza', 'plaza'], ['backwards', 'hacia atrás']] },
+    ],
+    versions: [
+      {
+        id: 'a2-03-day',
+        tense: 'p',
+        tab: 'Mi día',
+        title: 'A day in the city',
+        frame: 'Lo escribes en la noche, después de tu primer día fuera del hospital.',
+        lines: [
+          { en: 'Today I [left]p the hospital. Leo [was waiting]p for me in the street.', es: 'Hoy salí del hospital. Leo me estaba esperando en la calle.' },
+          { en: 'My friend [asked]p me: "Would you like to have a coffee?" I [said]p: "I\'d love to!"', es: 'Mi amigo me preguntó: "¿Te gustaría tomar un café?". Le dije: "¡Me encantaría!".' },
+          { en: 'The waiter at the café [was]p very strange. He [talked]p fast and [wanted]p us to stay forever.', es: 'El mesero del café estaba muy raro. Hablaba rápido y quería que nos quedáramos para siempre.' },
+          { en: 'We [stopped]p him, and then we [made]p a plan for the rest of the day.', es: 'Lo detuvimos y luego hicimos un plan para el resto del día.' },
+          { en: 'In the plaza, the hands of the clock [moved]p backwards. The center of my clock [shone]p for a second.', es: 'En la plaza, las manecillas del reloj se movieron hacia atrás. El centro de mi reloj brilló un segundo.' },
+          { en: 'Now everything [is]n normal again... I [think]n.', es: 'Ahora todo está normal otra vez... creo.' },
+        ],
+        questions: [
+          { q: 'Who was waiting in the street?', options: ['Leo.', 'The waiter.', 'The doctor.'], answer: 0, tip: 'El diario dice: "Leo was waiting for me in the street".' },
+          { q: 'What did the waiter want?', options: ['He wanted them to stay forever.', 'He wanted a coffee.', 'He wanted to go to the park.'], answer: 0, tip: 'El diario dice: "wanted us to stay forever".' },
+          { q: 'What happened in the plaza?', options: ['The clock moved backwards.', 'The fountain stopped.', 'Leo disappeared.'], answer: 0, tip: 'El diario dice: "the hands of the clock moved backwards".' },
+        ],
+      },
+    ],
+  },
+  // ── A2-04 — Mr. Hale's Workshop ──
+  {
+    id: 'a2-04',
+    title: "A2 · Mr. Hale's Workshop",
+    unlock: 'a2-04-close',
+    words: [
+      { title: 'Peticiones corteses', words: [['Could you...?', '¿Podría(s)...?'], ['Can you...?', '¿Puedes...?'], ['Would you mind...?', '¿Te importaría...?'], ['Of course.', 'Por supuesto.'], ['Sure.', 'Claro.']] },
+      { title: 'Herramientas', words: [['workshop', 'taller'], ['workbench', 'mesa de trabajo'], ['tools', 'herramientas'], ['screwdriver', 'destornillador'], ['wrench', 'llave inglesa'], ['hammer', 'martillo'], ['radio', 'radio']] },
+      { title: 'Instrucciones', words: [['first', 'primero'], ['then', 'luego'], ['turn off', 'apagar'], ['turn on', 'encender'], ['be careful', 'ten cuidado'], ['keep it safe', 'guárdalo bien']] },
+    ],
+    versions: [
+      {
+        id: 'a2-04-workshop',
+        tense: 'p',
+        tab: 'El taller',
+        title: "Mr. Hale's workshop",
+        frame: 'Lo escribes al volver a casa, con la piedrita morada guardada en el bolsillo.',
+        lines: [
+          { en: 'Today Leo [took]p me to Mr. Hale\'s workshop. He [fixes]n clocks, radios and bikes.', es: 'Hoy Leo me llevó al taller del señor Hale. Él arregla relojes, radios y bicicletas.' },
+          { en: 'Mr. Hale [was]p very busy. I [asked]p him: "Could you help us, please?"', es: 'El señor Hale estaba muy ocupado. Le pregunté: "¿Podría ayudarnos, por favor?".' },
+          { en: 'There [was]p an old radio on the workbench. We [fixed]p it step by step.', es: 'Había una radio vieja en la mesa de trabajo. La arreglamos paso a paso.' },
+          { en: 'Then a purple light [came]p out of the radio, and Mr. Hale [changed]p. We [had]p to fight him.', es: 'Luego salió una luz morada de la radio y el señor Hale cambió. Tuvimos que pelear con él.' },
+          { en: 'In the end, Mr. Hale [was]p OK again. He [gave]p us a small purple stone.', es: 'Al final, el señor Hale volvió a estar bien. Nos dio una piedrita morada.' },
+          { en: 'Now we [are going to look]f for more purple lights. It [is]n our job now.', es: 'Ahora vamos a buscar más luces moradas. Ahora ese es nuestro trabajo.' },
+        ],
+        questions: [
+          { q: 'What does Mr. Hale fix?', options: ['Clocks, radios and bikes.', 'Cars and buses.', 'Computers.'], answer: 0, tip: 'El diario dice: "He fixes clocks, radios and bikes".' },
+          { q: 'Where was the old radio?', options: ['On the workbench.', 'In the office.', 'Under the car.'], answer: 0, tip: 'El diario dice: "an old radio on the workbench".' },
+          { q: 'What did Mr. Hale give them?', options: ['A small purple stone.', 'The center of the clock.', 'A new radio.'], answer: 0, tip: 'El diario dice: "He gave us a small purple stone".' },
+        ],
+      },
+    ],
+  },
 ]
 
 /** Diccionario de las palabras de los diarios (inglés → español) */

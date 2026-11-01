@@ -1,7 +1,7 @@
 import { DICT } from './diary'
 
 /**
- * Diccionario inglés → español del juego (nivel A1), para tocar una palabra y ver qué significa.
+ * Diccionario inglés → español del juego (niveles A1 y A2), para tocar una palabra y ver qué significa.
  * Formato: palabra=traducción, separadas por punto y coma. Para agregar una palabra, añádela aquí.
  */
 const RAW = `
@@ -78,6 +78,13 @@ opposite=enfrente de;flowers=flores;born=nacer (are born = nacen);other=otro;sid
 weekend=fin de semana;lobby=recepción, vestíbulo;memory=memoria;politely=con cortesía;panels=paneles;
 want=querer;wants=quiere;wanted=quería, quise (want);would=(would like = me gustaría);like=gustar, como;elevator=ascensor;speech=discurso;director=director, directora;retire=jubilarse;retired=jubilado;goodbye=adiós;floors=pisos;floor=piso;tower=torre;suit=traje;chair=silla;habits=costumbres;whoever=quienquiera que;especially=especialmente;nervous=nervioso;popcorn=palomitas;
 groups=grupos;group=grupo;tour=recorrido, visita guiada;outside=afuera;terrace=terraza;
+advice=consejo;beginning=comienzo, principio;care=cuidado (take care = cuídate);carefully=con cuidado;center=centro;check=revisar;few=pocos (a few = unos pocos);fill=llenar (fill in = llenar un formulario);
+hallway=pasillo;headache=dolor de cabeza;hey=oye, hola;hit=golpear, golpeó (hit, pasado igual);hitting=golpeando (hit);hitted=forma incorrecta (el pasado de hit es hit);hmm=mmm;item=objeto, artículo;male=masculino;female=femenino;
+minion=esbirro;missing=perdido, que falta;must=deber, tener que;mustn't=no debes (está prohibido);nurse=enfermero, enfermera;oh=oh;pale=pálido;purple=morado;raise=levantar;round=ronda;
+should=debería, deberías;shouldn't=no deberías;soda=gaseosa;sore=adolorido (sore throat = dolor de garganta);stairs=escaleras;which=cuál, que;worried=preocupado;wow=¡guau!;
+backwards=hacia atrás;done=hecho, terminado;finally=por fin, finalmente;normal=normal;rule=regla;sometime=algún día, en algún momento;i'd=yo quisiera (I'd like = I would like);follow=seguir;climb=subir, trepar;
+hale=Hale (nombre);instruction=instrucción;mind=importar (Would you mind...? = ¿Te importaría...?);off=apagado (turn off = apagar);request=petición;responsible=responsable;responsibility=responsabilidad;
+safe=seguro, a salvo;screwdriver=destornillador;step=paso;tool=herramienta;toolbox=caja de herramientas;workbench=mesa de trabajo;workshop=taller;wrench=llave inglesa;glove=guante;hammer=martillo;ladder=escalera (de mano);cafe=café (lugar);hold=sostener, agarrar;shone=brilló (shine);disappear=desaparecer;
 `
 
 const BASE: Record<string, string> = Object.fromEntries(
