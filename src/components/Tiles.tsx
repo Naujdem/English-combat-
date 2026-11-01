@@ -117,6 +117,7 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   '2': { en: 'solar panel', es: 'panel solar' },
   '3': { en: 'robot tractor', es: 'tractor robot' },
   '4': { en: 'elevator', es: 'ascensor' },
+  '5': { en: 'bed', es: 'cama' },
 }
 
 export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: { c: string; x: number; y: number; floor: string; doorOpen: boolean; party?: boolean; still?: boolean }) {
@@ -741,6 +742,16 @@ export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: 
           <rect x={X + 16.5} y={Y + 8} width={10.5} height={T - 8} fill="#c9d3dc" />
           <rect x={X + 10} y={Y + 1} width={12} height={5} rx="1" fill="#1f3c58" />
           <path d={`M${X + 14} ${Y + 5} l2 -3 l2 3 z`} fill="#7fe0ff" />
+        </g>
+      )
+    case '5':
+      return (
+        <g>
+          {base}
+          <rect x={X + 3} y={Y + 2} width={T - 6} height={T - 4} rx="3" fill="#b8c4cc" />
+          <rect x={X + 5} y={Y + 4} width={T - 10} height={T - 8} rx="2" fill="#f4f7f9" />
+          <rect x={X + 7} y={Y + 5} width={T - 14} height={7} rx="2" fill="#ffffff" stroke="#cfd8de" strokeWidth="1" />
+          <rect x={X + 5} y={Y + 14} width={T - 10} height={T - 18} rx="2" fill="#7fb3d5" />
         </g>
       )
     default:

@@ -18,13 +18,16 @@ import { setSound, soundOn } from '../game/sfx'
 import { autoVoiceOn, setAutoVoice } from '../game/speech'
 import { DIARY, pageNotified, pageSeen, unlockedPages } from '../data/diary'
 import { dueCards } from '../game/cards'
-import type { Update } from '../game/store'
-import { heroLook } from '../game/helpers'
+import { isA2Unlocked, type Update } from '../game/store'
+import { heroLook, SCENES } from '../game/helpers'
 import { interestFriend } from '../data/friends'
 import { useDesktop } from '../game/device'
 import { Achievements } from '../components/Achievements'
 import { ACHIEVEMENTS, achieved } from '../data/collection'
 import { EraExam, EXAMS, type EraId } from '../components/EraExam'
+
+/** Primera escena de A2 (no está en el mapa del mundo para no cambiar el reloj ni los conteos de A1) */
+const A2_START = 'a2-hospital'
 
 const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } as const
 
@@ -32,7 +35,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
     state.defeated.includes('office-future-boss')
-      ? '¡Terminaste A1! Tu voz está completa: presente, pasado y futuro. A2 se construirá pronto; mientras tanto, puedes repasar y visitar cualquier lugar.'
+      ? '¡Terminaste A1! Tu voz está completa: presente, pasado y futuro. A2 empieza en el hospital; también puedes repasar y visitar cualquier lugar de A1.'
       : state.defeated.includes('farm-future-boss')
       ? 'Recuperaste cuatro fragmentos de voz del futuro. Toma el Sky Bus hasta la torre Green Valley: el último lugar de A1.'
       : state.defeated.includes('barrio-future-boss')
@@ -208,6 +211,11 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       </Panel>
 
       <button className={btnPrimary} onClick={() => tap(here)}>Entrar a {here.name}</button>
+      {isA2Unlocked(state) && SCENES[A2_START] && (
+        <button className={btnPrimary} onClick={() => onEnter(A2_START)}>
+          {state.sceneId === A2_START ? 'Volver al hospital (A2)' : 'Ir al hospital (A2)'}
+        </button>
+      )}
       </div>
       </div>
 

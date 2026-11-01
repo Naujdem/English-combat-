@@ -16,6 +16,10 @@ import { sfx } from './game/sfx'
 import { KEYWORDS } from './data/keywords'
 import { newCard } from './game/cards'
 
+/** Epílogo de la torre de 2056 (final de A1) y primera escena de A2 */
+const A1_FINAL_EPILOGUE = 'office-future-epilogue'
+const A2_START = 'a2-hospital'
+
 /** Un capítulo terminado cuyo final todavía no se vio (por si se cerró el juego en medio) */
 function pendingEpilogue(s: ReturnType<typeof useGameState>['state']) {
   const scene = SCENES[s.sceneId]
@@ -138,14 +142,14 @@ export default function App() {
         <Epilogue
           state={state}
           onDone={() =>
-            update((s) => ({
-              ...s,
-              opened: (() => {
-                const id = SCENES[s.sceneId].epilogue ?? 'school-epilogue'
-                return s.opened.includes(id) ? s.opened : [...s.opened, id]
-              })(),
-              screen: 'world',
-            }))
+            update((s) => {
+              const id = SCENES[s.sceneId].epilogue ?? 'school-epilogue'
+              const opened = s.opened.includes(id) ? s.opened : [...s.opened, id]
+              // Final de A1: A2 empieza en el hospital justo después
+              if (id === A1_FINAL_EPILOGUE && SCENES[A2_START])
+                return { ...s, opened, sceneId: A2_START, pos: { ...SCENES[A2_START].start }, battle: null, screen: 'explore' }
+              return { ...s, opened, screen: 'world' }
+            })
           }
         />
       )
