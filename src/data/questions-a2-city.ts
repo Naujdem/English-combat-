@@ -6,6 +6,8 @@ import type { Question } from '../game/types'
  * (solo salen en el combate del café, etiqueta a2-city). Las de completar y ordenar también salen como escucha y escritura.
  */
 const T = ['a2-city']
+/** Solo la turista corrompida (esbirro ligero frente al café) */
+const TT = ['a2-city-tourist']
 
 export const A2_CITY_QUESTIONS: Question[] = [
   // ── Invitaciones y frecuencia (práctica de Leo + combate) ──
@@ -24,4 +26,14 @@ export const A2_CITY_QUESTIONS: Question[] = [
   { id: 'a2-03-s3', topic: 'should-must', prompt: "You ___ order a coffee. Water is free here.", options: ["don't have to", "doesn't have to", "mustn't to"], answer: 0, tip: "No es necesario: don't have to. Con you: don't.", tags: T },
   { id: 'a2-03-s4', topic: 'should-must', kind: 'fix', prompt: 'You must to try the cake here!', options: ['You must try the cake here!', 'You musts try the cake here!', 'You must trying the cake here!'], answer: 0, tip: 'Después de must no va to: must try.', tags: T },
   { id: 'a2-03-s5', topic: 'should-must', kind: 'order', prompt: 'Deberías venir con nosotros.', options: ['You', 'should', 'come', 'with', 'us.'], answer: 0, tip: 'You + should + verbo: You should come.', tags: T },
+
+  // ── La turista corrompida (esbirro ligero): invitaciones en la ciudad ──
+  { id: 'a2-03-t1', topic: 'invitations', prompt: 'Would you like ___ the museum with me?', options: ['to visit', 'visit', 'visiting'], answer: 0, tip: 'Would you like + to + verbo: to visit.', tags: TT },
+  { id: 'a2-03-t2', topic: 'invitations', prompt: 'How about ___ the bus to the plaza?', options: ['taking', 'take', 'to take'], answer: 0, tip: 'How about + verbo con -ing: taking.', tags: TT },
+  { id: 'a2-03-t3', topic: 'invitations', kind: 'fix', prompt: "Let's to walk to the fountain!", options: ["Let's walk to the fountain!", "Let's walking to the fountain!", "Let's walks to the fountain!"], answer: 0, tip: "Let's + verbo tal cual, sin to: Let's walk.", tags: TT },
+  { id: 'a2-03-t4', topic: 'invitations', kind: 'fix', prompt: 'Would you like come to the market?', options: ['Would you like to come to the market?', 'Would you like coming to the market?', 'Would you likes to come to the market?'], answer: 0, tip: 'Would you like + to + verbo: to come.', tags: TT },
+  { id: 'a2-03-t5', topic: 'invitations', prompt: "Would you like to see the old church? — Yes, I'd love ___!", options: ['to', 'it', 'go'], answer: 0, tip: "Para aceptar: I'd love to.", tags: TT },
+  { id: 'a2-03-t6', topic: 'invitations', prompt: "Would you like a city tour now? — Sorry, I ___. I'm meeting my friend.", options: ["can't", "don't can", "not can"], answer: 0, tip: "Para rechazar con amabilidad: Sorry, I can't.", tags: TT },
+  { id: 'a2-03-t7', topic: 'invitations', kind: 'order', prompt: '¿Qué tal si tomamos una foto en la plaza?', options: ['How', 'about', 'taking', 'a', 'photo', 'in', 'the', 'plaza?'], answer: 0, tip: 'How about + verbo con -ing: How about taking...?', tags: TT },
+  { id: 'a2-03-t8', topic: 'invitations', kind: 'order', prompt: '¿Te gustaría venir a la oficina de turismo?', options: ['Would', 'you', 'like', 'to', 'come', 'to', 'the', 'tourist', 'office?'], answer: 0, tip: 'Would + you + like to + verbo...?', tags: TT },
 ]
