@@ -30,7 +30,7 @@ export type NpcTask = {
   /** Para activity 'practice': preguntas fijas en orden (si no, se eligen al azar del tema) */
   practiceIds?: string[]
   /** Para activity 'sequence' (Sequence Master): los pasos en el orden correcto (salen desordenados) */
-  sequence?: { title: string; intro: SequenceStep; steps: SequenceStep[]; hint?: string }
+  sequence?: { title: string; intro: SequenceStep; steps: SequenceStep[]; hint?: string; visual?: 'radio' | 'none' }
   /** Para activity 'reconstruct' (Reconstruct the Story): contrastar pistas con una nota corrompida y elegir la frase verdadera */
   reconstruct?: { title: string; intro: { en: string; es: string }; items: ReconstructItem[] }
   /** Dialogue Under Pressure: segundos para cada elección de la charla */
@@ -1176,11 +1176,12 @@ NPC_TASKS['a2-04-sequence'] = {
     title: 'Arreglar la radio',
     intro: { en: "Mr. Hale's notes are on the floor. Let's put the steps in order: turn off the radio, open the back, change the old battery, and test it.", es: 'Las notas del señor Hale están en el piso. Ordenemos los pasos: apagar la radio, abrir la parte de atrás, cambiar la batería vieja y probarla.' },
     steps: [
-      { en: 'First, turn off the radio.', es: 'Primero, apaga la radio.' },
-      { en: 'Then, open the back of the radio.', es: 'Luego, abre la parte de atrás de la radio.' },
-      { en: 'After that, change the old battery.', es: 'Después, cambia la batería vieja.' },
-      { en: 'Finally, turn it on and test it.', es: 'Por último, enciéndela y pruébala.' },
+      { en: 'First, turn off the radio.', es: 'Primero, apaga la radio.', part: 'switch' },
+      { en: 'Then, open the back of the radio.', es: 'Luego, abre la parte de atrás de la radio.', part: 'back' },
+      { en: 'After that, change the old battery.', es: 'Después, cambia la batería vieja.', part: 'battery' },
+      { en: 'Finally, turn it on and test it.', es: 'Por último, enciéndela y pruébala.', part: 'dial' },
     ],
+    visual: 'radio',
   },
   steps: [],
   reward: {

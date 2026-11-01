@@ -1041,7 +1041,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'tour') return <TourPlan onClose={finish} />
             if (t.activity === 'plan') return <LessonPlan onClose={finish} />
             if (t.activity === 'timeline') return <Timeline onClose={finish} />
-            if (t.activity === 'sequence' && t.sequence) return <SequenceMaster title={t.sequence.title} intro={t.sequence.intro} steps={t.sequence.steps} hint={t.sequence.hint} onClose={finish} />
+            if (t.activity === 'sequence' && t.sequence) return <SequenceMaster title={t.sequence.title} intro={t.sequence.intro} steps={t.sequence.steps} hint={t.sequence.hint} visual={t.sequence.visual} onClose={finish} />
             if (t.activity === 'reconstruct' && t.reconstruct) return <Reconstruct title={t.reconstruct.title} intro={t.reconstruct.intro} items={t.reconstruct.items} onClose={finish} />
             if (t.activity === 'mystery') return <Mystery onClose={finish} />
             if (t.activity === 'verbs') return <VerbBook state={state} update={update} onClose={finish} />
