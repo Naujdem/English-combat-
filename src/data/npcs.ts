@@ -399,6 +399,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#3b9d5d', hair: '#2b1d12', skin: '#e0ac69' },
     doneLine: { text: "What a day! Let's do it again sometime.", es: '¡Qué día! Repitámoslo alguna vez.' },
   },
+  // La persona especial (nombre y aspecto del jugador) te acompaña en la ciudad
+  'a2-03-interest': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: "It's so nice to be outside again, {name}!", es: '¡Qué bueno estar afuera otra vez, {name}!' },
+  },
   // El mesero del café: aparece al aceptar la invitación y, tras la charla, se convierte en el eco
   'a2-03-waiter': {
     name: 'The waiter',

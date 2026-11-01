@@ -94,6 +94,8 @@ export const A2_CITY: SceneDef = {
   keysNeeded: 0,
   entities: [
     { type: 'npc', id: 'a2-03-leo', x: 9, y: 10 },
+    // La persona especial te acompaña en la ciudad (solo una frase, sin tarea)
+    { type: 'npc', id: 'a2-03-interest', x: 2, y: 10 },
     { type: 'npc', id: 'a2-03-friend', x: 5, y: 9 },
     // El mesero (charla con presión) y, en su lugar, el eco del café (combate)
     { type: 'npc', id: 'a2-03-waiter', x: 4, y: 2 },
