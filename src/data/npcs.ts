@@ -449,6 +449,27 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#3a7a5a', hair: '#1a1a1a', skin: '#8d5524', gender: 'female', accessory: 'glasses' },
     doneLine: { text: 'The books are quiet again. Thank you! Come back and read with us anytime.', es: 'Los libros están tranquilos otra vez. ¡Gracias! Vuelve a leer con nosotros cuando quieras.' },
   },
+  // ── A2-06, la granja de los River: Leo (solo la lección), Elena, el abuelo y el vecino joven ──
+  'a2-06-leo': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    until: 'a2-06-practice',
+  },
+  'a2-06-elena': {
+    name: 'Elena',
+    look: { shirt: '#b5523b', hair: '#4a2e1a', skin: '#c68642', gender: 'female' },
+    doneLine: { text: 'Maybe one day the River Race will start again. Thank you!', es: 'Quizá algún día la River Race vuelva a empezar. ¡Gracias!' },
+  },
+  'a2-06-grandfather': {
+    name: 'Grandfather',
+    look: { shirt: '#7a6a4a', hair: '#d8d8d8', skin: '#c68642', gender: 'male', accessory: 'glasses' },
+    doneLine: { text: 'Every year we organized the River Race... Those were good days.', es: 'Cada año organizábamos la River Race... Eran buenos días.' },
+  },
+  'a2-06-neighbor': {
+    name: 'The young neighbor',
+    look: { shirt: '#4a7a9a', hair: '#2b1d12', skin: '#e0ac69', gender: 'male', accessory: 'cap' },
+    doneLine: { text: "The horses are fine. I feed them every morning.", es: 'Los caballos están bien. Les doy de comer cada mañana.' },
+  },
   'a2-receptionist': {
     name: 'The receptionist',
     look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },

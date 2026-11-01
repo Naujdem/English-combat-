@@ -1431,6 +1431,250 @@ NPC_TASKS['a2-05-close'] = {
   },
 }
 
+// ── A2-06 — A Tradition at Risk (granja de los River; escena en data/a2FarmPast.ts). Sin combate ──
+// Orden: Leo (lección past-simple-comparatives + práctica mixta) → el abuelo → el vecino joven
+//        → Elena (Reconstruct the Story: descartar eventos falsos + ordenar los verdaderos) → Elena (diálogo final) → Elena (cierre).
+NPC_TASKS['a2-06-leo'] = {
+  done: 'a2-06-practice',
+  lesson: 'past-simple-comparatives',
+  activity: 'practice',
+  practice: 'past-simple-comparatives',
+  practiceIds: ['a2-06-p1', 'a2-06-p2', 'a2-06-p3'],
+  steps: [],
+  reward: {
+    text: "Leo: \"Now you can listen to Elena's family. Use the Past Simple to tell what happened and comparatives when they compare ideas.\"",
+    es: 'Ahora puedes escuchar a la familia de Elena. Usa el pasado simple para contar lo que pasó y los comparativos cuando comparen ideas.',
+    sub: 'Habla con el abuelo en la casa familiar y luego con el vecino joven en el establo.',
+    say: "Now you can listen to Elena's family.",
+  },
+}
+
+NPC_TASKS['a2-06-grandfather'] = {
+  done: 'a2-06-grandfather-talk',
+  requires: {
+    id: 'a2-06-practice',
+    text: 'Grandfather: "Hello, young friend. Your friend Leo is waiting for you in the square."',
+    es: 'Hola, joven amigo. Tu amigo Leo te espera en la plaza.',
+    sub: 'Leo está en la plaza.',
+  },
+  steps: [
+    {
+      text: 'Every year we organized the River Race. The winner kept our family banner for one year.',
+      es: 'Cada año organizábamos la River Race. El ganador se quedaba con el estandarte de la familia durante un año.',
+      choice: { ask: '¿Qué hacía el ganador?', options: ['The winner kept the banner for one year.', 'The winner keeped the banner for one year.', 'The winner sold the banner.'], answer: 0, tip: 'keep es irregular: kept. Y el ganador lo guardaba, no lo vendía.' },
+    },
+    {
+      text: "Five years ago I became ill. I couldn't prepare the race. After the last race, someone lost the banner. Then the race stopped.",
+      es: 'Hace cinco años me enfermé. No pude preparar la carrera. Después de la última carrera, alguien perdió el estandarte. Entonces la carrera se detuvo.',
+      choice: { ask: '¿Qué pasó con el estandarte?', options: ['Someone lost the banner after the last race.', 'Someone losed the banner after the last race.', 'The grandfather sold the banner.'], answer: 0, tip: 'lose es irregular: lost. Y nadie lo vendió: alguien lo perdió.' },
+    },
+    {
+      text: 'Elena wants to bring it back. But the young neighbor says it was more expensive than before.',
+      es: 'Elena quiere recuperarla. Pero el vecino joven dice que era más cara que antes.',
+    },
+  ],
+  reward: {
+    text: 'Grandfather: "Talk to our young neighbor. He is in the stable."',
+    es: 'Habla con nuestro vecino joven. Está en el establo.',
+    sub: 'El vecino joven está en el establo.',
+    say: 'He is in the stable.',
+  },
+}
+
+NPC_TASKS['a2-06-neighbor'] = {
+  done: 'a2-06-neighbor-talk',
+  requires: {
+    id: 'a2-06-grandfather-talk',
+    text: 'Neighbor: "Hi. Did you talk to the grandfather? Talk to him first."',
+    es: 'Hola. ¿Hablaste con el abuelo? Habla primero con él.',
+    sub: 'El abuelo está en la casa familiar.',
+  },
+  steps: [
+    {
+      text: 'The race was old and expensive. It was more expensive than the other farms wanted.',
+      es: 'La carrera era vieja y cara. Era más cara de lo que querían las otras granjas.',
+      choice: { ask: '¿Qué piensa el vecino de la carrera?', options: ['It was more expensive than the other farms wanted.', 'It was expensiver than the other farms wanted.', 'It was more cheap than before.'], answer: 0, tip: 'expensive es largo: more expensive than.' },
+    },
+    {
+      text: "No, the grandfather didn't sell the horses. But after he became ill, nobody organized the race. The banner disappeared.",
+      es: 'No, el abuelo no vendió los caballos. Pero después de que se enfermó, nadie organizó la carrera. El estandarte desapareció.',
+      choice: { ask: '¿El abuelo vendió los caballos?', options: ["No, he didn't sell the horses.", "No, he didn't sold the horses.", 'Yes, he selled the horses.'], answer: 0, tip: "Negativa en pasado: didn't + verbo base (sell)." },
+    },
+    {
+      text: "I think it's better to stop. Elena is kind, but the tradition is not the most important thing now.",
+      es: 'Creo que es mejor dejarla. Elena es amable, pero la tradición no es lo más importante ahora.',
+    },
+  ],
+  reward: {
+    text: 'Neighbor: "Elena is in the square. Tell her what you think."',
+    es: 'Elena está en la plaza. Dile lo que piensas.',
+    sub: 'Habla con Elena en la plaza: reconstruye la historia.',
+    say: 'Elena is in the square.',
+  },
+}
+
+// Reconstruct the Story (1/2): cada evento falso contra lo que dijeron; se elige el evento verdadero
+NPC_TASKS['a2-06-reconstruct'] = {
+  npc: 'a2-06-elena',
+  done: 'a2-06-reconstruct',
+  activity: 'reconstruct',
+  requires: {
+    id: 'a2-06-neighbor-talk',
+    text: 'Elena: "Hi! Please, listen to my grandfather and our young neighbor first."',
+    es: '¡Hola! Por favor, escucha primero a mi abuelo y a nuestro vecino joven.',
+    sub: 'El abuelo está en la casa familiar; el vecino, en el establo.',
+  },
+  reconstruct: {
+    title: 'Reconstruct the Story',
+    intro: { en: 'People in the village tell different stories. Some are false. Compare each one with what you heard and choose what really happened.', es: 'En el pueblo cuentan historias distintas y algunas son falsas. Compara cada una con lo que escuchaste y elige lo que pasó de verdad.' },
+    items: [
+      {
+        source: 'The grandfather',
+        clue: { en: 'Every year we organized the River Race.', es: 'Cada año organizábamos la River Race.' },
+        claim: { en: 'Elena started the race last year.', es: 'Elena empezó la carrera el año pasado.' },
+        options: ['Every year the River family organized the River Race.', 'Elena organized the River Race last year.', 'Every year the River family organize the River Race.'],
+        answer: 0,
+        tip: 'Elena no la empezó: la familia la organizaba cada año (organize → organized).',
+      },
+      {
+        source: 'The young neighbor',
+        clue: { en: "No, the grandfather didn't sell the horses.", es: 'No, el abuelo no vendió los caballos.' },
+        claim: { en: 'The grandfather sold the horses five years ago.', es: 'El abuelo vendió los caballos hace cinco años.' },
+        options: ['Five years ago the grandfather became ill.', 'Five years ago the grandfather sold the horses.', 'Five years ago the grandfather becomed ill.'],
+        answer: 0,
+        tip: 'Nunca vendió los caballos: hace cinco años se enfermó (become → became).',
+      },
+      {
+        source: 'The young neighbor',
+        clue: { en: 'After he became ill, nobody organized the race.', es: 'Después de que se enfermó, nadie organizó la carrera.' },
+        claim: { en: 'The neighbor organized the race better than the family.', es: 'El vecino organizó la carrera mejor que la familia.' },
+        options: ['The race stopped.', 'The neighbor organized the race.', 'The race stoped.'],
+        answer: 0,
+        tip: 'Nadie la organizó: la carrera se detuvo (stop → stopped, doble p).',
+      },
+      {
+        source: 'The grandfather',
+        clue: { en: 'After the last race, someone lost the banner.', es: 'Después de la última carrera, alguien perdió el estandarte.' },
+        claim: { en: 'The banner is still in the stable.', es: 'El estandarte sigue en el establo.' },
+        options: ['Someone lost the banner after the last race.', 'The banner is in the stable.', 'Someone losed the banner after the last race.'],
+        answer: 0,
+        tip: 'El estandarte no está: alguien lo perdió (lose → lost).',
+      },
+      {
+        source: 'The grandfather',
+        clue: { en: 'The young neighbor says it was more expensive than before.', es: 'El vecino joven dice que era más cara que antes.' },
+        claim: { en: 'The race was always the biggest in the country.', es: 'La carrera siempre fue la más grande del país.' },
+        options: ['The young neighbor said the race was more expensive than before.', 'The race was the biggest in the country.', 'The young neighbor said the race was expensiver than before.'],
+        answer: 0,
+        tip: 'Nadie habló del país: el vecino dijo que era más cara que antes (more expensive than).',
+      },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Elena: "Good! Now we know the true events. But in what order did they happen?"',
+    es: '¡Bien! Ya sabemos los eventos verdaderos. Pero ¿en qué orden pasaron?',
+    sub: 'Habla otra vez con Elena para ordenar la historia.',
+    say: 'In what order did they happen?',
+  },
+}
+
+// Reconstruct the Story (2/2): ordenar los eventos verdaderos
+NPC_TASKS['a2-06-order'] = {
+  npc: 'a2-06-elena',
+  done: 'a2-06-order',
+  activity: 'sequence',
+  requires: {
+    id: 'a2-06-reconstruct',
+    text: 'Elena: "First, let\'s find the true events. Talk to me."',
+    es: 'Primero, encontremos los eventos verdaderos. Habla conmigo.',
+    sub: 'Elena está en la plaza.',
+  },
+  sequence: {
+    title: 'Reconstruct the Story',
+    hint: 'Piensa en el tiempo: Every year → Five years ago → after the last race → Now.',
+    intro: { en: 'Put the true events in order, from the oldest to now.', es: 'Ordena los eventos verdaderos, del más antiguo a hoy.' },
+    steps: [
+      { en: 'Every year the River family organized the River Race.', es: 'Cada año la familia River organizaba la River Race.' },
+      { en: 'The winner kept the family banner for one year.', es: 'El ganador se quedaba con el estandarte de la familia durante un año.' },
+      { en: 'Five years ago the grandfather became ill.', es: 'Hace cinco años el abuelo se enfermó.' },
+      { en: 'The young neighbor said the race was more expensive than before.', es: 'El vecino joven dijo que la carrera era más cara que antes.' },
+      { en: 'Someone lost the banner after the last race.', es: 'Alguien perdió el estandarte después de la última carrera.' },
+      { en: 'The race stopped.', es: 'La carrera se detuvo.' },
+      { en: 'Now Elena wants to bring the tradition back.', es: 'Ahora Elena quiere recuperar la tradición.' },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Elena: "The story is complete. Now tell me: what do you think happened?"',
+    es: 'La historia está completa. Ahora dime: ¿qué crees que pasó?',
+    sub: 'Habla otra vez con Elena.',
+    say: 'What do you think happened?',
+  },
+}
+
+// Diálogo final con Elena: cada respuesta equivocada tiene su propia reacción y se puede reintentar
+NPC_TASKS['a2-06-elena'] = {
+  done: 'a2-06-elena-talk',
+  requires: {
+    id: 'a2-06-order',
+    text: 'Elena: "Let\'s put the story in order first."',
+    es: 'Primero pongamos la historia en orden.',
+    sub: 'Habla con Elena.',
+  },
+  steps: [
+    {
+      text: 'You talked to my grandfather and the neighbor. What do you think happened?',
+      es: 'Hablaste con mi abuelo y con el vecino. ¿Qué crees que pasó?',
+      choice: {
+        ask: '¿Qué le dices a Elena?',
+        options: ['The race stopped because your grandfather became ill and someone lost the banner.', 'The neighbor says it was too expensive.', 'Your grandfather sold the horses.'],
+        answer: 0,
+        tip: 'Recuerda lo que contaron el abuelo y el vecino.',
+        tips: [
+          '',
+          'Elena: "The neighbor thinks that, but the real problem was different. Try again." (El vecino piensa eso, pero el problema real fue otro. Inténtalo otra vez).',
+          'Elena: "No, my grandfather never sold the horses. Listen again to what they said." (No, mi abuelo nunca vendió los caballos. Escucha otra vez lo que dijeron).',
+        ],
+      },
+    },
+    {
+      text: 'Yes. That is what really happened. Thank you.',
+      es: 'Sí. Eso es lo que pasó de verdad. Gracias.',
+    },
+  ],
+  reward: {
+    text: 'Elena: "Wait, please. I have something for you."',
+    es: 'Espera, por favor. Tengo algo para ti.',
+    sub: 'Habla otra vez con Elena.',
+    say: 'I have something for you.',
+  },
+}
+
+// Cierre: Elena entrega el trozo del estandarte
+NPC_TASKS['a2-06-close'] = {
+  npc: 'a2-06-elena',
+  done: 'a2-06-close',
+  requires: {
+    id: 'a2-06-elena-talk',
+    text: 'Elena: "Tell me what you think happened."',
+    es: 'Dime qué crees que pasó.',
+    sub: 'Habla con Elena.',
+  },
+  steps: [
+    {
+      text: 'Maybe one day we can have the race again. Take this old piece of the banner. It is not complete, but it is a start.',
+      es: 'Quizá algún día podamos tener la carrera otra vez. Toma este trozo viejo del estandarte. No está completo, pero es un comienzo.',
+    },
+  ],
+  reward: {
+    text: 'Elena: "It is not complete, but it is a start."',
+    es: 'No está completo, pero es un comienzo.',
+    sub: 'A2-06 completada. Guardaste el trozo viejo del estandarte de la familia River.',
+    say: 'It is a start.',
+  },
+}
+
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */
 export function taskOf(npcId: string, opened: string[]): { id: string; task: NpcTask; blocked: boolean } | null {
   for (const [id, t] of Object.entries(NPC_TASKS)) {

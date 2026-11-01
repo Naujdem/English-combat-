@@ -8,7 +8,7 @@ import { Tappable } from './Words'
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
 
 /** Una charla corta con un personaje: frases y elecciones con una sola respuesta correcta */
-export type MiniStep = { text: string; es: string; choice?: { ask: string; options: string[]; answer: number; tip: string } }
+export type MiniStep = { text: string; es: string; choice?: { ask: string; options: string[]; answer: number; tip: string; /** Reacción propia de cada opción equivocada (si no, se usa tip) */ tips?: string[] } }
 
 /**
  * pressure (opcional, Dialogue Under Pressure): segundos para cada elección. Si se acaba el tiempo
@@ -67,7 +67,7 @@ export function MiniTalk({ name, look, steps, onClose, pressure }: { name: strin
       {waiting && (
         <div className="mt-2 grid gap-2">
           {mixed(s.choice!.options).map(([o, k]) => (
-            <button key={k} className={`${btn} text-left text-base`} onClick={() => (k === s.choice!.answer ? (setSolved(true), setTip(null)) : setTip(s.choice!.tip))}>
+            <button key={k} className={`${btn} text-left text-base`} onClick={() => (k === s.choice!.answer ? (setSolved(true), setTip(null)) : setTip(s.choice!.tips?.[k] || s.choice!.tip))}>
               {o}
             </button>
           ))}

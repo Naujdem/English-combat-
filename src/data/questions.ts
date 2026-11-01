@@ -13,6 +13,7 @@ import { HOSPITAL_QUESTIONS } from './questions-hospital'
 import { A2_CITY_QUESTIONS } from './questions-a2-city'
 import { A2_WORKSHOP_QUESTIONS } from './questions-a2-workshop'
 import { A2_LIBRARY_QUESTIONS } from './questions-a2-library'
+import { A2_FARM_PAST_QUESTIONS } from './a2FarmPast'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -344,6 +345,7 @@ export const QUESTIONS: Question[] = [
   ...A2_CITY_QUESTIONS,
   ...A2_WORKSHOP_QUESTIONS,
   ...A2_LIBRARY_QUESTIONS,
+  ...A2_FARM_PAST_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -820,6 +822,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'El pasado es igual para todas las personas: I went, she went, they went.',
       'Cuándo: yesterday · last week · last night · two days ago. Para contar en orden: First, ... Then, ... After that, ... Finally, ...',
       'Comparar: adjetivo corto + -er + than → older than, bigger than (sin "more").',
+    ],
+  },
+  'past-simple-comparatives': {
+    name: 'Pasado simple (did / didn\'t) y comparativos',
+    level: 'A2',
+    lesson: [
+      'Regulares: organize → organized · stop → stopped.',
+      'Irregulares: become → became · lose → lost · keep → kept · sell → sold.',
+      "Negativa: didn't + verbo base → The grandfather didn't sell the horses (nunca \"didn't sold\" ni \"selled\").",
+      'Comparar: adjetivo corto + -er + than (kinder than) · adjetivo largo: more + adjetivo + than (more expensive than).',
     ],
   },
   future: {
