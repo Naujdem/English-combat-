@@ -1,4 +1,4 @@
-import type { GameState, SceneDef, Zone } from '../game/types'
+import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 
 /**
  * A2-01 — A New Beginning. Habitación del hospital donde despierta el protagonista justo después del final de A1.
@@ -8,7 +8,8 @@ import type { GameState, SceneDef, Zone } from '../game/types'
  * Una sola escena con tres zonas: la habitación (arriba a la izquierda, como en la primera versión), la recepción
  * (arriba a la derecha) y el pasillo que las une (abajo). Se amplió solo hacia la derecha y hacia abajo,
  * así las posiciones de la habitación guardadas antes siguen siendo válidas.
- * Personajes: la médica (habitación), tu amigo (pasillo) y la recepcionista. Sus tareas están en data/tasks.ts.
+ * Personajes: la médica y la persona especial (habitación), tu amigo (pasillo), la recepcionista y, en A2-02, Leo.
+ * Sus tareas están en data/tasks.ts. Un solo combate (el eco corrompido), después de la lección de Leo.
  */
 const MAP = [
   '######################',
@@ -39,16 +40,59 @@ function zoneAt(x: number, y: number): Zone {
 export const A2_CORE_MISSING = 'a2-01-doctor'
 export const clockCoreMissing = (s: GameState) => s.opened.includes(A2_CORE_MISSING)
 
-/** A2-02 — Pieces of Yesterday: las seis etapas */
+/**
+ * A2-02 — Pieces of Yesterday: recuerdos breves → llega Leo → lección → práctica → combate.
+ * Leo aparece cuando la persona especial lo llama (al cerrar los recuerdos, `a2-02-pieces`) y su llegada es `a2-02-leo`.
+ */
+export const A2_LEO_CALLED = 'a2-02-pieces'
+export const A2_LEO_ARRIVED = 'a2-02-leo'
+export const A2_PRACTICE_DONE = 'a2-02-practice'
+export const A2_ECHO = 'a2-echo'
+
 const A2_02_CHIPS = (s: GameState) => [
-  { label: 'A2-02 · Pieces of Yesterday', done: s.opened.includes('a2-02-pieces') },
+  { label: 'A2-02 · Pieces of Yesterday', done: s.defeated.includes(A2_ECHO) },
   { label: 'Something Is Missing', done: s.opened.includes('a2-02-missing') },
   { label: 'The Elevator', done: s.opened.includes('a2-02-elevator') },
   { label: 'The Stranger', done: s.opened.includes('a2-02-stranger') },
   { label: 'The Missing Core', done: s.opened.includes('a2-02-core') },
   { label: 'Comparing Memories', done: s.opened.includes('a2-02-compare') },
-  { label: 'Pieces of Yesterday', done: s.opened.includes('a2-02-pieces') },
+  { label: 'Llamar a Leo', done: s.opened.includes(A2_LEO_CALLED) },
+  { label: 'Leo llega', done: s.opened.includes(A2_LEO_ARRIVED) },
+  { label: 'Lección de Leo', done: s.seenLesson.includes('should-must') },
+  { label: 'Práctica', done: s.opened.includes(A2_PRACTICE_DONE) },
+  { label: 'El eco', done: s.defeated.includes(A2_ECHO) },
 ]
+
+/**
+ * El único combate del hospital: un paciente al que la luz morada dejó corrompido.
+ * Aparece después de la lección y la práctica de Leo, y pregunta sobre lo mismo (should / must / have to).
+ * Es un eco: al vencerlo vuelve a ser él mismo (desaparece del mapa) y da un escudo.
+ */
+export const A2_HOSPITAL_ENEMIES: Record<string, EnemyDef> = {
+  [A2_ECHO]: {
+    id: A2_ECHO,
+    name: 'Un eco corrompido',
+    person: 'Mr. Reed',
+    kind: 'minion',
+    echo: true,
+    hp: 5,
+    topics: ['should-must'],
+    kinds: ['fill', 'fix', 'order', 'write'],
+    tags: ['a2-hospital'],
+    onlyTags: true,
+    look: { shirt: '#9fb7c9', hair: '#5a5a5a', skin: '#c9b8d8' },
+    before: [
+      { text: 'You must to stay here! You should drinks the purple water! Nobody have to leave!', es: '¡Tienes que quedarte aquí! ¡Deberías tomar el agua morada! ¡Nadie tiene que irse! (Todo lo dice mal: must to, should drinks, nobody have to).' },
+      { text: 'Doctors give bad advice. I give the best advice! Listen to me!', es: 'Los médicos dan malos consejos. ¡Yo doy los mejores! ¡Escúchame!' },
+    ],
+    after: [
+      { text: 'You must rest... You should drink water... Oh. My head! I have a terrible headache.', es: 'Debes descansar... Deberías tomar agua... Oh. ¡Mi cabeza! Tengo un dolor de cabeza terrible.' },
+      { text: 'Where am I? I was in the waiting room, and then... a purple light. Thank you. I should go back to my room.', es: '¿Dónde estoy? Estaba en la sala de espera y luego... una luz morada. Gracias. Debería volver a mi habitación.' },
+    ],
+    freed: { text: "I have to rest now. The nurse says I mustn't walk fast!", es: 'Ahora tengo que descansar. ¡La enfermera dice que no debo caminar rápido!' },
+    bonus: { q: 'Before you go! You have a sore throat. You ___ drink cold soda.', options: ["shouldn't", 'should', "don't should"], answer: 0, tip: "Un mal consejo para la garganta: shouldn't." },
+  },
+}
 
 export const A2_HOSPITAL: SceneDef = {
   id: 'a2-hospital',
@@ -63,8 +107,12 @@ export const A2_HOSPITAL: SceneDef = {
     { type: 'npc', id: 'a2-doctor', x: 4, y: 4 },
     { type: 'npc', id: 'a2-friend', x: 7, y: 13 },
     { type: 'npc', id: 'a2-receptionist', x: 16, y: 3 },
-    // A2-02: la persona especial aparece en el pasillo cuando vuelve al hospital
-    { type: 'npc', id: 'a2-interest', x: 15, y: 12 },
+    // La persona especial te trajo al hospital: está en tu habitación desde el principio
+    { type: 'npc', id: 'a2-interest', x: 6, y: 6 },
+    // Leo llega al pasillo cuando la persona especial lo llama
+    { type: 'npc', id: 'a2-leo', x: 15, y: 12 },
+    // El único combate: aparece después de la lección y la práctica de Leo
+    { type: 'enemy', id: A2_ECHO, x: 19, y: 14, after: A2_PRACTICE_DONE },
   ],
   labels: [
     { text: 'Habitación', x: 6, y: 1 },
@@ -89,7 +137,7 @@ export const A2_HOSPITAL: SceneDef = {
     { label: 'Pertenencias', done: s.opened.includes('a2-01-belongings') },
   ],
   intro: {
-    first: 'Abres los ojos en la habitación de un hospital. Todo terminó en la torre Green Valley... ¿o no? Muévete un poco para despertarte: la médica está junto a tu cama.',
+    first: 'Abres los ojos en la habitación de un hospital. Todo terminó en la torre Green Valley... ¿o no? Muévete un poco para despertarte: la médica está junto a tu cama, y {iname} te acompaña.',
     later: 'El hospital: tu habitación, el pasillo y la recepción. Sigue los objetivos bajo el mapa.',
   },
 }

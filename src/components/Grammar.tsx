@@ -218,6 +218,10 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (question) return { title: 'Para invitar o preguntar con cortesía: Would + you + like to + verbo?', parts: [V('Would'), '+', S('you'), '+', K('like to'), '+', V('verbo'), '+', R('...?')] }
       if (negative) return { title: "Para decir que no quieres: don't / doesn't want to + verbo:", parts: [S('Sujeto'), '+', V("don't / doesn't"), '+', K('want to'), '+', V('verbo'), '+', R('...')] }
       return { title: 'Lo que quieres: want(s) to + verbo · con cortesía: would like to + verbo:', parts: [S('Sujeto'), '+', K('want(s) to / would like to'), '+', V('verbo'), '+', R('...')] }
+    case 'should-must':
+      if (question) return { title: 'Para preguntar: Should + sujeto + verbo? · Do / Does + sujeto + have to + verbo?', parts: [V('Should / Do'), '+', S('Sujeto'), '+', K('(have to)'), '+', V('verbo'), '+', R('...?')] }
+      if (negative) return { title: "shouldn't = mal consejo · mustn't = prohibido · don't have to = no es necesario:", parts: [S('Sujeto'), '+', K("shouldn't / mustn't / don't have to"), '+', V('verbo'), '+', R('...')] }
+      return { title: 'Consejo: should · Regla: must · Obligación: have to / has to. Después, el verbo va solo:', parts: [S('Sujeto'), '+', K('should / must / have to'), '+', V('verbo'), '+', R('...')] }
     case 'time':
       if (question) return { title: 'Para preguntar la hora:', parts: [K('What time'), '+', V('is'), '+', S('it?')] }
       return { title: 'at + hora · on + día · in + mes, estación o parte del día:', parts: [R('...'), '+', K('at / on / in'), '+', R('hora / día / mes')] }

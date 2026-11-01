@@ -29,7 +29,7 @@ export type Interest = {
 export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle' | 'epilogue'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
-export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'going-to-wh' | 'going-to-predict' | 'want-to' | 'past-simple' | 'future'
+export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'going-to-wh' | 'going-to-predict' | 'want-to' | 'should-must' | 'past-simple' | 'future'
 
 /**
  * fill: completar el espacio en blanco.
@@ -119,7 +119,8 @@ export type BonusQ = { q: string; options: string[]; answer: number; tip: string
 export type StoryLine = { text: string; es?: string }
 
 export type Entity =
-  | { type: 'enemy'; id: string; x: number; y: number }
+  /** after: el enemigo solo aparece cuando este id está en `opened` */
+  | { type: 'enemy'; id: string; x: number; y: number; after?: string }
   | { type: 'friend'; id: string; x: number; y: number }
   | { type: 'interest'; x: number; y: number }
   | { type: 'chest'; id: string; outfit: string; x: number; y: number }

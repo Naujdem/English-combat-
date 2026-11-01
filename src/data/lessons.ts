@@ -318,4 +318,35 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'leo', text: "And to say it is NOT going to happen: There are no clouds. It isn't going to rain.", es: 'Y para decir que no va a pasar: no hay nubes, no va a llover.', board: ["It isn't going to rain.", '(no hay nubes)'] },
     { who: 'board', text: "There are no clouds. It ___ going to rain.", board: ["It isn't going to rain.", '(no hay nubes)'], choice: { options: ["isn't", "aren't", "doesn't"], answer: 0, tip: "It + isn't going to." } },
   ],
+
+  // ── A2 · Leo en el hospital: consejos y reglas (should / must / have to) + palabras de salud ──
+  'should-must': [
+    { who: 'leo', text: "In a hospital you hear a lot of advice and a lot of rules. Let's learn three words for that: SHOULD, MUST and HAVE TO.", es: 'En un hospital se oyen muchos consejos y muchas reglas. Aprendamos tres palabras para eso: should, must y have to.', board: ['should · must · have to', 'consejos y reglas'] },
+
+    { who: 'leo', text: 'SHOULD is for advice: a good idea. You should rest. You should drink water. After SHOULD, the verb goes alone: no TO, no -S.', es: 'Should es para consejos: una buena idea. Deberías descansar. Deberías tomar agua. Después de should el verbo va solo: sin to y sin -s.', board: ['should + verbo', 'You should rest.'] },
+    { who: 'board', text: 'You look tired. You ___ rest a little.', board: ['should + verbo', 'You should rest.'], choice: { options: ['should', 'should to', 'shoulds'], answer: 0, tip: 'Should + verbo solo: You should rest.' } },
+    { who: 'board', text: 'She has a fever. She should ___ to the doctor.', board: ['should + verbo', 'She should go.'], choice: { options: ['go', 'goes', 'to go'], answer: 0, tip: 'Después de should el verbo no lleva -s ni to: She should go.' } },
+
+    { who: 'leo', text: "To give advice in negative: SHOULDN'T. Your leg hurts. You shouldn't run!", es: "Para aconsejar que no: shouldn't. Te duele la pierna. ¡No deberías correr!", board: ["shouldn't + verbo", "You shouldn't run."] },
+    { who: 'board', text: 'You have a sore throat. You ___ drink cold soda.', board: ["shouldn't + verbo", "You shouldn't run."], choice: { options: ["shouldn't", 'should', "don't should"], answer: 0, tip: "Un mal consejo para la garganta: shouldn't drink." } },
+
+    { who: 'leo', text: "MUST is stronger: a rule, something very important. You must take this medicine. And MUSTN'T means it is not allowed: You mustn't eat before the test.", es: "Must es más fuerte: una regla, algo muy importante. Debes tomar esta medicina. Y mustn't es que está prohibido: no debes comer antes del examen.", board: ['must = regla', "mustn't = prohibido"] },
+    { who: 'board', text: 'The doctor says: You ___ take this medicine every day.', board: ['must = regla', "mustn't = prohibido"], choice: { options: ['must', 'must to', 'musts'], answer: 0, tip: 'Must + verbo solo, igual con todos: You must take.' } },
+    { who: 'board', text: 'Hospital rule: Visitors ___ smoke here.', board: ['must = regla', "mustn't = prohibido"], choice: { options: ["mustn't", 'must', "don't must"], answer: 0, tip: "Está prohibido: mustn't smoke." } },
+
+    { who: 'leo', text: 'HAVE TO is also obligation. I have to stay here tonight. With he, she, it: HAS TO. The doctor has to work at night.', es: 'Have to también es obligación. Tengo que quedarme aquí esta noche. Con he, she, it: has to. La médica tiene que trabajar de noche.', board: ['I / you / we / they → have to', 'he / she / it → has to'] },
+    { who: 'board', text: 'The nurse ___ check my leg again.', board: ['I / you / we / they → have to', 'he / she / it → has to'], choice: { options: ['has to', 'have to', 'has'], answer: 0, tip: 'The nurse (she) → has to + verbo.' } },
+
+    { who: 'leo', text: "Careful! DON'T HAVE TO is not the same as MUSTN'T. You don't have to stay in bed = it is not necessary. You mustn't = it is not allowed.", es: "¡Cuidado! Don't have to no es lo mismo que mustn't. You don't have to stay in bed = no es necesario. You mustn't = está prohibido.", board: ["don't have to = no es necesario", "mustn't = prohibido"] },
+    { who: 'board', text: "Your leg is better. You ___ stay in bed all day.", board: ["don't have to = no es necesario", "mustn't = prohibido"], choice: { options: ["don't have to", "mustn't", "doesn't have to"], answer: 0, tip: "No es necesario quedarte en cama: don't have to. Con you: don't." } },
+
+    { who: 'leo', text: 'To ask: SHOULD I...? or DO I HAVE TO...? Should I call the nurse? Do I have to take this medicine? — Yes, you do.', es: '¿Para preguntar? Should I...? o Do I have to...? ¿Debería llamar a la enfermera? ¿Tengo que tomar esta medicina? — Sí.', board: ['Should I...?', 'Do I have to...? — Yes, you do.'] },
+    { who: 'board', text: '___ I have to stay here tonight?', board: ['Should I...?', 'Do I have to...? — Yes, you do.'], choice: { options: ['Do', 'Must', 'Am'], answer: 0, tip: 'Pregunta con have to: Do + I + have to...?' } },
+
+    { who: 'leo', text: 'Now some health words. A headache, a stomachache, a fever, a cough, a sore throat. My head hurts: I have a headache.', es: 'Ahora palabras de salud. Dolor de cabeza, dolor de estómago, fiebre, tos, dolor de garganta. Me duele la cabeza: tengo dolor de cabeza.', board: ['I have a headache.', 'My head hurts.'], table: { head: ['Inglés', 'Español'], rows: [['a {headache}', 'dolor de cabeza'], ['a {stomachache}', 'dolor de estómago'], ['a {fever}', 'fiebre'], ['a {cough}', 'tos'], ['a {sore throat}', 'dolor de garganta']] } },
+    { who: 'board', text: 'My head hurts. I have a ___.', board: ['I have a headache.', 'My head hurts.'], choice: { options: ['headache', 'stomachache', 'cough'], answer: 0, tip: 'Head (cabeza) + ache (dolor) = headache.' } },
+    { who: 'board', text: "I'm very hot. I think I have a ___.", board: ['a fever · a cough', 'a sore throat'], choice: { options: ['fever', 'cough', 'sore throat'], answer: 0, tip: 'Mucho calor en el cuerpo: fever (fiebre).' } },
+
+    { who: 'leo', text: "Great! Now you can understand the doctor... and give good advice. Let's practice!", es: '¡Genial! Ya puedes entender a la médica... y dar buenos consejos. ¡A practicar!', board: ['should · must · have to', '+ verbo solo'], table: { head: ['Para qué', 'Ejemplo'], rows: [['Consejo', '<You> {should} [rest].'], ['Mal consejo', "<You> {shouldn't} [run]."], ['Regla fuerte', '<You> {must} [take] this medicine.'], ['Prohibido', "<You> {mustn't} [smoke] here."], ['Obligación', '<She> {has to} [work] tonight.'], ['No es necesario', "<You> {don't have to} [stay] in bed."]] } },
+  ],
 }

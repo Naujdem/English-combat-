@@ -373,13 +373,20 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#3b9d5d', hair: '#2b1d12', skin: '#e0ac69' },
     doneLine: { text: "Take it easy, OK? I'm right here.", es: 'Tómalo con calma, ¿sí? Aquí estoy.' },
   },
-  // A2-02: la persona especial (nombre y aspecto del jugador). Aparece cuando vuelve al hospital
+  // La persona especial (nombre y aspecto del jugador). Te trajo al hospital: está contigo desde el inicio de A2-01
   'a2-interest': {
     name: '',
     look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
     interest: true,
-    after: 'a2-02-core',
     doneLine: { text: 'Rest a little, {name}. I am right here.', es: 'Descansa un poco, {name}. Aquí estoy.' },
+  },
+  // A2-02: Leo se quedó en el ascensor al final de A1. Llega al hospital cuando la persona especial lo llama
+  'a2-leo': {
+    name: 'Leo',
+    // Misma piel y pelo que Leo en A1; camisa naranja y gafas para no confundirlo con tu amigo (verde)
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    after: 'a2-02-pieces',
+    doneLine: { text: 'You should rest a little. I have to stay with you. Doctor\'s orders!', es: 'Deberías descansar un poco. Tengo que quedarme contigo. ¡Órdenes de la médica!' },
   },
   'a2-receptionist': {
     name: 'The receptionist',

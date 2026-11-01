@@ -9,6 +9,7 @@ import { PAST_QUESTIONS } from './questions-past'
 import { FUTURE_QUESTIONS } from './questions-future'
 import { LISTEN_QUESTIONS } from './questions-listen'
 import { TERRAZA_QUESTIONS } from './questions-terraza'
+import { HOSPITAL_QUESTIONS } from './questions-hospital'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -336,6 +337,7 @@ export const QUESTIONS: Question[] = [
   ...FUTURE_QUESTIONS,
   // ── Final de A1: el desconocido en la terraza
   ...TERRAZA_QUESTIONS,
+  ...HOSPITAL_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -762,6 +764,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Lo que quieres: I want to + verbo. Con he / she: she wants to.',
       'Con más cortesía: I would like to (I\'d like to) + verbo. Would no cambia: she would like to.',
       'Para invitar: Would you like to come? → Yes, I would. / Yes, I\'d like to!',
+    ],
+  },
+  'should-must': {
+    name: 'Consejos y reglas: should / must / have to',
+    level: 'A2',
+    lesson: [
+      "Consejo: should + verbo → You should rest. · Mal consejo: shouldn't → You shouldn't run.",
+      "Regla fuerte: must + verbo → You must take this medicine. · Prohibido: mustn't.",
+      "Obligación: have to / has to (he, she, it) + verbo · No es necesario: don't / doesn't have to.",
+      'Salud: a headache · a stomachache · a fever · a cough · a sore throat.',
     ],
   },
   'past-simple': {
