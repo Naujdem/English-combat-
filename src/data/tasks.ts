@@ -1262,7 +1262,7 @@ NPC_TASKS['a2-05-practice'] = {
   reward: {
     text: 'Leo: "Well done! Mrs. Okafor is at the front desk. Ask her what happened."',
     es: '¡Bien hecho! La señora Okafor está en el mostrador. Pregúntale qué pasó.',
-    sub: 'Mrs. Okafor, la bibliotecaria, está frente al mostrador.',
+    sub: 'Un lector raro bloquea el paso al mostrador: choca con él para el combate. Luego habla con Mrs. Okafor.',
     say: 'Ask her what happened.',
   },
 }

@@ -3,7 +3,8 @@ import { A2_04_CLOSE } from './a2Workshop'
 
 /**
  * A2-05 — Words That Don't Belong (biblioteca, presente). Estanterías, mesa de lectura y mostrador.
- * Orden: Leo (llega) → Leo (lección de Past Simple + práctica) → Mrs. Okafor (testimonio en pasado)
+ * Orden: Leo (llega) → Leo (lección de Past Simple + práctica) → el lector corrompido (esbirro en el paso al mostrador)
+ *        → Mrs. Okafor (testimonio en pasado)
  *        → Mrs. Okafor (Reconstruct the Story: contrastar pistas) → Mrs. Okafor (Sequence Master: ordenar la nota) → el eco de tinta (jefe ligero, 2 fases cortas)
  *        → Leo (cierre con el fragmento y una pista).
  * Se activa al terminar A2-04. Tareas en data/tasks.ts.
@@ -15,9 +16,9 @@ const MAP = [
   '#.LL..LL..LL.#',
   '#............#',
   '#.KK......CCC#',
-  '#.KK.........#',
+  '#.KK.....L...#',
   '#p..........p#',
-  '#............#',
+  '#........L...#',
   '##############',
 ]
 
@@ -32,12 +33,40 @@ export const A2_05_TESTIMONY = 'a2-05-testimony'
 export const A2_05_RECONSTRUCT = 'a2-05-reconstruct'
 export const A2_05_SEQUENCE = 'a2-05-sequence'
 export const A2_05_BOSS = 'a2-05-ink-echo'
+/** Esbirro ligero: el lector corrompido bloquea el paso al mostrador tras la práctica de Leo */
+export const A2_05_READER = 'a2-05-reader'
 export const A2_05_CLOSE = 'a2-05-close'
 
 /** A2-05 se abre al terminar A2-04 */
 export const isA2LibraryUnlocked = (s: GameState) => s.opened.includes(A2_04_CLOSE)
 
 export const A2_LIBRARY_ENEMIES: Record<string, EnemyDef> = {
+  // Esbirro ligero (1 fase): aparece tras la práctica de Leo en el único paso hacia el mostrador de Mrs. Okafor,
+  // antes del testimonio, el Reconstruct y el eco de tinta. Es un eco: al vencerlo vuelve a su tiempo y da un escudo.
+  [A2_05_READER]: {
+    id: A2_05_READER,
+    name: 'El lector corrompido',
+    person: 'Mr. Lin',
+    kind: 'minion',
+    echo: true,
+    hp: 4,
+    topics: ['past-simple'],
+    kinds: ['fill', 'fix', 'order', 'write'],
+    tags: ['a2-library-reader'],
+    onlyTags: true,
+    zone: 'biblioteca',
+    look: { shirt: '#6b8e6b', hair: '#9a9a9a', skin: '#c9b8d8', accessory: 'glasses', gender: 'male' },
+    before: [
+      { text: 'Shh! I readed this book yesterday. I finded a secret in it, and I keeped it!', es: '¡Shh! "Leí" este libro ayer. "Encontré" un secreto en él y lo "guardé". (Todo mal: readed, finded, keeped).' },
+      { text: 'Nobody goed to the front desk today! Go back to your table!', es: '¡Nadie "fue" al mostrador hoy! ¡Vuelve a tu mesa! (goed: mal).' },
+    ],
+    after: [
+      { text: 'I read... I found... Oh. My words are OK again. What happened?', es: 'Leí... Encontré... Oh. Mis palabras están bien otra vez. ¿Qué pasó?' },
+      { text: 'I opened an old book about clocks, and the ink moved. It was purple! Thank you.', es: 'Abrí un libro viejo sobre relojes y la tinta se movió. ¡Era morada! Gracias.' },
+    ],
+    freed: { text: 'I came here to read the newspaper. I usually sit by the window. Mrs. Okafor is at the front desk.', es: 'Vine a leer el periódico. Normalmente me siento junto a la ventana. Mrs. Okafor está en el mostrador.' },
+    bonus: { q: 'Before you go! Last week I ___ three books about history.', options: ['bought', 'buyed', 'buy'], answer: 0, tip: 'buy es irregular: buy → bought.' },
+  },
   [A2_05_BOSS]: {
     id: A2_05_BOSS,
     name: 'El eco de tinta',
@@ -99,6 +128,8 @@ export const A2_LIBRARY: SceneDef = {
     { type: 'npc', id: 'a2-05-interest', x: 8, y: 8 },
     // Mrs. Okafor, la bibliotecaria, frente al mostrador
     { type: 'npc', id: 'a2-05-librarian', x: 11, y: 6 },
+    // El lector corrompido bloquea el único paso hacia el mostrador tras la práctica de Leo
+    { type: 'enemy', id: A2_05_READER, x: 9, y: 7, after: A2_05_PRACTICE },
     { type: 'enemy', id: A2_05_BOSS, x: 4, y: 5, after: A2_05_SEQUENCE },
   ],
   labels: [
@@ -117,6 +148,7 @@ export const A2_LIBRARY: SceneDef = {
     { label: 'Leo', done: s.opened.includes(A2_05_ARRIVE) },
     { label: 'Lección de Leo', done: s.seenLesson.includes('past-simple') },
     { label: 'Práctica', done: s.opened.includes(A2_05_PRACTICE) },
+    { label: 'El lector', done: s.defeated.includes(A2_05_READER) },
     { label: 'Mrs. Okafor', done: s.opened.includes(A2_05_TESTIMONY) },
     { label: 'Reconstruct the Story', done: s.opened.includes(A2_05_RECONSTRUCT) },
     { label: 'Ordenar la nota', done: s.opened.includes(A2_05_SEQUENCE) },
