@@ -425,7 +425,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     interest: true,
     doneLine: { text: 'So many tools! Could you show me the wrench, {name}?', es: '¡Cuántas herramientas! ¿Me muestras la llave inglesa, {name}?' },
   },
-  // Mr. Hale trabaja en la mesa; tras arreglar la radio (Sequence Master) se corrompe y pasa a ser el jefe
+  // Mr. Hale trabaja en la mesa; tras arreglar la radio (Fix the Radio) se corrompe y pasa a ser el jefe
   'a2-04-hale': {
     name: 'Mr. Hale',
     look: { shirt: '#3b5a7a', hair: '#2b1d12', skin: '#e0ac69', gender: 'male' },
