@@ -7,6 +7,8 @@ import type { Question } from '../game/types'
  * el jefe Mr. Hale pregunta solo de aquí (etiqueta a2-workshop): fase 1 peticiones, fase 2 instrucciones.
  */
 const T = ['a2-workshop']
+/** Solo el aprendiz corrompido (esbirro ligero antes de Mr. Hale) */
+const TA = ['a2-workshop-apprentice']
 
 export const A2_WORKSHOP_QUESTIONS: Question[] = [
   // ── Peticiones corteses (práctica de Leo + fase 1 del jefe) ──
@@ -30,4 +32,14 @@ export const A2_WORKSHOP_QUESTIONS: Question[] = [
   { id: 'a2-04-i7', topic: 'instructions', prompt: 'Mr. Hale is responsible ___ the workshop.', options: ['for', 'of', 'to'], answer: 0, tip: 'Responsable de algo: responsible for.', tags: T },
   { id: 'a2-04-i8', topic: 'instructions', prompt: 'In the workshop we ___ to wear gloves. It is the rule.', options: ['have', 'has', 'having'], answer: 0, tip: 'Con we: have to + verbo.', tags: T },
   { id: 'a2-04-i9', topic: 'instructions', kind: 'fix', prompt: 'She is responsible of the tools.', options: ['She is responsible for the tools.', 'She responsible for the tools.', 'She is responsible to the tools.'], answer: 0, tip: 'Responsable de algo: be + responsible for.', tags: T },
+
+  // ── El aprendiz corrompido (esbirro ligero): peticiones e instrucciones ──
+  { id: 'a2-04-a1', topic: 'requests', prompt: '___ you hold this bike for a minute, please?', options: ['Could', 'Do', 'Are'], answer: 0, tip: 'Para pedir algo con cortesía: Could you + verbo...?', tags: TA },
+  { id: 'a2-04-a2', topic: 'requests', prompt: 'Would you mind ___ the door? The workshop is very cold.', options: ['closing', 'close', 'to close'], answer: 0, tip: 'Would you mind + verbo con -ing: closing.', tags: TA },
+  { id: 'a2-04-a3', topic: 'requests', kind: 'fix', prompt: 'Can you passing me the brush?', options: ['Can you pass me the brush?', 'Can you to pass me the brush?', 'Can you passes me the brush?'], answer: 0, tip: 'Can you + verbo tal cual: Can you pass...?', tags: TA },
+  { id: 'a2-04-a4', topic: 'requests', kind: 'order', prompt: '¿Te importaría esperar aquí, por favor?', options: ['Would', 'you', 'mind', 'waiting', 'here,', 'please?'], answer: 0, tip: 'Would you mind + verbo con -ing + ... + please?', tags: TA },
+  { id: 'a2-04-a5', topic: 'instructions', prompt: 'First, clean the tools. ___, put them in the toolbox.', options: ['Then', 'First', 'Before'], answer: 0, tip: 'El segundo paso: Then (luego).', tags: TA },
+  { id: 'a2-04-a6', topic: 'instructions', kind: 'fix', prompt: 'Finally, you puts the tools on the shelf.', options: ['Finally, put the tools on the shelf.', 'Finally, putting the tools on the shelf.', 'Finally, to put the tools on the shelf.'], answer: 0, tip: 'En instrucciones el verbo va tal cual, sin "you" ni -s: put.', tags: TA },
+  { id: 'a2-04-a7', topic: 'instructions', kind: 'order', prompt: 'Después de eso, revisa las ruedas de la bicicleta.', options: ['After', 'that,', 'check', 'the', 'bike', 'wheels.'], answer: 0, tip: 'After that, + verbo tal cual: After that, check...', tags: TA },
+  { id: 'a2-04-a8', topic: 'instructions', prompt: "It's my job ___ the floor every evening.", options: ['to clean', 'clean', 'cleaning'], answer: 0, tip: "It's my job + to + verbo: to clean.", tags: TA },
 ]

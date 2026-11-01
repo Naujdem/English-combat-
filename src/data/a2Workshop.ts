@@ -3,7 +3,7 @@ import { A2_03_CLOSE } from './a2City'
 
 /**
  * A2-04 — Mr. Hale's Workshop (alcance mínimo con jefe). Taller pequeño: zona de trabajo, herramientas y oficina.
- * Orden: Leo (llega) → Leo (lección + práctica) → Mr. Hale (charla con presión) → Leo (Fix the Radio: arreglar la radio)
+ * Orden: Leo (llega) → Leo (lección + práctica) → el aprendiz corrompido (esbirro en el paso hacia el taller) → Mr. Hale (charla con presión) → Leo (Fix the Radio: arreglar la radio)
  *        → Mr. Hale corrompido (jefe en 2 fases) → Leo (cierre con el fragmento y una pista).
  * Se activa al terminar A2-03. Tareas en data/tasks.ts.
  */
@@ -13,7 +13,7 @@ const MAP = [
   '#........#...#',
   '#.77..77.d...#',
   '#........#.p.#',
-  '#8......8#####',
+  '#87787.78#####',
   '#............#',
   '#.U..77....8.#',
   '#............#',
@@ -31,12 +31,40 @@ export const A2_04_PRACTICE = 'a2-04-practice'
 export const A2_04_PRESSURE = 'a2-04-pressure'
 export const A2_04_SEQUENCE = 'a2-04-sequence'
 export const A2_04_BOSS = 'a2-04-hale-boss'
+/** Esbirro ligero: el aprendiz corrompido bloquea el paso del garaje al taller tras la práctica de Leo */
+export const A2_04_APPRENTICE = 'a2-04-apprentice'
 export const A2_04_CLOSE = 'a2-04-close'
 
 /** A2-04 se abre al terminar A2-03 */
 export const isA2WorkshopUnlocked = (s: GameState) => s.opened.includes(A2_03_CLOSE)
 
 export const A2_WORKSHOP_ENEMIES: Record<string, EnemyDef> = {
+  // Esbirro ligero (1 fase): aparece tras la práctica de Leo en el único paso entre el garaje y el taller, antes de Mr. Hale.
+  // Es un eco: al vencerlo vuelve a su tiempo y da un escudo; la pregunta extra puede dar otro.
+  [A2_04_APPRENTICE]: {
+    id: A2_04_APPRENTICE,
+    name: 'El aprendiz corrompido',
+    person: 'Sam',
+    kind: 'minion',
+    echo: true,
+    hp: 4,
+    topics: ['requests', 'instructions'],
+    kinds: ['fill', 'fix', 'order', 'write'],
+    tags: ['a2-workshop-apprentice'],
+    onlyTags: true,
+    zone: 'taller',
+    look: { shirt: '#d9a441', hair: '#4a3020', skin: '#c9b8d8', accessory: 'cap', gender: 'male' },
+    before: [
+      { text: 'Stop! Could you to wait here? First you gives me your tools, then you goes home!', es: '¡Alto! "¿Podrías esperar aquí?" Primero "me das" tus herramientas y luego "te vas" a casa. (Lo dice mal: could you to, you gives, you goes).' },
+      { text: "Nobody passes! Mr. Hale is busy. Would you mind go away?", es: '¡Nadie pasa! El señor Hale está ocupado. "¿Te importaría irte?" (would you mind go: mal).' },
+    ],
+    after: [
+      { text: 'Could you... give me a minute, please? Oh. Why am I standing here?', es: '¿Podrías... darme un minuto, por favor? Oh. ¿Por qué estoy parado aquí?' },
+      { text: 'I was cleaning the tools, and then I saw a purple light near the old radio. Thank you!', es: 'Estaba limpiando las herramientas y luego vi una luz morada cerca de la radio vieja. ¡Gracias!' },
+    ],
+    freed: { text: "It's my job to clean the tools. Could you tell Mr. Hale I'm OK?", es: 'Mi trabajo es limpiar las herramientas. ¿Podrías decirle al señor Hale que estoy bien?' },
+    bonus: { q: 'Before you go! Would you mind ___ this toolbox to the shelf?', options: ['taking', 'take', 'to take'], answer: 0, tip: 'Would you mind + verbo con -ing: taking.' },
+  },
   [A2_04_BOSS]: {
     id: A2_04_BOSS,
     name: 'Mr. Hale, el mecánico corrompido',
@@ -99,6 +127,8 @@ export const A2_WORKSHOP: SceneDef = {
     { type: 'npc', id: 'a2-04-interest', x: 9, y: 8 },
     // Mr. Hale trabaja en la mesa (charla con presión) y, tras arreglar la radio, se corrompe en el mismo sitio
     { type: 'npc', id: 'a2-04-hale', x: 4, y: 3 },
+    // El aprendiz corrompido bloquea el único paso entre el garaje y el taller tras la práctica de Leo
+    { type: 'enemy', id: A2_04_APPRENTICE, x: 6, y: 5, after: A2_04_PRACTICE },
     { type: 'enemy', id: A2_04_BOSS, x: 4, y: 3, after: A2_04_SEQUENCE },
   ],
   labels: [
@@ -117,6 +147,7 @@ export const A2_WORKSHOP: SceneDef = {
     { label: 'Leo', done: s.opened.includes(A2_04_ARRIVE) },
     { label: 'Lección de Leo', done: s.seenLesson.includes('requests') },
     { label: 'Práctica', done: s.opened.includes(A2_04_PRACTICE) },
+    { label: 'El aprendiz', done: s.defeated.includes(A2_04_APPRENTICE) },
     { label: 'Mr. Hale', done: s.opened.includes(A2_04_PRESSURE) },
     { label: 'Arreglar la radio', done: s.opened.includes(A2_04_SEQUENCE) },
     { label: 'Jefe: Mr. Hale', done: s.defeated.includes(A2_04_BOSS) },
