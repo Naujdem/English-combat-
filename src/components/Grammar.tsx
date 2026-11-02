@@ -233,6 +233,33 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       return { title: 'Pasado: regulares + -ed (visited) · irregulares con su forma (went, saw) · yesterday / last week:', parts: [S('Sujeto'), '+', V('verbo en pasado'), '+', R('...'), '+', K('yesterday / last week')] }
     case 'instructions':
       return { title: "Pasos en orden con el verbo tal cual · It's my job to + verbo · responsible for:", parts: [K('First / Then / After that / Finally'), '+', V('verbo'), '+', R('...')] }
+    case 'past-simple-comparatives':
+      if (/\bthan\b/i.test(sentence)) return { title: 'Para comparar: corto + -er + than · more + largo + than:', parts: [S('Sujeto'), '+', V('was / were'), '+', K('older / more expensive'), '+', K('than'), '+', R('...')] }
+      if (negative) return { title: "Para negar en pasado: didn't + verbo base:", parts: [S('Sujeto'), '+', K("didn't"), '+', V('verbo base'), '+', R('...')] }
+      return { title: 'Pasado: regulares + -ed (organized) · irregulares con su forma (became, lost):', parts: [S('Sujeto'), '+', V('verbo en pasado'), '+', R('...')] }
+    case 'superlatives-comparatives-race':
+      if (/\bthe (most|best|\w+est)\b/i.test(sentence)) return { title: 'El más de todos: the + corto + -est · the most + largo:', parts: [S('Sujeto'), '+', V('is'), '+', K('the fastest / the most...'), '+', R('...')] }
+      if (/\bthan\b/i.test(sentence)) return { title: 'Para comparar dos: corto + -er + than · more + largo + than:', parts: [S('Sujeto'), '+', V('is'), '+', K('faster / more careful'), '+', K('than'), '+', R('...')] }
+      return { title: 'Comparar: faster than · El más: the fastest · Ahora mismo: am / is / are + -ing:', parts: [S('Sujeto'), '+', V('is / are'), '+', K('faster than / the fastest / running'), '+', R('...')] }
+    case 'past-simple-continuous':
+      return { title: 'Acción larga: was / were + -ing · acción corta que interrumpe: pasado simple (when / while):', parts: [S('Sujeto'), '+', V('was / were + -ing'), '+', K('when'), '+', R('acción en pasado simple')] }
+    case 'recipes-some-any':
+      if (question || negative) return { title: 'En negativas y preguntas: any:', parts: [V("Is there / There isn't"), '+', K('any'), '+', R('cosa')] }
+      return { title: "Receta: el verbo va primero (Don't + verbo para prohibir) · en afirmativas: some:", parts: [V('Put / Add / Mix'), '+', K('some'), '+', R('cosa')] }
+    case 'present-perfect':
+      if (question) return { title: 'Para preguntar por experiencias: Have / Has + sujeto + ever + participio?', parts: [V('Have / Has'), '+', S('Sujeto'), '+', K('ever'), '+', V('participio'), '+', R('...?')] }
+      if (negative) return { title: "Para negar: haven't / hasn't + participio (… yet):", parts: [S('Sujeto'), '+', K("haven't / hasn't"), '+', V('participio'), '+', R('... yet')] }
+      return { title: 'have / has + participio (seen, been, found) · just / already van en medio:', parts: [S('Sujeto'), '+', K('have / has'), '+', V('participio'), '+', R('...')] }
+    case 'places-directions':
+      if (question) return { title: 'Para preguntar el camino:', parts: [K('How can I get to'), '+', R('lugar?')] }
+      return { title: 'Dónde está: next to / between / opposite · cómo llegar: turn left / go straight:', parts: [S('Lugar'), '+', V('is'), '+', K('next to / between / opposite'), '+', R('...')] }
+    case 'future-plans':
+      if (/\bwill\b|'ll\b/i.test(sentence)) return { title: 'Decisión ahora, oferta o promesa: will + verbo (sin to):', parts: [S('Sujeto'), '+', K('will'), '+', V('verbo'), '+', R('...')] }
+      if (/\bgoing to\b/i.test(sentence)) return { title: 'Intención o algo que se ve venir: am / is / are + going to + verbo:', parts: [S('Sujeto'), '+', K('am / is / are going to'), '+', V('verbo'), '+', R('...')] }
+      return { title: 'Plan acordado: am / is / are + -ing · intención: going to · decisión ahora: will:', parts: [S('Sujeto'), '+', K('am leaving / going to / will'), '+', V('verbo'), '+', R('...')] }
+    case 'health-emergency':
+      if (/\b(should|must)/i.test(sentence)) return { title: 'Consejo: should + verbo · norma: must + verbo (sin to):', parts: [S('You'), '+', K("should / shouldn't / must"), '+', V('verbo'), '+', R('...')] }
+      return { title: "Síntomas: I've got + a headache · una parte duele: hurts · consejo: should + verbo:", parts: [S('I / He'), '+', K("'ve got / 's got"), '+', R('a headache / a cough')] }
     case 'time':
       if (question) return { title: 'Para preguntar la hora:', parts: [K('What time'), '+', V('is'), '+', S('it?')] }
       return { title: 'at + hora · on + día · in + mes, estación o parte del día:', parts: [R('...'), '+', K('at / on / in'), '+', R('hora / día / mes')] }
