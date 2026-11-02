@@ -30,6 +30,7 @@ import { A2_RACE_ID, A2_07_CLOSE, isA2RaceUnlocked } from '../data/a2Race'
 import { A2_CAR_ID, A2_08_CLOSE, isA2CarUnlocked } from '../data/a2Car'
 import { A2_MILL_ID, A2_09_CLOSE, isA2MillUnlocked } from '../data/a2Mill'
 import { A2_LEO_HOUSE_ID, A2_10_CLOSE, isA2LeoHouseUnlocked } from '../data/a2LeoHouse'
+import { A2_FUTURE_ID, A2_11_CLOSE, isA2FutureUnlocked } from '../data/a2Future'
 import { useDesktop } from '../game/device'
 import { Achievements } from '../components/Achievements'
 import { ACHIEVEMENTS, achieved } from '../data/collection'
@@ -53,12 +54,15 @@ const A2_NODES: A2Node[] = [
   { id: 'road', sceneId: A2_CAR_ID, name: 'Camino', mission: 'A2-08', x: 325, y: 125, open: isA2CarUnlocked, done: (s) => s.opened.includes(A2_08_CLOSE), locked: 'Se abre al terminar en el hipódromo.' },
   { id: 'mill', sceneId: A2_MILL_ID, name: 'Molino', mission: 'A2-09', x: 95, y: 175, open: isA2MillUnlocked, done: (s) => s.opened.includes(A2_09_CLOSE), locked: 'Se abre al terminar en el camino.' },
   { id: 'leo-house', sceneId: A2_LEO_HOUSE_ID, name: 'Casa de Leo', mission: 'A2-10', x: 290, y: 290, open: isA2LeoHouseUnlocked, done: (s) => s.opened.includes(A2_10_CLOSE), locked: 'Se abre al terminar en el molino.' },
+  { id: 'city-2056', sceneId: A2_FUTURE_ID, name: 'Ciudad 2056', mission: 'A2-11', x: 40, y: 205, open: isA2FutureUnlocked, done: (s) => s.opened.includes(A2_11_CLOSE), locked: 'Se abre al terminar en la casa de Leo.' },
 ]
 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
-    isA2LeoHouseUnlocked(state) && !state.opened.includes(A2_10_CLOSE)
+    isA2FutureUnlocked(state) && !state.opened.includes(A2_11_CLOSE)
+      ? 'A2-11 · The City of Tomorrow: sigues la señal del reloj hasta la ciudad de 2056. La carreta River debería estar en el museo del transporte.'
+      : isA2LeoHouseUnlocked(state) && !state.opened.includes(A2_10_CLOSE)
       ? 'A2-10 · Echoes Across Time: de vuelta en el presente, Leo te espera en su casa para juntar todas las pistas.'
       : isA2MillUnlocked(state) && !state.opened.includes(A2_09_CLOSE)
       ? 'A2-09 · The Silent Mill: vuelves a la granja de los River, en el pasado. El molino junto al río está en silencio. Leo te espera allí.'

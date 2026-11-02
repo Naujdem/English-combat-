@@ -52,6 +52,8 @@ export const FLOOR: Record<Zone, string> = {
   'sala-torre': '#e6e3f2',
   'cima-torre': '#efe9dc',
   taller: '#cfc6b8',
+  estacion: '#dfe6ee',
+  museo: '#ece4d4',
 }
 
 const WALL = '#7a6a58'

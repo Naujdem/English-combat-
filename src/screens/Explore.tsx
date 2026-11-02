@@ -52,6 +52,9 @@ import { Reconstruct } from '../components/Reconstruct'
 import { FixRadio } from '../components/FixRadio'
 import { CommandPuzzle } from '../components/CommandPuzzle'
 import { MemoryChest } from '../components/MemoryChest'
+import { LostLuggage } from '../components/LostLuggage'
+import { RouteChallenge } from '../components/RouteChallenge'
+import { MagicBook } from '../components/MagicBook'
 import { DebateTalk } from '../components/DebateTalk'
 import { LessonPlan } from '../components/LessonPlan'
 import { TourPlan } from '../components/TourPlan'
@@ -1047,6 +1050,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               const who = npcOf(t.npc ?? task)
               return <MemoryChest name={who.name} look={who.look} title={t.memory.title} intro={t.memory.intro} pairs={t.memory.pairs} onClose={finish} />
             }
+            if (t.activity === 'luggage') return <LostLuggage onClose={finish} />
+            if (t.activity === 'route') return <RouteChallenge name={npcOf(t.npc ?? task).name} onClose={finish} />
+            if (t.activity === 'book') return <MagicBook name={npcOf(t.npc ?? task).name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'debate' && t.debate) {
               const who = npcOf(t.npc ?? task)
               const results = t.debate.results
