@@ -103,12 +103,15 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const [logros, setLogros] = useState(false)
   const [exam, setExam] = useState<EraId | null>(null)
   const [menu, setMenu] = useState(false)
+  // Modo profesor: abre las épocas de A1 y todas las misiones de A2 para revisarlas sin jugar lo anterior
+  const teacher = useTeacher().on
+  const a2NodeOpen = (n: A2Node) => (teacher || n.open(state)) && !!SCENES[n.sceneId]
   // Nivel del mapa: al terminar A1 se puede elegir entre A1 y A2
-  const a2Open = isA2Unlocked(state)
+  const a2Open = teacher || isA2Unlocked(state)
   const [level, setLevel] = useState<'A1' | 'A2'>(a2Open && A2_NODES.some((n) => n.sceneId === state.sceneId) ? 'A2' : 'A1')
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]
   function tapA2(n: A2Node) {
-    if (!n.open(state) || !SCENES[n.sceneId]) return setMsg(`${n.name} (${n.mission}) está cerrado. ${n.locked}`)
+    if (!a2NodeOpen(n)) return setMsg(`${n.name} (${n.mission}) está cerrado. ${n.locked}`)
     onEnter(n.sceneId)
   }
   const exams = (Object.keys(EXAMS) as EraId[]).filter((e) => state.opened.includes(EXAMS[e].unlock))
@@ -147,7 +150,6 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   }
   const here = WORLD.find((n) => n.sceneId === state.sceneId) ?? WORLD[0]
   // Épocas: el pasado aparece cuando el reloj está completo (o en modo profesor)
-  const teacher = useTeacher().on
   const pastOpen = teacher || state.defeated.includes('office-boss')
   const [era, setEra] = useState<WorldNode['era']>(here.era)
   const shownNodes = nodesOf(era)
@@ -230,7 +232,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         ))}
         <polyline points={A2_NODES.map((n) => `${n.x},${n.y}`).join(' ')} fill="none" stroke="#e8dcc8" strokeOpacity="0.55" strokeWidth="4" strokeDasharray="2 9" strokeLinecap="round" />
         {A2_NODES.map((n) => {
-          const open = n.open(state) && !!SCENES[n.sceneId]
+          const open = a2NodeOpen(n)
           const done = n.done(state)
           return (
             <g key={n.id} onClick={() => tapA2(n)} className="cursor-pointer" role="button" aria-label={`${n.name}, ${n.mission}${done ? ', terminado' : ''}`}>

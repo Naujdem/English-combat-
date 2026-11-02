@@ -17,6 +17,12 @@ import { BARRIO_FUTURE } from '../data/barrioFuture'
 import { FARM_FUTURE } from '../data/farmFuture'
 import { TOWER_FUTURE } from '../data/towerFuture'
 import { SCHOOL } from '../data/school'
+import { A2_HOSPITAL, A2_ECHO } from '../data/a2Hospital'
+import { A2_CITY, A2_03_CLOSE } from '../data/a2City'
+import { A2_WORKSHOP, A2_04_CLOSE } from '../data/a2Workshop'
+import { A2_LIBRARY, A2_05_CLOSE } from '../data/a2Library'
+import { A2_FARM_PAST, A2_06_CLOSE } from '../data/a2FarmPast'
+import { A2_RACE } from '../data/a2Race'
 
 /**
  * Modo profesor: permisos especiales para revisar el juego sin jugarlo entero.
@@ -656,6 +662,32 @@ export const PRESETS: { id: string; label: string; apply: (s: GameState) => Game
     },
   },
 ]
+
+/**
+ * A2: cada atajo parte de A1 terminado (con el final del desconocido), borra el avance de A2
+ * y marca como cerradas solo las misiones anteriores, para entrar a la misión elegida desde el principio.
+ */
+const A1_END = PRESETS.findIndex((p) => p.id === 'future-tower-stranger-done')
+function a2Start(s: GameState, scene: { id: string; start: { x: number; y: number } }, opened: string[], defeated: string[]): GameState {
+  const b = PRESETS[A1_END].apply(s)
+  return {
+    ...b,
+    screen: 'explore',
+    sceneId: scene.id,
+    pos: { ...scene.start },
+    opened: add(b.opened.filter((o) => !o.startsWith('a2-')), ['office-future-epilogue', ...opened]),
+    defeated: add(b.defeated.filter((d) => !d.startsWith('a2-')), defeated),
+  }
+}
+
+PRESETS.push(
+  { id: 'a2-01', label: 'A2-01 · Hospital: inicio de A2', apply: (s) => a2Start(s, A2_HOSPITAL, [], []) },
+  { id: 'a2-03', label: 'A2-03 · Ciudad: recién llegado', apply: (s) => a2Start(s, A2_CITY, [], [A2_ECHO]) },
+  { id: 'a2-04', label: 'A2-04 · Taller: recién llegado', apply: (s) => a2Start(s, A2_WORKSHOP, [A2_03_CLOSE], [A2_ECHO]) },
+  { id: 'a2-05', label: 'A2-05 · Biblioteca: recién llegado', apply: (s) => a2Start(s, A2_LIBRARY, [A2_03_CLOSE, A2_04_CLOSE], [A2_ECHO]) },
+  { id: 'a2-06', label: 'A2-06 · Granja River: recién llegado', apply: (s) => a2Start(s, A2_FARM_PAST, [A2_03_CLOSE, A2_04_CLOSE, A2_05_CLOSE], [A2_ECHO]) },
+  { id: 'a2-07', label: 'A2-07 · Hipódromo: recién llegado', apply: (s) => a2Start(s, A2_RACE, [A2_03_CLOSE, A2_04_CLOSE, A2_05_CLOSE, A2_06_CLOSE], [A2_ECHO]) },
+)
 
 /** Marca todas las lecciones como vistas (para no repetirlas al revisar) */
 export function skipLessons(s: GameState): GameState {
