@@ -16,6 +16,15 @@ import { btn, btnGhost, Panel } from './ui'
 /** Temas de A1 en el orden en que aparecen en el juego */
 export const A1_ORDER: TopicId[] = ['greetings', 'to-be', 'possessives', 'prepositions', 'imperatives', 'there-is', 'demonstratives', 'ordering', 'present-simple', 'likes', 'can', 'present-continuous', 'have-got', 'do-does', 'plurals', 'time', 'object-pronouns', 'could-you', 'was-were', 'past-regular', 'past-irregular', 'past-did', 'past-time', 'going-to', 'going-to-neg', 'going-to-wh', 'going-to-predict', 'want-to']
 
+/** Temas de A2 en el orden en que Leo los enseña */
+export const A2_ORDER: TopicId[] = ['should-must', 'invitations', 'requests', 'instructions', 'past-simple', 'past-simple-comparatives', 'superlatives-comparatives-race', 'past-simple-continuous', 'recipes-some-any', 'present-perfect', 'places-directions', 'future-plans', 'health-emergency']
+
+const LEVELS: { level: string; order: TopicId[] }[] = [
+  { level: 'A1', order: A1_ORDER },
+  { level: 'A2', order: A2_ORDER },
+]
+const ALL_ORDER = [...A1_ORDER, ...A2_ORDER]
+
 export function mastery(s: GameState, t: TopicId) {
   const st = s.stats[t] ?? { ok: 0, fail: 0 }
   const total = st.ok + st.fail
@@ -59,13 +68,19 @@ export function Review({ state, update, onClose }: { state: GameState; update: U
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-gold">Repasar</p>
-            <p className="font-display text-lg">Gramática A1, tema por tema</p>
+            <p className="font-display text-lg">Gramática, tema por tema</p>
           </div>
           <button className={btnGhost} onClick={onClose}>Cerrar</button>
         </div>
         <p className="text-sm text-paper/65">Fuera de la historia: mira la estructura, vuelve a ver la explicación de Leo o practica sin perder vida.</p>
 
-        {A1_ORDER.filter((t) => unlocked(state, t, teacher)).map((t, k) => {
+        {LEVELS.map(({ level, order }) => {
+          const shown = order.filter((t) => unlocked(state, t, teacher))
+          if (!shown.length) return null
+          return (
+            <div key={level} className="flex flex-col gap-3">
+              <p className="mt-1 px-1 text-xs font-semibold uppercase tracking-wide text-gold">Nivel {level}</p>
+              {shown.map((t, k) => {
           const open = true
           const m = mastery(state, t)
           return (
@@ -95,7 +110,10 @@ export function Review({ state, update, onClose }: { state: GameState; update: U
             </Panel>
           )
         })}
-        {A1_ORDER.some((t) => !unlocked(state, t, teacher)) && (
+            </div>
+          )
+        })}
+        {ALL_ORDER.some((t) => !unlocked(state, t, teacher)) && (
           <p className="px-1 text-center text-sm text-paper/55">Aparecerán más temas cuando Leo te los enseñe en la historia.</p>
         )}
       </div>
@@ -106,12 +124,13 @@ export function Review({ state, update, onClose }: { state: GameState; update: U
 /** Mi progreso: lugares, piezas, temas y repaso */
 export function ProgressView({ state, onClose, onReview }: { state: GameState; onClose: () => void; onReview: () => void }) {
   const teacher = useTeacher().on
-  const shown = A1_ORDER.filter((t) => unlocked(state, t, teacher))
+  const shown = ALL_ORDER.filter((t) => unlocked(state, t, teacher))
+  const a2 = A2_ORDER.some((t) => shown.includes(t))
   const bosses = WORLD.filter((n) => n.sceneId)
   const places = WORLD.filter((n) => state.defeated.includes(`${n.id}-boss`)).length
   const minions = Object.values(ENEMIES).filter((e) => e.kind === 'minion' && state.defeated.includes(e.id)).length
   const diaries = DIARY.flatMap((c) => c.versions).filter((v) => state.opened.includes(`diary-${v.id}`)).length
-  const all = A1_ORDER.map((t) => mastery(state, t))
+  const all = ALL_ORDER.map((t) => mastery(state, t))
   const answered = all.reduce((n, m) => n + m.total, 0)
   const right = all.reduce((n, m) => n + m.ok, 0)
 
@@ -131,7 +150,7 @@ export function ProgressView({ state, onClose, onReview }: { state: GameState; o
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-gold">Mi progreso</p>
-            <p className="font-display text-lg">{state.hero.name || 'Tu personaje'} · Nivel A1</p>
+            <p className="font-display text-lg">{state.hero.name || 'Tu personaje'} · Nivel {a2 ? 'A2' : 'A1'}</p>
           </div>
           <button className={btnGhost} onClick={onClose}>Cerrar</button>
         </div>
@@ -152,10 +171,13 @@ export function ProgressView({ state, onClose, onReview }: { state: GameState; o
           <p className="font-display text-lg">Temas</p>
           <p className="text-sm text-paper/60">Según tus respuestas en combates, prácticas y el cuaderno.</p>
           <div className="mt-3 grid gap-3">
-            {shown.map((t) => {
+            {shown.map((t, k) => {
               const m = mastery(state, t)
+              const lvl = A2_ORDER.includes(t) ? 'A2' : 'A1'
+              const head = k === 0 || (A2_ORDER.includes(shown[k - 1]) ? 'A2' : 'A1') !== lvl
               return (
                 <div key={t}>
+                  {head && <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-gold">Nivel {lvl}</p>}
                   <div className="mb-1 flex items-center justify-between gap-2 text-sm">
                     <span>{TOPICS[t].name}</span>
                     <span className="text-paper/65">
@@ -168,8 +190,8 @@ export function ProgressView({ state, onClose, onReview }: { state: GameState; o
               )
             })}
           </div>
-          {shown.length < A1_ORDER.length && (
-            <p className="mt-3 text-sm text-paper/55">Y {A1_ORDER.length - shown.length} temas más por descubrir en la historia.</p>
+          {shown.length < ALL_ORDER.length && (
+            <p className="mt-3 text-sm text-paper/55">Y {ALL_ORDER.length - shown.length} temas más por descubrir en la historia.</p>
           )}
           <button className={`${btn} mt-4 w-full border-gold`} onClick={onReview}>Repasar un tema</button>
         </Panel>
