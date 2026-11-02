@@ -70,7 +70,7 @@ export const A2_FARM_PAST_ENEMIES: Record<string, EnemyDef> = {
     echo: true,
     hp: 5,
     topics: ['past-simple-comparatives'],
-    kinds: ['fill', 'fix', 'order'],
+    kinds: ['fill', 'fix', 'order', 'listen'],
     tags: ['a2-farm-helper'],
     onlyTags: true,
     zone: 'campo',
@@ -96,16 +96,16 @@ export const A2_FARM_PAST_ENEMIES: Record<string, EnemyDef> = {
     echo: true,
     hp: 6,
     topics: ['past-simple-comparatives'],
-    kinds: ['fill', 'fix', 'order'],
+    kinds: ['fill', 'fix', 'order', 'listen'],
     tags: ['a2-farm-echo'],
     // Fase 1: Past Simple de la carrera · Fase 2: comparativos
     phases: [
-      { hp: 3, title: 'Past Simple', topics: ['past-simple-comparatives'], kinds: ['fill', 'fix', 'order'], tags: ['a2-farm-echo-past'] },
+      { hp: 3, title: 'Past Simple', topics: ['past-simple-comparatives'], kinds: ['fill', 'fix', 'order', 'listen'], tags: ['a2-farm-echo-past'] },
       {
         hp: 3,
         title: 'Comparatives',
         topics: ['past-simple-comparatives'],
-        kinds: ['fill', 'fix', 'order'],
+        kinds: ['fill', 'fix', 'order', 'listen'],
         tags: ['a2-farm-echo-comp'],
         line: { text: 'OK, OK! But my horse was more fast and more strong than all the horses!', es: '¡Vale, vale! ¡Pero mi caballo era "más rápido" y "más fuerte" que todos los caballos! (Ahora usa mal los comparativos: more fast, more strong).' },
       },

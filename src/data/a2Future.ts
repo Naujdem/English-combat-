@@ -76,7 +76,7 @@ export const A2_FUTURE_ENEMIES: Record<string, EnemyDef> = {
     echo: true,
     hp: 6,
     topics: [TP],
-    kinds: ['fill', 'fix', 'order'],
+    kinds: ['fill', 'fix', 'order', 'listen'],
     tags: ['a2-future-minion'],
     // Fase 1: preposiciones de lugar · Fase 2: indicaciones
     phases: [
@@ -84,7 +84,7 @@ export const A2_FUTURE_ENEMIES: Record<string, EnemyDef> = {
         hp: 3,
         title: 'Preposiciones de lugar',
         topics: [TP],
-        kinds: ['fill', 'fix', 'order'],
+        kinds: ['fill', 'fix', 'order', 'listen'],
         tags: ['a2-future-minion-place'],
         line: { text: 'The museum is next the station! No, it is in front the tower!', es: '¡El museo está al lado de la estación! ¡No, está delante de la torre! (next the, in front the: mal).' },
       },
@@ -92,7 +92,7 @@ export const A2_FUTURE_ENEMIES: Record<string, EnemyDef> = {
         hp: 3,
         title: 'Indicaciones',
         topics: [TP],
-        kinds: ['fill', 'fix', 'order'],
+        kinds: ['fill', 'fix', 'order', 'listen'],
         tags: ['a2-future-minion-dir'],
         line: { text: 'Go straight on left! Turn to right in the bridge!', es: '¡Sigue derecho a la izquierda! ¡Gira a la derecha en el puente! (go straight on left, turn to right: mal).' },
       },
@@ -119,7 +119,7 @@ export const A2_FUTURE_ENEMIES: Record<string, EnemyDef> = {
     kind: 'boss',
     hp: 8,
     topics: [TP],
-    kinds: ['fill', 'fix', 'order'],
+    kinds: ['fill', 'fix', 'order', 'listen'],
     tags: ['a2-future-boss'],
     // Fase 1: preposiciones de movimiento · Fase 2: transporte y viajes
     phases: [
@@ -127,7 +127,7 @@ export const A2_FUTURE_ENEMIES: Record<string, EnemyDef> = {
         hp: 4,
         title: 'Preposiciones de movimiento',
         topics: [TP],
-        kinds: ['fill', 'fix', 'order'],
+        kinds: ['fill', 'fix', 'order', 'listen'],
         tags: ['a2-future-boss-move'],
         line: { text: 'I go across the tunnel and through the bridge! Nobody stops me!', es: '¡Voy por el túnel y por el puente! ¡Nadie me detiene! (across the tunnel, through the bridge: al revés).' },
       },
@@ -135,7 +135,7 @@ export const A2_FUTURE_ENEMIES: Record<string, EnemyDef> = {
         hp: 4,
         title: 'Transporte y viajes',
         topics: [TP],
-        kinds: ['fill', 'fix', 'order'],
+        kinds: ['fill', 'fix', 'order', 'listen'],
         tags: ['a2-future-boss-travel'],
         line: { text: 'Get out the tram! You can go with foot! Next stop: nowhere!', es: '¡Bájate del tranvía! ¡Puedes ir a pie! Próxima parada: ninguna. (get out the tram, with foot: mal).' },
       },

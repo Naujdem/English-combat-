@@ -73,7 +73,7 @@ export const A2_CONTROL_ENEMIES: Record<string, EnemyDef> = {
     echo: true,
     hp: 6,
     topics: [TP],
-    kinds: ['fill', 'fix', 'order'],
+    kinds: ['fill', 'fix', 'order', 'listen'],
     tags: ['a2-control-minion'],
     // Fase 1: will / going to · Fase 2: presente continuo para planes acordados
     phases: [
@@ -81,7 +81,7 @@ export const A2_CONTROL_ENEMIES: Record<string, EnemyDef> = {
         hp: 3,
         title: 'Will y going to',
         topics: [TP],
-        kinds: ['fill', 'fix', 'order'],
+        kinds: ['fill', 'fix', 'order', 'listen'],
         tags: ['a2-control-minion-will'],
         line: { text: 'Attention! It will to rain! Nobody going to travel today!', es: '¡Atención! ¡Va a llover! ¡Nadie va a viajar hoy! (will to rain, nobody going to: mal).' },
       },
@@ -89,7 +89,7 @@ export const A2_CONTROL_ENEMIES: Record<string, EnemyDef> = {
         hp: 3,
         title: 'Planes acordados',
         topics: [TP],
-        kinds: ['fill', 'fix', 'order'],
+        kinds: ['fill', 'fix', 'order', 'listen'],
         tags: ['a2-control-minion-plans'],
         line: { text: 'You are leave at nothing o’clock! Your friends is meeting nobody!', es: '¡Sales a las ninguna en punto! ¡Tus amigos no se reúnen con nadie! (are leave, friends is: mal).' },
       },
@@ -116,7 +116,7 @@ export const A2_CONTROL_ENEMIES: Record<string, EnemyDef> = {
     kind: 'boss',
     hp: 8,
     topics: [TP],
-    kinds: ['fill', 'fix', 'order'],
+    kinds: ['fill', 'fix', 'order', 'listen'],
     tags: ['a2-control-boss'],
     // Fase 1: will / going to / presente continuo · Fase 2: viajes y reservas
     phases: [
@@ -124,7 +124,7 @@ export const A2_CONTROL_ENEMIES: Record<string, EnemyDef> = {
         hp: 4,
         title: 'Planes: will, going to y presente continuo',
         topics: [TP],
-        kinds: ['fill', 'fix', 'order'],
+        kinds: ['fill', 'fix', 'order', 'listen'],
         tags: ['a2-control-boss-plans'],
         line: { text: 'I am going close every route! Tomorrow I will closing the sky too!', es: '¡Voy a cerrar cada ruta! ¡Mañana cerraré también el cielo! (going close, will closing: mal).' },
       },
@@ -132,7 +132,7 @@ export const A2_CONTROL_ENEMIES: Record<string, EnemyDef> = {
         hp: 4,
         title: 'Viajes y reservas',
         topics: [TP],
-        kinds: ['fill', 'fix', 'order'],
+        kinds: ['fill', 'fix', 'order', 'listen'],
         tags: ['a2-control-boss-travel'],
         line: { text: 'Your ticket is a single return! Your train leaves from the platform nowhere!', es: '¡Tu boleto es de ida de ida y vuelta! ¡Tu tren sale del andén ninguna parte! (single return, the platform: mal).' },
       },

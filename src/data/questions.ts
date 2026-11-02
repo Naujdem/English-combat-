@@ -29,6 +29,7 @@ import { A2_CONTROL_PRACTICE } from './a2Control'
 import { A2_CONTROL_QUESTIONS } from './questions-a2-12'
 import { A2_RETURN_PRACTICE } from './a2Return'
 import { A2_RETURN_QUESTIONS } from './questions-a2-13'
+import { A2_EXTRA_QUESTIONS } from './questions-a2-extra'
 import { A2_PARTY_PRACTICE } from './a2Party'
 import { A2_PARTY_QUESTIONS } from './questions-a2-s3'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
@@ -378,6 +379,7 @@ export const QUESTIONS: Question[] = [
   ...A2_CONTROL_QUESTIONS,
   ...A2_RETURN_PRACTICE,
   ...A2_RETURN_QUESTIONS,
+  ...A2_EXTRA_QUESTIONS,
   ...A2_PARTY_PRACTICE,
   ...A2_PARTY_QUESTIONS,
   // ── Escucha real (comprensión)
