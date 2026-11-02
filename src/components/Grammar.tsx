@@ -218,6 +218,10 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (question) return { title: 'Para invitar o preguntar con cortesía: Would + you + like to + verbo?', parts: [V('Would'), '+', S('you'), '+', K('like to'), '+', V('verbo'), '+', R('...?')] }
       if (negative) return { title: "Para decir que no quieres: don't / doesn't want to + verbo:", parts: [S('Sujeto'), '+', V("don't / doesn't"), '+', K('want to'), '+', V('verbo'), '+', R('...')] }
       return { title: 'Lo que quieres: want(s) to + verbo · con cortesía: would like to + verbo:', parts: [S('Sujeto'), '+', K('want(s) to / would like to'), '+', V('verbo'), '+', R('...')] }
+    case 'wishes-conditional':
+      if (/\bif\b/i.test(sentence)) return { title: 'Primer condicional: If + presente, will + verbo (después de if, nunca will):', parts: [K('If'), '+', S('sujeto'), '+', V('presente'), '+', K("will / won't"), '+', V('verbo')] }
+      if (/\bhope\b/i.test(sentence)) return { title: 'Para desear algo: I hope + frase · I hope to + verbo:', parts: [S('I'), '+', K('hope'), '+', R('you have a great year')] }
+      return { title: "Preferencias: I'd like to + verbo · I'd rather + verbo (sin to) · I'd prefer + cosa:", parts: [S('I'), '+', K("'d like to / 'd rather / 'd prefer"), '+', V('verbo / cosa'), '+', R('...')] }
     case 'should-must':
       if (question) return { title: 'Para preguntar: Should + sujeto + verbo? · Do / Does + sujeto + have to + verbo?', parts: [V('Should / Do'), '+', S('Sujeto'), '+', K('(have to)'), '+', V('verbo'), '+', R('...?')] }
       if (negative) return { title: "shouldn't = mal consejo · mustn't = prohibido · don't have to = no es necesario:", parts: [S('Sujeto'), '+', K("shouldn't / mustn't / don't have to"), '+', V('verbo'), '+', R('...')] }

@@ -3340,6 +3340,241 @@ NPC_TASKS['a2-13-close'] = {
   },
 }
 
+// ── Misión secundaria de A2 · Make a Wish (casa de Leo y jardín; escena y duelo en data/a2Party.ts) ──
+// Cumpleaños sorpresa de la persona especial. Sin fragmento ni pistas nuevas de "L".
+// Orden: Leo (lección wishes-conditional + práctica) → Maya (elegir con los invitados) → Leo en el jardín (plan B)
+//        → señora García (¿cómo se conocieron?) → duelo con Maya → Leo (tarjeta) → la persona especial (¡sorpresa!).
+NPC_TASKS['a2-s3-leo'] = {
+  done: 'a2-s3-practice',
+  lesson: 'wishes-conditional',
+  activity: 'practice',
+  practice: 'wishes-conditional',
+  practiceIds: ['a2-s3-p1', 'a2-s3-p2', 'a2-s3-p3', 'a2-s3-p4', 'a2-s3-p5', 'a2-s3-p6', 'a2-s3-p7'],
+  steps: [],
+  reward: {
+    text: 'Leo: "Perfect! The guests are in the garden. Ask Maya what everybody wants."',
+    es: '¡Perfecto! Los invitados están en el jardín. Pregúntale a Maya qué quieren todos.',
+    sub: 'Sal al jardín y habla con Maya.',
+    say: 'Ask Maya what everybody wants.',
+  },
+}
+
+// Elegir con los invitados (DebateTalk): would rather / would like / would prefer. No hay respuestas incorrectas.
+NPC_TASKS['a2-s3-choices'] = {
+  npc: 'a2-s3-maya',
+  done: 'a2-s3-choices',
+  activity: 'debate',
+  requires: {
+    id: 'a2-s3-practice',
+    text: 'Maya: "Hi! Leo has the plan. Talk to him first."',
+    es: '¡Hola! Leo tiene el plan. Habla primero con él.',
+    sub: 'Leo está en la sala.',
+  },
+  debate: {
+    title: 'Party Choices',
+    ask: 'Ayuda a Maya a elegir: di qué prefieres y por qué.',
+    turns: [
+      {
+        text: 'OK, party planner! Would you rather have the party in the garden or in the living room?',
+        es: '¡Bien, organizador de fiestas! ¿Prefieres hacer la fiesta en el jardín o en la sala?',
+        options: [
+          { en: "I'd rather have it in the garden. It's a sunny day!", es: 'Prefiero hacerla en el jardín. ¡Es un día soleado!', value: 'good' },
+          { en: 'The garden, I think.', es: 'El jardín, creo.', value: 'neutral' },
+          { en: "I'd rather to have it in the garden.", es: '(Frase mal dicha).', value: 'bad' },
+        ],
+      },
+      {
+        text: 'And what would you like to eat? Cake, pizza... or both?',
+        es: '¿Y qué te gustaría comer? ¿Pastel, pizza... o las dos cosas?',
+        options: [
+          { en: "I'd like both! A birthday needs cake, and everybody likes pizza.", es: '¡Me gustarían las dos! Un cumpleaños necesita pastel, y a todos les gusta la pizza.', value: 'good' },
+          { en: 'Anything is OK.', es: 'Cualquier cosa está bien.', value: 'neutral' },
+          { en: 'I would like eat cake.', es: '(Frase mal dicha).', value: 'bad' },
+        ],
+      },
+      {
+        text: 'Music or games? Leo wants to dance... but Leo dances very badly.',
+        es: '¿Música o juegos? Leo quiere bailar... pero Leo baila muy mal.',
+        options: [
+          { en: "I'd prefer games. Everybody can play, even Leo!", es: 'Prefiero juegos. ¡Todos pueden jugar, hasta Leo!', value: 'good', reply: { text: 'Ha ha, yes! Games it is.', es: 'Ja, ja, ¡sí! Entonces, juegos.' } },
+          { en: 'Both, maybe.', es: 'Las dos, quizás.', value: 'neutral', reply: { text: 'OK, a little music and some games.', es: 'Bueno, un poco de música y algunos juegos.' } },
+          { en: 'I prefer would games.', es: '(Frase mal dicha).', value: 'bad', reply: { text: 'Sorry? Games? OK...', es: '¿Perdón? ¿Juegos? Bueno...' } },
+        ],
+      },
+      {
+        text: 'I really hope the surprise works. Do you think our friend will be happy?',
+        es: 'De verdad espero que la sorpresa funcione. ¿Crees que la persona del cumpleaños estará feliz?',
+        options: [
+          { en: 'I hope so! I think it will be a great surprise.', es: '¡Eso espero! Creo que será una gran sorpresa.', value: 'good' },
+          { en: 'Maybe.', es: 'Quizás.', value: 'neutral' },
+          { en: 'I hope it will to be fun.', es: '(Frase mal dicha).', value: 'bad' },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: 'Great choices! Now go and help Leo. He looks worried about the weather.', es: '¡Buenas elecciones! Ahora ve a ayudar a Leo. Se ve preocupado por el clima.' },
+      mid: { text: 'OK, good. Go and help Leo now. He is looking at the sky.', es: 'Bien. Ve a ayudar a Leo ahora. Está mirando el cielo.' },
+      low: { text: "Hmm... OK. Leo needs help. He's looking at the clouds.", es: 'Mmm... bueno. Leo necesita ayuda. Está mirando las nubes.' },
+    },
+  },
+  steps: [],
+  reward: {
+    text: 'Maya: "Go and help Leo in the garden."',
+    es: 'Ve a ayudar a Leo en el jardín.',
+    sub: 'Leo está junto a la mesa del pastel.',
+    say: 'Go and help Leo.',
+  },
+}
+
+// Plan B (Sequence Master): una cadena de condiciones por si llueve
+NPC_TASKS['a2-s3-plan-b'] = {
+  npc: 'a2-s3-leo-garden',
+  done: 'a2-s3-plan-b',
+  activity: 'sequence',
+  requires: {
+    id: 'a2-s3-choices',
+    text: 'Leo: "First, ask Maya what everybody wants."',
+    es: 'Primero, pregúntale a Maya qué quieren todos.',
+    sub: 'Maya está en el jardín.',
+  },
+  sequence: {
+    title: 'Plan B: If it rains...',
+    hint: 'Cada paso empieza con lo que dice el paso anterior: If it rains → we move inside → if we move inside...',
+    intro: { en: "Look at those clouds! We need a plan B. Put the plan in order: each step starts where the last one ends.", es: '¡Mira esas nubes! Necesitamos un plan B. Ordena el plan: cada paso empieza donde termina el anterior.' },
+    steps: [
+      { en: "If it rains, we'll move the party inside.", es: 'Si llueve, pasaremos la fiesta adentro.' },
+      { en: "If we move inside, we'll need more chairs.", es: 'Si pasamos adentro, necesitaremos más sillas.' },
+      { en: "If we need more chairs, I'll bring them from the attic.", es: 'Si necesitamos más sillas, las traeré del ático.' },
+      { en: "If I bring the chairs, you'll have time to decorate.", es: 'Si traigo las sillas, tendrás tiempo para decorar.' },
+      { en: 'If you decorate, the living room will look great!', es: 'Si decoras, ¡la sala se verá genial!' },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "Perfect plan! Now say hello to my mom. She wants to meet you."',
+    es: '¡Plan perfecto! Ahora saluda a mi mamá. Quiere conocerte.',
+    sub: 'Habla con la señora García en el jardín.',
+    say: 'Say hello to my mom.',
+  },
+}
+
+// ¿Cómo se conocieron? (DebateTalk, Busuu cap. 4): la señora García pregunta por la amistad con la persona especial
+NPC_TASKS['a2-s3-meet'] = {
+  npc: 'a2-s3-garcia',
+  done: 'a2-s3-meet',
+  activity: 'debate',
+  requires: {
+    id: 'a2-s3-plan-b',
+    text: 'Mrs. Garcia: "Hello, dear! Leo needs help with the clouds. Talk to him first."',
+    es: '¡Hola! Leo necesita ayuda con las nubes. Habla primero con él.',
+    sub: 'Leo está junto a la mesa del pastel.',
+  },
+  debate: {
+    title: 'How Did You Meet?',
+    ask: 'Charla con la mamá de Leo: cuenta cómo conociste a la persona del cumpleaños.',
+    turns: [
+      {
+        text: 'Thank you for helping Leo, dear. So, how did you and our birthday friend meet?',
+        es: 'Gracias por ayudar a Leo. Entonces, ¿cómo se conocieron tú y la persona del cumpleaños?',
+        options: [
+          { en: 'We met at school. Then we became good friends.', es: 'Nos conocimos en la escuela. Luego nos hicimos muy buenos amigos.', value: 'good' },
+          { en: 'At school.', es: 'En la escuela.', value: 'neutral' },
+          { en: 'We meet at school.', es: '(Frase mal dicha).', value: 'bad', reply: { text: 'You MET at school? How nice!', es: '¿Se conocieron en la escuela? ¡Qué lindo!' } },
+        ],
+      },
+      {
+        text: 'How lovely! And did you get on well from the start?',
+        es: '¡Qué bonito! ¿Y se llevaron bien desde el principio?',
+        options: [
+          { en: 'Yes, we did. We got on well from the first day.', es: 'Sí. Nos llevamos bien desde el primer día.', value: 'good' },
+          { en: 'I think so.', es: 'Creo que sí.', value: 'neutral' },
+          { en: 'Yes, we getted on well.', es: '(Frase mal dicha).', value: 'bad', reply: { text: 'You GOT on well? Good!', es: '¿Se llevaron bien? ¡Qué bueno!' } },
+        ],
+      },
+      {
+        text: "You know, Leo's father and I met at university. We got married five years later. Isn't that romantic?",
+        es: 'Sabes, el papá de Leo y yo nos conocimos en la universidad. Nos casamos cinco años después. ¿No es romántico?',
+        options: [
+          { en: "Yes! That's a lovely story. Where did you meet at university?", es: '¡Sí! Es una historia preciosa. ¿Dónde se conocieron en la universidad?', value: 'good', reply: { text: 'In the library, of course! Like many good stories.', es: '¡En la biblioteca, claro! Como muchas buenas historias.' } },
+          { en: "Yes, it's nice.", es: 'Sí, es lindo.', value: 'neutral' },
+          { en: 'Where you met?', es: '(Frase mal dicha).', value: 'bad', reply: { text: 'Where DID we meet? In the library.', es: '¿Dónde nos conocimos? En la biblioteca.' } },
+        ],
+      },
+      {
+        text: 'And what will you write on the birthday card?',
+        es: '¿Y qué vas a escribir en la tarjeta de cumpleaños?',
+        options: [
+          { en: "I'll write: I hope you have a wonderful year.", es: 'Escribiré: Espero que tengas un año maravilloso.', value: 'good' },
+          { en: 'Something nice.', es: 'Algo bonito.', value: 'neutral' },
+          { en: 'I will to write a nice card.', es: '(Frase mal dicha).', value: 'bad' },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: 'What a nice friendship. Oh! Maya wants to play a game with you.', es: 'Qué bonita amistad. ¡Oh! Maya quiere jugar contigo.' },
+      mid: { text: 'Lovely. Oh, look, Maya is calling you.', es: 'Qué lindo. Oh, mira, Maya te está llamando.' },
+      low: { text: 'Hmm, OK, dear. Maya is calling you.', es: 'Mmm, bueno. Maya te está llamando.' },
+    },
+  },
+  steps: [],
+  reward: {
+    text: 'Mrs. Garcia: "Go on, play with Maya. The party isn\'t ready yet."',
+    es: 'Anda, juega con Maya. La fiesta todavía no está lista.',
+    sub: 'Maya te reta a un juego de preguntas en el jardín.',
+    say: 'Go on, play with Maya.',
+  },
+}
+
+// Tarjeta de deseos: escribir los deseos enteros (T-) en la tarjeta para la persona especial
+NPC_TASKS['a2-s3-card'] = {
+  npc: 'a2-s3-leo-garden',
+  done: 'a2-s3-card',
+  activity: 'practice',
+  practice: 'wishes-conditional',
+  practiceIds: ['a2-s3-w3', 'T-a2-s3-w1', 'T-a2-s3-w2'],
+  requires: {
+    id: 'a2-s3-maya-duel',
+    text: 'Leo: "Maya wants to play a game with you. Go on, it\'s fun!"',
+    es: 'Maya quiere jugar contigo. ¡Anda, es divertido!',
+    sub: 'Gana el juego de preguntas de Maya.',
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "Beautiful card! Quick, hide! I can hear {iname} at the door!"',
+    es: '¡Qué linda tarjeta! ¡Rápido, escóndete! ¡Oigo a {iname} en la puerta!',
+    sub: '{iname} acaba de llegar al jardín. Ve a saludar.',
+    say: 'Quick, hide!',
+  },
+}
+
+// ¡Sorpresa! La persona especial llega: tarjeta, velas y deseos. Recompensa: ropa de fiesta (sin fragmento)
+NPC_TASKS['a2-s3-close'] = {
+  npc: 'a2-s3-interest',
+  done: 'a2-s3-close',
+  outfit: 'ropa-fiesta',
+  steps: [
+    { text: '(Everybody jumps out:) "SURPRISE! Happy birthday, {iname}!"', es: '(Todos salen de sus escondites:) "¡SORPRESA! ¡Feliz cumpleaños, {iname}!"' },
+    {
+      text: '{iname}: "A party? For me? I thought everybody forgot!"',
+      es: '{iname}: "¿Una fiesta? ¿Para mí? ¡Creí que todos lo habían olvidado!"',
+      choice: { ask: 'Le das la tarjeta. ¿Qué le dices?', options: ['Happy birthday! I hope you like the card.', 'Happy birthday! I hope you liking the card.', 'Happy birthday! I hope you to like the card.'], answer: 0, tip: 'I hope + you + verbo: you like.' },
+    },
+    { text: '{iname}: "\'I hope all your wishes come true. If you smile, the day will be perfect.\' This is so nice. Thank you!"', es: '{iname}: "\'Espero que se cumplan todos tus deseos. Si sonríes, el día será perfecto.\' Esto es muy lindo. ¡Gracias!"' },
+    {
+      text: 'Leo: "Now the candles! Close your eyes and make a wish!"',
+      es: 'Leo: "¡Ahora las velas! ¡Cierra los ojos y pide un deseo!"',
+      choice: { ask: '{iname} te pregunta: "What will happen if I tell you my wish?"', options: ["If you tell me, it won't come true!", "If you will tell me, it won't come true!", "If you tell me, it doesn't come true will!"], answer: 0, tip: "If + presente (tell), won't + verbo (won't come true)." },
+    },
+    { text: '{iname}: "OK, then it\'s a secret. But I can tell you one thing: I\'m very happy you are here."', es: '{iname}: "Bueno, entonces es un secreto. Pero te puedo decir una cosa: estoy muy feliz de que estés aquí."' },
+  ],
+  reward: {
+    text: '{iname}: "This is the best birthday ever!"',
+    es: '¡Este es el mejor cumpleaños de todos!',
+    sub: 'Misión secundaria completada: Make a Wish. Ganaste la ropa de fiesta. Habla otra vez con {iname} en el jardín.',
+    say: 'This is the best birthday ever!',
+  },
+}
+
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */
 export function taskOf(npcId: string, opened: string[]): { id: string; task: NpcTask; blocked: boolean } | null {
   for (const [id, t] of Object.entries(NPC_TASKS)) {

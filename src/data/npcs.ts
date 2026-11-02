@@ -604,6 +604,38 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     interest: true,
     doneLine: { text: 'You were so calm on the phone. I was very scared.', es: 'Estuviste muy tranquilo al teléfono. Yo estaba muy asustado.' },
   },
+  // ── Misión secundaria Make a Wish (casa de Leo y jardín): Leo (sala y jardín), Maya, la mamá de Leo y la persona especial ──
+  'a2-s3-leo': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    until: 'a2-s3-practice',
+  },
+  'a2-s3-leo-garden': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    after: 'a2-s3-practice',
+    doneLine: { text: "If you eat more cake, you'll explode! Ha ha.", es: '¡Si comes más pastel, vas a explotar! Ja, ja.' },
+  },
+  'a2-s3-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    // Se va cuando reta al duelo (el duelo la pone en otro lugar del jardín)
+    until: 'a2-s3-meet',
+    doneLine: { text: 'Leo needs your help. Go!', es: 'Leo necesita tu ayuda. ¡Ve!' },
+  },
+  'a2-s3-garcia': {
+    name: 'Mrs. Garcia',
+    look: { shirt: '#d4537e', hair: '#2b1d14', skin: '#e0ac69', gender: 'female' },
+    doneLine: { text: 'Would you like some more lemonade, dear?', es: '¿Quieres más limonada?' },
+  },
+  'a2-s3-interest': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    after: 'a2-s3-card',
+    until: 'a2-s3-close',
+    doneLine: { text: 'I hope we have many more days like this.', es: 'Espero que tengamos muchos más días como este.' },
+  },
   'a2-receptionist': {
     name: 'The receptionist',
     look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },
