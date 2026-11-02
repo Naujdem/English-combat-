@@ -521,6 +521,36 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     interest: true,
     doneLine: { text: "We've come so far together. Let's keep going.", es: 'Hemos llegado muy lejos juntos. Sigamos.' },
   },
+  // ── A2-11, la ciudad de 2056: robot de objetos perdidos, Leo (estación y museo), la persona especial y Adrián ──
+  'a2-11-robot': {
+    name: 'Lost & Found Bot',
+    look: { shirt: '#9aa6b2', hair: '#5a6672', skin: '#c9d6e2' },
+    doneLine: { text: 'Have a nice trip. Do not lose your bag again!', es: 'Buen viaje. ¡No vuelvas a perder tu mochila!' },
+  },
+  'a2-11-leo': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    until: 'a2-11-route',
+    doneLine: { text: "Let's find the museum. The signal is very strong.", es: 'Busquemos el museo. La señal es muy fuerte.' },
+  },
+  'a2-11-leo-museum': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    after: 'a2-11-route',
+    doneLine: { text: 'The cargo box is empty. Somebody has the fragment.', es: 'La caja de carga está vacía. Alguien tiene el fragmento.' },
+  },
+  'a2-11-interest': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: 'This city is beautiful… but something is wrong.', es: 'Esta ciudad es hermosa… pero algo anda mal.' },
+  },
+  'a2-11-adrian': {
+    name: 'Adrián',
+    look: { shirt: '#1f3c58', hair: '#3a2a1a', skin: '#c68642', gender: 'male' },
+    after: 'a2-11-detective',
+    doneLine: { text: 'Every route in my city is perfect. Every route.', es: 'Cada ruta de mi ciudad es perfecta. Cada una.' },
+  },
   'a2-receptionist': {
     name: 'The receptionist',
     look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },

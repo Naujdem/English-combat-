@@ -23,6 +23,8 @@ import { A2_MILL_PRACTICE } from './a2Mill'
 import { A2_MILL_QUESTIONS } from './questions-a2-09'
 import { A2_LEO_HOUSE_PRACTICE } from './a2LeoHouse'
 import { A2_LEO_HOUSE_QUESTIONS } from './questions-a2-10'
+import { A2_FUTURE_PRACTICE } from './a2Future'
+import { A2_FUTURE_QUESTIONS } from './questions-a2-11'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -364,6 +366,8 @@ export const QUESTIONS: Question[] = [
   ...A2_MILL_QUESTIONS,
   ...A2_LEO_HOUSE_PRACTICE,
   ...A2_LEO_HOUSE_QUESTIONS,
+  ...A2_FUTURE_PRACTICE,
+  ...A2_FUTURE_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -890,6 +894,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Participios irregulares que hay que aprender: go → gone · see → seen · be → been · find → found · take → taken · write → written.',
       'Experiencias: Have you ever…? · I have never… · Acciones recientes: just (hace muy poco) · already (ya) · yet (todavía no / ya, al final en negativas y preguntas).',
       'Con un momento terminado (yesterday, in 1996, last week) se usa Past Simple: I saw the cart in 1996.',
+    ],
+  },
+  'places-directions': {
+    name: 'Lugares, direcciones y transporte',
+    level: 'A2',
+    lesson: [
+      'Lugar: in · on · under · next to · between … and … · behind · in front of · opposite → The museum is opposite the tower.',
+      'Movimiento: across (de un lado al otro) · through (por dentro) · along (a lo largo) · past (por delante) · into / out of.',
+      'Indicaciones: go straight · turn left / right · take the second street on the left · it is on your right. Pedir: How can I get to…?',
+      'Transporte: take the tram · get on / get off · by tram, by bus (pero on foot) · a ticket to…',
     ],
   },
   future: {

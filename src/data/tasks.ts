@@ -26,7 +26,7 @@ export type NpcTask = {
   heal?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -2668,6 +2668,229 @@ NPC_TASKS['a2-10-close'] = {
     es: 'Próxima parada: la ciudad del mañana.',
     sub: 'A2-10 completada. Ganaste la chaqueta de detective. El reloj marca una señal en 2056.',
     say: 'Next stop: the city of tomorrow.',
+  },
+}
+
+// ── A2-11 — The City of Tomorrow (ciudad de 2056; escena, esbirro y jefe en data/a2Future.ts) ──
+// La carreta River está en el museo del transporte, pero la carga está vacía: Adrián supervisó el traslado y tocó el fragmento.
+// Orden: robot (Lost Luggage) → Leo (lección places-directions + práctica) → Dron de Rutas → persona especial (Route Challenge)
+//        → Leo en el museo (Magic Book) → Leo (Detective: la carreta) → Adrián (reunión) → El tranvía sin rumbo → persona especial (cierre).
+NPC_TASKS['a2-11-luggage'] = {
+  npc: 'a2-11-robot',
+  done: 'a2-11-luggage',
+  activity: 'luggage',
+  steps: [],
+  reward: {
+    text: 'Leo: "There you are! You have your bag… and an old paper map? Come here, I have something to teach you."',
+    es: '¡Ahí estás! Tienes tu mochila… ¿y un mapa de papel viejo? Ven, tengo algo que enseñarte.',
+    sub: 'Habla con Leo en la estación.',
+    say: 'There you are!',
+  },
+}
+
+NPC_TASKS['a2-11-leo'] = {
+  done: 'a2-11-practice',
+  lesson: 'places-directions',
+  activity: 'practice',
+  practice: 'places-directions',
+  practiceIds: ['a2-11-p1', 'a2-11-p2', 'a2-11-p3', 'a2-11-p4', 'a2-11-p5', 'a2-11-p6', 'a2-11-p7'],
+  requires: {
+    id: 'a2-11-luggage',
+    text: 'Leo: "Where is your bag? Ask the robot at Lost and Found."',
+    es: '¿Dónde está tu mochila? Pregúntale al robot de objetos perdidos.',
+    sub: 'El robot está junto al mostrador de la estación.',
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "Now we can find the museum. Wait… that drone at the door is giving strange directions!"',
+    es: 'Ahora podemos encontrar el museo. Espera… ¡ese dron de la puerta está dando indicaciones raras!',
+    sub: 'Un dron guía corrompido bloquea la salida de la estación. Véncelo.',
+    say: 'That drone is giving strange directions!',
+  },
+}
+
+// Route Challenge: con el viejo mapa de la oficial Rosa; el puente se cierra solo y hay que recalcular la ruta
+NPC_TASKS['a2-11-route'] = {
+  npc: 'a2-11-interest',
+  done: 'a2-11-route',
+  activity: 'route',
+  requires: {
+    id: 'a2-11-route-drone',
+    text: '"The drone is blocking the station door! We can\'t go out."',
+    es: '¡El dron bloquea la puerta de la estación! No podemos salir.',
+    sub: 'Vence al Dron de Rutas, a la salida de la estación.',
+  },
+  steps: [],
+  reward: {
+    text: '"We made it! Leo is waiting for us inside the museum."',
+    es: '¡Llegamos! Leo nos espera dentro del museo.',
+    sub: 'Entra al museo del transporte (arriba a la derecha) y habla con Leo.',
+    say: 'We made it!',
+  },
+}
+
+// The Magic Book: el catálogo del museo alterado (leer y tocar / corregir con la preposición). Escudo con 0-1 errores
+NPC_TASKS['a2-11-book'] = {
+  npc: 'a2-11-leo-museum',
+  done: 'a2-11-book',
+  activity: 'book',
+  steps: [],
+  reward: {
+    text: 'Leo: "Room 3… there it is. The River cart."',
+    es: 'Sala 3… ahí está. La carreta River.',
+    sub: 'Habla otra vez con Leo para revisar la carreta.',
+    say: 'There it is. The River cart.',
+  },
+}
+
+// Detective: la carreta (placa, ruedas, carga vacía, registro de traslado firmado por A., Mobility Coordination)
+NPC_TASKS['a2-11-detective'] = {
+  npc: 'a2-11-leo-museum',
+  done: 'a2-11-detective',
+  activity: 'reconstruct',
+  requires: {
+    id: 'a2-11-book',
+    text: 'Leo: "First, let\'s read the museum book. It says where everything is."',
+    es: 'Primero, leamos el libro del museo. Dice dónde está cada cosa.',
+    sub: 'Habla con Leo para abrir el libro.',
+  },
+  reconstruct: {
+    title: 'Detective: The River Cart',
+    intro: { en: 'The museum guide has wrong information about the cart. Look at each clue and choose what is true.', es: 'La guía del museo tiene información equivocada sobre la carreta. Mira cada pista y elige lo que es verdad.' },
+    items: [
+      {
+        source: 'The plaque',
+        clue: { en: 'Gift from the River family. The cart came to this museum from the old city collection.', es: 'Donación de la familia River. La carreta llegó a este museo desde la antigua colección de la ciudad.' },
+        claim: { en: 'The cart has always been in this museum.', es: 'La carreta siempre ha estado en este museo.' },
+        options: ['The cart came to the museum from the city collection.', 'The cart came at the museum from the city collection.', 'The cart came to the museum of the city collection to.'],
+        answer: 0,
+        tip: 'Llegar a un lugar: came to. Desde dónde: from.',
+      },
+      {
+        source: 'The wheels',
+        clue: { en: 'There is purple dust on the wheels and under the cart.', es: 'Hay polvo morado en las ruedas y debajo de la carreta.' },
+        claim: { en: 'The cart is completely clean.', es: 'La carreta está completamente limpia.' },
+        options: ['There is purple dust on the wheels.', 'There is purple dust in on the wheels.', 'There is purple dust at the wheels of.'],
+        answer: 0,
+        tip: 'Sobre una superficie: on the wheels.',
+      },
+      {
+        source: 'The cargo box',
+        clue: { en: 'The cargo box is open. There is nothing in it. Somebody has opened it.', es: 'La caja de carga está abierta. No hay nada adentro. Alguien la ha abierto.' },
+        claim: { en: 'The fragment is still in the cargo box.', es: 'El fragmento sigue en la caja de carga.' },
+        options: ['The fragment is not in the cargo box.', 'The fragment is not on the cargo box inside.', 'The fragment is not at the cargo box in.'],
+        answer: 0,
+        tip: 'Dentro de una caja: in the box.',
+      },
+      {
+        source: 'The transfer record',
+        clue: { en: 'The cart traveled by truck from the old collection to the museum. Signed: A. — Mobility Coordination.', es: 'La carreta viajó en camión desde la antigua colección hasta el museo. Firma: A. — Coordinación de Movilidad.' },
+        claim: { en: 'Nobody moved the cart. It came on foot.', es: 'Nadie movió la carreta. Llegó a pie.' },
+        options: ['Somebody from Mobility Coordination moved the cart by truck.', 'Somebody from Mobility Coordination moved the cart with truck.', 'Somebody from Mobility Coordination moved the cart on the truck by.'],
+        answer: 0,
+        tip: 'Medio de transporte: by truck (sin artículo).',
+      },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "A. — Mobility Coordination… This person opened the cargo box. Let\'s find the Mobility Office."',
+    es: 'A. — Coordinación de Movilidad… Esta persona abrió la caja de carga. Busquemos la oficina de movilidad.',
+    sub: 'La oficina de movilidad está abajo a la derecha, cruzando Sky Street.',
+    say: "Let's find the Mobility Office.",
+  },
+}
+
+// Reunión con Adrián (pedir y dar indicaciones, hablar de viajes). No hay respuestas incorrectas; al terminar aparece el jefe.
+NPC_TASKS['a2-11-meeting'] = {
+  npc: 'a2-11-adrian',
+  done: 'a2-11-meeting',
+  activity: 'debate',
+  requires: {
+    id: 'a2-11-detective',
+    text: '"Welcome to the Mobility Office."',
+    es: 'Bienvenido a la oficina de movilidad.',
+    sub: 'Primero revisa la carreta con Leo en el museo.',
+  },
+  debate: {
+    title: 'The Mobility Office',
+    ask: 'Habla con Adrián: pide información, aclara lo que no entiendas y cuenta cómo llegaste.',
+    turns: [
+      {
+        text: "Hello! I'm Adrián, the mobility coordinator of the city. Are you lost?",
+        es: '¡Hola! Soy Adrián, el coordinador de movilidad de la ciudad. ¿Están perdidos?',
+        options: [
+          { en: 'Hello! Could you help us? We are looking for information about the River cart.', es: '¡Hola! ¿Nos puedes ayudar? Buscamos información sobre la carreta River.', value: 'good' },
+          { en: 'Yes.', es: 'Sí.', value: 'neutral' },
+          { en: 'Give me information.', es: 'Dame información.', value: 'bad' },
+        ],
+      },
+      {
+        text: 'Ah-the-River-cart-I-moved-it-myself-by-truck-from-the-old-collection-to-the-museum.',
+        es: 'Ah, la carreta River. Yo mismo la llevé en camión desde la antigua colección hasta el museo. (lo dijo muy rápido).',
+        options: [
+          { en: 'Sorry, could you say that again more slowly?', es: 'Perdón, ¿puedes repetirlo más despacio?', value: 'good', reply: { text: 'Of course. I moved the cart myself, by truck, from the old collection to the museum.', es: 'Claro. Yo mismo llevé la carreta, en camión, desde la antigua colección hasta el museo.' } },
+          { en: 'What?', es: '¿Qué?', value: 'neutral', reply: { text: 'I moved it. Myself.', es: 'Yo la llevé. Yo mismo.' } },
+          { en: 'OK.', es: 'Vale.', value: 'bad', reply: { text: 'Did you understand me?', es: '¿Me entendiste?' } },
+        ],
+      },
+      {
+        text: 'How did you get here from the station?',
+        es: '¿Cómo llegaron aquí desde la estación?',
+        options: [
+          { en: 'We took the tram, but the bridge was closed, so we walked through the tunnel.', es: 'Tomamos el tranvía, pero el puente estaba cerrado, así que atravesamos el túnel.', value: 'good' },
+          { en: 'On foot.', es: 'A pie.', value: 'neutral' },
+          { en: 'We came across the tunnel with foot.', es: '(Frase mal dicha).', value: 'bad' },
+        ],
+      },
+      {
+        text: 'In my city, every route is perfect. I decide all the routes now. Do you like my city?',
+        es: 'En mi ciudad, cada ruta es perfecta. Ahora yo decido todas las rutas. ¿Te gusta mi ciudad?',
+        options: [
+          { en: 'It is amazing, but some routes are changing by themselves. Why?', es: 'Es increíble, pero algunas rutas cambian solas. ¿Por qué?', value: 'good' },
+          { en: 'It is OK.', es: 'Está bien.', value: 'neutral' },
+          { en: 'No.', es: 'No.', value: 'bad' },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: 'By themselves? No… that is impossible. Every route is mine. Excuse me, I have work to do.', es: '¿Solas? No… eso es imposible. Cada ruta es mía. Disculpen, tengo trabajo.' },
+      mid: { text: 'Every route is perfect. Excuse me, I have work to do.', es: 'Cada ruta es perfecta. Disculpen, tengo trabajo.' },
+      low: { text: '… Excuse me. I have work to do.', es: '… Disculpen. Tengo trabajo.' },
+    },
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "Did you see his eyes? They were purple for a second… Look out! A tram with no driver!"',
+    es: '¿Viste sus ojos? Por un segundo fueron morados… ¡Cuidado! ¡Un tranvía sin conductor!',
+    sub: 'El tranvía sin rumbo apareció en Sky Street.',
+    say: 'Look out!',
+  },
+}
+
+// Cierre con la persona especial: todas las rutas se cierran. Adrián, de espaldas: "Nobody leaves the city." Abre A2-12.
+NPC_TASKS['a2-11-close'] = {
+  npc: 'a2-11-interest',
+  done: 'a2-11-close',
+  outfit: 'pase-2056',
+  requires: {
+    id: 'a2-11-runaway-tram',
+    text: '"The tram! It is going to crash! Stop it!"',
+    es: '¡El tranvía! ¡Va a chocar! ¡Detenlo!',
+    sub: 'Vence al tranvía sin rumbo en Sky Street.',
+  },
+  steps: [
+    { text: 'The tram has stopped. Are you OK?', es: 'El tranvía se ha detenido. ¿Estás bien?' },
+    { text: 'You used the city like a local: next to, between, across, through, along… and you took the tram.', es: 'Usaste la ciudad como alguien de aquí: next to, between, across, through, along… y tomaste el tranvía.' },
+    { text: 'Look at the screens! Every screen in the street says the same thing: ALL ROUTES CLOSED.', es: '¡Mira las pantallas! Todas las pantallas de la calle dicen lo mismo: TODAS LAS RUTAS CERRADAS.' },
+    { text: 'And there… at the door of the Mobility Office. It is Adrián. He is not looking at us.', es: 'Y allí… en la puerta de la oficina de movilidad. Es Adrián. No nos está mirando.' },
+    { text: 'Adrián: "Nobody leaves the city."', es: 'Adrián: "Nadie sale de la ciudad."' },
+  ],
+  reward: {
+    text: '"The fragment… Adrián has it. I am sure."',
+    es: 'El fragmento… lo tiene Adrián. No hay duda.',
+    sub: 'A2-11 completada. Ganaste la chaqueta con pase de transporte (2056). Todas las rutas de la ciudad están cerradas.',
+    say: 'Adrián has it.',
   },
 }
 
