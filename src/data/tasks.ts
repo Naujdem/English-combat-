@@ -26,7 +26,7 @@ export type NpcTask = {
   heal?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -47,7 +47,7 @@ export type NpcTask = {
   /** Para activity 'command' (Command Puzzle, A2-09 Wake the Mill): el jugador da la orden (verbo + objeto). Con 0-1 errores, escudo */
   /** Para activity 'memory' (The Memory Chest, A2-10): parejas que se emparejan volteando cartas */
   memory?: { title: string; intro: { en: string; es: string }; pairs: MemoryPair[] }
-  command?: { title: string; intro: { en: string; es: string }; verbs: string[]; objects: CommandObject[]; steps: CommandStep[] }
+  command?: { title: string; intro: { en: string; es: string }; verbs: string[]; objects: CommandObject[]; steps: CommandStep[]; scene?: 'mill' | 'control'; finish?: { en: string; es: string; banner: string } }
   /** Para activity 'reconstruct' (Reconstruct the Story): contrastar pistas con una nota corrompida y elegir la frase verdadera */
   reconstruct?: { title: string; intro: { en: string; es: string }; items: ReconstructItem[] }
   /** Para activity 'debate' (Dialogue Under Pressure, versión de debate): turnos con respuesta buena / neutral / mala y tres desenlaces */
@@ -2891,6 +2891,170 @@ NPC_TASKS['a2-11-close'] = {
     es: 'El fragmento… lo tiene Adrián. No hay duda.',
     sub: 'A2-11 completada. Ganaste la chaqueta con pase de transporte (2056). Todas las rutas de la ciudad están cerradas.',
     say: 'Adrián has it.',
+  },
+}
+
+// ── A2-12 — Out of Control (centro de control de 2056; escena, esbirro y jefe en data/a2Control.ts) ──
+// Adrián, corrompido por el fragmento de la carga de la carreta, cerró todas las rutas. Al vencerlo entrega el fragmento y queda como aliado.
+// Orden: Leo (lección future-plans + práctica) → El Anunciador → persona especial (Future Planner) → Leo (el registro del sistema)
+//        → robot de control (Command Puzzle) → Adrián (jefe) → Leo (cierre: el reloj señala el hospital).
+NPC_TASKS['a2-12-leo'] = {
+  done: 'a2-12-practice',
+  lesson: 'future-plans',
+  activity: 'practice',
+  practice: 'future-plans',
+  practiceIds: ['a2-12-p1', 'a2-12-p2', 'a2-12-p3', 'a2-12-p4', 'a2-12-p5', 'a2-12-p6', 'a2-12-p7', 'a2-12-p8'],
+  steps: [],
+  reward: {
+    text: 'Leo: "Good. Now let\'s go to the platforms… Wait. Do you hear that announcement? Something is wrong with it."',
+    es: 'Bien. Ahora vamos a los andenes… Espera. ¿Oyes ese anuncio? Algo le pasa.',
+    sub: 'El Anunciador corrompido bloquea la salida de la sala de boletos. Véncelo.',
+    say: 'Something is wrong with it.',
+  },
+}
+
+// Future Planner: los planes de los viajeros en el tablero (BOOKED → presente continuo · PLAN → going to · CANCELLED → will). Escudo con 0-1 errores
+NPC_TASKS['a2-12-planner'] = {
+  npc: 'a2-12-interest',
+  done: 'a2-12-planner',
+  activity: 'futureplan',
+  requires: {
+    id: 'a2-12-announcer',
+    text: '"The announcer is blocking the door! We can\'t get to the platforms."',
+    es: '¡El anunciador bloquea la puerta! No podemos llegar a los andenes.',
+    sub: 'Vence al Anunciador, a la salida de la sala de boletos.',
+  },
+  steps: [],
+  reward: {
+    text: '"Everybody has a plan now. But the trains still aren\'t moving. Leo is reading something in the hall."',
+    es: 'Ahora todos tienen un plan. Pero los trenes siguen sin moverse. Leo está leyendo algo en el pasillo.',
+    sub: 'Habla con Leo en el pasillo.',
+    say: 'Everybody has a plan now.',
+  },
+}
+
+// Lectura: el registro del sistema (Reconstruct). Qué hizo y qué va a hacer Adrián.
+NPC_TASKS['a2-12-log'] = {
+  npc: 'a2-12-leo-hall',
+  done: 'a2-12-log',
+  activity: 'reconstruct',
+  requires: {
+    id: 'a2-12-planner',
+    text: 'Leo: "First, help the travelers on the platforms. They are very confused."',
+    es: 'Primero ayuda a los viajeros de los andenes. Están muy confundidos.',
+    sub: 'La persona especial está en los andenes (abajo).',
+  },
+  reconstruct: {
+    title: 'The Control Log',
+    intro: { en: 'This is the system log of the Control Room. The screen shows wrong information. Read each entry and choose what is true.', es: 'Este es el registro del sistema de la sala de control. La pantalla muestra información equivocada. Lee cada entrada y elige lo que es verdad.' },
+    items: [
+      {
+        source: 'Log · 08:00',
+        clue: { en: 'Fragment moved from the River cart to the Control Room. — A.', es: 'Fragmento trasladado de la carreta River a la sala de control. — A.' },
+        claim: { en: 'The fragment is still in the museum.', es: 'El fragmento sigue en el museo.' },
+        options: ['The fragment is in the Control Room now.', 'The fragment are in the Control Room now.', 'The fragment is on the Control Room now in.'],
+        answer: 0,
+        tip: 'Mira la entrada: se trasladó a la sala de control (is in the Control Room).',
+      },
+      {
+        source: "Adrián's calendar",
+        clue: { en: 'Today, 15:00: meeting with the city council (confirmed).', es: 'Hoy, 15:00: reunión con el concejo de la ciudad (confirmada).' },
+        claim: { en: 'Adrián has no plans today.', es: 'Adrián no tiene planes hoy.' },
+        options: ['Adrián is meeting the city council at three.', 'Adrián meets going to the city council at three.', 'Adrián will meeting the city council at three.'],
+        answer: 0,
+        tip: 'Una reunión confirmada es un plan acordado: presente continuo (is meeting).',
+      },
+      {
+        source: 'A note on the desk',
+        clue: { en: 'I am going to close every route. Nobody leaves my city.', es: 'Voy a cerrar cada ruta. Nadie sale de mi ciudad.' },
+        claim: { en: 'Adrián wants to open the routes.', es: 'Adrián quiere abrir las rutas.' },
+        options: ['Adrián is going to close every route.', 'Adrián going to close every route.', 'Adrián is going close every route.'],
+        answer: 0,
+        tip: 'Su intención: is going to + verbo.',
+      },
+      {
+        source: 'System alert',
+        clue: { en: 'Train 4 is on its way to Platform 2. Workers are on the tracks.', es: 'El tren 4 va camino del andén 2. Hay obreros en la vía.' },
+        claim: { en: 'Platform 2 is safe.', es: 'El andén 2 es seguro.' },
+        options: ['Train 4 is going to arrive at Platform 2.', 'Train 4 will arriving at Platform 2.', 'Train 4 is go to arrive at Platform 2.'],
+        answer: 0,
+        tip: 'Ya va en camino (evidencia): is going to arrive.',
+      },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "Workers on the tracks! We need to stop that train. The Control Bot can give orders to the system. Hurry!"',
+    es: '¡Obreros en la vía! Tenemos que detener ese tren. El robot de control puede dar órdenes al sistema. ¡Rápido!',
+    sub: 'Habla con el robot de control, junto a la puerta de la sala de control.',
+    say: 'Hurry!',
+  },
+}
+
+// Command Puzzle (reutilizado de A2-09): órdenes al transporte. Los errores no quitan vida; escudo con 0-1 errores. Al terminar aparece Adrián.
+NPC_TASKS['a2-12-command'] = {
+  npc: 'a2-12-bot',
+  done: 'a2-12-command',
+  activity: 'command',
+  requires: {
+    id: 'a2-12-log',
+    text: 'Control Bot: "Access denied. Talk to your friend first."',
+    es: 'Acceso denegado. Habla primero con tu amigo.',
+    sub: 'Leo está en el pasillo.',
+  },
+  command: {
+    title: 'The Control Room',
+    scene: 'control',
+    intro: { en: 'Give orders to the system. Choose a verb, then touch the thing.', es: 'Da órdenes al sistema. Elige un verbo y luego toca la cosa.' },
+    verbs: ['unlock', 'stop', 'cancel', 'send', 'open', 'close', 'start'],
+    objects: [
+      { id: 'doors', en: 'doors', es: 'puertas' },
+      { id: 'tram', en: 'tram', es: 'tranvía' },
+      { id: 'route', en: 'route', es: 'ruta' },
+      { id: 'train', en: 'train', es: 'tren' },
+      { id: 'gates', en: 'gates', es: 'compuertas del andén' },
+    ],
+    steps: [
+      { problem: { en: 'The doors of the Control Room are locked.', es: 'Las puertas de la sala de control están cerradas con llave.' }, verb: 'unlock', object: 'doors', done: { en: 'Access granted. The doors are open.', es: 'Acceso permitido. Las puertas están abiertas.' }, tip: 'Están cerradas con llave (locked): hay que quitar el seguro → unlock.', fails: { open: { en: 'The doors are locked. You cannot open them yet.', es: 'Las puertas tienen seguro. Todavía no puedes abrirlas.' } } },
+      { problem: { en: 'Tram 7 is going too fast to the closed bridge!', es: '¡El tranvía 7 va demasiado rápido hacia el puente cerrado!' }, verb: 'stop', object: 'tram', done: { en: 'Tram 7 has stopped. Everybody is safe.', es: 'El tranvía 7 se ha detenido. Todos están a salvo.' }, tip: 'Va demasiado rápido: hay que detenerlo → stop.' },
+      { problem: { en: 'Route B goes to the closed bridge. It is dangerous.', es: 'La ruta B va al puente cerrado. Es peligroso.' }, verb: 'cancel', object: 'route', done: { en: 'Route B is cancelled.', es: 'La ruta B está cancelada.' }, tip: 'Una ruta peligrosa se anula: cancel.' },
+      { problem: { en: 'The system wants to send Train 4 to Platform 2, but there are workers on the tracks. Warn the system!', es: 'El sistema quiere enviar el tren 4 al andén 2, pero hay obreros en la vía. ¡Avisa al sistema!' }, verb: 'send', negative: true, object: 'train', done: { en: 'Train 4 is waiting. The workers are safe.', es: 'El tren 4 está esperando. Los obreros están a salvo.' }, tip: "Es una advertencia: usa DON'T + send.", fails: { send: { en: "No! Never say 'send' here. There are workers on the tracks!", es: '¡No! Aquí nunca digas "envía". ¡Hay obreros en la vía!' }, stop: { en: 'The train is not moving yet. Tell the system what NOT to do.', es: 'El tren todavía no se mueve. Dile al sistema qué NO hacer.' } } },
+      { problem: { en: 'The new routes are safe. The passengers are waiting behind the gates.', es: 'Las nuevas rutas son seguras. Los pasajeros esperan detrás de las compuertas.' }, verb: 'open', object: 'gates', done: { en: 'The gates are open. The passengers are getting on the trains.', es: 'Las compuertas están abiertas. Los pasajeros se suben a los trenes.' }, tip: 'Para que pasen: open.' },
+    ],
+    finish: { en: 'System restored. Thank you! … Warning: somebody is entering the Control Room.', es: 'Sistema restaurado. ¡Gracias! … Aviso: alguien está entrando a la sala de control.', banner: '¡Sistema restaurado!' },
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "The routes are opening… but look! Adrián is in the Control Room. And his eyes are purple."',
+    es: 'Las rutas se están abriendo… ¡pero mira! Adrián está en la sala de control. Y sus ojos son morados.',
+    sub: 'Adrián apareció en la sala de control (arriba a la derecha). Véncelo para recuperar el fragmento.',
+    say: 'His eyes are purple.',
+  },
+}
+
+// Cierre con Leo tras vencer a Adrián (el fragmento ya lo entregó el jefe). El reloj señala el hospital (A2-13). Sin voces ni spoilers.
+NPC_TASKS['a2-12-close'] = {
+  npc: 'a2-12-leo-hall',
+  done: 'a2-12-close',
+  outfit: 'uniforme-control',
+  requires: {
+    id: 'a2-12-adrian',
+    text: 'Leo: "Adrián still has the fragment. Go to the Control Room!"',
+    es: 'Adrián todavía tiene el fragmento. ¡Ve a la sala de control!',
+    sub: 'Vence a Adrián en la sala de control.',
+  },
+  steps: [
+    { text: 'Listen! The trains are running again. Adrián is opening every route.', es: '¡Escucha! Los trenes funcionan otra vez. Adrián está abriendo cada ruta.' },
+    { text: "You talked about plans like an expert: I'm leaving at ten, we're going to visit, I'll take the next one… and you booked tickets.", es: 'Hablaste de planes como un experto: I\'m leaving at ten, we\'re going to visit, I\'ll take the next one… y reservaste boletos.' },
+    { text: 'And the fragment from the cart is with you now. Look at your clock. It is shining.', es: 'Y el fragmento de la carreta ya está contigo. Mira tu reloj. Está brillando.' },
+    { text: 'The clock is showing a place… in the present. It is the hospital. The place where everything started.', es: 'El reloj muestra un lugar… en el presente. Es el hospital. El lugar donde empezó todo.' },
+    { text: "We're going back. I don't know what is waiting for us there… but we're going together.", es: 'Vamos a volver. No sé qué nos espera allí… pero vamos juntos.' },
+  ],
+  reward: {
+    text: 'Leo: "We\'re going back."',
+    es: 'Vamos a volver.',
+    sub: 'A2-12 completada. Recuperaste el fragmento de la carreta y ganaste el uniforme del centro de control (2056). Adrián ahora es tu aliado. El reloj señala el hospital.',
+    say: "We're going back.",
   },
 }
 

@@ -42,6 +42,8 @@ export function CommandPuzzle({
   verbs,
   objects,
   steps,
+  scene = 'mill',
+  finish,
   onClose,
 }: {
   name: string
@@ -51,6 +53,10 @@ export function CommandPuzzle({
   verbs: string[]
   objects: CommandObject[]
   steps: CommandStep[]
+  /** Dibujo: el molino (A2-09) o el centro de control de movilidad (A2-12) */
+  scene?: 'mill' | 'control'
+  /** Frase final del personaje y texto del aviso al terminar (por defecto, los del molino) */
+  finish?: { en: string; es: string; banner: string }
   onClose: (done: boolean, perfect: boolean) => void
 }) {
   const [i, setI] = useState(0)
@@ -103,8 +109,9 @@ export function CommandPuzzle({
     setReact({ ...reaction, ok: false, said })
   }
 
+  const end = finish ?? { en: 'The mill is awake! Thank you!', es: '¡El molino despertó! ¡Gracias!', banner: '¡Molino despierto!' }
   const line = done
-    ? { en: 'The mill is awake! Thank you!', es: '¡El molino despertó! ¡Gracias!' }
+    ? end
     : i === 0 && !react
       ? { en: `${intro.en} ${step.problem.en}`, es: `${intro.es} ${step.problem.es}` }
       : step.problem
@@ -132,7 +139,7 @@ export function CommandPuzzle({
       <p key={line.en} className="anim-fade-in mt-2 text-[17px] leading-relaxed"><Tappable text={line.en} /></p>
       {showEs && <p className="mt-1 text-sm text-paper/60">{line.es}</p>}
 
-      {millArt(i)}
+      {scene === 'control' ? controlArt(i) : millArt(i)}
 
       {react && react.said && (
         <div key={`${i}-${total}`} className={`anim-fade-in mt-2 rounded-lg px-3 py-2 text-sm ${react.ok ? 'bg-hp/15 text-hp' : 'bg-danger/15 text-[#f3b0b0]'}`}>
@@ -178,7 +185,7 @@ export function CommandPuzzle({
           </div>
         </>
       )}
-      {done && <p className="anim-fade-in mt-2 rounded-lg bg-hp/15 px-3 py-2 text-sm text-hp">¡Molino despierto! Diste todas las órdenes{total <= 1 ? ' casi sin errores: ganas un escudo.' : '.'}</p>}
+      {done && <p className="anim-fade-in mt-2 rounded-lg bg-hp/15 px-3 py-2 text-sm text-hp">{end.banner} Diste todas las órdenes{total <= 1 ? ' casi sin errores: ganas un escudo.' : '.'}</p>}
 
       <div className="mt-4 flex items-center justify-between gap-2">
         <button className={btnGhost} onClick={() => setShowEs((v) => !v)}>{showEs ? 'Ocultar' : 'Traducir'}</button>
@@ -281,4 +288,86 @@ export function CommandPuzzle({
       </svg>
     )
   }
+
+  /** Centro de control (A2-12): 0 puertas · 1 tranvía · 2 ruta B · 3 tren al andén 2 (advertencia) · 4 compuertas del andén */
+  function controlArt(k: number) {
+    const unlocked = solved(0)
+    const tramStopped = solved(1)
+    const routeCut = solved(2)
+    const trainHeld = solved(3)
+    const gatesOpen = solved(4)
+    const SCREEN = '#12263a'
+    const CYAN = '#7fe0ff'
+    return (
+      <svg viewBox="0 0 320 220" className="mt-3 w-full rounded-xl border-2 border-line" role="group" aria-label={`El centro de control: ${Math.min(k, steps.length)} de ${steps.length} órdenes`}>
+        <rect width="320" height="220" fill="#2d3a48" />
+        <rect y="168" width="320" height="52" fill="#5a6672" />
+
+        {/* pantalla grande con el mapa de rutas */}
+        <rect x="70" y="10" width="180" height="104" rx="6" fill={SCREEN} stroke="#2f7fbf" strokeWidth="2" />
+        <text x="160" y="24" textAnchor="middle" fontSize="9" fontWeight="700" fill={gatesOpen ? '#7ee08a' : '#ff8a8a'}>{gatesOpen ? 'ROUTES OPEN' : 'ALL ROUTES CLOSED'}</text>
+        {/* río y puente cerrado */}
+        <rect x="200" y="30" width="14" height="78" fill="#2f5f8f" />
+        <rect x="196" y="62" width="22" height="8" fill="#ff8a8a" />
+        <text x="207" y="58" textAnchor="middle" fontSize="7" fill="#ff8a8a">X</text>
+        {/* ruta B (hacia el puente cerrado) */}
+        <g {...hit('route')}>
+          <rect x="84" y="56" width="116" height="22" fill="transparent" />
+          <line x1="90" y1="66" x2="198" y2="66" stroke={routeCut ? '#5a6672' : '#ff8a8a'} strokeWidth="3" strokeDasharray={routeCut ? '4 4' : undefined} />
+          <text x="92" y="60" fontSize="8" fontWeight="700" fill={routeCut ? '#7a8692' : '#ff8a8a'}>ROUTE B</text>
+        </g>
+        {/* tranvía en la pantalla, corriendo hacia el puente */}
+        <g {...hit('tram')}>
+          <rect x="84" y="84" width="112" height="22" fill="transparent" />
+          <line x1="90" y1="96" x2="198" y2="96" stroke={CYAN} strokeOpacity="0.35" strokeWidth="2" />
+          <g>
+            <rect x={tramStopped ? 120 : 150} y="90" width="22" height="12" rx="3" fill="#2f8f9d" stroke={CYAN} className={k === 2 ? 'anim-pop' : ''} />
+            {!tramStopped && <animateTransform attributeName="transform" type="translate" values="-30 0; 0 0; -30 0" dur="1.6s" repeatCount="indefinite" />}
+          </g>
+          {!tramStopped && <text x="104" y="88" fontSize="7" fill="#ff8a8a">TRAM 7 · TOO FAST</text>}
+        </g>
+
+        {/* puertas de la sala de control */}
+        <g {...hit('doors')}>
+          <rect x="10" y="40" width="48" height="128" fill="transparent" />
+          <rect x="12" y="42" width="22" height="124" fill="#9aa6b2" stroke="#5a6672" transform={unlocked ? 'translate(-8 0)' : undefined} />
+          <rect x="36" y="42" width="22" height="124" fill="#9aa6b2" stroke="#5a6672" transform={unlocked ? 'translate(8 0)' : undefined} />
+          <circle cx="35" cy="104" r="7" fill={unlocked ? '#7ee08a' : '#ff8a8a'} className={k === 1 ? 'anim-pop' : ''} />
+          <text x="35" y="107" textAnchor="middle" fontSize="7" fontWeight="700" fill="#12263a">{unlocked ? 'ON' : 'OFF'}</text>
+        </g>
+
+        {/* andén 2: tren y obreros en la vía */}
+        <g {...hit('train')}>
+          <rect x="70" y="122" width="180" height="46" fill="transparent" />
+          <text x="74" y="132" fontSize="8" fontWeight="700" fill="#d9f3ff">PLATFORM 2</text>
+          <line x1="70" y1="160" x2="250" y2="160" stroke="#c9d6e2" strokeWidth="2" />
+          <g>
+            <rect x={trainHeld ? 74 : 90} y="138" width="54" height="20" rx="4" fill="#d4743a" stroke="#8a4a20" />
+            {!trainHeld && k === 3 && <animateTransform attributeName="transform" type="translate" values="0 0; 10 0; 0 0" dur="1.2s" repeatCount="indefinite" />}
+          </g>
+          {[190, 210].map((x) => (
+            <g key={x}>
+              <circle cx={x} cy="142" r="4" fill="#e0ac69" />
+              <rect x={x - 4} y="146" width="8" height="12" fill="#f2c230" />
+            </g>
+          ))}
+          {k === 3 && !trainHeld && <text x="200" y="136" textAnchor="middle" fontSize="8" fontWeight="700" fill="#ff8a8a">WORKERS!</text>}
+        </g>
+
+        {/* compuertas del andén con pasajeros esperando */}
+        <g {...hit('gates')}>
+          <rect x="262" y="120" width="52" height="96" fill="transparent" />
+          {[268, 290].map((x) => (
+            <rect key={x} x={x} y={gatesOpen ? 120 : 150} width="18" height="18" fill="#9aa6b2" stroke="#5a6672" />
+          ))}
+          {[272, 284, 298].map((x, n) => (
+            <circle key={x} cx={x} cy={gatesOpen ? 176 - n * 2 : 196} r="5" fill={['#e0ac69', '#c68642', '#f1c27d'][n]} className={gatesOpen ? 'anim-bob' : ''} />
+          ))}
+        </g>
+
+        <text x="10" y="214" fontSize="9" fill="#d9f3ff">{Math.min(k, steps.length)}/{steps.length}</text>
+      </svg>
+    )
+  }
+
 }

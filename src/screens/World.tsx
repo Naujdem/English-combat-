@@ -31,6 +31,7 @@ import { A2_CAR_ID, A2_08_CLOSE, isA2CarUnlocked } from '../data/a2Car'
 import { A2_MILL_ID, A2_09_CLOSE, isA2MillUnlocked } from '../data/a2Mill'
 import { A2_LEO_HOUSE_ID, A2_10_CLOSE, isA2LeoHouseUnlocked } from '../data/a2LeoHouse'
 import { A2_FUTURE_ID, A2_11_CLOSE, isA2FutureUnlocked } from '../data/a2Future'
+import { A2_CONTROL_ID, A2_12_CLOSE, isA2ControlUnlocked } from '../data/a2Control'
 import { useDesktop } from '../game/device'
 import { Achievements } from '../components/Achievements'
 import { ACHIEVEMENTS, achieved } from '../data/collection'
@@ -55,12 +56,17 @@ const A2_NODES: A2Node[] = [
   { id: 'mill', sceneId: A2_MILL_ID, name: 'Molino', mission: 'A2-09', x: 95, y: 175, open: isA2MillUnlocked, done: (s) => s.opened.includes(A2_09_CLOSE), locked: 'Se abre al terminar en el camino.' },
   { id: 'leo-house', sceneId: A2_LEO_HOUSE_ID, name: 'Casa de Leo', mission: 'A2-10', x: 290, y: 290, open: isA2LeoHouseUnlocked, done: (s) => s.opened.includes(A2_10_CLOSE), locked: 'Se abre al terminar en el molino.' },
   { id: 'city-2056', sceneId: A2_FUTURE_ID, name: 'Ciudad 2056', mission: 'A2-11', x: 40, y: 205, open: isA2FutureUnlocked, done: (s) => s.opened.includes(A2_11_CLOSE), locked: 'Se abre al terminar en la casa de Leo.' },
+  { id: 'control-2056', sceneId: A2_CONTROL_ID, name: 'Centro de control', mission: 'A2-12', x: 150, y: 345, open: isA2ControlUnlocked, done: (s) => s.opened.includes(A2_12_CLOSE), locked: 'Se abre al terminar en la ciudad de 2056.' },
 ]
 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
-    isA2FutureUnlocked(state) && !state.opened.includes(A2_11_CLOSE)
+    state.opened.includes(A2_12_CLOSE)
+      ? 'A2-12 completada. El reloj señala el hospital, en el presente. A2-13 · The Missing Voice llegará pronto.'
+      : isA2ControlUnlocked(state) && !state.opened.includes(A2_12_CLOSE)
+      ? 'A2-12 · Out of Control: Adrián cerró todas las rutas de 2056. Leo te espera en la sala de boletos del centro de control.'
+      : isA2FutureUnlocked(state) && !state.opened.includes(A2_11_CLOSE)
       ? 'A2-11 · The City of Tomorrow: sigues la señal del reloj hasta la ciudad de 2056. La carreta River debería estar en el museo del transporte.'
       : isA2LeoHouseUnlocked(state) && !state.opened.includes(A2_10_CLOSE)
       ? 'A2-10 · Echoes Across Time: de vuelta en el presente, Leo te espera en su casa para juntar todas las pistas.'
