@@ -10,25 +10,29 @@ import { btn, btnGhost, btnPrimary, Panel } from './ui'
 type Line = { text: string; es: string }
 
 /** Una opción del jugador: su valor (buena / neutral / mala) y la reacción del personaje */
-export type DebateOption = { en: string; es: string; value: 'good' | 'neutral' | 'bad'; reply: Line }
+export type DebateOption = { en: string; es: string; value: 'good' | 'neutral' | 'bad'; reply?: Line }
 export type DebateTurn = Line & { options: DebateOption[] }
 /** Desenlaces según las respuestas buenas: high (3 o más), mid (1-2), low (0) */
 export type DebateEndings = { high: Line; mid: Line; low: Line }
+export type DebateTier = keyof DebateEndings
 
 /**
  * Dialogue Under Pressure (versión de debate, A2-06): turnos con tres respuestas (buena, neutral, mala).
  * No hay respuesta incorrecta: el personaje reacciona distinto, se cuentan las buenas y al final hay un desenlace.
  * Siempre se termina (no bloquea la misión).
+ * reply y endings son opcionales (A2-07): sin reply se sigue al siguiente turno; sin endings se cierra tras el último.
+ * onClose recibe el desenlace (high / mid / low) para que la misión pueda guardarlo.
  */
-export function DebateTalk({ name, look, title, turns, endings, onClose }: { name: string; look: SpriteLook; title: string; turns: DebateTurn[]; endings: DebateEndings; onClose: (done: boolean) => void }) {
+export function DebateTalk({ name, look, title, turns, endings, ask, onClose }: { name: string; look: SpriteLook; title: string; turns: DebateTurn[]; endings?: DebateEndings; ask?: string; onClose: (done: boolean, tier?: DebateTier) => void }) {
   const [i, setI] = useState(0)
   const [picked, setPicked] = useState<DebateOption | null>(null)
   const [good, setGood] = useState(0)
   const [showEs, setShowEs] = useState(false)
   const end = i >= turns.length
-  const ending = good >= 3 ? endings.high : good >= 1 ? endings.mid : endings.low
+  const tier: DebateTier = good >= 3 ? 'high' : good >= 1 ? 'mid' : 'low'
   const turn = turns[i]
-  const line: Line = end ? ending : picked ? picked.reply : turn
+  const line: Line = end && endings ? endings[tier] : (picked?.reply ?? turn)
+  const last = i === turns.length - 1
   const tone = picked?.value === 'good' ? 'bg-hp/15 text-hp' : picked?.value === 'bad' ? 'bg-danger/15 text-[#f3b0b0]' : 'bg-paper/10 text-paper/80'
 
   function pick(o: DebateOption) {
@@ -37,6 +41,7 @@ export function DebateTalk({ name, look, title, turns, endings, onClose }: { nam
   }
 
   function next() {
+    if (last && !endings) return onClose(true, tier)
     setPicked(null)
     setI(i + 1)
   }
@@ -64,7 +69,7 @@ export function DebateTalk({ name, look, title, turns, endings, onClose }: { nam
 
       {!end && !picked && (
         <>
-          <p className="mt-3 text-sm text-paper/75">¿Qué le respondes? Defiende la tradición.</p>
+          <p className="mt-3 text-sm text-paper/75">¿Qué le respondes? {ask ?? 'Defiende la tradición.'}</p>
           <div className="mt-2 grid gap-2">
             {mixed(turn.options, turn.text).map(([o, k]) => (
               <button key={k} className={`${btn} text-left text-base`} onClick={() => pick(o)}>
@@ -80,11 +85,11 @@ export function DebateTalk({ name, look, title, turns, endings, onClose }: { nam
         <button className={btnGhost} onClick={() => setShowEs((v) => !v)}>{showEs ? 'Ocultar' : 'Traducir'}</button>
         {picked && (
           <button className={btnPrimary} onClick={next} autoFocus>
-            Siguiente
+            {last && !endings ? 'Listo' : 'Siguiente'}
           </button>
         )}
         {end && (
-          <button className={btnPrimary} onClick={() => onClose(true)} autoFocus>
+          <button className={btnPrimary} onClick={() => onClose(true, tier)} autoFocus>
             Listo
           </button>
         )}

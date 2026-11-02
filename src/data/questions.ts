@@ -15,6 +15,8 @@ import { A2_WORKSHOP_QUESTIONS } from './questions-a2-workshop'
 import { A2_LIBRARY_QUESTIONS } from './questions-a2-library'
 import { A2_FARM_PAST_QUESTIONS } from './a2FarmPast'
 import { A2_FARM_QUESTIONS } from './questions-a2-farm'
+import { A2_RACE_PRACTICE } from './a2Race'
+import { A2_RACE_QUESTIONS } from './questions-a2-race'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -348,6 +350,8 @@ export const QUESTIONS: Question[] = [
   ...A2_LIBRARY_QUESTIONS,
   ...A2_FARM_PAST_QUESTIONS,
   ...A2_FARM_QUESTIONS,
+  ...A2_RACE_PRACTICE,
+  ...A2_RACE_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -834,6 +838,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Irregulares: become → became · lose → lost · keep → kept · sell → sold.',
       "Negativa: didn't + verbo base → The grandfather didn't sell the horses (nunca \"didn't sold\" ni \"selled\").",
       'Comparar: adjetivo corto + -er + than (kinder than) · adjetivo largo: more + adjetivo + than (more expensive than).',
+    ],
+  },
+  'superlatives-comparatives-race': {
+    name: 'Comparativos, superlativos y presente continuo',
+    level: 'A2',
+    lesson: [
+      'Comparar dos: adjetivo corto + -er + than (faster than) · adjetivo largo: more + adjetivo + than · good → better than.',
+      'El mejor de todos: the + adjetivo + -est (the fastest) · the most + adjetivo largo (the most dangerous) · good → the best.',
+      'Lo que pasa ahora mismo: am / is / are + verbo con -ing → The horses are running. She is jumping.',
+      'Adverbios: carefully → more carefully than (nunca "more careful" para decir cómo se hace algo).',
     ],
   },
   future: {

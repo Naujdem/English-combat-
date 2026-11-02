@@ -179,13 +179,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   )
 
   /** Termina la tarea de un personaje: si se completó, se guarda su `done` y se muestra su recompensa */
-  function finishTask(id: string, done: boolean) {
+  function finishTask(id: string, done: boolean, extra: string[] = []) {
     const t = NPC_TASKS[id]
     setTask(null)
     if (!done || !t) return
     update((s) => ({
       ...s,
-      opened: s.opened.includes(t.done) ? s.opened : [...s.opened, t.done],
+      opened: [...s.opened, ...[t.done, ...extra].filter((x, k, all) => !s.opened.includes(x) && all.indexOf(x) === k)],
       items: t.shield ? { ...s.items, shield: Math.min(2, s.items.shield + 1) } : s.items,
       outfits: t.outfit && !s.outfits.includes(t.outfit) ? [...s.outfits, t.outfit] : s.outfits,
       hp: t.heal ? s.maxHp : s.hp,
@@ -1027,14 +1027,29 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'tour') return <TourPlan onClose={finish} />
             if (t.activity === 'plan') return <LessonPlan onClose={finish} />
             if (t.activity === 'timeline') return <Timeline onClose={finish} />
-            if (t.activity === 'sequence' && t.sequence) return <SequenceMaster title={t.sequence.title} intro={t.sequence.intro} steps={t.sequence.steps} hint={t.sequence.hint} onClose={finish} />
+            if (t.activity === 'sequence' && t.sequence) {
+              const r = t.sequence.race
+              const race = r && { runners: r.runners, legs: r.legs, start: r.startBy?.find((b) => state.opened.includes(b.flag))?.position ?? r.start }
+              return <SequenceMaster title={t.sequence.title} intro={t.sequence.intro} steps={t.sequence.steps} hint={t.sequence.hint} race={race} onClose={finish} />
+            }
             if (t.activity === 'fixradio' && t.fixradio) {
               const who = npcOf(t.npc ?? task)
               return <FixRadio name={who.name} look={who.look} title={t.fixradio.title} intro={t.fixradio.intro} steps={t.fixradio.steps} onClose={finish} />
             }
             if (t.activity === 'debate' && t.debate) {
               const who = npcOf(t.npc ?? task)
-              return <DebateTalk name={who.name} look={who.look} title={t.debate.title} turns={t.debate.turns} endings={t.debate.endings} onClose={finish} />
+              const results = t.debate.results
+              return (
+                <DebateTalk
+                  name={who.name}
+                  look={who.look}
+                  title={t.debate.title}
+                  turns={t.debate.turns}
+                  endings={t.debate.endings}
+                  ask={t.debate.ask}
+                  onClose={(done, tier) => finishTask(task, done, tier && results?.[tier] ? [results[tier]!] : [])}
+                />
+              )
             }
             if (t.activity === 'reconstruct' && t.reconstruct) return <Reconstruct title={t.reconstruct.title} intro={t.reconstruct.intro} items={t.reconstruct.items} onClose={finish} />
             if (t.activity === 'mystery') return <Mystery onClose={finish} />
