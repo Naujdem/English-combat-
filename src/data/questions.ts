@@ -19,6 +19,8 @@ import { A2_RACE_PRACTICE } from './a2Race'
 import { A2_RACE_QUESTIONS } from './questions-a2-race'
 import { A2_CAR_PRACTICE } from './a2Car'
 import { A2_CAR_QUESTIONS } from './questions-a2-car'
+import { A2_MILL_PRACTICE } from './a2Mill'
+import { A2_MILL_QUESTIONS } from './questions-a2-09'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -356,6 +358,8 @@ export const QUESTIONS: Question[] = [
   ...A2_RACE_QUESTIONS,
   ...A2_CAR_PRACTICE,
   ...A2_CAR_QUESTIONS,
+  ...A2_MILL_PRACTICE,
+  ...A2_MILL_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -862,6 +866,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Pasado continuo → acción en progreso: was / were + verbo con -ing → I was driving. We were checking the wheels.',
       'I / he / she / it → was · you / we / they → were.',
       'when + pasado simple (acción corta que interrumpe) · while + pasado continuo (acción larga): You were driving when the car stopped.',
+    ],
+  },
+  'used-to-imperative': {
+    name: 'Used to, imperativo y conectores',
+    level: 'A2',
+    lesson: [
+      'Hábitos del pasado que ya no pasan: used to + verbo base → The mill used to work every day.',
+      "Negativo: didn't use to + verbo base · Pregunta: Did + sujeto + use to…? (sin -d después de did / didn't).",
+      "Imperativo para instrucciones: verbo base al principio → Open the gate. · Prohibir: Don't + verbo → Don't touch the wheel.",
+      'Conectores: because (razón) · so (resultado) · although (contraste).',
     ],
   },
   future: {

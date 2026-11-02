@@ -2222,6 +2222,112 @@ NPC_TASKS['a2-08-close'] = {
   },
 }
 
+// ── A2-09 — The Silent Mill (molino de la granja River en el pasado; escena, esbirro, eco y jefe en data/a2Mill.ts) ──
+// Orden: Leo (lección used-to-imperative + práctica) → el aprendiz corrompido → Mr. Bell (charla)
+//        → [opcional: receta de pan (Sequence Master, escudo) · Eco del molino] → La rueda rota → Leo (cierre).
+NPC_TASKS['a2-09-leo'] = {
+  done: 'a2-09-practice',
+  lesson: 'used-to-imperative',
+  activity: 'practice',
+  practice: 'used-to-imperative',
+  practiceIds: ['a2-09-p1', 'a2-09-p2', 'a2-09-p3', 'a2-09-p4', 'a2-09-p5', 'a2-09-p6', 'a2-09-p7'],
+  steps: [],
+  reward: {
+    text: 'Leo: "Someone is in the field. Be careful."',
+    es: 'Hay alguien en el campo. Ten cuidado.',
+    sub: 'Un aprendiz corrompido bloquea el campo. Véncelo y habla con el molinero junto a la rueda.',
+    say: 'Someone is in the field.',
+  },
+}
+
+// Charla con el molinero: abre el combate con el jefe (y el eco opcional)
+NPC_TASKS['a2-09-miller-talk'] = {
+  npc: 'a2-09-miller',
+  done: 'a2-09-miller-talk',
+  requires: {
+    id: 'a2-09-apprentice',
+    text: 'Mr. Bell: "My apprentice is not himself. Please, help him first."',
+    es: 'Mi aprendiz no es él mismo. Por favor, ayúdalo primero.',
+    sub: 'Habla primero con Leo y vence al aprendiz corrompido.',
+  },
+  steps: [
+    { text: 'Welcome to the River mill. I am Mr. Bell, the miller.', es: 'Bienvenido al molino de los River. Soy el señor Bell, el molinero.' },
+    {
+      text: 'This mill used to work every day. The water used to turn the wheel, and the stones used to grind the wheat.',
+      es: 'Este molino solía funcionar todos los días. El agua solía girar la rueda, y las piedras solían moler el trigo.',
+      choice: { ask: 'What did the mill use to make?', options: ['It used to make flour.', 'It used to makes flour.', 'It use to make flour.'], answer: 0, tip: 'used to + verbo base: make.' },
+    },
+    { text: 'But one night the wheel stopped. Now the mill is silent, and my sacks are empty.', es: 'Pero una noche la rueda se detuvo. Ahora el molino está en silencio y mis sacos están vacíos.' },
+    {
+      text: 'Something is wrong with the wheel. Please, be careful.',
+      es: 'Algo anda mal con la rueda. Por favor, ten cuidado.',
+      choice: { ask: 'What is the safety rule?', options: ["Don't stand too close to the wheel.", 'Not stand too close to the wheel.', "Don't standing too close to the wheel."], answer: 0, tip: "Prohibir: Don't + verbo base." },
+    },
+  ],
+  reward: {
+    text: 'Mr. Bell: "Listen… the wheel is moving by itself!"',
+    es: '¡Escucha… la rueda se mueve sola!',
+    sub: 'Algo despertó en la rueda del molino. Opcional: Mr. Bell te enseña su receta de pan (escudo) y hay un eco en el corral viejo.',
+    say: 'The wheel is moving by itself!',
+  },
+}
+
+// Opcional: receta de pan del molinero (Sequence Master en imperativo). No bloquea; da un escudo.
+NPC_TASKS['a2-09-recipe'] = {
+  npc: 'a2-09-miller',
+  done: 'a2-09-recipe',
+  activity: 'sequence',
+  shield: true,
+  requires: {
+    id: 'a2-09-miller-talk',
+    text: 'Mr. Bell: "Talk to me first."',
+    es: 'Habla conmigo primero.',
+    sub: 'El molinero está junto a la rueda.',
+  },
+  sequence: {
+    title: 'My Bread Recipe',
+    hint: 'Piensa qué se hace primero en la cocina: los ingredientes, la masa, la espera y el horno.',
+    intro: { en: 'Put the recipe in order.', es: 'Ordena la receta.' },
+    steps: [
+      { en: 'First, put the flour, water and salt in a big bowl.', es: 'Primero, pon la harina, el agua y la sal en un tazón grande.' },
+      { en: 'Then, mix everything and make the dough.', es: 'Luego, mezcla todo y haz la masa.' },
+      { en: 'After that, wait for one hour.', es: 'Después, espera una hora.' },
+      { en: 'Finally, bake the bread for forty minutes.', es: 'Por último, hornea el pan durante cuarenta minutos.' },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Mr. Bell: "Good! My mother used to make bread like this."',
+    es: '¡Bien! Mi madre solía hacer pan así.',
+    sub: 'Mr. Bell te da un escudo de palabras: bloquea un error en combate.',
+    say: 'My mother used to make bread like this.',
+  },
+}
+
+// Cierre con Leo tras vencer a la rueda rota (el fragmento ya lo entregó el jefe). Toca el carro sin explicarlo (A2-10).
+NPC_TASKS['a2-09-close'] = {
+  npc: 'a2-09-leo',
+  done: 'a2-09-close',
+  requires: {
+    id: 'a2-09-broken-wheel',
+    text: 'Leo: "The wheel is still angry. Go to the mill."',
+    es: 'La rueda sigue enojada. Ve al molino.',
+    sub: 'Sigue los objetivos bajo el mapa.',
+  },
+  steps: [
+    { text: 'Listen. The wheel is turning again. The mill is not silent anymore.', es: 'Escucha. La rueda gira otra vez. El molino ya no está en silencio.' },
+    { text: 'You used "used to" for old habits, the imperative for instructions, and because, so and although to explain.', es: 'Usaste "used to" para hábitos viejos, el imperativo para instrucciones, y because, so y although para explicar.' },
+    { text: 'You have another fragment. And now we know something: the cart stopped by this mill that night.', es: 'Tienes otro fragmento. Y ahora sabemos algo: el carro se detuvo junto a este molino esa noche.' },
+    { text: 'But why did it stop here? We need to find out.', es: 'Pero ¿por qué se detuvo aquí? Tenemos que averiguarlo.' },
+  ],
+  reward: {
+    text: 'Leo: "We need to find out."',
+    es: 'Tenemos que averiguarlo.',
+    sub: 'A2-09 completada. Recuperaste otro fragmento. El carro se detuvo junto al molino… pero ¿por qué?',
+    say: 'We need to find out.',
+  },
+}
+
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */
 export function taskOf(npcId: string, opened: string[]): { id: string; task: NpcTask; blocked: boolean } | null {
   for (const [id, t] of Object.entries(NPC_TASKS)) {
