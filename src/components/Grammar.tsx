@@ -222,6 +222,11 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (/\bif\b/i.test(sentence)) return { title: 'Primer condicional: If + presente, will + verbo (después de if, nunca will):', parts: [K('If'), '+', S('sujeto'), '+', V('presente'), '+', K("will / won't"), '+', V('verbo')] }
       if (/\bhope\b/i.test(sentence)) return { title: 'Para desear algo: I hope + frase · I hope to + verbo:', parts: [S('I'), '+', K('hope'), '+', R('you have a great year')] }
       return { title: "Preferencias: I'd like to + verbo · I'd rather + verbo (sin to) · I'd prefer + cosa:", parts: [S('I'), '+', K("'d like to / 'd rather / 'd prefer"), '+', V('verbo / cosa'), '+', R('...')] }
+    case 'clothes-shopping':
+      if (/\b(enough|too)\b/i.test(sentence)) return { title: 'too + adjetivo (demasiado) · adjetivo + enough (lo bastante):', parts: [S('It'), '+', V("is / isn't"), '+', K('too'), '+', R('big / long'), '+', K('enough')] }
+      if (/\btry\b/i.test(sentence)) return { title: 'Probarse ropa: try + it / them + on (el pronombre va en medio):', parts: [K('Can I'), '+', V('try'), '+', S('it / them'), '+', K('on?')] }
+      if (question) return { title: 'Precios: How much + is (una cosa) / are (varias)?', parts: [K('How much'), '+', V('is / are'), '+', S('this / these'), '+', R('...?')] }
+      return { title: "En la tienda: I'm looking for… · I'd like to return / exchange… · I'll take it:", parts: [S('I'), '+', K("'m looking for / 'd like to return"), '+', R('a black jacket / this shirt')] }
     case 'should-must':
       if (question) return { title: 'Para preguntar: Should + sujeto + verbo? · Do / Does + sujeto + have to + verbo?', parts: [V('Should / Do'), '+', S('Sujeto'), '+', K('(have to)'), '+', V('verbo'), '+', R('...?')] }
       if (negative) return { title: "shouldn't = mal consejo · mustn't = prohibido · don't have to = no es necesario:", parts: [S('Sujeto'), '+', K("shouldn't / mustn't / don't have to"), '+', V('verbo'), '+', R('...')] }

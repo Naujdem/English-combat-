@@ -32,6 +32,8 @@ import { A2_RETURN_QUESTIONS } from './questions-a2-13'
 import { A2_EXTRA_QUESTIONS } from './questions-a2-extra'
 import { A2_PARTY_PRACTICE } from './a2Party'
 import { A2_PARTY_QUESTIONS } from './questions-a2-s3'
+import { A2_MARKET_PRACTICE } from './a2Market'
+import { A2_MARKET_QUESTIONS } from './questions-a2-s4'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -382,6 +384,8 @@ export const QUESTIONS: Question[] = [
   ...A2_EXTRA_QUESTIONS,
   ...A2_PARTY_PRACTICE,
   ...A2_PARTY_QUESTIONS,
+  ...A2_MARKET_PRACTICE,
+  ...A2_MARKET_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -948,6 +952,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Deseos: I hope + frase (I hope you have a great year) · I hope to + verbo (I hope to travel).',
       "Primer condicional: If + presente, will + verbo → If it rains, we'll move inside. (Después de if, nunca will).",
       "Preguntas y negativo: What will you do if...? · If we don't hurry, we won't finish.",
+    ],
+  },
+  'clothes-shopping': {
+    name: 'Ropa, compras y devoluciones',
+    level: 'A2',
+    lesson: [
+      'Ropa y tallas: a black jacket (el color antes de la prenda) · size S / M / L · What size are you? · wear = llevar puesto.',
+      'Probarse ropa: Can I try it on? (una cosa) · Can I try them on? (jeans, shoes) · It fits = de talla · It suits you = te queda bien.',
+      "Precios: How much is it? / How much are they? · on sale = en rebaja · 20% off · half price · It's a bargain! · I'll take it.",
+      "Devoluciones: I'd like to return this · receipt (recibo) · refund (dinero) · exchange it for a bigger size. too big · not big enough.",
     ],
   },
   future: {

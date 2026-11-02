@@ -64,6 +64,8 @@ import { PartyPlan } from '../components/PartyPlan'
 import { Predict } from '../components/Predict'
 import { Speech } from '../components/Speech'
 import { BrokenClocks } from '../components/BrokenClocks'
+import { FittingRoom } from '../components/FittingRoom'
+import { SHOP, isShopOpen } from '../data/a2Market'
 import { voiceOf, type Voice } from '../game/speech'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
@@ -198,6 +200,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       items: t.shield || bonusShield ? { ...s.items, shield: Math.min(2, s.items.shield + 1) } : s.items,
       outfits: t.outfit && !s.outfits.includes(t.outfit) ? [...s.outfits, t.outfit] : s.outfits,
       hp: t.heal ? s.maxHp : s.hp,
+      coins: t.coins ? (s.coins ?? 0) + t.coins : s.coins,
     }))
     setMsg({ text: fill(t.reward.text), es: t.reward.es && fill(t.reward.es), sub: fill(t.reward.sub), say: t.reward.say && fill(t.reward.say), tone: 'good' })
 
@@ -1055,6 +1058,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               return <MemoryChest name={who.name} look={who.look} title={t.memory.title} intro={t.memory.intro} pairs={t.memory.pairs} onClose={finish} />
             }
             if (t.activity === 'luggage') return <LostLuggage onClose={finish} />
+            if (t.activity === 'fitting') return <FittingRoom friend={state.interest.name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'route') return <RouteChallenge name={npcOf(t.npc ?? task).name} onClose={finish} />
             if (t.activity === 'exam' && t.exam) {
               const era = t.exam
@@ -1221,7 +1225,10 @@ function Backpack({ state, update, chips, hasBoss, onNotebook }: { state: GameSt
                   <p className="text-sm text-paper/60">No hay objetivos en este lugar.</p>
                 )}
               </div>
-            ) : state.outfits.length < 2 ? (
+            ) : (
+              <>
+              {isShopOpen(state) && <Shop state={state} update={update} />}
+              {state.outfits.length < 2 ? (
               <p className="text-sm text-paper/60">Aún tienes un solo atuendo. Gana más en combates, cofres y misiones.</p>
             ) : (
               <div className="grid grid-cols-2 gap-2">
@@ -1242,9 +1249,55 @@ function Backpack({ state, update, chips, hasBoss, onNotebook }: { state: GameSt
                 })}
               </div>
             )}
+              </>
+            )}
           </Panel>
         </Overlay>
       )}
     </>
+  )
+}
+
+/** Tienda de atuendos de Nadia (se abre al terminar Market Day): se compra con las monedas de misiones y minijuegos */
+function Shop({ state, update }: { state: GameState; update: Update }) {
+  const coins = state.coins ?? 0
+  const [note, setNote] = useState<string | null>(null)
+  function buy(id: string, price: number) {
+    if (state.outfits.includes(id)) return
+    if (coins < price) {
+      setNote(`Nadia: "Sorry, you need ${price - coins} more coins." Te faltan ${price - coins} monedas.`)
+      return
+    }
+    update((s) => ({ ...s, coins: (s.coins ?? 0) - price, outfits: [...s.outfits, id], outfit: id }))
+    setNote(`Nadia: "It really suits you!" Compraste: ${OUTFITS[id].name}. Ya lo llevas puesto.`)
+  }
+  return (
+    <div className="mb-4 rounded-xl border-2 border-gold/50 p-2">
+      <div className="mb-2 flex items-center justify-between px-1">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gold">Tienda de Nadia</p>
+        <p className="text-sm">Monedas: <b className="text-gold">{coins}</b></p>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        {SHOP.map(({ id, price }) => {
+          const own = state.outfits.includes(id)
+          return (
+            <button
+              key={id}
+              onClick={() => buy(id, price)}
+              disabled={own}
+              className={`flex flex-col items-center rounded-xl border-2 p-2 ${own ? 'border-hp/50 opacity-60' : coins >= price ? 'border-line' : 'border-line opacity-75'}`}
+            >
+              <svg width="56" height="56" viewBox="0 0 32 32" aria-hidden="true">
+                <SpriteBody look={heroLook({ ...state, outfit: id })} />
+              </svg>
+              <span className="text-sm">{OUTFITS[id].name}</span>
+              <span className="text-xs font-semibold text-gold">{own ? 'Comprado' : `${price} monedas`}</span>
+            </button>
+          )
+        })}
+      </div>
+      {note && <p className="anim-fade-in mt-2 px-1 text-sm text-paper/80">{note}</p>}
+      <p className="mt-1 px-1 text-xs text-paper/50">Ganas monedas en misiones y minijuegos.</p>
+    </div>
   )
 }

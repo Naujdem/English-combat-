@@ -806,6 +806,40 @@ export const DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // ── Misión secundaria · Market Day ──
+  {
+    id: 'a2-s4',
+    title: 'A2 · Market Day',
+    unlock: 'a2-s4-close',
+    words: [
+      { title: 'Ropa', words: [['jacket', 'chaqueta'], ['jeans', 'jeans'], ['sneakers', 'tenis'], ['scarf', 'bufanda'], ['boots', 'botas'], ['size S / M / L', 'talla pequeña / mediana / grande']] },
+      { title: 'Probarse ropa', words: [['try it on', 'probárselo'], ['fit', 'quedar bien (de talla)'], ['suit', 'quedar bien (de estilo)'], ['too big', 'demasiado grande'], ['not big enough', 'no lo bastante grande']] },
+      { title: 'Precios', words: [['How much is it?', '¿Cuánto cuesta?'], ['on sale', 'en rebaja'], ['20% off', '20% de descuento'], ['half price', 'mitad de precio'], ['a bargain', 'una ganga'], ["I'll take it", 'me lo llevo']] },
+      { title: 'Devoluciones', words: [['return', 'devolver'], ['receipt', 'recibo'], ['refund', 'reembolso'], ['exchange', 'cambiar (por otra prenda)']] },
+    ],
+    versions: [
+      {
+        id: 'a2-s4-shopping',
+        tense: 'p',
+        tab: 'Las rebajas',
+        title: 'Sale day',
+        frame: 'Lo escribes en casa, con la ropa nueva todavía en la bolsa.',
+        lines: [
+          { en: 'Today {iname} and I [went]p shopping. It [was]p sale day, and everything [was]p cheaper.', es: 'Hoy {iname} y yo fuimos de compras. Era día de rebajas y todo estaba más barato.' },
+          { en: 'We [had]p $100. I [bought]p a warm jacket, running sneakers and black jeans.', es: 'Teníamos 100 dólares. Compré una chaqueta abrigada, tenis para correr y unos jeans negros.' },
+          { en: 'The first jeans [were]p too big, so I [tried]p on a smaller size.', es: 'Los primeros jeans eran demasiado grandes, así que me probé una talla más pequeña.' },
+          { en: 'I also [returned]p my old shirt. It [was]p too small, but I [had]p the receipt.', es: 'También devolví mi camisa vieja. Era demasiado pequeña, pero tenía el recibo.' },
+          { en: 'Then we [met]p Rita. She [knows]n every sale in the city! I [won]p her game, and the red scarf [is]n now a gift for {iname}.', es: 'Luego conocimos a Rita. ¡Conoce todas las rebajas de la ciudad! Gané su juego, y la bufanda roja ahora es un regalo para {iname}.' },
+          { en: 'Nadia [gave]p me points. Next time I [am going to buy]f the black jacket.', es: 'Nadia me dio puntos. La próxima vez voy a comprar la chaqueta negra.' },
+        ],
+        questions: [
+          { q: 'Why did they go shopping?', options: ['It was sale day.', 'It was a birthday.', 'It was cold.'], answer: 0, tip: 'El diario dice: "It was sale day".' },
+          { q: 'What was the problem with the old shirt?', options: ['It was too small.', 'It was too big.', 'It had a hole.'], answer: 0, tip: 'El diario dice: "It was too small".' },
+          { q: 'Who is the red scarf for?', options: ['For {iname}.', 'For Rita.', 'For Nadia.'], answer: 0, tip: 'El diario dice: "the red scarf is now a gift for {iname}".' },
+        ],
+      },
+    ],
+  },
 ]
 
 /** Diccionario de las palabras de los diarios (inglés → español) */

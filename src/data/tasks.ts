@@ -25,8 +25,10 @@ export type NpcTask = {
   /** Al completarla, la vida vuelve al máximo */
   heal?: boolean
   outfit?: string
+  /** Monedas que da al completarse (tienda de atuendos de Market Day) */
+  coins?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -3572,6 +3574,148 @@ NPC_TASKS['a2-s3-close'] = {
     es: '¡Este es el mejor cumpleaños de todos!',
     sub: 'Misión secundaria completada: Make a Wish. Ganaste la ropa de fiesta. Habla otra vez con {iname} en el jardín.',
     say: 'This is the best birthday ever!',
+  },
+}
+
+// ── Misión secundaria de A2 · Market Day (tienda de ropa y mercado; escena y duelo en data/a2Market.ts) ──
+// Ropa, probarse ropa, precios, descuentos y devoluciones (Busuu caps. 19 y 20). Sin fragmento ni pistas nuevas de "L".
+// Orden: Leo (lección clothes-shopping + práctica) → la persona especial (Fitting Room) → Nadia (devolución)
+//        → duelo con Rita → la persona especial (cierre: monedas y tienda de atuendos).
+NPC_TASKS['a2-s4-leo'] = {
+  done: 'a2-s4-practice',
+  lesson: 'clothes-shopping',
+  activity: 'practice',
+  practice: 'clothes-shopping',
+  practiceIds: ['a2-s4-p1', 'a2-s4-p2', 'a2-s4-p3', 'a2-s4-p4', 'a2-s4-p5', 'a2-s4-p6', 'a2-s4-p7'],
+  steps: [],
+  reward: {
+    text: 'Leo: "You\'re ready! Your friend is in the clothes shop. Good luck!"',
+    es: '¡Estás listo! Tu acompañante está en la tienda de ropa. ¡Buena suerte!',
+    sub: 'Entra a la tienda y habla con {iname}, junto a los percheros.',
+    say: "You're ready!",
+  },
+}
+
+// Fitting Room (Shopping Challenge + Smart Inventory): la lista de {iname} con 100 dólares. Con 0-1 errores, escudo
+NPC_TASKS['a2-s4-fitting'] = {
+  npc: 'a2-s4-interest',
+  done: 'a2-s4-fitting',
+  activity: 'fitting',
+  coins: 20,
+  requires: {
+    id: 'a2-s4-practice',
+    text: '{iname}: "Hi! Talk to Leo first. He knows all about sales!"',
+    es: '¡Hola! Habla primero con Leo. ¡Sabe todo sobre rebajas!',
+    sub: 'Leo está en la calle del mercado.',
+  },
+  steps: [],
+  reward: {
+    text: '{iname}: "A jacket, sneakers and jeans for exactly $100. Perfect!"',
+    es: 'Una chaqueta, tenis y jeans por exactamente 100 dólares. ¡Perfecto!',
+    sub: 'Ganaste 20 monedas. Ahora devuelve la camisa vieja: habla con Nadia en el mostrador.',
+    say: 'Perfect!',
+  },
+}
+
+// Devolución (DebateTalk): la camisa de la semana pasada es muy pequeña. No hay respuestas incorrectas
+NPC_TASKS['a2-s4-return'] = {
+  npc: 'a2-s4-nadia',
+  done: 'a2-s4-return',
+  activity: 'debate',
+  coins: 10,
+  requires: {
+    id: 'a2-s4-fitting',
+    text: 'Nadia: "Hello! Welcome to the sale. Your friend is waiting for you by the racks."',
+    es: '¡Hola! Bienvenido a las rebajas. Tu acompañante te espera junto a los percheros.',
+    sub: 'Habla con {iname} en la tienda.',
+  },
+  debate: {
+    title: 'Returns',
+    ask: 'Devuelve la camisa: explica el problema y pide lo que quieres.',
+    turns: [
+      {
+        text: 'Hello again! How can I help you?',
+        es: '¡Hola otra vez! ¿En qué puedo ayudarte?',
+        options: [
+          { en: "I bought this shirt here last week, but it's too small. I'd like to return it.", es: 'Compré esta camisa aquí la semana pasada, pero me queda muy pequeña. Quisiera devolverla.', value: 'good' },
+          { en: 'This shirt. Small.', es: 'Esta camisa. Pequeña.', value: 'neutral' },
+          { en: "I buyed this shirt and it's too much small.", es: '(Frase mal dicha).', value: 'bad', reply: { text: "Sorry? Oh, you bought this shirt... and it's too small?", es: '¿Perdón? Ah, compraste esta camisa... ¿y te queda pequeña?' } },
+        ],
+      },
+      {
+        text: 'No problem. Have you got the receipt?',
+        es: 'No hay problema. ¿Tienes el recibo?',
+        options: [
+          { en: 'Yes, here it is.', es: 'Sí, aquí está.', value: 'good' },
+          { en: 'Receipt... yes.', es: 'Recibo... sí.', value: 'neutral' },
+          { en: 'Yes, here is it the recipe.', es: '(Frase mal dicha).', value: 'bad', reply: { text: 'The recipe? Ha ha, you mean the receipt. Thanks.', es: '¿La receta? Ja, ja, quieres decir el recibo. Gracias.' } },
+        ],
+      },
+      {
+        text: 'Would you like a refund or an exchange?',
+        es: '¿Quieres que te devolvamos el dinero o prefieres cambiarla?',
+        options: [
+          { en: 'Can I exchange it for a bigger size, please? I really like the color.', es: '¿Puedo cambiarla por una talla más grande, por favor? Me gusta mucho el color.', value: 'good' },
+          { en: 'Exchange, I think.', es: 'Cambio, creo.', value: 'neutral' },
+          { en: 'Can I change it for a more big size?', es: '(Frase mal dicha).', value: 'bad', reply: { text: 'A bigger size? OK, let me check.', es: '¿Una talla más grande? Bueno, déjame revisar.' } },
+        ],
+      },
+      {
+        text: "Here's a size L. Do you want to try it on?",
+        es: 'Aquí tienes una talla L. ¿Quieres probártela?',
+        options: [
+          { en: 'Yes, please. ... It fits perfectly! Thank you for your help.', es: 'Sí, por favor. ... ¡Me queda perfecta! Gracias por tu ayuda.', value: 'good' },
+          { en: "OK. It's good.", es: 'Bueno. Está bien.', value: 'neutral' },
+          { en: 'Yes, I want try on it.', es: '(Frase mal dicha).', value: 'bad' },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: "You're a great customer! Careful, here comes Rita. She loves sales.", es: '¡Eres un gran cliente! Cuidado, ahí viene Rita. Le encantan las rebajas.' },
+      mid: { text: 'OK, all done. Oh... here comes Rita. Good luck!', es: 'Bueno, listo. Ah... ahí viene Rita. ¡Buena suerte!' },
+      low: { text: 'Hmm... OK, here is your new shirt. Oh no, here comes Rita.', es: 'Mmm... bueno, aquí está tu camisa nueva. Ay no, ahí viene Rita.' },
+    },
+  },
+  steps: [],
+  reward: {
+    text: 'Nadia: "Watch out! Rita wants the last red scarf on sale."',
+    es: '¡Cuidado! Rita quiere la última bufanda roja en rebaja.',
+    sub: 'Ganaste 10 monedas. Rita te espera junto al mostrador.',
+    say: 'Watch out!',
+  },
+}
+
+// Cierre: la persona especial y la bufanda de Rita. Recompensa: monedas y la tienda de atuendos (sin fragmento)
+NPC_TASKS['a2-s4-close'] = {
+  npc: 'a2-s4-interest',
+  done: 'a2-s4-close',
+  coins: 30,
+  requires: {
+    id: 'a2-s4-rita-duel',
+    text: '{iname}: "Is that Rita? She wants the red scarf. Go and win it!"',
+    es: '¿Esa es Rita? Quiere la bufanda roja. ¡Ve y gánala!',
+    sub: 'Gana el duelo de Rita, junto al mostrador.',
+  },
+  steps: [
+    { text: '{iname}: "You won the scarf! Rita is really funny."', es: '{iname}: "¡Ganaste la bufanda! Rita es muy divertida."' },
+    {
+      text: '{iname}: "Well? Show me your new clothes!"',
+      es: '{iname}: "¿Y bien? ¡Muéstrame tu ropa nueva!"',
+      choice: { ask: 'Te pones la chaqueta nueva. ¿Qué dices?', options: ["I'm wearing my new jacket. Does it suit me?", "I'm wear my new jacket. Does it suits me?", 'I wearing my new jacket. It suit me?'], answer: 0, tip: "Ahora mismo: I'm wearing. Pregunta: Does it suit me? (sin -s después de does)." },
+    },
+    { text: '{iname}: "Yes, it really suits you! And the scarf... is it for me? Oh, thank you!"', es: '{iname}: "¡Sí, te queda muy bien! Y la bufanda... ¿es para mí? ¡Ay, gracias!"' },
+    {
+      text: '{iname}: "Look, Nadia gives points to good customers. You can use them in the shop next time."',
+      es: '{iname}: "Mira, Nadia da puntos a los buenos clientes. Puedes usarlos en la tienda la próxima vez."',
+      choice: { ask: 'Nadia te da una tarjeta de puntos. ¿Qué le dices?', options: ['Thank you! How much is the black jacket with the points?', 'Thank you! How many is the black jacket with the points?', 'Thank you! How much are the black jacket with the points?'], answer: 0, tip: 'Una cosa: How much is…?' },
+    },
+    { text: 'Nadia: "Thirty-five points. Come back soon!"', es: 'Nadia: "Treinta y cinco puntos. ¡Vuelve pronto!"' },
+  ],
+  reward: {
+    text: '{iname}: "Best shopping day ever!"',
+    es: '¡El mejor día de compras de todos!',
+    sub: 'Misión secundaria completada: Market Day. Ganaste 30 monedas. Se abrió la tienda: Mochila › Atuendos.',
+    say: 'Best shopping day ever!',
   },
 }
 

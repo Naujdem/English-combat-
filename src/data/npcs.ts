@@ -636,6 +636,23 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     until: 'a2-s3-close',
     doneLine: { text: 'I hope we have many more days like this.', es: 'Espero que tengamos muchos más días como este.' },
   },
+  // ── Misión secundaria Market Day (tienda de ropa y mercado): Leo, la persona especial y Nadia, la dependienta ──
+  'a2-s4-leo': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    doneLine: { text: "I'd like a new hat... but it's too expensive. Ha ha.", es: 'Me gustaría un sombrero nuevo... pero es demasiado caro. Ja, ja.' },
+  },
+  'a2-s4-interest': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: 'That jacket really suits you. Good choice!', es: 'Esa chaqueta te queda muy bien. ¡Buena elección!' },
+  },
+  'a2-s4-nadia': {
+    name: 'Nadia',
+    look: { shirt: '#2e9d8f', hair: '#1f1f1f', skin: '#8d5524', gender: 'female' },
+    doneLine: { text: 'Thank you for shopping with us. Have a nice day!', es: 'Gracias por comprar con nosotros. ¡Que tengas un buen día!' },
+  },
   'a2-receptionist': {
     name: 'The receptionist',
     look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },
