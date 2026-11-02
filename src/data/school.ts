@@ -300,6 +300,7 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   'chaqueta-viajero': { name: 'Chaqueta de viajero del tiempo', color: '#6b4fa3' },
   'camiseta-dorada': { name: 'Camiseta dorada del escudero', color: '#c99a1e' },
   'traje-tiempo': { name: 'Traje del tiempo', color: '#1f2a44' },
+  'chaqueta-detective': { name: 'Chaqueta de detective (A2)', color: '#6a5a3a' },
 }
 
 SCHOOL.requirements = BOSS_REQUIREMENTS

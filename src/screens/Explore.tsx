@@ -51,6 +51,7 @@ import { SequenceMaster } from '../components/SequenceMaster'
 import { Reconstruct } from '../components/Reconstruct'
 import { FixRadio } from '../components/FixRadio'
 import { CommandPuzzle } from '../components/CommandPuzzle'
+import { MemoryChest } from '../components/MemoryChest'
 import { DebateTalk } from '../components/DebateTalk'
 import { LessonPlan } from '../components/LessonPlan'
 import { TourPlan } from '../components/TourPlan'
@@ -1041,6 +1042,10 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               const who = npcOf(t.npc ?? task)
               const c = t.command
               return <CommandPuzzle name={who.name} look={who.look} title={c.title} intro={c.intro} verbs={c.verbs} objects={c.objects} steps={c.steps} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
+            }
+            if (t.activity === 'memory' && t.memory) {
+              const who = npcOf(t.npc ?? task)
+              return <MemoryChest name={who.name} look={who.look} title={t.memory.title} intro={t.memory.intro} pairs={t.memory.pairs} onClose={finish} />
             }
             if (t.activity === 'debate' && t.debate) {
               const who = npcOf(t.npc ?? task)

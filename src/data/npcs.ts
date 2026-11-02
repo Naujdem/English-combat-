@@ -503,6 +503,24 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#e8e0cc', hair: '#9a9a9a', skin: '#e0ac69', gender: 'male', accessory: 'cap' },
     doneLine: { text: 'Listen! The wheel is turning again. Thank you.', es: '¡Escucha! La rueda gira otra vez. Gracias.' },
   },
+  // ── A2-10, la casa de Leo: Leo abajo (lección) y arriba en el ático (investigación y cierre), y la persona especial (reunión) ──
+  'a2-10-leo': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    until: 'a2-10-practice',
+  },
+  'a2-10-leo-up': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    after: 'a2-10-practice',
+    doneLine: { text: 'The cart is still there… in the future.', es: 'La carreta sigue allí… en el futuro.' },
+  },
+  'a2-10-interest': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: "We've come so far together. Let's keep going.", es: 'Hemos llegado muy lejos juntos. Sigamos.' },
+  },
   'a2-receptionist': {
     name: 'The receptionist',
     look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },

@@ -29,6 +29,7 @@ import { A2_FARM_PAST_ID, A2_06_CLOSE, isA2FarmPastUnlocked } from '../data/a2Fa
 import { A2_RACE_ID, A2_07_CLOSE, isA2RaceUnlocked } from '../data/a2Race'
 import { A2_CAR_ID, A2_08_CLOSE, isA2CarUnlocked } from '../data/a2Car'
 import { A2_MILL_ID, A2_09_CLOSE, isA2MillUnlocked } from '../data/a2Mill'
+import { A2_LEO_HOUSE_ID, A2_10_CLOSE, isA2LeoHouseUnlocked } from '../data/a2LeoHouse'
 import { useDesktop } from '../game/device'
 import { Achievements } from '../components/Achievements'
 import { ACHIEVEMENTS, achieved } from '../data/collection'
@@ -51,12 +52,15 @@ const A2_NODES: A2Node[] = [
   { id: 'race', sceneId: A2_RACE_ID, name: 'Hipódromo', mission: 'A2-07', x: 290, y: 70, open: isA2RaceUnlocked, done: (s) => s.opened.includes(A2_07_CLOSE), locked: 'Se abre al terminar en la granja River.' },
   { id: 'road', sceneId: A2_CAR_ID, name: 'Camino', mission: 'A2-08', x: 325, y: 125, open: isA2CarUnlocked, done: (s) => s.opened.includes(A2_08_CLOSE), locked: 'Se abre al terminar en el hipódromo.' },
   { id: 'mill', sceneId: A2_MILL_ID, name: 'Molino', mission: 'A2-09', x: 95, y: 175, open: isA2MillUnlocked, done: (s) => s.opened.includes(A2_09_CLOSE), locked: 'Se abre al terminar en el camino.' },
+  { id: 'leo-house', sceneId: A2_LEO_HOUSE_ID, name: 'Casa de Leo', mission: 'A2-10', x: 290, y: 290, open: isA2LeoHouseUnlocked, done: (s) => s.opened.includes(A2_10_CLOSE), locked: 'Se abre al terminar en el molino.' },
 ]
 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
-    isA2MillUnlocked(state) && !state.opened.includes(A2_09_CLOSE)
+    isA2LeoHouseUnlocked(state) && !state.opened.includes(A2_10_CLOSE)
+      ? 'A2-10 · Echoes Across Time: de vuelta en el presente, Leo te espera en su casa para juntar todas las pistas.'
+      : isA2MillUnlocked(state) && !state.opened.includes(A2_09_CLOSE)
       ? 'A2-09 · The Silent Mill: vuelves a la granja de los River, en el pasado. El molino junto al río está en silencio. Leo te espera allí.'
       : isA2CarUnlocked(state) && !state.opened.includes(A2_08_CLOSE)
       ? 'A2-08 · El Carro que se Detuvo: después de la carrera, el carro se detiene en un camino viejo. Leo y JoJo están contigo.'
