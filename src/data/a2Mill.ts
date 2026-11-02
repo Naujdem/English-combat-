@@ -4,9 +4,12 @@ import { A2_08_CLOSE } from './a2Car'
 /**
  * A2-09 — The Silent Mill (el molino de la granja River, en el pasado).
  * Mapa de la granja de A2-06 con el molino junto al río ('n'), una carreta vieja ('u') y sacos de harina en el granero.
- * Orden: Leo (lección used-to-imperative + práctica) → el aprendiz corrompido (esbirro, 2 fases: used to / when-while)
- *        → Mr. Bell, el molinero (charla) → [opcional: receta de pan con Sequence Master (escudo) · Eco del molino (escudo)]
- *        → La rueda rota (jefe, 3 fases, entrega el fragmento) → Leo (cierre).
+ * Contenido: recetas e imperativo (cap. 15), some/any y cantidades (cap. 17), compras (cap. 20); when/while como repaso.
+ * Orden: Leo (lección recipes-some-any + práctica) → el aprendiz corrompido (esbirro, 2 fases: some/any / when-while)
+ *        → Mr. Bell, el molinero (charla) → Leo (Detective: Reconstruct sobre el carro)
+ *        → Mr. Bell (Wake the Mill: Command Puzzle) → La rueda rota (jefe, 3 fases, entrega el fragmento) → Leo (cierre).
+ *        Opcionales: receta de pan de Mr. Bell (Sequence Master, escudo) · Eco del molino (escudo).
+ * El caso de A1 (1996: los ratones se comieron la cuerda) no se repite: aquí se investiga el carro, no la rueda.
  * "cart" = la carreta de la carrera (A2-07/08): se detuvo junto al molino esa noche. No se explica más (queda para A2-10).
  * Se activa al terminar A2-08. Tareas en data/tasks.ts, lección en data/lessons.ts, combates en data/questions-a2-09.ts.
  */
@@ -39,11 +42,15 @@ export const A2_09_PRACTICE = 'a2-09-practice'
 /** Esbirro: el aprendiz corrompido aparece en el campo tras la práctica de Leo */
 export const A2_09_MINION = 'a2-09-apprentice'
 export const A2_09_MILLER = 'a2-09-miller-talk'
+/** Detective: Reconstruct con testimonios sobre el carro esa noche */
+export const A2_09_DETECTIVE = 'a2-09-detective'
+/** Wake the Mill: órdenes para volver a poner en marcha el molino; al terminarlo aparece el jefe */
+export const A2_09_WAKE = 'a2-09-wake'
 /** Opcional: receta de pan del molinero (Sequence Master), da un escudo */
 export const A2_09_RECIPE = 'a2-09-recipe'
-/** Opcional: eco en el corral viejo, repasa used to y da un escudo */
+/** Opcional: eco en el corral viejo, repasa recetas en imperativo y da un escudo */
 export const A2_09_ECHO = 'a2-09-mill-echo'
-/** Jefe: aparece junto a la rueda del molino tras hablar con el molinero */
+/** Jefe: aparece junto a la rueda del molino tras despertarla (Wake the Mill) */
 export const A2_09_BOSS = 'a2-09-broken-wheel'
 export const A2_09_CLOSE = 'a2-09-close'
 
@@ -52,15 +59,15 @@ export const isA2MillUnlocked = (s: GameState) => s.opened.includes(A2_08_CLOSE)
 
 /** Práctica guiada de Leo (lista fija en data/tasks.ts) */
 const T = ['a2-mill']
-const TP = 'used-to-imperative' as const
+const TP = 'recipes-some-any' as const
 export const A2_MILL_PRACTICE: Question[] = [
-  { id: 'a2-09-p1', topic: TP, prompt: 'The mill ___ every day. Now it is silent.', options: ['used to work', 'used to worked', 'use to work'], answer: 0, tip: 'used to + verbo en forma base (work, no worked).', tags: T },
-  { id: 'a2-09-p2', topic: TP, prompt: 'The mill ___ be so quiet.', options: ["didn't use to", "didn't used to", 'not use to'], answer: 0, tip: "Negativo: didn't use to (sin -d después de didn't).", tags: T },
-  { id: 'a2-09-p3', topic: TP, prompt: '___ the miller use to grind wheat here?', options: ['Did', 'Was', 'Does'], answer: 0, tip: 'Pregunta: Did + sujeto + use to + verbo.', tags: T },
-  { id: 'a2-09-p4', topic: TP, kind: 'order', prompt: 'La gente solía comprar harina aquí.', options: ['People', 'used', 'to', 'buy', 'flour', 'here.'], answer: 0, tip: 'Sujeto + used to + verbo base.', tags: T },
-  { id: 'a2-09-p5', topic: TP, prompt: '___ the gate slowly.', options: ['Open', 'Opens', 'Opening'], answer: 0, tip: 'Imperativo: el verbo en forma base al principio, sin sujeto.', tags: T },
-  { id: 'a2-09-p6', topic: TP, kind: 'fix', prompt: "Don't to touch the wheel.", options: ["Don't touch the wheel.", 'Not touch the wheel.', "Don't touching the wheel."], answer: 0, tip: "Prohibir: Don't + verbo base.", tags: T },
-  { id: 'a2-09-p7', topic: TP, prompt: 'The wheel stopped ___ there was no water.', options: ['because', 'so', 'although'], answer: 0, tip: 'because = la razón (no había agua).', tags: T },
+  { id: 'a2-09-p1', topic: TP, prompt: '___ the flour in a big bowl.', options: ['Put', 'Puts', 'Putting'], answer: 0, tip: 'Receta: verbo base al principio (Put).', tags: T },
+  { id: 'a2-09-p2', topic: TP, kind: 'fix', prompt: "Don't to open the oven.", options: ["Don't open the oven.", 'Not open the oven.', "Don't opening the oven."], answer: 0, tip: "Prohibir: Don't + verbo base.", tags: T },
+  { id: 'a2-09-p3', topic: TP, prompt: 'There is ___ flour in this sack.', options: ['some', 'any', 'a'], answer: 0, tip: 'Afirmativo: some.', tags: T },
+  { id: 'a2-09-p4', topic: TP, prompt: "There isn't ___ salt in the kitchen.", options: ['any', 'some', 'many'], answer: 0, tip: 'Negativo: any.', tags: T },
+  { id: 'a2-09-p5', topic: TP, kind: 'order', prompt: '¿Hay sacos en el granero?', options: ['Are', 'there', 'any', 'sacks', 'in', 'the', 'barn?'], answer: 0, tip: 'Pregunta: Are there any + plural?', tags: T },
+  { id: 'a2-09-p6', topic: TP, prompt: 'How ___ water do we need?', options: ['much', 'many', 'some'], answer: 0, tip: 'water no se cuenta: How much…?', tags: T },
+  { id: 'a2-09-p7', topic: TP, prompt: 'How much ___ a loaf of bread?', options: ['is', 'are', 'do'], answer: 0, tip: 'Precio: How much is…?', tags: T },
 ]
 
 export const A2_MILL_ENEMIES: Record<string, EnemyDef> = {
@@ -74,15 +81,15 @@ export const A2_MILL_ENEMIES: Record<string, EnemyDef> = {
     topics: [TP],
     kinds: ['fill', 'fix', 'order'],
     tags: ['a2-mill-minion'],
-    // Fase 1: used to · Fase 2: when / while (repaso de A2-08)
+    // Fase 1: some / any · Fase 2: when / while (repaso de A2-08)
     phases: [
       {
         hp: 3,
-        title: 'Used to',
+        title: 'Some / any',
         topics: [TP],
         kinds: ['fill', 'fix', 'order'],
-        tags: ['a2-mill-minion-used'],
-        line: { text: 'The miller use to sing here! The water use to dance!', es: '¡El molinero solía cantar aquí! ¡El agua solía bailar! (use to: mal).' },
+        tags: ['a2-mill-minion-some'],
+        line: { text: "There is any flour! There aren't some sacks!", es: '¡Hay harina! ¡No hay sacos! (any y some al revés: mal).' },
       },
       {
         hp: 3,
@@ -97,17 +104,17 @@ export const A2_MILL_ENEMIES: Record<string, EnemyDef> = {
     zone: 'campo-viejo',
     look: { shirt: '#b8a888', hair: '#3a2a1a', skin: '#c9b8d8', accessory: 'cap', gender: 'male' },
     before: [
-      { text: 'This mill use to worked every day! Now it is silent. Go away!', es: '¡Este molino solía funcionar todos los días! Ahora está silencioso. ¡Vete! (use to worked: mal).' },
+      { text: "The mill is silent and there isn't some flour. Go away!", es: 'El molino está en silencio y no hay harina. ¡Vete! (isn’t some: mal).' },
       { text: 'I was sleep when the wheel stop. I didn’t saw nothing!', es: 'Yo estaba durmiendo cuando la rueda se detuvo. ¡No vi nada! (was sleep, stop, didn’t saw nothing: mal).' },
     ],
     after: [
-      { text: 'The mill used to work… I was sleeping when the wheel stopped. Oh. My words are back.', es: 'El molino solía funcionar… Yo estaba durmiendo cuando la rueda se detuvo. Oh. Mis palabras volvieron.' },
+      { text: "There isn't any flour… I was sleeping when the wheel stopped. Oh. My words are back.", es: 'No hay harina… Yo estaba durmiendo cuando la rueda se detuvo. Oh. Mis palabras volvieron.' },
       { text: 'The cart stopped here that night… I heard its wheels on the stones.', es: 'El carro se detuvo aquí esa noche… Oí sus ruedas sobre las piedras.' },
     ],
     freed: { text: 'Talk to Mr. Bell, the miller. He is near the wheel.', es: 'Habla con el señor Bell, el molinero. Está cerca de la rueda.' },
-    bonus: { q: 'Before you go! The mill ___ make flour for the whole town.', options: ['used to', 'use to', 'was use to'], answer: 0, tip: 'used to + verbo base (afirmativo con -d).' },
+    bonus: { q: 'Before you go! Is there ___ bread for the miller?', options: ['any', 'some', 'many'], answer: 0, tip: 'Pregunta: any (Is there any…?).' },
   },
-  // Eco opcional (1 fase): aparece en el corral viejo tras hablar con el molinero. Repasa used to y da un escudo.
+  // Eco opcional (1 fase): aparece en el corral viejo tras hablar con el molinero. Repasa recetas en imperativo y da un escudo.
   [A2_09_ECHO]: {
     id: A2_09_ECHO,
     name: 'Eco del molino',
@@ -122,14 +129,14 @@ export const A2_MILL_ENEMIES: Record<string, EnemyDef> = {
     zone: 'campo-viejo',
     look: { shirt: '#d8cfb8', hair: '#8a8070', skin: '#c9b8d8', gender: 'female' },
     before: [
-      { text: 'Long ago, people use to come here every day…', es: 'Hace mucho, la gente solía venir aquí todos los días… (use to: mal).' },
-      { text: 'They use to brought wheat. Did you used to come?', es: 'Solían traer trigo. ¿Tú solías venir? (use to brought, did… used to: mal).' },
+      { text: 'Mixes the flour… Adds the water… I forget my old recipe…', es: 'Mezcla la harina… Añade el agua… Olvido mi vieja receta… (Mixes, Adds: mal en una receta).' },
+      { text: 'Not open the oven! Bakes the bread!', es: '¡No abras el horno! ¡Hornea el pan! (Not open, Bakes: mal).' },
     ],
     after: [
-      { text: 'People used to come here every day… Thank you. I can rest now.', es: 'La gente solía venir aquí todos los días… Gracias. Ya puedo descansar.' },
+      { text: "Mix the flour… add the water… don't open the oven. My recipe is back. Thank you.", es: 'Mezcla la harina… añade el agua… no abras el horno. Mi receta volvió. Gracias.' },
     ],
-    freed: { text: 'People used to come here every day.', es: 'La gente solía venir aquí todos los días.' },
-    bonus: { q: 'Before I go! ___ you use to eat fresh bread?', options: ['Did', 'Do', 'Were'], answer: 0, tip: 'Pregunta con used to: Did + sujeto + use to.' },
+    freed: { text: 'Bake the bread for forty minutes.', es: 'Hornea el pan durante cuarenta minutos.' },
+    bonus: { q: 'Before I go! ___ the bread cool before you eat it.', options: ['Let', 'Lets', 'Letting'], answer: 0, tip: 'Imperativo: verbo base (Let).' },
   },
   // Jefe (3 fases): aparece junto a la rueda tras hablar con el molinero. Entrega el fragmento.
   [A2_09_BOSS]: {
@@ -141,16 +148,8 @@ export const A2_MILL_ENEMIES: Record<string, EnemyDef> = {
     topics: [TP],
     kinds: ['fill', 'fix', 'order'],
     tags: ['a2-mill-boss'],
-    // Fase 1: used to · Fase 2: imperativo · Fase 3: because / so / although
+    // Fase 1: imperativo · Fase 2: some / any y cantidades · Fase 3: compras
     phases: [
-      {
-        hp: 3,
-        title: 'Used to',
-        topics: [TP],
-        kinds: ['fill', 'fix', 'order'],
-        tags: ['a2-mill-boss-used'],
-        line: { text: 'The water use to love me! The miller use to sang for me!', es: '¡El agua solía quererme! ¡El molinero solía cantarme! (use to, use to sang: mal).' },
-      },
       {
         hp: 3,
         title: 'Imperativo',
@@ -161,22 +160,30 @@ export const A2_MILL_ENEMIES: Record<string, EnemyDef> = {
       },
       {
         hp: 3,
-        title: 'Because / so / although',
+        title: 'Some / any',
         topics: [TP],
         kinds: ['fill', 'fix', 'order'],
-        tags: ['a2-mill-boss-link'],
-        line: { text: 'I stopped so the night was dark… although I was angry!', es: 'Me detuve porque la noche estaba oscura… ¡porque estaba enojada! (so y although mal usados).' },
+        tags: ['a2-mill-boss-some'],
+        line: { text: "There isn't some water! How many flour do you want?", es: '¡No hay agua! ¿Cuánta harina quieres? (isn’t some, many flour: mal).' },
+      },
+      {
+        hp: 3,
+        title: 'Compras',
+        topics: [TP],
+        kinds: ['fill', 'fix', 'order'],
+        tags: ['a2-mill-boss-shop'],
+        line: { text: 'How much cost my flour? It are very expensive!', es: '¿Cuánto cuesta mi harina? ¡Es muy cara! (How much cost, It are: mal).' },
       },
     ],
     onlyTags: true,
     zone: 'campo-viejo',
     look: { shirt: '#5a4a3a', hair: '#2a2016', skin: '#c9b8d8', gender: 'male' },
     before: [
-      { text: 'I use to turn every day! Now I don’t turn for nobody!', es: '¡Yo solía girar todos los días! ¡Ahora no giro para nadie! (use to, don’t… nobody: mal).' },
+      { text: 'You woke me up! Now I don’t turn for nobody!', es: '¡Me despertaste! ¡Ahora no giro para nadie! (don’t… nobody: mal).' },
       { text: 'Not come closer! I took the words of this mill, because the light was mine!', es: '¡No te acerques! Me llevé las palabras de este molino, ¡porque la luz era mía! (Not come: mal).' },
     ],
     after: [
-      { text: 'I used to turn every day… The water is moving again.', es: 'Yo solía girar todos los días… El agua se mueve otra vez.' },
+      { text: 'I turned every day… The water is moving again.', es: 'Yo giraba todos los días… El agua se mueve otra vez.' },
       { text: 'The cart… it stopped by the mill that night. I saw it. But I cannot say more.', es: 'El carro… se detuvo junto al molino esa noche. Lo vi. Pero no puedo decir más.' },
     ],
     freed: { text: 'The cart stopped by the mill. I cannot say more.', es: 'El carro se detuvo junto al molino. No puedo decir más.' },
@@ -204,8 +211,8 @@ export const A2_MILL: SceneDef = {
     { type: 'enemy', id: A2_09_MINION, x: 8, y: 10, after: A2_09_PRACTICE },
     // Eco opcional en el corral viejo tras hablar con el molinero
     { type: 'enemy', id: A2_09_ECHO, x: 4, y: 7, after: A2_09_MILLER },
-    // La rueda rota aparece junto al molino tras hablar con el molinero
-    { type: 'enemy', id: A2_09_BOSS, x: 11, y: 8, after: A2_09_MILLER },
+    // La rueda rota aparece junto al molino tras despertarla (Wake the Mill)
+    { type: 'enemy', id: A2_09_BOSS, x: 11, y: 8, after: A2_09_WAKE },
   ],
   labels: [
     { text: 'Mill', x: 11, y: 6 },
@@ -214,7 +221,7 @@ export const A2_MILL: SceneDef = {
   ],
   zoneAt,
   examine: {
-    '11,7': { text: 'The mill wheel. The water used to turn it. Now it is silent.', sub: 'La rueda del molino. El agua solía girarla. Ahora está en silencio.', say: 'The water used to turn it.', tone: 'warn' },
+    '11,7': { text: 'The mill wheel. The water turned it every day. Now it is silent.', sub: 'La rueda del molino. El agua la giraba todos los días. Ahora está en silencio.', say: 'The mill wheel is silent.', tone: 'warn' },
     '1,1': { text: 'Sacks of flour. They are almost empty.', sub: 'Sacos de harina. Están casi vacíos.', say: 'Sacks of flour.' },
     '2,1': { text: 'Sacks of flour. They are almost empty.', sub: 'Sacos de harina. Están casi vacíos.', say: 'Sacks of flour.' },
     '13,9': { text: 'An old cart. Its wheels are full of flour.', sub: 'Una carreta vieja. Sus ruedas están llenas de harina.', say: 'An old cart.' },
@@ -226,6 +233,8 @@ export const A2_MILL: SceneDef = {
     { label: 'Práctica', done: s.opened.includes(A2_09_PRACTICE) },
     { label: 'Esbirro: el aprendiz corrompido', done: s.defeated.includes(A2_09_MINION) },
     { label: 'Hablar con el molinero', done: s.opened.includes(A2_09_MILLER) },
+    { label: 'Detective: ¿qué pasó esa noche?', done: s.opened.includes(A2_09_DETECTIVE) },
+    { label: 'Wake the Mill', done: s.opened.includes(A2_09_WAKE) },
     { label: 'Opcional: receta de pan', done: s.opened.includes(A2_09_RECIPE) },
     { label: 'Opcional: Eco del molino', done: s.defeated.includes(A2_09_ECHO) },
     { label: 'Jefe: La rueda rota', done: s.defeated.includes(A2_09_BOSS) },

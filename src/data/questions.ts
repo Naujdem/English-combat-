@@ -868,14 +868,14 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'when + pasado simple (acción corta que interrumpe) · while + pasado continuo (acción larga): You were driving when the car stopped.',
     ],
   },
-  'used-to-imperative': {
-    name: 'Used to, imperativo y conectores',
+  'recipes-some-any': {
+    name: 'Recetas, some/any y compras',
     level: 'A2',
     lesson: [
-      'Hábitos del pasado que ya no pasan: used to + verbo base → The mill used to work every day.',
-      "Negativo: didn't use to + verbo base · Pregunta: Did + sujeto + use to…? (sin -d después de did / didn't).",
-      "Imperativo para instrucciones: verbo base al principio → Open the gate. · Prohibir: Don't + verbo → Don't touch the wheel.",
-      'Conectores: because (razón) · so (resultado) · although (contraste).',
+      "Instrucciones y recetas (imperativo): verbo base al principio → Put the flour in a bowl. · Prohibir: Don't + verbo → Don't open the oven.",
+      "some en afirmativo (There is some flour) · any en negativo y preguntas (There isn't any salt. Is there any water?).",
+      'How much + lo que no se cuenta (flour, water) · How many + plural (sacks, eggs).',
+      "Comprar: How much is it? · I'd like two sacks, please. · Here is your change. · Can I return it?",
     ],
   },
   future: {
