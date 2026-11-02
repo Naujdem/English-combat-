@@ -551,6 +551,30 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'a2-11-detective',
     doneLine: { text: 'Every route in my city is perfect. Every route.', es: 'Cada ruta de mi ciudad es perfecta. Cada una.' },
   },
+  // ── A2-12, el centro de control de 2056: Leo (sala de boletos y pasillo), el robot de control y la persona especial ──
+  'a2-12-leo': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    until: 'a2-12-practice',
+    doneLine: { text: 'The announcer is blocking the door. Be careful.', es: 'El anunciador bloquea la puerta. Ten cuidado.' },
+  },
+  'a2-12-leo-hall': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    after: 'a2-12-practice',
+    doneLine: { text: "We're going back to the present. I'm sure of it.", es: 'Vamos a volver al presente. Estoy seguro.' },
+  },
+  'a2-12-bot': {
+    name: 'Control Bot',
+    look: { shirt: '#9aa6b2', hair: '#5a6672', skin: '#c9d6e2' },
+    doneLine: { text: 'System status: all routes open. Have a safe trip.', es: 'Estado del sistema: todas las rutas abiertas. Buen viaje.' },
+  },
+  'a2-12-interest': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: 'Everybody has a plan now. And so do we.', es: 'Ahora todos tienen un plan. Y nosotros también.' },
+  },
   'a2-receptionist': {
     name: 'The receptionist',
     look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },

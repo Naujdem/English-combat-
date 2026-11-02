@@ -25,6 +25,8 @@ import { A2_LEO_HOUSE_PRACTICE } from './a2LeoHouse'
 import { A2_LEO_HOUSE_QUESTIONS } from './questions-a2-10'
 import { A2_FUTURE_PRACTICE } from './a2Future'
 import { A2_FUTURE_QUESTIONS } from './questions-a2-11'
+import { A2_CONTROL_PRACTICE } from './a2Control'
+import { A2_CONTROL_QUESTIONS } from './questions-a2-12'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -368,6 +370,8 @@ export const QUESTIONS: Question[] = [
   ...A2_LEO_HOUSE_QUESTIONS,
   ...A2_FUTURE_PRACTICE,
   ...A2_FUTURE_QUESTIONS,
+  ...A2_CONTROL_PRACTICE,
+  ...A2_CONTROL_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -904,6 +908,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Movimiento: across (de un lado al otro) · through (por dentro) · along (a lo largo) · past (por delante) · into / out of.',
       'Indicaciones: go straight · turn left / right · take the second street on the left · it is on your right. Pedir: How can I get to…?',
       'Transporte: take the tram · get on / get off · by tram, by bus (pero on foot) · a ticket to…',
+    ],
+  },
+  'future-plans': {
+    name: 'Planes: will, going to y presente continuo',
+    level: 'A2',
+    lesson: [
+      'Presente continuo → plan ya acordado (con boleto, hora o cita): I am leaving at ten. We are meeting Adrián at three.',
+      'going to → intención o algo que se ve venir (evidencia): We are going to visit Green Valley. Look! It is going to rain.',
+      "will → decisión en el momento, ofrecer ayuda, promesa u opinión: OK, I'll take the next train. I'll help you. I think it will rain.",
+      'Viajes: book a ticket · single / return · platform 3 (sin the) · delayed · cancelled · check in. Horarios fijos: The train leaves at 10:15.',
     ],
   },
   future: {

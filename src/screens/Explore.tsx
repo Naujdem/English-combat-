@@ -58,6 +58,7 @@ import { MagicBook } from '../components/MagicBook'
 import { DebateTalk } from '../components/DebateTalk'
 import { LessonPlan } from '../components/LessonPlan'
 import { TourPlan } from '../components/TourPlan'
+import { FuturePlanner } from '../components/FuturePlanner'
 import { PartyPlan } from '../components/PartyPlan'
 import { Predict } from '../components/Predict'
 import { Speech } from '../components/Speech'
@@ -1044,7 +1045,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'command' && t.command) {
               const who = npcOf(t.npc ?? task)
               const c = t.command
-              return <CommandPuzzle name={who.name} look={who.look} title={c.title} intro={c.intro} verbs={c.verbs} objects={c.objects} steps={c.steps} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
+              return <CommandPuzzle name={who.name} look={who.look} title={c.title} intro={c.intro} verbs={c.verbs} objects={c.objects} steps={c.steps} scene={c.scene} finish={c.finish} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             }
             if (t.activity === 'memory' && t.memory) {
               const who = npcOf(t.npc ?? task)
@@ -1052,6 +1053,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             }
             if (t.activity === 'luggage') return <LostLuggage onClose={finish} />
             if (t.activity === 'route') return <RouteChallenge name={npcOf(t.npc ?? task).name} onClose={finish} />
+            if (t.activity === 'futureplan') return <FuturePlanner name={npcOf(t.npc ?? task).name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'book') return <MagicBook name={npcOf(t.npc ?? task).name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'debate' && t.debate) {
               const who = npcOf(t.npc ?? task)
