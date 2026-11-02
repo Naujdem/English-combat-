@@ -30,6 +30,7 @@ import { A2_RACE_ID, A2_07_CLOSE, isA2RaceUnlocked } from '../data/a2Race'
 import { A2_CAR_ID, A2_08_CLOSE, isA2CarUnlocked } from '../data/a2Car'
 import { A2_MILL_ID, A2_09_CLOSE, isA2MillUnlocked } from '../data/a2Mill'
 import { A2_LEO_HOUSE_ID, A2_10_CLOSE, isA2LeoHouseUnlocked } from '../data/a2LeoHouse'
+import { A2_PARTY_ID, A2_S3_CLOSE, isA2PartyUnlocked } from '../data/a2Party'
 import { A2_FUTURE_ID, A2_11_CLOSE, isA2FutureUnlocked } from '../data/a2Future'
 import { A2_CONTROL_ID, A2_12_CLOSE, isA2ControlUnlocked } from '../data/a2Control'
 import { A2_RETURN_ID, A2_13_CLOSE, isA2ReturnUnlocked } from '../data/a2Return'
@@ -47,8 +48,9 @@ const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } 
  * Mapa de nodos de A2: una misión por lugar, en orden. Se abre cada uno al cerrar el anterior.
  * Se ve en tres partes (pestañas): 1 presente (1-4), 2 pasado (5-8), 3 en franjas presente/futuro/presente (9-12).
  * En el mapa se numeran del 1 al 12 (sin el código A2-xx).
+ * Parte 4 (pestaña "Extras"): misiones secundarias, después de A2-13. Se marcan con una estrella en vez de número.
  */
-type A2Node = { id: string; sceneId: string; name: string; mission: string; era: keyof typeof ERA_COLOR; part: 1 | 2 | 3; x: number; y: number; open: (s: GameState) => boolean; done: (s: GameState) => boolean; locked: string }
+type A2Node = { id: string; sceneId: string; name: string; mission: string; era: keyof typeof ERA_COLOR; part: 1 | 2 | 3 | 4; x: number; y: number; open: (s: GameState) => boolean; done: (s: GameState) => boolean; locked: string }
 const A2_NODES: A2Node[] = [
   { id: 'hospital', sceneId: A2_START, name: 'Hospital', mission: 'A2-01', era: 'Presente', part: 1, x: 90, y: 110, open: isA2Unlocked, done: isA2CityUnlocked, locked: 'Termina A1 para llegar aquí.' },
   { id: 'city', sceneId: A2_CITY_ID, name: 'Ciudad', mission: 'A2-03', era: 'Presente', part: 1, x: 270, y: 110, open: isA2CityUnlocked, done: (s) => s.opened.includes(A2_03_CLOSE), locked: 'Se abre al salir del hospital.' },
@@ -62,13 +64,17 @@ const A2_NODES: A2Node[] = [
   { id: 'city-2056', sceneId: A2_FUTURE_ID, name: 'Ciudad 2056', mission: 'A2-11', era: 'Futuro', part: 3, x: 90, y: 178, open: isA2FutureUnlocked, done: (s) => s.opened.includes(A2_11_CLOSE), locked: 'Se abre al terminar en la casa de Leo.' },
   { id: 'control-2056', sceneId: A2_CONTROL_ID, name: 'Centro de control', mission: 'A2-12', era: 'Futuro', part: 3, x: 270, y: 178, open: isA2ControlUnlocked, done: (s) => s.opened.includes(A2_12_CLOSE), locked: 'Se abre al terminar en la ciudad de 2056.' },
   { id: 'hospital-return', sceneId: A2_RETURN_ID, name: 'Hospital', mission: 'A2-13', era: 'Presente', part: 3, x: 180, y: 305, open: isA2ReturnUnlocked, done: (s) => s.opened.includes(A2_13_CLOSE), locked: 'Se abre al terminar en el centro de control.' },
+  // Misiones secundarias (parte 4, "Extras")
+  { id: 'party', sceneId: A2_PARTY_ID, name: 'Make a Wish', mission: 'Secundaria', era: 'Presente', part: 4, x: 180, y: 180, open: isA2PartyUnlocked, done: (s) => s.opened.includes(A2_S3_CLOSE), locked: 'Se abre al terminar A2.' },
 ]
 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
-    state.opened.includes(A2_13_CLOSE)
-      ? '¡A2 completado! El núcleo del reloj brilla, pero no está lleno. Pronto: las misiones secundarias de A2 y después B1.'
+    state.opened.includes(A2_13_CLOSE) && !state.opened.includes(A2_S3_CLOSE)
+      ? '¡A2 completado! El núcleo del reloj brilla, pero no está lleno. En la pestaña Extras hay una misión secundaria: Leo prepara una fiesta sorpresa.'
+      : state.opened.includes(A2_13_CLOSE)
+      ? '¡A2 completado! El núcleo del reloj brilla, pero no está lleno. Pronto: más misiones secundarias de A2 y después B1.'
       : isA2ReturnUnlocked(state)
       ? 'A2-13 · The Missing Voice: el reloj te lleva de vuelta al hospital donde empezó A2. Leo te espera en el pasillo.'
       : isA2ControlUnlocked(state) && !state.opened.includes(A2_12_CLOSE)
@@ -136,11 +142,11 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const [level, setLevel] = useState<'A1' | 'A2'>(a2Open && A2_NODES.some((n) => n.sceneId === state.sceneId) ? 'A2' : 'A1')
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]
   // Épocas de A2: se ve una a la vez (pestañas), como en A1. Solo aparecen las épocas que ya tienen una misión abierta.
-  const a2Parts = ([1, 2, 3] as const).filter((p) => A2_NODES.some((n) => n.part === p && a2NodeOpen(n)))
+  const a2Parts = ([1, 2, 3, 4] as const).filter((p) => A2_NODES.some((n) => n.part === p && a2NodeOpen(n)))
   const [a2Part, setA2Part] = useState<A2Node['part']>(a2Here.part)
   const a2Shown = A2_NODES.filter((n) => n.part === a2Part)
-  /** Número del lugar en el mapa (1 a 12) */
-  const a2Num = (n: A2Node) => A2_NODES.indexOf(n) + 1
+  /** Número del lugar en el mapa (1 a 12); las misiones secundarias llevan una estrella */
+  const a2Num = (n: A2Node) => (n.part === 4 ? '★' : String(A2_NODES.indexOf(n) + 1))
   /** Franjas de fondo: la parte 3 tiene presente, futuro y presente; las otras, un solo color */
   const A2_BG = { Presente: '#2a3a24', Pasado: '#4a3a24', Futuro: '#1f2c40' } as const
   const a2Bands: { era: A2Node['era']; y: number; h: number }[] =
@@ -246,7 +252,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
               style={a2Part === p ? { background: p === 2 ? ERA_COLOR.Pasado : p === 3 ? ERA_COLOR.Futuro : ERA_COLOR.Presente } : undefined}
               onClick={() => setA2Part(p)}
             >
-              Parte {p}
+              {p === 4 ? 'Extras' : `Parte ${p}`}
             </button>
           ))}
         </div>

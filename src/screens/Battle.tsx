@@ -671,6 +671,17 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
     setShowEs(false)
     setPhase('after')
     update((s) => {
+      if (enemy.kind === 'trainer' && enemy.duel) {
+        // Duelo amistoso: queda vencido (cuenta para las tareas), recupera sus temas y puede dar un atuendo
+        const r = enemy.reward
+        return {
+          ...s,
+          hp: s.maxHp,
+          defeated: s.defeated.includes(enemy.id) ? s.defeated : [...s.defeated, enemy.id],
+          recovered: [...s.recovered, ...enemy.topics.filter((t) => !s.recovered.includes(t))],
+          outfits: r && !s.outfits.includes(r) ? [...s.outfits, r] : s.outfits,
+        }
+      }
       if (enemy.kind === 'trainer') {
         // Al terminar el entrenamiento Leo queda como amigo y da pistas en combate
         return {
@@ -717,7 +728,8 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
         nextQuestion()
         return
       }
-      update((s) => ({ ...s, battle: null, screen: 'world' }))
+      // El duelo amistoso se juega dentro de un escenario: al ganar se vuelve a él, no al mapa
+      update((s) => ({ ...s, battle: null, screen: enemy.duel ? 'explore' : 'world' }))
       onExit()
       return
     }
@@ -796,7 +808,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               {phase === 'lost' && (
                 <p className="mt-2 text-xs text-paper/60">
                   {enemy.kind === 'trainer'
-                    ? 'Leo: "Don\'t worry, it\'s just practice!" Vuelves a empezar con la vida llena.'
+                    ? enemy.duel?.lost ?? 'Leo: "Don\'t worry, it\'s just practice!" Vuelves a empezar con la vida llena.'
                     : enemy.standoff
                       ? 'Te quedaste sin energía. Respira: vuelves a intentarlo aquí mismo, con la vida llena.'
                       : 'Te quedaste sin energía. Volverás a la entrada con la vida llena.'}
@@ -1030,11 +1042,13 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
 
       {phase === 'won' && (
         <Panel className="anim-pop border-gold">
-          <p className="font-display text-2xl text-gold">{enemy.kind === 'trainer' ? '¡Entrenamiento completo!' : enemy.standoff ? '¡Lo hiciste retroceder!' : '¡Victoria!'}</p>
+          <p className="font-display text-2xl text-gold">{enemy.duel ? '¡Ganaste el duelo!' : enemy.kind === 'trainer' ? '¡Entrenamiento completo!' : enemy.standoff ? '¡Lo hiciste retroceder!' : '¡Victoria!'}</p>
           {enemy.standoff ? (
             <p className="mt-1 text-[16px]">
               El desconocido da un paso atrás. No está vencido... pero ahora sabe que tu voz es fuerte: pasado, presente y futuro.
             </p>
+          ) : enemy.duel ? (
+            <p className="mt-1 text-[16px]">{enemy.duel.won}</p>
           ) : enemy.kind === 'trainer' ? (
             <p className="mt-1 text-[16px]">
               Leo ahora es tu amigo. Si fallas en un combate, te dará una pista. Tu aventura empieza en la escuela.
@@ -1072,7 +1086,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               <p className="text-paper/75">También ganaste: {OUTFITS[enemy.reward ?? 'capa'].name}. Tus amigos tienen cosas nuevas que contarte.</p>
             </div>
           )}
-          <button className={`${btnPrimary} mt-4 w-full`} onClick={leave} autoFocus>{enemy.kind === 'trainer' ? 'Ir al mapa' : 'Continuar'}</button>
+          <button className={`${btnPrimary} mt-4 w-full`} onClick={leave} autoFocus>{enemy.kind === 'trainer' && !enemy.duel ? 'Ir al mapa' : 'Continuar'}</button>
         </Panel>
       )}
 

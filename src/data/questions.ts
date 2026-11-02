@@ -29,6 +29,8 @@ import { A2_CONTROL_PRACTICE } from './a2Control'
 import { A2_CONTROL_QUESTIONS } from './questions-a2-12'
 import { A2_RETURN_PRACTICE } from './a2Return'
 import { A2_RETURN_QUESTIONS } from './questions-a2-13'
+import { A2_PARTY_PRACTICE } from './a2Party'
+import { A2_PARTY_QUESTIONS } from './questions-a2-s3'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -376,6 +378,8 @@ export const QUESTIONS: Question[] = [
   ...A2_CONTROL_QUESTIONS,
   ...A2_RETURN_PRACTICE,
   ...A2_RETURN_QUESTIONS,
+  ...A2_PARTY_PRACTICE,
+  ...A2_PARTY_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -932,6 +936,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Dolor en una parte del cuerpo: my back hurts (con -s) · my ears hurt (plural, sin -s). Sentirse: I feel sick / dizzy / tired.',
       "Consejos: You should rest. You shouldn't shout. Why don't you drink some tea? (verbo base, sin to). Normas: You must… / You mustn't…",
       "Emergencias: What's your emergency? · I need an ambulance. · My friend has fainted. · We are on the second floor. · Please come quickly!",
+    ],
+  },
+  'wishes-conditional': {
+    name: 'Deseos, preferencias y primer condicional',
+    level: 'A2',
+    lesson: [
+      "Preferencias: I'd like + sustantivo / to + verbo · I'd rather + verbo (sin to) · I'd prefer + sustantivo / to + verbo.",
+      'Deseos: I hope + frase (I hope you have a great year) · I hope to + verbo (I hope to travel).',
+      "Primer condicional: If + presente, will + verbo → If it rains, we'll move inside. (Después de if, nunca will).",
+      "Preguntas y negativo: What will you do if...? · If we don't hurry, we won't finish.",
     ],
   },
   future: {

@@ -772,6 +772,40 @@ export const DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // ── Misión secundaria · Make a Wish ──
+  {
+    id: 'a2-s3',
+    title: 'A2 · Make a Wish',
+    unlock: 'a2-s3-close',
+    words: [
+      { title: 'Preferencias', words: [["I'd like...", 'Me gustaría...'], ["I'd rather...", 'Preferiría...'], ["I'd prefer...", 'Prefiero...'], ['Would you rather...?', '¿Preferirías...?']] },
+      { title: 'Deseos', words: [['I hope...', 'Espero que...'], ['make a wish', 'pedir un deseo'], ['come true', 'hacerse realidad'], ['blow out the candles', 'soplar las velas']] },
+      { title: 'La fiesta', words: [['surprise party', 'fiesta sorpresa'], ['guest', 'invitado'], ['present', 'regalo'], ['balloon', 'globo'], ['card', 'tarjeta'], ['hide', 'esconderse']] },
+      { title: 'Relaciones', words: [['meet (met)', 'conocer (conoció)'], ['get married', 'casarse'], ['single', 'soltero'], ['get on well', 'llevarse bien'], ['become friends', 'hacerse amigos']] },
+    ],
+    versions: [
+      {
+        id: 'a2-s3-party',
+        tense: 'n',
+        tab: 'La fiesta',
+        title: 'A surprise party',
+        frame: 'Lo escribes en el jardín de Leo, mientras la fiesta sigue.',
+        lines: [
+          { en: 'I [am sitting]n in Leo\'s garden. Today [is]n {iname}\'s birthday, and everybody [is]n here.', es: 'Estoy en el jardín de Leo. Hoy es el cumpleaños de {iname}, y todos están aquí.' },
+          { en: 'Maya [is playing]n games with the guests. She [says]n she [would rather]n play than dance.', es: 'Maya está jugando con los invitados. Dice que prefiere jugar a bailar.' },
+          { en: 'Leo\'s mom [is]n very kind. She [tells]n me how she and Leo\'s father [met]p at university.', es: 'La mamá de Leo es muy amable. Me cuenta cómo ella y el papá de Leo se conocieron en la universidad.' },
+          { en: 'There [are]n clouds in the sky, but we [have]n a plan B. If it [rains]n, we [will move]f inside.', es: 'Hay nubes en el cielo, pero tenemos un plan B. Si llueve, pasaremos adentro.' },
+          { en: '{iname} [is reading]n my card and [is smiling]n. I [hope]n all the wishes [come]n true.', es: '{iname} está leyendo mi tarjeta y está sonriendo. Espero que se cumplan todos los deseos.' },
+          { en: 'Today nothing strange [is happening]n. No purple light, no echoes. Just friends and cake.', es: 'Hoy no está pasando nada raro. Ni luz morada, ni ecos. Solo amigos y pastel.' },
+        ],
+        questions: [
+          { q: 'Whose birthday is it?', options: ["{iname}'s birthday.", "Leo's birthday.", "Maya's birthday."], answer: 0, tip: "El diario dice: \"Today is {iname}'s birthday\"." },
+          { q: "Where did Leo's parents meet?", options: ['At university.', 'At school.', 'At a party.'], answer: 0, tip: 'El diario dice: "met at university".' },
+          { q: 'What will they do if it rains?', options: ['They will move inside.', 'They will go home.', 'They will stop the party.'], answer: 0, tip: 'El diario dice: "If it rains, we will move inside".' },
+        ],
+      },
+    ],
+  },
 ]
 
 /** Diccionario de las palabras de los diarios (inglés → español) */

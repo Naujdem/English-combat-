@@ -29,7 +29,7 @@ export type Interest = {
 export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle' | 'epilogue'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
-export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'going-to-wh' | 'going-to-predict' | 'want-to' | 'should-must' | 'invitations' | 'requests' | 'instructions' | 'past-simple' | 'past-simple-comparatives' | 'superlatives-comparatives-race' | 'past-simple-continuous' | 'recipes-some-any' | 'present-perfect' | 'places-directions' | 'future-plans' | 'health-emergency' | 'future'
+export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'going-to-wh' | 'going-to-predict' | 'want-to' | 'should-must' | 'invitations' | 'requests' | 'instructions' | 'past-simple' | 'past-simple-comparatives' | 'superlatives-comparatives-race' | 'past-simple-continuous' | 'recipes-some-any' | 'present-perfect' | 'places-directions' | 'future-plans' | 'health-emergency' | 'wishes-conditional' | 'future'
 
 /**
  * fill: completar el espacio en blanco.
@@ -74,6 +74,11 @@ export type EnemyDef = {
   person: string
   /** trainer: Leo en modo entrenamiento, no castiga al perder */
   kind: 'minion' | 'boss' | 'trainer'
+  /**
+   * Duelo amistoso (con kind 'trainer'): no castiga al perder, pero al ganar queda vencido (cuenta para las tareas),
+   * recupera sus temas y puede dar un atuendo. Sus textos reemplazan los de Leo entrenador.
+   */
+  duel?: { lost: string; won: string }
   /** Esbirro opcional: no da llave, da la recompensa de `reward` */
   optional?: boolean
   /** Esbirro del presente arrastrado por la luz del reloj: al vencerlo vuelve a su tiempo (desaparece del mapa) y da un escudo */
@@ -127,7 +132,7 @@ export type Entity =
   /** after: el enemigo solo aparece cuando este id está en `opened` */
   | { type: 'enemy'; id: string; x: number; y: number; after?: string }
   | { type: 'friend'; id: string; x: number; y: number }
-  | { type: 'interest'; x: number; y: number }
+  | { type: 'interest'; x: number; y: number; after?: string }
   | { type: 'chest'; id: string; outfit: string; x: number; y: number }
   | { type: 'boss'; id: string; x: number; y: number }
   /** Personaje que no pelea, con su propia actividad */

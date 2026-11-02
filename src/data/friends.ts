@@ -418,6 +418,51 @@ export function interestFriend(interest: Interest, heroName = ''): FriendDef {
             : { who: 'friend', text: 'See you on Friday!', es: '¡Nos vemos el viernes!' },
         ],
       },
+      // A2: después de la fiesta sorpresa de cumpleaños (misión secundaria Make a Wish): deseos y primer condicional
+      {
+        requires: 'wishes-conditional',
+        level: 'A2',
+        title: romance ? 'Un deseo secreto' : 'Después de la fiesta',
+        lines: [
+          { who: 'narrator', text: `The party is over. ${n} is sitting under the tree in Leo's garden, with your card in ${hisLow} hands.`, es: `La fiesta terminó. ${n} está bajo el árbol del jardín de Leo, con tu tarjeta en las manos.` },
+          { who: 'friend', text: 'Thank you for the card. Nobody has ever written me something so nice.', es: 'Gracias por la tarjeta. Nadie me había escrito algo tan bonito.' },
+          {
+            who: 'friend',
+            text: "I won't tell you my wish. If I tell you, it won't come true! But what about you? What would you like to do next year?",
+            es: 'No te voy a contar mi deseo. ¡Si te lo cuento, no se cumplirá! Pero ¿y tú? ¿Qué te gustaría hacer el próximo año?',
+            options: [
+              {
+                text: "I'd like to travel with you and Leo. I hope we have more adventures.",
+                reply: romance ? "I'd like that very much. Wherever we go." : 'Yes! The three of us, like always.',
+                es: romance ? 'Me encantaría. Adonde sea que vayamos.' : '¡Sí! Los tres, como siempre.',
+                effect: 2,
+              },
+              { text: "I'd rather stay at home and sleep for a week!", reply: 'Ha ha, after this year, I understand!', es: 'Ja, ja, después de este año, ¡te entiendo!', effect: 1 },
+              { text: "I'd like travel a lot.", reply: "Ha ha, I'd like TO travel. Me too!", es: 'Ja, ja, "I\'d like TO travel". ¡Yo también!', effect: 0 },
+              nonsense('If the cake rains, I sleep.', "The cake rains? Ha ha, I don't understand.", '¿El pastel llueve? Ja, ja, no entiendo.'),
+            ],
+          },
+          {
+            who: 'friend',
+            text: 'This year was crazy. If something strange happens again, will you call me?',
+            es: 'Este año fue una locura. Si vuelve a pasar algo raro, ¿me vas a llamar?',
+            options: [
+              {
+                text: "Of course. And if you call me, I'll come right away.",
+                reply: romance ? "Then I'll call you... even when nothing strange happens." : 'Promise? Good. Me too.',
+                es: romance ? 'Entonces te llamaré... aunque no pase nada raro.' : '¿Lo prometes? Bien. Yo también.',
+                effect: 2,
+              },
+              { text: "Maybe, if I'm not busy.", reply: 'Ha ha, very honest!', es: 'Ja, ja, ¡qué sinceridad!', effect: 1 },
+              { text: 'Of course. If you will call me, I come.', reply: "Ha ha: if you CALL me, I'LL come. But thank you!", es: 'Ja, ja: "if you CALL me, I\'LL come". ¡Pero gracias!', effect: 0 },
+              nonsense('My phone is a banana.', "A banana? Ha ha, I don't understand.", '¿Una banana? Ja, ja, no entiendo.'),
+            ],
+          },
+          romance
+            ? { who: 'narrator', text: `${he} smiles at you, and for a second the whole garden is quiet. Maybe some wishes come true after all.`, es: 'Te sonríe, y por un segundo todo el jardín queda en silencio. Quizás algunos deseos sí se cumplen.' }
+            : { who: 'friend', text: 'Best friends? — Best friends.', es: '¿Mejores amigos? — Mejores amigos.' },
+        ],
+      },
       { requires: 'future', level: 'B1', title: romance ? 'Planes juntos' : 'Planes de futuro', lines: [] },
     ],
     casual: [
