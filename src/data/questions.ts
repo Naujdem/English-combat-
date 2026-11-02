@@ -19,6 +19,8 @@ import { A2_RACE_PRACTICE } from './a2Race'
 import { A2_RACE_QUESTIONS } from './questions-a2-race'
 import { A2_CAR_PRACTICE } from './a2Car'
 import { A2_CAR_QUESTIONS } from './questions-a2-car'
+import { A2_MILL_PRACTICE } from './a2Mill'
+import { A2_MILL_QUESTIONS } from './questions-a2-09'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -356,6 +358,8 @@ export const QUESTIONS: Question[] = [
   ...A2_RACE_QUESTIONS,
   ...A2_CAR_PRACTICE,
   ...A2_CAR_QUESTIONS,
+  ...A2_MILL_PRACTICE,
+  ...A2_MILL_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -862,6 +866,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Pasado continuo → acción en progreso: was / were + verbo con -ing → I was driving. We were checking the wheels.',
       'I / he / she / it → was · you / we / they → were.',
       'when + pasado simple (acción corta que interrumpe) · while + pasado continuo (acción larga): You were driving when the car stopped.',
+    ],
+  },
+  'recipes-some-any': {
+    name: 'Recetas, some/any y compras',
+    level: 'A2',
+    lesson: [
+      "Instrucciones y recetas (imperativo): verbo base al principio → Put the flour in a bowl. · Prohibir: Don't + verbo → Don't open the oven.",
+      "some en afirmativo (There is some flour) · any en negativo y preguntas (There isn't any salt. Is there any water?).",
+      'How much + lo que no se cuenta (flour, water) · How many + plural (sacks, eggs).',
+      "Comprar: How much is it? · I'd like two sacks, please. · Here is your change. · Can I return it?",
     ],
   },
   future: {

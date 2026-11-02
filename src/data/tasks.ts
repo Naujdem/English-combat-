@@ -5,6 +5,7 @@ import type { RaceLeg, SequenceStep } from '../components/SequenceMaster'
 import type { FixStep } from '../components/FixRadio'
 import type { ReconstructItem } from '../components/Reconstruct'
 import type { DebateEndings, DebateTurn } from '../components/DebateTalk'
+import type { CommandObject, CommandStep } from '../components/CommandPuzzle'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -24,7 +25,7 @@ export type NpcTask = {
   heal?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -42,6 +43,8 @@ export type NpcTask = {
   }
   /** Para activity 'fixradio' (Fix the Radio): instrucciones paso a paso; el jugador toca la pieza de cada paso */
   fixradio?: { title: string; intro: { en: string; es: string }; steps: FixStep[] }
+  /** Para activity 'command' (Command Puzzle, A2-09 Wake the Mill): el jugador da la orden (verbo + objeto). Con 0-1 errores, escudo */
+  command?: { title: string; intro: { en: string; es: string }; verbs: string[]; objects: CommandObject[]; steps: CommandStep[] }
   /** Para activity 'reconstruct' (Reconstruct the Story): contrastar pistas con una nota corrompida y elegir la frase verdadera */
   reconstruct?: { title: string; intro: { en: string; es: string }; items: ReconstructItem[] }
   /** Para activity 'debate' (Dialogue Under Pressure, versión de debate): turnos con respuesta buena / neutral / mala y tres desenlaces */
@@ -2219,6 +2222,210 @@ NPC_TASKS['a2-08-close'] = {
     es: 'Debemos seguir.',
     sub: 'A2-08 completada. Recuperaste otro fragmento. La luz morada sigue apareciendo.',
     say: 'We should keep going.',
+  },
+}
+
+// ── A2-09 — The Silent Mill (molino de la granja River en el pasado; escena, esbirro, eco y jefe en data/a2Mill.ts) ──
+// Orden: Leo (lección recipes-some-any + práctica) → el aprendiz corrompido → Mr. Bell (charla)
+//        → Leo (Detective: Reconstruct sobre el carro) → Mr. Bell (Wake the Mill) → La rueda rota → Leo (cierre).
+//        Opcionales: receta de pan de Mr. Bell (Sequence Master, escudo) · Eco del molino.
+NPC_TASKS['a2-09-leo'] = {
+  done: 'a2-09-practice',
+  lesson: 'recipes-some-any',
+  activity: 'practice',
+  practice: 'recipes-some-any',
+  practiceIds: ['a2-09-p1', 'a2-09-p2', 'a2-09-p3', 'a2-09-p4', 'a2-09-p5', 'a2-09-p6', 'a2-09-p7'],
+  steps: [],
+  reward: {
+    text: 'Leo: "Someone is in the field. Be careful."',
+    es: 'Hay alguien en el campo. Ten cuidado.',
+    sub: 'Un aprendiz corrompido bloquea el campo. Véncelo y habla con el molinero junto a la rueda.',
+    say: 'Someone is in the field.',
+  },
+}
+
+// Charla con el molinero (some/any): presenta el problema y abre el eco opcional
+NPC_TASKS['a2-09-miller-talk'] = {
+  npc: 'a2-09-miller',
+  done: 'a2-09-miller-talk',
+  requires: {
+    id: 'a2-09-apprentice',
+    text: 'Mr. Bell: "My apprentice is not himself. Please, help him first."',
+    es: 'Mi aprendiz no es él mismo. Por favor, ayúdalo primero.',
+    sub: 'Habla primero con Leo y vence al aprendiz corrompido.',
+  },
+  steps: [
+    { text: 'Welcome to the River mill. I am Mr. Bell, the miller.', es: 'Bienvenido al molino de los River. Soy el señor Bell, el molinero.' },
+    {
+      text: 'This mill makes flour for the whole valley. But one night the wheel stopped. Now my sacks are empty.',
+      es: 'Este molino hace harina para todo el valle. Pero una noche la rueda se detuvo. Ahora mis sacos están vacíos.',
+      choice: { ask: 'What can you say about the sacks?', options: ["There isn't any flour in the sacks.", "There isn't some flour in the sacks.", "There aren't any flour in the sacks."], answer: 0, tip: "Negativo: isn't any (flour no se cuenta)." },
+    },
+    {
+      text: 'And that night, something strange happened outside. My apprentice heard wheels on the stones.',
+      es: 'Y esa noche pasó algo extraño afuera. Mi aprendiz oyó ruedas sobre las piedras.',
+      choice: { ask: 'Ask Mr. Bell a question.', options: ['Were there any people outside?', 'Were there some people outside?', 'Was there any people outside?'], answer: 0, tip: 'Pregunta: any · people es plural: Were there…?' },
+    },
+    { text: "I don't know. Talk to your friend Leo. Then come back: we need to wake the mill.", es: 'No lo sé. Habla con tu amigo Leo. Luego vuelve: tenemos que despertar el molino.' },
+  ],
+  reward: {
+    text: 'Mr. Bell: "Talk to Leo. Then come back."',
+    es: 'Habla con Leo. Luego vuelve.',
+    sub: 'Leo quiere averiguar qué pasó esa noche. Hay un eco en el corral viejo (opcional).',
+    say: 'Talk to Leo. Then come back.',
+  },
+}
+
+// Detective: contrastar testimonios sobre esa noche (no explica por qué se detuvo el carro: eso queda para A2-10)
+NPC_TASKS['a2-09-detective'] = {
+  npc: 'a2-09-leo',
+  done: 'a2-09-detective',
+  activity: 'reconstruct',
+  requires: {
+    id: 'a2-09-miller-talk',
+    text: 'Leo: "Talk to the miller first. He is near the wheel."',
+    es: 'Habla primero con el molinero. Está cerca de la rueda.',
+    sub: 'El molinero está junto a la rueda.',
+  },
+  reconstruct: {
+    title: 'Detective: That Night',
+    intro: { en: 'The corrupted words changed the story of that night. Compare each clue and choose what really happened.', es: 'Las palabras corrompidas cambiaron la historia de esa noche. Compara cada pista y elige lo que pasó de verdad.' },
+    items: [
+      {
+        source: 'Sam',
+        clue: { en: 'I was sleeping when I heard the wheels of a cart on the stones.', es: 'Estaba durmiendo cuando oí las ruedas de un carro sobre las piedras.' },
+        claim: { en: 'Nobody came to the mill that night.', es: 'Nadie vino al molino esa noche.' },
+        options: ['A cart came to the mill that night.', 'Nobody came to the mill that night.', 'A cart come to the mill that night.'],
+        answer: 0,
+        tip: 'Sam oyó ruedas: llegó un carro (come → came).',
+      },
+      {
+        source: 'Mr. Bell',
+        clue: { en: "I closed the mill early. There wasn't any flour left.", es: 'Cerré el molino temprano. No quedaba harina.' },
+        claim: { en: 'There was a lot of flour in the mill that night.', es: 'Había mucha harina en el molino esa noche.' },
+        options: ["There wasn't any flour in the mill that night.", 'There was a lot of flour in the mill that night.', "There wasn't some flour in the mill that night."],
+        answer: 0,
+        tip: "Negativo: wasn't any.",
+      },
+      {
+        source: 'Old note',
+        clue: { en: 'Race day. Sold: three sacks of flour. Paid: twelve coins.', es: 'Día de la carrera. Vendidos: tres sacos de harina. Pagado: doce monedas.' },
+        claim: { en: "The miller didn't sell any flour that week.", es: 'El molinero no vendió harina esa semana.' },
+        options: ['The miller sold some flour on race day.', "The miller didn't sell any flour that week.", 'The miller sold any flour on race day.'],
+        answer: 0,
+        tip: 'La nota dice que vendió tres sacos: sold some flour (afirmativo: some).',
+      },
+      {
+        source: 'The cart',
+        clue: { en: 'The wheels of the old cart are white with flour.', es: 'Las ruedas de la carreta vieja están blancas de harina.' },
+        claim: { en: 'The cart was never near the mill.', es: 'La carreta nunca estuvo cerca del molino.' },
+        options: ['The cart was near the mill.', 'The cart was never near the mill.', 'The cart were near the mill.'],
+        answer: 0,
+        tip: 'Harina en las ruedas: estuvo cerca del molino (the cart → was).',
+      },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "A cart came here that night. But why? First, let\'s wake the mill."',
+    es: 'Un carro vino aquí esa noche. Pero ¿por qué? Primero, despertemos el molino.',
+    sub: 'Habla con Mr. Bell para despertar el molino.',
+    say: 'A cart came here that night.',
+  },
+}
+
+// Wake the Mill (Command Puzzle): el jugador da las órdenes. Al terminarlo aparece el jefe. Con 0-1 errores, escudo.
+NPC_TASKS['a2-09-wake'] = {
+  npc: 'a2-09-miller',
+  done: 'a2-09-wake',
+  activity: 'command',
+  requires: {
+    id: 'a2-09-detective',
+    text: 'Mr. Bell: "Talk to Leo first. Then we can wake the mill."',
+    es: 'Habla primero con Leo. Luego podemos despertar el molino.',
+    sub: 'Leo está en el campo.',
+  },
+  command: {
+    title: 'Wake the Mill',
+    intro: { en: 'Tell me what to do. Choose a verb, then touch the thing.', es: 'Dime qué hacer. Elige un verbo y luego toca la cosa.' },
+    verbs: ['lift', 'push', 'pull', 'open', 'close', 'turn', 'touch'],
+    objects: [
+      { id: 'stone', en: 'stone', es: 'piedra' },
+      { id: 'gate', en: 'gate', es: 'compuerta' },
+      { id: 'wheel', en: 'wheel', es: 'rueda' },
+      { id: 'millstones', en: 'millstones', es: 'piedras de moler' },
+      { id: 'rope', en: 'rope', es: 'cuerda' },
+    ],
+    steps: [
+      { problem: { en: 'A stone is stuck in the gate.', es: 'Una piedra está atascada en la compuerta.' }, verb: 'lift', object: 'stone', done: { en: 'The stone is out!', es: '¡La piedra salió!' }, tip: 'La piedra está atascada: hay que levantarla (lift).', fails: { push: { en: 'You push the stone, but it goes deeper into the gate.', es: 'Empujas la piedra, pero se mete más en la compuerta.' } } },
+      { problem: { en: "The gate is closed. The water can't pass.", es: 'La compuerta está cerrada. El agua no puede pasar.' }, verb: 'open', object: 'gate', done: { en: 'The water is coming!', es: '¡Viene el agua!' }, tip: 'Lo contrario de closed: open.' },
+      { problem: { en: 'The water is here, but the wheel is stuck.', es: 'El agua ya llegó, pero la rueda está atascada.' }, verb: 'turn', object: 'wheel', done: { en: 'The wheel is turning!', es: '¡La rueda está girando!' }, tip: 'Una rueda se gira: turn.' },
+      { problem: { en: 'The millstones are moving! Mr. Bell puts his hand near them. Warn him!', es: '¡Las piedras de moler se mueven! El señor Bell acerca la mano. ¡Avísale!' }, verb: 'touch', negative: true, object: 'millstones', done: { en: 'Thank you! That was dangerous.', es: '¡Gracias! Eso era peligroso.' }, tip: "Es una advertencia: usa DON'T + touch.", fails: { touch: { en: "No! Never say 'touch' here. It's dangerous!", es: '¡No! Aquí nunca digas "toca". ¡Es peligroso!' } } },
+      { problem: { en: 'The mill is working! Tell everyone with the bell.', es: '¡El molino funciona! Avísales a todos con la campana.' }, verb: 'pull', object: 'rope', done: { en: 'Ding, ding! The mill is awake!', es: '¡Din, don! ¡El molino despertó!' }, tip: 'La cuerda de la campana se jala: pull.' },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Mr. Bell: "The mill is awake… but the wheel looks angry!"',
+    es: 'El molino despertó… ¡pero la rueda parece enojada!',
+    sub: 'La rueda rota despertó junto al molino. Opcional: Mr. Bell también te enseña su receta de pan.',
+    say: 'The mill is awake!',
+  },
+}
+
+// Opcional: receta de pan del molinero (Sequence Master en imperativo). No bloquea; da un escudo.
+NPC_TASKS['a2-09-recipe'] = {
+  npc: 'a2-09-miller',
+  done: 'a2-09-recipe',
+  activity: 'sequence',
+  shield: true,
+  requires: {
+    id: 'a2-09-wake',
+    text: 'Mr. Bell: "First, let\'s wake the mill."',
+    es: 'Primero, despertemos el molino.',
+    sub: 'El molinero está junto a la rueda.',
+  },
+  sequence: {
+    title: 'My Bread Recipe',
+    hint: 'Piensa qué se hace primero en la cocina: los ingredientes, la masa, la espera y el horno.',
+    intro: { en: 'Put the recipe in order.', es: 'Ordena la receta.' },
+    steps: [
+      { en: 'First, put some flour, water and salt in a big bowl.', es: 'Primero, pon harina, agua y sal en un tazón grande.' },
+      { en: 'Then, mix everything and make the dough.', es: 'Luego, mezcla todo y haz la masa.' },
+      { en: 'After that, wait for one hour.', es: 'Después, espera una hora.' },
+      { en: 'Finally, bake the bread for forty minutes.', es: 'Por último, hornea el pan durante cuarenta minutos.' },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Mr. Bell: "Good! Now there is some bread for everybody."',
+    es: '¡Bien! Ahora hay pan para todos.',
+    sub: 'Mr. Bell te da un escudo de palabras: bloquea un error en combate.',
+    say: 'Now there is some bread for everybody.',
+  },
+}
+
+// Cierre con Leo tras vencer a la rueda rota (el fragmento ya lo entregó el jefe). Toca el carro sin explicarlo (A2-10).
+NPC_TASKS['a2-09-close'] = {
+  npc: 'a2-09-leo',
+  done: 'a2-09-close',
+  requires: {
+    id: 'a2-09-broken-wheel',
+    text: 'Leo: "The wheel is still angry. Go to the mill."',
+    es: 'La rueda sigue enojada. Ve al molino.',
+    sub: 'Sigue los objetivos bajo el mapa.',
+  },
+  steps: [
+    { text: 'Listen. The wheel is turning again. The mill is not silent anymore.', es: 'Escucha. La rueda gira otra vez. El molino ya no está en silencio.' },
+    { text: 'You gave instructions, you used some and any, and you asked about prices.', es: 'Diste instrucciones, usaste some y any, y preguntaste precios.' },
+    { text: 'You have another fragment. And now we know something: the cart stopped by this mill that night.', es: 'Tienes otro fragmento. Y ahora sabemos algo: el carro se detuvo junto a este molino esa noche.' },
+    { text: 'But why did it stop here? We need to find out.', es: 'Pero ¿por qué se detuvo aquí? Tenemos que averiguarlo.' },
+  ],
+  reward: {
+    text: 'Leo: "We need to find out."',
+    es: 'Tenemos que averiguarlo.',
+    sub: 'A2-09 completada. Recuperaste otro fragmento. El carro se detuvo junto al molino… pero ¿por qué?',
+    say: 'We need to find out.',
   },
 }
 

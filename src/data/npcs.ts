@@ -492,6 +492,17 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#e0c14a', hair: '#1a1a1a', skin: '#8d5524', gender: 'male', accessory: 'cap' },
     doneLine: { text: 'It was the same purple light from the race. I am sure.', es: 'Era la misma luz morada de la carrera. Estoy seguro.' },
   },
+  // ── A2-09, el molino: Leo (lección y cierre) y Mr. Bell, el molinero (charla y receta de pan) ──
+  'a2-09-leo': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    doneLine: { text: 'The cart stopped by the mill. But why here?', es: 'El carro se detuvo junto al molino. Pero ¿por qué aquí?' },
+  },
+  'a2-09-miller': {
+    name: 'Mr. Bell',
+    look: { shirt: '#e8e0cc', hair: '#9a9a9a', skin: '#e0ac69', gender: 'male', accessory: 'cap' },
+    doneLine: { text: 'Listen! The wheel is turning again. Thank you.', es: '¡Escucha! La rueda gira otra vez. Gracias.' },
+  },
   'a2-receptionist': {
     name: 'The receptionist',
     look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },

@@ -50,6 +50,7 @@ import { Timeline } from '../components/Timeline'
 import { SequenceMaster } from '../components/SequenceMaster'
 import { Reconstruct } from '../components/Reconstruct'
 import { FixRadio } from '../components/FixRadio'
+import { CommandPuzzle } from '../components/CommandPuzzle'
 import { DebateTalk } from '../components/DebateTalk'
 import { LessonPlan } from '../components/LessonPlan'
 import { TourPlan } from '../components/TourPlan'
@@ -179,14 +180,14 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   )
 
   /** Termina la tarea de un personaje: si se completó, se guarda su `done` y se muestra su recompensa */
-  function finishTask(id: string, done: boolean, extra: string[] = []) {
+  function finishTask(id: string, done: boolean, extra: string[] = [], bonusShield = false) {
     const t = NPC_TASKS[id]
     setTask(null)
     if (!done || !t) return
     update((s) => ({
       ...s,
       opened: [...s.opened, ...[t.done, ...extra].filter((x, k, all) => !s.opened.includes(x) && all.indexOf(x) === k)],
-      items: t.shield ? { ...s.items, shield: Math.min(2, s.items.shield + 1) } : s.items,
+      items: t.shield || bonusShield ? { ...s.items, shield: Math.min(2, s.items.shield + 1) } : s.items,
       outfits: t.outfit && !s.outfits.includes(t.outfit) ? [...s.outfits, t.outfit] : s.outfits,
       hp: t.heal ? s.maxHp : s.hp,
     }))
@@ -1035,6 +1036,11 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'fixradio' && t.fixradio) {
               const who = npcOf(t.npc ?? task)
               return <FixRadio name={who.name} look={who.look} title={t.fixradio.title} intro={t.fixradio.intro} steps={t.fixradio.steps} onClose={finish} />
+            }
+            if (t.activity === 'command' && t.command) {
+              const who = npcOf(t.npc ?? task)
+              const c = t.command
+              return <CommandPuzzle name={who.name} look={who.look} title={c.title} intro={c.intro} verbs={c.verbs} objects={c.objects} steps={c.steps} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             }
             if (t.activity === 'debate' && t.debate) {
               const who = npcOf(t.npc ?? task)
