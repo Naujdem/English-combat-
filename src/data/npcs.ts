@@ -470,6 +470,17 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#4a7a9a', hair: '#2b1d12', skin: '#e0ac69', gender: 'male', accessory: 'cap' },
     doneLine: { text: "The horses are fine. I feed them every morning.", es: 'Los caballos están bien. Les doy de comer cada mañana.' },
   },
+  // ── A2-07, el hipódromo: Leo (lección y cierre) y JoJo (testigo del accidente del carro; no combate) ──
+  'a2-07-leo': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    doneLine: { text: 'The core is still empty… but we are getting closer.', es: 'El núcleo todavía está vacío… pero nos estamos acercando.' },
+  },
+  'a2-07-jojo': {
+    name: 'JoJo',
+    look: { shirt: '#e0c14a', hair: '#1a1a1a', skin: '#8d5524', gender: 'male', accessory: 'cap' },
+    doneLine: { text: 'Now I can ride without fear.', es: 'Ahora puedo montar sin miedo.' },
+  },
   'a2-receptionist': {
     name: 'The receptionist',
     look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },

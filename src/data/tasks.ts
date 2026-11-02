@@ -1,7 +1,7 @@
 import type { TopicId } from '../game/types'
 import type { MiniStep } from '../components/MiniTalk'
 import type { RoundItem, RoundLines } from '../components/OneMoreRound'
-import type { SequenceStep } from '../components/SequenceMaster'
+import type { RaceLeg, SequenceStep } from '../components/SequenceMaster'
 import type { FixStep } from '../components/FixRadio'
 import type { ReconstructItem } from '../components/Reconstruct'
 import type { DebateEndings, DebateTurn } from '../components/DebateTalk'
@@ -32,13 +32,28 @@ export type NpcTask = {
   /** Para activity 'practice': preguntas fijas en orden (si no, se eligen al azar del tema) */
   practiceIds?: string[]
   /** Para activity 'sequence' (Sequence Master): los pasos en el orden correcto (salen desordenados) */
-  sequence?: { title: string; intro: SequenceStep; steps: SequenceStep[]; hint?: string }
+  sequence?: {
+    title: string
+    intro: SequenceStep
+    steps: SequenceStep[]
+    hint?: string
+    /** Modo carrera (A2-07): tramos seguidos con posición. start = puesto inicial; startBy cambia el puesto si hay una marca en opened */
+    race?: { runners: number; start: number; startBy?: { flag: string; position: number }[]; legs: RaceLeg[] }
+  }
   /** Para activity 'fixradio' (Fix the Radio): instrucciones paso a paso; el jugador toca la pieza de cada paso */
   fixradio?: { title: string; intro: { en: string; es: string }; steps: FixStep[] }
   /** Para activity 'reconstruct' (Reconstruct the Story): contrastar pistas con una nota corrompida y elegir la frase verdadera */
   reconstruct?: { title: string; intro: { en: string; es: string }; items: ReconstructItem[] }
   /** Para activity 'debate' (Dialogue Under Pressure, versión de debate): turnos con respuesta buena / neutral / mala y tres desenlaces */
-  debate?: { title: string; turns: DebateTurn[]; endings: DebateEndings }
+  debate?: {
+    title: string
+    turns: DebateTurn[]
+    endings?: DebateEndings
+    /** Texto de la indicación antes de las opciones (por defecto: "Defiende la tradición.") */
+    ask?: string
+    /** Marca que se guarda en opened según el desenlace (A2-07: la confianza de JoJo cambia la salida de la carrera) */
+    results?: Partial<Record<keyof DebateEndings, string>>
+  }
   /** Dialogue Under Pressure: segundos para cada elección de la charla */
   pressure?: number
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
@@ -1751,6 +1766,258 @@ NPC_TASKS['a2-06-close'] = {
     es: 'No está completo, pero es un comienzo.',
     sub: 'A2-06 completada. Guardaste el trozo viejo del estandarte de la familia River.',
     say: 'It is a start.',
+  },
+}
+
+// ── A2-07 — The Great Race (hipódromo del pasado; escena, Jack y el Master Jockey en data/a2Race.ts) ──
+// Orden: Leo (lección superlatives-comparatives-race + práctica) → Jack the Rival (puerta de la pista)
+//        → JoJo (DebateTalk: el desenlace cambia la posición de salida) → JoJo (la carrera: Sequence Master por tramos + desafíos)
+//        → JoJo (Reconstruct the Story: ordenar) → The Master Jockey (en la meta) → Leo (cierre: fragmento) → Leo (despedida opcional con JoJo).
+NPC_TASKS['a2-07-leo'] = {
+  done: 'a2-07-practice',
+  lesson: 'superlatives-comparatives-race',
+  activity: 'practice',
+  practice: 'superlatives-comparatives-race',
+  practiceIds: ['a2-07-p1', 'a2-07-p2', 'a2-07-p3', 'a2-07-p4', 'a2-07-p5'],
+  steps: [],
+  reward: {
+    text: 'Leo: "Let\'s go to the track. Someone there remembers an old accident."',
+    es: 'Vamos a la pista. Alguien allí recuerda un viejo accidente.',
+    sub: 'Un jinete rival bloquea la puerta de la pista. Véncelo y busca a JoJo junto a los establos.',
+    say: "Let's go to the track.",
+  },
+}
+
+// DebateTalk con JoJo (antes de la carrera): 4 turnos sin respuestas incorrectas.
+// Mayoría buena → salida en mejor posición (a2-07-jojo-trust); mixto → posición media (a2-07-jojo-mixed); si no, la última.
+NPC_TASKS['a2-07-debate'] = {
+  npc: 'a2-07-jojo',
+  done: 'a2-07-debate',
+  activity: 'debate',
+  requires: {
+    id: 'a2-07-jack',
+    text: 'JoJo: "Talk to Leo first."',
+    es: 'Habla primero con Leo.',
+    sub: 'Leo está en la tribuna.',
+  },
+  debate: {
+    title: 'Talk to JoJo',
+    ask: 'Escucha a JoJo y respóndele.',
+    results: { high: 'a2-07-jojo-trust', mid: 'a2-07-jojo-mixed' },
+    turns: [
+      {
+        text: 'Last year a cart crossed the track. My horse fell. I still hear the noise. What do you think happened?',
+        es: 'El año pasado un carro cruzó la pista. Mi caballo se cayó. Todavía oigo el ruido. ¿Qué crees que pasó?',
+        options: [
+          { en: 'The cart was dangerous. You did your best.', es: 'El carro era peligroso. Hiciste lo mejor que pudiste.', value: 'good' },
+          { en: 'Accidents happen in races.', es: 'Los accidentes pasan en las carreras.', value: 'neutral' },
+          { en: 'You were too slow. It was your fault.', es: 'Fuiste demasiado lento. Fue tu culpa.', value: 'bad' },
+        ],
+      },
+      {
+        text: 'After the fall, the words felt wrong. ‘Faster’ didn’t sound right anymore. Do you feel that too?',
+        es: 'Después de la caída, las palabras se sentían mal. "Faster" ya no sonaba bien. ¿Tú también lo sientes?',
+        options: [
+          { en: 'Yes. But we can make the words right again.', es: 'Sí. Pero podemos arreglar las palabras otra vez.', value: 'good' },
+          { en: 'Maybe. Let’s just race.', es: 'Quizá. Solo corramos.', value: 'neutral' },
+          { en: 'That’s not important. Just ride.', es: 'Eso no es importante. Solo monta.', value: 'bad' },
+        ],
+      },
+      {
+        text: 'Today the track still remembers the cart. Are you going to be careful?',
+        es: 'Hoy la pista todavía recuerda el carro. ¿Vas a tener cuidado?',
+        options: [
+          { en: 'Yes. I’ll jump higher and ride carefully.', es: 'Sí. Saltaré más alto y montaré con cuidado.', value: 'good' },
+          { en: 'I’ll try.', es: 'Lo intentaré.', value: 'neutral' },
+          { en: 'I don’t care about the cart.', es: 'No me importa el carro.', value: 'bad' },
+        ],
+      },
+      {
+        text: 'If you finish well, maybe the word comes back. What will you do at the finish line?',
+        es: 'Si terminas bien, quizá la palabra vuelve. ¿Qué harás en la meta?',
+        options: [
+          { en: 'I’ll speak clearly and help you.', es: 'Hablaré con claridad y te ayudaré.', value: 'good' },
+          { en: 'I’ll just cross the line.', es: 'Solo cruzaré la línea.', value: 'neutral' },
+          { en: 'I’ll win and leave.', es: 'Ganaré y me iré.', value: 'bad' },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: 'Thank you. I trust you. Ride well.', es: 'Gracias. Confío en ti. Monta bien. (Saldrás en mejor posición).' },
+      mid: { text: 'Okay. Be careful out there.', es: 'Está bien. Ten cuidado allá afuera.' },
+      low: { text: 'Fine. Do what you want.', es: 'Bien. Haz lo que quieras.' },
+    },
+  },
+  steps: [],
+  reward: {
+    text: 'JoJo: "Ride well."',
+    es: 'Monta bien.',
+    sub: 'Habla otra vez con JoJo para empezar la carrera.',
+    say: 'Ride well.',
+  },
+}
+
+// La carrera: Sequence Master en 4 tramos + un desafío por tramo. La posición sube o baja según el acierto; siempre se llega a la meta.
+NPC_TASKS['a2-07-race'] = {
+  npc: 'a2-07-jojo',
+  done: 'a2-07-race',
+  activity: 'sequence',
+  requires: {
+    id: 'a2-07-debate',
+    text: 'JoJo: "Talk to me before the race."',
+    es: 'Habla conmigo antes de la carrera.',
+    sub: 'JoJo está junto a los establos.',
+  },
+  sequence: {
+    title: 'The Great Race',
+    intro: { en: 'Ride well. Put each part of the race in order.', es: 'Monta bien. Ordena cada parte de la carrera.' },
+    hint: 'Piensa qué pasa primero en este tramo.',
+    steps: [],
+    race: {
+      runners: 5,
+      start: 4,
+      startBy: [
+        { flag: 'a2-07-jojo-trust', position: 2 },
+        { flag: 'a2-07-jojo-mixed', position: 3 },
+      ],
+      legs: [
+        {
+          title: 'Salida',
+          steps: [
+            { en: 'Get ready', es: 'Prepárate' },
+            { en: 'Leave the gate', es: 'Sal del cajón de salida' },
+            { en: 'Ride faster', es: 'Monta más rápido' },
+          ],
+          challenge: { q: 'Look! Your horse ___ faster now.', es: '¡Mira! Tu caballo está corriendo más rápido ahora.', options: ['is running', 'are running', 'running'], answer: 0, tip: 'Un caballo: is + verbo con -ing.' },
+        },
+        {
+          title: 'Primer salto',
+          steps: [
+            { en: 'See the jump', es: 'Mira el salto' },
+            { en: 'Jump higher', es: 'Salta más alto' },
+            { en: 'Land safely', es: 'Aterriza con seguridad' },
+          ],
+          challenge: { q: 'This jump is ___ than the first one.', es: 'Este salto es más alto que el primero.', options: ['higher', 'more high', 'highest'], answer: 0, tip: 'Adjetivo corto: high → higher than.' },
+        },
+        {
+          title: 'El carro',
+          steps: [
+            { en: 'See the cart', es: 'Mira el carro' },
+            { en: 'Jump higher over the cart', es: 'Salta más alto por encima del carro' },
+            { en: 'Keep going', es: 'Sigue adelante' },
+          ],
+          challenge: { q: 'This is ___ part of the track.', es: 'Esta es la parte más peligrosa de la pista.', options: ['the most dangerous', 'the more dangerous', 'most dangerous'], answer: 0, tip: 'Superlativo de adjetivo largo: the most dangerous.' },
+        },
+        {
+          title: 'Meta',
+          steps: [
+            { en: 'Ride faster', es: 'Monta más rápido' },
+            { en: 'Cross the finish line', es: 'Cruza la meta' },
+            { en: 'Celebrate', es: 'Celebra' },
+          ],
+          challenge: { q: 'You are ___ rider today!', es: '¡Eres el jinete más rápido hoy!', options: ['the fastest', 'the faster', 'fastest'], answer: 0, tip: 'El más rápido de todos: the fastest.' },
+        },
+      ],
+    },
+  },
+  steps: [],
+  reward: {
+    text: 'JoJo: "You finished the race!"',
+    es: '¡Terminaste la carrera!',
+    sub: 'Habla otra vez con JoJo: reconstruyan juntos lo que pasó.',
+    say: 'You finished the race!',
+  },
+}
+
+// Reconstruct the Story (después de la carrera): ordenar los fragmentos (mismo formato que el orden de A2-06)
+NPC_TASKS['a2-07-story'] = {
+  npc: 'a2-07-jojo',
+  done: 'a2-07-story',
+  activity: 'sequence',
+  requires: {
+    id: 'a2-07-race',
+    text: 'JoJo: "The race is starting. Talk to me."',
+    es: 'La carrera va a empezar. Habla conmigo.',
+    sub: 'JoJo está junto a los establos.',
+  },
+  sequence: {
+    title: 'Reconstruct the Story',
+    hint: 'Piensa en el tiempo: last year → after that → today.',
+    intro: { en: 'Put the story in order, from last year to today.', es: 'Ordena la historia, del año pasado a hoy.' },
+    steps: [
+      { en: 'A cart crossed the track last year.', es: 'Un carro cruzó la pista el año pasado.' },
+      { en: 'JoJo’s horse fell.', es: 'El caballo de JoJo se cayó.' },
+      { en: 'The words felt wrong after that.', es: 'Después de eso, las palabras se sentían mal.' },
+      { en: 'Today you saw the cart again.', es: 'Hoy viste el carro otra vez.' },
+      { en: 'You jumped higher over the cart.', es: 'Saltaste más alto por encima del carro.' },
+      { en: 'You finished the race.', es: 'Terminaste la carrera.' },
+      { en: 'The word “fastest” feels almost right again.', es: 'La palabra "fastest" se siente casi bien otra vez.' },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'JoJo: "Yes. That’s what happened. The cart is gone now, and the word is almost back. Thank you."',
+    es: 'Sí. Eso es lo que pasó. El carro ya no está, y la palabra casi volvió. Gracias.',
+    sub: 'Alguien te espera en la meta: The Master Jockey.',
+    say: 'The cart is gone now, and the word is almost back.',
+  },
+}
+
+// Cierre: Leo (y JoJo) tras vencer al Master Jockey (taskOf mira opened + defeated)
+NPC_TASKS['a2-07-close'] = {
+  npc: 'a2-07-leo',
+  done: 'a2-07-close',
+  requires: {
+    id: 'a2-07-master-jockey',
+    text: 'Leo: "The race isn’t over. Talk to JoJo."',
+    es: 'La carrera no ha terminado. Habla con JoJo.',
+    sub: 'Sigue los objetivos bajo el mapa.',
+  },
+  steps: [
+    { text: 'You rode well and you spoke well. The fragment is yours.', es: 'Montaste bien y hablaste bien. El fragmento es tuyo.' },
+    { text: 'JoJo: "The cart crossed the track and the word disappeared. Now you have it back."', es: 'JoJo: "El carro cruzó la pista y la palabra desapareció. Ahora la recuperaste."' },
+    { text: 'Yes. And now we have one more fragment for the clock. The core is still empty… but we are getting closer.', es: 'Sí. Y ahora tenemos un fragmento más para el reloj. El núcleo todavía está vacío… pero nos estamos acercando.' },
+  ],
+  reward: {
+    text: 'Leo: "We are getting closer."',
+    es: 'Nos estamos acercando.',
+    sub: 'A2-07 completada. Recuperaste un fragmento de la voz del ganador. (Opcional: habla otra vez con Leo para despedirte de JoJo).',
+    say: 'We are getting closer.',
+  },
+}
+
+// Despedida opcional (DebateTalk corto, 1 turno): no cuenta para cerrar la unidad
+NPC_TASKS['a2-07-farewell'] = {
+  npc: 'a2-07-leo',
+  done: 'a2-07-farewell',
+  activity: 'debate',
+  requires: {
+    id: 'a2-07-close',
+    text: 'Leo: "The race isn’t over. Talk to JoJo."',
+    es: 'La carrera no ha terminado. Habla con JoJo.',
+    sub: 'Sigue los objetivos bajo el mapa.',
+  },
+  debate: {
+    title: 'Talk to JoJo',
+    ask: 'Elige qué le dices a JoJo.',
+    turns: [
+      {
+        text: 'You have the fragment. What do you say to JoJo?',
+        es: 'Tienes el fragmento. ¿Qué le dices a JoJo?',
+        options: [
+          { en: 'The cart is gone. The word is yours again.', es: 'El carro ya no está. La palabra es tuya otra vez.', value: 'good', reply: { text: 'JoJo: "Thank you. Now I can ride without fear."', es: 'JoJo: "Gracias. Ahora puedo montar sin miedo."' } },
+          { en: 'We finished the race.', es: 'Terminamos la carrera.', value: 'neutral', reply: { text: 'JoJo: "Yes. We finished."', es: 'JoJo: "Sí. Terminamos."' } },
+          { en: 'I won. That’s all.', es: 'Gané. Eso es todo.', value: 'bad', reply: { text: 'JoJo: "Okay… goodbye."', es: 'JoJo: "Está bien… adiós."' } },
+        ],
+      },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "We are getting closer."',
+    es: 'Nos estamos acercando.',
+    sub: 'Te despediste de JoJo.',
+    say: 'We are getting closer.',
   },
 }
 
