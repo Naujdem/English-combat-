@@ -31,6 +31,7 @@ import { A2_CAR_ID, A2_08_CLOSE, isA2CarUnlocked } from '../data/a2Car'
 import { A2_MILL_ID, A2_09_CLOSE, isA2MillUnlocked } from '../data/a2Mill'
 import { A2_LEO_HOUSE_ID, A2_10_CLOSE, isA2LeoHouseUnlocked } from '../data/a2LeoHouse'
 import { A2_PARTY_ID, A2_S3_CLOSE, isA2PartyUnlocked } from '../data/a2Party'
+import { A2_MARKET_ID, A2_S4_CLOSE, isA2MarketUnlocked } from '../data/a2Market'
 import { A2_FUTURE_ID, A2_11_CLOSE, isA2FutureUnlocked } from '../data/a2Future'
 import { A2_CONTROL_ID, A2_12_CLOSE, isA2ControlUnlocked } from '../data/a2Control'
 import { A2_RETURN_ID, A2_13_CLOSE, isA2ReturnUnlocked } from '../data/a2Return'
@@ -65,14 +66,15 @@ const A2_NODES: A2Node[] = [
   { id: 'control-2056', sceneId: A2_CONTROL_ID, name: 'Centro de control', mission: 'A2-12', era: 'Futuro', part: 3, x: 270, y: 178, open: isA2ControlUnlocked, done: (s) => s.opened.includes(A2_12_CLOSE), locked: 'Se abre al terminar en la ciudad de 2056.' },
   { id: 'hospital-return', sceneId: A2_RETURN_ID, name: 'Hospital', mission: 'A2-13', era: 'Presente', part: 3, x: 180, y: 305, open: isA2ReturnUnlocked, done: (s) => s.opened.includes(A2_13_CLOSE), locked: 'Se abre al terminar en el centro de control.' },
   // Misiones secundarias (parte 4, "Extras")
-  { id: 'party', sceneId: A2_PARTY_ID, name: 'Make a Wish', mission: 'Secundaria', era: 'Presente', part: 4, x: 180, y: 180, open: isA2PartyUnlocked, done: (s) => s.opened.includes(A2_S3_CLOSE), locked: 'Se abre al terminar A2.' },
+  { id: 'party', sceneId: A2_PARTY_ID, name: 'Make a Wish', mission: 'Secundaria', era: 'Presente', part: 4, x: 100, y: 130, open: isA2PartyUnlocked, done: (s) => s.opened.includes(A2_S3_CLOSE), locked: 'Se abre al terminar A2.' },
+  { id: 'market', sceneId: A2_MARKET_ID, name: 'Market Day', mission: 'Secundaria', era: 'Presente', part: 4, x: 260, y: 240, open: isA2MarketUnlocked, done: (s) => s.opened.includes(A2_S4_CLOSE), locked: 'Se abre al terminar A2.' },
 ]
 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
-    state.opened.includes(A2_13_CLOSE) && !state.opened.includes(A2_S3_CLOSE)
-      ? '¡A2 completado! El núcleo del reloj brilla, pero no está lleno. En la pestaña Extras hay una misión secundaria: Leo prepara una fiesta sorpresa.'
+    state.opened.includes(A2_13_CLOSE) && !(state.opened.includes(A2_S3_CLOSE) && state.opened.includes(A2_S4_CLOSE))
+      ? '¡A2 completado! El núcleo del reloj brilla, pero no está lleno. En la pestaña Extras hay misiones secundarias: una fiesta sorpresa y un día de rebajas en la tienda de ropa.'
       : state.opened.includes(A2_13_CLOSE)
       ? '¡A2 completado! El núcleo del reloj brilla, pero no está lleno. Pronto: más misiones secundarias de A2 y después B1.'
       : isA2ReturnUnlocked(state)

@@ -29,7 +29,7 @@ export type Interest = {
 export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle' | 'epilogue'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
-export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'going-to-wh' | 'going-to-predict' | 'want-to' | 'should-must' | 'invitations' | 'requests' | 'instructions' | 'past-simple' | 'past-simple-comparatives' | 'superlatives-comparatives-race' | 'past-simple-continuous' | 'recipes-some-any' | 'present-perfect' | 'places-directions' | 'future-plans' | 'health-emergency' | 'wishes-conditional' | 'future'
+export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'going-to-wh' | 'going-to-predict' | 'want-to' | 'should-must' | 'invitations' | 'requests' | 'instructions' | 'past-simple' | 'past-simple-comparatives' | 'superlatives-comparatives-race' | 'past-simple-continuous' | 'recipes-some-any' | 'present-perfect' | 'places-directions' | 'future-plans' | 'health-emergency' | 'wishes-conditional' | 'clothes-shopping' | 'future'
 
 /**
  * fill: completar el espacio en blanco.
@@ -244,6 +244,8 @@ export type GameState = {
   interest: Interest
   outfit: string
   outfits: string[]
+  /** Monedas para la tienda de atuendos (se ganan en misiones y minijuegos; se abre con Market Day) */
+  coins?: number
   hp: number
   maxHp: number
   recovered: TopicId[]

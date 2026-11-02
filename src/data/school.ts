@@ -305,6 +305,12 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   'pase-2056': { name: 'Chaqueta con pase de transporte (2056)', color: '#2f8f9d' },
   'uniforme-control': { name: 'Uniforme del centro de control (2056)', color: '#3a5a7a' },
   'voluntario-hospital': { name: 'Chaleco de voluntario del hospital (A2)', color: '#4f9d8a' },
+  // Tienda de Nadia (Market Day): se compran con monedas
+  'camiseta-rebaja': { name: 'Camiseta roja de rebaja', color: '#d64545' },
+  'sudadera-verde': { name: 'Sudadera verde', color: '#3b9d5d' },
+  'camisa-amarilla': { name: 'Camisa amarilla', color: '#e0b526' },
+  'chaqueta-negra': { name: 'Chaqueta negra', color: '#1f1f24' },
+  'abrigo-invierno': { name: 'Abrigo de invierno', color: '#7a4a2e' },
 }
 
 SCHOOL.requirements = BOSS_REQUIREMENTS
