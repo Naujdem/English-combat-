@@ -77,7 +77,7 @@ export const A2_HOSPITAL_ENEMIES: Record<string, EnemyDef> = {
     echo: true,
     hp: 5,
     topics: ['should-must'],
-    kinds: ['fill', 'fix', 'order', 'write'],
+    kinds: ['fill', 'fix', 'order', 'listen', 'write'],
     tags: ['a2-hospital'],
     onlyTags: true,
     look: { shirt: '#9fb7c9', hair: '#5a5a5a', skin: '#c9b8d8' },

@@ -58,7 +58,7 @@ export const A2_CITY_ENEMIES: Record<string, EnemyDef> = {
     echo: true,
     hp: 4,
     topics: ['invitations'],
-    kinds: ['fill', 'fix', 'order', 'write'],
+    kinds: ['fill', 'fix', 'order', 'listen', 'write'],
     tags: ['a2-city-tourist'],
     onlyTags: true,
     zone: 'calle',
@@ -82,16 +82,16 @@ export const A2_CITY_ENEMIES: Record<string, EnemyDef> = {
     echo: true,
     hp: 6,
     topics: ['should-must', 'invitations'],
-    kinds: ['fill', 'fix', 'order', 'write'],
+    kinds: ['fill', 'fix', 'order', 'listen', 'write'],
     tags: ['a2-city'],
     // Dos fases cortas: primero reglas y consejos, luego invitaciones y hábitos
     phases: [
-      { hp: 3, title: 'Rules', topics: ['should-must'], kinds: ['fill', 'fix', 'order', 'write'], tags: ['a2-city'] },
+      { hp: 3, title: 'Rules', topics: ['should-must'], kinds: ['fill', 'fix', 'order', 'listen', 'write'], tags: ['a2-city'] },
       {
         hp: 3,
         title: 'Invitations',
         topics: ['invitations'],
-        kinds: ['fill', 'fix', 'order', 'write'],
+        kinds: ['fill', 'fix', 'order', 'listen', 'write'],
         tags: ['a2-city'],
         line: { text: "OK, no rules! Let's sit here forever! How about drink purple coffee? I always am here, you never leaves!", es: '¡Bueno, sin reglas! ¡Sentémonos aquí para siempre! ¿Qué tal tomar café morado? ¡Siempre estoy aquí, tú nunca te vas! (Ahora mezcla invitaciones y frecuencia).' },
       },

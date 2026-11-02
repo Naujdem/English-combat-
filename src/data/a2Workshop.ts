@@ -49,7 +49,7 @@ export const A2_WORKSHOP_ENEMIES: Record<string, EnemyDef> = {
     echo: true,
     hp: 4,
     topics: ['requests', 'instructions'],
-    kinds: ['fill', 'fix', 'order', 'write'],
+    kinds: ['fill', 'fix', 'order', 'listen', 'write'],
     tags: ['a2-workshop-apprentice'],
     onlyTags: true,
     zone: 'taller',
@@ -72,16 +72,16 @@ export const A2_WORKSHOP_ENEMIES: Record<string, EnemyDef> = {
     kind: 'boss',
     hp: 8,
     topics: ['requests', 'instructions'],
-    kinds: ['fill', 'fix', 'order', 'write'],
+    kinds: ['fill', 'fix', 'order', 'listen', 'write'],
     tags: ['a2-workshop'],
     // Fase 1: peticiones corteses · Fase 2: instrucciones y responsabilidades
     phases: [
-      { hp: 4, title: 'Requests', topics: ['requests'], kinds: ['fill', 'fix', 'order', 'write'], tags: ['a2-workshop'] },
+      { hp: 4, title: 'Requests', topics: ['requests'], kinds: ['fill', 'fix', 'order', 'listen', 'write'], tags: ['a2-workshop'] },
       {
         hp: 4,
         title: 'Instructions',
         topics: ['instructions'],
-        kinds: ['fill', 'fix', 'order', 'write'],
+        kinds: ['fill', 'fix', 'order', 'listen', 'write'],
         tags: ['a2-workshop'],
         line: { text: 'No more questions! Listen to my orders! First you cleans everything, then you is responsible of my tools, forever!', es: '¡Basta de preguntas! ¡Escucha mis órdenes! Primero "limpias" todo, luego "eres responsable" de mis herramientas, ¡para siempre! (Ahora mezcla instrucciones y responsabilidades, con errores).' },
       },
