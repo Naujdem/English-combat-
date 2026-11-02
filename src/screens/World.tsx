@@ -36,6 +36,17 @@ const A2_START = 'a2-hospital'
 
 const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } as const
 
+/** Mapa de nodos de A2: una misión por lugar, en orden. Se abre cada uno al cerrar el anterior. */
+type A2Node = { id: string; sceneId: string; name: string; mission: string; x: number; y: number; open: (s: GameState) => boolean; done: (s: GameState) => boolean; locked: string }
+const A2_COLOR = '#b06ad4'
+const A2_NODES: A2Node[] = [
+  { id: 'hospital', sceneId: A2_START, name: 'Hospital', mission: 'A2-01', x: 64, y: 300, open: isA2Unlocked, done: isA2CityUnlocked, locked: 'Termina A1 para llegar aquí.' },
+  { id: 'city', sceneId: A2_CITY_ID, name: 'Ciudad', mission: 'A2-03', x: 184, y: 258, open: isA2CityUnlocked, done: (s) => s.opened.includes(A2_03_CLOSE), locked: 'Se abre al salir del hospital.' },
+  { id: 'workshop', sceneId: A2_WORKSHOP_ID, name: 'Taller', mission: 'A2-04', x: 300, y: 190, open: isA2WorkshopUnlocked, done: (s) => s.opened.includes(A2_04_CLOSE), locked: 'Se abre al terminar el día en la ciudad.' },
+  { id: 'library', sceneId: A2_LIBRARY_ID, name: 'Biblioteca', mission: 'A2-05', x: 170, y: 130, open: isA2LibraryUnlocked, done: (s) => s.opened.includes(A2_05_CLOSE), locked: 'Se abre al terminar en el taller del señor Hale.' },
+  { id: 'farm', sceneId: A2_FARM_PAST_ID, name: 'Granja River', mission: 'A2-06', x: 62, y: 62, open: isA2FarmPastUnlocked, done: (s) => s.opened.includes(A2_06_CLOSE), locked: 'Se abre al terminar en la biblioteca.' },
+]
+
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
@@ -84,6 +95,14 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const [logros, setLogros] = useState(false)
   const [exam, setExam] = useState<EraId | null>(null)
   const [menu, setMenu] = useState(false)
+  // Nivel del mapa: al terminar A1 se puede elegir entre A1 y A2
+  const a2Open = isA2Unlocked(state)
+  const [level, setLevel] = useState<'A1' | 'A2'>(a2Open && A2_NODES.some((n) => n.sceneId === state.sceneId) ? 'A2' : 'A1')
+  const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]
+  function tapA2(n: A2Node) {
+    if (!n.open(state) || !SCENES[n.sceneId]) return setMsg(`${n.name} (${n.mission}) está cerrado. ${n.locked}`)
+    onEnter(n.sceneId)
+  }
   const exams = (Object.keys(EXAMS) as EraId[]).filter((e) => state.opened.includes(EXAMS[e].unlock))
   const pendingExam = exams.find((e) => !state.writings?.[e])
   // Viaje en autobús la primera vez que se va a un lugar (ciudad o barrio)
@@ -155,7 +174,23 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         <button className={btnGhost} onClick={() => setFriends(true)}>Amigos</button>
       </header>
 
-      {pastOpen && (
+      {a2Open && (
+        <div className="flex gap-1.5" role="tablist" aria-label="Nivel">
+          {(['A1', 'A2'] as const).map((l) => (
+            <button
+              key={l}
+              role="tab"
+              aria-selected={level === l}
+              className={`flex-1 rounded-xl border-2 px-3 py-1.5 font-display text-[16px] ${level === l ? 'border-gold bg-gold/15 text-gold' : 'border-line text-paper/70'}`}
+              onClick={() => setLevel(l)}
+            >
+              Nivel {l}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {level === 'A1' && pastOpen && (
         <div className="flex gap-1.5" role="tablist" aria-label="Épocas">
           {(futureOpen ? (['Presente', 'Pasado', 'Futuro'] as const) : (['Presente', 'Pasado'] as const)).map((e) => (
             <button
@@ -173,6 +208,46 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       )}
 
       <div className={desktop ? 'grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_21rem] items-start gap-5' : 'contents'}>
+      {level === 'A2' ? (
+      <svg
+        viewBox="0 0 360 380"
+        className="w-full shrink-0 rounded-2xl border-2 border-line bg-[#2a2236]"
+        style={desktop ? { height: 'calc(100svh - 96px)' } : { aspectRatio: '360 / 380' }}
+        role="img"
+        aria-label="Mapa de A2"
+      >
+        <path d="M0 0 H360 V380 H0Z" fill="#2a2236" />
+        {[...Array(18)].map((_, k) => (
+          <circle key={k} cx={(k * 73) % 360} cy={(k * 131) % 380} r={10 + (k % 4) * 4} fill="#3a2f4a" />
+        ))}
+        <polyline points={A2_NODES.map((n) => `${n.x},${n.y}`).join(' ')} fill="none" stroke="#e8dcc8" strokeOpacity="0.55" strokeWidth="4" strokeDasharray="2 9" strokeLinecap="round" />
+        {A2_NODES.map((n) => {
+          const open = n.open(state) && !!SCENES[n.sceneId]
+          const done = n.done(state)
+          return (
+            <g key={n.id} onClick={() => tapA2(n)} className="cursor-pointer" role="button" aria-label={`${n.name}, ${n.mission}${done ? ', terminado' : ''}`}>
+              <circle cx={n.x} cy={n.y} r="24" fill={open ? A2_COLOR : '#4a4238'} stroke={done ? '#e0a526' : '#f4efe4'} strokeWidth="3" />
+              {open ? (
+                <text x={n.x} y={n.y + 5} textAnchor="middle" fontSize="13" fontFamily="Fredoka, Nunito, system-ui, sans-serif" fontWeight="600" fill="#f4efe4">{done ? '✓' : n.mission.slice(3)}</text>
+              ) : (
+                <g transform={`translate(${n.x - 7} ${n.y - 9})`}>
+                  <rect x="0" y="7" width="14" height="11" rx="2" fill="#f4efe4" />
+                  <path d="M3 7 V4.5 a4 4 0 0 1 8 0 V7" fill="none" stroke="#f4efe4" strokeWidth="2.2" />
+                </g>
+              )}
+              <rect x={n.x - 44} y={n.y + 30} width="88" height="34" rx="8" fill="rgba(0,0,0,0.45)" />
+              <text x={n.x} y={n.y + 45} textAnchor="middle" fontSize="13" fontFamily="Fredoka, Nunito, system-ui, sans-serif" fontWeight="600" fill="#f4efe4">{n.name}</text>
+              <text x={n.x} y={n.y + 58} textAnchor="middle" fontSize="10" fontFamily="Nunito, system-ui, sans-serif" fill="#d8b0ec">{n.mission}</text>
+            </g>
+          )
+        })}
+        <g transform={`translate(${a2Here.x - 18} ${a2Here.y - 66}) scale(1.15)`} pointerEvents="none">
+          <g className="anim-bob">
+            <SpriteBody look={heroLook(state)} mood={state.recovered.length ? 'normal' : 'mute'} />
+          </g>
+        </g>
+      </svg>
+      ) : (
       <svg
         viewBox="0 0 360 380"
         className="w-full shrink-0 rounded-2xl border-2 border-line bg-[#24301f]"
@@ -220,37 +295,19 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         </g>
         )}
       </svg>
+      )}
 
       <div className={desktop ? 'flex flex-col gap-3' : 'contents'}>
       <Panel className="py-3">
         <p className="text-[15px] text-paper/85">{msg}</p>
       </Panel>
 
-      <button className={btnPrimary} onClick={() => tap(here)}>Entrar a {here.name}</button>
-      {isA2Unlocked(state) && SCENES[A2_START] && (
-        <button className={btnPrimary} onClick={() => onEnter(A2_START)}>
-          {state.sceneId === A2_START ? 'Volver al hospital (A2)' : 'Ir al hospital (A2)'}
+      {level === 'A2' ? (
+        <button className={btnPrimary} onClick={() => tapA2(a2Here)}>
+          {state.sceneId === a2Here.sceneId ? 'Volver a' : 'Entrar a'} {a2Here.name} ({a2Here.mission})
         </button>
-      )}
-      {isA2CityUnlocked(state) && SCENES[A2_CITY_ID] && (
-        <button className={btnPrimary} onClick={() => onEnter(A2_CITY_ID)}>
-          {state.sceneId === A2_CITY_ID ? 'Volver a la ciudad (A2-03)' : 'Ir a la ciudad (A2-03)'}
-        </button>
-      )}
-      {isA2WorkshopUnlocked(state) && SCENES[A2_WORKSHOP_ID] && (
-        <button className={btnPrimary} onClick={() => onEnter(A2_WORKSHOP_ID)}>
-          {state.sceneId === A2_WORKSHOP_ID ? 'Volver al taller del señor Hale (A2-04)' : 'Ir al taller del señor Hale (A2-04)'}
-        </button>
-      )}
-      {isA2LibraryUnlocked(state) && SCENES[A2_LIBRARY_ID] && (
-        <button className={btnPrimary} onClick={() => onEnter(A2_LIBRARY_ID)}>
-          {state.sceneId === A2_LIBRARY_ID ? 'Volver a la biblioteca (A2-05)' : 'Ir a la biblioteca (A2-05)'}
-        </button>
-      )}
-      {isA2FarmPastUnlocked(state) && SCENES[A2_FARM_PAST_ID] && (
-        <button className={btnPrimary} onClick={() => onEnter(A2_FARM_PAST_ID)}>
-          {state.sceneId === A2_FARM_PAST_ID ? 'Volver a la granja de los River (A2-06)' : 'Ir a la granja de los River (A2-06)'}
-        </button>
+      ) : (
+        <button className={btnPrimary} onClick={() => tap(here)}>Entrar a {here.name}</button>
       )}
       </div>
       </div>

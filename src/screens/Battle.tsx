@@ -1046,7 +1046,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
           ) : enemy.echo ? (
             <p className="mt-1 text-[16px]">{enemy.person} vuelve a ser como antes. Ganaste un escudo.</p>
           ) : enemy.optional ? (
-            <p className="mt-1 text-[16px]">{enemy.person} te regaló un atuendo nuevo. Póntelo desde Atuendos.</p>
+            <p className="mt-1 text-[16px]">{enemy.person} te regaló un atuendo nuevo. Póntelo desde Mochila › Atuendos.</p>
           ) : enemy.kind === 'minion' ? (
             <p className="mt-1 text-[16px]">
               {enemy.person} te dio un pedazo de llave. Llevas {keysNow} de {scene.keysNeeded}.

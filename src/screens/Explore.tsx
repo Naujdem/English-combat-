@@ -341,7 +341,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           outfits: s.outfits.includes(e.outfit) ? s.outfits : [...s.outfits, e.outfit],
           outfit: e.outfit,
         }))
-        setMsg({ text: `Abriste un cofre: ${outfit.name}.`, sub: 'Ya la llevas puesta. Puedes cambiarla desde el menú de atuendos.', tone: 'good' })
+        setMsg({ text: `Abriste un cofre: ${outfit.name}.`, sub: 'Ya la llevas puesta. Puedes cambiarla en Mochila › Atuendos.', tone: 'good' })
         return
       }
       const id = e.type === 'friend' ? e.id : 'interest'
@@ -667,15 +667,6 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       </div>
 
       <div className={desktop ? 'flex h-full w-80 shrink-0 flex-col gap-3' : 'contents'}>
-      <div className={`flex flex-wrap items-center gap-1.5 ${desktop ? 'text-xs' : 'text-[11px]'}`} aria-label={hasBoss ? 'Objetivos para el jefe' : 'Objetivos'}>
-        <span className="font-semibold uppercase tracking-wide text-paper/50">{hasBoss ? 'Para el jefe:' : 'Objetivos:'}</span>
-        {scene.chips(state).map((c) => (
-          <span key={c.label} className={`rounded-full px-2 py-0.5 ${c.done ? 'bg-hp/20 text-hp' : 'bg-panel-2 text-paper/70'}`}>
-            {c.done && !/\d/.test(c.label) ? '✓ ' : ''}{c.label}
-          </span>
-        ))}
-      </div>
-
       {scene.id === 'school' && lf.started && lf.returned.length < LOST_ITEMS.length && (
         <div className="flex items-center justify-between gap-2 rounded-xl border border-gold/40 bg-gold/10 px-3 py-1.5 text-xs">
           <span className="font-semibold text-gold">Misión: objetos perdidos ({lf.returned.length}/{LOST_ITEMS.length})</span>
@@ -719,15 +710,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
 
       <div className="mt-auto flex shrink-0 items-end justify-between pb-2">
         <div className="flex flex-col gap-2">
-          <button className={`${btn} relative px-3 text-sm`} onClick={() => setNotebook(true)}>
-            Cuaderno
-            {state.mistakes.length > 0 && (
-              <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-danger px-1 text-[11px] font-bold text-white">
-                {state.mistakes.length}
-              </span>
-            )}
-          </button>
-          <OutfitButton state={state} update={update} />
+          <Backpack state={state} update={update} chips={scene.chips(state)} hasBoss={hasBoss} onNotebook={() => setNotebook(true)} />
         </div>
         {desktop ? (
           <p className="max-w-[10rem] text-right text-xs leading-snug text-paper/55">
@@ -937,7 +920,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   outfits: s.outfits.includes('uniforme') ? s.outfits : [...s.outfits, 'uniforme'],
                   outfit: 'uniforme',
                 }))
-                setMsg({ text: 'Recibiste tu carnet y el uniforme escolar.', sub: 'Ya lo llevas puesto. Puedes cambiarlo en Atuendos.', tone: 'good' })
+                setMsg({ text: 'Recibiste tu carnet y el uniforme escolar.', sub: 'Ya lo llevas puesto. Puedes cambiarlo en Mochila › Atuendos.', tone: 'good' })
               }
             }}
           />
@@ -962,7 +945,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               }))
               setMsg({
                 text: `Conseguiste una tiza para retar a ${ENEMIES[ses.minion].person}.`,
-                sub: last ? 'Completaste el horario. También encontraste unas gafas de lectura: póntelas en Atuendos.' : 'Cuando lo venzas, aparecerá la siguiente clase en la pizarra.',
+                sub: last ? 'Completaste el horario. También encontraste unas gafas de lectura: póntelas en Mochila › Atuendos.' : 'Cuando lo venzas, aparecerá la siguiente clase en la pizarra.',
                 tone: 'good',
               })
             }}
@@ -1133,37 +1116,81 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   )
 }
 
-function OutfitButton({ state, update }: { state: GameState; update: Update }) {
+function Backpack({ state, update, chips, hasBoss, onNotebook }: { state: GameState; update: Update; chips: { label: string; done: boolean }[]; hasBoss: boolean; onNotebook: () => void }) {
   const [open, setOpen] = useState(false)
+  const [tab, setTab] = useState<'goals' | 'outfits'>('goals')
+  const pending = chips.filter((c) => !c.done).length
   return (
     <>
-      <button className={`${btn} px-3 text-sm`} onClick={() => setOpen(true)} disabled={state.outfits.length < 2}>
-        Atuendos
+      <button className={`${btn} relative flex items-center gap-1.5 px-3 text-sm`} onClick={() => setOpen(true)} aria-label={`Mochila${state.mistakes.length ? `, ${state.mistakes.length} errores en el cuaderno` : ''}`}>
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M9 6 V5 a3 3 0 0 1 6 0 V6" fill="none" stroke="currentColor" strokeWidth="2" />
+          <rect x="5" y="6" width="14" height="15" rx="4" fill="none" stroke="currentColor" strokeWidth="2" />
+          <rect x="8" y="13" width="8" height="4" rx="1" fill="currentColor" />
+        </svg>
+        Mochila
+        {state.mistakes.length > 0 && (
+          <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-danger px-1 text-[11px] font-bold text-white">
+            {state.mistakes.length}
+          </span>
+        )}
       </button>
       {open && (
         <Overlay onClose={() => setOpen(false)}>
-          <Panel>
+          <Panel className="max-h-[88vh] overflow-y-auto">
             <div className="mb-3 flex items-center justify-between">
-              <h2 className="font-display text-xl">Atuendos</h2>
+              <h2 className="font-display text-xl text-gold">Mochila</h2>
               <button className={btnGhost} onClick={() => setOpen(false)}>Cerrar</button>
             </div>
-            <div className="grid grid-cols-2 gap-2">
-              {state.outfits.map((o) => {
-                const s2 = { ...state, outfit: o }
-                return (
-                  <button
-                    key={o}
-                    onClick={() => update((s) => ({ ...s, outfit: o }))}
-                    className={`flex flex-col items-center rounded-xl border-2 p-2 ${state.outfit === o ? 'border-gold bg-gold/10' : 'border-line'}`}
-                  >
-                    <svg width="64" height="64" viewBox="0 0 32 32" aria-hidden="true">
-                      <SpriteBody look={heroLook(s2)} />
-                    </svg>
-                    <span className="text-sm">{OUTFITS[o].name}</span>
-                  </button>
-                )
-              })}
+            <div className="mb-3 grid grid-cols-3 gap-1.5" role="tablist">
+              <button role="tab" aria-selected={tab === 'goals'} className={`rounded-xl border-2 px-2 py-1.5 text-sm font-semibold ${tab === 'goals' ? 'border-gold bg-gold/10 text-gold' : 'border-line text-paper/70'}`} onClick={() => setTab('goals')}>
+                Objetivos{pending > 0 ? ` (${pending})` : ''}
+              </button>
+              <button className={`relative rounded-xl border-2 border-line px-2 py-1.5 text-sm font-semibold text-paper/70`} onClick={() => { setOpen(false); onNotebook() }}>
+                Cuaderno
+                {state.mistakes.length > 0 && <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-danger px-1 text-[11px] font-bold text-white">{state.mistakes.length}</span>}
+              </button>
+              <button role="tab" aria-selected={tab === 'outfits'} className={`rounded-xl border-2 px-2 py-1.5 text-sm font-semibold ${tab === 'outfits' ? 'border-gold bg-gold/10 text-gold' : 'border-line text-paper/70'}`} onClick={() => setTab('outfits')}>
+                Atuendos
+              </button>
             </div>
+            {tab === 'goals' ? (
+              <div>
+                <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-paper/50">{hasBoss ? 'Para llegar al jefe' : 'En este lugar'}</p>
+                {chips.length ? (
+                  <ul className="grid gap-1.5">
+                    {chips.map((c) => (
+                      <li key={c.label} className={`flex items-center gap-2 rounded-xl border-2 px-3 py-2 text-[15px] ${c.done ? 'border-hp/50 bg-hp/10 text-hp' : 'border-line text-paper/85'}`}>
+                        <span aria-hidden="true">{c.done ? '✓' : '○'}</span>
+                        {c.label}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-paper/60">No hay objetivos en este lugar.</p>
+                )}
+              </div>
+            ) : state.outfits.length < 2 ? (
+              <p className="text-sm text-paper/60">Aún tienes un solo atuendo. Gana más en combates, cofres y misiones.</p>
+            ) : (
+              <div className="grid grid-cols-2 gap-2">
+                {state.outfits.map((o) => {
+                  const s2 = { ...state, outfit: o }
+                  return (
+                    <button
+                      key={o}
+                      onClick={() => update((s) => ({ ...s, outfit: o }))}
+                      className={`flex flex-col items-center rounded-xl border-2 p-2 ${state.outfit === o ? 'border-gold bg-gold/10' : 'border-line'}`}
+                    >
+                      <svg width="64" height="64" viewBox="0 0 32 32" aria-hidden="true">
+                        <SpriteBody look={heroLook(s2)} />
+                      </svg>
+                      <span className="text-sm">{OUTFITS[o].name}</span>
+                    </button>
+                  )
+                })}
+              </div>
+            )}
           </Panel>
         </Overlay>
       )}
