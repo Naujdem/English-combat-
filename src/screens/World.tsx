@@ -43,22 +43,22 @@ const A2_START = 'a2-hospital'
 
 const ERA_COLOR = { Presente: '#3b9d5d', Pasado: '#c98b4a', Futuro: '#5d8fd4' } as const
 
-/** Mapa de nodos de A2: una misión por lugar, en orden. Se abre cada uno al cerrar el anterior. */
-type A2Node = { id: string; sceneId: string; name: string; mission: string; x: number; y: number; open: (s: GameState) => boolean; done: (s: GameState) => boolean; locked: string }
+/** Mapa de nodos de A2: una misión por lugar, en orden. Se abre cada uno al cerrar el anterior. Se ven por época (pestañas), como en A1. */
+type A2Node = { id: string; sceneId: string; name: string; mission: string; era: keyof typeof ERA_COLOR; x: number; y: number; open: (s: GameState) => boolean; done: (s: GameState) => boolean; locked: string }
 const A2_COLOR = '#b06ad4'
 const A2_NODES: A2Node[] = [
-  { id: 'hospital', sceneId: A2_START, name: 'Hospital', mission: 'A2-01', x: 64, y: 300, open: isA2Unlocked, done: isA2CityUnlocked, locked: 'Termina A1 para llegar aquí.' },
-  { id: 'city', sceneId: A2_CITY_ID, name: 'Ciudad', mission: 'A2-03', x: 184, y: 258, open: isA2CityUnlocked, done: (s) => s.opened.includes(A2_03_CLOSE), locked: 'Se abre al salir del hospital.' },
-  { id: 'workshop', sceneId: A2_WORKSHOP_ID, name: 'Taller', mission: 'A2-04', x: 300, y: 190, open: isA2WorkshopUnlocked, done: (s) => s.opened.includes(A2_04_CLOSE), locked: 'Se abre al terminar el día en la ciudad.' },
-  { id: 'library', sceneId: A2_LIBRARY_ID, name: 'Biblioteca', mission: 'A2-05', x: 170, y: 130, open: isA2LibraryUnlocked, done: (s) => s.opened.includes(A2_05_CLOSE), locked: 'Se abre al terminar en el taller del señor Hale.' },
-  { id: 'farm', sceneId: A2_FARM_PAST_ID, name: 'Granja River', mission: 'A2-06', x: 62, y: 62, open: isA2FarmPastUnlocked, done: (s) => s.opened.includes(A2_06_CLOSE), locked: 'Se abre al terminar en la biblioteca.' },
-  { id: 'race', sceneId: A2_RACE_ID, name: 'Hipódromo', mission: 'A2-07', x: 290, y: 70, open: isA2RaceUnlocked, done: (s) => s.opened.includes(A2_07_CLOSE), locked: 'Se abre al terminar en la granja River.' },
-  { id: 'road', sceneId: A2_CAR_ID, name: 'Camino', mission: 'A2-08', x: 325, y: 125, open: isA2CarUnlocked, done: (s) => s.opened.includes(A2_08_CLOSE), locked: 'Se abre al terminar en el hipódromo.' },
-  { id: 'mill', sceneId: A2_MILL_ID, name: 'Molino', mission: 'A2-09', x: 95, y: 175, open: isA2MillUnlocked, done: (s) => s.opened.includes(A2_09_CLOSE), locked: 'Se abre al terminar en el camino.' },
-  { id: 'leo-house', sceneId: A2_LEO_HOUSE_ID, name: 'Casa de Leo', mission: 'A2-10', x: 290, y: 290, open: isA2LeoHouseUnlocked, done: (s) => s.opened.includes(A2_10_CLOSE), locked: 'Se abre al terminar en el molino.' },
-  { id: 'city-2056', sceneId: A2_FUTURE_ID, name: 'Ciudad 2056', mission: 'A2-11', x: 40, y: 205, open: isA2FutureUnlocked, done: (s) => s.opened.includes(A2_11_CLOSE), locked: 'Se abre al terminar en la casa de Leo.' },
-  { id: 'control-2056', sceneId: A2_CONTROL_ID, name: 'Centro de control', mission: 'A2-12', x: 150, y: 345, open: isA2ControlUnlocked, done: (s) => s.opened.includes(A2_12_CLOSE), locked: 'Se abre al terminar en la ciudad de 2056.' },
-  { id: 'hospital-return', sceneId: A2_RETURN_ID, name: 'Hospital', mission: 'A2-13', x: 268, y: 345, open: isA2ReturnUnlocked, done: (s) => s.opened.includes(A2_13_CLOSE), locked: 'Se abre al terminar en el centro de control.' },
+  { id: 'hospital', sceneId: A2_START, name: 'Hospital', mission: 'A2-01', era: 'Presente', x: 90, y: 80, open: isA2Unlocked, done: isA2CityUnlocked, locked: 'Termina A1 para llegar aquí.' },
+  { id: 'city', sceneId: A2_CITY_ID, name: 'Ciudad', mission: 'A2-03', era: 'Presente', x: 270, y: 80, open: isA2CityUnlocked, done: (s) => s.opened.includes(A2_03_CLOSE), locked: 'Se abre al salir del hospital.' },
+  { id: 'workshop', sceneId: A2_WORKSHOP_ID, name: 'Taller', mission: 'A2-04', era: 'Presente', x: 270, y: 195, open: isA2WorkshopUnlocked, done: (s) => s.opened.includes(A2_04_CLOSE), locked: 'Se abre al terminar el día en la ciudad.' },
+  { id: 'library', sceneId: A2_LIBRARY_ID, name: 'Biblioteca', mission: 'A2-05', era: 'Presente', x: 90, y: 195, open: isA2LibraryUnlocked, done: (s) => s.opened.includes(A2_05_CLOSE), locked: 'Se abre al terminar en el taller del señor Hale.' },
+  { id: 'farm', sceneId: A2_FARM_PAST_ID, name: 'Granja River', mission: 'A2-06', era: 'Pasado', x: 90, y: 90, open: isA2FarmPastUnlocked, done: (s) => s.opened.includes(A2_06_CLOSE), locked: 'Se abre al terminar en la biblioteca.' },
+  { id: 'race', sceneId: A2_RACE_ID, name: 'Hipódromo', mission: 'A2-07', era: 'Pasado', x: 270, y: 90, open: isA2RaceUnlocked, done: (s) => s.opened.includes(A2_07_CLOSE), locked: 'Se abre al terminar en la granja River.' },
+  { id: 'road', sceneId: A2_CAR_ID, name: 'Camino', mission: 'A2-08', era: 'Pasado', x: 270, y: 250, open: isA2CarUnlocked, done: (s) => s.opened.includes(A2_08_CLOSE), locked: 'Se abre al terminar en el hipódromo.' },
+  { id: 'mill', sceneId: A2_MILL_ID, name: 'Molino', mission: 'A2-09', era: 'Pasado', x: 90, y: 250, open: isA2MillUnlocked, done: (s) => s.opened.includes(A2_09_CLOSE), locked: 'Se abre al terminar en el camino.' },
+  { id: 'leo-house', sceneId: A2_LEO_HOUSE_ID, name: 'Casa de Leo', mission: 'A2-10', era: 'Presente', x: 90, y: 310, open: isA2LeoHouseUnlocked, done: (s) => s.opened.includes(A2_10_CLOSE), locked: 'Se abre al terminar en el molino.' },
+  { id: 'city-2056', sceneId: A2_FUTURE_ID, name: 'Ciudad 2056', mission: 'A2-11', era: 'Futuro', x: 100, y: 120, open: isA2FutureUnlocked, done: (s) => s.opened.includes(A2_11_CLOSE), locked: 'Se abre al terminar en la casa de Leo.' },
+  { id: 'control-2056', sceneId: A2_CONTROL_ID, name: 'Centro de control', mission: 'A2-12', era: 'Futuro', x: 260, y: 250, open: isA2ControlUnlocked, done: (s) => s.opened.includes(A2_12_CLOSE), locked: 'Se abre al terminar en la ciudad de 2056.' },
+  { id: 'hospital-return', sceneId: A2_RETURN_ID, name: 'Hospital', mission: 'A2-13', era: 'Presente', x: 270, y: 310, open: isA2ReturnUnlocked, done: (s) => s.opened.includes(A2_13_CLOSE), locked: 'Se abre al terminar en el centro de control.' },
 ]
 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
@@ -132,6 +132,10 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const a2Open = teacher || isA2Unlocked(state)
   const [level, setLevel] = useState<'A1' | 'A2'>(a2Open && A2_NODES.some((n) => n.sceneId === state.sceneId) ? 'A2' : 'A1')
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]
+  // Épocas de A2: se ve una a la vez (pestañas), como en A1. Solo aparecen las épocas que ya tienen una misión abierta.
+  const a2Eras = (['Presente', 'Pasado', 'Futuro'] as const).filter((e) => A2_NODES.some((n) => n.era === e && a2NodeOpen(n)))
+  const [a2Era, setA2Era] = useState<A2Node['era']>(a2Here.era)
+  const a2Shown = A2_NODES.filter((n) => n.era === a2Era)
   function tapA2(n: A2Node) {
     if (!a2NodeOpen(n)) return setMsg(`${n.name} (${n.mission}) está cerrado. ${n.locked}`)
     onEnter(n.sceneId)
@@ -222,6 +226,23 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         </div>
       )}
 
+      {level === 'A2' && a2Eras.length > 1 && (
+        <div className="flex gap-1.5" role="tablist" aria-label="Épocas de A2">
+          {a2Eras.map((e) => (
+            <button
+              key={e}
+              role="tab"
+              aria-selected={a2Era === e}
+              className={`rounded-full border-2 px-3 py-1 text-sm font-semibold ${a2Era === e ? 'border-transparent text-ink' : 'border-line text-paper/70'}`}
+              style={a2Era === e ? { background: ERA_COLOR[e] } : undefined}
+              onClick={() => setA2Era(e)}
+            >
+              {e}
+            </button>
+          ))}
+        </div>
+      )}
+
       {level === 'A1' && pastOpen && (
         <div className="flex gap-1.5" role="tablist" aria-label="Épocas">
           {(futureOpen ? (['Presente', 'Pasado', 'Futuro'] as const) : (['Presente', 'Pasado'] as const)).map((e) => (
@@ -248,12 +269,12 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         role="img"
         aria-label="Mapa de A2"
       >
-        <path d="M0 0 H360 V380 H0Z" fill="#2a2236" />
+        <path d="M0 0 H360 V380 H0Z" fill={a2Era === 'Pasado' ? '#3e2f3a' : a2Era === 'Futuro' ? '#22233f' : '#2a2236'} />
         {[...Array(18)].map((_, k) => (
-          <circle key={k} cx={(k * 73) % 360} cy={(k * 131) % 380} r={10 + (k % 4) * 4} fill="#3a2f4a" />
+          <circle key={k} cx={(k * 73) % 360} cy={(k * 131) % 380} r={10 + (k % 4) * 4} fill={a2Era === 'Pasado' ? '#4e3c46' : a2Era === 'Futuro' ? '#2e3152' : '#3a2f4a'} />
         ))}
-        <polyline points={A2_NODES.map((n) => `${n.x},${n.y}`).join(' ')} fill="none" stroke="#e8dcc8" strokeOpacity="0.55" strokeWidth="4" strokeDasharray="2 9" strokeLinecap="round" />
-        {A2_NODES.map((n) => {
+        <polyline points={a2Shown.map((n) => `${n.x},${n.y}`).join(' ')} fill="none" stroke="#e8dcc8" strokeOpacity="0.55" strokeWidth="4" strokeDasharray="2 9" strokeLinecap="round" />
+        {a2Shown.map((n) => {
           const open = a2NodeOpen(n)
           const done = n.done(state)
           return (
@@ -269,15 +290,17 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
               )}
               <rect x={n.x - 44} y={n.y + 30} width="88" height="34" rx="8" fill="rgba(0,0,0,0.45)" />
               <text x={n.x} y={n.y + 45} textAnchor="middle" fontSize="13" fontFamily="Fredoka, Nunito, system-ui, sans-serif" fontWeight="600" fill="#f4efe4">{n.name}</text>
-              <text x={n.x} y={n.y + 58} textAnchor="middle" fontSize="10" fontFamily="Nunito, system-ui, sans-serif" fill="#d8b0ec">{n.mission}</text>
+              <text x={n.x} y={n.y + 58} textAnchor="middle" fontSize="10" fontFamily="Nunito, system-ui, sans-serif" fill={ERA_COLOR[n.era]}>{n.mission} · {n.era}</text>
             </g>
           )
         })}
+        {a2Here.era === a2Era && (
         <g transform={`translate(${a2Here.x - 18} ${a2Here.y - 66}) scale(1.15)`} pointerEvents="none">
           <g className="anim-bob">
             <SpriteBody look={heroLook(state)} mood={state.recovered.length ? 'normal' : 'mute'} />
           </g>
         </g>
+        )}
       </svg>
       ) : (
       <svg
