@@ -27,6 +27,7 @@ import { A2_WORKSHOP_ID, A2_04_CLOSE, isA2WorkshopUnlocked } from '../data/a2Wor
 import { A2_LIBRARY_ID, A2_05_CLOSE, isA2LibraryUnlocked } from '../data/a2Library'
 import { A2_FARM_PAST_ID, A2_06_CLOSE, isA2FarmPastUnlocked } from '../data/a2FarmPast'
 import { A2_RACE_ID, A2_07_CLOSE, isA2RaceUnlocked } from '../data/a2Race'
+import { A2_CAR_ID, A2_08_CLOSE, isA2CarUnlocked } from '../data/a2Car'
 import { useDesktop } from '../game/device'
 import { Achievements } from '../components/Achievements'
 import { ACHIEVEMENTS, achieved } from '../data/collection'
@@ -47,12 +48,15 @@ const A2_NODES: A2Node[] = [
   { id: 'library', sceneId: A2_LIBRARY_ID, name: 'Biblioteca', mission: 'A2-05', x: 170, y: 130, open: isA2LibraryUnlocked, done: (s) => s.opened.includes(A2_05_CLOSE), locked: 'Se abre al terminar en el taller del señor Hale.' },
   { id: 'farm', sceneId: A2_FARM_PAST_ID, name: 'Granja River', mission: 'A2-06', x: 62, y: 62, open: isA2FarmPastUnlocked, done: (s) => s.opened.includes(A2_06_CLOSE), locked: 'Se abre al terminar en la biblioteca.' },
   { id: 'race', sceneId: A2_RACE_ID, name: 'Hipódromo', mission: 'A2-07', x: 290, y: 70, open: isA2RaceUnlocked, done: (s) => s.opened.includes(A2_07_CLOSE), locked: 'Se abre al terminar en la granja River.' },
+  { id: 'road', sceneId: A2_CAR_ID, name: 'Camino', mission: 'A2-08', x: 325, y: 125, open: isA2CarUnlocked, done: (s) => s.opened.includes(A2_08_CLOSE), locked: 'Se abre al terminar en el hipódromo.' },
 ]
 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
-    isA2RaceUnlocked(state) && !state.opened.includes(A2_07_CLOSE)
+    isA2CarUnlocked(state) && !state.opened.includes(A2_08_CLOSE)
+      ? 'A2-08 · El Carro que se Detuvo: después de la carrera, el carro se detiene en un camino viejo. Leo y JoJo están contigo.'
+      : isA2RaceUnlocked(state) && !state.opened.includes(A2_07_CLOSE)
       ? 'A2-07 · The Great Race: el trozo del estandarte de los River te recuerda otra carrera. Leo te espera en un viejo hipódromo del pasado.'
       : isA2FarmPastUnlocked(state) && !state.opened.includes(A2_06_CLOSE)
       ? 'A2-06 · A Tradition at Risk: Leo te espera en la granja de la familia River. Elena quiere recuperar una vieja tradición.'

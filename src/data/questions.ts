@@ -17,6 +17,8 @@ import { A2_FARM_PAST_QUESTIONS } from './a2FarmPast'
 import { A2_FARM_QUESTIONS } from './questions-a2-farm'
 import { A2_RACE_PRACTICE } from './a2Race'
 import { A2_RACE_QUESTIONS } from './questions-a2-race'
+import { A2_CAR_PRACTICE } from './a2Car'
+import { A2_CAR_QUESTIONS } from './questions-a2-car'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -352,6 +354,8 @@ export const QUESTIONS: Question[] = [
   ...A2_FARM_QUESTIONS,
   ...A2_RACE_PRACTICE,
   ...A2_RACE_QUESTIONS,
+  ...A2_CAR_PRACTICE,
+  ...A2_CAR_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -848,6 +852,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'El mejor de todos: the + adjetivo + -est (the fastest) · the most + adjetivo largo (the most dangerous) · good → the best.',
       'Lo que pasa ahora mismo: am / is / are + verbo con -ing → The horses are running. She is jumping.',
       'Adverbios: carefully → more carefully than (nunca "more careful" para decir cómo se hace algo).',
+    ],
+  },
+  'past-simple-continuous': {
+    name: 'Pasado simple y pasado continuo: when / while',
+    level: 'A2',
+    lesson: [
+      'Pasado simple → acción terminada: The engine stopped. JoJo got out. We saw a light.',
+      'Pasado continuo → acción en progreso: was / were + verbo con -ing → I was driving. We were checking the wheels.',
+      'I / he / she / it → was · you / we / they → were.',
+      'when + pasado simple (acción corta que interrumpe) · while + pasado continuo (acción larga): You were driving when the car stopped.',
     ],
   },
   future: {

@@ -481,6 +481,17 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#e0c14a', hair: '#1a1a1a', skin: '#8d5524', gender: 'male', accessory: 'cap' },
     doneLine: { text: 'Now I can ride without fear.', es: 'Ahora puedo montar sin miedo.' },
   },
+  // ── A2-08, el camino: Leo (lección, Reconstruct y cierre) y JoJo (DebateTalk junto al carro) ──
+  'a2-08-leo': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    doneLine: { text: 'The purple light keeps appearing. We should keep going.', es: 'La luz morada sigue apareciendo. Debemos seguir.' },
+  },
+  'a2-08-jojo': {
+    name: 'JoJo',
+    look: { shirt: '#e0c14a', hair: '#1a1a1a', skin: '#8d5524', gender: 'male', accessory: 'cap' },
+    doneLine: { text: 'It was the same purple light from the race. I am sure.', es: 'Era la misma luz morada de la carrera. Estoy seguro.' },
+  },
   'a2-receptionist': {
     name: 'The receptionist',
     look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },
