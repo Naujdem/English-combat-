@@ -2021,6 +2021,207 @@ NPC_TASKS['a2-07-farewell'] = {
   },
 }
 
+// ── A2-08 — El Carro que se Detuvo (camino del pasado; escena, esbirro y jefe en data/a2Car.ts) ──
+// Canon: manejaba el jugador; JoJo se bajó y revisó las ruedas; Leo revisa el motor. "cart" (carrera) ≠ "car" (hoy).
+// Orden: Leo (lección past-simple-continuous + práctica) → Eco de la carretera → JoJo (DebateTalk)
+//        → Leo (Reconstruct the Story) → Leo (ordenar la historia) → El Motor Silencioso → Leo (cierre).
+NPC_TASKS['a2-08-leo'] = {
+  done: 'a2-08-practice',
+  lesson: 'past-simple-continuous',
+  activity: 'practice',
+  practice: 'past-simple-continuous',
+  practiceIds: ['a2-08-p1', 'a2-08-p2', 'a2-08-p3', 'a2-08-p4', 'a2-08-p5', 'a2-08-p6', 'a2-08-p7'],
+  steps: [],
+  reward: {
+    text: 'Leo: "Something is moving on the road. Be careful."',
+    es: 'Algo se mueve en el camino. Ten cuidado.',
+    sub: 'Un eco bloquea el camino. Véncelo y habla con JoJo junto al carro.',
+    say: 'Something is moving on the road.',
+  },
+}
+
+// DebateTalk con JoJo: 4 turnos sin respuestas incorrectas. No bloquea; el buen desenlace da una pista.
+NPC_TASKS['a2-08-debate'] = {
+  npc: 'a2-08-jojo',
+  done: 'a2-08-debate',
+  activity: 'debate',
+  requires: {
+    id: 'a2-08-road-echo',
+    text: 'JoJo: "I got out to check the wheels… but something is on the road. Careful!"',
+    es: 'Me bajé a revisar las ruedas… pero algo hay en el camino. ¡Cuidado!',
+    sub: 'Habla primero con Leo y vence al eco del camino.',
+  },
+  debate: {
+    title: 'Talk to JoJo',
+    ask: 'Escucha a JoJo y respóndele.',
+    turns: [
+      {
+        text: 'Last year a cart crossed the track during the race. Today your car stopped, and the same purple light appeared. Is it the same light?',
+        es: 'El año pasado una carreta cruzó la pista durante la carrera. Hoy tu carro se detuvo y apareció la misma luz morada. ¿Es la misma luz?',
+        options: [
+          { en: 'Yes. The purple light was the same.', es: 'Sí. La luz morada era la misma.', value: 'good' },
+          { en: 'Maybe. We should check more.', es: 'Quizá. Deberíamos revisar más.', value: 'neutral' },
+          { en: 'I don’t know. The car just stopped.', es: 'No sé. El carro simplemente se detuvo.', value: 'bad' },
+        ],
+      },
+      {
+        text: 'I was watching the race when the cart appeared. What were you doing when the car stopped today?',
+        es: 'Yo estaba viendo la carrera cuando apareció la carreta. ¿Qué estabas haciendo tú cuando el carro se detuvo hoy?',
+        options: [
+          { en: 'I was driving when the car stopped.', es: 'Estaba manejando cuando el carro se detuvo.', value: 'good' },
+          { en: 'We were on the road.', es: 'Estábamos en el camino.', value: 'neutral' },
+          { en: 'I was drive and the car stop.', es: '(Frase mal dicha).', value: 'bad' },
+        ],
+      },
+      {
+        text: 'People at the race said the light took something from the cart. Do you believe it?',
+        es: 'En la carrera la gente dijo que la luz le quitó algo a la carreta. ¿Lo crees?',
+        options: [
+          { en: 'Yes. The light took something. We have to be careful.', es: 'Sí. La luz se llevó algo. Tenemos que tener cuidado.', value: 'good' },
+          { en: 'I’m not sure. Let’s see the evidence.', es: 'No estoy seguro. Veamos las pruebas.', value: 'neutral' },
+          { en: 'No. It was just an old cart.', es: 'No. Era solo una carreta vieja.', value: 'bad' },
+        ],
+      },
+      {
+        text: 'We should tell Leo what we saw. Are you ready?',
+        es: 'Deberíamos contarle a Leo lo que vimos. ¿Estás listo?',
+        options: [
+          { en: 'Yes. Let’s reconstruct what happened.', es: 'Sí. Reconstruyamos lo que pasó.', value: 'good' },
+          { en: 'OK, let’s go.', es: 'Vale, vamos.', value: 'neutral' },
+          { en: 'Later. I’m tired.', es: 'Después. Estoy cansado.', value: 'bad' },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: 'One more thing: the light appeared near the wheels while the engine was making noise. Tell Leo.', es: 'Una cosa más: la luz apareció cerca de las ruedas mientras el motor hacía ruido. Díselo a Leo.' },
+      mid: { text: 'OK. Talk to Leo.', es: 'Vale. Habla con Leo.' },
+      low: { text: '… OK. If you say so. Talk to Leo.', es: '… Vale. Si tú lo dices. Habla con Leo.' },
+    },
+  },
+  steps: [],
+  reward: {
+    text: 'JoJo: "Talk to Leo."',
+    es: 'Habla con Leo.',
+    sub: 'Leo quiere reconstruir lo que pasó.',
+    say: 'Talk to Leo.',
+  },
+}
+
+// Reconstruct the Story (1/2): contrastar lo que se recuerda con las versiones corrompidas del eco
+NPC_TASKS['a2-08-reconstruct'] = {
+  npc: 'a2-08-leo',
+  done: 'a2-08-reconstruct',
+  activity: 'reconstruct',
+  requires: {
+    id: 'a2-08-debate',
+    text: 'Leo: "Talk to JoJo first. He was near the wheels."',
+    es: 'Habla primero con JoJo. Él estaba cerca de las ruedas.',
+    sub: 'JoJo está junto al carro.',
+  },
+  reconstruct: {
+    title: 'Reconstruct the Story',
+    intro: { en: 'The echo told a false story. Compare each part with what you remember and choose what really happened.', es: 'El eco contó una historia falsa. Compara cada parte con lo que recuerdas y elige lo que pasó de verdad.' },
+    items: [
+      {
+        source: 'You',
+        clue: { en: 'I was driving. Nobody else was driving.', es: 'Yo estaba manejando. Nadie más manejaba.' },
+        claim: { en: 'JoJo was driving when the car stopped.', es: 'JoJo estaba manejando cuando el carro se detuvo.' },
+        options: ['I was driving when the car stopped.', 'JoJo was driving when the car stopped.', 'I was drive when the car stopped.'],
+        answer: 0,
+        tip: 'Manejabas tú: I was driving (was + -ing).',
+      },
+      {
+        source: 'Leo',
+        clue: { en: 'The engine was making a strange noise.', es: 'El motor estaba haciendo un ruido extraño.' },
+        claim: { en: 'The engine was silent all the time.', es: 'El motor estuvo en silencio todo el tiempo.' },
+        options: ['The engine was making a strange noise.', 'The engine was silent all the time.', 'The engine was make a strange noise.'],
+        answer: 0,
+        tip: 'Hacía ruido: was making (make → making).',
+      },
+      {
+        source: 'JoJo',
+        clue: { en: 'I got out and checked the wheels.', es: 'Me bajé y revisé las ruedas.' },
+        claim: { en: 'JoJo stayed in the car.', es: 'JoJo se quedó en el carro.' },
+        options: ['JoJo got out and checked the wheels.', 'JoJo stayed in the car.', 'JoJo get out and checked the wheels.'],
+        answer: 0,
+        tip: 'Se bajó: get → got (irregular).',
+      },
+      {
+        source: 'JoJo',
+        clue: { en: 'The light was near the wheels, not in the sky.', es: 'La luz estaba cerca de las ruedas, no en el cielo.' },
+        claim: { en: 'We saw a purple light in the sky.', es: 'Vimos una luz morada en el cielo.' },
+        options: ['We saw a purple light near the wheels.', 'We saw a purple light in the sky.', 'We seed a purple light near the wheels.'],
+        answer: 0,
+        tip: 'Cerca de las ruedas: see → saw.',
+      },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "Good. Now we know what really happened. But in what order?"',
+    es: 'Bien. Ya sabemos lo que pasó de verdad. Pero ¿en qué orden?',
+    sub: 'Habla otra vez con Leo para ordenar la historia.',
+    say: 'But in what order?',
+  },
+}
+
+// Reconstruct the Story (2/2): Sequence Master con los eventos verdaderos
+NPC_TASKS['a2-08-story'] = {
+  npc: 'a2-08-leo',
+  done: 'a2-08-story',
+  activity: 'sequence',
+  requires: {
+    id: 'a2-08-reconstruct',
+    text: 'Leo: "First, let\'s find what really happened. Talk to me."',
+    es: 'Primero, encontremos lo que pasó de verdad. Habla conmigo.',
+    sub: 'Leo está en el camino.',
+  },
+  sequence: {
+    title: 'Reconstruct the Story',
+    hint: 'Piensa qué estaba pasando y qué lo interrumpió.',
+    intro: { en: 'Put the events in order.', es: 'Ordena los eventos.' },
+    steps: [
+      { en: 'I was driving on the road.', es: 'Yo estaba manejando por el camino.' },
+      { en: 'The engine was making a strange noise.', es: 'El motor estaba haciendo un ruido extraño.' },
+      { en: 'Suddenly, the car stopped.', es: 'De repente, el carro se detuvo.' },
+      { en: 'JoJo got out and checked the wheels.', es: 'JoJo se bajó y revisó las ruedas.' },
+      { en: 'We saw a small purple light near the wheels.', es: 'Vimos una pequeña luz morada cerca de las ruedas.' },
+      { en: 'Then the noise stopped and everything was quiet.', es: 'Luego el ruido se detuvo y todo quedó en silencio.' },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "The story is clear. But the engine is still… listening."',
+    es: 'La historia está clara. Pero el motor sigue… escuchando.',
+    sub: 'Algo despertó junto al carro: El Motor Silencioso.',
+    say: 'The story is clear.',
+  },
+}
+
+// Cierre con Leo tras vencer al Motor Silencioso (el fragmento ya lo entregó el jefe)
+NPC_TASKS['a2-08-close'] = {
+  npc: 'a2-08-leo',
+  done: 'a2-08-close',
+  requires: {
+    id: 'a2-08-silent-engine',
+    text: 'Leo: "The engine is still listening. Go to the car."',
+    es: 'El motor sigue escuchando. Ve al carro.',
+    sub: 'Sigue los objetivos bajo el mapa.',
+  },
+  steps: [
+    { text: 'Good. The car stopped, but we understood what happened.', es: 'Bien. El carro se detuvo, pero entendimos qué pasó.' },
+    { text: 'You used the Past Simple for finished actions, and the Past Continuous for what was happening.', es: 'Usaste el pasado simple para las acciones terminadas y el pasado continuo para lo que estaba pasando.' },
+    { text: 'You have the fragment. The clock is still incomplete… but one more piece of your voice is back.', es: 'Tienes el fragmento. El reloj sigue incompleto… pero un pedazo más de tu voz volvió.' },
+    { text: 'JoJo: "It was the same light from the race. I am sure."', es: 'JoJo: "Era la misma luz de la carrera. Estoy seguro."' },
+  ],
+  reward: {
+    text: 'Leo: "We should keep going."',
+    es: 'Debemos seguir.',
+    sub: 'A2-08 completada. Recuperaste otro fragmento. La luz morada sigue apareciendo.',
+    say: 'We should keep going.',
+  },
+}
+
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */
 export function taskOf(npcId: string, opened: string[]): { id: string; task: NpcTask; blocked: boolean } | null {
   for (const [id, t] of Object.entries(NPC_TASKS)) {
