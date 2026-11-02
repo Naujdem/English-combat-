@@ -16,7 +16,7 @@ const MAP = [
   '#......q.......#',
   '#......q.O.O.O.#',
   '#H.H...q.......#',
-  '#......q...i...#',
+  '#......q.....i.#',
   '###d#######d####',
   '#..............#',
   '#.t...H....H...#',
@@ -187,7 +187,7 @@ export const A2_CONTROL: SceneDef = {
   examine: {
     '10,1': { text: 'Every screen says the same thing: ALL ROUTES CLOSED.', sub: 'Todas las pantallas dicen lo mismo: TODAS LAS RUTAS CERRADAS.', say: 'All routes closed.', tone: 'warn' },
     '1,1': { text: 'Booking office. Single and return tickets.', sub: 'Taquilla. Boletos de ida y de ida y vuelta.', say: 'Booking office.' },
-    '11,5': { text: 'The route board: Route B is going to the closed bridge.', sub: 'El tablero de rutas: la ruta B va hacia el puente cerrado.', say: 'Route B is going to the closed bridge.', tone: 'warn' },
+    '13,5': { text: 'The route board: Route B is going to the closed bridge.', sub: 'El tablero de rutas: la ruta B va hacia el puente cerrado.', say: 'Route B is going to the closed bridge.', tone: 'warn' },
   },
   requirements: [],
   chips: (s) => [
