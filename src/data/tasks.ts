@@ -26,7 +26,7 @@ export type NpcTask = {
   heal?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -60,6 +60,8 @@ export type NpcTask = {
     /** Marca que se guarda en opened según el desenlace (A2-07: la confianza de JoJo cambia la salida de la carrera) */
     results?: Partial<Record<keyof DebateEndings, string>>
   }
+  /** Para activity 'exam': el examen escrito de una época o nivel (EraExam). Al guardar las frases se completa la tarea */
+  exam?: 'a2'
   /** Dialogue Under Pressure: segundos para cada elección de la charla */
   pressure?: number
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
@@ -3055,6 +3057,286 @@ NPC_TASKS['a2-12-close'] = {
     es: 'Vamos a volver.',
     sub: 'A2-12 completada. Recuperaste el fragmento de la carreta y ganaste el uniforme del centro de control (2056). Adrián ahora es tu aliado. El reloj señala el hospital.',
     say: "We're going back.",
+  },
+}
+
+// ── A2-13 — The Missing Voice (de vuelta al hospital, presente; escena, esbirro y jefe en data/a2Return.ts) ──
+// La luz morada les quita la voz a todos; Leo se queda ronco y se desmaya. Jefe final de A2 (The Silence, 4 fases) y examen escrito de A2.
+// Orden: Leo (lección health-emergency + práctica) → la paciente silenciada → la recepcionista (notas escritas) → la médica (DebateTalk)
+//        → la persona especial (llamada de emergencia, Dialogue Under Pressure) → Leo (Detective: el tablero de A2) → The Silence
+//        → Leo (examen de A2) → Leo (cierre: el núcleo se ilumina; "Be brave. Use your voice."; Who is L?).
+NPC_TASKS['a2-13-leo'] = {
+  done: 'a2-13-practice',
+  lesson: 'health-emergency',
+  activity: 'practice',
+  practice: 'health-emergency',
+  practiceIds: ['a2-13-p1', 'a2-13-p2', 'a2-13-p3', 'a2-13-p4', 'a2-13-p5', 'a2-13-p6', 'a2-13-p7', 'a2-13-p8'],
+  steps: [],
+  reward: {
+    text: 'Leo: "(cough) Good… Now go to the reception. Wait… that patient. Her eyes are purple."',
+    es: '(tose) Bien… Ahora ve a la recepción. Espera… esa paciente. Sus ojos son morados.',
+    sub: 'La paciente silenciada bloquea la entrada de la recepción. Véncela.',
+    say: 'Her eyes are purple.',
+  },
+}
+
+// Lectura: la recepcionista no puede hablar y escribe notas. Hay que entenderlas (y contestar bien).
+NPC_TASKS['a2-13-notes'] = {
+  npc: 'a2-13-receptionist',
+  done: 'a2-13-notes',
+  requires: {
+    id: 'a2-13-silenced',
+    text: '(The receptionist points at the door. Somebody is blocking it.)',
+    es: '(La recepcionista señala la puerta. Alguien la está bloqueando).',
+    sub: 'Vence a la paciente silenciada, a la entrada de la recepción.',
+  },
+  steps: [
+    {
+      text: '(She opens her mouth, but no sound comes out. She takes a notebook and writes:) "I can\'t speak. Can you read?"',
+      es: '(Abre la boca, pero no le sale ningún sonido. Toma una libreta y escribe:) "No puedo hablar. ¿Sabes leer?".',
+      choice: { ask: 'Contéstale con amabilidad.', options: ["Yes, I can. What's the matter?", "Yes, I can. What's the matters?", 'Yes, I do. What matter?'], answer: 0, tip: "Para preguntar qué le pasa: What's the matter?" },
+    },
+    {
+      text: '(She writes:) "At 3 o\'clock a purple light came from the hallway. Since then, nobody has spoken. My throat hurts."',
+      es: '(Escribe:) "A las 3 una luz morada vino del pasillo. Desde entonces, nadie ha hablado. Me duele la garganta".',
+      choice: { ask: '¿Qué pasó, según la nota?', options: ['A purple light came, and now nobody can speak.', 'A purple light is going to come at 3.', 'Nobody came to the hospital at 3.'], answer: 0, tip: 'La nota dice: came (pasado) y nobody has spoken (desde entonces, nadie ha hablado).' },
+    },
+    {
+      text: '(She writes:) "Your friend is very pale. He has got a sore throat too. The doctor is in your old room."',
+      es: '(Escribe:) "Tu amigo está muy pálido. Él también tiene dolor de garganta. La médica está en tu antigua habitación".',
+      choice: { ask: 'Dale un consejo antes de irte.', options: ["You should drink some water. Don't try to speak.", 'You should to drink some water. Not try to speak.', "You shoulds drink some water. Don't trying to speak."], answer: 0, tip: "Consejo: should + verbo base. Una orden negativa: Don't + verbo." },
+    },
+    {
+      text: '(She smiles and writes:) "Thank you. Please hurry."',
+      es: '(Sonríe y escribe:) "Gracias. Por favor, apúrate".',
+    },
+  ],
+  reward: {
+    text: '"Thank you. Please hurry."',
+    es: 'Gracias. Por favor, apúrate.',
+    sub: 'La médica está en tu antigua habitación (a la izquierda). Cuéntale qué le pasa a Leo.',
+    say: 'Please hurry.',
+  },
+}
+
+// Reunión con la médica de A2-01: describir los síntomas de Leo y dar tu opinión. No hay respuestas incorrectas.
+NPC_TASKS['a2-13-doctor'] = {
+  npc: 'a2-13-doctor',
+  done: 'a2-13-doctor',
+  activity: 'debate',
+  requires: {
+    id: 'a2-13-notes',
+    text: '(The doctor writes quickly in her notebook. She looks very busy.)',
+    es: '(La médica escribe rápido en su libreta. Se ve muy ocupada).',
+    sub: 'Primero habla con la recepcionista.',
+  },
+  debate: {
+    title: 'The Doctor',
+    ask: 'Cuéntale a la médica qué le pasa a Leo: los síntomas, desde cuándo y lo que tú piensas.',
+    turns: [
+      {
+        text: '(in a very weak voice) You came back… Good. Tell me. What\'s the matter with your friend?',
+        es: '(con una voz muy débil) Volviste… Bien. Dime. ¿Qué le pasa a tu amigo?',
+        options: [
+          { en: "He's got a sore throat, and his voice is getting weaker and weaker.", es: 'Tiene dolor de garganta, y su voz es cada vez más débil.', value: 'good' },
+          { en: 'He is sick.', es: 'Está enfermo.', value: 'neutral' },
+          { en: 'He have got a voice.', es: '(Frase mal dicha).', value: 'bad' },
+        ],
+      },
+      {
+        text: 'Has he got a fever? Does his head hurt?',
+        es: '¿Tiene fiebre? ¿Le duele la cabeza?',
+        options: [
+          { en: "No, he hasn't got a fever. But he feels dizzy and very tired.", es: 'No, no tiene fiebre. Pero se siente mareado y muy cansado.', value: 'good' },
+          { en: 'No fever.', es: 'Sin fiebre.', value: 'neutral' },
+          { en: 'His head hurt him yesterday tomorrow.', es: '(Frase sin sentido).', value: 'bad', reply: { text: "Sorry, I don't understand.", es: 'Perdón, no te entiendo.' } },
+        ],
+      },
+      {
+        text: 'When did it start?',
+        es: '¿Cuándo empezó?',
+        options: [
+          { en: 'It started when we arrived. The purple light was shining in the windows.', es: 'Empezó cuando llegamos. La luz morada brillaba en las ventanas.', value: 'good' },
+          { en: 'Today.', es: 'Hoy.', value: 'neutral' },
+          { en: 'It is start when we are arrive.', es: '(Frase mal dicha).', value: 'bad' },
+        ],
+      },
+      {
+        text: 'What do you think? Is it a normal illness?',
+        es: '¿Tú qué piensas? ¿Es una enfermedad normal?',
+        options: [
+          { en: "I don't think so. I think the purple light is taking everybody's voice.", es: 'No lo creo. Creo que la luz morada se está llevando la voz de todos.', value: 'good' },
+          { en: 'I don\'t know.', es: 'No sé.', value: 'neutral' },
+          { en: 'Yes, he should to eat more.', es: '(Frase mal dicha).', value: 'bad' },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: "You're right. I've checked every patient. It is not an illness: it is that light. You must find where it comes from.", es: 'Tienes razón. He revisado a todos los pacientes. No es una enfermedad: es esa luz. Tienes que encontrar de dónde viene.' },
+      mid: { text: "It is not a normal illness. I'm sure. You must find where that light comes from.", es: 'No es una enfermedad normal. Estoy segura. Tienes que encontrar de dónde viene esa luz.' },
+      low: { text: '… I think it is that light. Please, be careful.', es: '… Creo que es esa luz. Por favor, ten cuidado.' },
+    },
+  },
+  steps: [],
+  reward: {
+    text: '"Help! Leo has fainted in the hallway!"',
+    es: '¡Ayuda! ¡Leo se desmayó en el pasillo!',
+    sub: 'La persona especial grita desde la habitación. Habla con ella: hay que pedir ayuda por teléfono.',
+    say: 'Leo has fainted!',
+  },
+}
+
+// Dialogue Under Pressure (MiniTalk con temporizador, ya existe): la llamada de emergencia. Adrián manda un mensaje al final.
+NPC_TASKS['a2-13-call'] = {
+  npc: 'a2-13-interest',
+  done: 'a2-13-call',
+  pressure: 14,
+  requires: {
+    id: 'a2-13-doctor',
+    text: '"Leo looks very pale. Talk to the doctor first."',
+    es: 'Leo se ve muy pálido. Habla primero con la médica.',
+    sub: 'La médica está en tu antigua habitación.',
+  },
+  steps: [
+    {
+      text: '"Leo has fainted! The doctor can\'t speak, she has lost her voice too. Here, take my phone. Call for help! Quick!"',
+      es: '¡Leo se desmayó! La médica no puede hablar, también perdió la voz. Toma mi teléfono. ¡Pide ayuda! ¡Rápido!',
+    },
+    {
+      text: "Operator: \"Emergency services. What's your emergency?\"",
+      es: 'Operador: "Servicio de emergencias. ¿Cuál es su emergencia?".',
+      choice: { ask: 'Di qué pasó.', options: ["My friend has fainted. He can't speak.", "My friend has faint. He can't to speak.", "My friend is fainted. He don't speak."], answer: 0, tip: 'Acaba de pasar: has fainted. Después de can\'t, el verbo va sin to.' },
+    },
+    {
+      text: 'Operator: "OK. Is he breathing?"',
+      es: 'Operador: "Está bien. ¿Está respirando?".',
+      choice: { ask: 'Sí, respira. Y tiene los ojos abiertos.', options: ['Yes, he is. His eyes are open.', 'Yes, he does. His eyes is open.', 'Yes, he breathing. His eyes are open.'], answer: 0, tip: 'Pregunta con is → respuesta corta: Yes, he is.' },
+    },
+    {
+      text: 'Operator: "Where are you now?"',
+      es: 'Operador: "¿Dónde están ahora?".',
+      choice: { ask: 'Estás en el hospital de la ciudad, en el segundo piso.', options: ["We're in the city hospital, on the second floor.", "We're on the city hospital, in the second floor.", "We're at the city hospital, at the second floor."], answer: 0, tip: 'in the hospital (dentro de un edificio) · on the second floor (pisos).' },
+    },
+    {
+      text: 'Operator: "Has he got any other symptoms?"',
+      es: 'Operador: "¿Tiene algún otro síntoma?".',
+      choice: { ask: 'Le duele la garganta y está muy pálido.', options: ['His throat hurts, and he is very pale.', 'His throat hurt him, and he is very pale.', 'His throat hurts, and he has very pale.'], answer: 0, tip: 'Una parte del cuerpo: hurts. Para cómo está: he is pale.' },
+    },
+    {
+      text: 'Operator: "OK. Help is coming. What should you do now? Listen carefully."',
+      es: 'Operador: "Bien. La ayuda va en camino. ¿Qué deben hacer ahora? Escuche con atención".',
+      choice: { ask: '¿Qué consejo tiene sentido?', options: ["We shouldn't move him. We should stay with him.", 'We should to move him. We shouldn\'t stay with him.', 'We must running. We mustn\'t stay with him.'], answer: 0, tip: "Con alguien desmayado: no moverlo (shouldn't move) y quedarse con él (should stay)." },
+    },
+    {
+      text: '(A message appears on the phone:) Adrián: "I\'ve seen the alert from 2056. I\'m coming. I\'ll help you."',
+      es: '(Aparece un mensaje en el teléfono:) Adrián: "He visto la alerta desde 2056. Voy para allá. Te ayudaré".',
+    },
+  ],
+  reward: {
+    text: 'Leo opens his eyes. He tries to speak… but nothing comes out.',
+    es: 'Leo abre los ojos. Intenta hablar… pero no le sale nada.',
+    sub: 'Leo está despierto en el pasillo, pero sin voz. Habla con él: tiene algo que mostrarte.',
+    say: 'Leo opens his eyes.',
+  },
+}
+
+// Detective: el tablero de A2 (Reconstruct). Leo no puede hablar: escribe en la libreta. Se juntan las pistas de toda la campaña.
+NPC_TASKS['a2-13-board'] = {
+  npc: 'a2-13-leo-hall',
+  done: 'a2-13-board',
+  activity: 'reconstruct',
+  reconstruct: {
+    title: 'The A2 Board',
+    intro: { en: "Leo can't speak, so he writes in his notebook: \"Let's put everything together.\" Read each clue and choose what is true.", es: 'Leo no puede hablar, así que escribe en su libreta: "Juntemos todo". Lee cada pista y elige lo que es verdad.' },
+    items: [
+      {
+        source: 'The workshop and the library',
+        clue: { en: 'Mr. Hale and the echo in the library touched a fragment. Their words changed, and their eyes turned purple.', es: 'Mr. Hale y el eco de la biblioteca tocaron un fragmento. Sus palabras cambiaron y sus ojos se volvieron morados.' },
+        claim: { en: 'The fragments help people speak better.', es: 'Los fragmentos ayudan a hablar mejor.' },
+        options: ['People who touched a fragment changed their words.', 'People who touch a fragment changes their words.', 'People who touched a fragment has changed his words.'],
+        answer: 0,
+        tip: 'Lo que pasó: touched y changed (Past Simple).',
+      },
+      {
+        source: 'The race, the road and the mill',
+        clue: { en: 'The purple light stopped the cart in the race, the car on the road and the wheel of the mill.', es: 'La luz morada detuvo la carreta en la carrera, el carro en el camino y la rueda del molino.' },
+        claim: { en: 'The purple light makes things go faster.', es: 'La luz morada hace que las cosas vayan más rápido.' },
+        options: ['The purple light stops everything it touches.', 'The purple light stop everything it touch.', 'The purple light is stopping everything it touched tomorrow.'],
+        answer: 0,
+        tip: 'Algo que siempre pasa: stops, touches (presente con -s).',
+      },
+      {
+        source: 'The museum of 2056',
+        clue: { en: 'The fragment was in the cargo of the River cart for many years. Adrián took it, and he closed every route.', es: 'El fragmento estuvo en la carga de la carreta River muchos años. Adrián lo tomó y cerró todas las rutas.' },
+        claim: { en: 'Somebody traveled in time with the cart.', es: 'Alguien viajó en el tiempo con la carreta.' },
+        options: ['Nobody traveled in time: the years passed.', 'Nobody travels in time: the years pass tomorrow.', 'Nobody has travel in time: the years passed.'],
+        answer: 0,
+        tip: 'Nadie viajó: solo pasaron los años (traveled, passed).',
+      },
+      {
+        source: 'The hospital, today',
+        clue: { en: 'Since 3 o\'clock, nobody in the hospital has spoken. Leo has lost his voice too.', es: 'Desde las 3, nadie en el hospital ha hablado. Leo también ha perdido la voz.' },
+        claim: { en: 'The light has stopped the trains.', es: 'La luz ha detenido los trenes.' },
+        options: ["Now the light has stopped people's voices.", "Now the light has stop people's voices.", "Now the light stopped people's voices tomorrow."],
+        answer: 0,
+        tip: 'Algo que pasó y se nota ahora: has stopped (Present Perfect).',
+      },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: '(Leo writes:) "The light stops what it touches. Now it has stopped our voices." — The hallway goes dark. Something is coming.',
+    es: '(Leo escribe:) "La luz detiene lo que toca. Ahora ha detenido nuestras voces". — El pasillo se oscurece. Algo viene.',
+    sub: 'The Silence apareció al fondo del pasillo (a la derecha). Es el jefe final de A2.',
+    say: 'Something is coming.',
+  },
+}
+
+// Examen escrito de A2 (EraExam, entrada 'a2'). Al guardar las frases se completa la tarea.
+NPC_TASKS['a2-13-exam'] = {
+  npc: 'a2-13-leo-hall',
+  done: 'a2-13-exam',
+  activity: 'exam',
+  exam: 'a2',
+  requires: {
+    id: 'a2-13-the-silence',
+    text: '(Leo points at the end of the hallway. He can\'t speak.)',
+    es: '(Leo señala el fondo del pasillo. No puede hablar).',
+    sub: 'Vence a The Silence, al fondo del pasillo.',
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "(cough)… Wow. You wrote that… all by yourself."',
+    es: '(tose)… Guau. Escribiste eso… tú solo.',
+    sub: 'Examen de A2 guardado (también está en el Menú). Habla otra vez con Leo.',
+    say: 'All by yourself.',
+  },
+}
+
+// Cierre de A2: Leo recupera la voz, el núcleo brilla sin llenarse, el susurro "Be brave. Use your voice." y la pregunta para B1.
+NPC_TASKS['a2-13-close'] = {
+  npc: 'a2-13-leo-hall',
+  done: 'a2-13-close',
+  outfit: 'voluntario-hospital',
+  heal: true,
+  steps: [
+    { text: 'Can you hear me? My voice… it is back. Everybody is talking again.', es: '¿Me oyes? Mi voz… volvió. Todos están hablando otra vez.' },
+    { text: 'You did it. The past, the present, the future… you remembered every word.', es: 'Lo lograste. El pasado, el presente, el futuro… recordaste cada palabra.' },
+    { text: 'Look at your clock. The empty core is shining for the first time… but it is not full yet.', es: 'Mira tu reloj. El centro vacío brilla por primera vez… pero todavía no está lleno.' },
+    {
+      text: '(Suddenly, a very quiet, sad voice comes from the clock:) "Be brave. Use your voice."',
+      es: '(De repente, una voz muy baja y triste sale del reloj:) "Sé valiente. Usa tu voz".',
+      choice: { ask: 'Leo se queda pálido. ¿Qué le preguntas?', options: ["What's wrong, Leo? Have you heard that before?", "What's wrong, Leo? Did you heard that before?", "What wrong, Leo? Have you hear that before?"], answer: 0, tip: '¿Alguna vez antes? Have you heard…? (have + participio).' },
+    },
+    { text: 'Those words… they were on my birthday card. The card from "L".', es: 'Esas palabras… estaban en mi tarjeta de cumpleaños. La tarjeta de "L".' },
+    { text: 'And that voice… it was sad. Very sad. Like the voice of the stranger.', es: 'Y esa voz… era triste. Muy triste. Como la voz del desconocido.' },
+    { text: 'Who is L? And why does my throat hurt when the clock shines?', es: '¿Quién es L? ¿Y por qué me duele la garganta cuando brilla el reloj?' },
+  ],
+  reward: {
+    text: 'Leo: "Who is L?"',
+    es: '¿Quién es L?',
+    sub: '¡A2 completado! Ganaste el chaleco de voluntario del hospital. El núcleo del reloj brilla, pero no está lleno. Las respuestas, en B1.',
+    say: 'Who is L?',
   },
 }
 

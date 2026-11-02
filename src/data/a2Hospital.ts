@@ -11,7 +11,7 @@ import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
  * Personajes: la médica y la persona especial (habitación), tu amigo (pasillo), la recepcionista y, en A2-02, Leo.
  * Sus tareas están en data/tasks.ts. Un solo combate (el eco corrompido), después de la lección de Leo.
  */
-const MAP = [
+export const HOSPITAL_MAP = [
   '######################',
   '#W...##...W#.p.....p.#',
   '#F.....p...#..CCCCC..#',
@@ -30,7 +30,7 @@ const MAP = [
   '######################',
 ]
 /** Se reutilizan pisos existentes para no ampliar las zonas */
-function zoneAt(x: number, y: number): Zone {
+export function hospitalZoneAt(x: number, y: number): Zone {
   if (y >= 12) return 'lobby-torre'
   if (x >= 12) return 'recepcion'
   return 'aula-futuro'
@@ -98,7 +98,7 @@ export const A2_HOSPITAL: SceneDef = {
   id: 'a2-hospital',
   name: 'Hospital · Habitación',
   topics: [],
-  map: MAP,
+  map: HOSPITAL_MAP,
   start: { x: 2, y: 3 },
   // Sin jefe todavía: la puerta del jefe apunta a un muro y no hace falta ninguna llave
   bossDoor: { x: 0, y: 0 },
@@ -119,7 +119,7 @@ export const A2_HOSPITAL: SceneDef = {
     { text: 'Recepción', x: 16, y: 1 },
     { text: 'Pasillo', x: 11, y: 14 },
   ],
-  zoneAt,
+  zoneAt: hospitalZoneAt,
   examine: {
     '1,3': { text: 'You are in a hospital bed. Your body is still recovering.', sub: 'Estás en una cama de hospital. Tu cuerpo todavía se está recuperando.', say: 'You are in a hospital bed. Your body is still recovering.' },
     '1,4': { text: 'There is a small table beside your bed.', sub: 'Hay una mesita junto a tu cama.', say: 'There is a small table beside your bed.' },

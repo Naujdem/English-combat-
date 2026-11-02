@@ -10,7 +10,7 @@ import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from '../data/irregular'
  * No hay una sola respuesta: se revisa que use la estructura pedida y se avisan los errores típicos.
  * Al final ve sus frases junto a un ejemplo de Leo y se guardan en su diario de escritura.
  */
-export type EraId = 'presente' | 'pasado' | 'futuro'
+export type EraId = 'presente' | 'pasado' | 'futuro' | 'a2'
 type Task = { ask: string; help: string; need: RegExp; needMsg: string; model: string }
 
 const IRR = IRREGULAR_VERBS.map((v) => v.past).concat(MORE_IRREGULAR_PASTS)
@@ -49,6 +49,18 @@ export const EXAMS: Record<EraId, { title: string; unlock: string; intro: string
       { ask: '¿Qué le preguntarías al desconocido? (pregunta con going to)', help: 'Why are you going to...? · What are you going to...?', need: /\b(am|is|are)\b.*going to.*\?\s*$/i, needMsg: 'Haz una pregunta: (What / Why / Where) + are you going to...?', model: 'Why are you going to take my voice?' },
     ],
   },
+  a2: {
+    title: 'Examen de A2',
+    unlock: 'a2-13-exam',
+    intro: 'El examen final de A2. Escribe 5 frases tuyas sobre todo lo que viviste en A2. No hay una sola respuesta correcta.',
+    tasks: [
+      { ask: '¿Qué estaba pasando cuando la luz morada detuvo el carro? (Past Continuous + when / while)', help: 'JoJo was watching the race when... · While we were...', need: /\b(was|were)\s+\w+ing\b/i, needMsg: 'Usa was / were + verbo con -ing (Past Continuous): was driving, were watching...', model: 'The car was going home when the purple light stopped it.' },
+      { ask: '¿Qué has hecho en A2? (Present Perfect)', help: "I have visited... · We've found...", need: /(\b(have|has)|'ve)\s+(never\s+|already\s+|just\s+|ever\s+)?(?!to\b|got\b)\w+/i, needMsg: 'Usa have / has + participio: I have visited, we have found, she has lost...', model: 'I have visited the past, the present and the future.' },
+      { ask: 'Compara dos lugares o personas de A2 (comparativo o superlativo)', help: 'The race was faster than... · Adrián is the busiest...', need: /\b\w+er than\b|\bmore \w+ than\b|\bthe (most \w+|\w+est)\b|\b(better|worse) than\b|\bthe (best|worst)\b/i, needMsg: 'Compara: faster than, more interesting than, the best, the biggest...', model: 'The city of 2056 is bigger and noisier than the farm.' },
+      { ask: '¿Cuál es tu plan para B1? (going to, will o presente continuo)', help: "I'm going to... · I'll... · We are meeting...", need: /going to\s+\w+|\bwill\s+\w+|'ll\s+\w+|\b(am|is|are)\s+\w+ing\b|'(m|s|re)\s+\w+ing\b/i, needMsg: "Habla de un plan: I'm going to find..., I'll help..., We're meeting...", model: "I'm going to find out who L is." },
+      { ask: 'Leo ha perdido la voz. Dale un consejo (should / shouldn\'t)', help: "You should... · You shouldn't...", need: /\bshould(n'?t| not)?\s+\w+/i, needMsg: "Da un consejo con should / shouldn't + verbo: You should rest.", model: "You should rest, and you shouldn't shout." },
+    ],
+  },
 }
 
 const WRONG_PAST = new Map(IRREGULAR_VERBS.map((v) => [v.wrong, v.past]))
@@ -75,6 +87,8 @@ export function commonErrors(raw: string): string[] {
   if (/\bgoing (be|go|visit|play|eat|see|find|take|make|have|study|help|buy|rain|fall|fly)\b/.test(t)) out.push('Falta "to": going to + verbo.')
   if (/\b(want|wants) (be|go|see|find|play|eat|have|help|visit|ask|say|fly|study)\b/.test(t)) out.push('Falta "to": want to + verbo.')
   if (/\bwould like (be|go|see|find|play|eat|have|help|visit|ask|say|fly|study)\b/.test(t)) out.push('Falta "to": would like to + verbo.')
+  if (/\b(should|must)(n'?t)? to\b/.test(t)) out.push('Should y must van sin "to": You should rest.')
+  if (/\b(have|has) (went|took|ate|saw|wrote|gave|did|came|spoke)\b/.test(t)) out.push('Con have / has va el participio: have gone, have taken, have eaten, have seen...')
   if (/\bcan to\b/.test(t) || /\bcans\b/.test(t)) out.push('Can va sin "to" y sin -s: I can swim, she can swim.')
   if (/\bgoing to \w+(ed|s)\b/.test(t) && !/\bgoing to (be|bus|has)\b/.test(t)) out.push('Después de going to, el verbo va simple: going to play (no "played" ni "plays").')
   return out

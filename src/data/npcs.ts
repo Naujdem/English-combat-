@@ -575,6 +575,35 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     interest: true,
     doneLine: { text: 'Everybody has a plan now. And so do we.', es: 'Ahora todos tienen un plan. Y nosotros también.' },
   },
+  // ── A2-13, de vuelta al hospital: Leo (pasillo), la recepcionista sin voz, la médica y la persona especial ──
+  'a2-13-leo': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    until: 'a2-13-doctor',
+    doneLine: { text: '(cough) I am OK… Go to the reception. The doctor can help us.', es: '(tose) Estoy bien… Ve a la recepción. La médica nos puede ayudar.' },
+  },
+  'a2-13-leo-hall': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    after: 'a2-13-call',
+    doneLine: { text: 'My voice is back. Thanks to you.', es: 'Mi voz volvió. Gracias a ti.' },
+  },
+  'a2-13-receptionist': {
+    name: 'The receptionist',
+    look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },
+    doneLine: { text: '(She writes:) "Thank you. The doctor is in your old room."', es: '(Escribe:) "Gracias. La médica está en tu antigua habitación".' },
+  },
+  'a2-13-doctor': {
+    name: 'The doctor',
+    look: { shirt: '#eef3f6', hair: '#3b2a1a', skin: '#c68642', gender: 'female', accessory: 'glasses' },
+    doneLine: { text: 'It is not an illness. It is that light. Be careful.', es: 'No es una enfermedad. Es esa luz. Ten cuidado.' },
+  },
+  'a2-13-interest': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: 'You were so calm on the phone. I was very scared.', es: 'Estuviste muy tranquilo al teléfono. Yo estaba muy asustado.' },
+  },
   'a2-receptionist': {
     name: 'The receptionist',
     look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },
