@@ -21,6 +21,8 @@ import { A2_CAR_PRACTICE } from './a2Car'
 import { A2_CAR_QUESTIONS } from './questions-a2-car'
 import { A2_MILL_PRACTICE } from './a2Mill'
 import { A2_MILL_QUESTIONS } from './questions-a2-09'
+import { A2_LEO_HOUSE_PRACTICE } from './a2LeoHouse'
+import { A2_LEO_HOUSE_QUESTIONS } from './questions-a2-10'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -360,6 +362,8 @@ export const QUESTIONS: Question[] = [
   ...A2_CAR_QUESTIONS,
   ...A2_MILL_PRACTICE,
   ...A2_MILL_QUESTIONS,
+  ...A2_LEO_HOUSE_PRACTICE,
+  ...A2_LEO_HOUSE_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -876,6 +880,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       "some en afirmativo (There is some flour) · any en negativo y preguntas (There isn't any salt. Is there any water?).",
       'How much + lo que no se cuenta (flour, water) · How many + plural (sacks, eggs).',
       "Comprar: How much is it? · I'd like two sacks, please. · Here is your change. · Can I return it?",
+    ],
+  },
+  'present-perfect': {
+    name: 'Present Perfect',
+    level: 'A2',
+    lesson: [
+      'have / has + participio → I have found a clue. Leo has been to the past.',
+      'Participios irregulares que hay que aprender: go → gone · see → seen · be → been · find → found · take → taken · write → written.',
+      'Experiencias: Have you ever…? · I have never… · Acciones recientes: just (hace muy poco) · already (ya) · yet (todavía no / ya, al final en negativas y preguntas).',
+      'Con un momento terminado (yesterday, in 1996, last week) se usa Past Simple: I saw the cart in 1996.',
     ],
   },
   future: {

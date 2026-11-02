@@ -6,6 +6,7 @@ import type { FixStep } from '../components/FixRadio'
 import type { ReconstructItem } from '../components/Reconstruct'
 import type { DebateEndings, DebateTurn } from '../components/DebateTalk'
 import type { CommandObject, CommandStep } from '../components/CommandPuzzle'
+import type { MemoryPair } from '../components/MemoryChest'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -25,7 +26,7 @@ export type NpcTask = {
   heal?: boolean
   outfit?: string
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -44,6 +45,8 @@ export type NpcTask = {
   /** Para activity 'fixradio' (Fix the Radio): instrucciones paso a paso; el jugador toca la pieza de cada paso */
   fixradio?: { title: string; intro: { en: string; es: string }; steps: FixStep[] }
   /** Para activity 'command' (Command Puzzle, A2-09 Wake the Mill): el jugador da la orden (verbo + objeto). Con 0-1 errores, escudo */
+  /** Para activity 'memory' (The Memory Chest, A2-10): parejas que se emparejan volteando cartas */
+  memory?: { title: string; intro: { en: string; es: string }; pairs: MemoryPair[] }
   command?: { title: string; intro: { en: string; es: string }; verbs: string[]; objects: CommandObject[]; steps: CommandStep[] }
   /** Para activity 'reconstruct' (Reconstruct the Story): contrastar pistas con una nota corrompida y elegir la frase verdadera */
   reconstruct?: { title: string; intro: { en: string; es: string }; items: ReconstructItem[] }
@@ -2426,6 +2429,245 @@ NPC_TASKS['a2-09-close'] = {
     es: 'Tenemos que averiguarlo.',
     sub: 'A2-09 completada. Recuperaste otro fragmento. El carro se detuvo junto al molino… pero ¿por qué?',
     say: 'We need to find out.',
+  },
+}
+
+// ── A2-10 — Echoes Across Time (casa de Leo, presente; escena, esbirro y jefe en data/a2LeoHouse.ts) ──
+// Canon aprobado (A + C): la luz detiene lo que toca; el fragmento siguió en la carga de la carreta; la carreta pasó a la
+// colección de la ciudad y en 2056 está en el museo del transporte. Sin fragmento en esta misión.
+// Orden: Leo abajo (lección present-perfect + práctica) → Eco del ático → Leo arriba (The Memory Chest)
+//        → Leo (Detective: el tablero) → Leo (el periódico) → persona especial (reunión) → El devorador de recuerdos → Leo (cierre).
+NPC_TASKS['a2-10-leo'] = {
+  done: 'a2-10-practice',
+  lesson: 'present-perfect',
+  activity: 'practice',
+  practice: 'present-perfect',
+  practiceIds: ['a2-10-p1', 'a2-10-p2', 'a2-10-p3', 'a2-10-p4', 'a2-10-p5', 'a2-10-p6', 'a2-10-p7'],
+  steps: [],
+  reward: {
+    text: 'Leo: "I\'ll go up first. Wait… something is on the stairs!"',
+    es: 'Yo subo primero. Espera… ¡hay algo en la escalera!',
+    sub: 'Un eco bloquea la escalera del ático. Véncelo y sube con Leo.',
+    say: 'Something is on the stairs!',
+  },
+}
+
+// The Memory Chest: emparejar verbo y participio para abrir los seis candados del baúl de pistas
+NPC_TASKS['a2-10-chest'] = {
+  npc: 'a2-10-leo-up',
+  done: 'a2-10-chest',
+  activity: 'memory',
+  requires: {
+    id: 'a2-10-attic-echo',
+    text: 'Leo: "Come up! But be careful on the stairs."',
+    es: '¡Sube! Pero ten cuidado en la escalera.',
+    sub: 'Vence al eco que bloquea la escalera.',
+  },
+  memory: {
+    title: 'Six Locks',
+    intro: { en: 'Our clues are in this chest, but the light has closed it with six locks. Match each verb with its participle.', es: 'Nuestras pistas están en este baúl, pero la luz lo cerró con seis candados. Une cada verbo con su participio.' },
+    pairs: [
+      { a: 'go', b: 'gone', example: { en: 'We have gone back to the past three times.', es: 'Hemos vuelto al pasado tres veces.' } },
+      { a: 'see', b: 'seen', example: { en: 'We have seen the purple light again and again.', es: 'Hemos visto la luz morada una y otra vez.' } },
+      { a: 'find', b: 'found', example: { en: 'I have found an old newspaper in the library.', es: 'He encontrado un periódico viejo en la biblioteca.' } },
+      { a: 'take', b: 'taken', example: { en: 'The light has taken words from many people.', es: 'La luz les ha quitado palabras a muchas personas.' } },
+      { a: 'be', b: 'been', example: { en: 'Leo has been my friend for a long time.', es: 'Leo ha sido mi amigo por mucho tiempo.' } },
+      { a: 'write', b: 'written', example: { en: 'I have written every clue on the board.', es: 'He escrito cada pista en el tablero.' } },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "It\'s open! Look: the piece of the River banner, a horseshoe, flour from the cart… and my old newspaper."',
+    es: '¡Está abierto! Mira: el trozo del estandarte de los River, una herradura, harina de la carreta… y mi periódico viejo.',
+    sub: 'Habla otra vez con Leo para armar el tablero de pistas.',
+    say: "It's open!",
+  },
+}
+
+// Detective: el tablero. Descubrir el patrón: la luz detiene lo que toca
+NPC_TASKS['a2-10-detective'] = {
+  npc: 'a2-10-leo-up',
+  done: 'a2-10-detective',
+  activity: 'reconstruct',
+  requires: {
+    id: 'a2-10-chest',
+    text: 'Leo: "First, let\'s open the chest."',
+    es: 'Primero, abramos el baúl.',
+    sub: 'El baúl está en el ático.',
+  },
+  reconstruct: {
+    title: 'Detective: The Clue Board',
+    intro: { en: 'The corrupted words have changed our memories. Compare each clue and choose what is true now.', es: 'Las palabras corrompidas han cambiado nuestros recuerdos. Compara cada pista y elige lo que es verdad ahora.' },
+    items: [
+      {
+        source: 'The race',
+        clue: { en: 'The cart stopped on the track when the purple light touched it.', es: 'La carreta se detuvo en la pista cuando la luz morada la tocó.' },
+        claim: { en: 'The light has never touched anything.', es: 'La luz nunca ha tocado nada.' },
+        options: ['The light has touched the cart.', 'The light has touch the cart.', 'The light have touched the cart.'],
+        answer: 0,
+        tip: 'the light (it) + has + participio: touched.',
+      },
+      {
+        source: 'The road',
+        clue: { en: 'Our car stopped on the road. The engine was silent.', es: 'Nuestro carro se detuvo en el camino. El motor estaba en silencio.' },
+        claim: { en: 'Our car has never stopped.', es: 'Nuestro carro nunca se ha detenido.' },
+        options: ['Our car has stopped too.', 'Our car has stop too.', 'Our car have stopped too.'],
+        answer: 0,
+        tip: 'our car (it) + has + stopped.',
+      },
+      {
+        source: 'The mill',
+        clue: { en: 'The mill wheel stopped. There was purple light between the stones.', es: 'La rueda del molino se detuvo. Había luz morada entre las piedras.' },
+        claim: { en: 'The mill wheel has worked every night.', es: 'La rueda del molino ha funcionado todas las noches.' },
+        options: ['The mill wheel has stopped too.', 'The mill wheel has stoped too.', 'The mill wheel stopped has too.'],
+        answer: 0,
+        tip: 'stop → stopped (doble p).',
+      },
+      {
+        source: 'Leo',
+        clue: { en: 'A cart, a car and a wheel… the light touched all of them, and all of them stopped.', es: 'Una carreta, un carro y una rueda… la luz los tocó a todos, y todos se detuvieron.' },
+        claim: { en: 'The light has made everything faster.', es: 'La luz ha hecho todo más rápido.' },
+        options: ['The light has stopped everything it touched.', 'The light has stop everything it touched.', 'The light stopped has everything it touched.'],
+        answer: 0,
+        tip: 'has + stopped: el patrón de todas las pistas.',
+      },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "That\'s it! The light stops what it touches. And the cart carried something with that light… Now, look at this newspaper."',
+    es: '¡Eso es! La luz detiene lo que toca. Y la carreta llevaba algo con esa luz… Ahora, mira este periódico.',
+    sub: 'Habla otra vez con Leo para leer el periódico viejo.',
+    say: 'The light stops what it touches.',
+  },
+}
+
+// El periódico viejo (lectura con preguntas, Present Perfect vs Past Simple): la carreta pasó a la colección de la ciudad
+NPC_TASKS['a2-10-news'] = {
+  npc: 'a2-10-leo-up',
+  done: 'a2-10-news',
+  requires: {
+    id: 'a2-10-detective',
+    text: 'Leo: "First, let\'s finish the clue board."',
+    es: 'Primero, terminemos el tablero de pistas.',
+    sub: 'Leo está junto al baúl.',
+  },
+  steps: [
+    { text: 'Leo: "I found this newspaper in the library. Read it with me."', es: 'Encontré este periódico en la biblioteca. Léelo conmigo.' },
+    {
+      text: '"OLD RACE CART GOES TO THE CITY. The River family has given its old race cart to the city history collection. The cart has been in the family barn for many years."',
+      es: '"LA VIEJA CARRETA DE CARRERAS VA A LA CIUDAD. La familia River ha donado su vieja carreta de carreras a la colección de historia de la ciudad. La carreta ha estado en el granero de la familia por muchos años."',
+      choice: { ask: 'Where is the cart now?', options: ['It is in the city history collection.', 'It is in the family barn.', 'It is at the race track.'], answer: 0, tip: 'Dice: has given its old race cart to the city history collection.' },
+    },
+    {
+      text: '"The cart stopped in the middle of a famous race many years ago. Since then, nobody has driven it. Workers cleaned it last week and found purple dust in the wheels."',
+      es: '"La carreta se detuvo en mitad de una carrera famosa hace muchos años. Desde entonces, nadie la ha conducido. La semana pasada unos trabajadores la limpiaron y encontraron polvo morado en las ruedas."',
+      choice: { ask: 'Which sentence is correct?', options: ['Nobody has driven the cart since the race.', 'Nobody drove the cart last week… and they found nothing.', 'Somebody has driven the cart every day.'], answer: 0, tip: 'Dice: Since then, nobody has driven it.' },
+    },
+    {
+      text: '"A museum worker said: We have never seen dust like this. We will keep the cart for the future."',
+      es: '"Un trabajador del museo dijo: Nunca hemos visto un polvo así. Guardaremos la carreta para el futuro."',
+      choice: { ask: 'When did the workers clean the cart?', options: ['They cleaned it last week.', 'They have cleaned it last week.', 'They never cleaned it.'], answer: 0, tip: 'Con last week (momento terminado): Past Simple → cleaned.' },
+    },
+    { text: 'Leo: "Purple dust… The fragment has stayed in that cart all these years. If the city keeps it for the future…"', es: 'Polvo morado… El fragmento se ha quedado en esa carreta todos estos años. Si la ciudad la guarda para el futuro…' },
+  ],
+  reward: {
+    text: 'Leo: "Talk to {iname}. We have to decide what to do."',
+    es: 'Habla con {iname}. Tenemos que decidir qué hacer.',
+    sub: 'Habla con {iname} junto al tablero.',
+    say: 'We have to decide what to do.',
+  },
+}
+
+// Reunión con la persona especial (cap. 12: aclarar y opinar). No hay respuestas incorrectas; al terminar aparece el jefe.
+NPC_TASKS['a2-10-meeting'] = {
+  npc: 'a2-10-interest',
+  done: 'a2-10-meeting',
+  activity: 'debate',
+  requires: {
+    id: 'a2-10-news',
+    text: '"Leo has found something in the chest. Go and see!"',
+    es: 'Leo ha encontrado algo en el baúl. ¡Ve a ver!',
+    sub: 'Leo está junto al baúl.',
+  },
+  debate: {
+    title: 'Our Meeting',
+    ask: 'Responde en la reunión: aclara lo que no entiendas y da tu opinión.',
+    turns: [
+      {
+        text: 'So the city has kept the cart for years. Do you think the cart is still there in the future?',
+        es: 'Entonces la ciudad ha guardado la carreta por años. ¿Crees que la carreta sigue allí en el futuro?',
+        options: [
+          { en: 'I think so. The city has kept it for a long time.', es: 'Creo que sí. La ciudad la ha guardado por mucho tiempo.', value: 'good' },
+          { en: "Maybe. I'm not sure.", es: 'Quizá. No estoy seguro.', value: 'neutral' },
+          { en: "I don't care about the cart.", es: 'No me importa la carreta.', value: 'bad' },
+        ],
+      },
+      {
+        text: 'If-the-fragment-is-still-in-the-cart-we-have-to-find-it-before-somebody-touches-it!',
+        es: '¡Si el fragmento sigue en la carreta, tenemos que encontrarlo antes de que alguien lo toque! (lo dijo muy rápido).',
+        options: [
+          { en: 'Sorry, could you say that again more slowly?', es: 'Perdón, ¿puedes repetirlo más despacio?', value: 'good', reply: { text: 'Sorry! If the fragment is still in the cart, we have to find it before somebody touches it.', es: '¡Perdón! Si el fragmento sigue en la carreta, tenemos que encontrarlo antes de que alguien lo toque.' } },
+          { en: 'What?', es: '¿Qué?', value: 'neutral', reply: { text: 'The fragment! We have to find it first!', es: '¡El fragmento! ¡Tenemos que encontrarlo primero!' } },
+          { en: 'OK.', es: 'Vale.', value: 'bad', reply: { text: 'Did you understand me?', es: '¿Me entendiste?' } },
+        ],
+      },
+      {
+        text: 'What do you think we should do now?',
+        es: '¿Qué crees que deberíamos hacer ahora?',
+        options: [
+          { en: 'In my opinion, we should follow the signal of the clock.', es: 'En mi opinión, deberíamos seguir la señal del reloj.', value: 'good' },
+          { en: "Let's ask Leo.", es: 'Preguntémosle a Leo.', value: 'neutral' },
+          { en: "Let's do nothing.", es: 'No hagamos nada.', value: 'bad' },
+        ],
+      },
+      {
+        text: 'Have you ever been to the city of the future?',
+        es: '¿Alguna vez has estado en la ciudad del futuro?',
+        options: [
+          { en: 'Yes, I have. I have been there before.', es: 'Sí. He estado allí antes.', value: 'good' },
+          { en: 'I think so.', es: 'Creo que sí.', value: 'neutral' },
+          { en: 'Yes, I have went there.', es: '(Frase mal dicha).', value: 'bad' },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: "Then it's decided. Wait… do you feel that? Something is eating the clues!", es: 'Entonces está decidido. Espera… ¿sientes eso? ¡Algo se está comiendo las pistas!' },
+      mid: { text: 'OK, we agree. Wait… something is moving near the board!', es: 'Vale, estamos de acuerdo. Espera… ¡algo se mueve cerca del tablero!' },
+      low: { text: '… OK. Wait. Something is moving near the board!', es: '… Vale. Espera. ¡Algo se mueve cerca del tablero!' },
+    },
+  },
+  steps: [],
+  reward: {
+    text: '"Look out! The clues!"',
+    es: '¡Cuidado! ¡Las pistas!',
+    sub: 'El devorador de recuerdos apareció en el ático.',
+    say: 'Look out!',
+  },
+}
+
+// Cierre con Leo: la señal de 2056 abre A2-11. Recompensa: chaqueta de detective (sin fragmento en esta misión)
+NPC_TASKS['a2-10-close'] = {
+  npc: 'a2-10-leo-up',
+  done: 'a2-10-close',
+  outfit: 'chaqueta-detective',
+  requires: {
+    id: 'a2-10-memory-eater',
+    text: 'Leo: "It\'s eating our clues! Stop it!"',
+    es: '¡Se está comiendo nuestras pistas! ¡Detenlo!',
+    sub: 'Vence al devorador de recuerdos.',
+  },
+  steps: [
+    { text: 'Our clues are safe. You have done great work today.', es: 'Nuestras pistas están a salvo. Has hecho un gran trabajo hoy.' },
+    { text: 'You have used the Present Perfect: for experiences, for recent things, and to say what has changed.', es: 'Has usado el Present Perfect: para experiencias, para cosas recientes y para decir lo que ha cambiado.' },
+    { text: 'Look at your clock. It has never vibrated like this. The signal is in 2056.', es: 'Mira tu reloj. Nunca había vibrado así. La señal está en 2056.' },
+    { text: 'The cart is still there… in the future. And the fragment is waiting for us.', es: 'La carreta sigue allí… en el futuro. Y el fragmento nos está esperando.' },
+  ],
+  reward: {
+    text: 'Leo: "Next stop: the city of tomorrow."',
+    es: 'Próxima parada: la ciudad del mañana.',
+    sub: 'A2-10 completada. Ganaste la chaqueta de detective. El reloj marca una señal en 2056.',
+    say: 'Next stop: the city of tomorrow.',
   },
 }
 
