@@ -1,6 +1,6 @@
 # English Combat
 
-Juego de rol por turnos para aprender inglés (A1 → B1). Un desconocido le roba la voz al protagonista y la esparce por distintas épocas; para recuperarla hay que vencer, con gramática, a quienes guardan sus palabras.
+Juego de rol por turnos para aprender inglés (A1 → B2; A1 completo, A2 en desarrollo). Un desconocido le roba la voz al protagonista y la esparce por distintas épocas; para recuperarla hay que vencer, con gramática, a quienes guardan sus palabras.
 
 ## Cómo correrlo
 
@@ -8,6 +8,7 @@ Juego de rol por turnos para aprender inglés (A1 → B1). Un desconocido le rob
 npm install
 npm run dev      # servidor local
 npm run build    # versión para publicar (carpeta dist/)
+npm run validate # revisa el banco de preguntas (ver «Validador de preguntas»)
 ```
 
 Stack: React + Vite + TypeScript + Tailwind. Todos los gráficos son SVG dibujados en código, sin imágenes.
@@ -53,6 +54,7 @@ Para revisar el juego sin jugarlo entero: en la pantalla de inicio, toca 5 veces
 - Saltar lecciones, vida 20, llenar vida, 2 escudos.
 - Saltar a estados preparados: escuela lista para el jefe, escuela terminada, ciudad recién llegado, ciudad lista para el jefe, barrio recién llegado, barrio listo para el jefe y barrio terminado.
 - Aparecer junto a cualquier personaje del escenario.
+- Saltar al inicio de cada misión de A2 (hospital, ciudad, taller, biblioteca, granja River, hipódromo).
 
 Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del código, así que sirve para que los estudiantes no lo activen por accidente, no como seguridad.
 
@@ -108,6 +110,7 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - Amistad por puntos, sin respuestas incorrectas: las respuestas sin sentido bajan la amistad. Recompensas: Leo da una pista en combate; Maya da +1 de vida máxima.
 - Objetos del mapa que muestran su nombre en inglés al chocar con ellos.
 - Atuendos desbloqueables y guardado automático.
+- Mochila (botón en la exploración): agrupa Objetivos, Cuaderno y Atuendos.
 - El Profesor Grimm pelea en 3 fases (to be → posesivos → mezcla con ordenar y escuchar), con diálogo entre fases (`phases` en `school.ts`).
 - Secretaría (`src/components/Registration.tsx`): la señora López llena contigo la ficha de matrícula (nombre, edad, país, nacionalidad, dirección, teléfono y email). La dirección y el teléfono son inventados (papel de traslado), así no se pide información real. Practica números de teléfono escuchando y cómo se dice un email (at, dot). Da el uniforme escolar.
 - Patio: césped, portería, árbol y banca. Coach Mike repasa palabras de deportes y la primera vez da su silbato. Max pelea con preguntas de deportes, da un pedazo de llave y regala la camiseta deportiva.
@@ -138,8 +141,6 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 
 - Ciudad, añadido después: pregunta extra al vencer a cada esbirro (da escudo, campo `bonus`), despedida del jefe (`farewell`), Mia en la plaza para practicar disculpas (*Sorry! — That's OK!*) y dar indicaciones, final del capítulo 2 (Leo vive en Green Street) y diario de la ciudad con sus palabras.
 - Voz automática: las frases en inglés se leen solas al aparecer (`auto` en `SpeakButton`). Se apaga en Ajustes, en el mapa del mundo, junto con los sonidos.
-
-## Siguientes pasos sugeridos
 
 ## El barrio (Green Street)
 
@@ -186,6 +187,7 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - Green Street en 2056 (`src/data/barrioFuture.ts`): misma distribución que el barrio del presente; la calle cumple 60 años. La fiesta (`src/components/PartyPlan.tsx`): preguntas con What / Where / When / Who + going to.
 - La granja de 2056 (`src/data/farmFuture.ts`): misma distribución que la granja del presente, con molino eólico, paneles solares y tractor robot. ¿Qué va a pasar? (`src/components/Predict.tsx`): predicciones con going to a partir de un dibujo.
 - La torre Green Valley en 2056 (`src/data/towerFuture.ts`, escena `office-future`): misma distribución que la oficina del presente; es el final de A1. El discurso de Diana (`src/components/Speech.tsx`): repaso de pasado, presente, futuro y want to / would like to.
+- Final de A1: Leo se separa en el ascensor y el protagonista enfrenta al desconocido en la terraza de la torre (preguntas en `src/data/questions-terraza.ts`, repaso de pasado, presente y futuro); el desconocido extrae el núcleo del reloj y la historia sigue en el hospital (A2).
 - La muletilla de Leo, "Hi, hi!": abre cada lección (`src/components/Lesson.tsx`); el desconocido la dice en su primera aparición.
 
 ## Explicaciones y repaso de cierre de A1
@@ -194,8 +196,7 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - Huecos de A1 cubiertos: *whose* y *mine / his / hers* en objetos perdidos, deletrear el nombre en la secretaría, palabras de pregunta y *and / but / or* (`src/data/questions-extra.ts`), y repasos de vocabulario: adjetivos opuestos (Ana), mascotas y clima (Lucy, después de la fiesta) y partes del cuerpo (Rosie, después de su juego).
 
 - El plan completo está en `docs/curriculo-a1.md`: primera vuelta A1 en presente (Escuela → Ciudad → Barrio con la casa del protagonista → Granja → Oficina), y luego los mismos lugares en pasado y futuro, todavía en A1, con el reloj completo. A2 y B1 repiten el esquema presente → pasado → futuro.
-- Pendientes pequeños de la escuela: deletrear en la secretaría, *whose* en objetos perdidos y preguntas con *who/what/where/when*.
-- Sonidos y animación de caminar.
+- Pendiente: animación de caminar.
 
 ## Logros y álbum del tiempo
 
@@ -208,3 +209,29 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - Producción: en combate, una de cada tres preguntas pide escribir u ordenar. Las preguntas de pasado se pueden escribir con el verbo base como pista (`pastBase` en `src/data/questions.ts`), y las de going to con am / is / are.
 - Escucha real: `src/data/questions-listen.ts` (se oye un mensaje sin verlo y se responde una pregunta). La segunda pregunta de cada combate busca una de estas.
 - Exámenes de época: `src/components/EraExam.tsx`. Al terminar el presente, el pasado y el futuro, el jugador escribe 4 frases propias; se revisa la estructura pedida y los errores típicos, y se comparan con las de Leo. Se guardan en `writings`.
+
+## A2: la segunda campaña
+
+- Al terminar A1, el mapa permite elegir A1 o A2. A2 tiene su propio mapa de nodos y cada misión se abre al terminar la anterior.
+- Cada misión vive en un archivo `src/data/a2*.ts` (mapa, enemigos y orden de la misión en el comentario de arriba), con sus preguntas en `src/data/questions-a2-*.ts`, sus tareas en `src/data/tasks.ts` y la lección de Leo en `src/data/lessons.ts`. Para registrar una misión nueva: escena en `SCENES` (`src/game/helpers.ts`), preguntas en `questions.ts`, enemigos en `enemies.ts` y nodo en `src/screens/World.tsx`.
+- Gramática central: Past Simple (regulares e irregulares) con Past Continuous, comparativos y superlativos, invitaciones y frecuencia, peticiones corteses e instrucciones.
+
+| Misión | Archivo | Qué pasa |
+|---|---|---|
+| A2-01 *A New Beginning* | `a2Hospital.ts` | El protagonista despierta en el hospital tras el final de A1: la médica, la persona especial, un amigo nuevo, la recepción y el minijuego *One More Round!* (`OneMoreRound.tsx`). Descubre que el núcleo del reloj está vacío. |
+| A2-02 *Pieces of Yesterday* | `a2Hospital.ts`, `questions-hospital.ts` | Recuerdos del ascensor, el desconocido y el núcleo perdido; se comparan recuerdos con Leo en Past Simple. Termina con el eco del hospital. |
+| A2-03 *Day in the City* | `a2City.ts` | Lección de invitaciones y frecuencia, café con esbirro y eco, plan del día con *Sequence Master* (`SequenceMaster.tsx`) y una anomalía al cierre. |
+| A2-04 *Mr. Hale's Workshop* | `a2Workshop.ts` | Peticiones corteses e instrucciones, *Fix the Radio* (`FixRadio.tsx`) y primer jefe de A2: Mr. Hale corrompido (2 fases), que deja un fragmento. |
+| A2-05 *Words That Don't Belong* | `a2Library.ts` | Biblioteca: Past Simple y conectores, testimonio de Mrs. Okafor, *Reconstruct the Story* (`Reconstruct.tsx`) y el eco de tinta. |
+| A2-06 *A Tradition at Risk* | `a2FarmPast.ts` | Granja de la familia River: Past Simple y comparativos, esbirro, eco de la carrera y el trozo del estandarte. |
+| A2-07 *The Great Race* | `a2Race.ts` | Hipódromo del pasado: comparativos, superlativos y presente continuo; JoJo con *DebateTalk* (`DebateTalk.tsx`), Jack the Rival y The Master Jockey (3 fases), que entrega un fragmento. |
+| A2-08 *El carro que se detuvo* | `a2Car.ts` | Camino tras la carrera: Past Simple + Past Continuous con *when / while*; Eco de la carretera y el jefe El Motor Silencioso, que entrega un fragmento. |
+
+- Los jefes de A2 entregan fragmentos de voz (no piezas del reloj) y dejan pistas breves, sin adelantar lo que pasa en B1 y B2.
+- Minijuegos nuevos reutilizables: `SequenceMaster` (ordenar pasos o tramos), `Reconstruct` (corregir una nota corrompida con pistas confiables), `DebateTalk` (convencer con argumentos), `FixRadio` y `OneMoreRound`.
+
+## Validador de preguntas
+
+- `npm run validate` revisa sin internet la estructura del banco: IDs repetidos, respuestas fuera de rango, opciones repetidas, huecos `___` que faltan, pistas vacías, prácticas con IDs inexistentes y enemigos con pocas preguntas.
+- `npm run validate -- --lt` además pasa el inglés por LanguageTool (necesita internet): marca respuestas correctas con posibles errores y opciones incorrectas que podrían ser válidas.
+- El informe queda en `reports/validacion.md`. Código en `scripts/validate-questions.ts`.
