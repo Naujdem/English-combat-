@@ -51,7 +51,7 @@ export const A2_LIBRARY_ENEMIES: Record<string, EnemyDef> = {
     echo: true,
     hp: 4,
     topics: ['past-simple'],
-    kinds: ['fill', 'fix', 'order', 'write'],
+    kinds: ['fill', 'fix', 'order', 'listen', 'write'],
     tags: ['a2-library-reader'],
     onlyTags: true,
     zone: 'biblioteca',
@@ -74,16 +74,16 @@ export const A2_LIBRARY_ENEMIES: Record<string, EnemyDef> = {
     kind: 'boss',
     hp: 6,
     topics: ['past-simple'],
-    kinds: ['fill', 'fix', 'order', 'write'],
+    kinds: ['fill', 'fix', 'order', 'listen', 'write'],
     tags: ['a2-library'],
     // Fase 1: pasados regulares (-ed) · Fase 2: irregulares, conectores y comparativos
     phases: [
-      { hp: 3, title: 'Regular -ed', topics: ['past-simple'], kinds: ['fill', 'fix', 'order', 'write'], tags: ['a2-library-reg'] },
+      { hp: 3, title: 'Regular -ed', topics: ['past-simple'], kinds: ['fill', 'fix', 'order', 'listen', 'write'], tags: ['a2-library-reg'] },
       {
         hp: 3,
         title: 'Irregular verbs',
         topics: ['past-simple'],
-        kinds: ['fill', 'fix', 'order', 'write'],
+        kinds: ['fill', 'fix', 'order', 'listen', 'write'],
         tags: ['a2-library-irr'],
         line: { text: 'Stop correcting me! Yesterday I goed everywhere, I eated every page and I writed new words!', es: '¡Deja de corregirme! Ayer "fui" a todas partes, "me comí" cada página y "escribí" palabras nuevas. (Ahora usa mal los verbos irregulares: goed, eated, writed).' },
       },
