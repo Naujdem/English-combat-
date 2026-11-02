@@ -32,6 +32,7 @@ import { A2_MILL_ID, A2_09_CLOSE, isA2MillUnlocked } from '../data/a2Mill'
 import { A2_LEO_HOUSE_ID, A2_10_CLOSE, isA2LeoHouseUnlocked } from '../data/a2LeoHouse'
 import { A2_FUTURE_ID, A2_11_CLOSE, isA2FutureUnlocked } from '../data/a2Future'
 import { A2_CONTROL_ID, A2_12_CLOSE, isA2ControlUnlocked } from '../data/a2Control'
+import { A2_RETURN_ID, A2_13_CLOSE, isA2ReturnUnlocked } from '../data/a2Return'
 import { useDesktop } from '../game/device'
 import { Achievements } from '../components/Achievements'
 import { ACHIEVEMENTS, achieved } from '../data/collection'
@@ -57,13 +58,16 @@ const A2_NODES: A2Node[] = [
   { id: 'leo-house', sceneId: A2_LEO_HOUSE_ID, name: 'Casa de Leo', mission: 'A2-10', x: 290, y: 290, open: isA2LeoHouseUnlocked, done: (s) => s.opened.includes(A2_10_CLOSE), locked: 'Se abre al terminar en el molino.' },
   { id: 'city-2056', sceneId: A2_FUTURE_ID, name: 'Ciudad 2056', mission: 'A2-11', x: 40, y: 205, open: isA2FutureUnlocked, done: (s) => s.opened.includes(A2_11_CLOSE), locked: 'Se abre al terminar en la casa de Leo.' },
   { id: 'control-2056', sceneId: A2_CONTROL_ID, name: 'Centro de control', mission: 'A2-12', x: 150, y: 345, open: isA2ControlUnlocked, done: (s) => s.opened.includes(A2_12_CLOSE), locked: 'Se abre al terminar en la ciudad de 2056.' },
+  { id: 'hospital-return', sceneId: A2_RETURN_ID, name: 'Hospital', mission: 'A2-13', x: 268, y: 345, open: isA2ReturnUnlocked, done: (s) => s.opened.includes(A2_13_CLOSE), locked: 'Se abre al terminar en el centro de control.' },
 ]
 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
-    state.opened.includes(A2_12_CLOSE)
-      ? 'A2-12 completada. El reloj señala el hospital, en el presente. A2-13 · The Missing Voice llegará pronto.'
+    state.opened.includes(A2_13_CLOSE)
+      ? '¡A2 completado! El núcleo del reloj brilla, pero no está lleno. Pronto: las misiones secundarias de A2 y después B1.'
+      : isA2ReturnUnlocked(state)
+      ? 'A2-13 · The Missing Voice: el reloj te lleva de vuelta al hospital donde empezó A2. Leo te espera en el pasillo.'
       : isA2ControlUnlocked(state) && !state.opened.includes(A2_12_CLOSE)
       ? 'A2-12 · Out of Control: Adrián cerró todas las rutas de 2056. Leo te espera en la sala de boletos del centro de control.'
       : isA2FutureUnlocked(state) && !state.opened.includes(A2_11_CLOSE)

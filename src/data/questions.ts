@@ -27,6 +27,8 @@ import { A2_FUTURE_PRACTICE } from './a2Future'
 import { A2_FUTURE_QUESTIONS } from './questions-a2-11'
 import { A2_CONTROL_PRACTICE } from './a2Control'
 import { A2_CONTROL_QUESTIONS } from './questions-a2-12'
+import { A2_RETURN_PRACTICE } from './a2Return'
+import { A2_RETURN_QUESTIONS } from './questions-a2-13'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -372,6 +374,8 @@ export const QUESTIONS: Question[] = [
   ...A2_FUTURE_QUESTIONS,
   ...A2_CONTROL_PRACTICE,
   ...A2_CONTROL_QUESTIONS,
+  ...A2_RETURN_PRACTICE,
+  ...A2_RETURN_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -918,6 +922,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'going to → intención o algo que se ve venir (evidencia): We are going to visit Green Valley. Look! It is going to rain.',
       "will → decisión en el momento, ofrecer ayuda, promesa u opinión: OK, I'll take the next train. I'll help you. I think it will rain.",
       'Viajes: book a ticket · single / return · platform 3 (sin the) · delayed · cancelled · check in. Horarios fijos: The train leaves at 10:15.',
+    ],
+  },
+  'health-emergency': {
+    name: 'Salud, consejos y emergencias',
+    level: 'A2',
+    lesson: [
+      "Preguntar qué le pasa a alguien: What's the matter? / What's wrong? — Responder: I've got a headache / a sore throat / a fever / a cough.",
+      'Dolor en una parte del cuerpo: my back hurts (con -s) · my ears hurt (plural, sin -s). Sentirse: I feel sick / dizzy / tired.',
+      "Consejos: You should rest. You shouldn't shout. Why don't you drink some tea? (verbo base, sin to). Normas: You must… / You mustn't…",
+      "Emergencias: What's your emergency? · I need an ambulance. · My friend has fainted. · We are on the second floor. · Please come quickly!",
     ],
   },
   future: {

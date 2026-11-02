@@ -59,6 +59,7 @@ import { DebateTalk } from '../components/DebateTalk'
 import { LessonPlan } from '../components/LessonPlan'
 import { TourPlan } from '../components/TourPlan'
 import { FuturePlanner } from '../components/FuturePlanner'
+import { EraExam } from '../components/EraExam'
 import { PartyPlan } from '../components/PartyPlan'
 import { Predict } from '../components/Predict'
 import { Speech } from '../components/Speech'
@@ -1053,6 +1054,20 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             }
             if (t.activity === 'luggage') return <LostLuggage onClose={finish} />
             if (t.activity === 'route') return <RouteChallenge name={npcOf(t.npc ?? task).name} onClose={finish} />
+            if (t.activity === 'exam' && t.exam) {
+              const era = t.exam
+              return (
+                <EraExam
+                  era={era}
+                  saved={state.writings?.[era]}
+                  onClose={() => finishTask(task, !!state.writings?.[era])}
+                  onSave={(lines) => {
+                    update((s) => ({ ...s, writings: { ...(s.writings ?? {}), [era]: lines } }))
+                    finishTask(task, true)
+                  }}
+                />
+              )
+            }
             if (t.activity === 'futureplan') return <FuturePlanner name={npcOf(t.npc ?? task).name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'book') return <MagicBook name={npcOf(t.npc ?? task).name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'debate' && t.debate) {
