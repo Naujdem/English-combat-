@@ -1772,7 +1772,7 @@ NPC_TASKS['a2-06-close'] = {
 // ── A2-07 — The Great Race (hipódromo del pasado; escena, Jack y el Master Jockey en data/a2Race.ts) ──
 // Orden: Leo (lección superlatives-comparatives-race + práctica) → Jack the Rival (puerta de la pista)
 //        → JoJo (DebateTalk: el desenlace cambia la posición de salida) → JoJo (la carrera: Sequence Master por tramos + desafíos)
-//        → JoJo (Reconstruct the Story: ordenar) → The Master Jockey (en la meta) → Leo (cierre) → Leo (despedida opcional con JoJo).
+//        → JoJo (Reconstruct the Story: ordenar) → The Master Jockey (en la meta) → Leo (cierre: fragmento) → Leo (despedida opcional con JoJo).
 NPC_TASKS['a2-07-leo'] = {
   done: 'a2-07-practice',
   lesson: 'superlatives-comparatives-race',
@@ -1811,7 +1811,7 @@ NPC_TASKS['a2-07-debate'] = {
         options: [
           { en: 'The cart was dangerous. You did your best.', es: 'El carro era peligroso. Hiciste lo mejor que pudiste.', value: 'good' },
           { en: 'Accidents happen in races.', es: 'Los accidentes pasan en las carreras.', value: 'neutral' },
-          { en: 'You should have jumped higher.', es: 'Debiste saltar más alto.', value: 'bad' },
+          { en: 'You were too slow. It was your fault.', es: 'Fuiste demasiado lento. Fue tu culpa.', value: 'bad' },
         ],
       },
       {
@@ -1885,8 +1885,8 @@ NPC_TASKS['a2-07-race'] = {
           title: 'Salida',
           steps: [
             { en: 'Get ready', es: 'Prepárate' },
+            { en: 'Leave the gate', es: 'Sal del cajón de salida' },
             { en: 'Ride faster', es: 'Monta más rápido' },
-            { en: 'Stay calm', es: 'Mantén la calma' },
           ],
           challenge: { q: 'Look! Your horse ___ faster now.', es: '¡Mira! Tu caballo está corriendo más rápido ahora.', options: ['is running', 'are running', 'running'], answer: 0, tip: 'Un caballo: is + verbo con -ing.' },
         },
@@ -1951,15 +1951,15 @@ NPC_TASKS['a2-07-story'] = {
       { en: 'Today you saw the cart again.', es: 'Hoy viste el carro otra vez.' },
       { en: 'You jumped higher over the cart.', es: 'Saltaste más alto por encima del carro.' },
       { en: 'You finished the race.', es: 'Terminaste la carrera.' },
-      { en: 'The word “fastest” feels right again.', es: 'La palabra "fastest" se siente bien otra vez.' },
+      { en: 'The word “fastest” feels almost right again.', es: 'La palabra "fastest" se siente casi bien otra vez.' },
     ],
   },
   steps: [],
   reward: {
-    text: 'JoJo: "Yes. That’s what happened. The cart is gone now, and the word is back. Thank you."',
-    es: 'Sí. Eso es lo que pasó. El carro ya no está, y la palabra volvió. Gracias.',
+    text: 'JoJo: "Yes. That’s what happened. The cart is gone now, and the word is almost back. Thank you."',
+    es: 'Sí. Eso es lo que pasó. El carro ya no está, y la palabra casi volvió. Gracias.',
     sub: 'Alguien te espera en la meta: The Master Jockey.',
-    say: 'The cart is gone now, and the word is back.',
+    say: 'The cart is gone now, and the word is almost back.',
   },
 }
 
@@ -1976,12 +1976,12 @@ NPC_TASKS['a2-07-close'] = {
   steps: [
     { text: 'You rode well and you spoke well. The fragment is yours.', es: 'Montaste bien y hablaste bien. El fragmento es tuyo.' },
     { text: 'JoJo: "The cart crossed the track and the word disappeared. Now you have it back."', es: 'JoJo: "El carro cruzó la pista y la palabra desapareció. Ahora la recuperaste."' },
-    { text: 'Yes. And now we have one more piece of the clock. The core is still empty… but we are getting closer.', es: 'Sí. Y ahora tenemos una pieza más del reloj. El núcleo todavía está vacío… pero nos estamos acercando.' },
+    { text: 'Yes. And now we have one more fragment for the clock. The core is still empty… but we are getting closer.', es: 'Sí. Y ahora tenemos un fragmento más para el reloj. El núcleo todavía está vacío… pero nos estamos acercando.' },
   ],
   reward: {
     text: 'Leo: "We are getting closer."',
     es: 'Nos estamos acercando.',
-    sub: 'A2-07 completada. Recuperaste un fragmento de voz y una pieza del reloj. (Opcional: habla otra vez con Leo para despedirte de JoJo).',
+    sub: 'A2-07 completada. Recuperaste un fragmento de la voz del ganador. (Opcional: habla otra vez con Leo para despedirte de JoJo).',
     say: 'We are getting closer.',
   },
 }

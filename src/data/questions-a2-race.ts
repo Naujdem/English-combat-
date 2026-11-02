@@ -14,7 +14,7 @@ const TP = 'superlatives-comparatives-race' as const
 
 export const A2_RACE_QUESTIONS: Question[] = [
   // ── Jack the Rival (esbirro) ──
-  { id: 'a2-07-j1', topic: TP, prompt: 'My horse is ___ than yours.', options: ['faster', 'fastest', 'more fast'], answer: 0, tip: 'Comparamos dos: fast → faster than (sin "more").', tags: J },
+  { id: 'a2-07-j1', topic: TP, prompt: 'This horse is ___ than that one.', options: ['faster', 'fastest', 'more fast'], answer: 0, tip: 'Comparamos dos: fast → faster than (sin "more").', tags: J },
   { id: 'a2-07-j2', topic: TP, kind: 'fix', prompt: 'This is the more dangerous jump.', options: ['This is the most dangerous jump.', 'This is the dangerousest jump.', 'This is most dangerous jump.'], answer: 0, tip: 'El más de todos (adjetivo largo): the most dangerous.', tags: J },
   { id: 'a2-07-j3', topic: TP, kind: 'order', prompt: 'Los caballos están corriendo ahora.', options: ['The', 'horses', 'are', 'running', 'now.'], answer: 0, tip: 'Sujeto + are + verbo con -ing: The horses are running now.', tags: J },
   { id: 'a2-07-j4', topic: TP, prompt: 'She ___ (jump) over the fence.', options: ['is jumping', 'are jumping', 'jumping'], answer: 0, tip: 'She + is + verbo con -ing: is jumping.', tags: J },
@@ -24,7 +24,7 @@ export const A2_RACE_QUESTIONS: Question[] = [
   { id: 'a2-07-j8', topic: TP, kind: 'order', prompt: 'Este es el caballo más rápido.', options: ['This', 'is', 'the', 'fastest', 'horse.'], answer: 0, tip: 'the + fastest + horse: This is the fastest horse.', tags: J },
 
   // ── The Master Jockey · fase 1: comparativos + superlativos ──
-  { id: 'a2-07-b1', topic: TP, prompt: 'My horse is ___ than yours.', options: ['faster', 'more fast', 'fastest'], answer: 0, tip: 'Comparamos dos: faster than.', tags: B1 },
+  { id: 'a2-07-b1', topic: TP, prompt: 'My jump was ___ than yours.', options: ['higher', 'more high', 'highest'], answer: 0, tip: 'Adjetivo corto: high → higher than (sin "more").', tags: B1 },
   { id: 'a2-07-b2', topic: TP, kind: 'fix', prompt: 'I am the more good jockey.', options: ['I am the best jockey.', 'I am the goodest jockey.', 'I am the most good jockey.'], answer: 0, tip: 'good es irregular: the best (nunca "more good" ni "goodest").', tags: B1 },
   { id: 'a2-07-b3', topic: TP, prompt: 'Your horse is ___ than mine.', options: ['slower', 'more slow', 'slowest'], answer: 0, tip: 'Adjetivo corto: slow → slower than.', tags: B1 },
   { id: 'a2-07-b4', topic: TP, prompt: 'This is ___ race of the year.', options: ['the most important', 'the importantest', 'the more important'], answer: 0, tip: 'Adjetivo largo, el más de todos: the most important.', tags: B1 },

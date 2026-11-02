@@ -53,7 +53,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const desktop = useDesktop()
   const [msg, setMsg] = useState<string>(
     isA2RaceUnlocked(state) && !state.opened.includes(A2_07_CLOSE)
-      ? 'A2-07 · The Great Race: Leo te espera en un viejo hipódromo del pasado. Alguien allí recuerda un accidente.'
+      ? 'A2-07 · The Great Race: el trozo del estandarte de los River te recuerda otra carrera. Leo te espera en un viejo hipódromo del pasado.'
       : isA2FarmPastUnlocked(state) && !state.opened.includes(A2_06_CLOSE)
       ? 'A2-06 · A Tradition at Risk: Leo te espera en la granja de la familia River. Elena quiere recuperar una vieja tradición.'
       : isA2LibraryUnlocked(state) && !state.opened.includes(A2_05_CLOSE)

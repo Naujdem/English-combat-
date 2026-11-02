@@ -8,7 +8,7 @@ import { A2_06_CLOSE } from './a2FarmPast'
  *        → JoJo (DebateTalk: la confianza de JoJo da mejor posición de salida)
  *        → JoJo (la carrera: Sequence Master por tramos + desafíos; la posición sube o baja según el acierto)
  *        → JoJo (Reconstruct the Story: ordenar lo que pasó) → The Master Jockey (jefe, 3 fases, en la meta)
- *        → Leo (cierre: fragmento de voz + pieza del reloj) → Leo (opcional: despedida con JoJo).
+ *        → Leo (cierre: fragmento de la voz del ganador) → Leo (opcional: despedida con JoJo).
  * Se activa al terminar A2-06. Tareas en data/tasks.ts, lección en data/lessons.ts, combates en data/questions-a2-race.ts.
  */
 const MAP = [
@@ -121,7 +121,7 @@ export const A2_RACE_ENEMIES: Record<string, EnemyDef> = {
     freed: { text: 'The cart is gone, but the race never really ends.', es: 'El carro ya no está, pero la carrera nunca termina de verdad.' },
     release: {
       title: '¡Fragmento recuperado!',
-      text: 'El Master Jockey suelta un fragmento: la voz del ganador. Al tomarlo, la palabra "fastest" vuelve a sonar bien en tu voz. Junto a él brilla una pieza pequeña del reloj. La guardas: el centro del reloj sigue vacío.',
+      text: 'El Master Jockey suelta un fragmento morado: la voz del ganador. Al tomarlo, la palabra "fastest" vuelve a sonar completa en tu voz. El centro vacío de tu reloj vibra un segundo... y se queda quieto. Lo guardas con los otros.',
     },
   },
 }
@@ -168,10 +168,10 @@ export const A2_RACE: SceneDef = {
     { label: 'La carrera', done: s.opened.includes(A2_07_RACE) },
     { label: 'Reconstruct the Story', done: s.opened.includes(A2_07_STORY) },
     { label: 'Jefe: The Master Jockey', done: s.defeated.includes(A2_07_BOSS) },
-    { label: 'Cierre: fragmento y pieza del reloj', done: s.opened.includes(A2_07_CLOSE) },
+    { label: 'Cierre: el fragmento', done: s.opened.includes(A2_07_CLOSE) },
   ],
   intro: {
-    first: 'Leo te lleva a un viejo hipódromo del pasado. Aquí, hace un año, un carro cruzó la pista en plena carrera. Habla con Leo en la tribuna.',
+    first: 'El trozo del estandarte de los River te recuerda otra carrera de caballos. Leo te lleva a un viejo hipódromo del pasado: aquí, hace un año, un carro cruzó la pista en plena carrera. Habla con Leo en la tribuna.',
     later: 'El hipódromo en A2. Sigue los objetivos bajo el mapa.',
   },
 }
