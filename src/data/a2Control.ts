@@ -149,6 +149,12 @@ export const A2_CONTROL_ENEMIES: Record<string, EnemyDef> = {
       { text: 'Here. Take it. I think it is yours. I am going to open all the routes right now.', es: 'Toma. Creo que es tuyo. Voy a abrir todas las rutas ahora mismo.' },
     ],
     freed: { text: 'All the routes are open again. If you ever need help in 2056, come and find me. I will help you.', es: 'Todas las rutas están abiertas otra vez. Si alguna vez necesitas ayuda en 2056, búscame. Te ayudaré.' },
+    farewell: {
+      q: "Adrián: I'm so sorry. What are you going to do now?",
+      options: ["I'm going to look for my voice.", "I'm going look for my voice.", 'I will to look for my voice.'],
+      answer: 0,
+      tip: 'Plan decidido: am going to + verbo base (sin olvidar el to).',
+    },
     release: {
       title: '¡Fragmento recuperado!',
       text: 'Adrián abre la mano: tenía el fragmento morado de la carreta River. Al tomarlo, el centro vacío de tu reloj vibra y la luz morada se apaga en los ojos de Adrián. Todas las pantallas cambian a ROUTES OPEN.',

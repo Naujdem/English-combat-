@@ -49,6 +49,7 @@ export const A2_LIBRARY_ENEMIES: Record<string, EnemyDef> = {
     person: 'Mr. Lin',
     kind: 'minion',
     echo: true,
+    reward: 'sueter-lector',
     hp: 4,
     topics: ['past-simple'],
     kinds: ['fill', 'fix', 'order', 'listen', 'write'],

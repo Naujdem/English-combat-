@@ -187,6 +187,12 @@ export const A2_MILL_ENEMIES: Record<string, EnemyDef> = {
       { text: 'The cart… it stopped by the mill that night. I saw it. But I cannot say more.', es: 'El carro… se detuvo junto al molino esa noche. Lo vi. Pero no puedo decir más.' },
     ],
     freed: { text: 'The cart stopped by the mill. I cannot say more.', es: 'El carro se detuvo junto al molino. No puedo decir más.' },
+    farewell: {
+      q: 'The miller: Thank you! Is there any flour for the bread now?',
+      options: ['Yes, there is some flour in the sacks.', 'Yes, there is any flour in the sacks.', 'Yes, there are some flour in the sacks.'],
+      answer: 0,
+      tip: 'Afirmación: some · flour es incontable: there is.',
+    },
     release: {
       title: '¡Fragmento recuperado!',
       text: 'Entre las piedras del molino brilla un pequeño fragmento morado. Al tomarlo, el centro vacío de tu reloj vibra… y oyes, muy lejos, unas ruedas sobre las piedras. Lo guardas con los otros.',

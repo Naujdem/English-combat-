@@ -697,7 +697,15 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       if (enemy.standoff) return base
       // Jefe de A2: libera una anomalía (fragmento) en vez de pieza del reloj, temas o atuendo
       if (enemy.release) return base
-      if (enemy.echo) return { ...base, items: { ...s.items, shield: Math.min(2, s.items.shield + 1) } }
+      if (enemy.echo) {
+        // Esbirro de A2: da un escudo y, si lo tiene, un atuendo de regalo
+        const r = enemy.reward
+        return {
+          ...base,
+          items: { ...s.items, shield: Math.min(2, s.items.shield + 1) },
+          outfits: r && !s.outfits.includes(r) ? [...s.outfits, r] : s.outfits,
+        }
+      }
       if (enemy.optional) {
         const r = enemy.reward
         return r && !s.outfits.includes(r) ? { ...base, outfits: [...s.outfits, r] } : base
@@ -1067,7 +1075,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               <b className="text-gold">{enemy.release.title}</b> {enemy.release.text}
             </div>
           ) : enemy.echo ? (
-            <p className="mt-1 text-[16px]">{enemy.person} vuelve a ser como antes. Ganaste un escudo.</p>
+            <p className="mt-1 text-[16px]">{enemy.person} vuelve a ser como antes. Ganaste un escudo.{enemy.reward && OUTFITS[enemy.reward] && ` También te regaló: ${OUTFITS[enemy.reward].name}. Póntelo desde Mochila › Atuendos.`}</p>
           ) : enemy.optional ? (
             <p className="mt-1 text-[16px]">{enemy.person} te regaló un atuendo nuevo. Póntelo desde Mochila › Atuendos.</p>
           ) : enemy.kind === 'minion' ? (

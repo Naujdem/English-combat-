@@ -47,6 +47,7 @@ export const A2_WORKSHOP_ENEMIES: Record<string, EnemyDef> = {
     person: 'Sam',
     kind: 'minion',
     echo: true,
+    reward: 'overol-taller',
     hp: 4,
     topics: ['requests', 'instructions'],
     kinds: ['fill', 'fix', 'order', 'listen', 'write'],

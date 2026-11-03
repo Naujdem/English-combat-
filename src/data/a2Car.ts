@@ -122,6 +122,12 @@ export const A2_CAR_ENEMIES: Record<string, EnemyDef> = {
       { text: 'Last year the light touched the cart at the race. Today it touched your car.', es: 'El año pasado la luz tocó la carreta en la carrera. Hoy tocó tu carro.' },
     ],
     freed: { text: 'The car is quiet now. Talk to Leo.', es: 'El carro está quieto ahora. Habla con Leo.' },
+    farewell: {
+      q: "JoJo: You're back! What were you doing when the engine stopped?",
+      options: ['I was checking the wheels when it stopped.', 'I was check the wheels when it stopped.', 'I checked the wheels when it was stop.'],
+      answer: 0,
+      tip: 'Acción en progreso: was + -ing (was checking). Acción que interrumpe: pasado simple (stopped).',
+    },
     release: {
       title: '¡Fragmento recuperado!',
       text: 'Del motor sale un pequeño fragmento morado. Al tomarlo, el centro vacío de tu reloj vibra un segundo… y se queda quieto. Lo guardas con los otros.',

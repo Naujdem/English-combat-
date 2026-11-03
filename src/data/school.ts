@@ -313,6 +313,12 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   'abrigo-invierno': { name: 'Abrigo de invierno', color: '#7a4a2e' },
   // A Dinner to Remember: regalo de Chef Bruno (no se vende en la tienda)
   'delantal-chef': { name: 'Delantal de chef', color: '#f4efe4' },
+  // Regalos de algunos esbirros de A2 (al liberarlos)
+  'chaleco-mesero': { name: 'Chaleco de mesero (A2)', color: '#5a3a2e' },
+  'overol-taller': { name: 'Overol del taller de Hale (A2)', color: '#4a5560' },
+  'sueter-lector': { name: 'Suéter de biblioteca (A2)', color: '#7a5a8a' },
+  'chaqueta-jinete': { name: 'Chaqueta de jinete (pasado)', color: '#b03a2e' },
+  'chaqueta-neon': { name: 'Chaqueta neón de rutas (2056)', color: '#28b0a0' },
 }
 
 SCHOOL.requirements = BOSS_REQUIREMENTS

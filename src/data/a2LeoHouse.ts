@@ -152,6 +152,12 @@ export const A2_LEO_HOUSE_ENEMIES: Record<string, EnemyDef> = {
       { text: 'The cart has waited a long time. It is still waiting… far away.', es: 'La carreta ha esperado mucho tiempo. Todavía espera… muy lejos.' },
     ],
     freed: { text: 'The cart is still waiting.', es: 'La carreta todavía espera.' },
+    farewell: {
+      q: 'Leo: Thank you! Have you found all the memories?',
+      options: ['Yes, I have found all of them.', 'Yes, I have find all of them.', 'Yes, I has found all of them.'],
+      answer: 0,
+      tip: 'I + have + participio: find → found.',
+    },
     release: {
       title: 'La señal',
       text: 'El devorador se deshace en polvo morado. No deja ningún fragmento… pero tu reloj vibra con fuerza: una señal late muy lejos, en 2056.',
