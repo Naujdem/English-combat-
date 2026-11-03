@@ -40,6 +40,8 @@ import { FragmentJoin } from '../components/FragmentJoin'
 import { SpriteL } from '../components/SpriteL'
 import { BlurFace, BlurFaceIcon } from '../components/BlurFace'
 import { exitMemory, isMemoryScene } from '../game/memory'
+import { MemoriesTab } from '../components/MemoriesTab'
+import { isB1Unlocked } from '../data/b1World'
 import { B1_CALL, B1_PHONE } from '../data/b1Home'
 import { B1_HOME_ID, B1_OPENING } from '../data/b1World'
 import { NPC_TASKS, PARTY_ITEMS, taskOf } from '../data/tasks'
@@ -1198,7 +1200,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
 
 function Backpack({ state, update, chips, hasBoss, onNotebook }: { state: GameState; update: Update; chips: { label: string; done: boolean }[]; hasBoss: boolean; onNotebook: () => void }) {
   const [open, setOpen] = useState(false)
-  const [tab, setTab] = useState<'goals' | 'outfits'>('goals')
+  const [tab, setTab] = useState<'goals' | 'outfits' | 'memories'>('goals')
+  // B1: pestaña Recuerdos (solo con B1 desbloqueado)
+  const b1 = isB1Unlocked(state)
   const pending = chips.filter((c) => !c.done).length
   return (
     <>
@@ -1222,7 +1226,7 @@ function Backpack({ state, update, chips, hasBoss, onNotebook }: { state: GameSt
               <h2 className="font-display text-xl text-gold">Mochila</h2>
               <button className={btnGhost} onClick={() => setOpen(false)}>Cerrar</button>
             </div>
-            <div className="mb-3 grid grid-cols-3 gap-1.5" role="tablist">
+            <div className={`mb-3 grid gap-1.5 ${b1 ? 'grid-cols-4' : 'grid-cols-3'}`} role="tablist">
               <button role="tab" aria-selected={tab === 'goals'} className={`rounded-xl border-2 px-2 py-1.5 text-sm font-semibold ${tab === 'goals' ? 'border-gold bg-gold/10 text-gold' : 'border-line text-paper/70'}`} onClick={() => setTab('goals')}>
                 Objetivos{pending > 0 ? ` (${pending})` : ''}
               </button>
@@ -1233,8 +1237,15 @@ function Backpack({ state, update, chips, hasBoss, onNotebook }: { state: GameSt
               <button role="tab" aria-selected={tab === 'outfits'} className={`rounded-xl border-2 px-2 py-1.5 text-sm font-semibold ${tab === 'outfits' ? 'border-gold bg-gold/10 text-gold' : 'border-line text-paper/70'}`} onClick={() => setTab('outfits')}>
                 Atuendos
               </button>
+              {b1 && (
+                <button role="tab" aria-selected={tab === 'memories'} className={`rounded-xl border-2 px-2 py-1.5 text-sm font-semibold ${tab === 'memories' ? 'border-[#9b6ad6] bg-[#9b6ad6]/15 text-[#d9c7f2]' : 'border-line text-paper/70'}`} onClick={() => setTab('memories')}>
+                  Recuerdos
+                </button>
+              )}
             </div>
-            {tab === 'goals' ? (
+            {tab === 'memories' ? (
+              <MemoriesTab state={state} />
+            ) : tab === 'goals' ? (
               <div>
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-paper/50">{hasBoss ? 'Para llegar al jefe' : 'En este lugar'}</p>
                 {chips.length ? (
