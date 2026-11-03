@@ -186,7 +186,8 @@ function PlateBoard({ plate, showEs, onReset, onSolved }: { plate: Plate; showEs
     <div className="mt-3">
       {/* La tablilla de piedra */}
       <div className={`ins-tablet relative rounded-2xl border-2 px-2 py-3 ${solved ? 'ins-glow border-[#e8c96a]' : 'border-[#6f7a8c]'}`}>
-        <div className="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-2">
+        {/* Al traducir, los glifos se funden (bajan de brillo) y queda la traducción */}
+        <div className={`ins-move flex flex-wrap items-center justify-center gap-x-1.5 gap-y-2 ${solved ? 'opacity-40' : ''}`}>
           {plate.words.map((w, k) => {
             const t = slots[k]
             const state = marks ? (marks[k] ? 'right' : 'wrong') : undefined
@@ -357,7 +358,8 @@ function SceneArt({ scene, total, done }: { scene: InsScene; total: number; done
         <g>
           <path d="M0 110 V40 H60 L66 110 Z" fill={STONE} />
           <path d="M300 110 V40 H240 L234 110 Z" fill={STONE} />
-          <path d="M66 110 Q150 70 234 110" fill="#0e1118" />
+          <rect x="60" y="40" width="180" height="70" fill="#0e1118" />
+          <path d="M60 70 H240 M60 92 H240" stroke="#2a3140" strokeWidth="1" strokeDasharray="2 7" />
           <path d="M0 40 H60 M240 40 H300" stroke={GOLD} strokeWidth="2" />
           <path d="M60 40 H240" stroke={GOLD} strokeOpacity="0.25" strokeWidth="1" strokeDasharray="3 6" />
           {Array.from({ length: n }, (_, k) => {

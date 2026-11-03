@@ -243,6 +243,7 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
   - Nombres con estática: escribe `[[?]]` en el texto (`src/game/staticName.ts`); se ve ▒▒▒ y la voz no lo lee.
   - Diario de B1 en `src/data/b1Diary.ts` (páginas "Diario de L" con `kind: 'L'`) y resúmenes de la Mochila en `src/data/b1Memories.ts`.
   - El nodo 1 abre una demo (`src/data/b1MemoryDemo.ts`) que se borra al hacer la misión 1.
+- Inscriptions (minijuego de los templos, misiones 9, 11 y 13): componente `src/components/Inscriptions.tsx` (glifos en `InsGlyph.tsx`), tipos y reglas en `src/game/inscriptions.ts`. Una sala se declara en una tarea con `activity: 'inscriptions'` e `inscriptions: { title, intro, scene, plates }`. El validador revisa las tablillas (largo de words y roles, regla, fichas repetidas, alternativas) y pasa sus frases por LanguageTool. Salas de prueba en `src/data/b1InscriptionsDemo.ts` (modo profesor).
 - La pestaña B1 aparece al terminar A2-13 (o en modo profesor, que también tiene saltos a cada nodo de B1).
 
 ## Validador de preguntas
