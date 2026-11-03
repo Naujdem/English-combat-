@@ -36,7 +36,7 @@ import { CoachSays } from '../components/CoachSays'
 import { Directions } from '../components/Directions'
 import { CafeOrder } from '../components/CafeOrder'
 import { MiniTalk } from '../components/MiniTalk'
-import { FragmentJoinCue } from '../components/FragmentJoinCue'
+import { FragmentJoin } from '../components/FragmentJoin'
 import { B1_CALL, B1_PHONE } from '../data/b1Home'
 import { B1_HOME_ID, B1_OPENING } from '../data/b1World'
 import { NPC_TASKS, PARTY_ITEMS, taskOf } from '../data/tasks'
@@ -1010,14 +1010,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         </Overlay>
       )}
 
-      {/* B1 · apertura: al colgar, dos fragmentos se juntan (punto de enganche de la animación: FragmentJoinCue) */}
+      {/* B1 · apertura: al colgar, dos fragmentos se juntan. FragmentJoin guarda la apertura (abre el recuerdo 1) */}
       {scene.id === B1_HOME_ID && state.opened.includes(B1_CALL) && !state.opened.includes(B1_OPENING) && !task && (
-        <FragmentJoinCue
-          onDone={() => {
-            update((s) => (s.opened.includes(B1_OPENING) ? s : { ...s, opened: [...s.opened, B1_OPENING] }))
-            onWorld()
-          }}
-        />
+        <FragmentJoin state={state} update={update} memoryNumber={1} onDone={onWorld} />
       )}
       {task && NPC_TASKS[task]?.activity === 'practice' && NPC_TASKS[task].practice && (
         // Práctica guiada con Leo (pantalla completa): al terminarla se marca la tarea

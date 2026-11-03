@@ -53,3 +53,8 @@ export function finishMemory(s: GameState): GameState {
   const add = [memoryFlag(m.n), ...(m.close ? [closeId(m.n)] : [])].filter((x) => !s.opened.includes(x))
   return { ...s, opened: [...s.opened, ...add], memory: undefined, screen: 'world' }
 }
+
+/** Una misión soltó un solo fragmento: queda suelto en el reloj */
+export const addLooseFragment = (s: GameState): GameState => ({ ...s, looseFragments: (s.looseFragments ?? 0) + 1 })
+/** Un fragmento suelto se juntó con otro: sale del reloj (después se muestra FragmentJoin) */
+export const joinLooseFragment = (s: GameState): GameState => ({ ...s, looseFragments: Math.max(0, (s.looseFragments ?? 0) - 1) })

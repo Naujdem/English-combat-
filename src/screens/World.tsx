@@ -21,6 +21,7 @@ import { dueCards } from '../game/cards'
 import { B1_PREFIX, isA2Unlocked, type Update } from '../game/store'
 import { B1Map } from '../components/B1Map'
 import { MemoryPlaceholder } from '../components/MemoryPlaceholder'
+import { LooseFragment } from '../components/FragmentJoin'
 import { B1_HOME_ID, B1_NODES, B1_OPENING, B1_PART_NAMES, B1_ERA_COLOR, b1LockedText, b1Message, b1NodeDone, b1NodeOpen, isB1Unlocked, type B1Node, type B1Part } from '../data/b1World'
 import { heroLook, SCENES } from '../game/helpers'
 import { interestFriend } from '../data/friends'
@@ -514,7 +515,11 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
               <p className="font-display text-xl text-gold">Reloj del tiempo</p>
               <button className={btnGhost} onClick={() => setClock(false)}>Cerrar</button>
             </div>
-            <div className="my-3 flex justify-center"><TimeClock pieces={state.relics} size={150} coreMissing={coreMissing} /></div>
+            <div className="my-3 flex items-center justify-center gap-3">
+              <TimeClock pieces={state.relics} size={150} coreMissing={coreMissing} />
+              {/* B1: un fragmento suelto espera en el reloj hasta juntarse con otro */}
+              <LooseFragment count={state.looseFragments ?? 0} />
+            </div>
             <p className="text-[15px] text-paper/85">
               El reloj del desconocido explotó y sus piezas se llevaron pedazos de tu voz. Quien toca una pieza se corrompe; tú no, porque es tu voz. Cada jefe tiene una.
               {coreMissing ? ' Las cinco piezas siguen en su lugar... pero el centro del reloj está vacío.' : state.relics >= PRESENT_NODES.length ? ' ¡Lo tienes completo! Ya puedes ir tras el desconocido.' : ' Con el reloj completo podrás alcanzar al desconocido y recuperar toda tu voz.'}

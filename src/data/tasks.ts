@@ -4025,7 +4025,7 @@ NPC_TASKS['a2-s5-close'] = {
 
 // ── B1 · Apertura (tu cuarto, la noche antes del viaje; escena en data/b1Home.ts) ──
 // Ms. Haddad llama: te aceptaron en el intercambio de Lumen Bay. Al colgar, dos piezas del reloj se tocan.
-// Al terminar se guarda B1_CALL; luego Explore muestra FragmentJoinCue (mensaje de sistema y "You touch them") y guarda B1_OPENING.
+// Al terminar se guarda B1_CALL; luego Explore muestra la animación FragmentJoin, que guarda B1_OPENING.
 NPC_TASKS['b1-phone'] = {
   done: 'b1-00-call',
   steps: [
