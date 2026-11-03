@@ -205,7 +205,7 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
               aria-selected={k === v}
               onClick={() => switchVersion(k)}
               className={`rounded-xl border-2 px-1 py-2 text-sm font-semibold ${k === v ? 'border-gold bg-gold/10 text-gold' : 'border-line text-paper/75'}`}
-              style={x.kind === 'L' ? { color: k === v ? L_INK : '#b9a6d6' } : x.tense !== 'mix' ? { color: k === v ? TENSE_INFO[x.tense].color : undefined } : undefined}
+              style={x.kind === 'L' ? { color: k === v ? '#d9c7f2' : '#b9a6d6' } : x.tense !== 'mix' ? { color: k === v ? TENSE_INFO[x.tense].color : undefined } : undefined}
             >
               {done(x.id) ? '✓ ' : ''}{x.tab}
               {isNew(chapter, x) && <span className="block text-[10px] font-bold uppercase tracking-wide text-gold">Nueva</span>}
