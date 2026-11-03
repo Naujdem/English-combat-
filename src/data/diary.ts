@@ -772,6 +772,280 @@ export const DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // ── Diarios A2-06 a A2-13: una página cada uno. Repasan get / become (cap. 3), did (cap. 9) y how (cap. 27) ──
+  // ── A2-06 — A Tradition at Risk ──
+  {
+    id: 'a2-06',
+    title: 'A2 · A Tradition at Risk',
+    unlock: 'a2-06-close',
+    words: [
+      { title: 'La granja River', words: [['tradition', 'tradición'], ['race', 'carrera'], ['horse', 'caballo'], ['banner', 'estandarte'], ['grandfather', 'abuelo'], ['neighbor', 'vecino'], ['river', 'río']] },
+      { title: 'Get y become (cambios)', words: [['become ill', 'enfermarse'], ['became', 'se volvió (become)'], ['get angry', 'enojarse'], ['got', 'se puso, consiguió (get)'], ['get worried', 'preocuparse']] },
+      { title: 'Comparar', words: [['bigger than', 'más grande que'], ['more important than', 'más importante que'], ['more expensive than', 'más caro que'], ['useful', 'útil']] },
+    ],
+    versions: [
+      {
+        id: 'a2-06-farm',
+        tense: 'p',
+        tab: 'La granja',
+        title: 'A tradition at risk',
+        frame: 'Lo escribes en la noche, en la granja de la familia River. Fíjate en get y become: sirven para contar cómo cambian las personas.',
+        lines: [
+          { en: 'Today Leo and I [visited]p the River farm. Elena [was]p very worried about her family.', es: 'Hoy Leo y yo visitamos la granja de los River. Elena estaba muy preocupada por su familia.' },
+          { en: 'Every year the family [had]p a horse race. It [was]p bigger and more important than a party.', es: 'Cada año la familia hacía una carrera de caballos. Era más grande y más importante que una fiesta.' },
+          { en: 'Five years ago the grandfather [became]p ill. He [couldn\'t]p prepare the race, and someone [lost]p the banner.', es: 'Hace cinco años el abuelo se enfermó. No pudo preparar la carrera, y alguien perdió el estandarte.' },
+          { en: 'The neighbor [got]p angry with me. "The race [was]p more expensive than useful," he [said]p.', es: 'El vecino se enojó conmigo. "La carrera era más cara que útil", dijo.' },
+          { en: 'How [did]p the tradition [stop]p? Elena and I [put]p the true story in order.', es: '¿Cómo se detuvo la tradición? Elena y yo ordenamos la historia verdadera.' },
+          { en: 'Then an echo of the race [appeared]p by the river. We [stopped]p it.', es: 'Luego apareció un eco de la carrera junto al río. Lo detuvimos.' },
+          { en: 'Elena [gave]p me an old piece of the banner. It [isn\'t]n complete, but it [is]n a start.', es: 'Elena me dio un trozo viejo del estandarte. No está completo, pero es un comienzo.' },
+        ],
+        questions: [
+          { q: 'What happened to the grandfather five years ago?', options: ['He became ill.', 'He sold the horses.', 'He becomed ill.'], answer: 0, tip: 'El diario dice: "Five years ago the grandfather became ill". become → became (irregular, no "becomed").' },
+          { q: 'Did the neighbor get angry?', options: ['Yes, he did.', "No, he didn't.", 'Yes, he got.'], answer: 0, tip: 'A una pregunta con Did se responde con did: Yes, he did. El diario dice: "The neighbor got angry with me".' },
+          { q: 'How was the race, compared to a party?', options: ['Bigger and more important.', 'Smaller and cheaper.', 'More boring.'], answer: 0, tip: 'El diario dice: "It was bigger and more important than a party".' },
+          { q: 'What did Elena give to {name}?', options: ['An old piece of the banner.', 'A horse.', 'A fragment of the clock.'], answer: 0, tip: 'El diario dice: "Elena gave me an old piece of the banner".' },
+        ],
+      },
+    ],
+  },
+  // ── A2-07 — The Great Race ──
+  {
+    id: 'a2-07',
+    title: 'A2 · The Great Race',
+    unlock: 'a2-07-close',
+    words: [
+      { title: 'La carrera', words: [['race track', 'hipódromo, pista'], ['rider', 'jinete'], ['jockey', 'jinete (profesional)'], ['cart', 'carreta'], ['finish line', 'meta'], ['winner', 'ganador']] },
+      { title: 'Superlativos', words: [['the fastest', 'el más rápido'], ['the biggest', 'el más grande'], ['the strongest', 'el más fuerte'], ['the best', 'el mejor']] },
+      { title: 'Get y become', words: [['get tired', 'cansarse'], ['become confident', 'volverse seguro, ganar confianza'], ['get closer', 'acercarse'], ['nervous', 'nervioso']] },
+    ],
+    versions: [
+      {
+        id: 'a2-07-race',
+        tense: 'p',
+        tab: 'La carrera',
+        title: 'The great race',
+        frame: 'Lo escribes después de la carrera, todavía con el corazón rápido.',
+        lines: [
+          { en: 'Today we [went]p to an old race track in the past. It [was]p the biggest race of the year.', es: 'Hoy fuimos a un hipódromo viejo en el pasado. Era la carrera más grande del año.' },
+          { en: 'Jack the Rival [blocked]p the door. "I [am]n the fastest rider here!" he [said]p. But I [beat]p him.', es: 'Jack el Rival bloqueó la puerta. "¡Soy el jinete más rápido de aquí!", dijo. Pero le gané.' },
+          { en: 'JoJo [saw]p an old accident. A cart [crossed]p the track, and a word [disappeared]p.', es: 'JoJo vio un accidente viejo. Una carreta cruzó la pista y una palabra desapareció.' },
+          { en: 'How [did]p JoJo [feel]p? At first he [was]p nervous, but then he [became]p more confident.', es: '¿Cómo se sentía JoJo? Al principio estaba nervioso, pero luego se volvió más seguro.' },
+          { en: 'In the race, my horse [got]p tired, but I [didn\'t stop]p.', es: 'En la carrera, mi caballo se cansó, pero no me detuve.' },
+          { en: 'The Master Jockey [was]p the strongest rider of all. I [won]p, and I [got]p a fragment of the winner\'s voice.', es: 'El Maestro Jinete era el jinete más fuerte de todos. Gané, y conseguí un fragmento de la voz del ganador.' },
+          { en: 'The core of the clock [is]n still empty, but we [are getting]n closer.', es: 'El núcleo del reloj todavía está vacío, pero nos estamos acercando.' },
+        ],
+        questions: [
+          { q: 'How did JoJo feel at first?', options: ['Nervous.', 'Very confident.', 'Angry.'], answer: 0, tip: 'El diario dice: "At first he was nervous, but then he became more confident".' },
+          { q: 'Did {name} stop when the horse got tired?', options: ["No, I didn't.", 'Yes, I did.', "No, I wasn't."], answer: 0, tip: 'Pregunta con Did → respuesta con did. El diario dice: "my horse got tired, but I didn\'t stop".' },
+          { q: 'Who was the strongest rider?', options: ['The Master Jockey.', 'Jack the Rival.', 'JoJo.'], answer: 0, tip: 'El diario dice: "The Master Jockey was the strongest rider of all".' },
+        ],
+      },
+    ],
+  },
+  // ── A2-08 — El carro que se detuvo ──
+  {
+    id: 'a2-08',
+    title: 'A2 · El carro que se detuvo',
+    unlock: 'a2-08-close',
+    words: [
+      { title: 'El carro', words: [['car', 'carro'], ['engine', 'motor'], ['wheels', 'ruedas'], ['road', 'carretera'], ['drive', 'manejar'], ['get out', 'bajarse'], ['check', 'revisar']] },
+      { title: 'When y while', words: [['when', 'cuando (acción corta)'], ['while', 'mientras (acción larga)'], ['was driving', 'estaba manejando'], ['were talking', 'estábamos hablando']] },
+      { title: 'Get y become', words: [['become quiet', 'quedarse en silencio'], ['get another', 'conseguir otro'], ['get out of the car', 'bajarse del carro']] },
+    ],
+    versions: [
+      {
+        id: 'a2-08-road',
+        tense: 'p',
+        tab: 'El camino',
+        title: 'The car that stopped',
+        frame: 'Lo escribes junto a la carretera. Una acción larga (was driving) y una corta que la interrumpe (stopped).',
+        lines: [
+          { en: 'After the race, I [was driving]p the car on the old road. Leo and JoJo [were]p with me.', es: 'Después de la carrera, yo iba manejando el carro por la carretera vieja. Leo y JoJo iban conmigo.' },
+          { en: 'We [were talking]p when the engine [stopped]p. Everything [became]p very quiet.', es: 'Estábamos hablando cuando el motor se detuvo. Todo se quedó en silencio.' },
+          { en: 'JoJo [got]p out of the car and [checked]p the wheels. Leo [checked]p the engine.', es: 'JoJo se bajó del carro y revisó las ruedas. Leo revisó el motor.' },
+          { en: 'While we [were looking]p at the car, an echo of the road [attacked]p us.', es: 'Mientras mirábamos el carro, un eco de la carretera nos atacó.' },
+          { en: '[Did]p the light [come]p from the car? No, it [didn\'t]p. It [was]p the same purple light from the race.', es: '¿La luz salió del carro? No. Era la misma luz morada de la carrera.' },
+          { en: 'We [beat]p the Silent Engine, and I [got]p another fragment.', es: 'Vencimos al Motor Silencioso, y conseguí otro fragmento.' },
+          { en: 'How [do]n I [feel]n now? Tired, but happy. We [should keep]n going.', es: '¿Cómo me siento ahora? Cansado, pero feliz. Deberíamos seguir.' },
+        ],
+        questions: [
+          { q: 'What happened while they were talking?', options: ['The engine stopped.', 'JoJo won a race.', 'Leo drove the car.'], answer: 0, tip: 'El diario dice: "We were talking when the engine stopped".' },
+          { q: 'Who got out and checked the wheels?', options: ['JoJo.', 'Leo.', 'The echo.'], answer: 0, tip: 'El diario dice: "JoJo got out of the car and checked the wheels".' },
+          { q: 'Did the light come from the car?', options: ["No, it didn't.", 'Yes, it did.', "No, it wasn't."], answer: 0, tip: 'El diario dice: "No, it didn\'t. It was the same purple light from the race".' },
+        ],
+      },
+    ],
+  },
+  // ── A2-09 — The Silent Mill ──
+  {
+    id: 'a2-09',
+    title: 'A2 · The Silent Mill',
+    unlock: 'a2-09-close',
+    words: [
+      { title: 'El molino', words: [['mill', 'molino'], ['miller', 'molinero'], ['apprentice', 'aprendiz'], ['wheel', 'rueda'], ['flour', 'harina'], ['gate', 'compuerta, portón']] },
+      { title: 'Recetas y cantidades', words: [['recipe', 'receta'], ['some', 'algo de, algunos'], ['any', 'nada de, algún (preguntas y negativas)'], ['a little', 'un poco de'], ['How much…?', '¿Cuánto…?'], ['price', 'precio']] },
+      { title: 'Get y become', words: [['become strange', 'volverse raro'], ['get angry', 'enojarse'], ['get flour', 'conseguir harina']] },
+    ],
+    versions: [
+      {
+        id: 'a2-09-mill',
+        tense: 'p',
+        tab: 'El molino',
+        title: 'The silent mill',
+        frame: 'Lo escribes junto al molino, con olor a pan. Repasa some y any, y las preguntas con How much.',
+        lines: [
+          { en: 'Today we [visited]p the old mill on the River farm. The wheel [wasn\'t turning]p, and Mr. Bell, the miller, [was]p very sad.', es: 'Hoy visitamos el molino viejo de la granja River. La rueda no giraba, y el señor Bell, el molinero, estaba muy triste.' },
+          { en: 'His apprentice [became]p strange and angry. He [didn\'t want]p to give us any flour.', es: 'Su aprendiz se volvió raro y enojado. No quería darnos nada de harina.' },
+          { en: 'Mr. Bell [showed]p me his bread recipe: some flour, some water and a little salt.', es: 'El señor Bell me mostró su receta de pan: algo de harina, algo de agua y un poco de sal.' },
+          { en: 'How much [did]p the flour [cost]p? I [asked]p about the prices, like at a real market.', es: '¿Cuánto costaba la harina? Pregunté los precios, como en un mercado de verdad.' },
+          { en: 'To wake the mill, I [gave]p instructions: "Open the gate. Don\'t stop the water."', es: 'Para despertar el molino, di instrucciones: "Abre la compuerta. No detengas el agua."' },
+          { en: 'The broken wheel [got]p angry, but we [won]p. Now the mill [isn\'t]n silent anymore.', es: 'La rueda rota se enojó, pero ganamos. Ahora el molino ya no está en silencio.' },
+          { en: 'The cart [stopped]p by this mill that night. But why? We [need]n to find out.', es: 'La carreta se detuvo junto a este molino esa noche. Pero ¿por qué? Tenemos que averiguarlo.' },
+        ],
+        questions: [
+          { q: 'Did the apprentice give them any flour?', options: ["No, he didn't.", 'Yes, he did.', 'Yes, he gave.'], answer: 0, tip: 'El diario dice: "He didn\'t want to give us any flour". Respuesta corta: No, he didn\'t.' },
+          { q: "What was in Mr. Bell's bread?", options: ['Some flour, some water and a little salt.', 'Some eggs and a lot of sugar.', 'Some chocolate.'], answer: 0, tip: 'El diario dice: "some flour, some water and a little salt".' },
+          { q: 'Where did the cart stop that night?', options: ['By the mill.', 'At the race track.', 'At the museum.'], answer: 0, tip: 'El diario dice: "The cart stopped by this mill that night".' },
+        ],
+      },
+    ],
+  },
+  // ── A2-10 — Echoes Across Time ──
+  {
+    id: 'a2-10',
+    title: 'A2 · Echoes Across Time',
+    unlock: 'a2-10-close',
+    words: [
+      { title: 'El ático', words: [['attic', 'ático'], ['stairs', 'escaleras'], ['chest', 'baúl'], ['newspaper', 'periódico'], ['clue', 'pista'], ['meeting', 'reunión']] },
+      { title: 'Present Perfect', words: [['have never seen', 'nunca he visto'], ['has never vibrated', 'nunca ha vibrado'], ['have done', 'he hecho'], ['ever', 'alguna vez'], ['already', 'ya']] },
+      { title: 'Get y become', words: [['get bigger', 'hacerse más grande'], ['get to', 'llegar a'], ['become', 'convertirse en']] },
+    ],
+    versions: [
+      {
+        id: 'a2-10-house',
+        tense: 'mix',
+        tab: 'Casa de Leo',
+        title: 'Echoes across time',
+        frame: 'Lo escribes en el ático de Leo. Mezcla pasado, Present Perfect (presente) y futuro: lo que pasó, lo que has vivido y lo que viene.',
+        lines: [
+          { en: 'Today we [came]p back to the present, to Leo\'s house on Green Street.', es: 'Hoy volvimos al presente, a la casa de Leo en Green Street.' },
+          { en: 'We [went]p up to the attic. An echo [was]p on the stairs, and it [got]p bigger and bigger!', es: 'Subimos al ático. Había un eco en las escaleras, ¡y se hacía cada vez más grande!' },
+          { en: 'In an old chest, we [found]p photos and a newspaper. The River family [gave]p the cart to the city.', es: 'En un baúl viejo encontramos fotos y un periódico. La familia River le donó la carreta a la ciudad.' },
+          { en: 'How [did]p the cart [get]p to the future? In 2056 it [is going to be]f in the transport museum.', es: '¿Cómo llegó la carreta al futuro? En 2056 va a estar en el museo del transporte.' },
+          { en: '{iname}, Leo and I [had]p a meeting. I [have never seen]n so many clues!', es: '{iname}, Leo y yo tuvimos una reunión. ¡Nunca he visto tantas pistas!' },
+          { en: 'The Memory Eater [tried]p to eat our clues, but we [stopped]p it.', es: 'El Devorador de Recuerdos intentó comerse nuestras pistas, pero lo detuvimos.' },
+          { en: 'My clock [has never vibrated]n like this. Tomorrow we [are going to travel]f to the city of tomorrow.', es: 'Mi reloj nunca había vibrado así. Mañana vamos a viajar a la ciudad del mañana.' },
+        ],
+        questions: [
+          { q: 'Where did they find the newspaper?', options: ['In an old chest.', 'In the museum.', 'In the car.'], answer: 0, tip: 'El diario dice: "In an old chest, we found photos and a newspaper".' },
+          { q: 'How did the cart get to the future?', options: ['The River family gave it to the city.', 'Leo drove it.', 'The Memory Eater took it.'], answer: 0, tip: 'El diario dice: "The River family gave the cart to the city". Por eso en 2056 está en el museo.' },
+          { q: 'Did the Memory Eater eat the clues?', options: ["No, it didn't.", 'Yes, it did.', "No, it wasn't."], answer: 0, tip: 'El diario dice: "it tried to eat our clues, but we stopped it".' },
+        ],
+      },
+    ],
+  },
+  // ── A2-11 — The City of Tomorrow ──
+  {
+    id: 'a2-11',
+    title: 'A2 · The City of Tomorrow',
+    unlock: 'a2-11-close',
+    words: [
+      { title: 'La ciudad de 2056', words: [['station', 'estación'], ['museum', 'museo'], ['tram', 'tranvía'], ['route', 'ruta'], ['screen', 'pantalla'], ['cargo', 'carga']] },
+      { title: 'Moverse por la ciudad', words: [['across', 'al otro lado de, cruzando'], ['through', 'a través de'], ['along', 'a lo largo de'], ['next to', 'al lado de'], ['How far…?', '¿Qué tan lejos…?']] },
+      { title: 'Get y become', words: [['get confused', 'confundirse'], ['become cold', 'volverse frío'], ['get lost', 'perderse']] },
+    ],
+    versions: [
+      {
+        id: 'a2-11-city',
+        tense: 'p',
+        tab: 'La ciudad',
+        title: 'The city of tomorrow',
+        frame: 'Lo escribes en 2056, en una banca de la estación. Repasa las preguntas con How far y las preposiciones de movimiento.',
+        lines: [
+          { en: 'Today we [traveled]p to 2056. At the station, a robot [helped]p me to find my bag.', es: 'Hoy viajamos a 2056. En la estación, un robot me ayudó a encontrar mi maleta.' },
+          { en: 'How far [was]p the museum? Not far: across the street and through the park.', es: '¿Qué tan lejos estaba el museo? No muy lejos: cruzando la calle y a través del parque.' },
+          { en: 'A route drone [got]p confused and [blocked]p the way. We [beat]p it.', es: 'Un dron de rutas se confundió y bloqueó el camino. Lo vencimos.' },
+          { en: 'In the transport museum, we [found]p the River cart. But the cargo [was]p empty!', es: 'En el museo del transporte encontramos la carreta de los River. ¡Pero la carga estaba vacía!' },
+          { en: 'Adrián [moved]p the cart to the museum. He [touched]p the fragment and [became]p cold and strange.', es: 'Adrián trasladó la carreta al museo. Tocó el fragmento y se volvió frío y extraño.' },
+          { en: 'Then a tram [lost]p control. We [stopped]p it in Sky Street.', es: 'Luego un tranvía perdió el control. Lo detuvimos en Sky Street.' },
+          { en: 'Now every screen [says]n: ALL ROUTES CLOSED. Adrián [has]n the fragment.', es: 'Ahora todas las pantallas dicen: TODAS LAS RUTAS CERRADAS. Adrián tiene el fragmento.' },
+        ],
+        questions: [
+          { q: 'How far was the museum?', options: ['Not far.', 'Very far.', 'Two hours by train.'], answer: 0, tip: 'El diario dice: "Not far: across the street and through the park".' },
+          { q: 'Did they find the fragment in the cart?', options: ["No, they didn't.", 'Yes, they did.', "No, they weren't."], answer: 0, tip: 'El diario dice: "the cargo was empty". El fragmento lo tiene Adrián.' },
+          { q: 'What happened to Adrián?', options: ['He became cold and strange.', 'He became a robot.', 'He got lost in the park.'], answer: 0, tip: 'El diario dice: "He touched the fragment and became cold and strange".' },
+        ],
+      },
+    ],
+  },
+  // ── A2-12 — Out of Control ──
+  {
+    id: 'a2-12',
+    title: 'A2 · Out of Control',
+    unlock: 'a2-12-close',
+    words: [
+      { title: 'Viajes y reservas', words: [['platform', 'andén'], ['ticket', 'boleto'], ['book', 'reservar'], ['announcement', 'anuncio'], ['control room', 'sala de control'], ['next train', 'próximo tren']] },
+      { title: 'Planes', words: [["I'm leaving at…", 'salgo a las… (plan fijo)'], ["We're going to…", 'vamos a…'], ["I'll take…", 'tomaré…'], ['How long…?', '¿Cuánto tiempo…?']] },
+      { title: 'Get y become', words: [['get very angry', 'enojarse mucho'], ['become himself again', 'volver a ser él mismo'], ['get back', 'volver']] },
+    ],
+    versions: [
+      {
+        id: 'a2-12-control',
+        tense: 'p',
+        tab: 'El centro de control',
+        title: 'Out of control',
+        frame: 'Lo escribes en el tren, por fin en movimiento. Repasa How long y las formas de hablar de planes.',
+        lines: [
+          { en: 'Today all the trains in the city [were]p stopped. Adrián [closed]p every route.', es: 'Hoy todos los trenes de la ciudad estaban detenidos. Adrián cerró todas las rutas.' },
+          { en: 'An announcer [gave]p wrong information: "The next train will never come!"', es: 'Un anunciador dio información equivocada: "¡El próximo tren nunca vendrá!".' },
+          { en: '{iname} and I [made]p a plan: "We\'re leaving at ten. We\'re going to visit the control room."', es: '{iname} y yo hicimos un plan: "Salimos a las diez. Vamos a visitar la sala de control".' },
+          { en: 'How long [did]p we [wait]p? Too long! So I [booked]p tickets and [gave]p orders to the robot.', es: '¿Cuánto tiempo esperamos? ¡Demasiado! Así que reservé boletos y le di órdenes al robot.' },
+          { en: 'In the control room, Adrián [got]p very angry. We [fought]p, and then he [became]p himself again.', es: 'En la sala de control, Adrián se enojó mucho. Peleamos, y luego volvió a ser él mismo.' },
+          { en: 'He [gave]p me the fragment from the cart. Now he [is]n our friend.', es: 'Me dio el fragmento de la carreta. Ahora es nuestro amigo.' },
+          { en: 'The clock [is showing]n the hospital. We [are going to go]f back.', es: 'El reloj está mostrando el hospital. Vamos a volver.' },
+        ],
+        questions: [
+          { q: 'Who closed every route?', options: ['Adrián.', 'Leo.', 'The announcer.'], answer: 0, tip: 'El diario dice: "Adrián closed every route".' },
+          { q: 'What happened to Adrián after the fight?', options: ['He became himself again.', 'He got very tired.', 'He became a train.'], answer: 0, tip: 'El diario dice: "then he became himself again".' },
+          { q: 'Did Adrián give {name} the fragment?', options: ['Yes, he did.', "No, he didn't.", 'Yes, he gave.'], answer: 0, tip: 'El diario dice: "He gave me the fragment from the cart". Respuesta corta: Yes, he did.' },
+        ],
+      },
+    ],
+  },
+  // ── A2-13 — The Missing Voice ──
+  {
+    id: 'a2-13',
+    title: 'A2 · The Missing Voice',
+    unlock: 'a2-13-close',
+    words: [
+      { title: 'En el hospital', words: [['patient', 'paciente'], ['receptionist', 'recepcionista'], ['doctor', 'médico, médica'], ['notes', 'notas'], ['emergency call', 'llamada de emergencia']] },
+      { title: 'Salud', words: [["What's the matter?", '¿Qué te pasa?'], ['hoarse', 'ronco'], ['My throat hurts.', 'Me duele la garganta.'], ['You should…', 'Deberías…'], ['You must…', 'Tienes que…']] },
+      { title: 'Get y become', words: [['get hoarse', 'quedarse ronco'], ['get your voice back', 'recuperar la voz'], ['get better', 'mejorarse'], ['become quiet', 'quedarse callado']] },
+    ],
+    versions: [
+      {
+        id: 'a2-13-hospital',
+        tense: 'p',
+        tab: 'El hospital',
+        title: 'The missing voice',
+        frame: 'Lo escribes en el hospital, al final de A2. Es la última página de esta parte de la historia.',
+        lines: [
+          { en: 'Today we [went]p back to the hospital. It [was]p very quiet: nobody [could]p talk.', es: 'Hoy volvimos al hospital. Estaba muy silencioso: nadie podía hablar.' },
+          { en: 'Leo [got]p hoarse, and in the end he [lost]p his voice too.', es: 'Leo se quedó ronco, y al final también perdió la voz.' },
+          { en: 'A patient with purple eyes [blocked]p the reception. The receptionist [wrote]p notes, because she [couldn\'t]p speak.', es: 'Una paciente con ojos morados bloqueó la recepción. La recepcionista escribía notas, porque no podía hablar.' },
+          { en: 'The doctor [asked]p me: "What\'s the matter? How long have you felt like this?"', es: 'La médica me preguntó: "¿Qué te pasa? ¿Hace cuánto te sientes así?".' },
+          { en: '{iname} [made]p an emergency call and [explained]p everything.', es: '{iname} hizo una llamada de emergencia y lo explicó todo.' },
+          { en: 'The Silence [was]p the strongest enemy of all. But we [won]p, and everybody [got]p their voice back.', es: 'El Silencio era el enemigo más fuerte de todos. Pero ganamos, y todos recuperaron la voz.' },
+          { en: 'Then a sad voice [came]p from the clock: "Be brave. Use your voice." Who [is]n L?', es: 'Luego una voz triste salió del reloj: "Sé valiente. Usa tu voz." ¿Quién es L?' },
+        ],
+        questions: [
+          { q: 'What happened to Leo?', options: ['He got hoarse and lost his voice.', 'He became a doctor.', 'He got lost in the hospital.'], answer: 0, tip: 'El diario dice: "Leo got hoarse, and in the end he lost his voice too".' },
+          { q: 'Why did the receptionist write notes?', options: ["Because she couldn't speak.", 'Because she was busy.', 'Because Leo asked her.'], answer: 0, tip: 'El diario dice: "because she couldn\'t speak".' },
+          { q: 'Did everybody get their voice back?', options: ['Yes, they did.', "No, they didn't.", 'Yes, they got.'], answer: 0, tip: 'El diario dice: "everybody got their voice back". Respuesta corta: Yes, they did.' },
+        ],
+      },
+    ],
+  },
   // ── Misión secundaria · Make a Wish ──
   {
     id: 'a2-s3',
@@ -905,6 +1179,14 @@ export const DICT: Record<string, string> = {
   quarter: 'cuarto', half: 'media', past: 'pasado, y (half past = y media)', crazy: 'loco', gary: 'Gary (nombre)', sara: 'Sara (nombre)', emails: 'correos', put: 'pongo (put)', meetings: 'reuniones', agenda: 'agenda', monday: 'lunes', friday: 'viernes', phone: 'teléfono', rings: 'suena (ring)', rossi: 'Rossi (nombre)', wants: 'quiere (want)', speak: 'hablar', clark: 'Clark (nombre)', "isn't": 'no es, no está', write: 'escribo (write)', message: 'mensaje', for: 'para', angry: 'enojado', could: 'podrías (can)', please: 'por favor', complete: 'completo', shows: 'muestra (show)', old: 'viejo', future: 'futuro', touch: 'tocamos (touch)', ms: 'señora', eight: 'ocho', with: 'con',
   "school's": 'de la escuela', ana: 'Ana (nombre)', story: 'historia', plan: 'plan', "stranger's": 'del desconocido',
   higgins: 'Higgins (nombre)', greg: 'Greg (nombre)', garcia: 'Garcia (nombre)', rosa: 'Rosa (nombre)', lily: 'Lily (nombre)', danny: 'Danny (nombre)', chloe: 'Chloe (nombre)', victor: 'Víctor (nombre)', tony: 'Tony (nombre)', betty: 'Betty (nombre)', kira: 'Kira (nombre)', bo: 'Bo (nombre)', bleeps: 'Bleeps (nombre)', marco: 'Marco (nombre)', sam: 'Sam (nombre)', carmen: 'Carmen (nombre)', hill: 'Hill (nombre)', daniel: 'Daniel (nombre)', joey: 'Joey (nombre)', bill: 'Bill (nombre)', hank: 'Hank (nombre)', lucy: 'Lucy (nombre)', priya: 'Priya (nombre)', patel: 'Patel (nombre)', finn: 'Finn (nombre)', grace: 'Grace (nombre)', diana: 'Diana (nombre)', ray: 'Ray (nombre)', kevin: 'Kevin (nombre)', stone: 'Stone (nombre)', paula: 'Paula (nombre)',
+  // A2-06 a A2-13
+  ill: 'enfermo (become ill = enfermarse)', hoarse: 'ronco', miller: 'molinero', flour: 'harina', apprentice: 'aprendiz', cargo: 'carga', tram: 'tranvía', route: 'ruta', announcer: 'anunciador',
+  attic: 'ático', chest: 'baúl', echo: 'eco', banner: 'estandarte', jockey: 'jinete', rider: 'jinete', engine: 'motor', wheels: 'ruedas', wheel: 'rueda', confident: 'seguro de sí mismo',
+  booked: 'reservé (book)', emergency: 'emergencia', useful: 'útil', tradition: 'tradición', vibrated: 'vibrado (vibrate)', museum: 'museo', core: 'núcleo', beat: 'vencí (beat)',
+  attacked: 'atacó (attack)', blocked: 'bloqueó (block)', crossed: 'cruzó (cross)', cost: 'costar / costó', grandfather: 'abuelo', track: 'pista', race: 'carrera', mill: 'molino',
+  gate: 'compuerta, portón', recipe: 'receta', prices: 'precios', clues: 'pistas', newspaper: 'periódico', screen: 'pantalla', himself: 'él mismo', patient: 'paciente', notes: 'notas',
+  explained: 'explicó (explain)', checked: 'revisó (check)', driving: 'manejando (drive)', became: 'se volvió, se puso (become)', become: 'volverse, convertirse en', did: 'auxiliar del pasado (did you…? = ¿…?) / hizo',
+  elena: 'Elena (nombre)', jojo: 'JoJo (nombre)', jack: 'Jack (nombre)', bell: 'Bell (nombre)', 'adrián': 'Adrián (nombre)', river: 'River (apellido) / río',
   'grimm-bot': 'GRIMM-BOT (nombre del robot director)', dr: 'doctora, doctor (Dr.)', l: 'L (la letra de la tarjeta)', 'twenty-five': 'veinticinco', 'great-grandpa': 'bisabuelo', valley: 'valle (Green Valley = nombre de la torre)',
 }
 
