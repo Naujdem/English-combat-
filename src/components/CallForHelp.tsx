@@ -178,9 +178,14 @@ function SmokeHallway({ level, mute }: { level: number; mute: boolean }) {
       <g transform="translate(60 70) scale(2.4)">
         <SpriteL pose="profile" mute={mute} />
       </g>
-      <g className="b1-smoke">
+      <defs>
+        <filter id="b1-smoke-blur" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="9" />
+        </filter>
+      </defs>
+      <g className="b1-smoke" filter="url(#b1-smoke-blur)">
         {shown.map((c, k) => (
-          <circle key={k} cx={c.x} cy={c.y} r={c.r} fill="#c4c8cf" opacity={0.22 + level * 0.07} />
+          <circle key={k} cx={c.x} cy={c.y} r={c.r * 1.3} fill="#c4c8cf" opacity={0.3 + level * 0.1} />
         ))}
       </g>
       {level >= 4 && <rect width="320" height="170" fill="#9aa0aa" opacity="0.25" />}

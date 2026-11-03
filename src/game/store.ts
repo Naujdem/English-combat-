@@ -77,6 +77,13 @@ export function loadSave(): GameState | null {
       const e = ENEMIES[id]
       if (e?.release) for (const t of e.topics) if (!data.recovered.includes(t)) data.recovered.push(t)
     }
+    // B1-01: la demo del recuerdo 1 se borró (la reemplazó la misión The Accident). Quien guardó ahí vuelve a su cuarto
+    if (data.sceneId === 'b1-01-demo' && SCENES['b1-home']) {
+      data.sceneId = 'b1-home'
+      data.pos = { ...SCENES['b1-home'].start }
+      data.memory = undefined
+      data.battle = null
+    }
     // Escena que ya no existe: se lleva al jugador a la escuela sin tocar su progreso
     if (!SCENES[data.sceneId]) {
       data.sceneId = SCHOOL.id
