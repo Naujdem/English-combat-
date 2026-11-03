@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { mixed } from '../game/mix'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
-import { DIARY, fillNames, LOCKED_HINT, lookup, normWord, pageSeen, TENSE_INFO, type DiaryChapter, type DiaryVersion, type Tense } from '../data/diary'
+import { ALL_DIARY as DIARY, fillNames, LOCKED_HINT, lookup, normWord, pageSeen, TENSE_INFO, type DiaryChapter, type DiaryVersion, type Tense } from '../data/diary'
 import { translate } from '../data/glossary'
 import { newCard } from '../game/cards'
 import { useTeacher } from '../game/teacher'
@@ -205,7 +205,7 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
               aria-selected={k === v}
               onClick={() => switchVersion(k)}
               className={`rounded-xl border-2 px-1 py-2 text-sm font-semibold ${k === v ? 'border-gold bg-gold/10 text-gold' : 'border-line text-paper/75'}`}
-              style={x.tense !== 'mix' ? { color: k === v ? TENSE_INFO[x.tense].color : undefined } : undefined}
+              style={x.kind === 'L' ? { color: k === v ? L_INK : '#b9a6d6' } : x.tense !== 'mix' ? { color: k === v ? TENSE_INFO[x.tense].color : undefined } : undefined}
             >
               {done(x.id) ? '✓ ' : ''}{x.tab}
               {isNew(chapter, x) && <span className="block text-[10px] font-bold uppercase tracking-wide text-gold">Nueva</span>}
@@ -213,9 +213,11 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
           ))}
         </div>
 
-        <button className={`${btn} py-2 text-sm`} onClick={() => setWordsView(true)}>
-          Palabras del capítulo ({chapter.words.reduce((n, g) => n + g.words.length, 0)})
-        </button>
+        {chapter.words.length > 0 && (
+          <button className={`${btn} py-2 text-sm`} onClick={() => setWordsView(true)}>
+            Palabras del capítulo ({chapter.words.reduce((n, g) => n + g.words.length, 0)})
+          </button>
+        )}
 
         {hidden.length > 0 && (
           <p className="text-xs text-paper/55">
@@ -225,6 +227,9 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
 
         <p className="text-sm text-paper/70">{version.frame}</p>
 
+        {version.kind === 'L' ? (
+          <LPage title={fill(version.title)} lines={version.lines.map((l) => ({ en: fill(l.en), es: fill(l.es) }))} showEs={showEs} verbs={verbs} active={word?.raw} onWord={(raw, en) => setWord({ raw, sentence: plain(en) })} />
+        ) : (
         <div className="rounded-2xl border-2 border-[#c9b48f] bg-[#f6efdf] px-4 py-3 text-[#2b241c] shadow-inner">
           <div className="mb-2 flex items-center justify-between">
             <p className="font-display text-xl italic">{fill(version.title)}</p>
@@ -242,6 +247,7 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
             )
           })}
         </div>
+        )}
 
         <div className="flex flex-wrap items-center gap-2">
           <button className={`${btn} px-3 py-2 text-sm`} onClick={() => setShowEs((x) => !x)}>{showEs ? 'Ocultar traducción' : 'Traducir'}</button>
@@ -279,7 +285,7 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
           </Panel>
         )}
 
-        {quiz === null ? (
+        {version.questions.length === 0 ? null : quiz === null ? (
           <button className={btnPrimary} onClick={() => setQuiz(0)}>Responder preguntas</button>
         ) : quiz < version.questions.length ? (
           <Panel>
@@ -328,9 +334,52 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
   )
 }
 
-/** Quita las marcas de verbos: "[took]p" → "took" */
+/** Quita las marcas de verbos y de tachones: "[took]p" → "took", "~~x~~" → "" */
 function plain(text: string) {
-  return text.replace(/\[([^\]]+)\][pnf]/g, '$1')
+  return text.replace(/\[([^\]]+)\][pnf]/g, '$1').replace(/~~[^~]*~~/g, '')
+}
+
+/** Tinta del Diario de L */
+const L_INK = '#3a2f5c'
+const L_HAND = '"Segoe Print", "Bradley Hand", "Comic Sans MS", "Chalkboard SE", cursive'
+
+/**
+ * Página del Diario de L (B1): letra a mano, tachones decorativos y una firma que es solo una mancha de tinta.
+ * Nunca aparece un nombre. ~~texto~~ se ve tachado (no se puede tocar).
+ */
+function LPage({ title, lines, showEs, verbs, active, onWord }: { title: string; lines: { en: string; es: string }[]; showEs: boolean; verbs: boolean; active?: string; onWord: (raw: string, en: string) => void }) {
+  return (
+    <div className="relative overflow-hidden rounded-2xl border-2 border-[#b9a98a] bg-[#efe6d2] px-5 py-4 shadow-inner" style={{ color: L_INK, fontFamily: L_HAND, backgroundImage: 'repeating-linear-gradient(transparent 0 30px, rgba(90,110,160,0.18) 30px 31px)' }}>
+      {/* Tachones de adorno en el margen */}
+      <svg className="pointer-events-none absolute right-3 top-3 h-10 w-16 opacity-60" viewBox="0 0 64 40" aria-hidden="true">
+        <path d="M4 14 q6 -6 12 0 t12 0 t12 0 t12 0" fill="none" stroke={L_INK} strokeWidth="1.6" strokeLinecap="round" />
+        <path d="M6 24 L52 18 M8 30 L50 22" stroke={L_INK} strokeWidth="1.4" strokeLinecap="round" />
+      </svg>
+      <p className="mb-2 pr-16 text-xl" style={{ transform: 'rotate(-1deg)' }}>{title}</p>
+      {lines.map((l, k) => (
+        <div key={k} className="py-1" style={{ transform: `rotate(${k % 2 ? 0.4 : -0.5}deg)` }}>
+          <p className="text-[18px] leading-relaxed">
+            {l.en.split(/(~~[^~]*~~)/).map((part, j) =>
+              part.startsWith('~~') ? (
+                <span key={j} className="mr-1 line-through decoration-2 opacity-70" style={{ textDecorationColor: L_INK }} aria-hidden="true">{part.slice(2, -2)}</span>
+              ) : (
+                <TapLine key={j} text={part} verbs={verbs} active={active} onWord={(raw) => onWord(raw, l.en)} />
+              ),
+            )}
+          </p>
+          {showEs && <p className="text-sm opacity-70" style={{ fontFamily: 'inherit' }}>{l.es}</p>}
+        </div>
+      ))}
+      {/* Firma: una mancha de tinta, nunca un nombre */}
+      <div className="mt-3 flex justify-end">
+        <svg width="46" height="34" viewBox="0 0 46 34" role="img" aria-label="Firma: una mancha de tinta">
+          <path d="M14 8 Q22 2 30 7 Q40 6 38 16 Q44 24 34 27 Q28 33 20 28 Q8 31 9 21 Q3 13 14 8 Z" fill={L_INK} opacity="0.85" />
+          <circle cx="40" cy="8" r="2" fill={L_INK} opacity="0.7" />
+          <circle cx="6" cy="27" r="1.4" fill={L_INK} opacity="0.6" />
+        </svg>
+      </div>
+    </div>
+  )
 }
 
 /** Una línea con palabras que se pueden tocar y verbos coloreados por tiempo */

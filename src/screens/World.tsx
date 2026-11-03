@@ -16,7 +16,7 @@ const TRIPS: Record<string, BusTrip> = { city: BUS_TO_CITY, barrio: BUS_TO_BARRI
 import { ProgressView, Review } from '../components/Review'
 import { setSound, soundOn } from '../game/sfx'
 import { autoVoiceOn, setAutoVoice } from '../game/speech'
-import { DIARY, pageNotified, pageSeen, unlockedPages } from '../data/diary'
+import { ALL_DIARY as DIARY, pageNotified, pageSeen, unlockedPages } from '../data/diary'
 import { dueCards } from '../game/cards'
 import { B1_PREFIX, isA2Unlocked, type Update } from '../game/store'
 import { B1Map } from '../components/B1Map'

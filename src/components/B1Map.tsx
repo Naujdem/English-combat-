@@ -17,7 +17,7 @@ export function B1Map({ state, part, onTap, style }: { state: GameState; part: B
       {bands.map((b) => (
         <g key={b.x}>
           <rect x={b.x} y="0" width={b.w} height="380" fill={B1_BAND[b.era]} />
-          <text x={b.x + 10} y="370" fontSize="11" fontFamily="Nunito, system-ui, sans-serif" fontWeight="700" fill={B1_ERA_COLOR[b.era]}>{b.era}</text>
+          <text x={b.x + 10} y="370" fontSize="11" fontFamily="Nunito, system-ui, sans-serif" fontWeight="700" fill={B1_ERA_COLOR[b.era]}>{b.era === 'Recuerdo' ? 'Recuerdo · 20??' : b.era}</text>
         </g>
       ))}
       {bands.length > 1 && <path d="M180 0 V380" stroke="#f4efe4" strokeOpacity="0.2" strokeWidth="2" />}

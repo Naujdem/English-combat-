@@ -1,3 +1,4 @@
+import { B1_DIARY } from './b1Diary'
 /**
  * Diario del capítulo: la misma historia contada en pasado, presente y futuro,
  * y una cuarta versión que mezcla los tres tiempos.
@@ -12,6 +13,8 @@ export type DiaryLine = { en: string; es: string }
 export type DiaryQuestion = { q: string; options: string[]; answer: number; tip: string }
 export type DiaryVersion = {
   id: string
+  /** B1: 'L' = página del Diario de L (letra a mano, tachones con ~~texto~~, firma con mancha de tinta, sin preguntas) */
+  kind?: 'L'
   tense: Tense | 'mix'
   tab: string
   /** Se abre cuando este id está en `opened` (pasado y futuro, al viajar en el tiempo) */
@@ -1194,7 +1197,7 @@ export const DICT: Record<string, string> = {
 
 /** Páginas del diario que el jugador ya abrió jugando (el modo profesor no cuenta) */
 export function unlockedPages(opened: string[]) {
-  return DIARY.flatMap((chapter) =>
+  return ALL_DIARY.flatMap((chapter) =>
     opened.includes(chapter.unlock)
       ? chapter.versions.filter((version) => !version.unlock || opened.includes(version.unlock)).map((version) => ({ chapter, version }))
       : [],
@@ -1238,3 +1241,6 @@ export function lookup(raw: string, names: string[] = []): string | null {
   if (names.some((n) => n.toLowerCase() === w)) return `${raw.replace(/[^\p{L}]/gu, '')} (nombre)`
   return DICT[w] ?? null
 }
+
+/** Todos los capítulos del diario: A1 y A2 (DIARY) y los recuerdos de B1 (data/b1Diary.ts) */
+export const ALL_DIARY: DiaryChapter[] = [...DIARY, ...B1_DIARY]

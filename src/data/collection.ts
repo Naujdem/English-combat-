@@ -10,7 +10,8 @@ import { DIARY } from './diary'
  * El álbum del tiempo: una carta por personaje, con un espacio por cada época en la que aparece.
  * Los espacios "Viajero" se ganan venciendo a los ecos (los que la luz del reloj arrastró a otra época).
  */
-export type Era = 'Pasado' | 'Presente' | 'Futuro' | 'Viajero'
+/** Recuerdo: los recuerdos de L en B1 (año 20??) */
+export type Era = 'Pasado' | 'Presente' | 'Futuro' | 'Viajero' | 'Recuerdo'
 export type PortraitSrc = { enemy: string } | { npc: string } | { friend: 'leo' | 'maya' }
 export type AlbumSlot = { era: Era; label: string; src: PortraitSrc; unlock: (s: GameState) => boolean; hint: string }
 export type AlbumCard = { id: string; name: string; slots: AlbumSlot[] }
