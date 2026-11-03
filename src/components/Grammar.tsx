@@ -239,6 +239,13 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (/\b(get on|fell out|fall out|made up|make up|in common|trust)\b/i.test(sentence)) return { title: 'Relaciones: get on well with · fall out · make up · have a lot in common:', parts: [S('Sujeto'), '+', K('get on well with / fell out / made up'), '+', R('...')] }
       if (/'s\b/i.test(sentence)) return { title: "Familia con 's: my mother's brother = my uncle:", parts: [S("My mother's"), '+', K('brother'), '+', V('is'), '+', R('my uncle')] }
       return { title: 'Describir a alguien: sujeto + is + (a bit / very) + adjetivo de personalidad:', parts: [S('Sujeto'), '+', V('is'), '+', K('a bit / very'), '+', R('shy / friendly / honest')] }
+    case 'housework':
+      if (question) return { title: 'Para preguntar si ya se hizo: Have you + participio + ... yet?', parts: [V('Have / Has'), '+', S('Sujeto'), '+', V('done / made / taken out'), '+', R('...'), '+', K('yet?')] }
+      if (/\bmake|made\b/i.test(sentence)) return { title: 'make = crear o producir: make the bed, make a cake, make a mess, make a mistake:', parts: [S('Sujeto'), '+', K('make / made'), '+', R('the bed / a mess')] }
+      return { title: 'do = tareas y trabajos: do the dishes, do the laundry, do homework, do the shopping:', parts: [S('Sujeto'), '+', K('do / did / have done'), '+', R('the dishes / the laundry')] }
+    case 'holidays':
+      if (/\brather\b/i.test(sentence)) return { title: "Para elegir: I'd rather + verbo (sin to):", parts: [S('I'), '+', K("'d rather"), '+', V('go camping / stay at a hotel')] }
+      return { title: "En una postal: We're staying at + lugar · Yesterday we + pasado:", parts: [S('We'), '+', V("'re staying"), '+', K('at'), '+', R('a hotel / a campsite')] }
     case 'should-must':
       if (question) return { title: 'Para preguntar: Should + sujeto + verbo? · Do / Does + sujeto + have to + verbo?', parts: [V('Should / Do'), '+', S('Sujeto'), '+', K('(have to)'), '+', V('verbo'), '+', R('...?')] }
       if (negative) return { title: "shouldn't = mal consejo · mustn't = prohibido · don't have to = no es necesario:", parts: [S('Sujeto'), '+', K("shouldn't / mustn't / don't have to"), '+', V('verbo'), '+', R('...')] }

@@ -59,7 +59,9 @@ export const FRIEND_REWARDS: Record<string, Record<number, string>> = {
 }
 
 /** Índice del momento de historia A2 (personalidad / familia) de cada amigo */
-const A2_PEOPLE_MOMENT: Record<string, number> = { leo: 3, maya: 1 }
+const A2_PEOPLE_MOMENT: Record<string, number> = { leo: 3, maya: 3 }
+/** Índice del momento de historia de Maya con la postal de vacaciones (A2) */
+const A2_HOLIDAY_MOMENT = 4
 
 export function completeStory(s: GameState, friendId: string, index: number, delta: number): GameState {
   const before = s.talks[friendId] ?? 0
@@ -73,6 +75,10 @@ export function completeStory(s: GameState, friendId: string, index: number, del
   const a2 = A2_PEOPLE_MOMENT[friendId]
   if (a2 !== undefined && talks > a2 && !next.seenLesson.includes('people-relationships')) {
     next = { ...next, seenLesson: [...next.seenLesson, 'people-relationships'] }
+  }
+  // La postal de Maya (su segundo momento A2) abre en el repaso el tema de vacaciones
+  if (friendId === 'maya' && talks > A2_HOLIDAY_MOMENT && !next.seenLesson.includes('holidays')) {
+    next = { ...next, seenLesson: [...next.seenLesson, 'holidays'] }
   }
   return next
 }

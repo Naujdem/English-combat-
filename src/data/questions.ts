@@ -32,6 +32,7 @@ import { A2_RETURN_QUESTIONS } from './questions-a2-13'
 import { A2_EXTRA_QUESTIONS } from './questions-a2-extra'
 import { A2_PARTY_PRACTICE } from './a2Party'
 import { A2_PARTY_QUESTIONS } from './questions-a2-s3'
+import { A2_HOME_QUESTIONS } from './questions-a2-home'
 import { A2_MARKET_PRACTICE } from './a2Market'
 import { A2_MARKET_QUESTIONS } from './questions-a2-s4'
 import { A2_DINNER_PRACTICE } from './a2Dinner'
@@ -387,6 +388,7 @@ export const QUESTIONS: Question[] = [
   ...A2_EXTRA_QUESTIONS,
   ...A2_PARTY_PRACTICE,
   ...A2_PARTY_QUESTIONS,
+  ...A2_HOME_QUESTIONS,
   ...A2_MARKET_PRACTICE,
   ...A2_MARKET_QUESTIONS,
   ...A2_DINNER_PRACTICE,
@@ -988,6 +990,26 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'What is he like? = ¿cómo es? (personalidad) · What does he look like? = ¿cómo se ve? · What does he like? = ¿qué le gusta?',
       "Familia ampliada: uncle / aunt · cousin · nephew / niece · grandson / granddaughter · stepmother · half-sister · mother-in-law · an only child. Con 's: my mother's brother = my uncle.",
       'Relaciones: get on (well) with (llevarse bien) · fall out with (pelearse) · make up (reconciliarse) · trust (confiar en) · have a lot in common (tener mucho en común).',
+    ],
+  },
+  housework: {
+    name: 'Tareas de la casa: do / make',
+    level: 'A2',
+    lesson: [
+      'Tareas: do the dishes, do the laundry, tidy up, sweep the floor, take out the rubbish, make the bed, vacuum.',
+      'do = tareas y trabajos (do the dishes, do homework, do the shopping) · make = crear o producir (make the bed, make a cake, make a mess, make a mistake).',
+      "Present Perfect con tareas: Have you done the dishes yet? · I've already swept the garden. · I haven't taken out the rubbish yet.",
+      "Turnos y ayuda: It's your turn to... · Whose turn is it? · Can you give me a hand?",
+    ],
+  },
+  holidays: {
+    name: 'Vacaciones y alojamiento',
+    level: 'A2',
+    lesson: [
+      'Tipos de vacaciones: a beach holiday, a camping trip, a city break (sightseeing).',
+      'Alojamiento: hotel, hostel, campsite, apartment · a single / double room · book a room · check in / check out.',
+      "En una postal: We're staying at... · Yesterday we went... · Wish you were here!",
+      "Para elegir: I'd rather go camping. · Would you rather stay at a hotel or go camping?",
     ],
   },
   future: {
