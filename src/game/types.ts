@@ -65,7 +65,7 @@ export type Question = {
   voice?: 'female' | 'male'
 }
 
-export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio' | 'calle' | 'cafe' | 'tienda' | 'turismo' | 'casa-leo' | 'casa-maya' | 'parque' | 'casa' | 'granero' | 'corral' | 'campo' | 'casa-granja' | 'recepcion' | 'oficina' | 'reuniones' | 'direccion' | 'aula-vieja' | 'patio-viejo' | 'direccion-vieja' | 'calle-vieja' | 'tienda-vieja' | 'correo' | 'mercado' | 'obra' | 'casa-nueva' | 'caseta' | 'granero-viejo' | 'casa-vieja' | 'campo-viejo' | 'sala-cine' | 'vestibulo' | 'oficina-cine' | 'aula-futuro' | 'patio-futuro' | 'direccion-futuro' | 'calle-futuro' | 'turismo-futuro' | 'lobby-torre' | 'oficina-torre' | 'sala-torre' | 'cima-torre' | 'taller' | 'estacion' | 'museo'
+export type Zone = 'aula' | 'bano' | 'cafeteria' | 'biblioteca' | 'sala' | 'secretaria' | 'patio' | 'calle' | 'cafe' | 'tienda' | 'turismo' | 'casa-leo' | 'casa-maya' | 'parque' | 'casa' | 'granero' | 'corral' | 'campo' | 'casa-granja' | 'recepcion' | 'oficina' | 'reuniones' | 'direccion' | 'aula-vieja' | 'patio-viejo' | 'direccion-vieja' | 'calle-vieja' | 'tienda-vieja' | 'correo' | 'mercado' | 'obra' | 'casa-nueva' | 'caseta' | 'granero-viejo' | 'casa-vieja' | 'campo-viejo' | 'sala-cine' | 'vestibulo' | 'oficina-cine' | 'aula-futuro' | 'patio-futuro' | 'direccion-futuro' | 'calle-futuro' | 'turismo-futuro' | 'lobby-torre' | 'oficina-torre' | 'sala-torre' | 'cima-torre' | 'taller' | 'estacion' | 'museo' | 'aula-noche' | 'pasillo-noche'
 
 export type EnemyDef = {
   id: string

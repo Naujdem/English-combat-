@@ -33,7 +33,7 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -72,6 +72,12 @@ export type NpcTask = {
     /** Marca que se guarda en opened según el desenlace (A2-07: la confianza de JoJo cambia la salida de la carrera) */
     results?: Partial<Record<keyof DebateEndings, string>>
   }
+  /** Para activity 'practice': escudo de palabras si todas las respuestas son correctas */
+  practiceShield?: boolean
+  /** B1: temas que se recuperan al completar la tarea (misiones sin jefe: se recuperan al cerrar la misión) */
+  recover?: TopicId[]
+  /** B1: la lección de Leo se ve por mensajes en el teléfono (no en el salón) */
+  phoneLesson?: boolean
   /** B1: al terminar la tarea se sale del recuerdo con ese número (game/memory.ts, exitMemory). closeMemory: además se guarda el cierre de la misión */
   exitMemory?: number
   closeMemory?: boolean
@@ -4058,6 +4064,18 @@ NPC_TASKS['b1-phone'] = {
     es: '(Dos piezas del reloj brillan.)',
     sub: 'Dos fragmentos se juntaron.',
   },
+}
+
+// ── B1-01 · The Accident (recuerdo 1; escena y textos en data/b1Accident.ts) ──
+// El amigo espera junto a la puerta. Al hablarle empieza la secuencia fija (components/CallForHelp.tsx, TheAccident):
+// charla → alarma → Call for Help (5 rondas) → rescate. Al terminar se sale del recuerdo SIN cerrar la misión:
+// el cierre (closeId(1)) llega al final del epílogo, en tu cuarto.
+NPC_TASKS['b1-01-friend'] = {
+  done: 'b1-01-rescue',
+  activity: 'callforhelp',
+  exitMemory: 1,
+  steps: [],
+  reward: { text: '(The memory fades.)', es: '(El recuerdo se desvanece.)', sub: 'Recuerdo 1 terminado.' },
 }
 
 // ── B1 · DEMO de Inscriptions como tarea (tablilla en la sala de prueba de data/b1TabletDemo.ts, solo modo profesor) ──

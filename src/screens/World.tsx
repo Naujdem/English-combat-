@@ -20,6 +20,9 @@ import { ALL_DIARY as DIARY, pageNotified, pageSeen, unlockedPages } from '../da
 import { dueCards } from '../game/cards'
 import { B1_PREFIX, isA2Unlocked, type Update } from '../game/store'
 import { B1Map } from '../components/B1Map'
+import { enterMemory, memoryFlag } from '../game/memory'
+import { B1_01_SCHOOL } from '../data/b1Accident'
+import { B1_HOME } from '../data/b1Home'
 import { LooseFragment } from '../components/FragmentJoin'
 import { B1_HOME_ID, B1_NODES, B1_OPENING, B1_PART_NAMES, B1_ERA_COLOR, b1LockedText, b1Message, b1NodeDone, b1NodeOpen, isB1Unlocked, type B1Node, type B1Part } from '../data/b1World'
 import { heroLook, SCENES } from '../game/helpers'
@@ -161,6 +164,12 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   function tapB1(n: B1Node) {
     const label = n.num ? `${n.num}. ${n.name}` : `★ ${n.name}`
     if (!b1NodeOpen(n, state)) return setMsg(`${label} está cerrado. ${b1LockedText(n)}`)
+    if (n.num === 1) {
+      // Ya saliste del recuerdo: el epílogo (y después de cerrar la misión, tu cuarto) está en b1-home
+      if (state.opened.includes(memoryFlag(1))) return onEnter(B1_HOME_ID)
+      // El recuerdo empieza desde tu cuarto: al despertar vuelves ahí (exitMemory regresa al último lugar del presente)
+      return update((s) => enterMemory({ ...s, sceneId: B1_HOME_ID, pos: { ...B1_HOME.start } }, 1, B1_01_SCHOOL.id, B1_01_SCHOOL.start))
+    }
     setMsg(`${n.name}: este lugar se construirá pronto.`)
   }
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]
