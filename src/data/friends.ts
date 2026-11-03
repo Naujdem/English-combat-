@@ -101,7 +101,38 @@ export const FRIENDS: Record<string, FriendDef> = {
           { who: 'friend', text: "OK, no more grammar. Let's play!", es: 'Bueno, no más gramática. ¡A jugar!' },
         ],
       },
-      { requires: 'past-simple', level: 'A2', title: 'La partida de ayer', lines: [] },
+      {
+        // A2 (Busuu cap. 1): personalidad. Abre en el repaso el tema de personalidad, familia y relaciones
+        requires: 'past-simple',
+        level: 'A2',
+        title: 'La partida de ayer',
+        lines: [
+          { who: 'friend', text: "Hey! I played an online game yesterday with a new teammate. His name is Ravi, and he's from India!", es: '¡Oye! Ayer jugué una partida en línea con un compañero nuevo. ¡Se llama Ravi y es de la India!' },
+          {
+            who: 'friend',
+            text: 'At first he was very bossy. He told everybody what to do! But then he gave me his best sword. Was he a good teammate in the end?',
+            es: 'Al principio era muy mandón. ¡Le decía a todos qué hacer! Pero luego me dio su mejor espada. ¿Fue un buen compañero al final?',
+            options: [
+              { text: 'Yes! He was bossy at first, but he was very generous.', reply: 'Exactly! People can surprise you.', es: '¡Exacto! La gente te puede sorprender.', effect: 2 },
+              { text: 'Maybe he was shy, not bossy.', reply: "Ha ha, shy? No, no. He talked ALL the time!", es: 'Ja, ja, ¿tímido? No, no. ¡Hablaba TODO el tiempo!', effect: 1 },
+              { text: 'Yes! He give you his best sword!', reply: 'Ha ha, in the past: he GAVE me his sword. But yes!', es: 'Ja, ja, en pasado: he GAVE me his sword. ¡Pero sí!', effect: 0 },
+              nonsense('Ravi is a sword.', "A sword? Ha ha, I don't understand.", '¿Una espada? Ja, ja, no entiendo.'),
+            ],
+          },
+          {
+            who: 'friend',
+            text: 'OK, now a question for you. What am I like? Be honest!',
+            es: 'Bueno, ahora una pregunta para ti. ¿Cómo soy yo? ¡Sé honesto!',
+            options: [
+              { text: "You're kind, funny and very patient. And you love grammar!", reply: 'Ha ha! Patient? Maybe. Grammar? Definitely.', es: '¡Ja, ja! ¿Paciente? Quizás. ¿Gramática? Definitivamente.', effect: 2 },
+              { text: "You're a bit lazy... but very funny.", reply: 'Lazy?! Hey! ...OK, maybe on Sundays.', es: '¿¡Perezoso!? ¡Oye! ...Bueno, quizás los domingos.', effect: 1 },
+              { text: 'You have brown hair and you are tall.', reply: "Ha ha, that's what I LOOK like. I asked what I'm LIKE: my personality!", es: 'Ja, ja, eso es cómo me veo (look like). Te pregunté cómo soy (like): ¡mi personalidad!', effect: 0 },
+              nonsense('You are a Tuesday.', "A Tuesday?! Ha ha, I don't understand.", '¿¡Un martes!? Ja, ja, no entiendo.'),
+            ],
+          },
+          { who: 'friend', text: "Thanks. You're a really good friend. And honest! I like that.", es: 'Gracias. Eres un muy buen amigo. ¡Y honesto! Me gusta eso.' },
+        ],
+      },
     ],
     casual: [
       {
@@ -176,6 +207,40 @@ export const FRIENDS: Record<string, FriendDef> = {
           { text: 'I went into your house. It was beautiful.', reply: 'It was! Grandpa made it with love.', es: '¡Lo era! El abuelo la hizo con amor.', effect: 1 },
           { text: 'Wow! He builded it with his hands!', reply: "Ha ha, 'he BUILT it'. Built, not builded!", es: 'Ja, ja, "he BUILT it". ¡Built, no builded!', effect: 0 },
           nonsense('Your house ate a cookie.', "My house? Ha ha, I don't understand.", '¿Mi casa? Ja, ja, no entiendo.'),
+        ],
+      },
+      // A2 (Busuu caps. 1 y 4): personalidad y relaciones
+      {
+        requires: 'past-simple',
+        text: 'My sister Emma and I fell out yesterday. She took my controller without asking! What should I do?',
+        es: 'Mi hermana Emma y yo nos peleamos ayer. ¡Tomó mi control sin preguntar! ¿Qué hago?',
+        options: [
+          { text: "Say sorry and make up. She's your sister!", reply: "You're right. I'll talk to her.", es: 'Tienes razón. Hablaré con ella.', effect: 2 },
+          { text: 'Wait one day. Then talk to her.', reply: 'Good idea. We both need some time.', es: 'Buena idea. Los dos necesitamos un poco de tiempo.', effect: 1 },
+          { text: 'You should fall up with her.', reply: 'Ha ha, FALL OUT is to fight. MAKE UP is to be friends again!', es: 'Ja, ja, fall out es pelearse. ¡Make up es volver a ser amigos!', effect: 0 },
+          nonsense('Your controller is my grandma.', "My controller? Ha ha, I don't understand.", '¿Mi control? Ja, ja, no entiendo.'),
+        ],
+      },
+      {
+        requires: 'past-simple',
+        text: 'What was your first teacher like?',
+        es: '¿Cómo era tu primer profesor?',
+        options: [
+          { text: 'She was very kind and patient.', reply: 'Like a good teacher!', es: '¡Como un buen profesor!', effect: 2 },
+          { text: 'He was a bit bossy, but he was honest.', reply: 'Bossy but honest... OK!', es: 'Mandón pero honesto... ¡bueno!', effect: 1 },
+          { text: 'She looked like patient.', reply: "Ha ha, just 'she WAS patient'. 'Look like' is for faces!", es: 'Ja, ja, solo "she WAS patient". ¡"Look like" es para el aspecto!', effect: 0 },
+          nonsense('My teacher was a window.', "A window? Ha ha, I don't understand.", '¿Una ventana? Ja, ja, no entiendo.'),
+        ],
+      },
+      {
+        requires: 'past-simple',
+        text: 'Ravi says we have a lot in common. Do you have a lot in common with your friends?',
+        es: 'Ravi dice que tenemos mucho en común. ¿Tú tienes mucho en común con tus amigos?',
+        options: [
+          { text: 'Yes! We like the same games and the same music.', reply: "That's why you're friends!", es: '¡Por eso son amigos!', effect: 2 },
+          { text: 'Not much, but we get on well.', reply: "That's the important thing!", es: '¡Eso es lo importante!', effect: 1 },
+          { text: 'Yes, we have a lot on common.', reply: "Ha ha, IN common, not 'on'. But cool!", es: 'Ja, ja, IN common, no "on". ¡Pero genial!', effect: 0 },
+          nonsense('My friends are green potatoes.', "Potatoes? Ha ha, I don't understand.", '¿Papas? Ja, ja, no entiendo.'),
         ],
       },
     ],
@@ -254,6 +319,48 @@ export const FRIENDS: Record<string, FriendDef> = {
           },
         ],
       },
+      {
+        // A2 (Busuu cap. 2): familia ampliada. Abre en el repaso el tema de personalidad, familia y relaciones
+        requires: 'present-perfect',
+        level: 'A2',
+        title: 'La familia de Maya',
+        lines: [
+          {
+            who: 'friend',
+            text: "Guess what! I've just become an aunt! My sister has had a baby boy.",
+            es: '¡Adivina! ¡Acabo de convertirme en tía! Mi hermana tuvo un bebé.',
+            options: [
+              { text: "Congratulations! So he's your nephew!", reply: 'Yes! My first nephew. His name is Tomás.', es: '¡Sí! Mi primer sobrino. Se llama Tomás.', effect: 2 },
+              { text: 'Wow! Have you held him yet?', reply: "Yes, I've already held him. He's so small!", es: 'Sí, ya lo cargué. ¡Es tan pequeño!', effect: 1 },
+              { text: "Congratulations! So he's your niece!", reply: 'Ha ha, a boy is a NEPHEW. A girl is a niece!', es: 'Ja, ja, un niño es un NEPHEW. ¡Una niña es una niece!', effect: 0 },
+              nonsense('Your sister is a sandwich.', "A sandwich? I don't understand...", '¿Un sándwich? No entiendo...'),
+            ],
+          },
+          {
+            who: 'friend',
+            text: 'On Sunday all the family came to see him: my grandparents, my uncles, my aunts and about twenty cousins! Have you got a big family?',
+            es: 'El domingo vino toda la familia a verlo: mis abuelos, mis tíos, mis tías ¡y como veinte primos! ¿Tienes una familia grande?',
+            options: [
+              { text: "Yes! I've got lots of cousins. I get on well with them.", reply: "That's great! Family parties are the best.", es: '¡Qué bien! Las fiestas familiares son lo mejor.', effect: 2 },
+              { text: "No, I'm an only child. But I've got two cousins.", reply: 'Small families are nice too. More cake for you!', es: 'Las familias pequeñas también son lindas. ¡Más pastel para ti!', effect: 1 },
+              { text: "Yes! My uncle's children are my nephews.", reply: "Ha ha, your uncle's children are your COUSINS. Nephews are your brother's or sister's sons.", es: 'Ja, ja, los hijos de tu tío son tus COUSINS. Los nephews son los hijos de tu hermano o hermana.', effect: 0 },
+              nonsense('My family is a bus.', "A bus? Ha ha, I don't understand.", '¿Un bus? Ja, ja, no entiendo.'),
+            ],
+          },
+          {
+            who: 'friend',
+            text: "My grandma is easy-going and very generous. She cooks for everybody! But my uncle Pedro is a bit bossy... What's your favorite relative like?",
+            es: 'Mi abuela es tranquila y muy generosa. ¡Cocina para todos! Pero mi tío Pedro es un poco mandón... ¿Cómo es tu pariente favorito?',
+            options: [
+              { text: 'My aunt is very funny and kind. I trust her a lot.', reply: 'She sounds lovely!', es: '¡Suena encantadora!', effect: 2 },
+              { text: 'My grandpa is shy, but he tells great stories.', reply: 'Shy people often have the best stories.', es: 'Las personas tímidas suelen tener las mejores historias.', effect: 1 },
+              { text: 'My aunt is very friend.', reply: "Ha ha, she's very FRIENDLY. A friend is a person!", es: 'Ja, ja, es muy FRIENDLY. ¡Friend es una persona!', effect: 0 },
+              nonsense('My grandpa is a pizza.', "A pizza? I don't understand...", '¿Una pizza? No entiendo...'),
+            ],
+          },
+          { who: 'friend', text: 'Next time, come to our family party. My grandma has already asked about you!', es: 'La próxima vez, ven a nuestra fiesta familiar. ¡Mi abuela ya preguntó por ti!' },
+        ],
+      },
     ],
     casual: [
       {
@@ -295,6 +402,40 @@ export const FRIENDS: Record<string, FriendDef> = {
           { text: 'Her favorite food is fish.', reply: 'Fish! Healthy and good.', es: '¡Pescado! Saludable y rico.', effect: 2 },
           { text: 'His favorite food is fish.', reply: "Your mother? Then it's HER favorite food, ha ha!", es: '¿Tu mamá? Entonces es "HER favorite food", ¡ja, ja!', effect: 0 },
           nonsense('My pencil is green.', "Your pencil? I asked about food! I don't understand.", '¿Tu lápiz? ¡Pregunté por comida! No entiendo.'),
+        ],
+      },
+      // A2 (Busuu caps. 2 y 4): familia ampliada y relaciones
+      {
+        requires: 'present-perfect',
+        text: 'My cousin Lucía has moved to Canada! Have you got any family in another country?',
+        es: '¡Mi prima Lucía se mudó a Canadá! ¿Tienes familia en otro país?',
+        options: [
+          { text: 'Yes, my uncle lives in Spain.', reply: 'Cool! Have you visited him?', es: '¡Genial! ¿Lo has visitado?', effect: 2 },
+          { text: 'No, all my family lives here.', reply: 'Family close to you. That is nice too.', es: 'La familia cerca. Eso también es lindo.', effect: 1 },
+          { text: "Yes, my aunt's son lives in Spain. He's my nephew.", reply: "Ha ha, your aunt's son is your COUSIN!", es: 'Ja, ja, ¡el hijo de tu tía es tu COUSIN!', effect: 0 },
+          nonsense('Canada is my sandwich.', "Your sandwich? I don't understand...", '¿Tu sándwich? No entiendo...'),
+        ],
+      },
+      {
+        requires: 'present-perfect',
+        text: 'My nephew Tomás has just smiled for the first time! Have you ever looked after a baby?',
+        es: '¡Mi sobrino Tomás acaba de sonreír por primera vez! ¿Alguna vez has cuidado a un bebé?',
+        options: [
+          { text: 'Yes, I have! I looked after my little cousin.', reply: 'Then you can help me!', es: '¡Entonces me puedes ayudar!', effect: 2 },
+          { text: "No, I haven't. Babies scare me a bit!", reply: "Ha ha, they're tiny! Don't be shy.", es: 'Ja, ja, ¡son chiquitos! No seas tímido.', effect: 1 },
+          { text: 'Yes, I have look after a baby.', reply: 'Ha ha, I have LOOKED after. Have + participle!', es: 'Ja, ja, I have LOOKED after. ¡Have + participio!', effect: 0 },
+          nonsense('The baby is my teacher.', "Your teacher? Ha ha, what?", '¿Tu profesor? Ja, ja, ¿qué?'),
+        ],
+      },
+      {
+        requires: 'present-perfect',
+        text: 'Do you get on well with your relatives?',
+        es: '¿Te llevas bien con tus parientes?',
+        options: [
+          { text: 'Yes, I get on well with all of them.', reply: 'Lucky you!', es: '¡Qué suerte!', effect: 2 },
+          { text: 'With most of them. My uncle is a bit bossy.', reply: 'Ha ha, every family has a bossy uncle!', es: 'Ja, ja, ¡toda familia tiene un tío mandón!', effect: 1 },
+          { text: 'Yes, I get in well with them.', reply: "Ha ha, get ON well with. But that's great!", es: 'Ja, ja, get ON well with. ¡Pero qué bien!', effect: 0 },
+          nonsense('My relatives are chairs.', "Chairs? I don't understand...", '¿Sillas? No entiendo...'),
         ],
       },
     ],
@@ -537,6 +678,40 @@ export function interestFriend(interest: Interest, heroName = ''): FriendDef {
           { text: 'I ate a cookie from Daniel!', reply: 'Lucky you!', es: '¡Qué suerte!', effect: 1 },
           { text: 'Yes! She seed him and she smiled.', reply: "Ha ha, 'she SAW him'. Saw, not seed!", es: 'Ja, ja, "she SAW him". ¡Saw, no seed!', effect: 0 },
           nonsense('Daniel was a sandwich.', "A sandwich? I don't understand...", '¿Un sándwich? No entiendo...'),
+        ],
+      },
+      // A2 (Busuu cap. 4): relaciones
+      {
+        requires: 'present-perfect',
+        text: 'Have you ever fallen out with a good friend?',
+        es: '¿Alguna vez te has peleado con un buen amigo?',
+        options: [
+          { text: 'Yes, once. But we talked and made up.', reply: 'Talking always helps.', es: 'Hablar siempre ayuda.', effect: 2 },
+          { text: "No, never. I'm quite easy-going.", reply: 'Easy-going... yes, I can see that!', es: 'Tranquilo... sí, ¡se nota!', effect: 1 },
+          { text: 'Yes, but we made down the next day.', reply: 'Ha ha, we made UP. Made up = friends again!', es: 'Ja, ja, we made UP. ¡Made up = amigos otra vez!', effect: 0 },
+          nonsense('My friend is a cloud.', "A cloud? I don't understand.", '¿Una nube? No entiendo.'),
+        ],
+      },
+      {
+        requires: 'present-perfect',
+        text: romance ? 'What is the most important thing in a relationship?' : 'What is the most important thing in a friendship?',
+        es: romance ? '¿Qué es lo más importante en una relación?' : '¿Qué es lo más importante en una amistad?',
+        options: [
+          { text: 'Trust. You have to trust each other.', reply: 'I think so too. And I trust you.', es: 'Yo también lo creo. Y yo confío en ti.', effect: 2 },
+          { text: 'Having a lot in common, I think.', reply: 'Maybe. We have a lot in common, right?', es: 'Quizás. Tenemos mucho en común, ¿no?', effect: 1 },
+          { text: 'Trust. You have to trust in each others.', reply: "Ha ha, just 'trust each OTHER'. But yes, trust!", es: 'Ja, ja, solo "trust each OTHER". Pero sí, ¡la confianza!', effect: 0 },
+          nonsense('The library is my shoe.', "Your shoe? I don't understand.", '¿Tu zapato? No entiendo.'),
+        ],
+      },
+      {
+        requires: 'present-perfect',
+        text: "My parents say I'm a bit bossy. Am I?",
+        es: 'Mis papás dicen que soy un poco mandón. ¿Lo soy?',
+        options: [
+          { text: "No! You're kind and very honest.", reply: romance ? "You're sweet. Thank you." : "Thanks! You're a good friend.", es: romance ? 'Eres un amor. Gracias.' : '¡Gracias! Eres un buen amigo.', effect: 2 },
+          { text: "Maybe a little... but only when you're right!", reply: "Ha ha, I'm always right!", es: 'Ja, ja, ¡siempre tengo la razón!', effect: 1 },
+          { text: 'No, you are very honesty.', reply: "Ha ha, I'm HONEST. Honesty is the noun!", es: 'Ja, ja, soy HONEST. ¡Honesty es el sustantivo!', effect: 0 },
+          nonsense('Your parents are bananas.', "Bananas? I don't understand.", '¿Bananos? No entiendo.'),
         ],
       },
     ],

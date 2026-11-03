@@ -58,6 +58,9 @@ export const FRIEND_REWARDS: Record<string, Record<number, string>> = {
   maya: { 1: 'El sándwich de Maya te da +1 de vida máxima.' },
 }
 
+/** Índice del momento de historia A2 (personalidad / familia) de cada amigo */
+const A2_PEOPLE_MOMENT: Record<string, number> = { leo: 3, maya: 1 }
+
 export function completeStory(s: GameState, friendId: string, index: number, delta: number): GameState {
   const before = s.talks[friendId] ?? 0
   const talks = Math.max(before, index + 1)
@@ -65,6 +68,11 @@ export function completeStory(s: GameState, friendId: string, index: number, del
   let next: GameState = { ...s, talks: { ...s.talks, [friendId]: talks }, friendship: { ...s.friendship, [friendId]: pts } }
   if (friendId === 'maya' && before < 1 && talks >= 1) {
     next = { ...next, maxHp: next.maxHp + 1, hp: next.maxHp + 1 }
+  }
+  // El momento A2 de Leo o de Maya abre en el repaso el tema de personalidad, familia y relaciones
+  const a2 = A2_PEOPLE_MOMENT[friendId]
+  if (a2 !== undefined && talks > a2 && !next.seenLesson.includes('people-relationships')) {
+    next = { ...next, seenLesson: [...next.seenLesson, 'people-relationships'] }
   }
   return next
 }
