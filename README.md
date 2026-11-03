@@ -45,6 +45,7 @@ Flujo completo: título → intro (te roban la voz) → Leo enseña *to be* → 
 | `src/game/social.ts` | Reglas de amistad: qué charla toca, límites por nivel, recompensas |
 | `src/components/Tiles.tsx` | Dibujo de cada casilla y vocabulario de los objetos |
 | `src/components/Sprite.tsx` | Personajes chibi |
+| `src/data/b1World.ts`, `src/components/B1Map.tsx` | B1: los 14 lugares (y Extras), cuándo se abre cada uno y el dibujo del mapa de B1 |
 
 ## Modo profesor
 
@@ -229,6 +230,14 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 
 - Los jefes de A2 entregan fragmentos de voz (no piezas del reloj) y dejan pistas breves, sin adelantar lo que pasa en B1 y B2.
 - Minijuegos nuevos reutilizables: `SequenceMaster` (ordenar pasos o tramos), `Reconstruct` (corregir una nota corrompida con pistas confiables), `DebateTalk` (convencer con argumentos), `FixRadio` y `OneMoreRound`.
+
+## B1 (en desarrollo)
+
+- Todos los identificadores de B1 llevan el prefijo `b1-` (`B1_PREFIX` en `src/game/store.ts`).
+- `src/data/b1World.ts`: los 14 lugares en 3 partes (Silence, Underworld, Temples and Voices) y los Extras, épocas Presente / Recuerdo, la apertura (`b1-00-opening`) y los cierres (`b1-01-close` … `b1-14-close`).
+- `src/components/B1Map.tsx`: el mapa de B1 (franja morada para los recuerdos, dorada para el presente, candado de dos fragmentos en los recuerdos cerrados).
+- La apertura (la llamada de Ms. Haddad) está en `src/data/b1Home.ts` y su tarea en `src/data/tasks.ts`. La animación de fragmentos se engancha en `src/components/FragmentJoinCue.tsx`.
+- La pestaña B1 aparece al terminar A2-13 (o en modo profesor, que también tiene saltos a cada nodo de B1).
 
 ## Validador de preguntas
 
