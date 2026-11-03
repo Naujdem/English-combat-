@@ -19,11 +19,16 @@ export const A1_ORDER: TopicId[] = ['greetings', 'to-be', 'possessives', 'prepos
 /** Temas de A2 en el orden en que Leo los enseña */
 export const A2_ORDER: TopicId[] = ['should-must', 'invitations', 'requests', 'instructions', 'past-simple', 'past-simple-comparatives', 'superlatives-comparatives-race', 'past-simple-continuous', 'recipes-some-any', 'present-perfect', 'places-directions', 'future-plans', 'health-emergency', 'wishes-conditional', 'clothes-shopping', 'food-dinner', 'people-relationships', 'housework', 'holidays']
 
+/** Temas de B1 en el orden en que aparecen en la historia */
+export const B1_ORDER: TopicId[] = ['cause-effect', 'emergencies']
+
 const LEVELS: { level: string; order: TopicId[] }[] = [
   { level: 'A1', order: A1_ORDER },
   { level: 'A2', order: A2_ORDER },
+  { level: 'B1', order: B1_ORDER },
 ]
-const ALL_ORDER = [...A1_ORDER, ...A2_ORDER]
+const ALL_ORDER = [...A1_ORDER, ...A2_ORDER, ...B1_ORDER]
+const levelOf = (t: TopicId) => (B1_ORDER.includes(t) ? 'B1' : A2_ORDER.includes(t) ? 'A2' : 'A1')
 
 export function mastery(s: GameState, t: TopicId) {
   const st = s.stats[t] ?? { ok: 0, fail: 0 }
@@ -126,6 +131,7 @@ export function ProgressView({ state, onClose, onReview }: { state: GameState; o
   const teacher = useTeacher().on
   const shown = ALL_ORDER.filter((t) => unlocked(state, t, teacher))
   const a2 = A2_ORDER.some((t) => shown.includes(t))
+  const b1 = B1_ORDER.some((t) => shown.includes(t))
   const bosses = WORLD.filter((n) => n.sceneId)
   const places = WORLD.filter((n) => state.defeated.includes(`${n.id}-boss`)).length
   const minions = Object.values(ENEMIES).filter((e) => e.kind === 'minion' && state.defeated.includes(e.id)).length
@@ -150,7 +156,7 @@ export function ProgressView({ state, onClose, onReview }: { state: GameState; o
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-gold">Mi progreso</p>
-            <p className="font-display text-lg">{state.hero.name || 'Tu personaje'} · Nivel {a2 ? 'A2' : 'A1'}</p>
+            <p className="font-display text-lg">{state.hero.name || 'Tu personaje'} · Nivel {b1 ? 'B1' : a2 ? 'A2' : 'A1'}</p>
           </div>
           <button className={btnGhost} onClick={onClose}>Cerrar</button>
         </div>
@@ -173,8 +179,8 @@ export function ProgressView({ state, onClose, onReview }: { state: GameState; o
           <div className="mt-3 grid gap-3">
             {shown.map((t, k) => {
               const m = mastery(state, t)
-              const lvl = A2_ORDER.includes(t) ? 'A2' : 'A1'
-              const head = k === 0 || (A2_ORDER.includes(shown[k - 1]) ? 'A2' : 'A1') !== lvl
+              const lvl = levelOf(t)
+              const head = k === 0 || levelOf(shown[k - 1]) !== lvl
               return (
                 <div key={t}>
                   {head && <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-gold">Nivel {lvl}</p>}

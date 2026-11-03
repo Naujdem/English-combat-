@@ -118,3 +118,15 @@ button { cursor: pointer; touch-action: manipulation; }
   .stone-fade, .stone-fill { transition-duration: 0.2s !important; }
   .stone-flash { animation-duration: 0.3s !important; }
 }
+
+/* B1-01 · The Accident: destello rojo de la alarma, luz que parpadea y humo que se mueve */
+@keyframes b1-alarm-flash { 0%, 100% { opacity: 0 } 15%, 45%, 75% { opacity: 0.28 } 30%, 60%, 90% { opacity: 0.08 } }
+.b1-alarm-flash { background: #d64545; animation: b1-alarm-flash 2s ease-in-out both; }
+@keyframes b1-alarm-light { 0%, 100% { opacity: 1 } 50% { opacity: 0.25 } }
+.b1-alarm-light { animation: b1-alarm-light 0.8s steps(2) infinite; }
+@keyframes b1-smoke { 0%, 100% { transform: translateX(0) } 50% { transform: translateX(-6px) } }
+.b1-smoke { animation: b1-smoke 4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .b1-alarm-flash { animation: none; opacity: 0.14 }
+  .b1-alarm-light, .b1-smoke { animation: none }
+}

@@ -33,7 +33,7 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -72,6 +72,12 @@ export type NpcTask = {
     /** Marca que se guarda en opened según el desenlace (A2-07: la confianza de JoJo cambia la salida de la carrera) */
     results?: Partial<Record<keyof DebateEndings, string>>
   }
+  /** Para activity 'practice': escudo de palabras si todas las respuestas son correctas */
+  practiceShield?: boolean
+  /** B1: temas que se recuperan al completar la tarea (misiones sin jefe: se recuperan al cerrar la misión) */
+  recover?: TopicId[]
+  /** B1: la lección de Leo se ve por mensajes en el teléfono (no en el salón). mine = tu mensaje, a la derecha */
+  phoneLesson?: { mine: string }
   /** B1: al terminar la tarea se sale del recuerdo con ese número (game/memory.ts, exitMemory). closeMemory: además se guarda el cierre de la misión */
   exitMemory?: number
   closeMemory?: boolean
@@ -4060,28 +4066,151 @@ NPC_TASKS['b1-phone'] = {
   },
 }
 
-// ── B1 · DEMO del recuerdo 1 (escena en data/b1MemoryDemo.ts). Se borra cuando se haga la misión 1 ──
-// Muestra un nombre con estática ([[?]]) y, al terminar, la salida del recuerdo (sin cerrar la misión 1).
-NPC_TASKS['b1-01-demo-friend'] = {
-  done: 'b1-01-demo-talk',
+// ── B1-01 · The Accident (recuerdo 1; escena y textos en data/b1Accident.ts) ──
+// El amigo espera junto a la puerta. Al hablarle empieza la secuencia fija (components/CallForHelp.tsx, TheAccident):
+// charla → alarma → Call for Help (5 rondas) → rescate. Al terminar se sale del recuerdo SIN cerrar la misión:
+// el cierre (closeId(1)) llega al final del epílogo, en tu cuarto.
+NPC_TASKS['b1-01-friend'] = {
+  done: 'b1-01-rescue',
+  activity: 'callforhelp',
   exitMemory: 1,
-  steps: [
-    { text: '(A long hallway. Everything is grey and quiet. Your friend is waiting by the door.)', es: '(Un pasillo largo. Todo está gris y en silencio. Tu amigo espera junto a la puerta.)' },
-    { text: 'Hey [[?]], how are you feeling?', es: 'Oye, ▒▒▒, ¿cómo te sientes?' },
-    {
-      text: 'You look tired. Long day?',
-      es: 'Te ves cansado. ¿Día largo?',
-      choice: { ask: '¿Qué respondes?', options: ['Yes, it was a long day.', 'Yes, it were a long day.', 'Yes, it a long day.'], answer: 0, tip: 'Con "it" en pasado: it was.' },
-    },
-    { text: '(The hallway starts to fade... The memory is ending.)', es: '(El pasillo empieza a desvanecerse... El recuerdo se acaba.)' },
-  ],
-  reward: { text: '(The memory fades.)', es: '(El recuerdo se desvanece.)', sub: 'Recuerdo de prueba terminado.' },
+  steps: [],
+  reward: { text: '(The memory fades.)', es: '(El recuerdo se desvanece.)', sub: 'Recuerdo 1 terminado.' },
 }
 
-// ── B1 · DEMO de Inscriptions como tarea (tablilla en la escena de prueba del recuerdo 1, data/b1MemoryDemo.ts) ──
-// Se borra junto con la demo cuando se haga la misión 1. Las misiones 9, 11 y 13 declaran sus salas igual.
+// ── B1-01 · epílogo (tu cuarto, b1-home): despiertas con dolor de garganta y Leo te escribe (el teléfono, b1-01-leo-phone) ──
+// Orden: mensaje a Leo → lección por mensajes (cause-effect) + práctica → Smoke Echo (esbirro, en el cuarto)
+//        → Blurry Memory (Reconstruct) → cierre: done = closeId(1) (abre el nodo 2) y recupera cause-effect y emergencies.
+NPC_TASKS['b1-01-message'] = {
+  npc: 'b1-01-leo-phone',
+  done: 'b1-01-message',
+  steps: [
+    {
+      text: '(You grab your phone and write to Leo.)',
+      es: '(Agarras tu teléfono y le escribes a Leo.)',
+      choice: { ask: '¿Qué le escribes?', options: ['I saw a fire. A man lost his voice.', 'I seen a fire. A man lose his voice.', 'I was see a fire. A man lost voice.'], answer: 0, tip: 'Pasado de see: saw. Pasado de lose: lost.' },
+    },
+  ],
+  reward: {
+    text: '(Leo is typing...)',
+    es: '(Leo está escribiendo...)',
+    sub: 'Leo te está respondiendo. Toca otra vez el teléfono.',
+  },
+}
+
+// Lección de Leo por mensajes (data/lessons.ts, 'cause-effect') y práctica guiada. Si todas están bien, escudo
+NPC_TASKS['b1-01-practice'] = {
+  npc: 'b1-01-leo-phone',
+  done: 'b1-01-practice',
+  lesson: 'cause-effect',
+  phoneLesson: { mine: 'I saw a fire. A man lost his voice.' },
+  activity: 'practice',
+  practice: 'cause-effect',
+  practiceIds: ['b1-01-p1', 'b1-01-p2', 'b1-01-p3', 'b1-01-p4', 'b1-01-p5', 'b1-01-p6', 'b1-01-p7', 'b1-01-p8'],
+  practiceShield: true,
+  steps: [],
+  reward: {
+    text: 'Leo: "Great job. Now try to sleep... Wait. Is that smoke in your room?"',
+    es: 'Muy bien. Ahora intenta dormir... Espera. ¿Eso es humo en tu cuarto?',
+    sub: 'Un eco de humo apareció en tu cuarto, junto al sofá. Véncelo. (Si acertaste todas, ganaste un escudo).',
+    say: 'Is that smoke in your room?',
+  },
+}
+
+// Blurry Memory (Reconstruct): Leo presenta el minijuego. Se abre al vencer al Smoke Echo
+NPC_TASKS['b1-01-blurry'] = {
+  npc: 'b1-01-leo-phone',
+  done: 'b1-01-blurry',
+  activity: 'reconstruct',
+  requires: {
+    id: 'b1-01-smoke-echo',
+    text: 'Leo: "There\'s smoke in your room! Be careful!"',
+    es: '¡Hay humo en tu cuarto! ¡Ten cuidado!',
+    sub: 'Vence al Smoke Echo, junto al sofá.',
+  },
+  reconstruct: {
+    title: 'Blurry Memory',
+    intro: { en: "Your memory is blurry. Let's put the pieces together.", es: 'Tu recuerdo está borroso. Juntemos las piezas.' },
+    items: [
+      {
+        source: 'Page 1 · The stairs',
+        clue: { en: 'Fact: the stairs were full of smoke. Result: we used the fire exit.', es: 'Hecho: las escaleras estaban llenas de humo. Resultado: usamos la salida de emergencia.' },
+        claim: { en: 'The stairs were full of smoke because we used the fire exit.', es: 'Las escaleras estaban llenas de humo porque usamos la salida de emergencia.' },
+        options: ['The stairs were full of smoke, so we used the fire exit.', 'The stairs were full of smoke, so of we used the fire exit.', 'The stairs were full of smoke because of we used the fire exit.'],
+        answer: 0,
+        tip: 'El humo es la causa y usar la salida es el resultado: so.',
+      },
+      {
+        source: 'Page 1 · The man',
+        clue: { en: 'Fact: he lost his voice. Cause: the smoke.', es: 'Hecho: perdió la voz. Causa: el humo.' },
+        claim: { en: 'He lost his voice so the smoke.', es: 'Perdió la voz así que el humo.' },
+        options: ['He lost his voice because of the smoke.', 'He lost his voice because the smoke.', 'He lost his voice so of the smoke.'],
+        answer: 0,
+        tip: 'Causa + sustantivo: because of.',
+      },
+      {
+        source: 'Page 2 · The teacher',
+        clue: { en: "Fact: she couldn't speak. Cause: she shouted for an hour.", es: 'Hecho: no podía hablar. Causa: gritó durante una hora.' },
+        claim: { en: "She couldn't speak because of she shouted for an hour.", es: 'No podía hablar a causa de gritó durante una hora.' },
+        options: ["She couldn't speak because she shouted for an hour.", "She couldn't speak as a result of she shouted for an hour.", "She couldn't speak because of shouted for an hour."],
+        answer: 0,
+        tip: 'Después de la causa hay una oración completa (she shouted…): because.',
+      },
+      {
+        mode: 'tap',
+        wrongWord: 'arrive',
+        source: 'Page 2 · The firefighters',
+        clue: { en: 'Fact: the firefighters arrived while we were waiting outside.', es: 'Hecho: los bomberos llegaron mientras esperábamos afuera.' },
+        claim: { en: 'The firefighters were arrive while we were waiting outside.', es: 'Los bomberos estaban llegar mientras esperábamos afuera.' },
+        options: ['The firefighters arrived while we were waiting outside.', 'The firefighters arrived while we waiting outside.', 'The firefighters arrive while we were waiting outside.'],
+        answer: 0,
+        tip: 'El hecho corto va en past simple: arrived.',
+      },
+      {
+        source: 'Page 3 · The end',
+        clue: { en: 'Fact: the smoke was thick. Result: he lost his voice.', es: 'Hecho: el humo era espeso. Resultado: perdió la voz.' },
+        claim: { en: 'The smoke was thick. As a result of, he lost his voice.', es: 'El humo era espeso. Como resultado de, perdió la voz.' },
+        options: ['The smoke was thick. As a result, he lost his voice.', 'The smoke was thick. As a result of, he lost his voice.', 'The smoke was thick. As a result he lost of his voice.'],
+        answer: 0,
+        tip: "As a result, + oración nueva (con coma, sin 'of').",
+      },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "The pieces fit together now."',
+    es: 'Ahora las piezas encajan.',
+    sub: 'Recuerdo reconstruido. Toca otra vez el teléfono.',
+    say: 'The pieces fit together now.',
+  },
+}
+
+// Cierre de B1-01: tu línea del diario y Leo se despide. done = closeId(1): abre el nodo 2 (A New City).
+// Misión sin jefe: los temas cause-effect y emergencies se recuperan aquí (recover)
+NPC_TASKS['b1-01-close'] = {
+  npc: 'b1-01-leo-phone',
+  done: 'b1-01-close',
+  recover: ['cause-effect', 'emergencies'],
+  coins: 10,
+  steps: [
+    {
+      text: '(You write in your diary:) "The man in the memory lost his voice. The friend next to him... didn\'t say a word."',
+      es: '(Escribes en tu diario:) "El hombre del recuerdo perdió la voz. El amigo que estaba a su lado... no dijo ni una palabra."',
+    },
+    { text: "That's a lot to carry. Get some sleep. We have a plane to catch.", es: 'Es mucho para cargar. Duerme un poco. Tenemos un avión que tomar.' },
+  ],
+  reward: {
+    text: 'Memory 1: The Accident',
+    es: 'Recuerdo 1: El accidente',
+    sub: "Ganaste el atuendo 'impermeable' y 10 monedas. Dos fragmentos se juntaron y te mostraron un recuerdo que no es tuyo. Mañana viajas a Lumen Bay.",
+    say: 'Memory 1: The Accident',
+  },
+}
+
+// ── B1 · DEMO de Inscriptions como tarea (tablilla en la sala de prueba de data/b1TabletDemo.ts, solo modo profesor) ──
+// Las misiones 9, 11 y 13 declaran sus salas igual.
 NPC_TASKS['b1-demo-tablet'] = {
-  done: 'b1-01-demo-inscriptions',
+  done: 'b1-demo-inscriptions',
   activity: 'inscriptions',
   inscriptions: INS_DEMO_DOOR,
   steps: [],

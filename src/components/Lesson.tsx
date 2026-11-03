@@ -36,6 +36,44 @@ export function ClassroomStage({ board, children }: { board?: [string, string?];
 }
 
 /**
+ * B1: la lección por mensajes. En vez del salón, la pantalla de un teléfono: tu mensaje a la derecha
+ * y lo que Leo "escribe" (la pizarra) en burbujas a la izquierda.
+ */
+export function PhoneStage({ board, mine }: { board?: [string, string?]; mine?: string }) {
+  const bubble = (text: string, y: number, color: string, size: number) => (
+    <text x="100" y={y} fill={color} fontSize={size} fontFamily={FONT} fontWeight="600">{text}</text>
+  )
+  return (
+    <svg viewBox="0 0 320 200" className="w-full rounded-2xl border-2 border-line" role="img" aria-label="Mensajes con Leo en el teléfono">
+      <rect width="320" height="200" fill="#1f2430" />
+      <rect x="70" y="6" width="180" height="188" rx="18" fill="#2d2d3a" stroke="#c9c2d6" strokeWidth="1.5" />
+      <rect x="78" y="16" width="164" height="168" rx="10" fill="#e8eef3" />
+      <rect x="78" y="16" width="164" height="26" rx="10" fill="#2f6f73" />
+      <rect x="78" y="32" width="164" height="10" fill="#2f6f73" />
+      <circle cx="94" cy="29" r="7" fill="#d4743a" />
+      <text x="107" y="33" fill="#f4efe4" fontSize="12" fontFamily={FONT} fontWeight="700">Leo</text>
+      <circle cx="132" cy="29" r="2.5" fill="#7ee08a" />
+      {mine && (
+        <g>
+          <rect x="140" y="50" width="96" height="30" rx="8" fill="#cfe9d6" />
+          <text x="146" y="62" fill="#1c1a17" fontSize="7.5" fontFamily={FONT}>{mine.length > 24 ? mine.slice(0, mine.lastIndexOf(' ', 24)) : mine}</text>
+          {mine.length > 24 && <text x="146" y="73" fill="#1c1a17" fontSize="7.5" fontFamily={FONT}>{mine.slice(mine.lastIndexOf(' ', 24) + 1)}</text>}
+        </g>
+      )}
+      {board && (
+        <g key={board.join()} className="anim-fade-in">
+          <rect x="86" y="92" width="150" height={board[1] ? 50 : 30} rx="8" fill="#ffffff" stroke="#c9d3dc" />
+          {bubble(board[0], 110, '#1c1a17', Math.min(10, 230 / Math.max(1, board[0].length)))}
+          {board[1] && bubble(board[1], 130, '#2f6f73', Math.min(10, 230 / Math.max(1, board[1].length)))}
+        </g>
+      )}
+      <rect x="86" y="160" width="148" height="16" rx="8" fill="#ffffff" stroke="#c9d3dc" />
+      <text x="94" y="171" fill="#9aa6b2" fontSize="7" fontFamily={FONT}>Leo is typing…</text>
+    </svg>
+  )
+}
+
+/**
  * Lección paso a paso con Leo. Los pasos 'board' son ejercicios que hay que
  * responder bien para avanzar. La traducción de Leo se muestra por defecto.
  */
@@ -44,11 +82,14 @@ export function Lesson({
   steps: rawSteps,
   title,
   onDone,
+  phone,
 }: {
   state: GameState
   steps: LessonStep[]
   title?: string
   onDone: (completed: boolean) => void
+  /** B1: por mensajes en el teléfono. Es tu mensaje (a la derecha); la pizarra son las burbujas de Leo */
+  phone?: { mine: string }
 }) {
   // La muletilla de Leo: empieza cada lección con "Hi, hi!"
   const steps = useMemo(() => {
@@ -86,16 +127,20 @@ export function Lesson({
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 px-4 py-6">
       {title && <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{title}</p>}
-      <ClassroomStage board={board}>
-        <g transform="translate(40 92) scale(3)">
-          <SpriteBody look={heroLook(state)} mood={state.recovered.length ? 'normal' : 'mute'} />
-        </g>
-        <g className="anim-appear">
-          <g transform="translate(280 92) scale(-3 3)">
-            <SpriteBody look={FRIENDS.leo.look} />
+      {phone ? (
+        <PhoneStage board={board} mine={phone.mine} />
+      ) : (
+        <ClassroomStage board={board}>
+          <g transform="translate(40 92) scale(3)">
+            <SpriteBody look={heroLook(state)} mood={state.recovered.length ? 'normal' : 'mute'} />
           </g>
-        </g>
-      </ClassroomStage>
+          <g className="anim-appear">
+            <g transform="translate(280 92) scale(-3 3)">
+              <SpriteBody look={FRIENDS.leo.look} />
+            </g>
+          </g>
+        </ClassroomStage>
+      )}
 
       {s.who === 'board' && s.topic && <GrammarPattern topic={s.topic} sentence={text} compact />}
 

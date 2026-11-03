@@ -7,7 +7,8 @@ import { B1_NODES, closeId } from '../data/b1World'
  * Entrar  — enterMemory(s, n, sceneId): fundido a negro → destello de estática → <MemoryFrame entering> → la escena.
  * Salir   — exitMemory(s, n, { close }): fundido con estática → despiertas en el presente, en el último lugar donde estabas,
  *           con "(You wake up. Your throat hurts.)" → se abren tu línea del diario y la página del Diario de L
- *           (data/b1Diary.ts, id memoryFlag(n)) → se vuelve al mapa.
+ *           (data/b1Diary.ts, id memoryFlag(n)). Con close: se vuelve al mapa. Sin close: te quedas en ese lugar,
+ *           porque la misión sigue con un epílogo en el presente (B1-01: tu cuarto).
  * Las dos son funciones de estado (se usan con update). Las pantallas las dibuja Explore con MemoryTransitions.
  * Al vencer al jefe de un recuerdo, la misión llama update((s) => exitMemory(s, n, { close: true })),
  * o pone exitMemory: n en la tarea final (data/tasks.ts).
@@ -46,12 +47,12 @@ export function wakeFromMemory(s: GameState): GameState {
   return { ...s, sceneId: m.returnTo.sceneId, pos: { ...m.returnTo.pos }, memory: { ...m, phase: 'wake' }, screen: 'explore' }
 }
 
-/** Paso final: se guardan las páginas del diario (y el cierre, si se pidió) y se vuelve al mapa */
+/** Paso final: se guardan las páginas del diario (y el cierre, si se pidió). Con cierre se vuelve al mapa; sin cierre, sigue el epílogo */
 export function finishMemory(s: GameState): GameState {
   const m = s.memory
   if (!m) return s
   const add = [memoryFlag(m.n), ...(m.close ? [closeId(m.n)] : [])].filter((x) => !s.opened.includes(x))
-  return { ...s, opened: [...s.opened, ...add], memory: undefined, screen: 'world' }
+  return { ...s, opened: [...s.opened, ...add], memory: undefined, screen: m.close ? 'world' : 'explore' }
 }
 
 /** Una misión soltó un solo fragmento: queda suelto en el reloj */

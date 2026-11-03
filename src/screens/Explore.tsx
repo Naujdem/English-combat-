@@ -42,7 +42,9 @@ import { BlurFace, BlurFaceIcon } from '../components/BlurFace'
 import { exitMemory, isMemoryScene } from '../game/memory'
 import { MemoriesTab } from '../components/MemoriesTab'
 import { Inscriptions } from '../components/Inscriptions'
-import { B1_DEMO_TABLET } from '../data/b1MemoryDemo'
+import { B1_DEMO_TABLET } from '../data/b1TabletDemo'
+import { B1_01_FRIEND, B1_LEO_PHONE } from '../data/b1Accident'
+import { TheAccident } from '../components/CallForHelp'
 import { isB1Unlocked } from '../data/b1World'
 import { B1_CALL, B1_PHONE } from '../data/b1Home'
 import { B1_HOME_ID, B1_OPENING } from '../data/b1World'
@@ -217,6 +219,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       outfits: t.outfit && !s.outfits.includes(t.outfit) ? [...s.outfits, t.outfit] : s.outfits,
       hp: t.heal ? s.maxHp : s.hp,
       coins: t.coins ? (s.coins ?? 0) + t.coins : s.coins,
+      // B1: misiones sin jefe recuperan sus temas al cerrarse (y quedan disponibles en Repasar)
+      ...(t.recover
+        ? {
+            recovered: [...s.recovered, ...t.recover.filter((x) => !s.recovered.includes(x))],
+            seenLesson: [...s.seenLesson, ...t.recover.filter((x) => !s.seenLesson.includes(x))],
+          }
+        : {}),
     }))
     // B1: la tarea termina el recuerdo (fundido, despertar y diario: MemoryTransitions)
     if (t.exitMemory) {
@@ -646,7 +655,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET ? <TabletIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET ? <TabletIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -1031,10 +1040,14 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       )}
       {task && NPC_TASKS[task]?.activity === 'practice' && NPC_TASKS[task].practice && (
         // Práctica guiada con Leo (pantalla completa): al terminarla se marca la tarea
-        <Practice state={state} update={update} review={NPC_TASKS[task].practice} ids={NPC_TASKS[task].practiceIds} guided onClose={() => finishTask(task, false)} onDone={() => finishTask(task, true)} />
+        <Practice state={state} update={update} review={NPC_TASKS[task].practice} ids={NPC_TASKS[task].practiceIds} guided onClose={() => finishTask(task, false)} onDone={(perfect) => finishTask(task, true, [], perfect && !!NPC_TASKS[task].practiceShield)} />
+      )}
+      {task && NPC_TASKS[task]?.activity === 'callforhelp' && (
+        // B1-01: la secuencia del recuerdo 1 (charla, alarma, Call for Help y rescate). Al terminar, se sale del recuerdo
+        <TheAccident state={state} update={update} friend={npcOf(B1_01_FRIEND).look} onDone={() => finishTask(task, true)} />
       )}
 
-      {task && NPC_TASKS[task] && NPC_TASKS[task].activity !== 'practice' && (
+      {task && NPC_TASKS[task] && NPC_TASKS[task].activity !== 'practice' && NPC_TASKS[task].activity !== 'callforhelp' && (
         <Overlay>
           {(() => {
             const t = NPC_TASKS[task]
@@ -1189,7 +1202,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           <Lesson
             state={state}
             steps={lesson.topics.flatMap((t) => (LESSONS[t] ?? []).map((st) => ({ ...st, topic: t })))}
-            title={lesson.enemyId ? 'Leo te alcanza antes del combate' : 'Leo te ayuda'}
+            title={lesson.enemyId ? 'Leo te alcanza antes del combate' : lesson.task && NPC_TASKS[lesson.task]?.phoneLesson ? 'Leo te escribe' : 'Leo te ayuda'}
+            phone={lesson.task ? NPC_TASKS[lesson.task]?.phoneLesson : undefined}
             onDone={() => {
               const { topics, enemyId, then, task: taskId } = lesson
               update((s) => ({ ...s, seenLesson: [...s.seenLesson, ...topics.filter((t) => !s.seenLesson.includes(t))] }))

@@ -2,7 +2,7 @@
  * Sonidos del juego hechos con el sintetizador del navegador (Web Audio):
  * no hay archivos que descargar y funcionan sin internet.
  */
-export type Sfx = 'correct' | 'wrong' | 'hit' | 'hurt' | 'victory' | 'defeat' | 'item' | 'step' | 'static' | 'memory-in' | 'memory-out' | 'fragment-join'
+export type Sfx = 'correct' | 'wrong' | 'hit' | 'hurt' | 'victory' | 'defeat' | 'item' | 'step' | 'static' | 'memory-in' | 'memory-out' | 'fragment-join' | 'alarm' | 'cough'
 
 const KEY = 'english-combat-sound'
 let ctx: AudioContext | null = null
@@ -130,6 +130,17 @@ export function sfx(kind: Sfx) {
     // ── B1: recuerdos ──
     case 'static':
       staticNoise(a, 0, 0.18, 0.1)
+      break
+    // ── B1-01: la alarma de incendio (timbre que sube y baja) y una tos seca ──
+    case 'alarm':
+      for (let k = 0; k < 4; k++) {
+        note(a, 880, k * 0.5, 0.22, 'square', 0.05)
+        note(a, 660, k * 0.5 + 0.25, 0.22, 'square', 0.05)
+      }
+      break
+    case 'cough':
+      staticNoise(a, 0, 0.12, 0.14, 700, 'lowpass')
+      staticNoise(a, 0.16, 0.1, 0.1, 600, 'lowpass')
       break
     case 'memory-in':
       staticNoise(a, 0, 0.35, 0.12, 1800)

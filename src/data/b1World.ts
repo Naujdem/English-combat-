@@ -5,7 +5,7 @@ import { A2_13_CLOSE } from './a2Return'
  * B1 (en desarrollo) — datos del mapa de B1. Todos los ids llevan el prefijo "b1-".
  * Se abre al terminar A2-13 (no depende de las misiones secundarias de A2).
  * La escena de apertura (la llamada de Ms. Haddad) está en data/b1Home.ts; su tarea, en data/tasks.ts.
- * Por ahora solo existe la apertura: los 14 lugares son placeholders (el 1 muestra "próximamente").
+ * Misiones hechas: la apertura y la 1 (The Accident, data/b1Accident.ts). Los demás lugares son placeholders.
  */
 
 /** Escena de apertura de B1 (la casa del protagonista, data/b1Home.ts) */
@@ -79,7 +79,9 @@ export function b1LockedText(n: B1Node): string {
 /** Mensaje superior del mapa cuando se ve B1 */
 export function b1Message(s: GameState): string {
   if (!s.opened.includes(B1_OPENING)) return 'B1 · Lumen Bay: la coordinadora del intercambio te está llamando.'
-  if (!s.opened.includes(closeId(1))) return 'Dos fragmentos del reloj se juntaron. Toca el recuerdo 1.'
+  if (!s.opened.includes(closeId(1)))
+    // 'b1-01-memory' = memoryFlag(1) (game/memory.ts importa este archivo: se escribe aquí para no hacer un ciclo)
+    return s.opened.includes('b1-01-memory') ? 'Despertaste en tu cuarto con dolor de garganta. Leo te está escribiendo: entra a 1. The Accident.' : 'Dos fragmentos del reloj se juntaron. Toca el recuerdo 1.'
   const next = B1_NODES.find((n) => n.num && b1NodeOpen(n, s) && !b1NodeDone(n, s))
   return next ? `Siguiente lugar abierto: ${next.num}. ${next.name}.` : 'Toca un lugar del mapa de B1.'
 }

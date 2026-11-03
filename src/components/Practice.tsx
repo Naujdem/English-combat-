@@ -37,8 +37,8 @@ export function Practice({
   /** Lista fija de preguntas (ids, también W-/T- para escribir); si se indica, reemplaza la elección al azar */
   ids?: string[]
   onClose: () => void
-  /** Al terminar todas las preguntas (si no se indica, se usa onClose) */
-  onDone?: () => void
+  /** Al terminar todas las preguntas (si no se indica, se usa onClose). perfect: todas correctas */
+  onDone?: (perfect: boolean) => void
 }) {
   const [queue] = useState<Question[]>(() => {
     if (ids?.length) return ids.map((id) => questionById(id)).filter((q): q is Question => !!q)
@@ -171,7 +171,7 @@ export function Practice({
                   ? 'Leo: "You\'re ready! Try again!" Ya puedes volver a retarlo.'
                   : 'Leo: "Good try! Practice a little more." Puedes repasar otra vez en tu cuaderno de errores.'}
             </p>
-            <button className={`${btnPrimary} mt-4 w-full`} onClick={onDone ?? onClose} autoFocus>
+            <button className={`${btnPrimary} mt-4 w-full`} onClick={() => (onDone ? onDone(score === queue.length) : onClose())} autoFocus>
               {guided ? 'Seguir' : 'Volver'}
             </button>
           </Panel>

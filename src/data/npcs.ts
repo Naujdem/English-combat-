@@ -366,13 +366,22 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   'b1-phone': {
     name: 'Ms. Haddad',
     look: { shirt: '#2f6f73', hair: '#1f1f1f', skin: '#c68642', gender: 'female' },
+    // Al salir del recuerdo 1, el teléfono pasa a ser Leo escribiendo (b1-01-leo-phone)
+    until: 'b1-01-memory',
     doneLine: { text: '(The phone is quiet now. Your flight leaves tomorrow at nine.)', es: '(El teléfono ya está en silencio. Tu vuelo sale mañana a las nueve.)' },
   },
-  // ── B1 · DEMO del recuerdo 1 (se borra con data/b1MemoryDemo.ts): en los recuerdos las caras se ven borrosas ──
-  'b1-01-demo-friend': {
-    name: 'Your friend',
-    look: { shirt: '#6a7a8c', hair: '#3b2a1a', skin: '#d8b48c' },
-    doneLine: { text: 'Hey [[?]]... are you OK?', es: 'Oye, ▒▒▒... ¿estás bien?' },
+  // ── B1-01 · epílogo: el mismo teléfono, ahora con Leo escribiendo (retrato de Leo). Aparece con memoryFlag(1) ──
+  'b1-01-leo-phone': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    after: 'b1-01-memory',
+    doneLine: { text: 'Get some sleep. We have a plane to catch.', es: 'Duerme un poco. Tenemos un avión que tomar.' },
+  },
+  // ── B1-01 · The Accident (recuerdo 1): el amigo junto a la puerta. Cara borrosa y sin nombre (ninguna pista de quién es) ──
+  'b1-01-friend': {
+    name: 'Amigo',
+    look: { shirt: '#5a6a7e', hair: '#2b2b33', skin: '#c9a888' },
+    doneLine: { text: '...', es: '(No dice nada).' },
   },
   // ── B1 · DEMO de Inscriptions: una tablilla de piedra (se dibuja como tablilla en Explore) ──
   'b1-demo-tablet': {

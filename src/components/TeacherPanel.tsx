@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
-import { PRESETS, setTeacher, skipLessons, useTeacher } from '../game/teacher'
+import { PRESETS, b1Mission1, setTeacher, skipLessons, useTeacher } from '../game/teacher'
 import { SCENES } from '../game/helpers'
 import { walkable } from './Tiles'
 import { ENEMIES } from '../data/enemies'
@@ -13,7 +13,7 @@ import { MiniTalk } from './MiniTalk'
 import { SpriteL } from './SpriteL'
 import { BlurFace, BlurFaceIcon } from './BlurFace'
 import { enterMemory } from '../game/memory'
-import { B1_MEMORY_DEMO } from '../data/b1MemoryDemo'
+import { B1_TABLET_TEST } from '../data/b1TabletDemo'
 import { Inscriptions } from './Inscriptions'
 import { INS_DEMOS } from '../data/b1InscriptionsDemo'
 import { CommandPuzzle } from './CommandPuzzle'
@@ -130,14 +130,18 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <p className="text-xs text-paper/55">En combate aparece un botón "Ganar (profe)" para saltar el combate.</p>
             </div>
 
+            <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1-1 · The Accident</p>
+            <div className="mt-1 grid grid-cols-2 gap-2">
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission1(s, 'memory'))}>B1-1: entrar al recuerdo</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission1(s, 'alarm'))}>B1-1: ir a la alarma</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission1(s, 'call'))}>B1-1: ir al Call for Help</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission1(s, 'epilogue'))}>B1-1: epílogo (ya despiertas)</button>
+              <button className={`${btn} col-span-2 px-2 text-sm`} onClick={() => go((s) => b1Mission1(s, 'echo'))}>B1-1: Smoke Echo</button>
+            </div>
+            <p className="mt-1 text-xs text-paper/55">En el recuerdo, habla con el amigo (junto a la puerta) para empezar o seguir la secuencia.</p>
+
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>
             <div className="mt-1 grid gap-2">
-              <button
-                className={`${btn} text-left text-sm`}
-                onClick={() => go((s) => enterMemory(PRESETS.find((p) => p.id === 'b1-opened')!.apply(s), 1, B1_MEMORY_DEMO.id, B1_MEMORY_DEMO.start))}
-              >
-                Ver demo de recuerdo
-              </button>
               <div className="grid grid-cols-2 gap-2">
                 <button className={`${btn} text-sm`} onClick={() => { setOpen(false); setDemo('frag-first') }}>Fragmentos: primera vez</button>
                 <button className={`${btn} text-sm`} onClick={() => { setOpen(false); setDemo('frag-next') }}>Fragmentos: siguientes</button>
@@ -151,9 +155,9 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
                 className={`${btn} text-left text-sm`}
                 onClick={() =>
                   go((s) => {
-                    // La tablilla de prueba como tarea (activity 'inscriptions'), dentro de la escena de prueba del recuerdo 1
-                    const b = enterMemory(PRESETS.find((p) => p.id === 'b1-opened')!.apply(s), 1, B1_MEMORY_DEMO.id, { x: 6, y: 3 })
-                    return { ...b, opened: b.opened.filter((o) => o !== 'b1-01-demo-inscriptions') }
+                    // La tablilla de prueba como tarea (activity 'inscriptions'), en su sala de prueba (data/b1TabletDemo.ts)
+                    const b = enterMemory(PRESETS.find((p) => p.id === 'b1-opened')!.apply(s), 9, B1_TABLET_TEST.id, B1_TABLET_TEST.start)
+                    return { ...b, opened: b.opened.filter((o) => o !== 'b1-demo-inscriptions') }
                   })
                 }
               >

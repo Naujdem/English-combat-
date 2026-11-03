@@ -54,6 +54,9 @@ export const FLOOR: Record<Zone, string> = {
   taller: '#cfc6b8',
   estacion: '#dfe6ee',
   museo: '#ece4d4',
+  // B1-01: la clase nocturna del recuerdo 1 (grises azulados)
+  'aula-noche': '#aeb8c6',
+  'pasillo-noche': '#9aa5b4',
 }
 
 const WALL = '#7a6a58'
@@ -124,6 +127,11 @@ export const VOCAB: Record<string, { en: string; es: string }> = {
   '6': { en: 'tools: a hammer, a screwdriver and a wrench', es: 'herramientas: un martillo, un destornillador y una llave inglesa' },
   '7': { en: 'workbench', es: 'mesa de trabajo' },
   '8': { en: 'toolbox', es: 'caja de herramientas' },
+  // B1-01 (recuerdo 1): la escuela nocturna
+  '@': { en: 'clock', es: 'reloj' },
+  '9': { en: 'fire alarm', es: 'alarma de incendio' },
+  '0': { en: 'fire exit sign', es: 'letrero de salida de emergencia' },
+  '^': { en: 'stairs', es: 'escalera' },
 }
 
 export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: { c: string; x: number; y: number; floor: string; doorOpen: boolean; party?: boolean; still?: boolean }) {
@@ -784,6 +792,54 @@ export function Tile({ c, x, y, floor, doorOpen, party = true, still = false }: 
           <rect x={X + 4} y={Y + 12} width={T - 8} height={14} rx="2" fill="#c0392b" stroke="#7a2e2e" strokeWidth="1.2" />
           <rect x={X + 4} y={Y + 17} width={T - 8} height={2} fill="#7a2e2e" />
           <path d={`M ${X + 11} ${Y + 12} V ${Y + 7} H ${X + 21} V ${Y + 12}`} fill="none" stroke="#5f646b" strokeWidth="2.5" />
+        </g>
+      )
+    // ── B1-01 (recuerdo 1): la escuela nocturna ──
+    case '@':
+      // Reloj de pared (las diez y cuarenta)
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill={WALL} />
+          <rect x={X} y={Y} width={T} height={6} fill={WALL_TOP} />
+          <circle cx={X + 16} cy={Y + 17} r="9" fill="#f4efe4" stroke="#2d2d3a" strokeWidth="1.8" />
+          <path d={`M${X + 16} ${Y + 17} L${X + 12.5} ${Y + 15}`} stroke="#2d2d3a" strokeWidth="1.8" strokeLinecap="round" />
+          <path d={`M${X + 16} ${Y + 17} L${X + 11} ${Y + 21}`} stroke="#2d2d3a" strokeWidth="1.2" strokeLinecap="round" />
+          <circle cx={X + 16} cy={Y + 17} r="1" fill="#2d2d3a" />
+        </g>
+      )
+    case '9':
+      // Alarma de incendio: caja roja con campana
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill={WALL} />
+          <rect x={X} y={Y} width={T} height={6} fill={WALL_TOP} />
+          <rect x={X + 8} y={Y + 9} width={16} height={18} rx="2" fill="#c0392b" stroke="#7a2e2e" strokeWidth="1.2" />
+          <circle cx={X + 16} cy={Y + 15} r="4" fill="#e0a526" />
+          <rect x={X + 11} y={Y + 21} width={10} height={4} rx="1" fill="#f4efe4" />
+        </g>
+      )
+    case '0':
+      // Letrero verde de salida de emergencia (una persona que corre hacia una puerta)
+      return (
+        <g>
+          <rect x={X} y={Y} width={T} height={T} fill={WALL} />
+          <rect x={X} y={Y} width={T} height={6} fill={WALL_TOP} />
+          <rect x={X + 3} y={Y + 11} width={T - 6} height={13} rx="1.5" fill="#2e9d5b" stroke="#e8f5ec" strokeWidth="1" />
+          <circle cx={X + 11} cy={Y + 14} r="1.6" fill="#e8f5ec" />
+          <path d={`M${X + 11} ${Y + 16} l-1.5 4 M${X + 11} ${Y + 16} l2.5 2.5 M${X + 9.5} ${Y + 20} l-2 2 M${X + 9.5} ${Y + 20} l2.5 1.5`} stroke="#e8f5ec" strokeWidth="1.2" strokeLinecap="round" />
+          <rect x={X + 18} y={Y + 13} width={7} height={9} fill="none" stroke="#e8f5ec" strokeWidth="1.2" />
+        </g>
+      )
+    case '^':
+      // Escalera que baja al piso de abajo (el humo sale en Call for Help, no en el mapa)
+      return (
+        <g>
+          {base}
+          {[0, 1, 2, 3, 4].map((k) => (
+            <rect key={k} x={X + 2} y={Y + 3 + k * 5.5} width={T - 4} height={5} fill={k % 2 ? '#4a5462' : '#5a6474'} />
+          ))}
+          <rect x={X + 2} y={Y + 2} width={2} height={T - 4} fill="#3a4250" />
+          <rect x={X + T - 4} y={Y + 2} width={2} height={T - 4} fill="#3a4250" />
         </g>
       )
     case '5':
