@@ -311,6 +311,8 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   'camisa-amarilla': { name: 'Camisa amarilla', color: '#e0b526' },
   'chaqueta-negra': { name: 'Chaqueta negra', color: '#1f1f24' },
   'abrigo-invierno': { name: 'Abrigo de invierno', color: '#7a4a2e' },
+  // A Dinner to Remember: regalo de Chef Bruno (no se vende en la tienda)
+  'delantal-chef': { name: 'Delantal de chef', color: '#f4efe4' },
 }
 
 SCHOOL.requirements = BOSS_REQUIREMENTS

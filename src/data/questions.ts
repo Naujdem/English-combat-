@@ -34,6 +34,8 @@ import { A2_PARTY_PRACTICE } from './a2Party'
 import { A2_PARTY_QUESTIONS } from './questions-a2-s3'
 import { A2_MARKET_PRACTICE } from './a2Market'
 import { A2_MARKET_QUESTIONS } from './questions-a2-s4'
+import { A2_DINNER_PRACTICE } from './a2Dinner'
+import { A2_DINNER_QUESTIONS } from './questions-a2-s5'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -386,6 +388,8 @@ export const QUESTIONS: Question[] = [
   ...A2_PARTY_QUESTIONS,
   ...A2_MARKET_PRACTICE,
   ...A2_MARKET_QUESTIONS,
+  ...A2_DINNER_PRACTICE,
+  ...A2_DINNER_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -962,6 +966,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Probarse ropa: Can I try it on? (una cosa) · Can I try them on? (jeans, shoes) · It fits = de talla · It suits you = te queda bien.',
       "Precios: How much is it? / How much are they? · on sale = en rebaja · 20% off · half price · It's a bargain! · I'll take it.",
       "Devoluciones: I'd like to return this · receipt (recibo) · refund (dinero) · exchange it for a bigger size. too big · not big enough.",
+    ],
+  },
+  'food-dinner': {
+    name: 'Comida, cantidades y conversación en la mesa',
+    level: 'A2',
+    lesson: [
+      'Sabores: sweet (dulce) · salty (salado) · sour (ácido) · bitter (amargo) · spicy (picante) · What does it taste like? — It tastes like…',
+      'Cómo se cocina: fried (frito) · roasted (asado al horno) · grilled (a la parrilla) · boiled (hervido) · raw (crudo).',
+      'Cantidades: How much + incontable (rice, salt, milk) · How many + plural (eggs, plates) · a lot of (los dos) · a little + incontable · a few + plural.',
+      "En la mesa: How was…? · How often…? · How do you make…? · Could you pass the salt, please? · Would you like some more…? — Yes, please / No, thank you, I'm full.",
     ],
   },
   future: {

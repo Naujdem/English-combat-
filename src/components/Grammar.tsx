@@ -227,6 +227,12 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (/\btry\b/i.test(sentence)) return { title: 'Probarse ropa: try + it / them + on (el pronombre va en medio):', parts: [K('Can I'), '+', V('try'), '+', S('it / them'), '+', K('on?')] }
       if (question) return { title: 'Precios: How much + is (una cosa) / are (varias)?', parts: [K('How much'), '+', V('is / are'), '+', S('this / these'), '+', R('...?')] }
       return { title: "En la tienda: I'm looking for… · I'd like to return / exchange… · I'll take it:", parts: [S('I'), '+', K("'m looking for / 'd like to return"), '+', R('a black jacket / this shirt')] }
+    case 'food-dinner':
+      if (/\bhow (much|many)\b/i.test(sentence)) return { title: 'How much + incontable (rice, salt) · How many + plural (eggs, plates):', parts: [K('How much / How many'), '+', S('rice / eggs'), '+', V('do we need / are there'), '+', R('...?')] }
+      if (/\b(a few|a little|a lot of|much|many)\b/i.test(sentence)) return { title: 'a lot of (los dos) · a little + incontable · a few + plural:', parts: [S('There is / are'), '+', K('a little / a few / a lot of'), '+', R('salt / tomatoes')] }
+      if (/\b(could you|would you like)\b/i.test(sentence)) return { title: 'En la mesa: Could you pass…, please? · Would you like some more…?', parts: [K('Could you / Would you like'), '+', V('pass / some more'), '+', R('the salt / juice?')] }
+      if (question) return { title: 'Preguntas con how: How was…? · How often…? · How do you make…?', parts: [K('How'), '+', V('was / often / do you make'), '+', R('...?')] }
+      return { title: 'Describir un plato: sabor (sweet, spicy) y forma de cocinarlo (fried, roasted):', parts: [S('The chicken'), '+', V('is'), '+', K('roasted'), '+', R('and a bit spicy')] }
     case 'should-must':
       if (question) return { title: 'Para preguntar: Should + sujeto + verbo? · Do / Does + sujeto + have to + verbo?', parts: [V('Should / Do'), '+', S('Sujeto'), '+', K('(have to)'), '+', V('verbo'), '+', R('...?')] }
       if (negative) return { title: "shouldn't = mal consejo · mustn't = prohibido · don't have to = no es necesario:", parts: [S('Sujeto'), '+', K("shouldn't / mustn't / don't have to"), '+', V('verbo'), '+', R('...')] }
