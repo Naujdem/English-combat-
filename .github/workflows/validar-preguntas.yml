@@ -19,3 +19,5 @@ jobs:
         with:
           name: validacion
           path: reports/validacion.md
+      - if: always()
+        run: grep -nE "b1-01|^## " reports/validacion.md || true
