@@ -23,7 +23,7 @@ import { Notebook } from '../components/Notebook'
 import { LostAsk } from '../components/LostAsk'
 import { LOST_INTRO, LOST_ITEMS } from '../data/lostFound'
 import { NPCS } from '../data/npcs'
-import { DIARY, fillNames, unlockedPages } from '../data/diary'
+import { ALL_DIARY as DIARY, fillNames, unlockedPages } from '../data/diary'
 import { Diary } from '../components/Diary'
 import { interestFriend } from '../data/friends'
 import { OneMoreRound } from '../components/OneMoreRound'
@@ -36,7 +36,12 @@ import { CoachSays } from '../components/CoachSays'
 import { Directions } from '../components/Directions'
 import { CafeOrder } from '../components/CafeOrder'
 import { MiniTalk } from '../components/MiniTalk'
-import { FragmentJoinCue } from '../components/FragmentJoinCue'
+import { FragmentJoin } from '../components/FragmentJoin'
+import { SpriteL } from '../components/SpriteL'
+import { BlurFace, BlurFaceIcon } from '../components/BlurFace'
+import { exitMemory, isMemoryScene } from '../game/memory'
+import { MemoriesTab } from '../components/MemoriesTab'
+import { isB1Unlocked } from '../data/b1World'
 import { B1_CALL, B1_PHONE } from '../data/b1Home'
 import { B1_HOME_ID, B1_OPENING } from '../data/b1World'
 import { NPC_TASKS, PARTY_ITEMS, taskOf } from '../data/tasks'
@@ -211,6 +216,11 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       hp: t.heal ? s.maxHp : s.hp,
       coins: t.coins ? (s.coins ?? 0) + t.coins : s.coins,
     }))
+    // B1: la tarea termina el recuerdo (fundido, despertar y diario: MemoryTransitions)
+    if (t.exitMemory) {
+      update((s) => exitMemory(s, t.exitMemory!, { close: t.closeMemory }))
+      return
+    }
     setMsg({ text: fill(t.reward.text), es: t.reward.es && fill(t.reward.es), sub: fill(t.reward.sub), say: t.reward.say && fill(t.reward.say), tone: 'good' })
 
     if (DIARY.some((c) => c.unlock === t.done) && !state.opened.includes(t.done)) setDiary(true)
@@ -530,6 +540,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const camX = Math.max(0, Math.min(cols - VIEW, state.pos.x - Math.floor(VIEW / 2)))
   const camY = Math.max(0, Math.min(rows - VIEW, state.pos.y - Math.floor(VIEW / 2)))
   const look = heroLook(state)
+  /** B1: escena de recuerdo (el héroe es L y las caras se ven borrosas) */
+  const inMemory = isMemoryScene(scene.id)
   const talkFriend = talk ? friendById(state, talk.friendId) : null
 
   function friendHasNews(id: string) {
@@ -632,7 +644,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE ? <PhoneIcon ringing={pending} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE ? <PhoneIcon ringing={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -680,7 +692,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             ))}
             <g style={{ transform: `translate(${state.pos.x * T}px, ${state.pos.y * T}px)`, transition: 'transform 150ms linear' }}>
               <g transform={state.facing === 'left' ? 'translate(32 0) scale(-1 1)' : undefined}>
-                <SpriteBody look={look} mood={state.recovered.length ? 'normal' : 'mute'} />
+                {/* En los recuerdos de B1 caminas como L, de espaldas */}
+                {inMemory ? <SpriteL pose="back" /> : <SpriteBody look={look} mood={state.recovered.length ? 'normal' : 'mute'} />}
               </g>
             </g>
           </g>
@@ -1010,14 +1023,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         </Overlay>
       )}
 
-      {/* B1 · apertura: al colgar, dos fragmentos se juntan (punto de enganche de la animación: FragmentJoinCue) */}
+      {/* B1 · apertura: al colgar, dos fragmentos se juntan. FragmentJoin guarda la apertura (abre el recuerdo 1) */}
       {scene.id === B1_HOME_ID && state.opened.includes(B1_CALL) && !state.opened.includes(B1_OPENING) && !task && (
-        <FragmentJoinCue
-          onDone={() => {
-            update((s) => (s.opened.includes(B1_OPENING) ? s : { ...s, opened: [...s.opened, B1_OPENING] }))
-            onWorld()
-          }}
-        />
+        <FragmentJoin state={state} update={update} memoryNumber={1} onDone={onWorld} />
       )}
       {task && NPC_TASKS[task]?.activity === 'practice' && NPC_TASKS[task].practice && (
         // Práctica guiada con Leo (pantalla completa): al terminarla se marca la tarea
@@ -1121,7 +1129,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               es: fill(st.es),
               choice: st.choice && { ...st.choice, ask: fill(st.choice.ask), options: st.choice.options.map(fill), tip: fill(st.choice.tip) },
             }))
-            return <MiniTalk name={who.name} look={who.look} steps={steps} onClose={finish} pressure={t.pressure} />
+            return <MiniTalk name={who.name} look={who.look} steps={steps} onClose={finish} pressure={t.pressure} icon={isMemoryScene(scene.id) ? <BlurFaceIcon look={who.look} size={48} /> : undefined} />
           })()}
         </Overlay>
       )}
@@ -1192,7 +1200,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
 
 function Backpack({ state, update, chips, hasBoss, onNotebook }: { state: GameState; update: Update; chips: { label: string; done: boolean }[]; hasBoss: boolean; onNotebook: () => void }) {
   const [open, setOpen] = useState(false)
-  const [tab, setTab] = useState<'goals' | 'outfits'>('goals')
+  const [tab, setTab] = useState<'goals' | 'outfits' | 'memories'>('goals')
+  // B1: pestaña Recuerdos (solo con B1 desbloqueado)
+  const b1 = isB1Unlocked(state)
   const pending = chips.filter((c) => !c.done).length
   return (
     <>
@@ -1216,7 +1226,7 @@ function Backpack({ state, update, chips, hasBoss, onNotebook }: { state: GameSt
               <h2 className="font-display text-xl text-gold">Mochila</h2>
               <button className={btnGhost} onClick={() => setOpen(false)}>Cerrar</button>
             </div>
-            <div className="mb-3 grid grid-cols-3 gap-1.5" role="tablist">
+            <div className={`mb-3 grid gap-1.5 ${b1 ? 'grid-cols-4' : 'grid-cols-3'}`} role="tablist">
               <button role="tab" aria-selected={tab === 'goals'} className={`rounded-xl border-2 px-2 py-1.5 text-sm font-semibold ${tab === 'goals' ? 'border-gold bg-gold/10 text-gold' : 'border-line text-paper/70'}`} onClick={() => setTab('goals')}>
                 Objetivos{pending > 0 ? ` (${pending})` : ''}
               </button>
@@ -1227,8 +1237,15 @@ function Backpack({ state, update, chips, hasBoss, onNotebook }: { state: GameSt
               <button role="tab" aria-selected={tab === 'outfits'} className={`rounded-xl border-2 px-2 py-1.5 text-sm font-semibold ${tab === 'outfits' ? 'border-gold bg-gold/10 text-gold' : 'border-line text-paper/70'}`} onClick={() => setTab('outfits')}>
                 Atuendos
               </button>
+              {b1 && (
+                <button role="tab" aria-selected={tab === 'memories'} className={`rounded-xl border-2 px-2 py-1.5 text-sm font-semibold ${tab === 'memories' ? 'border-[#9b6ad6] bg-[#9b6ad6]/15 text-[#d9c7f2]' : 'border-line text-paper/70'}`} onClick={() => setTab('memories')}>
+                  Recuerdos
+                </button>
+              )}
             </div>
-            {tab === 'goals' ? (
+            {tab === 'memories' ? (
+              <MemoriesTab state={state} />
+            ) : tab === 'goals' ? (
               <div>
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-paper/50">{hasBoss ? 'Para llegar al jefe' : 'En este lugar'}</p>
                 {chips.length ? (

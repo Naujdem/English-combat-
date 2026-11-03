@@ -16,11 +16,13 @@ const TRIPS: Record<string, BusTrip> = { city: BUS_TO_CITY, barrio: BUS_TO_BARRI
 import { ProgressView, Review } from '../components/Review'
 import { setSound, soundOn } from '../game/sfx'
 import { autoVoiceOn, setAutoVoice } from '../game/speech'
-import { DIARY, pageNotified, pageSeen, unlockedPages } from '../data/diary'
+import { ALL_DIARY as DIARY, pageNotified, pageSeen, unlockedPages } from '../data/diary'
 import { dueCards } from '../game/cards'
 import { B1_PREFIX, isA2Unlocked, type Update } from '../game/store'
 import { B1Map } from '../components/B1Map'
-import { MemoryPlaceholder } from '../components/MemoryPlaceholder'
+import { enterMemory } from '../game/memory'
+import { B1_MEMORY_DEMO } from '../data/b1MemoryDemo'
+import { LooseFragment } from '../components/FragmentJoin'
 import { B1_HOME_ID, B1_NODES, B1_OPENING, B1_PART_NAMES, B1_ERA_COLOR, b1LockedText, b1Message, b1NodeDone, b1NodeOpen, isB1Unlocked, type B1Node, type B1Part } from '../data/b1World'
 import { heroLook, SCENES } from '../game/helpers'
 import { interestFriend } from '../data/friends'
@@ -158,12 +160,12 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const b1Parts: B1Part[] = b1PartsOpen.length ? [...b1PartsOpen] : [1]
   const b1Next = B1_NODES.find((n) => n.num && b1NodeOpen(n, state) && !b1NodeDone(n, state)) ?? [...B1_NODES].reverse().find((n) => n.num && b1NodeOpen(n, state))
   const [b1Part, setB1Part] = useState<B1Part>(b1Next?.part ?? 1)
-  const [memory, setMemory] = useState<B1Node | null>(null)
   function tapB1(n: B1Node) {
     const label = n.num ? `${n.num}. ${n.name}` : `★ ${n.name}`
     if (!b1NodeOpen(n, state)) return setMsg(`${label} está cerrado. ${b1LockedText(n)}`)
-    // El recuerdo 1 todavía no es jugable: pantalla de "próximamente" (no guarda su cierre)
-    if (n.num === 1) return setMemory(n)
+    // DEMO (tarea 0-B): el recuerdo 1 abre una escena de prueba con la entrada y la salida de un recuerdo.
+    // Se reemplaza por la escena real cuando se haga la misión 1. No guarda el cierre de la misión.
+    if (n.num === 1) return update((s) => enterMemory(s, 1, B1_MEMORY_DEMO.id, B1_MEMORY_DEMO.start))
     setMsg(`${n.name}: este lugar se construirá pronto.`)
   }
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]
@@ -439,7 +441,6 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       </div>
       </div>
 
-      {memory && <MemoryPlaceholder title={`Recuerdo ${memory.num} · ${memory.name}`} onBack={() => setMemory(null)} />}
       {diary && <Diary state={state} update={update} onClose={closeDiary} />}
       {bus && (
         <BusRide
@@ -514,7 +515,11 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
               <p className="font-display text-xl text-gold">Reloj del tiempo</p>
               <button className={btnGhost} onClick={() => setClock(false)}>Cerrar</button>
             </div>
-            <div className="my-3 flex justify-center"><TimeClock pieces={state.relics} size={150} coreMissing={coreMissing} /></div>
+            <div className="my-3 flex items-center justify-center gap-3">
+              <TimeClock pieces={state.relics} size={150} coreMissing={coreMissing} />
+              {/* B1: un fragmento suelto espera en el reloj hasta juntarse con otro */}
+              <LooseFragment count={state.looseFragments ?? 0} />
+            </div>
             <p className="text-[15px] text-paper/85">
               El reloj del desconocido explotó y sus piezas se llevaron pedazos de tu voz. Quien toca una pieza se corrompe; tú no, porque es tu voz. Cada jefe tiene una.
               {coreMissing ? ' Las cinco piezas siguen en su lugar... pero el centro del reloj está vacío.' : state.relics >= PRESENT_NODES.length ? ' ¡Lo tienes completo! Ya puedes ir tras el desconocido.' : ' Con el reloj completo podrás alcanzar al desconocido y recuperar toda tu voz.'}

@@ -6,7 +6,7 @@ import { B1_HOME_ID, B1_OPENING } from './b1World'
  * En el repo no había un cuarto del protagonista que sirviera (tu casa de Green Street es la zona del jefe de A1),
  * así que este es uno pequeño. Leyenda: W ventana · 5 cama · K escritorio · L estante · p planta · A sofá.
  * El teléfono (personaje b1-phone, junto al escritorio) suena: Ms. Haddad llama. Su tarea está en data/tasks.ts
- * (done = B1_CALL). Al terminarla, Explore muestra FragmentJoinCue y guarda B1_OPENING.
+ * (done = B1_CALL). Al terminarla, Explore muestra FragmentJoin (que guarda B1_OPENING).
  */
 export const B1_PHONE = 'b1-phone'
 /** La llamada de Ms. Haddad terminó (falta el momento de los fragmentos) */

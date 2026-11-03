@@ -68,6 +68,9 @@ export function loadSave(): GameState | null {
     if (!data.mistakes) data.mistakes = []
     if (!data.cards) data.cards = []
     if (!data.stats) data.stats = {}
+    // B1: fragmentos sueltos (0 si no hay) y un recuerdo que se quedó entrando al cerrar el juego
+    if (data.looseFragments === undefined) data.looseFragments = 0
+    if (data.memory?.phase === 'in') data.memory = { ...data.memory, phase: undefined }
     if (!data.lostFound) data.lostFound = { started: false, carrying: null, picked: [], returned: [] }
     // Jefes de A2 vencidos antes de que devolvieran sus temas: se recuperan ahora (los piden los momentos de amistad A2)
     for (const id of data.defeated) {

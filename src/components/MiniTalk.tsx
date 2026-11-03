@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { mixed } from '../game/mix'
 import { voiceOf } from '../game/speech'
 import type { SpriteLook } from './Sprite'
@@ -14,7 +14,7 @@ export type MiniStep = { text: string; es: string; choice?: { ask: string; optio
  * pressure (opcional, Dialogue Under Pressure): segundos para cada elección. Si se acaba el tiempo
  * no se pierde vida: el personaje se impacienta y el tiempo vuelve a empezar.
  */
-export function MiniTalk({ name, look, steps, onClose, pressure }: { name: string; look: SpriteLook; steps: MiniStep[]; onClose: (done: boolean) => void; pressure?: number }) {
+export function MiniTalk({ name, look, steps, onClose, pressure, icon }: { name: string; look: SpriteLook; steps: MiniStep[]; onClose: (done: boolean) => void; pressure?: number; /** Retrato propio (B1: cara borrosa o L) en vez del sprite normal */ icon?: ReactNode }) {
   const [i, setI] = useState(0)
   const [solved, setSolved] = useState(false)
   const [tip, setTip] = useState<string | null>(null)
@@ -49,7 +49,7 @@ export function MiniTalk({ name, look, steps, onClose, pressure }: { name: strin
   return (
     <Panel>
       <div className="flex items-center gap-3">
-        <SpriteIcon look={look} size={48} />
+        {icon ?? <SpriteIcon look={look} size={48} />}
         <p className="flex-1 font-display text-lg text-gold">{name}</p>
         <SpeakButton text={s.text} size="sm" auto voice={voiceOf(look)} />
       </div>

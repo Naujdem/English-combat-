@@ -1,3 +1,4 @@
+import type { MemoryRun } from './memory'
 import type { Card } from './cards'
 export type Gender = 'male' | 'female'
 
@@ -275,4 +276,8 @@ export type GameState = {
   battle: { enemyId: string; enemyHp: number; returnTo: { x: number; y: number } } | null
   /** Frases propias de los exámenes de cada época (presente, pasado, futuro) */
   writings?: Record<string, string[]>
+  /** B1: recuerdo en curso (entrar, salir, despertar). Sin valor = no hay recuerdo (game/memory.ts) */
+  memory?: MemoryRun
+  /** B1: fragmentos sueltos que esperan en el reloj a juntarse con otro (LooseFragment). Sin valor = 0 */
+  looseFragments?: number
 }

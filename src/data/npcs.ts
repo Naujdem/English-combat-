@@ -368,6 +368,12 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#2f6f73', hair: '#1f1f1f', skin: '#c68642', gender: 'female' },
     doneLine: { text: '(The phone is quiet now. Your flight leaves tomorrow at nine.)', es: '(El teléfono ya está en silencio. Tu vuelo sale mañana a las nueve.)' },
   },
+  // ── B1 · DEMO del recuerdo 1 (se borra con data/b1MemoryDemo.ts): en los recuerdos las caras se ven borrosas ──
+  'b1-01-demo-friend': {
+    name: 'Your friend',
+    look: { shirt: '#6a7a8c', hair: '#3b2a1a', skin: '#d8b48c' },
+    doneLine: { text: 'Hey [[?]]... are you OK?', es: 'Oye, ▒▒▒... ¿estás bien?' },
+  },
   // ── A2-01, hospital. Nombres y apariencias provisionales (no canónicos) ──
   'a2-doctor': {
     name: 'The doctor',

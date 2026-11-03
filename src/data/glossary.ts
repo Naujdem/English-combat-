@@ -7,7 +7,7 @@ import { DICT } from './diary'
 const RAW = `
 a=un, una;about=sobre, acerca de;after=después de;afternoon=tarde;again=otra vez;age=edad;all=todo, todos;also=también;always=siempre;am=soy, estoy (to be);
 american=estadounidense;an=un, una;and=y;angry=enojado;animal=animal;animals=animales;another=otro;answer=respuesta, responder;any=algún, nada de (en preguntas y negativas);
-anything=algo, nada;apple=manzana;harbour=puerto (inglés británico);are=son, están (to be);aren't=no son, no están;arm=brazo;art=arte;ask=preguntar;at=en, a;bad=malo;bag=mochila, bolso;ball=pelota;
+anything=algo, nada;accepted=aceptado;apple=manzana;fade=desvanecerse;fades=se desvanece;glowing=brillando;grey=gris;residence=residencia;harbour=puerto (inglés británico);are=son, están (to be);aren't=no son, no están;arm=brazo;art=arte;ask=preguntar;at=en, a;bad=malo;bag=mochila, bolso;ball=pelota;
 banana=banano;bank=banco;basketball=baloncesto;bathroom=baño;be=ser, estar;beautiful=hermoso;because=porque;bed=cama;before=antes de;behind=detrás de;bench=banca;best=mejor;
 between=entre;big=grande;bike=bicicleta;birthday=cumpleaños;black=negro;blue=azul;board=pizarra;book=libro;bookshelf=estantería;boring=aburrido;bottle=botella;box=caja;boy=niño, chico;
 brave=valiente;bread=pan;breakfast=desayuno;bring=traer;brother=hermano;brown=café, marrón;bus=autobús;but=pero;buy=comprar;bye=adiós;cabinet=archivador;cafeteria=cafetería;café=café (lugar);
