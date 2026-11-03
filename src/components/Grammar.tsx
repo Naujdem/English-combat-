@@ -77,6 +77,8 @@ export function wordRole(word: string, topic?: TopicId): Role {
   if (IRREG_PAST.has(w) && (topic === 'past-irregular' || topic === 'past-regular')) return 'key'
   if (VERB.has(w)) return 'verb'
   if (/'s$/.test(w) && topic === 'possessives') return 'key'
+  // B1 · causa y efecto: los conectores van en morado
+  if (topic === 'cause-effect' && ['because', 'so', 'result', 'when', 'while'].includes(w)) return 'key'
   // Cada tema resalta sus palabras clave; las demás quedan neutras para no saturar
   if (KEY.has(w)) {
     if (topic === 'possessives') return ['my', 'your', 'his', 'her', 'its', 'our', 'their'].includes(w) ? 'key' : 'rest'
@@ -288,6 +290,15 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
     case 'health-emergency':
       if (/\b(should|must)/i.test(sentence)) return { title: 'Consejo: should + verbo · norma: must + verbo (sin to):', parts: [S('You'), '+', K("should / shouldn't / must"), '+', V('verbo'), '+', R('...')] }
       return { title: "Síntomas: I've got + a headache · una parte duele: hurts · consejo: should + verbo:", parts: [S('I / He'), '+', K("'ve got / 's got"), '+', R('a headache / a cough')] }
+    case 'cause-effect':
+      if (/\bbecause of\b/i.test(sentence)) return { title: 'Causa con un sustantivo: because of + the smoke / the fire:', parts: [S('Sujeto'), '+', V('verbo'), '+', R('...'), '+', K('because of'), '+', R('sustantivo')] }
+      if (/\bbecause\b/i.test(sentence)) return { title: 'Causa con una oración completa: because + sujeto + verbo:', parts: [S('Sujeto'), '+', V('verbo'), '+', R('...'), '+', K('because'), '+', S('sujeto'), '+', V('verbo')] }
+      if (/\bas a result\b/i.test(sentence)) return { title: 'Resultado en una frase nueva: As a result, + oración:', parts: [R('Causa.'), '+', K('As a result,'), '+', S('sujeto'), '+', V('verbo'), '+', R('...')] }
+      if (/\bso\b/i.test(sentence)) return { title: 'Resultado: causa, + so + resultado:', parts: [R('Causa,'), '+', K('so'), '+', S('sujeto'), '+', V('verbo'), '+', R('...')] }
+      return { title: 'Causa: because (+ oración) · because of (+ sustantivo) · Resultado: so · As a result,', parts: [S('Sujeto'), '+', V('verbo'), '+', K('because / because of / so'), '+', R('...')] }
+    case 'emergencies':
+      if (question) return { title: 'Pedir ayuda: Is anybody there? · Can you hear me?', parts: [V('Is / Can'), '+', S('anybody / you'), '+', R('there / hear me?')] }
+      return { title: "Órdenes en una emergencia: verbo base al principio · Don't + verbo:", parts: [K("(Don't)"), '+', V('Call / Get out / Follow / use'), '+', R('the firefighters / my voice')] }
     case 'time':
       if (question) return { title: 'Para preguntar la hora:', parts: [K('What time'), '+', V('is'), '+', S('it?')] }
       return { title: 'at + hora · on + día · in + mes, estación o parte del día:', parts: [R('...'), '+', K('at / on / in'), '+', R('hora / día / mes')] }

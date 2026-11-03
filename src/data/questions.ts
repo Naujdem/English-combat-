@@ -38,6 +38,7 @@ import { A2_MARKET_QUESTIONS } from './questions-a2-s4'
 import { A2_DINNER_PRACTICE } from './a2Dinner'
 import { A2_DINNER_QUESTIONS } from './questions-a2-s5'
 import { A2_FRIENDS_QUESTIONS } from './questions-a2-friends'
+import { B1_01_QUESTIONS } from './questions-b1-01'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -394,6 +395,8 @@ export const QUESTIONS: Question[] = [
   ...A2_DINNER_PRACTICE,
   ...A2_DINNER_QUESTIONS,
   ...A2_FRIENDS_QUESTIONS,
+  // ── B1 ──
+  ...B1_01_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -1016,5 +1019,26 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
     name: 'Futuro',
     level: 'B1',
     lesson: ['Próximamente.'],
+  },
+  // ── B1 ──
+  'cause-effect': {
+    name: 'Causa y efecto: because, because of, so, as a result',
+    level: 'B1',
+    lesson: [
+      'Causa con una oración completa (sujeto + verbo): because → He lost his voice because the smoke was thick.',
+      'Causa con solo un sustantivo: because of → He lost his voice because of the smoke.',
+      'Resultado: so (después de una coma) → The stairs were full of smoke, so we used the fire exit.',
+      'Resultado en una frase nueva: As a result, + oración → The smoke was thick. As a result, he lost his voice.',
+      'Para contar la historia: acción larga was / were + -ing (el fondo) + when + acción corta en pasado simple. While + acción larga.',
+    ],
+  },
+  emergencies: {
+    name: 'Emergencias y pedir ayuda',
+    level: 'B1',
+    lesson: [
+      'Pedir ayuda: Help! · Is anybody there? · Call the firefighters! · We are on the third floor.',
+      'Órdenes en una emergencia (verbo base al principio): Follow my voice! · Get out now! · Cover your mouth. · Don\'t use the lift!',
+      'Vocabulario: fire, smoke, flames, fire alarm, fire exit, firefighters, trapped (atrapado), locked (cerrado con llave), injured (herido).',
+    ],
   },
 }
