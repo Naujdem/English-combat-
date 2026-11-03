@@ -20,6 +20,7 @@ import { DIARY, pageNotified, pageSeen, unlockedPages } from '../data/diary'
 import { dueCards } from '../game/cards'
 import { B1_PREFIX, isA2Unlocked, type Update } from '../game/store'
 import { B1Map } from '../components/B1Map'
+import { MemoryPlaceholder } from '../components/MemoryPlaceholder'
 import { B1_HOME_ID, B1_NODES, B1_OPENING, B1_PART_NAMES, B1_ERA_COLOR, b1LockedText, b1Message, b1NodeDone, b1NodeOpen, isB1Unlocked, type B1Node, type B1Part } from '../data/b1World'
 import { heroLook, SCENES } from '../game/helpers'
 import { interestFriend } from '../data/friends'
@@ -157,9 +158,12 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const b1Parts: B1Part[] = b1PartsOpen.length ? [...b1PartsOpen] : [1]
   const b1Next = B1_NODES.find((n) => n.num && b1NodeOpen(n, state) && !b1NodeDone(n, state)) ?? [...B1_NODES].reverse().find((n) => n.num && b1NodeOpen(n, state))
   const [b1Part, setB1Part] = useState<B1Part>(b1Next?.part ?? 1)
+  const [memory, setMemory] = useState<B1Node | null>(null)
   function tapB1(n: B1Node) {
     const label = n.num ? `${n.num}. ${n.name}` : `★ ${n.name}`
     if (!b1NodeOpen(n, state)) return setMsg(`${label} está cerrado. ${b1LockedText(n)}`)
+    // El recuerdo 1 todavía no es jugable: pantalla de "próximamente" (no guarda su cierre)
+    if (n.num === 1) return setMemory(n)
     setMsg(`${n.name}: este lugar se construirá pronto.`)
   }
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]
@@ -435,6 +439,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       </div>
       </div>
 
+      {memory && <MemoryPlaceholder title={`Recuerdo ${memory.num} · ${memory.name}`} onBack={() => setMemory(null)} />}
       {diary && <Diary state={state} update={update} onClose={closeDiary} />}
       {bus && (
         <BusRide
