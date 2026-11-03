@@ -52,7 +52,7 @@ export const A2_LEO_HOUSE_PRACTICE: Question[] = [
   { id: 'a2-10-p1', topic: TP, prompt: 'I ___ (find) an old newspaper.', options: ['have found', 'have find', 'has found'], answer: 0, tip: 'I + have + participio: find → found.', tags: T },
   { id: 'a2-10-p2', topic: TP, prompt: 'Leo ___ (be) to the past twice.', options: ['has been', 'have been', 'has be'], answer: 0, tip: 'Leo (he) + has · be → been.', tags: T },
   { id: 'a2-10-p3', topic: TP, kind: 'fix', prompt: 'She have seen the light.', options: ['She has seen the light.', 'She has saw the light.', 'She have see the light.'], answer: 0, tip: 'she + has · see → seen (no saw).', tags: T },
-  { id: 'a2-10-p4', topic: TP, prompt: 'Have you ___ seen a purple light?', options: ['ever', 'yet', 'already'], answer: 0, tip: 'Experiencias: Have you ever…?', tags: T },
+  { id: 'a2-10-p4', topic: TP, prompt: 'Have you ___ seen a purple light?', options: ['ever', 'yet', 'ago'], answer: 0, tip: 'Experiencias: Have you ever…?', tags: T },
   { id: 'a2-10-p5', topic: TP, kind: 'order', prompt: 'Acabo de abrir la caja.', options: ['I', 'have', 'just', 'opened', 'the', 'box.'], answer: 0, tip: 'just va entre have y el participio.', tags: T },
   { id: 'a2-10-p6', topic: TP, prompt: "We haven't found the fragment ___.", options: ['yet', 'already', 'ever'], answer: 0, tip: 'Negativo: …yet al final.', tags: T },
   { id: 'a2-10-p7', topic: TP, prompt: 'The car ___ yesterday.', options: ['stopped', 'has stopped', 'have stopped'], answer: 0, tip: 'Con un momento terminado (yesterday): Past Simple.', tags: T },

@@ -112,7 +112,7 @@ export const BARRIO_QUESTIONS: Question[] = [
   { id: 'hof-01', topic: 'present-simple', prompt: '___ do you play football? — Twice a week.', options: ['How often', 'How many', 'How much'], answer: 0, tip: 'Para preguntar con qué frecuencia: How often...?', tags: ['parque'] },
   { id: 'hof-02', topic: 'present-simple', prompt: 'How often do you ___ your grandma? — Every Sunday.', options: ['visits', 'visit', 'visiting'], answer: 1, tip: 'How often do you + verbo simple: visit.', tags: ['casa'] },
   { id: 'hof-03', topic: 'present-simple', prompt: 'I visit my cousins ___ a month.', options: ['one', 'first', 'once'], answer: 2, tip: 'Una vez = once: once a month. Dos veces = twice.', tags: ['casa'] },
-  { id: 'hof-04', topic: 'present-simple', prompt: 'Maya reads ___ day.', options: ['every', 'all', 'everys'], answer: 0, tip: 'Todos los días = every day (every + palabra en singular).', tags: ['casa-maya'] },
+  { id: 'hof-04', topic: 'present-simple', prompt: 'Maya reads ___ day.', options: ['every', 'many', 'everys'], answer: 0, tip: 'Todos los días = every day (every + palabra en singular).', tags: ['casa-maya'] },
   { id: 'hof-05', topic: 'present-simple', prompt: 'Ben ___ watches TV. He hates it!', options: ['always', 'never', 'usually'], answer: 1, tip: 'Si lo odia, no lo ve nunca: never.', tags: ['barrio'] },
   { id: 'hof-06', topic: 'present-simple', prompt: 'How often ___ you go to the park? — Sometimes.', options: ['are', 'does', 'do'], answer: 2, tip: 'Con you: How often do you...?', tags: ['parque'] },
 
@@ -130,7 +130,7 @@ export const BARRIO_QUESTIONS: Question[] = [
   { id: 'hg-05', topic: 'have-got', prompt: 'Has she got a cat? — No, she ___.', options: ["hasn't", "haven't", "doesn't"], answer: 0, tip: 'Respuesta corta con she: No, she hasn\'t.', tags: ['casa-maya'] },
   { id: 'hg-06', topic: 'have-got', prompt: 'My house ___ got three bedrooms.', options: ['have', 'has', 'is'], answer: 1, tip: '"My house" es "it": has got.', tags: ['casa'] },
   { id: 'hg-07', topic: 'have-got', prompt: 'They ___ got a car. They go by bus.', options: ["haven't", "hasn't", "don't"], answer: 0, tip: 'Negativo con they: haven\'t got.', tags: ['barrio'] },
-  { id: 'hg-08', topic: 'have-got', prompt: 'My grandma has got ___ hair.', options: ['grey', 'greys', 'a grey'], answer: 0, tip: 'Hair (pelo) no lleva "a" ni plural: grey hair.', tags: ['casa'] },
+  { id: 'hg-08', topic: 'have-got', prompt: 'My grandma has got ___ hair.', options: ['gray', 'grays', 'a gray'], answer: 0, tip: 'Hair (pelo) no lleva "a" ni plural: gray hair.', tags: ['casa'] },
 
   { id: 'hgf-01', topic: 'have-got', kind: 'fix', prompt: 'My brother have got a bike!', options: ['My brother has got a bike.', 'My brother has get a bike.', 'My brother got have a bike.'], answer: 0, tip: '"My brother" es "he": has got.', tags: ['casa'] },
   { id: 'hgf-02', topic: 'have-got', kind: 'fix', prompt: 'I has got a dog!', options: ['I have got a dog.', 'I have get a dog.', 'I am got a dog.'], answer: 0, tip: 'Con "I": have got.', tags: ['casa'] },

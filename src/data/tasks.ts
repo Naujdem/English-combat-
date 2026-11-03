@@ -3628,11 +3628,11 @@ NPC_TASKS['a2-s3-chores'] = {
         ],
       },
       {
-        text: 'Leo has swept the garden, but the bin is full. Whose turn is it to take out the rubbish?',
+        text: 'Leo has swept the garden, but the trash can is full. Whose turn is it to take out the trash?',
         es: 'Leo barrió el jardín, pero la caneca está llena. ¿A quién le toca sacar la basura?',
         options: [
           { en: "It's my turn. I'll take it out now.", es: 'Me toca a mí. La saco ahora.', value: 'good' },
-          { en: "It's Leo's turn!", es: '¡Le toca a Leo!', value: 'neutral', reply: { text: 'Ha ha, poor Leo. OK, Leo, the rubbish!', es: 'Ja, ja, pobre Leo. ¡Bueno, Leo, la basura!' } },
+          { en: "It's Leo's turn!", es: '¡Le toca a Leo!', value: 'neutral', reply: { text: 'Ha ha, poor Leo. OK, Leo, the trash!', es: 'Ja, ja, pobre Leo. ¡Bueno, Leo, la basura!' } },
           { en: "It's my turn to taking it out.", es: '(Frase mal dicha).', value: 'bad', reply: { text: 'Your turn TO TAKE it out. Thank you!', es: 'Te toca SACARLA (to take). ¡Gracias!' } },
         ],
       },

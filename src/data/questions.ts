@@ -996,9 +996,9 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
     name: 'Tareas de la casa: do / make',
     level: 'A2',
     lesson: [
-      'Tareas: do the dishes, do the laundry, tidy up, sweep the floor, take out the rubbish, make the bed, vacuum.',
+      'Tareas: do the dishes, do the laundry, tidy up, sweep the floor, take out the trash, make the bed, vacuum.',
       'do = tareas y trabajos (do the dishes, do homework, do the shopping) · make = crear o producir (make the bed, make a cake, make a mess, make a mistake).',
-      "Present Perfect con tareas: Have you done the dishes yet? · I've already swept the garden. · I haven't taken out the rubbish yet.",
+      "Present Perfect con tareas: Have you done the dishes yet? · I've already swept the garden. · I haven't taken out the trash yet.",
       "Turnos y ayuda: It's your turn to... · Whose turn is it? · Can you give me a hand?",
     ],
   },

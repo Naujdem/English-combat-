@@ -23,7 +23,7 @@ export const A2_DINNER_QUESTIONS: Question[] = [
   { id: 'a2-s5-f5', topic: TP, prompt: 'We cook the eggs in hot water for ten minutes. They\'re ___ eggs.', options: ['boiled', 'fried', 'grilled'], answer: 0, tip: 'En agua hirviendo: boiled (hervido).', tags: FLAVOR },
   { id: 'a2-s5-f6', topic: TP, kind: 'fix', prompt: 'This soup is delicious very!', options: ['This soup is really delicious!', 'This soup is very delicious very!', 'This soup delicious is!'], answer: 0, tip: 'delicious ya es muy fuerte: mejor really delicious. El adverbio va antes del adjetivo.', tags: FLAVOR },
   { id: 'a2-s5-f7', topic: TP, kind: 'order', prompt: 'El pollo asado está un poco salado.', options: ['The', 'roasted', 'chicken', 'is', 'a', 'bit', 'salty.'], answer: 0, tip: 'roasted chicken (el adjetivo antes) + is + a bit salty.', tags: FLAVOR },
-  { id: 'a2-s5-f8', topic: TP, prompt: 'What does it taste ___? — It tastes like chicken.', options: ['like', 'as', 'of'], answer: 0, tip: 'Saber a algo: taste like… · What does it taste like?', tags: FLAVOR },
+  { id: 'a2-s5-f8', topic: TP, prompt: 'What does it taste ___? — It tastes like chicken.', options: ['like', 'as', 'in'], answer: 0, tip: 'Saber a algo: taste like… · What does it taste like?', tags: FLAVOR },
 
   // ── Fase 2: How much / How many y cantidades ──
   { id: 'a2-s5-q1', topic: TP, prompt: 'How ___ sugar do you take in your coffee?', options: ['much', 'many', 'often'], answer: 0, tip: 'sugar es incontable → How much.', tags: QTY },
@@ -38,7 +38,7 @@ export const A2_DINNER_QUESTIONS: Question[] = [
   // ── Fase 3: conversación en la mesa ──
   { id: 'a2-s5-t1', topic: TP, prompt: '___ was the soup? — It was great, thank you!', options: ['How', 'What', 'How much'], answer: 0, tip: 'Pedir una opinión: How was…?', tags: TABLE },
   { id: 'a2-s5-t2', topic: TP, prompt: 'How ___ do you cook? — Every weekend.', options: ['often', 'much', 'many'], answer: 0, tip: 'Frecuencia: How often…? — Every weekend.', tags: TABLE },
-  { id: 'a2-s5-t3', topic: TP, prompt: 'Would you like some more rice? — Yes, ___. It\'s delicious.', options: ['please', 'I like', 'I would'], answer: 0, tip: 'Aceptar con educación: Yes, please. Rechazar: No, thank you.', tags: TABLE },
+  { id: 'a2-s5-t3', topic: TP, prompt: 'Would you like some more rice? — Yes, ___. It\'s delicious.', options: ['please', 'I like', "I'd like"], answer: 0, tip: 'Aceptar con educación: Yes, please. Rechazar: No, thank you.', tags: TABLE },
   { id: 'a2-s5-t4', topic: TP, prompt: 'Could you ___ me the bread, please?', options: ['pass', 'give to', 'bring to'], answer: 0, tip: 'En la mesa: Could you pass me the bread?', tags: TABLE },
   { id: 'a2-s5-t5', topic: TP, prompt: 'How do you ___ this dish? — With rice, beans and avocado.', options: ['make', 'do', 'cook to'], answer: 0, tip: 'Preguntar la receta: How do you make…?', tags: TABLE },
   { id: 'a2-s5-t6', topic: TP, kind: 'fix', prompt: 'How long you need to cook the beans?', options: ['How long do you need to cook the beans?', 'How long you do need to cook the beans?', 'How much long do you need to cook the beans?'], answer: 0, tip: 'Pregunta con how long + do + sujeto + verbo.', tags: TABLE },

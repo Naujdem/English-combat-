@@ -50,9 +50,9 @@ export const A2_CAR_PRACTICE: Question[] = [
   { id: 'a2-08-p2', topic: TP, prompt: 'JoJo ___ (get) out of the car.', options: ['got', 'getted', 'was get'], answer: 0, tip: 'get → got (irregular). Past Simple.', tags: T },
   { id: 'a2-08-p3', topic: TP, kind: 'fix', prompt: 'We was check the wheels while the engine was make noise.', options: ['We were checking the wheels while the engine was making noise.', 'We was checking the wheels while the engine was making noise.', 'We were check the wheels while the engine was making noise.'], answer: 0, tip: 'we + were + -ing · make → making.', tags: T },
   { id: 'a2-08-p4', topic: TP, kind: 'order', prompt: 'El motor se detuvo de repente.', options: ['The', 'engine', 'stopped', 'suddenly.'], answer: 0, tip: 'stop → stopped (doble p).', tags: T },
-  { id: 'a2-08-p5', topic: TP, prompt: '___ we were looking at the road, we saw a purple light.', options: ['While', 'When', 'Then'], answer: 0, tip: 'While + Past Continuous (acción en progreso).', tags: T },
+  { id: 'a2-08-p5', topic: TP, prompt: '___ we were looking at the road, we saw a purple light.', options: ['While', 'So', 'Then'], answer: 0, tip: 'While + Past Continuous (acción en progreso).', tags: T },
   { id: 'a2-08-p6', topic: TP, prompt: 'I was looking at the map ___ the car stopped.', options: ['when', 'while', 'so'], answer: 0, tip: 'when + Past Simple (acción corta que interrumpe).', tags: T },
-  { id: 'a2-08-p7', topic: TP, kind: 'fix', prompt: 'JoJo get out while I check the road.', options: ['JoJo got out while I was checking the road.', 'JoJo got out while I checked the road.', 'JoJo was get out while I was checking the road.'], answer: 0, tip: 'got (terminada) · was checking (en progreso).', tags: T },
+  { id: 'a2-08-p7', topic: TP, kind: 'fix', prompt: 'JoJo get out while I check the road.', options: ['JoJo got out while I was checking the road.', 'JoJo got out while I check the road.', 'JoJo was get out while I was checking the road.'], answer: 0, tip: 'got (terminada) · was checking (en progreso).', tags: T },
 ]
 
 export const A2_CAR_ENEMIES: Record<string, EnemyDef> = {
