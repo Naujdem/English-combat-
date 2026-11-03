@@ -653,6 +653,28 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#2e9d8f', hair: '#1f1f1f', skin: '#8d5524', gender: 'female' },
     doneLine: { text: 'Thank you for shopping with us. Have a nice day!', es: 'Gracias por comprar con nosotros. ¡Que tengas un buen día!' },
   },
+  // ── Misión secundaria A Dinner to Remember (casa de Leo): Leo, la señora García, la persona especial y el abuelo Joe ──
+  'a2-s5-leo': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    doneLine: { text: "I'm so full... but there's always room for dessert!", es: 'Estoy tan lleno... ¡pero siempre hay espacio para el postre!' },
+  },
+  'a2-s5-garcia': {
+    name: 'Mrs. Garcia',
+    look: { shirt: '#d4537e', hair: '#2b1d14', skin: '#e0ac69', gender: 'female' },
+    doneLine: { text: 'Would you like some more soup, dear?', es: '¿Quieres un poco más de sopa?' },
+  },
+  'a2-s5-interest': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: 'What a dinner! I want to remember this night forever.', es: '¡Qué cena! Quiero recordar esta noche para siempre.' },
+  },
+  'a2-s5-joe': {
+    name: 'Grandpa Joe',
+    look: { shirt: '#8b5a2b', hair: '#e8e8e8', skin: '#f1c27d', accessory: 'glasses' },
+    doneLine: { text: 'How often do I eat dessert? Every day, ha ha!', es: '¿Con qué frecuencia como postre? ¡Todos los días, ja, ja!' },
+  },
   'a2-receptionist': {
     name: 'The receptionist',
     look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },

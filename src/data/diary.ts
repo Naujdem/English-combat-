@@ -840,6 +840,40 @@ export const DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // ── Misión secundaria · A Dinner to Remember ──
+  {
+    id: 'a2-s5',
+    title: 'A2 · A Dinner to Remember',
+    unlock: 'a2-s5-close',
+    words: [
+      { title: 'Sabores', words: [['sweet', 'dulce'], ['salty', 'salado'], ['sour', 'ácido'], ['bitter', 'amargo'], ['spicy', 'picante'], ['delicious', 'delicioso']] },
+      { title: 'Cocinar', words: [['fried', 'frito'], ['roasted', 'asado (al horno)'], ['grilled', 'a la parrilla'], ['boiled', 'hervido'], ['raw', 'crudo']] },
+      { title: 'Cantidades', words: [['How much…?', '¿Cuánto…? (no se cuenta)'], ['How many…?', '¿Cuántos…? (se cuenta)'], ['a lot of', 'mucho / muchos'], ['a little', 'un poco de'], ['a few', 'unos pocos'], ['enough', 'suficiente']] },
+      { title: 'En la mesa', words: [['Could you pass the salt?', '¿Me pasas la sal?'], ['Would you like some more?', '¿Quieres más?'], ["I'm full", 'estoy lleno'], ['How was…?', '¿Qué tal estuvo…?'], ['How often…?', '¿Con qué frecuencia…?']] },
+    ],
+    versions: [
+      {
+        id: 'a2-s5-dinner',
+        tense: 'p',
+        tab: 'La cena',
+        title: 'Dinner at Leo\'s house',
+        frame: 'Lo escribes antes de dormir, todavía lleno después de la cena.',
+        lines: [
+          { en: 'Tonight Leo\'s family [invited]p {iname} and me to dinner. We [were]p six people at the table.', es: 'Esta noche la familia de Leo nos invitó a {iname} y a mí a cenar. Éramos seis personas en la mesa.' },
+          { en: 'Mrs. Garcia [cooked]p roasted chicken, fried plantain and a soup. The soup [was]p a little salty, but delicious.', es: 'La señora García cocinó pollo asado, plátano frito y una sopa. La sopa estaba un poco salada, pero deliciosa.' },
+          { en: 'There [weren\'t]p enough plates, and we [needed]p four more eggs for the cake. We [counted]p everything!', es: 'No había suficientes platos, y necesitábamos cuatro huevos más para el pastel. ¡Contamos todo!' },
+          { en: 'Grandpa Joe [asked]p me, "How often do you cook?" He [makes]n the best arepas, but he never [cooks]n anything else.', es: 'El abuelo Joe me preguntó: "¿Con qué frecuencia cocinas?". Él hace las mejores arepas, pero nunca cocina nada más.' },
+          { en: 'Then Chef Bruno [came]p. I [won]p his game, and he [made]p a chocolate cake for everybody.', es: 'Luego llegó Chef Bruno. Gané su juego, y él hizo un pastel de chocolate para todos.' },
+          { en: 'Next week I [am going to make]f Mrs. Garcia\'s soup at home: a lot of love and a little salt.', es: 'La próxima semana voy a preparar la sopa de la señora García en casa: mucho amor y un poco de sal.' },
+        ],
+        questions: [
+          { q: 'How many people were at the table?', options: ['Six.', 'Four.', 'Twelve.'], answer: 0, tip: 'El diario dice: "We were six people at the table".' },
+          { q: 'How was the soup?', options: ['A little salty, but delicious.', 'Very sweet.', 'Too spicy.'], answer: 0, tip: 'El diario dice: "a little salty, but delicious".' },
+          { q: 'What did Chef Bruno make?', options: ['A chocolate cake.', 'Arepas.', 'A soup.'], answer: 0, tip: 'El diario dice: "he made a chocolate cake for everybody".' },
+        ],
+      },
+    ],
+  },
 ]
 
 /** Diccionario de las palabras de los diarios (inglés → español) */

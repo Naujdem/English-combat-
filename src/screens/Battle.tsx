@@ -841,6 +841,15 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
                 Escudo ×{state.items.shield}
               </span>
             )}
+            {(state.items.soup ?? 0) > 0 && state.hp < state.maxHp && (
+              <button
+                className="whitespace-nowrap rounded-full bg-gold/25 px-1.5 text-xs font-semibold text-gold"
+                title="Sopa de la abuela: te llena la vida una vez"
+                onClick={() => update((s) => ({ ...s, hp: s.maxHp, items: { ...s.items, soup: Math.max(0, (s.items.soup ?? 0) - 1) } }))}
+              >
+                Sopa ×{state.items.soup}
+              </button>
+            )}
           </div>
         </Panel>
         <Panel className="px-3 py-1.5">

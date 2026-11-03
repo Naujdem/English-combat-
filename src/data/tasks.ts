@@ -27,8 +27,10 @@ export type NpcTask = {
   outfit?: string
   /** Monedas que da al completarse (tienda de atuendos de Market Day) */
   coins?: number
+  /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
+  soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -3716,6 +3718,216 @@ NPC_TASKS['a2-s4-close'] = {
     es: '¡El mejor día de compras de todos!',
     sub: 'Misión secundaria completada: Market Day. Ganaste 30 monedas. Se abrió la tienda: Mochila › Atuendos.',
     say: 'Best shopping day ever!',
+  },
+}
+
+// ── Misión secundaria de A2 · A Dinner to Remember (casa de Leo; escena y duelo en data/a2Dinner.ts) ──
+// Platos y sabores (cap. 18), much / many y cantidades, y conversación en la mesa con preguntas con how (cap. 27).
+// Sin fragmento ni pistas nuevas de "L".
+// Orden: Leo (lección food-dinner + práctica) → la señora García (The Memory Chest) → la persona especial (Enough for Everyone)
+//        → el abuelo Joe (charla en la mesa) → duelo con Chef Bruno → la persona especial (cierre: delantal, sopa y monedas).
+// Opcional: la Navidad colombiana con la señora García (The Memory Chest, escudo).
+NPC_TASKS['a2-s5-leo'] = {
+  done: 'a2-s5-practice',
+  lesson: 'food-dinner',
+  activity: 'practice',
+  practice: 'food-dinner',
+  practiceIds: ['a2-s5-p1', 'a2-s5-p2', 'a2-s5-p3', 'a2-s5-p4', 'a2-s5-p5', 'a2-s5-p6', 'a2-s5-p7'],
+  steps: [],
+  reward: {
+    text: 'Leo: "Great! Now go to the kitchen. My mom is cooking a lot of food!"',
+    es: '¡Genial! Ahora ve a la cocina. ¡Mi mamá está cocinando mucha comida!',
+    sub: 'Habla con la señora García en la cocina.',
+    say: 'Great!',
+  },
+}
+
+// The Memory Chest · versión comida: cada plato con su sabor o su forma de cocinarlo
+NPC_TASKS['a2-s5-taste'] = {
+  npc: 'a2-s5-garcia',
+  done: 'a2-s5-taste',
+  activity: 'memory',
+  requires: {
+    id: 'a2-s5-practice',
+    text: 'Mrs. Garcia: "Hello, dear! Talk to Leo first. He wants to teach you something."',
+    es: '¡Hola, querido! Habla primero con Leo. Quiere enseñarte algo.',
+    sub: 'Leo está en el comedor.',
+  },
+  memory: {
+    title: 'Taste and Tell',
+    intro: { en: "Help me with the menu! Match each dish with its description. Don't look at the recipes!", es: '¡Ayúdame con el menú! Une cada plato con su descripción. ¡No mires las recetas!' },
+    pairs: [
+      { a: 'lemonade', b: 'sour and cold', example: { en: 'The lemonade is sour and cold. Perfect for a hot night!', es: 'La limonada es ácida y fría. ¡Perfecta para una noche calurosa!' } },
+      { a: 'chocolate cake', b: 'very sweet', example: { en: 'The chocolate cake is very sweet. Leo loves it.', es: 'El pastel de chocolate es muy dulce. A Leo le encanta.' } },
+      { a: 'chicken', b: 'roasted in the oven', example: { en: 'The chicken is roasted in the oven for an hour.', es: 'El pollo se asa en el horno durante una hora.' } },
+      { a: 'plantain', b: 'fried in oil', example: { en: 'The plantain is fried in oil. It is a little sweet.', es: 'El plátano se fríe en aceite. Es un poco dulce.' } },
+      { a: 'hot sauce', b: 'too spicy for Leo', example: { en: 'The hot sauce is too spicy for Leo. He needs a lot of water!', es: 'La salsa picante es demasiado picante para Leo. ¡Necesita mucha agua!' } },
+      { a: 'soup', b: 'a little salty', example: { en: 'The soup is a little salty. Grandpa Joe likes it that way.', es: 'La sopa está un poco salada. Al abuelo Joe le gusta así.' } },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Mrs. Garcia: "The menu is perfect! Now, how many people are coming? Ask your friend."',
+    es: '¡El menú está perfecto! Ahora, ¿cuántas personas vienen? Pregúntale a tu acompañante.',
+    sub: 'Habla con {iname}, junto a la nevera de la cocina.',
+    say: 'The menu is perfect!',
+  },
+}
+
+// Opcional · Navidad colombiana: The Memory Chest con platos de diciembre. Da un escudo
+NPC_TASKS['a2-s5-christmas'] = {
+  npc: 'a2-s5-garcia',
+  done: 'a2-s5-christmas',
+  activity: 'memory',
+  shield: true,
+  requires: {
+    id: 'a2-s5-taste',
+    text: 'Mrs. Garcia: "First the menu, dear. Then I have a surprise."',
+    es: 'Primero el menú, querido. Luego tengo una sorpresa.',
+    sub: 'Termina el menú con la señora García.',
+  },
+  memory: {
+    title: 'A Colombian Christmas',
+    intro: { en: 'My friend from Colombia sent me her Christmas recipes! Match each dish with its description.', es: '¡Mi amiga de Colombia me envió sus recetas de Navidad! Une cada plato con su descripción.' },
+    pairs: [
+      { a: 'natilla', b: 'a sweet milk dessert', example: { en: 'Natilla is a sweet milk dessert with cinnamon.', es: 'La natilla es un postre dulce de leche con canela.' } },
+      { a: 'buñuelos', b: 'fried cheese balls', example: { en: 'Buñuelos are fried cheese balls. People eat a lot of them in December.', es: 'Los buñuelos son bolitas de queso fritas. La gente come muchos en diciembre.' } },
+      { a: 'tamales', b: 'cooked in banana leaves', example: { en: 'Tamales are cooked in banana leaves for many hours.', es: 'Los tamales se cocinan en hojas de plátano durante muchas horas.' } },
+      { a: 'hot chocolate', b: 'with cheese inside', example: { en: 'In Colombia, people drink hot chocolate with a little cheese inside!', es: '¡En Colombia la gente toma chocolate caliente con un poco de queso adentro!' } },
+      { a: 'ajiaco', b: 'a soup with three potatoes', example: { en: 'Ajiaco is a chicken soup with three kinds of potatoes.', es: 'El ajiaco es una sopa de pollo con tres clases de papa.' } },
+    ],
+  },
+  steps: [],
+  reward: {
+    text: 'Mrs. Garcia: "Natilla and buñuelos... Next December, we\'ll make them together!"',
+    es: 'Natilla y buñuelos... ¡El próximo diciembre los haremos juntos!',
+    sub: 'Ganaste un escudo de palabras.',
+    say: "Next December, we'll make them together!",
+  },
+}
+
+// Enough for Everyone: cantidades para 6 invitados con How much / How many. Con 0-1 errores, escudo
+NPC_TASKS['a2-s5-enough'] = {
+  npc: 'a2-s5-interest',
+  done: 'a2-s5-enough',
+  activity: 'enough',
+  coins: 20,
+  requires: {
+    id: 'a2-s5-taste',
+    text: '{iname}: "Hi! Mrs. Garcia needs help with the menu first."',
+    es: '¡Hola! Primero la señora García necesita ayuda con el menú.',
+    sub: 'Habla con la señora García en la cocina.',
+  },
+  steps: [],
+  reward: {
+    text: '{iname}: "Six plates, enough rice and a lot of juice. We\'re ready!"',
+    es: 'Seis platos, suficiente arroz y mucho jugo. ¡Estamos listos!',
+    sub: 'Ganaste 20 monedas. Siéntate a la mesa: el abuelo Joe quiere conversar.',
+    say: "We're ready!",
+  },
+}
+
+// En la mesa (DebateTalk): preguntas con how del abuelo Joe. No hay respuestas incorrectas
+NPC_TASKS['a2-s5-table'] = {
+  npc: 'a2-s5-joe',
+  done: 'a2-s5-table',
+  activity: 'debate',
+  coins: 10,
+  requires: {
+    id: 'a2-s5-enough',
+    text: 'Grandpa Joe: "Is dinner ready? I\'m very hungry!"',
+    es: '¿Ya está la cena? ¡Tengo mucha hambre!',
+    sub: 'Ayuda a {iname} a preparar la mesa, en la cocina.',
+  },
+  debate: {
+    title: 'At the table',
+    ask: 'Conversa en la mesa: responde con educación y pregunta tú también.',
+    turns: [
+      {
+        text: 'So, how was the soup?',
+        es: 'Bueno, ¿qué tal estuvo la sopa?',
+        options: [
+          { en: "It was delicious, thank you! It was a little salty, but I like it that way.", es: '¡Estuvo deliciosa, gracias! Estaba un poco salada, pero así me gusta.', value: 'good' },
+          { en: 'Good soup.', es: 'Buena sopa.', value: 'neutral' },
+          { en: 'It is very delicious salty.', es: '(Frase mal dicha).', value: 'bad', reply: { text: 'Ha ha! Delicious and a bit salty? I agree.', es: '¡Ja, ja! ¿Deliciosa y un poco salada? Estoy de acuerdo.' } },
+        ],
+      },
+      {
+        text: 'Could you pass me the bread, please?',
+        es: '¿Me pasas el pan, por favor?',
+        options: [
+          { en: 'Of course. Here you are. Would you like some butter too?', es: 'Claro. Aquí tienes. ¿Quieres mantequilla también?', value: 'good' },
+          { en: 'Bread. Here.', es: 'Pan. Aquí.', value: 'neutral' },
+          { en: 'Yes, take it the bread you.', es: '(Frase mal dicha).', value: 'bad', reply: { text: 'Er... thank you, I think.', es: 'Eh... gracias, creo.' } },
+        ],
+      },
+      {
+        text: 'Tell me, how often do you cook at home?',
+        es: 'Cuéntame, ¿con qué frecuencia cocinas en casa?',
+        options: [
+          { en: 'Not very often. I cook on weekends. How often do you cook, Grandpa Joe?', es: 'No muy seguido. Cocino los fines de semana. ¿Y usted, abuelo Joe, con qué frecuencia cocina?', value: 'good' },
+          { en: 'Sometimes.', es: 'A veces.', value: 'neutral' },
+          { en: 'I cook how often weekends.', es: '(Frase mal dicha).', value: 'bad', reply: { text: 'On weekends? Good for you!', es: '¿Los fines de semana? ¡Bien por ti!' } },
+        ],
+      },
+      {
+        text: 'Me? Never! But I make the best arepas. Would you like some more chicken?',
+        es: '¿Yo? ¡Nunca! Pero hago las mejores arepas. ¿Quieres un poco más de pollo?',
+        options: [
+          { en: "No, thank you. I'm full. But how do you make your arepas?", es: 'No, gracias. Estoy lleno. Pero ¿cómo prepara sus arepas?', value: 'good' },
+          { en: 'No more.', es: 'No más.', value: 'neutral' },
+          { en: 'No, I am very much full.', es: '(Frase mal dicha).', value: 'bad' },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: 'What a nice guest! Oh... someone is knocking at the door. It smells like trouble!', es: '¡Qué invitado tan amable! Ay... alguien toca la puerta. ¡Huele a problemas!' },
+      mid: { text: 'Good, good. Oh... who is at the door?', es: 'Bien, bien. Ah... ¿quién está en la puerta?' },
+      low: { text: 'Hmm... OK. Oh, look, someone is at the door.', es: 'Mmm... bueno. Ah, mira, alguien está en la puerta.' },
+    },
+  },
+  steps: [],
+  reward: {
+    text: 'Grandpa Joe: "That\'s Chef Bruno, our neighbor. He always comes when he smells food!"',
+    es: 'Es Chef Bruno, nuestro vecino. ¡Siempre viene cuando huele comida!',
+    sub: 'Ganaste 10 monedas. Chef Bruno te espera en el comedor, junto al sofá.',
+    say: 'He always comes when he smells food!',
+  },
+}
+
+// Cierre: el postre de Chef Bruno y la sopa de la señora García. Recompensa: delantal, sopa de la abuela y monedas (sin fragmento)
+NPC_TASKS['a2-s5-close'] = {
+  npc: 'a2-s5-interest',
+  done: 'a2-s5-close',
+  coins: 30,
+  soup: 1,
+  outfit: 'delantal-chef',
+  requires: {
+    id: 'a2-s5-bruno-duel',
+    text: '{iname}: "Chef Bruno wants to play a game. Go! I want dessert!"',
+    es: 'Chef Bruno quiere jugar. ¡Ve! ¡Quiero postre!',
+    sub: 'Gana el duelo de Chef Bruno, en el comedor.',
+  },
+  steps: [
+    { text: '{iname}: "You won! And Chef Bruno made dessert for everybody."', es: '{iname}: "¡Ganaste! Y Chef Bruno hizo el postre para todos."' },
+    {
+      text: '{iname}: "Look! What is it?"',
+      es: '{iname}: "¡Mira! ¿Qué es?"',
+      choice: { ask: 'Chef Bruno trae un postre. ¿Cómo lo describes?', options: ["It's a chocolate cake. It's sweet, and there's a little cream on top.", "It's a cake of chocolate. It's sweet, and there's a few cream on top.", "It's chocolate cake. It sweet, and there are a little cream on top."], answer: 0, tip: 'a chocolate cake (el sabor antes) · cream es incontable: a little cream · there is.' },
+    },
+    { text: '{iname}: "Mmm! Thank you for bringing me. I love dinners with good friends."', es: '{iname}: "¡Mmm! Gracias por traerme. Me encantan las cenas con buenos amigos."' },
+    {
+      text: 'Mrs. Garcia: "Here, take some soup home. It\'s my mother\'s recipe."',
+      es: 'Señora García: "Toma, llévate un poco de sopa a casa. Es la receta de mi mamá."',
+      choice: { ask: 'La señora García te da sopa. ¿Qué le dices?', options: ['Thank you so much! How do you make it?', 'Thank you so much! How do you do it make?', 'Thank you so much! How you make it?'], answer: 0, tip: 'Preguntar la receta: How do you make it?' },
+    },
+    { text: 'Mrs. Garcia: "With a lot of love and a little salt. Come back soon!"', es: 'Señora García: "Con mucho amor y un poco de sal. ¡Vuelve pronto!"' },
+  ],
+  reward: {
+    text: '{iname}: "A dinner to remember!"',
+    es: '¡Una cena para recordar!',
+    sub: 'Misión secundaria completada: A Dinner to Remember. Ganaste 30 monedas, el delantal de chef (Mochila › Atuendos) y una sopa de la abuela: en un combate, te llena la vida una vez.',
+    say: 'A dinner to remember!',
   },
 }
 

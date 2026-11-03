@@ -65,6 +65,7 @@ import { Predict } from '../components/Predict'
 import { Speech } from '../components/Speech'
 import { BrokenClocks } from '../components/BrokenClocks'
 import { FittingRoom } from '../components/FittingRoom'
+import { EnoughForEveryone } from '../components/EnoughForEveryone'
 import { SHOP, isShopOpen } from '../data/a2Market'
 import { voiceOf, type Voice } from '../game/speech'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
@@ -197,7 +198,11 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
     update((s) => ({
       ...s,
       opened: [...s.opened, ...[t.done, ...extra].filter((x, k, all) => !s.opened.includes(x) && all.indexOf(x) === k)],
-      items: t.shield || bonusShield ? { ...s.items, shield: Math.min(2, s.items.shield + 1) } : s.items,
+      items: {
+        ...s.items,
+        shield: t.shield || bonusShield ? Math.min(2, s.items.shield + 1) : s.items.shield,
+        ...(t.soup ? { soup: (s.items.soup ?? 0) + t.soup } : {}),
+      },
       outfits: t.outfit && !s.outfits.includes(t.outfit) ? [...s.outfits, t.outfit] : s.outfits,
       hp: t.heal ? s.maxHp : s.hp,
       coins: t.coins ? (s.coins ?? 0) + t.coins : s.coins,
@@ -1058,6 +1063,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               return <MemoryChest name={who.name} look={who.look} title={t.memory.title} intro={t.memory.intro} pairs={t.memory.pairs} onClose={finish} />
             }
             if (t.activity === 'luggage') return <LostLuggage onClose={finish} />
+            if (t.activity === 'enough') return <EnoughForEveryone friend={state.interest.name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'fitting') return <FittingRoom friend={state.interest.name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'route') return <RouteChallenge name={npcOf(t.npc ?? task).name} onClose={finish} />
             if (t.activity === 'exam' && t.exam) {
