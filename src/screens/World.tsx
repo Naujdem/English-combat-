@@ -20,8 +20,6 @@ import { ALL_DIARY as DIARY, pageNotified, pageSeen, unlockedPages } from '../da
 import { dueCards } from '../game/cards'
 import { B1_PREFIX, isA2Unlocked, type Update } from '../game/store'
 import { B1Map } from '../components/B1Map'
-import { enterMemory } from '../game/memory'
-import { B1_MEMORY_DEMO } from '../data/b1MemoryDemo'
 import { LooseFragment } from '../components/FragmentJoin'
 import { B1_HOME_ID, B1_NODES, B1_OPENING, B1_PART_NAMES, B1_ERA_COLOR, b1LockedText, b1Message, b1NodeDone, b1NodeOpen, isB1Unlocked, type B1Node, type B1Part } from '../data/b1World'
 import { heroLook, SCENES } from '../game/helpers'
@@ -163,9 +161,6 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   function tapB1(n: B1Node) {
     const label = n.num ? `${n.num}. ${n.name}` : `★ ${n.name}`
     if (!b1NodeOpen(n, state)) return setMsg(`${label} está cerrado. ${b1LockedText(n)}`)
-    // DEMO (tarea 0-B): el recuerdo 1 abre una escena de prueba con la entrada y la salida de un recuerdo.
-    // Se reemplaza por la escena real cuando se haga la misión 1. No guarda el cierre de la misión.
-    if (n.num === 1) return update((s) => enterMemory(s, 1, B1_MEMORY_DEMO.id, B1_MEMORY_DEMO.start))
     setMsg(`${n.name}: este lugar se construirá pronto.`)
   }
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]
