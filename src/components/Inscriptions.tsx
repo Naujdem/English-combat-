@@ -62,7 +62,7 @@ export function Inscriptions({
 
       {done ? (
         <div className="anim-fade-in mt-3 rounded-xl bg-hp/15 px-3 py-3">
-          <p className="flex items-center gap-2 text-[16px]"><Tappable text={end.en} /><SpeakButton text={end.en} size="sm" auto /></p>
+          <p className="flex items-center gap-2 text-[16px]"><span className="min-w-0 flex-1"><Tappable text={end.en} /></span><span className="shrink-0"><SpeakButton text={end.en} size="sm" auto /></span></p>
           {showEs && <p className="text-sm text-paper/60">{end.es}</p>}
           <p className="mt-1 text-sm text-hp">{end.banner} {resets === 0 ? 'Sin reiniciar ninguna tablilla: ganas un escudo.' : ''}</p>
         </div>
@@ -222,7 +222,15 @@ function PlateBoard({ plate, showEs, onReset, onSolved }: { plate: Plate; showEs
         </div>
         {solved && (
           <div className="ins-translate mt-3 text-center">
-            <p className="flex items-center justify-center gap-2 font-display text-[18px] text-[#f6e7b4]"><Tappable text={correct} /><SpeakButton text={correct} size="sm" auto /></p>
+            <p className="flex items-center justify-center gap-2 font-display text-[18px] text-[#f6e7b4]">
+              {/* La frase va en un solo bloque para que salte de línea (si no, cada palabra es una columna y se sale de la tablilla) */}
+              <span className="min-w-0">
+                <Tappable text={correct} />
+              </span>
+              <span className="shrink-0">
+                <SpeakButton text={correct} size="sm" auto />
+              </span>
+            </p>
             <p className="text-[15px] text-paper/80">{plate.es}</p>
           </div>
         )}
