@@ -362,6 +362,12 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
       { text: "Would you like a coffee? The robot makes it... but I bring it. Ha ha!", es: '¿Quieres un café? El robot lo prepara... pero yo lo traigo. ¡Ja, ja!' },
     ],
   },
+  // ── B1 · apertura: el teléfono de tu cuarto. Quien habla es Ms. Noor Haddad, la coordinadora del intercambio ──
+  'b1-phone': {
+    name: 'Ms. Haddad',
+    look: { shirt: '#2f6f73', hair: '#1f1f1f', skin: '#c68642', gender: 'female' },
+    doneLine: { text: '(The phone is quiet now. Your flight leaves tomorrow at nine.)', es: '(El teléfono ya está en silencio. Tu vuelo sale mañana a las nueve.)' },
+  },
   // ── A2-01, hospital. Nombres y apariencias provisionales (no canónicos) ──
   'a2-doctor': {
     name: 'The doctor',

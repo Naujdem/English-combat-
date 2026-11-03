@@ -67,3 +67,14 @@ button { cursor: pointer; touch-action: manipulation; }
 .anim-fly { animation: fly 1.4s ease-in forwards; transform-box: fill-box; }
 @keyframes appear { from { opacity: 0; transform: translateX(20px) } to { opacity: 1; transform: none } }
 .anim-appear { animation: appear 0.6s ease-out both; transform-box: fill-box; }
+
+/* B1: destello simple de los fragmentos (FragmentJoinCue) y estática del recuerdo 1 (placeholder) */
+@keyframes b1-cue-flash { 0% { opacity: 0 } 15% { opacity: 0.85 } 100% { opacity: 0 } }
+.b1-cue-flash { background: radial-gradient(circle, #e6d6ff 0%, #9b6ad6 45%, transparent 75%); animation: b1-cue-flash 1.1s ease-out both; }
+@keyframes b1-cue-left { from { transform: translateX(-14px) rotate(-8deg) } to { transform: none } }
+@keyframes b1-cue-right { from { transform: translateX(14px) rotate(8deg) } to { transform: none } }
+.b1-cue-left { animation: b1-cue-left 0.9s ease-out both; transform-box: fill-box; transform-origin: center; }
+.b1-cue-right { animation: b1-cue-right 0.9s ease-out both; transform-box: fill-box; transform-origin: center; }
+@keyframes b1-static { 0%, 100% { opacity: 0.08 } 10% { opacity: 0.5 } 20% { opacity: 0.12 } 35% { opacity: 0.35 } 50% { opacity: 0.1 } 70% { opacity: 0.25 } }
+.b1-static { background: repeating-linear-gradient(0deg, rgba(255,255,255,0.18) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(200,180,255,0.12) 0 2px, transparent 2px 5px); animation: b1-static 1.2s steps(6) infinite; }
+@media (prefers-reduced-motion: reduce) { .b1-cue-flash, .b1-cue-left, .b1-cue-right, .b1-static { animation: none } }
