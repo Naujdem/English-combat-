@@ -1036,6 +1036,8 @@ export const DIARY: DiaryChapter[] = [
           { en: 'The doctor [asked]p me: "What\'s the matter? How long have you felt like this?"', es: 'La médica me preguntó: "¿Qué te pasa? ¿Hace cuánto te sientes así?".' },
           { en: '{iname} [made]p an emergency call and [explained]p everything.', es: '{iname} hizo una llamada de emergencia y lo explicó todo.' },
           { en: 'The Silence [was]p the strongest enemy of all. But we [won]p, and everybody [got]p their voice back.', es: 'El Silencio era el enemigo más fuerte de todos. Pero ganamos, y todos recuperaron la voz.' },
+          { en: 'Then the man in the dark coat [came]p back. He [wanted]p the fragment, but I [didn\'t give]p it to him.', es: 'Después volvió el hombre del abrigo oscuro. Quería el fragmento, pero no se lo di.' },
+          { en: 'Before he [left]p, he [said]p: "You had a voice… and you said nothing." I [don\'t understand]n.', es: 'Antes de irse, dijo: "Tenías voz… y no dijiste nada". No lo entiendo.' },
           { en: 'Then a sad voice [came]p from the clock: "Be brave. Use your voice." Who [is]n L?', es: 'Luego una voz triste salió del reloj: "Sé valiente. Usa tu voz." ¿Quién es L?' },
         ],
         questions: [

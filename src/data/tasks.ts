@@ -3303,10 +3303,10 @@ NPC_TASKS['a2-13-exam'] = {
   activity: 'exam',
   exam: 'a2',
   requires: {
-    id: 'a2-13-the-silence',
+    id: 'a2-13-stranger',
     text: '(Leo points at the end of the hallway. He can\'t speak.)',
     es: '(Leo señala el fondo del pasillo. No puede hablar).',
-    sub: 'Vence a The Silence, al fondo del pasillo.',
+    sub: 'Vence a The Silence y haz retroceder al hombre del abrigo oscuro, al fondo del pasillo.',
   },
   steps: [],
   reward: {
@@ -3326,6 +3326,7 @@ NPC_TASKS['a2-13-close'] = {
   steps: [
     { text: 'Can you hear me? My voice… it is back. Everybody is talking again.', es: '¿Me oyes? Mi voz… volvió. Todos están hablando otra vez.' },
     { text: 'You did it. The past, the present, the future… you remembered every word.', es: 'Lo lograste. El pasado, el presente, el futuro… recordaste cada palabra.' },
+    { text: 'And that man said: "You had a voice… and you said nothing." What does that mean?', es: 'Y ese hombre dijo: "Tenías voz… y no dijiste nada". ¿Qué significa eso?' },
     { text: 'Look at your clock. The empty core is shining for the first time… but it is not full yet.', es: 'Mira tu reloj. El centro vacío brilla por primera vez… pero todavía no está lleno.' },
     {
       text: '(Suddenly, a very quiet, sad voice comes from the clock:) "Be brave. Use your voice."',

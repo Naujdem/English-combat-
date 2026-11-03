@@ -9,8 +9,8 @@ import { HOSPITAL_MAP, hospitalZoneAt } from './a2Hospital'
  * ya vistos en A2-02) y la llamada de emergencia. Cierra A2 con un jefe final de 4 fases (repaso) y el examen escrito de A2.
  * Orden: Leo (lección health-emergency + práctica) → el paciente silenciado (esbirro, 2 fases, bloquea la recepción)
  *        → la recepcionista (notas escritas: lectura) → la médica (DebateTalk) → la persona especial (llamada de emergencia,
- *        Dialogue Under Pressure) → Leo (Detective: el tablero de A2, Reconstruct) → The Silence (jefe final, 4 fases)
- *        → Leo (examen de A2) → Leo (cierre: el núcleo se ilumina, "Be brave. Use your voice." y la pregunta para B1).
+ *        Dialogue Under Pressure) → Leo (Detective: el tablero de A2, Reconstruct) → The Silence (jefe, 2 fases)
+ *        → el desconocido (segundo round, como en A1: se le hace retroceder, no se le vence) → Leo (examen de A2) → Leo (cierre: el núcleo se ilumina, "Be brave. Use your voice." y la pregunta para B1).
  * Reutiliza el mapa del hospital de A2-01 como escena aparte, para no mezclar sus personajes con los de A2-01/02.
  * Se activa al terminar A2-12. Tareas en data/tasks.ts, lección en data/lessons.ts, combates en data/questions-a2-13.ts.
  */
@@ -24,6 +24,8 @@ export const A2_13_CALL = 'a2-13-call'
 export const A2_13_BOARD = 'a2-13-board'
 /** Jefe final de A2: The Silence, en el pasillo, tras el tablero */
 export const A2_13_BOSS = 'a2-13-the-silence'
+/** Segundo round contra el desconocido (el primero fue en la torre, al final de A1): aparece tras vencer a The Silence */
+export const A2_13_STRANGER = 'a2-13-stranger'
 export const A2_13_EXAM = 'a2-13-exam'
 export const A2_13_CLOSE = 'a2-13-close'
 
@@ -91,49 +93,33 @@ export const A2_RETURN_ENEMIES: Record<string, EnemyDef> = {
     freed: { text: 'The receptionist saw everything. She can\'t speak, but she can write.', es: 'La recepcionista lo vio todo. No puede hablar, pero puede escribir.' },
     bonus: { q: "Before you go! You've got a sore throat. You ___ shout.", options: ["shouldn't", 'should', "don't should"], answer: 0, tip: "Un mal consejo para la garganta: shouldn't." },
   },
-  // Jefe final de A2 (4 fases de repaso): The Silence. No es el desconocido: es el silencio que deja la luz morada.
-  // Al vencerlo entrega el último fragmento de A2; el núcleo del reloj se ilumina pero no se completa.
+  // Jefe de A2-13 (2 fases): The Silence. No es el desconocido: es el silencio que deja la luz morada.
+  // Al vencerlo deja el último fragmento de A2, y aparece el desconocido (segundo round) para llevárselo.
   [A2_13_BOSS]: {
     id: A2_13_BOSS,
     name: 'The Silence',
     person: 'The Silence',
     kind: 'boss',
-    hp: 12,
-    topics: ['past-simple-continuous', 'superlatives-comparatives-race', 'present-perfect', 'future-plans', TP],
+    hp: 6,
+    topics: [TP],
     kinds: ['fill', 'fix', 'order', 'listen'],
     tags: ['a2-return-boss'],
     phases: [
       {
         hp: 3,
-        title: 'El pasado: Past Simple y Past Continuous',
-        topics: ['past-simple-continuous'],
-        kinds: ['fill', 'fix', 'order', 'listen'],
-        tags: ['a2-car-boss', 'a2-car-minion'],
-        line: { text: 'The cart was stop when the light hitted it… while you sleeping!', es: 'La carreta se detenía cuando la luz la golpeó… ¡mientras dormías! (was stop, hitted, you sleeping: mal).' },
-      },
-      {
-        hp: 3,
-        title: 'Comparar y Present Perfect',
-        topics: ['superlatives-comparatives-race', 'present-perfect'],
-        kinds: ['fill', 'fix', 'order', 'listen'],
-        tags: ['a2-race-boss', 'a2-house-boss'],
-        line: { text: 'I am more strong than you! I have took the most quietest voices!', es: '¡Soy más fuerte que tú! ¡Me he llevado las voces más calladas! (more strong, have took, most quietest: mal).' },
-      },
-      {
-        hp: 3,
-        title: 'Planes: will, going to y presente continuo',
-        topics: ['future-plans'],
-        kinds: ['fill', 'fix', 'order', 'listen'],
-        tags: ['a2-control-boss'],
-        line: { text: 'Tomorrow I will to take every voice. Nobody going to speak again!', es: 'Mañana me llevaré cada voz. ¡Nadie va a volver a hablar! (will to take, nobody going to: mal).' },
-      },
-      {
-        hp: 3,
-        title: 'Salud y emergencias',
+        title: 'Síntomas',
         topics: [TP],
         kinds: ['fill', 'fix', 'order', 'listen'],
-        tags: ['a2-return-boss-health'],
-        line: { text: 'Your friend have lose his voice. You should to give up!', es: 'Tu amigo ha perdido la voz. ¡Deberías rendirte! (have lose, should to: mal).' },
+        tags: ['a2-return-boss-health', 'a2-return-minion-ill'],
+        line: { text: 'Your friend have lose his voice. His throat hurt him!', es: 'Tu amigo ha perdido la voz. ¡Le duele la garganta! (have lose, hurt him: mal).' },
+      },
+      {
+        hp: 3,
+        title: 'Consejos y emergencias',
+        topics: [TP],
+        kinds: ['fill', 'fix', 'order', 'listen'],
+        tags: ['a2-return-boss-health', 'a2-return-minion-advice'],
+        line: { text: 'You should to give up! Nobody must to call for help!', es: '¡Deberías rendirte! ¡Nadie debe pedir ayuda! (should to, must to: mal).' },
       },
     ],
     onlyTags: true,
@@ -156,8 +142,54 @@ export const A2_RETURN_ENEMIES: Record<string, EnemyDef> = {
     },
     release: {
       title: '¡El último fragmento de A2!',
-      text: 'The Silence se deshace en luz morada y deja un fragmento en el suelo. Al tomarlo, el centro vacío de tu reloj se ilumina por primera vez… pero no se llena del todo. En el pasillo, alguien tose: es Leo.',
+      text: 'The Silence se deshace en luz morada y deja un fragmento en el suelo. Lo tomas justo a tiempo: al fondo del pasillo aparece un hombre con un abrigo oscuro. Quiere el fragmento.',
     },
+  },
+  // Segundo round contra el desconocido (como en la torre de A1): repaso de A2 en pasado, presente y futuro.
+  // Se le hace retroceder, pero no se le vence. No revela quién es: eso se reserva para B2.
+  // Su frase final anuncia el incendio de B1 ("you said nothing"), que el protagonista todavía no puede entender.
+  [A2_13_STRANGER]: {
+    id: A2_13_STRANGER,
+    name: 'El hombre del abrigo oscuro',
+    person: '???',
+    kind: 'boss',
+    standoff: true,
+    onlyTags: true,
+    zone: 'lobby-torre',
+    hp: 12,
+    topics: ['past-simple-continuous', 'superlatives-comparatives-race', 'present-perfect', 'future-plans'],
+    kinds: ['fill', 'fix', 'order', 'listen'],
+    tags: ['a2-car-boss', 'a2-car-minion', 'a2-race-boss', 'a2-house-boss', 'a2-control-boss'],
+    phases: [
+      { hp: 4, title: 'The Past', topics: ['past-simple-continuous'], kinds: ['fill', 'fix', 'order', 'listen'], tags: ['a2-car-boss', 'a2-car-minion'] },
+      {
+        hp: 4,
+        title: 'The Present',
+        topics: ['superlatives-comparatives-race', 'present-perfect'],
+        kinds: ['fill', 'fix', 'order', 'listen'],
+        tags: ['a2-race-boss', 'a2-house-boss'],
+        line: { text: 'You have learned a lot. But have you ever used your voice when it really mattered?', es: 'Has aprendido mucho. Pero ¿alguna vez has usado tu voz cuando de verdad importaba?' },
+      },
+      {
+        hp: 4,
+        title: 'The Future',
+        topics: ['future-plans'],
+        kinds: ['fill', 'fix', 'order', 'listen'],
+        tags: ['a2-control-boss'],
+        line: { text: 'And one day, when someone needs you… will you speak? Or will you stay silent?', es: 'Y un día, cuando alguien te necesite… ¿vas a hablar? ¿O te vas a quedar callado?' },
+      },
+    ],
+    // La misma sombra de A1: abrigo oscuro, la cara en penumbra
+    look: { shirt: '#2d2440', hair: '#15111f', skin: '#5b5070' },
+    before: [
+      { text: 'Hi, hi… We meet again.', es: 'Hola, hola… Nos volvemos a ver.' },
+      { text: 'That fragment is mine. Give it to me… or answer me, if you can.', es: 'Ese fragmento es mío. Dámelo… o respóndeme, si puedes.' },
+    ],
+    after: [
+      { text: 'You had a voice… and you said nothing.', es: 'Tenías voz… y no dijiste nada.' },
+      { text: '(He looks at Leo for a long moment. Then he disappears in a purple cloud.)', es: '(Mira a Leo durante un largo momento. Luego desaparece en una nube morada).' },
+    ],
+    freed: { text: 'The hallway is quiet again. The fragment is still in your hand.', es: 'El pasillo vuelve a estar en calma. El fragmento sigue en tu mano.' },
   },
 }
 
@@ -183,6 +215,8 @@ export const A2_RETURN: SceneDef = {
     { type: 'enemy', id: A2_13_MINION, x: 16, y: 10, after: A2_13_PRACTICE },
     // The Silence aparece al fondo del pasillo tras el tablero
     { type: 'enemy', id: A2_13_BOSS, x: 19, y: 13, after: A2_13_BOARD },
+    // El desconocido (segundo round) aparece en el pasillo cuando The Silence ya fue vencido
+    { type: 'enemy', id: A2_13_STRANGER, x: 17, y: 13, after: A2_13_BOSS },
   ],
   labels: [
     { text: 'Habitación', x: 6, y: 1 },
