@@ -27,7 +27,7 @@ export const A2_PARTY_QUESTIONS: Question[] = [
 
   // ── Fase 2: primer condicional ──
   { id: 'a2-s3-c1', topic: TP, prompt: "If it ___ sunny, we'll eat in the garden.", options: ['is', 'will be', 'be'], answer: 0, tip: 'Después de if va el presente: is (nunca will be).', tags: IF },
-  { id: 'a2-s3-c2', topic: TP, prompt: 'If you blow out the candles, your wish ___ come true.', options: ['will', 'is', 'does'], answer: 0, tip: 'El resultado: will + verbo.', tags: IF },
+  { id: 'a2-s3-c2', topic: TP, prompt: 'If you blow out the candles, your wish ___ come true.', options: ['will', 'is', 'was'], answer: 0, tip: 'El resultado: will + verbo.', tags: IF },
   { id: 'a2-s3-c3', topic: TP, kind: 'fix', prompt: "If we will hurry, we'll finish on time.", options: ["If we hurry, we'll finish on time.", "If we hurries, we'll finish on time.", "If we hurry, we finish will on time."], answer: 0, tip: 'Después de if: presente (we hurry), sin will.', tags: IF },
   { id: 'a2-s3-c4', topic: TP, prompt: "If Leo ___ the cake, he'll be very sad.", options: ['drops', 'drop', 'will drop'], answer: 0, tip: 'Leo (he) + presente con -s: drops.', tags: IF },
   { id: 'a2-s3-c5', topic: TP, prompt: "If you don't come, the party ___ be fun.", options: ["won't", "doesn't", "isn't"], answer: 0, tip: "Resultado negativo: won't + verbo.", tags: IF },

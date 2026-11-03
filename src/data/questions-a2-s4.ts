@@ -31,7 +31,7 @@ export const A2_MARKET_QUESTIONS: Question[] = [
   { id: 'a2-s4-c3', topic: TP, prompt: 'The coat was $80. Now it\'s on ___: only $60!', options: ['sale', 'sell', 'sold'], answer: 0, tip: 'En rebaja: on sale.', tags: PRICE },
   { id: 'a2-s4-c4', topic: TP, prompt: 'The shirt is $30 and there\'s 10% off. So it\'s ___.', options: ['$27', '$20', '$33'], answer: 0, tip: '10% de 30 es 3: 30 − 3 = 27.', tags: PRICE },
   { id: 'a2-s4-c5', topic: TP, kind: 'fix', prompt: 'How much it costs?', options: ['How much does it cost?', 'How much is it cost?', 'How much it does cost?'], answer: 0, tip: 'Pregunta con cost: How much does it cost?', tags: PRICE },
-  { id: 'a2-s4-c6', topic: TP, prompt: 'How would you like to pay? — ___ card, please.', options: ['By', 'With the', 'In'], answer: 0, tip: 'Pagar con tarjeta: by card. En efectivo: in cash.', tags: PRICE },
+  { id: 'a2-s4-c6', topic: TP, prompt: 'How would you like to pay? — ___ card, please.', options: ['By', 'With', 'In'], answer: 0, tip: 'Pagar con tarjeta: by card. En efectivo: in cash.', tags: PRICE },
   { id: 'a2-s4-c7', topic: TP, kind: 'order', prompt: 'Es una ganga. ¡Me lo llevo!', options: ["It's", 'a', 'bargain.', "I'll", 'take', 'it!'], answer: 0, tip: "a bargain = una ganga · I'll take it = me lo llevo.", tags: PRICE },
   { id: 'a2-s4-c8', topic: TP, prompt: "$50 for a T-shirt? That's too ___!", options: ['expensive', 'cheap', 'bargain'], answer: 0, tip: 'Muy caro: too expensive. Barato: cheap.', tags: PRICE },
   { id: 'a2-s4-c9', topic: TP, kind: 'fix', prompt: 'This dress is in sale.', options: ['This dress is on sale.', 'This dress is at sale.', 'This dress is for sale off.'], answer: 0, tip: 'En rebaja: on sale.', tags: PRICE },

@@ -91,7 +91,7 @@ export const A2_EXTRA_QUESTIONS: Question[] = [
 
   // ── Direcciones: cuánto tiempo y qué tan lejos ──
   { id: 'a2x-hl01', topic: 'places-directions', prompt: 'How ___ does it take to get to the museum? — About twenty minutes.', options: ['long', 'far', 'much'], answer: 0, tip: 'Tiempo: How long does it take...?', tags: FB },
-  { id: 'a2x-hl02', topic: 'places-directions', prompt: "How ___ is the station from here? — It's two kilometres.", options: ['far', 'long', 'often'], answer: 0, tip: 'Distancia: How far is...?', tags: FB },
+  { id: 'a2x-hl02', topic: 'places-directions', prompt: "How ___ is the station from here? — It's two kilometers.", options: ['far', 'long', 'often'], answer: 0, tip: 'Distancia: How far is...?', tags: FB },
   { id: 'a2x-hl03', topic: 'places-directions', prompt: 'It ___ ten minutes to walk to the bridge.', options: ['takes', 'take', 'taking'], answer: 0, tip: 'It takes + tiempo + to + verbo.', tags: FB },
   { id: 'a2x-hl04', topic: 'places-directions', kind: 'order', prompt: '¿Cuánto tiempo se tarda en tranvía?', options: ['How', 'long', 'does', 'it', 'take', 'by', 'tram?'], answer: 0, tip: 'How long + does it take + by + transporte?', tags: FD },
   { id: 'a2x-hl05', topic: 'places-directions', kind: 'fix', prompt: 'How long it take to get to the park?', options: ['How long does it take to get to the park?', 'How long does it takes to get to the park?', 'How long it takes to get to the park?'], answer: 0, tip: 'How long + does + it + take (sin -s)?', tags: FD },
