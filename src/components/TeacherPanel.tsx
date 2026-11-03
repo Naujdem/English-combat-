@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
-import { PRESETS, setTeacher, skipLessons, useTeacher } from '../game/teacher'
+import { PRESETS, b1Mission1, setTeacher, skipLessons, useTeacher } from '../game/teacher'
 import { SCENES } from '../game/helpers'
 import { walkable } from './Tiles'
 import { ENEMIES } from '../data/enemies'
@@ -129,6 +129,16 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               </div>
               <p className="text-xs text-paper/55">En combate aparece un botón "Ganar (profe)" para saltar el combate.</p>
             </div>
+
+            <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1-1 · The Accident</p>
+            <div className="mt-1 grid grid-cols-2 gap-2">
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission1(s, 'memory'))}>B1-1: entrar al recuerdo</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission1(s, 'alarm'))}>B1-1: ir a la alarma</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission1(s, 'call'))}>B1-1: ir al Call for Help</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission1(s, 'epilogue'))}>B1-1: epílogo (ya despiertas)</button>
+              <button className={`${btn} col-span-2 px-2 text-sm`} onClick={() => go((s) => b1Mission1(s, 'echo'))}>B1-1: Smoke Echo</button>
+            </div>
+            <p className="mt-1 text-xs text-paper/55">En el recuerdo, habla con el amigo (junto a la puerta) para empezar o seguir la secuencia.</p>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>
             <div className="mt-1 grid gap-2">

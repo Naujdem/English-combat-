@@ -31,6 +31,8 @@ import { A2_12_CLOSE } from '../data/a2Control'
 import { A2_RETURN, A2_13_CLOSE } from '../data/a2Return'
 import { B1_HOME } from '../data/b1Home'
 import { B1_OPENING, closeId } from '../data/b1World'
+import { B1_01_ALARM, B1_01_ECHO, B1_01_MESSAGE, B1_01_PRACTICE, B1_01_SCHOOL, B1_01_TALKED } from '../data/b1Accident'
+import { enterMemory, memoryFlag } from './memory'
 
 /**
  * Modo profesor: permisos especiales para revisar el juego sin jugarlo entero.
@@ -711,8 +713,30 @@ function b1Start(s: GameState, done: string[]): GameState {
     sceneId: B1_HOME.id,
     pos: { ...B1_HOME.start },
     battle: null,
+    memory: undefined,
     opened: add(b.opened.filter((o) => !o.startsWith('b1-')), done),
+    defeated: b.defeated.filter((d) => !d.startsWith('b1-')),
+    // A2 terminado: su lección de when / while ya se vio. Las lecciones de B1 vuelven a salir
+    seenLesson: add(b.seenLesson.filter((t) => t !== 'cause-effect' && t !== 'emergencies'), ['past-simple-continuous']) as GameState['seenLesson'],
   }
+}
+
+/**
+ * Atajos de la misión B1-1 (The Accident) para el panel del profe. Parten de "B1: abrir el nodo 1".
+ *  memory: entra al recuerdo · alarm: el amigo ya habló (la secuencia sigue en la alarma) · call: ya sonó la alarma (Call for Help)
+ *  epilogue: ya despertaste en tu cuarto · echo: listo para el Smoke Echo (mensaje, lección y práctica hechos)
+ */
+export function b1Mission1(s: GameState, stage: 'memory' | 'alarm' | 'call' | 'epilogue' | 'echo'): GameState {
+  const b = b1Start(s, [B1_OPENING])
+  const home = { ...b, sceneId: B1_HOME.id, pos: { ...B1_HOME.start } }
+  if (stage === 'memory' || stage === 'alarm' || stage === 'call') {
+    const flags = stage === 'memory' ? [] : stage === 'alarm' ? [B1_01_TALKED] : [B1_01_TALKED, B1_01_ALARM]
+    const m = enterMemory(home, 1, B1_01_SCHOOL.id, stage === 'memory' ? B1_01_SCHOOL.start : { x: 7, y: 2 })
+    return { ...m, opened: add(m.opened, flags) }
+  }
+  const epi = { ...home, screen: 'explore' as const, pos: { x: 6, y: 4 }, opened: add(home.opened, [memoryFlag(1)]) }
+  if (stage === 'epilogue') return epi
+  return { ...epi, pos: { x: 7, y: 4 }, opened: add(epi.opened, [B1_01_MESSAGE, B1_01_PRACTICE]), seenLesson: add(epi.seenLesson, ['cause-effect']) as GameState['seenLesson'], defeated: epi.defeated.filter((d) => d !== B1_01_ECHO) }
 }
 
 PRESETS.push(
