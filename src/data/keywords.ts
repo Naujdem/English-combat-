@@ -1,3 +1,4 @@
+import { closeId } from './b1World'
 /**
  * Palabras clave de cada escenario: al terminarlo se guardan solas en las fichas (un mazo por lugar),
  * con una frase de ejemplo del mismo capítulo.
@@ -352,3 +353,40 @@ export const PHRASAL_DECK: Keyword[] = [
   ['take out', 'sacar', 'Take out your notebook.'],
 ]
 export const PHRASAL_DECK_AFTER = 'deck-a2-hospital'
+
+/**
+ * Lotes del mazo "Phrasal verbs": cada uno entra UNA vez, cuando `after` está en state.opened, y se guarda como `saved`.
+ * El primero es el de A1 y A2 (al empezar A2). Los de B1 entran al cerrar la misión indicada (closeId(n)),
+ * de a pocos, según el tema de cada misión. Las tarjetas que el jugador ya tenga no se repiten.
+ */
+export type PhrasalBatch = { saved: string; after: string; cards: Keyword[]; toast: string }
+export const PHRASAL_BATCHES: PhrasalBatch[] = [
+  { saved: 'deck-phrasal', after: PHRASAL_DECK_AFTER, cards: PHRASAL_DECK, toast: 'Nuevo mazo: Phrasal verbs (los que ya conoces de A1 y A2).' },
+  ...([
+    [2, [
+      ['check in', 'registrarse (hotel, aeropuerto)', 'We check in at the airport two hours before the flight.'],
+      ['set off', 'salir de viaje, ponerse en marcha', 'We set off early in the morning.'],
+    ]],
+    [4, [
+      ['fill in', 'llenar (un formulario)', 'Fill in the form with your name and address.'],
+      ['sign up', 'inscribirse', 'I want to sign up for the swimming class.'],
+      ['pay in', 'ingresar dinero (en el banco)', 'I pay in some money every month.'],
+      ['plug in', 'enchufar', 'Plug in the lamp, please.'],
+    ]],
+    [6, [
+      ['take on', 'contratar, asumir (un trabajo)', 'The shelter takes on new volunteers every summer.'],
+      ['hand in', 'entregar (un trabajo)', 'Hand in your application before Friday.'],
+    ]],
+    [7, [
+      ['give up', 'rendirse, dejar de', "Don't give up. You can do it."],
+      ['run out of', 'quedarse sin', 'We ran out of time.'],
+      ['break down', 'dañarse (una máquina)', 'The old bus broke down on the road.'],
+    ]],
+    [12, [
+      ['get on with', 'llevarse bien con', 'I get on well with my host family.'],
+      ['fall out', 'pelearse', 'They fell out last week, but now they are friends again.'],
+      ['make up', 'reconciliarse; inventar', 'We had a fight, but we made up the next day.'],
+    ]],
+    [13, [['look forward to', 'tener ganas de, esperar con ilusión', 'I look forward to the festival.']]],
+  ] as [number, Keyword[]][]).map(([n, cards]) => ({ saved: `deck-phrasal-b1-${n}`, after: closeId(n), cards, toast: 'Nuevas fichas: Phrasal verbs (B1).' })),
+]

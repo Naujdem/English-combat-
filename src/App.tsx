@@ -13,7 +13,7 @@ import { ENEMIES } from './data/enemies'
 import { ACHIEVEMENTS, achieved } from './data/collection'
 import { OUTFITS } from './data/school'
 import { sfx } from './game/sfx'
-import { KEYWORDS, KEYWORD_DONE, PHRASAL_DECK, PHRASAL_DECK_AFTER } from './data/keywords'
+import { KEYWORDS, KEYWORD_DONE, PHRASAL_BATCHES } from './data/keywords'
 import { newCard } from './game/cards'
 import { MemoryFrame } from './components/MemoryFrame'
 import { MemoryTransitions } from './components/MemoryTransitions'
@@ -69,16 +69,22 @@ export default function App() {
     setToast((t) => [...t, { kind: 'fichas' as const, text: ready.length > 2 ? `Palabras clave de ${ready.length} lugares: ya están en tus fichas para repasar.` : `Palabras clave de ${ready.map((id) => SCENES[id].name).join(' y ')}: ya están en tus fichas para repasar.` }])
   }, [state, update])
 
-  // Mazo de phrasal verbs de A1 y A2: entra solo al empezar A2
+  // Mazo "Phrasal verbs": entra por lotes (A1 y A2 al empezar A2; los de B1 al cerrar sus misiones), cada lote una sola vez
   useEffect(() => {
-    if (!state.opened.includes(PHRASAL_DECK_AFTER) || state.opened.includes('deck-phrasal')) return
+    const ready = PHRASAL_BATCHES.filter((b) => state.opened.includes(b.after) && !state.opened.includes(b.saved))
+    if (!ready.length) return
     update((s) => {
       const have = new Set(s.cards.map((c) => c.id))
       const cards = [...s.cards]
-      for (const [en, es, ex] of PHRASAL_DECK) if (!have.has(en)) cards.push(newCard(en, es, ex, { deck: 'Phrasal verbs' }))
-      return { ...s, cards, opened: [...s.opened, 'deck-phrasal'] }
+      for (const b of ready)
+        for (const [en, es, ex] of b.cards) {
+          if (have.has(en)) continue
+          have.add(en)
+          cards.push(newCard(en, es, ex, { deck: 'Phrasal verbs' }))
+        }
+      return { ...s, cards, opened: [...s.opened, ...ready.map((b) => b.saved).filter((x) => !s.opened.includes(x))] }
     })
-    setToast((t) => [...t, { kind: 'fichas' as const, text: 'Nuevo mazo: Phrasal verbs (los que ya conoces de A1 y A2).' }])
+    setToast((t) => [...t, ...[...new Set(ready.map((b) => b.toast))].map((text) => ({ kind: 'fichas' as const, text }))])
   }, [state, update])
 
   useEffect(() => {
