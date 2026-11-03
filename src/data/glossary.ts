@@ -118,6 +118,11 @@ trip=viaje;trouble=problema;turtle=tortuga;uncle=tío;unknown=desconocido;upstai
 we've=nosotros hemos (we have);whatever=lo que sea;whisper=susurrar;winner=ganador, ganadora;wire=cable;world=mundo;yourself=tú mismo, te;you'll=tú vas a (you will);you've=tú has (you have);
 battlefield=campo de batalla;harder=más difícil, más fuerte (hard);nineteen=diecinueve;obligation=obligación;sweeped=forma incorrecta: el pasado de sweep es swept;
 he'll=él va a (he will);ding=din (sonido de campana);dong=don (sonido de campana);spain=España;peru=Perú;brazil=Brasil;canada=Canadá;japan=Japón;london=Londres;
+air=aire;alarm=alarma (fire alarm = alarma de incendio);background=fondo;blurry=borroso;burn=quemar, arder;case=caso (in case of = en caso de);comma=coma;continuous=continuo;
+cough=toser, tos;dry=seco;exhausted=agotado;fire=incendio, fuego (fire exit = salida de emergencia);firefighters=bomberos;firefighter=bombero;flames=llamas;forgot=olvidó (forget);grab=agarrar;
+heat=calor;injured=herido;marker=marcador;mix=mezclar;noun=sustantivo;plane=avión;rang=sonó (ring);rescue=rescatar, rescate;result=resultado (as a result = como resultado);seen=visto (participio de see);
+smoke=humo;starving=muerto de hambre;tense=tiempo verbal;tenses=tiempos verbales;thick=espeso, grueso;thicker=más espeso;trap=atrapar;trapped=atrapado;typing=escribiendo (en el teclado);
+until=hasta;while=mientras;whoosh=fuum (sonido del fuego);
 `
 
 const BASE: Record<string, string> = Object.fromEntries(
