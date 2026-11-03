@@ -14,8 +14,9 @@ export type SpriteLook = {
  * Personaje "chibi" en una caja de 32x32 unidades.
  * Se usa pequeño en el mapa y grande en el combate.
  */
-export function SpriteBody({ look, mood = 'normal' }: { look: SpriteLook; mood?: 'normal' | 'hurt' | 'mute' }) {
+export function SpriteBody({ look, mood = 'normal', blur = false }: { look: SpriteLook; mood?: 'normal' | 'hurt' | 'mute'; /** Recuerdos de B1: cara lisa, sin ojos ni boca (ver BlurFace.tsx) */ blur?: boolean }) {
   const long = look.gender === 'female'
+  if (blur) return <BlurredBody look={look} long={long} />
   return (
     <g>
       <ellipse cx="16" cy="30" rx="8" ry="2.2" fill="rgba(0,0,0,0.18)" />
@@ -75,5 +76,33 @@ export function SpriteIcon({ look, size = 64, mood }: { look: SpriteLook; size?:
     <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
       <SpriteBody look={look} mood={mood} />
     </svg>
+  )
+}
+
+/**
+ * Cuerpo para los NPC de los recuerdos de B1: el mismo de SpriteBody, pero la cara es un óvalo liso del color de piel,
+ * con el borde difuminado y sin ojos, boca ni gafas.
+ */
+function BlurredBody({ look, long }: { look: SpriteLook; long: boolean }) {
+  return (
+    <g>
+      <ellipse cx="16" cy="30" rx="8" ry="2.2" fill="rgba(0,0,0,0.18)" />
+      {look.cape && <path d="M9 15 L5.5 28 L26.5 28 L23 15 Z" fill={look.cape} />}
+      {long && <path d="M8 10 Q7 22 10.5 23 L21.5 23 Q25 22 24 10 Z" fill={look.hair} />}
+      <rect x="12.4" y="25" width="2.6" height="5" fill="#2d2d3a" />
+      <rect x="17" y="25" width="2.6" height="5" fill="#2d2d3a" />
+      <rect x="10" y="15" width="12" height="11" rx="3" fill={look.shirt} />
+      {/* Borde suave: un halo un poco más grande y transparente alrededor del óvalo */}
+      <ellipse cx="16" cy="10.6" rx="7.9" ry="8.1" fill={look.skin} opacity="0.35" />
+      <ellipse cx="16" cy="10.6" rx="7" ry="7.3" fill={look.skin} />
+      <path d="M8.8 10 Q9.6 2.6 16 3.2 Q22.4 2.6 23.2 10 Q19.6 6.6 16 7.4 Q12.4 6.6 8.8 10 Z" fill={look.hair} opacity="0.85" />
+      {look.accessory === 'cap' && (
+        <>
+          <path d="M8.6 8.6 Q9.4 2.4 16 2.6 Q22.6 2.4 23.4 8.6 Z" fill={look.shirt} stroke="rgba(0,0,0,0.25)" strokeWidth="0.4" />
+          <rect x="21" y="7.2" width="5.5" height="2" rx="0.8" fill={look.shirt} />
+        </>
+      )}
+      {look.book && <rect x="21" y="17.5" width="6.5" height="5.5" rx="0.6" fill="#e0a526" />}
+    </g>
   )
 }
