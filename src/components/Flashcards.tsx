@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { StaticText } from './StaticText'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
 import { dueCards, review, toCsv, waitLabel, type Grade } from '../game/cards'
@@ -101,19 +102,19 @@ export function Flashcards({ state, update, onClose }: { state: GameState; updat
                   {card.type === 'phrase' ? '¿Cómo se dice bien?' : 'Palabra'}{card.deck ? ` · ${card.deck}` : ''}
                 </p>
                 <div className="flex items-center gap-2">
-                  <p className={`font-display ${card.type === 'phrase' ? 'text-xl text-[#f3b0b0] line-through decoration-danger/60' : 'text-3xl'}`}>{card.front}</p>
+                  <p className={`font-display ${card.type === 'phrase' ? 'text-xl text-[#f3b0b0] line-through decoration-danger/60' : 'text-3xl'}`}><StaticText text={card.front} /></p>
                   {card.type !== 'phrase' && <SpeakButton text={card.front} size="sm" />}
                 </div>
                 {flipped && (
                   <div className="anim-fade-in">
                     <div className="flex items-center justify-center gap-2">
-                      <p className="text-xl text-gold">{card.back}</p>
+                      <p className="text-xl text-gold"><StaticText text={card.back} /></p>
                       {card.type === 'phrase' && <SpeakButton text={card.back} size="sm" />}
                     </div>
-                    {card.example && card.type === 'phrase' && <p className="mt-2 text-sm text-paper/70">{card.example}</p>}
+                    {card.example && card.type === 'phrase' && <p className="mt-2 text-sm text-paper/70"><StaticText text={card.example} /></p>}
                     {card.example && card.type !== 'phrase' && (
                       <div className="mt-2 flex items-center justify-center gap-2">
-                        <p className="text-sm italic text-paper/70">"{card.example}"</p>
+                        <p className="text-sm italic text-paper/70">"<StaticText text={card.example} />"</p>
                         <SpeakButton text={card.example} size="sm" />
                       </div>
                     )}
@@ -148,8 +149,8 @@ export function Flashcards({ state, update, onClose }: { state: GameState; updat
               {shown.map((c) => (
                 <li key={c.id} className="flex items-center justify-between gap-2 border-b border-line pb-2 last:border-0">
                   <div>
-                    <p className="font-display text-lg">{c.front}</p>
-                    <p className="text-sm text-paper/70">{c.back}{c.deck ? <span className="text-paper/45"> · {c.deck}</span> : null}</p>
+                    <p className="font-display text-lg"><StaticText text={c.front} /></p>
+                    <p className="text-sm text-paper/70"><StaticText text={c.back} />{c.deck ? <span className="text-paper/45"> · {c.deck}</span> : null}</p>
                   </div>
                   <button
                     className={`${btnGhost} text-sm text-[#f3b0b0]`}

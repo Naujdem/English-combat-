@@ -4,6 +4,8 @@ import type { Update } from '../game/store'
 import { normalizeWord, phrasalAt, translate } from '../data/glossary'
 import { newCard } from '../game/cards'
 import { SpeakButton } from './SpeakButton'
+import { withStatic } from './StaticText'
+import { STATIC_NAME, staticForSpeech } from '../game/staticName'
 import { btn, btnGhost, btnPrimary } from './ui'
 
 /**
@@ -60,6 +62,12 @@ export function WordProvider({ state, update, children }: { state: GameState; up
 /** Texto en inglés con cada palabra tocable (subrayado punteado, como en las apps de idiomas) */
 export function Tappable({ text }: { text: string }) {
   const open = useContext(WordCtx)
+  // Nombres con estática ([[?]] → ▒▒▒): cada trozo de texto se sigue pudiendo tocar
+  if (text.includes(STATIC_NAME)) return <>{withStatic(text, (part, k) => <TappableWords key={k} text={part} sentence={staticForSpeech(text)} open={open} />)}</>
+  return <TappableWords text={text} sentence={text} open={open} />
+}
+
+function TappableWords({ text, sentence, open }: { text: string; sentence: string; open: Open | null }) {
   if (!open) return <>{text}</>
   const parts = text.split(/(\s+)/)
   // Posición de cada palabra entre las palabras de la frase (para encontrar phrasal verbs)
@@ -75,9 +83,9 @@ export function Tappable({ text }: { text: string }) {
             tabIndex={0}
             onClick={(e) => {
               e.stopPropagation()
-              open(p, text, index[i])
+              open(p, sentence, index[i])
             }}
-            onKeyDown={(e) => e.key === 'Enter' && open(p, text, index[i])}
+            onKeyDown={(e) => e.key === 'Enter' && open(p, sentence, index[i])}
             className="cursor-pointer underline decoration-paper/30 decoration-dotted underline-offset-4 hover:decoration-gold"
           >
             {p}

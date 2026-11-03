@@ -7,6 +7,8 @@ import { translate } from '../data/glossary'
 import { newCard } from '../game/cards'
 import { useTeacher } from '../game/teacher'
 import { SpeakButton } from './SpeakButton'
+import { StaticName } from './StaticText'
+import { STATIC_NAME } from '../game/staticName'
 import { btn, btnGhost, btnPrimary, Overlay, Panel } from './ui'
 
 /**
@@ -341,16 +343,21 @@ function TapLine({ text, verbs, onWord, active }: { text: string; verbs: boolean
     last = m.index! + m[0].length
   }
   if (last < text.length) parts.push({ t: text.slice(last) })
+  // Solo el primer nombre con estática de la línea hace sonar la estática
+  const firstStatic = parts.findIndex((p) => p.t.includes(STATIC_NAME))
 
   return (
     <>
       {parts.map((p, i) => {
-        const tokens = p.t.split(/(\s+)/)
+        // El marcador [[?]] (nombre con estática) se separa como palabra aparte
+        const tokens = p.t.split(/(\s+|\[\[\?\]\])/).filter((x) => x !== '')
         const style = verbs && p.tense ? { background: `${TENSE_INFO[p.tense].color}55`, boxShadow: `inset 0 -2px 0 ${TENSE_INFO[p.tense].color}` } : undefined
         return (
           <span key={i} style={style} className={style ? 'rounded px-0.5' : undefined}>
             {tokens.map((tok, j) =>
-              /\S/.test(tok) && /[A-Za-z]/.test(tok) ? (
+              tok === STATIC_NAME ? (
+                <StaticName key={j} sound={i === firstStatic && j === tokens.indexOf(STATIC_NAME)} />
+              ) : /\S/.test(tok) && /[A-Za-z]/.test(tok) ? (
                 <span
                   key={j}
                   role="button"
