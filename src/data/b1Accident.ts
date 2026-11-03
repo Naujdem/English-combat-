@@ -1,4 +1,4 @@
-import type { GameState, SceneDef, Zone } from '../game/types'
+import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import { closeId } from './b1World'
 import { memoryFlag } from '../game/memory'
 
@@ -30,6 +30,8 @@ export const B1_01_RESCUE = 'b1-01-rescue'
 /** El teléfono de tu cuarto, ahora con Leo escribiendo (aparece al salir del recuerdo 1) */
 export const B1_LEO_PHONE = 'b1-01-leo-phone'
 export const B1_01_MESSAGE = 'b1-01-message'
+/** Lo que le escribes a Leo al despertar (se ve en la lección por mensajes) */
+export const B1_01_MESSAGE_TEXT = 'I saw a fire. A man lost his voice.'
 export const B1_01_PRACTICE = 'b1-01-practice'
 /** Esbirro del epílogo: aparece en el cuarto al terminar la práctica */
 export const B1_01_ECHO = 'b1-01-smoke-echo'
@@ -128,3 +130,31 @@ export const ACCIDENT_RESCUE: ScriptLine[] = [
   { who: 'narrator', text: 'The firefighters arrived. Everyone got out because I shouted. But the smoke took my voice.', es: 'Llegaron los bomberos. Todos salieron porque yo grité. Pero el humo me quitó la voz.' },
   { who: 'narrator', text: "And my friend... didn't say a word.", es: 'Y mi amigo... no dijo ni una palabra.' },
 ]
+
+/**
+ * Smoke Echo (esbirro del epílogo): un eco de humo que el reloj trajo a tu cuarto. Aparece al terminar la práctica.
+ * Es un eco: al vencerlo vuelve a su tiempo y da un escudo y el impermeable. Sus frases con error están mal en cualquier contexto.
+ */
+export const B1_01_ENEMIES: Record<string, EnemyDef> = {
+  [B1_01_ECHO]: {
+    id: B1_01_ECHO,
+    name: 'Smoke Echo',
+    person: 'Smoke Echo',
+    kind: 'minion',
+    echo: true,
+    hp: 5,
+    topics: ['past-simple-continuous', 'cause-effect'],
+    kinds: ['fill', 'fix', 'order', 'listen'],
+    tags: ['b1-01-minion'],
+    onlyTags: true,
+    reward: 'impermeable',
+    look: { shirt: '#8a8f99', hair: '#5c616b', skin: '#b7bcc4' },
+    before: [
+      { text: "Whoosh... I was burning when the alarm rang. Because the smoke, you can't breathe!", es: 'Fuuum... Yo estaba ardiendo cuando sonó la alarma. ¡Por el humo, no puedes respirar! (Because the smoke: mal).' },
+      { text: 'While the alarm rang, I was clean the board. Because the smoke, he couldn\'t breathe!', es: 'Mientras sonaba la alarma, yo limpiaba la pizarra. ¡Por el humo, él no podía respirar! (I was clean, Because the smoke: mal).' },
+    ],
+    after: [{ text: "The smoke is going away... I'm just air now.", es: 'El humo se va... Ahora solo soy aire.' }],
+    freed: { text: 'Thank you. Be careful with fire, OK?', es: 'Gracias. Ten cuidado con el fuego, ¿sí?' },
+    bonus: { q: 'Elige la frase correcta:', options: ['He was tired because of the smoke.', 'He was tired because the smoke.', 'He was tired so of the smoke.'], answer: 0, tip: 'because of + sustantivo (the smoke).' },
+  },
+}

@@ -564,4 +564,37 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'leo', text: "On a POSTCARD we tell where we are and what we did: We're staying at a small hotel. Yesterday we went snorkeling. And we finish with: Wish you were here!", es: 'En una postal contamos dónde estamos y qué hicimos: Nos estamos quedando en un hotel pequeño. Ayer fuimos a bucear. Y terminamos con: ¡Ojalá estuvieras aquí!', board: ["We're staying at…", 'Yesterday we went… · Wish you were here!'], table: { head: ['Uso', 'Ejemplo'], rows: [['dónde', "<We>{'re staying} at a small hotel."], ['qué hicimos', 'Yesterday <we> [went] snorkeling.'], ['despedida', 'Wish you were here!']] } },
     { who: 'board', text: "We're staying ___ a campsite near the lake.", board: ["We're staying at…", 'Yesterday we went… · Wish you were here!'], choice: { options: ['at', 'on', 'to'], answer: 0, tip: 'stay at + lugar: at a campsite.' } },
   ],
+  // ── B1-01 · The Accident: Leo escribe por el teléfono. Contar una historia (was -ing + when / while) y causa y efecto ──
+  'cause-effect': [
+    { who: 'leo', text: 'I read your message. A fire... and a man who lost his voice. That sounds terrible.', es: 'Leí tu mensaje. Un incendio... y un hombre que perdió la voz. Suena terrible.' },
+    { who: 'leo', text: "Let's check how you told it. When you tell a story, you mix two past tenses.", es: 'Veamos cómo lo contaste. Cuando cuentas una historia, mezclas dos tiempos del pasado.' },
+    {
+      who: 'leo',
+      text: 'Look: "I was cleaning the board when the alarm rang."',
+      es: 'Mira: "Yo estaba limpiando la pizarra cuando sonó la alarma."',
+      board: ['I was cleaning the board', 'when the alarm rang.'],
+      table: { head: ['Acción larga (el fondo)', 'Acción corta (interrumpe)'], rows: [['<I> [was cleaning] the board', '{when} <the alarm> [rang].']], arrow: true },
+    },
+    { who: 'leo', text: 'Past continuous (was/were + -ing) is the background: what was happening. Past simple is the event that interrupts it.', es: 'El past continuous (was/were + -ing) es el fondo: lo que estaba pasando. El past simple es el hecho que lo interrumpe.' },
+    { who: 'leo', text: "With 'while', the long action comes right after it: 'While we were walking, the lights went out.'", es: "Con 'while', la acción larga va justo después: 'Mientras caminábamos, se fue la luz.'", board: ['While we were walking,', 'the lights went out.'] },
+    { who: 'board', text: 'My friend ___ at the door when the alarm rang.', board: ['was / were + -ing', '+ when + past simple'], choice: { options: ['was waiting', 'were waiting', 'is waiting'], answer: 0, tip: 'Acción en progreso cuando algo la interrumpe: was waiting (my friend = he → was).' } },
+    { who: 'leo', text: 'Now the new part: WHY something happened, and what happened AS A RESULT.', es: 'Ahora lo nuevo: POR QUÉ pasó algo y qué pasó COMO RESULTADO.', board: ['because + oración', 'because of + sustantivo'] },
+    {
+      who: 'leo',
+      text: 'Look at these two sentences. They say the same thing in two ways.',
+      es: 'Mira estas dos frases. Dicen lo mismo de dos maneras.',
+      table: { head: ['Estructura', 'Ejemplo'], rows: [['because + <oración>', '<He> [lost] his voice {because} <the smoke was thick>.'], ['because of + sustantivo', '<He> [lost] his voice {because of} the smoke.']] },
+    },
+    { who: 'leo', text: 'Because + a full sentence (subject + verb). Because of + just a noun: the smoke, the fire, the heat.', es: 'Because + una oración completa (sujeto + verbo). Because of + solo un sustantivo: el humo, el fuego, el calor.' },
+    { who: 'board', text: "He couldn't breathe ___ the smoke.", board: ['because + oración', 'because of + sustantivo'], choice: { options: ['because of', 'because', 'so'], answer: 0, tip: 'Después viene un sustantivo (the smoke), no una oración: because of.' } },
+    { who: 'leo', text: "Now the result. 'So' goes before the result. 'As a result' starts a new sentence, with a comma.", es: "Ahora el resultado: 'so' va antes del resultado. 'As a result' empieza una frase nueva, con coma.", board: ['…, so + resultado', 'As a result, + oración'] },
+    {
+      who: 'leo',
+      text: 'Look at the result in each sentence.',
+      es: 'Mira el resultado en cada frase.',
+      table: { rows: [['<The stairs> [were] full of smoke, {so} <we> [used] the fire exit.'], ['<The smoke> [was] thick. {As a result}, <he> [lost] his voice.']] },
+    },
+    { who: 'board', text: 'The alarm rang, ___ everybody left the building.', board: ['…, so + resultado', 'As a result, + oración'], choice: { options: ['so', 'because of', 'as a result of'], answer: 0, tip: 'Es el resultado: so (así que).' } },
+    { who: 'leo', text: 'Reason: because / because of. Result: so / as a result. Ready to practice?', es: 'Causa: because / because of. Resultado: so / as a result. ¿Listo para practicar?', board: ['because · because of', 'so · as a result'] },
+  ],
 }

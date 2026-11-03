@@ -313,6 +313,8 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   'abrigo-invierno': { name: 'Abrigo de invierno', color: '#7a4a2e' },
   // A Dinner to Remember: regalo de Chef Bruno (no se vende en la tienda)
   'delantal-chef': { name: 'Delantal de chef', color: '#f4efe4' },
+  // B1-01 · The Accident: regalo del Smoke Echo (al liberarlo)
+  impermeable: { name: 'Impermeable amarillo (B1)', color: '#e0b526' },
   // Regalos de algunos esbirros de A2 (al liberarlos)
   'chaleco-mesero': { name: 'Chaleco de mesero (A2)', color: '#5a3a2e' },
   'overol-taller': { name: 'Overol del taller de Hale (A2)', color: '#4a5560' },

@@ -366,7 +366,16 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   'b1-phone': {
     name: 'Ms. Haddad',
     look: { shirt: '#2f6f73', hair: '#1f1f1f', skin: '#c68642', gender: 'female' },
+    // Al salir del recuerdo 1, el teléfono pasa a ser Leo escribiendo (b1-01-leo-phone)
+    until: 'b1-01-memory',
     doneLine: { text: '(The phone is quiet now. Your flight leaves tomorrow at nine.)', es: '(El teléfono ya está en silencio. Tu vuelo sale mañana a las nueve.)' },
+  },
+  // ── B1-01 · epílogo: el mismo teléfono, ahora con Leo escribiendo (retrato de Leo). Aparece con memoryFlag(1) ──
+  'b1-01-leo-phone': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    after: 'b1-01-memory',
+    doneLine: { text: 'Get some sleep. We have a plane to catch.', es: 'Duerme un poco. Tenemos un avión que tomar.' },
   },
   // ── B1-01 · The Accident (recuerdo 1): el amigo junto a la puerta. Cara borrosa y sin nombre (ninguna pista de quién es) ──
   'b1-01-friend': {

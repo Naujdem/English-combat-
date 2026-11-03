@@ -43,7 +43,7 @@ import { exitMemory, isMemoryScene } from '../game/memory'
 import { MemoriesTab } from '../components/MemoriesTab'
 import { Inscriptions } from '../components/Inscriptions'
 import { B1_DEMO_TABLET } from '../data/b1TabletDemo'
-import { B1_01_FRIEND } from '../data/b1Accident'
+import { B1_01_FRIEND, B1_LEO_PHONE } from '../data/b1Accident'
 import { TheAccident } from '../components/CallForHelp'
 import { isB1Unlocked } from '../data/b1World'
 import { B1_CALL, B1_PHONE } from '../data/b1Home'
@@ -655,7 +655,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET ? <TabletIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET ? <TabletIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -1202,7 +1202,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           <Lesson
             state={state}
             steps={lesson.topics.flatMap((t) => (LESSONS[t] ?? []).map((st) => ({ ...st, topic: t })))}
-            title={lesson.enemyId ? 'Leo te alcanza antes del combate' : 'Leo te ayuda'}
+            title={lesson.enemyId ? 'Leo te alcanza antes del combate' : lesson.task && NPC_TASKS[lesson.task]?.phoneLesson ? 'Leo te escribe' : 'Leo te ayuda'}
+            phone={lesson.task ? NPC_TASKS[lesson.task]?.phoneLesson : undefined}
             onDone={() => {
               const { topics, enemyId, then, task: taskId } = lesson
               update((s) => ({ ...s, seenLesson: [...s.seenLesson, ...topics.filter((t) => !s.seenLesson.includes(t))] }))
