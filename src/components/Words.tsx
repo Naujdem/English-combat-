@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from 'react'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
-import { normalizeWord, translate } from '../data/glossary'
+import { normalizeWord, phrasalAt, translate } from '../data/glossary'
 import { newCard } from '../game/cards'
 import { SpeakButton } from './SpeakButton'
 import { btn, btnGhost, btnPrimary } from './ui'
@@ -9,20 +9,24 @@ import { btn, btnGhost, btnPrimary } from './ui'
 /**
  * Tocar una palabra en inglés en cualquier parte del juego (lecciones de Leo, diálogos,
  * lecturas) muestra su traducción y permite guardarla en las fichas.
+ * Si la palabra es parte de un phrasal verb ("get" o "up" en "get up"), se muestra y se guarda el phrasal verb completo.
  */
-type Open = (word: string, sentence: string) => void
+type Open = (word: string, sentence: string, index?: number) => void
 const WordCtx = createContext<Open | null>(null)
 
 export function WordProvider({ state, update, children }: { state: GameState; update: Update; children: ReactNode }) {
-  const [word, setWord] = useState<{ raw: string; sentence: string } | null>(null)
+  const [word, setWord] = useState<{ raw: string; sentence: string; index?: number } | null>(null)
   const names = [state.hero.name, state.interest.name].filter(Boolean).map((n) => n.toLowerCase())
-  const w = word ? normalizeWord(word.raw) : ''
-  const isName = !!word && (names.includes(w) || /^[A-Z]/.test(word.raw.replace(/^[^A-Za-z]+/, '')) && !translate(word.raw))
-  const meaning = word ? (isName ? 'Nombre propio' : translate(word.raw)) : null
+  const single = word ? normalizeWord(word.raw) : ''
+  const phrasal = word && word.index !== undefined ? phrasalAt(word.sentence.split(/\s+/).filter((t) => /[A-Za-z]/.test(t)), word.index) : null
+  const isName = !phrasal && !!word && (names.includes(single) || /^[A-Z]/.test(word.raw.replace(/^[^A-Za-z]+/, '')) && !translate(word.raw))
+  const w = phrasal ? phrasal.phrase : single
+  const meaning = phrasal ? phrasal.meaning : word ? (isName ? 'Nombre propio' : translate(word.raw)) : null
+  const singleMeaning = phrasal && word ? translate(word.raw) : null
   const saved = state.cards.some((c) => c.id === w)
 
   return (
-    <WordCtx.Provider value={(raw, sentence) => setWord({ raw, sentence })}>
+    <WordCtx.Provider value={(raw, sentence, index) => setWord({ raw, sentence, index })}>
       {children}
       {word && (
         <div className="absolute inset-x-0 bottom-0 z-[60] flex justify-center p-3" onClick={() => setWord(null)}>
@@ -31,7 +35,9 @@ export function WordProvider({ state, update, children }: { state: GameState; up
               <p className="font-display text-2xl">{w}</p>
               <SpeakButton text={w} size="sm" />
             </div>
+            {phrasal && <p className="text-xs font-semibold uppercase tracking-wide text-gold">Phrasal verb</p>}
             <p className="text-[16px] text-paper/85">{meaning ?? 'Esta palabra todavía no está en el diccionario del juego.'}</p>
+            {phrasal && singleMeaning && <p className="mt-1 text-sm text-paper/60">Sola, «{single}» significa: {singleMeaning}</p>}
             <div className="mt-3 flex items-center justify-between gap-2">
               <button className={btnGhost} onClick={() => setWord(null)}>Cerrar</button>
               {meaning && !isName && (
@@ -56,6 +62,9 @@ export function Tappable({ text }: { text: string }) {
   const open = useContext(WordCtx)
   if (!open) return <>{text}</>
   const parts = text.split(/(\s+)/)
+  // Posición de cada palabra entre las palabras de la frase (para encontrar phrasal verbs)
+  let n = -1
+  const index = parts.map((p) => (/[A-Za-z]/.test(p) ? ++n : -1))
   return (
     <>
       {parts.map((p, i) =>
@@ -66,9 +75,9 @@ export function Tappable({ text }: { text: string }) {
             tabIndex={0}
             onClick={(e) => {
               e.stopPropagation()
-              open(p, text)
+              open(p, text, index[i])
             }}
-            onKeyDown={(e) => e.key === 'Enter' && open(p, text)}
+            onKeyDown={(e) => e.key === 'Enter' && open(p, text, index[i])}
             className="cursor-pointer underline decoration-paper/30 decoration-dotted underline-offset-4 hover:decoration-gold"
           >
             {p}
