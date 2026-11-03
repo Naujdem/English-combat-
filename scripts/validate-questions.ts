@@ -7,13 +7,15 @@
  * Escribe el informe en reports/validacion.md. Qué revisa:
  *  1. Estructura: IDs repetidos, respuesta fuera de rango, opciones repetidas, "___" que falta,
  *     pistas vacías, prácticas de Leo con IDs inexistentes y enemigos con pocas preguntas propias.
- *  2. LanguageTool (--lt):
+ *  2. Diccionario: palabras en inglés de los textos del juego que no tienen traducción al tocarlas.
+ *  3. LanguageTool (--lt):
  *     A) la respuesta CORRECTA tiene un posible error → revisar primero (lo más grave);
  *     B) una opción INCORRECTA no tiene ningún error detectado → podría haber dos respuestas válidas.
  *        B es normal cuando la opción es incorrecta por el contenido (p. ej. "He sold the horses"),
  *        así que es solo una lista para mirar con calma.
  */
-import { writeFileSync, mkdirSync } from 'node:fs'
+import { writeFileSync, mkdirSync, readFileSync, readdirSync } from 'node:fs'
+import { translate } from '../src/data/glossary'
 import { QUESTIONS } from '../src/data/questions'
 import { ENEMIES } from '../src/data/enemies'
 import { NPC_TASKS } from '../src/data/tasks'
@@ -67,7 +69,33 @@ for (const e of Object.values(ENEMIES)) {
   })
 }
 
-// ── 2. Frases para LanguageTool ──
+// ── 2. Diccionario: palabras en inglés sin traducción ──
+// Se leen los campos con texto en inglés de los archivos de datos. Para no confundir el español con el inglés,
+// se descartan las palabras que aparecen en campos en español (es, tip, sub...) y las que llevan tilde.
+const noTranslation = new Map<string, Set<string>>()
+{
+  const dir = 'src/data'
+  const EN = /(?:text|en|prompt|say|q|audio):\s*(['"`])((?:\\.|(?!\1).)*)\1/g
+  const ES = /(?:es|sub|tip|ask|frame|help|needMsg|intro|placeEs|label|title):\s*(['"`])((?:\\.|(?!\1).)*)\1/g
+  const SOUNDS = /^(b+e+p+|b+o+p+|m+o+o+|b+a+a+|n+e+i+g+h+|h+m+|u+h+|a+h+|o+h+|z+|s+h+)$/
+  const files = readdirSync(dir).filter((f) => f.endsWith('.ts')).map((f) => [f, readFileSync(`${dir}/${f}`, 'utf8')] as const)
+  const spanish = new Set<string>()
+  for (const [, src] of files) for (const m of src.matchAll(ES)) for (const t of m[2].split(/[^A-Za-zÀ-ÿ']+/)) spanish.add(t.toLowerCase())
+  for (const [f, src] of files) {
+    for (const m of src.matchAll(EN)) {
+      for (const raw of m[2].replace(/\[|\]/g, ' ').split(/[^A-Za-zÀ-ÿ']+/)) {
+        const w = raw.replace(/^'+|'+$/g, '')
+        if (w.length < 2 || w.length > 18 || ['ll', 're', 've'].includes(w) || /[À-ÿ]/.test(w) || /^[A-Z]/.test(w)) continue
+        const low = w.toLowerCase()
+        if (spanish.has(low) || SOUNDS.test(low) || translate(low)) continue
+        noTranslation.set(low, (noTranslation.get(low) ?? new Set()).add(f))
+      }
+    }
+  }
+}
+const dictionary: Issue[] = [...noTranslation].sort().map(([w, fs]) => ({ where: w, msg: [...fs].join(', ') }))
+
+// ── 3. Frases para LanguageTool ──
 type Sentence = { text: string; correct: boolean; where: string; checkWrong: boolean }
 const sentences: Sentence[] = []
 const add = (text: string, correct: boolean, where: string, checkWrong = true) => {
@@ -178,6 +206,7 @@ async function main() {
   const parts = [
     `# Validación del banco de preguntas\n\n${bank.length} preguntas · ${Object.keys(ENEMIES).length} enemigos · ${new Date().toISOString().slice(0, 10)}\n`,
     section('Estructura', 'Errores del archivo de datos. Se corrigen sin saber inglés.', structure),
+    section('Diccionario', 'Palabras en inglés de los textos del juego que no tienen traducción al tocarlas. Se agregan en src/data/glossary.ts. Puede salir alguna palabra en español o un nombre propio: esas se ignoran.', dictionary),
   ]
   if (useLT) {
     parts.push(
@@ -191,7 +220,7 @@ async function main() {
   mkdirSync('reports', { recursive: true })
   writeFileSync('reports/validacion.md', report)
   if (process.env.GITHUB_STEP_SUMMARY) writeFileSync(process.env.GITHUB_STEP_SUMMARY, report)
-  console.log(`Estructura: ${structure.length}${useLT ? ` · A: ${ltCorrect.length} · B: ${ltWrong.length}` : ''} → reports/validacion.md`)
+  console.log(`Estructura: ${structure.length} · Diccionario: ${dictionary.length}${useLT ? ` · A: ${ltCorrect.length} · B: ${ltWrong.length}` : ''} → reports/validacion.md`)
 }
 
 main()

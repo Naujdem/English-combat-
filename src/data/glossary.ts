@@ -86,6 +86,38 @@ backwards=hacia atrás;done=hecho, terminado;finally=por fin, finalmente;normal=
 hale=Hale (nombre);instruction=instrucción;mind=importar (Would you mind...? = ¿Te importaría...?);off=apagado (turn off = apagar);request=petición;responsible=responsable;responsibility=responsabilidad;
 safe=seguro, a salvo;screwdriver=destornillador;step=paso;tool=herramienta;toolbox=caja de herramientas;workbench=mesa de trabajo;workshop=taller;wrench=llave inglesa;glove=guante;hammer=martillo;ladder=escalera (de mano);cafe=café (lugar);hold=sostener, agarrar;shone=brilló (shine);disappear=desaparecer;
 librarian=bibliotecario, bibliotecaria;bookmark=separador (de libro);borrow=pedir prestado;return=devolver, regresar;shelf=estante, repisa;belong=pertenecer;ink=tinta;testimony=testimonio, declaración;reader=lector, lectora;record=registro;visitor=visitante;heard=oyó, oí (hear);older=más viejo (old);bigger=más grande (big);than=que (para comparar);okafor=Okafor (nombre);mixed=mezclado (mixed up = revuelto);
+access=acceso;accident=accidente;action=acción;activity=actividad;adjective=adjetivo;adventure=aventura;agree=estar de acuerdo;airport=aeropuerto;alert=alerta;allowed=permitido;
+announcement=anuncio (por altavoz);anymore=ya no (not... anymore);anyway=de todos modos;appear=aparecer;argue=discutir;argument=discusión;arranged=organizado, acordado (arrange);asleep=dormido;
+attention=atención;aunt=tía;avocado=aguacate;awake=despierto;badly=mal;bean=fríjol;beep=pitido;biggest=el más grande (big);blink=parpadear;block=bloquear, cuadra;blow=soplar;bossy=mandón, mandona;
+butter=mantequilla;calm=calmado, tranquilo;calmer=más tranquilo (calm);candle=vela;cause=causa, causar;celebrate=celebrar;choice=opción, elección;choose=elegir;christmas=Navidad;church=iglesia;
+chili=ají;cinnamon=canela;clear=claro, despejado;clue=pista;closer=más cerca (close);coin=moneda;colorful=colorido;comfortable=cómodo;compare=comparar;comparative=comparativo;completely=completamente;
+confirm=confirmar;confused=confundido;congratulations=¡felicitaciones!;connect=conectar;continue=continuar;convince=convencer;cookbook=libro de cocina;coordination=coordinación;
+coordinator=coordinador, coordinadora;corrupted=corrompido;correction=corrección;council=consejo (de la ciudad);crash=choque, chocar;create=crear;cupboard=alacena, armario;curly=crespo, rizado;
+customer=cliente;dead=muerto;deal=trato;decide=decidir;decorate=decorar;deep=profundo;deeper=más profundo (deep);denied=negado, rechazado (deny);deny=negar;depot=depósito (de trenes o buses);
+description=descripción;deserve=merecer;dessert=postre;dining=comer (dining room = comedor);direction=dirección;dish=plato;divide=dividir;dough=masa;driver=conductor, conductora;due=previsto, pendiente;
+during=durante;dust=polvo;eater=el que come, comelón;edge=borde;else=más, otro (something else = otra cosa);entry=entrada, registro;even=incluso, hasta;event=evento;evidence=evidencia, pruebas;
+exact=exacto;example=ejemplo;expect=esperar (que algo pase);experience=experiencia;expert=experto, experta;explode=explotar;face=cara;fact=hecho, dato;fair=justo;false=falso;fallen=caído (fall);
+fear=miedo;fitting=prueba de ropa (fitting room = probador);flavor=sabor;flight=vuelo;form=forma, formulario;fork=tenedor;friendship=amistad;garage=garaje;ghost=fantasma;grant=conceder;
+grandmother=abuela;grill=parrilla, asar a la parrilla;grilled=a la parrilla;guess=adivinar;guest=invitado, invitada;hall=pasillo, salón;health=salud;held=sostuvo (hold);helper=ayudante;
+helpful=útil, servicial;hid=escondió (hide);hide=esconder, esconderse;hole=hueco, agujero;holiday=vacaciones, día festivo;honey=miel;hook=gancho;horseshoe=herradura;hunter=cazador, cazadora;
+illness=enfermedad;imperative=imperativo;impossible=imposible;incomplete=incompleto;information=información;intention=intención;interrupt=interrumpir;itself=sí mismo, solo;jumper=suéter;
+knife=cuchillo;knives=cuchillos (knife);knock=golpear, tocar (la puerta);lake=lago;land=aterrizar, tierra;lead=guiar, llevar;lemonade=limonada;lemon=limón;lie=mentira, mentir;life=vida;
+line=fila, línea;loaf=pan entero (a loaf of bread);local=local, del lugar;lock=cerradura, cerrar con llave;log=registro;lovely=encantador, precioso;low=bajo;manners=modales;match=partido, combinar;
+medicine=medicina, remedio;menu=menú;middle=medio, mitad;millstone=piedra de molino;minute=minuto;miss=extrañar, perder (el bus);mobility=movilidad;moment=momento;mountain=montaña;myself=yo mismo, me;
+necessary=necesario;negative=negativo, frase negativa;noon=mediodía;nowhere=a ninguna parte;offer=ofrecer, oferta;oil=aceite;okay=está bien, de acuerdo;oldest=el más viejo (old);online=en línea;
+operate=funcionar, operar;operator=operador, operadora;opinion=opinión;ouch=¡ay!;pack=empacar;paid=pagó, pagado (pay);pain=dolor;pair=par;participle=participio;passenger=pasajero, pasajera;
+pasta=pasta;personality=personalidad;pile=pila, montón;pill=pastilla;planner=agenda, planificador;plantain=plátano (para cocinar);platform=andén;poor=pobre;port=puerto;positive=positivo, frase afirmativa;
+possible=posible;postcard=postal;pot=olla;prepare=preparar;probably=probablemente;prove=demostrar;push=empujar;quantity=cantidad;queue=fila;quite=bastante;rack=estante, perchero;real=real, de verdad;
+reason=razón;recalculate=recalcular;recent=reciente;recover=recuperarse;relationship=relación;relative=pariente;repairs=reparaciones;restore=restaurar;ridden=montado (ride);rode=montó (ride);
+romantic=romántico;safely=sin peligro, a salvo;scare=asustar;scarf=bufanda;scarves=bufandas (scarf);sent=envió, enviado (send);service=servicio;shall=(para ofrecer o proponer) Shall we...? = ¿...?;
+share=compartir;shelves=estantes (shelf);signal=señal;situation=situación;size=talla, tamaño;smaller=más pequeño (small);smell=oler, olor;sneakers=tenis (zapatos);snorkeling=buceo con snorkel;
+sooner=más pronto (soon);speaker=parlante, hablante;spend=gastar, pasar (tiempo);spin=girar, dar vueltas;spinning=dando vueltas (spin);spoke=habló (speak);square=plaza, cuadrado;stable=establo;
+station=estación;status=estado;stuck=atascado;suddenly=de repente;superlative=superlativo;surprise=sorpresa;sweater=suéter;symptom=síntoma;system=sistema;task=tarea;taste=sabor, probar;
+teammate=compañero de equipo;tent=carpa;themselves=ellos mismos, se;tidied=ordenó, ordenado (tidy);tidy=ordenar, ordenado;tire=llanta;train=tren;transport=transporte;traveler=viajero, viajera;
+trip=viaje;trouble=problema;turtle=tortuga;uncle=tío;unknown=desconocido;upstairs=arriba (en el piso de arriba);village=pueblo;warn=advertir;warning=advertencia;weak=débil;weaker=más débil (weak);
+we've=nosotros hemos (we have);whatever=lo que sea;whisper=susurrar;winner=ganador, ganadora;wire=cable;world=mundo;yourself=tú mismo, te;you'll=tú vas a (you will);you've=tú has (you have);
+battlefield=campo de batalla;harder=más difícil, más fuerte (hard);nineteen=diecinueve;obligation=obligación;sweeped=forma incorrecta: el pasado de sweep es swept;
+he'll=él va a (he will);ding=din (sonido de campana);dong=don (sonido de campana);spain=España;peru=Perú;brazil=Brasil;canada=Canadá;japan=Japón;london=Londres;
 `
 
 const BASE: Record<string, string> = Object.fromEntries(
@@ -124,4 +156,97 @@ export function translate(raw: string): string | null {
 
 export function normalizeWord(raw: string) {
   return raw.toLowerCase().replace(/[’`]/g, "'").replace(/^[^a-zà-ÿ']+|[^a-zà-ÿ']+$/g, '').replace(/^'+|'+$/g, '')
+}
+
+/**
+ * Phrasal verbs: verbo + partícula con un significado nuevo ("get up" = levantarse).
+ * Al tocar el verbo o la partícula dentro de una frase, se muestra el phrasal verb completo.
+ */
+export const PHRASAL: Record<string, string> = {
+  'get up': 'levantarse',
+  'wake up': 'despertarse',
+  'sit down': 'sentarse',
+  'stand up': 'ponerse de pie',
+  'get on': 'subirse a (bus, tren) · get on well = llevarse bien',
+  'get off': 'bajarse de (bus, tren)',
+  'get in': 'entrar, subirse (a un carro)',
+  'get out': 'salir, bajarse (de un carro)',
+  'turn on': 'encender, prender',
+  'turn off': 'apagar',
+  'try on': 'probarse (ropa)',
+  'look for': 'buscar',
+  'look after': 'cuidar',
+  'find out': 'averiguar, descubrir',
+  'come back': 'volver',
+  'come in': 'entrar, pasar',
+  'go back': 'regresar',
+  'go out': 'salir',
+  'go on': 'continuar, seguir',
+  'go up': 'subir',
+  'pick up': 'recoger',
+  'put on': 'ponerse (ropa)',
+  'take off': 'quitarse (ropa), despegar (avión)',
+  'take out': 'sacar',
+  'give up': 'rendirse, dejar de',
+  'run out': 'acabarse, quedarse sin (run out of)',
+  'fill in': 'llenar (un formulario)',
+  'set up': 'instalar, configurar',
+  'sign up': 'inscribirse',
+  'slow down': 'ir más despacio',
+  'hurry up': 'apurarse',
+  'calm down': 'calmarse',
+  'blow out': 'soplar (para apagar)',
+  'break down': 'dañarse (una máquina)',
+  'throw away': 'botar (a la basura)',
+  'clean up': 'limpiar, ordenar',
+  'write down': 'anotar',
+  'check in': 'registrarse (hotel, aeropuerto)',
+  'grow up': 'crecer',
+}
+
+const IRREGULAR: Record<string, string[]> = {
+  get: ['got', 'gotten'], wake: ['woke', 'woken'], sit: ['sat'], stand: ['stood'], come: ['came'], go: ['went', 'gone', 'goes'],
+  take: ['took', 'taken'], find: ['found'], give: ['gave', 'given'], run: ['ran'], blow: ['blew', 'blown'], break: ['broke', 'broken'],
+  throw: ['threw', 'thrown'], write: ['wrote', 'written'], grow: ['grew', 'grown'], put: [], set: [],
+}
+
+/** Todas las formas de un verbo: gets, got, getting… */
+function verbForms(v: string): Set<string> {
+  const f = new Set([v, `${v}s`, `${v}es`, `${v}ed`, `${v}ing`, `${v}${v.slice(-1)}ing`, `${v}${v.slice(-1)}ed`, ...(IRREGULAR[v] ?? [])])
+  if (v.endsWith('e')) f.add(`${v.slice(0, -1)}ing`).add(`${v}d`)
+  if (v.endsWith('y')) f.add(`${v.slice(0, -1)}ies`).add(`${v.slice(0, -1)}ied`)
+  return f
+}
+/** Los que se pueden separar ("turn it on", "pick the box up"); los demás van juntos */
+const SEPARABLE = new Set(['wake up', 'turn on', 'turn off', 'try on', 'pick up', 'put on', 'take off', 'take out', 'fill in', 'set up', 'blow out', 'throw away', 'clean up', 'write down'])
+/** Palabras que no pueden ir entre el verbo y la partícula ("go to school on the bus" no es "go on") */
+const NOT_BETWEEN = new Set(['to', 'at', 'for', 'with', 'from', 'of', 'and', 'but', 'or', 'by', 'into', 'in', 'on', 'up', 'off', 'out', 'down', 'back', 'away', 'is', 'are', 'was', 'were'])
+const PHRASAL_FORMS = Object.keys(PHRASAL).map((p) => {
+  const [verb, particle] = p.split(' ')
+  return { phrase: p, forms: verbForms(verb), particle, gap: SEPARABLE.has(p) ? 2 : 0 }
+})
+
+/**
+ * Busca un phrasal verb alrededor de la palabra tocada (words = palabras de la frase, i = la tocada).
+ * El verbo y la partícula pueden estar separados por hasta 2 palabras ("pick the box up", "turn it on").
+ */
+export function phrasalAt(words: string[], i: number): { phrase: string; meaning: string } | null {
+  const w = words.map(normalizeWord)
+  const ends = (k: number) => /[.,!?;:]$/.test(words[k] ?? '')
+  for (const { phrase, forms, particle, gap } of PHRASAL_FORMS) {
+    if (forms.has(w[i])) {
+      for (let k = i + 1; k <= i + 1 + gap && k < w.length; k++) {
+        if (w[k] === particle) return { phrase, meaning: PHRASAL[phrase] }
+        if (ends(k) || NOT_BETWEEN.has(w[k])) break
+      }
+    }
+    if (w[i] === particle) {
+      for (let k = i - 1; k >= i - 1 - gap && k >= 0; k--) {
+        if (ends(k)) break
+        if (forms.has(w[k])) return { phrase, meaning: PHRASAL[phrase] }
+        if (NOT_BETWEEN.has(w[k])) break
+      }
+    }
+  }
+  return null
 }
