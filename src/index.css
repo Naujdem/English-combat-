@@ -90,3 +90,18 @@ button { cursor: pointer; touch-action: manipulation; }
 /* B1: salida de un recuerdo (fundido a negro) */
 @keyframes b1-fade-black { from { opacity: 0 } to { opacity: 1 } }
 .b1-fade-black { animation: b1-fade-black 0.9s ease-in forwards; }
+
+/* B1: Inscriptions (tablilla de piedra, brillo al traducir, regla del templo y efectos de la sala) */
+.ins-tablet { background: linear-gradient(180deg, #3e4757 0%, #2e3542 100%); box-shadow: inset 0 2px 0 rgba(255,255,255,0.06), inset 0 -3px 0 rgba(0,0,0,0.3); }
+.ins-stone { background: linear-gradient(180deg, #505b6d 0%, #3c4555 100%); }
+@keyframes ins-glow { 0% { box-shadow: 0 0 0 rgba(232,201,106,0) } 40% { box-shadow: 0 0 22px rgba(232,201,106,0.55) } 100% { box-shadow: 0 0 10px rgba(232,201,106,0.3) } }
+.ins-glow { animation: ins-glow 1s ease-out both; }
+@keyframes ins-translate { from { opacity: 0; filter: blur(3px) } to { opacity: 1; filter: none } }
+.ins-translate { animation: ins-translate 0.7s ease-out both; }
+.ins-move { transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out; transform-box: fill-box; }
+/* Reducir movimiento: los efectos cambian de golpe, solo con un fundido corto (sin desplazamientos ni brillos que crecen) */
+@media (prefers-reduced-motion: reduce) {
+  .ins-move { transform: none !important; transition-property: opacity !important; transition-duration: 0.2s !important; }
+  .ins-glow { animation: none; box-shadow: 0 0 10px rgba(232,201,106,0.3); }
+  .ins-translate { animation-name: fade-in !important; animation-duration: 0.2s !important; filter: none; }
+}
