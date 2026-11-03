@@ -74,6 +74,7 @@ export const A2_FUTURE_ENEMIES: Record<string, EnemyDef> = {
     person: 'Route Drone',
     kind: 'minion',
     echo: true,
+    reward: 'chaqueta-neon',
     hp: 6,
     topics: [TP],
     kinds: ['fill', 'fix', 'order', 'listen'],
@@ -152,6 +153,12 @@ export const A2_FUTURE_ENEMIES: Record<string, EnemyDef> = {
       { text: 'Somebody changed my route… somebody in the Mobility Office.', es: 'Alguien cambió mi ruta… alguien de la oficina de movilidad.' },
     ],
     freed: { text: 'Somebody in the Mobility Office changed my route.', es: 'Alguien de la oficina de movilidad cambió mi ruta.' },
+    farewell: {
+      q: 'Tram driver: Thank you! How do I get to the museum from here?',
+      options: ['Go straight on and turn left at the traffic lights.', 'Go straight on and turn to left in the traffic lights.', 'Goes straight on and turn left at the traffic lights.'],
+      answer: 0,
+      tip: 'Indicaciones: imperativo (Go, turn) + turn left + at the traffic lights.',
+    },
     release: {
       title: 'Las rutas',
       text: 'El tranvía se detiene. Del techo cae polvo morado, pero no hay ningún fragmento. Todas las pantallas de la calle parpadean al mismo tiempo.',

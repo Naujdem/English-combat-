@@ -80,6 +80,7 @@ export const A2_CITY_ENEMIES: Record<string, EnemyDef> = {
     person: 'Mr. Bell',
     kind: 'minion',
     echo: true,
+    reward: 'chaleco-mesero',
     hp: 6,
     topics: ['should-must', 'invitations'],
     kinds: ['fill', 'fix', 'order', 'listen', 'write'],

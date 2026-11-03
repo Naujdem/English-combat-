@@ -148,6 +148,12 @@ export const A2_RETURN_ENEMIES: Record<string, EnemyDef> = {
       { text: 'Keep it, then. But a voice is not only words…', es: 'Quédatelo, entonces. Pero una voz no son solo palabras…' },
     ],
     freed: { text: 'The purple light is gone. You can hear people talking in every room.', es: 'La luz morada se fue. Se oye a la gente hablar en cada habitación.' },
+    farewell: {
+      q: 'Doctor: You did it! How do you feel now?',
+      options: ['I feel much better, thank you.', 'I feel much more good, thank you.', 'I am feel better, thank you.'],
+      answer: 0,
+      tip: 'good → better (irregular) · I feel, sin am.',
+    },
     release: {
       title: '¡El último fragmento de A2!',
       text: 'The Silence se deshace en luz morada y deja un fragmento en el suelo. Al tomarlo, el centro vacío de tu reloj se ilumina por primera vez… pero no se llena del todo. En el pasillo, alguien tose: es Leo.',

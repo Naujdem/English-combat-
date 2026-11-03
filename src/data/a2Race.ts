@@ -69,6 +69,7 @@ export const A2_RACE_ENEMIES: Record<string, EnemyDef> = {
     person: 'Jack',
     kind: 'minion',
     echo: true,
+    reward: 'chaqueta-jinete',
     hp: 5,
     topics: [TP],
     kinds: ['fill', 'fix', 'order', 'listen'],
@@ -78,6 +79,7 @@ export const A2_RACE_ENEMIES: Record<string, EnemyDef> = {
     look: { shirt: '#b03a2e', hair: '#2b1d12', skin: '#e0ac69', accessory: 'cap', gender: 'male' },
     before: [{ text: 'You think your horse is the best? Mine is faster than yours. Watch me!', es: '¿Crees que tu caballo es el mejor? El mío es más rápido que el tuyo. ¡Mírame!' }],
     after: [{ text: 'Okay… you are better than me today. But the race isn’t over. Talk to JoJo. He knows about the cart.', es: 'Está bien… hoy eres mejor que yo. Pero la carrera no ha terminado. Habla con JoJo. Él sabe lo del carro. (Palabra liberada: fastest).' }],
+    bonus: { q: 'Before you go! My horse is fast, but your horse is ___ than mine.', options: ['faster', 'more fast', 'fastest'], answer: 0, tip: 'Comparativo de adjetivo corto: fast → faster than.' },
     freed: { text: 'Talk to JoJo. He knows about the cart.', es: 'Habla con JoJo. Él sabe lo del carro.' },
   },
   // Jefe (3 fases cortas): aparece en la meta tras Reconstruct the Story. Libera el fragmento de voz y la pieza del reloj.
@@ -119,6 +121,12 @@ export const A2_RACE_ENEMIES: Record<string, EnemyDef> = {
     ],
     after: [{ text: 'Fine. Take the fragment. The cart is gone, but the race never really ends.', es: 'Está bien. Toma el fragmento. El carro ya no está, pero la carrera nunca termina de verdad.' }],
     freed: { text: 'The cart is gone, but the race never really ends.', es: 'El carro ya no está, pero la carrera nunca termina de verdad.' },
+    farewell: {
+      q: 'JoJo: What a race! Who was the fastest today?',
+      options: ['Our horse was the fastest!', 'Our horse was the most fast!', 'Our horse was fastest than all!'],
+      answer: 0,
+      tip: 'Superlativo de adjetivo corto: the + -est (the fastest).',
+    },
     release: {
       title: '¡Fragmento recuperado!',
       text: 'El Master Jockey suelta un fragmento morado: la voz del ganador. Al tomarlo, la palabra "fastest" vuelve a sonar completa en tu voz. El centro vacío de tu reloj vibra un segundo... y se queda quieto. Lo guardas con los otros.',
