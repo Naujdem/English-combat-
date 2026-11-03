@@ -37,6 +37,9 @@ import { Directions } from '../components/Directions'
 import { CafeOrder } from '../components/CafeOrder'
 import { MiniTalk } from '../components/MiniTalk'
 import { FragmentJoin } from '../components/FragmentJoin'
+import { SpriteL } from '../components/SpriteL'
+import { BlurFace, BlurFaceIcon } from '../components/BlurFace'
+import { exitMemory, isMemoryScene } from '../game/memory'
 import { B1_CALL, B1_PHONE } from '../data/b1Home'
 import { B1_HOME_ID, B1_OPENING } from '../data/b1World'
 import { NPC_TASKS, PARTY_ITEMS, taskOf } from '../data/tasks'
@@ -211,6 +214,11 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       hp: t.heal ? s.maxHp : s.hp,
       coins: t.coins ? (s.coins ?? 0) + t.coins : s.coins,
     }))
+    // B1: la tarea termina el recuerdo (fundido, despertar y diario: MemoryTransitions)
+    if (t.exitMemory) {
+      update((s) => exitMemory(s, t.exitMemory!, { close: t.closeMemory }))
+      return
+    }
     setMsg({ text: fill(t.reward.text), es: t.reward.es && fill(t.reward.es), sub: fill(t.reward.sub), say: t.reward.say && fill(t.reward.say), tone: 'good' })
 
     if (DIARY.some((c) => c.unlock === t.done) && !state.opened.includes(t.done)) setDiary(true)
@@ -530,6 +538,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const camX = Math.max(0, Math.min(cols - VIEW, state.pos.x - Math.floor(VIEW / 2)))
   const camY = Math.max(0, Math.min(rows - VIEW, state.pos.y - Math.floor(VIEW / 2)))
   const look = heroLook(state)
+  /** B1: escena de recuerdo (el héroe es L y las caras se ven borrosas) */
+  const inMemory = isMemoryScene(scene.id)
   const talkFriend = talk ? friendById(state, talk.friendId) : null
 
   function friendHasNews(id: string) {
@@ -632,7 +642,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE ? <PhoneIcon ringing={pending} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE ? <PhoneIcon ringing={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -680,7 +690,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             ))}
             <g style={{ transform: `translate(${state.pos.x * T}px, ${state.pos.y * T}px)`, transition: 'transform 150ms linear' }}>
               <g transform={state.facing === 'left' ? 'translate(32 0) scale(-1 1)' : undefined}>
-                <SpriteBody look={look} mood={state.recovered.length ? 'normal' : 'mute'} />
+                {/* En los recuerdos de B1 caminas como L, de espaldas */}
+                {inMemory ? <SpriteL pose="back" /> : <SpriteBody look={look} mood={state.recovered.length ? 'normal' : 'mute'} />}
               </g>
             </g>
           </g>
@@ -1116,7 +1127,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               es: fill(st.es),
               choice: st.choice && { ...st.choice, ask: fill(st.choice.ask), options: st.choice.options.map(fill), tip: fill(st.choice.tip) },
             }))
-            return <MiniTalk name={who.name} look={who.look} steps={steps} onClose={finish} pressure={t.pressure} />
+            return <MiniTalk name={who.name} look={who.look} steps={steps} onClose={finish} pressure={t.pressure} icon={isMemoryScene(scene.id) ? <BlurFaceIcon look={who.look} size={48} /> : undefined} />
           })()}
         </Overlay>
       )}

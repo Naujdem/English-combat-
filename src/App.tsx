@@ -16,6 +16,7 @@ import { sfx } from './game/sfx'
 import { KEYWORDS, KEYWORD_DONE, PHRASAL_DECK, PHRASAL_DECK_AFTER } from './data/keywords'
 import { newCard } from './game/cards'
 import { MemoryFrame } from './components/MemoryFrame'
+import { MemoryTransitions } from './components/MemoryTransitions'
 import { isMemoryScene } from './game/memory'
 
 /** Epílogo de la torre de 2056 (final de A1) y primera escena de A2 */
@@ -195,6 +196,7 @@ export default function App() {
       <WordProvider state={state} update={update}>
         {screen}
       </WordProvider>
+      <MemoryTransitions state={state} update={update} />
       <TeacherPanel state={state} update={update} />
       {toast.length > 0 && (
         <div className="pointer-events-none absolute inset-x-0 top-3 z-50 flex justify-center px-3" role="status">

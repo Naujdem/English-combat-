@@ -64,6 +64,9 @@ export type NpcTask = {
     /** Marca que se guarda en opened según el desenlace (A2-07: la confianza de JoJo cambia la salida de la carrera) */
     results?: Partial<Record<keyof DebateEndings, string>>
   }
+  /** B1: al terminar la tarea se sale del recuerdo con ese número (game/memory.ts, exitMemory). closeMemory: además se guarda el cierre de la misión */
+  exitMemory?: number
+  closeMemory?: boolean
   /** Para activity 'exam': el examen escrito de una época o nivel (EraExam). Al guardar las frases se completa la tarea */
   exam?: 'a2'
   /** Dialogue Under Pressure: segundos para cada elección de la charla */
@@ -4047,6 +4050,24 @@ NPC_TASKS['b1-phone'] = {
     es: '(Dos piezas del reloj brillan.)',
     sub: 'Dos fragmentos se juntaron.',
   },
+}
+
+// ── B1 · DEMO del recuerdo 1 (escena en data/b1MemoryDemo.ts). Se borra cuando se haga la misión 1 ──
+// Muestra un nombre con estática ([[?]]) y, al terminar, la salida del recuerdo (sin cerrar la misión 1).
+NPC_TASKS['b1-01-demo-friend'] = {
+  done: 'b1-01-demo-talk',
+  exitMemory: 1,
+  steps: [
+    { text: '(A long hallway. Everything is grey and quiet. Your friend is waiting by the door.)', es: '(Un pasillo largo. Todo está gris y en silencio. Tu amigo espera junto a la puerta.)' },
+    { text: 'Hey [[?]], how are you feeling?', es: 'Oye, ▒▒▒, ¿cómo te sientes?' },
+    {
+      text: 'You look tired. Long day?',
+      es: 'Te ves cansado. ¿Día largo?',
+      choice: { ask: '¿Qué respondes?', options: ['Yes, it was a long day.', 'Yes, it were a long day.', 'Yes, it a long day.'], answer: 0, tip: 'Con "it" en pasado: it was.' },
+    },
+    { text: '(The hallway starts to fade... The memory is ending.)', es: '(El pasillo empieza a desvanecerse... El recuerdo se acaba.)' },
+  ],
+  reward: { text: '(The memory fades.)', es: '(El recuerdo se desvanece.)', sub: 'Recuerdo de prueba terminado.' },
 }
 
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */

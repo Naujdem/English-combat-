@@ -68,10 +68,6 @@ button { cursor: pointer; touch-action: manipulation; }
 @keyframes appear { from { opacity: 0; transform: translateX(20px) } to { opacity: 1; transform: none } }
 .anim-appear { animation: appear 0.6s ease-out both; transform-box: fill-box; }
 
-/* B1: estática del recuerdo (pantallas de prueba) */
-@keyframes b1-static { 0%, 100% { opacity: 0.08 } 10% { opacity: 0.5 } 20% { opacity: 0.12 } 35% { opacity: 0.35 } 50% { opacity: 0.1 } 70% { opacity: 0.25 } }
-.b1-static { background: repeating-linear-gradient(0deg, rgba(255,255,255,0.18) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(200,180,255,0.12) 0 2px, transparent 2px 5px); animation: b1-static 1.2s steps(6) infinite; }
-@media (prefers-reduced-motion: reduce) { .b1-static { animation: none } }
 /* B1: nombres con estática ([[?]] → ▒▒▒) */
 @keyframes b1-jitter { 0%, 100% { transform: translate(0, 0) } 25% { transform: translate(0.6px, -0.4px) } 50% { transform: translate(-0.5px, 0.3px) } 75% { transform: translate(0.3px, 0.5px) } }
 .b1-static-name { display: inline-block; letter-spacing: 0.04em; color: inherit; opacity: 0.8; animation: b1-jitter 0.35s steps(2) infinite; }
@@ -91,3 +87,6 @@ button { cursor: pointer; touch-action: manipulation; }
 .b1-frag-halo { animation: b1-halo 2.3s ease-out both; }
 .b1-frag-joined .b1-frag-halo { animation: none; opacity: 0.55 }
 @media (prefers-reduced-motion: reduce) { .b1-frag-left, .b1-frag-right, .b1-frag-halo { animation: none } .b1-frag-halo { opacity: 0.55 } }
+/* B1: salida de un recuerdo (fundido a negro) */
+@keyframes b1-fade-black { from { opacity: 0 } to { opacity: 1 } }
+.b1-fade-black { animation: b1-fade-black 0.9s ease-in forwards; }
