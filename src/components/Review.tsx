@@ -17,7 +17,7 @@ import { btn, btnGhost, Panel } from './ui'
 export const A1_ORDER: TopicId[] = ['greetings', 'to-be', 'possessives', 'prepositions', 'imperatives', 'there-is', 'demonstratives', 'ordering', 'present-simple', 'likes', 'can', 'present-continuous', 'have-got', 'do-does', 'plurals', 'time', 'object-pronouns', 'could-you', 'was-were', 'past-regular', 'past-irregular', 'past-did', 'past-time', 'going-to', 'going-to-neg', 'going-to-wh', 'going-to-predict', 'want-to']
 
 /** Temas de A2 en el orden en que Leo los enseña */
-export const A2_ORDER: TopicId[] = ['should-must', 'invitations', 'requests', 'instructions', 'past-simple', 'past-simple-comparatives', 'superlatives-comparatives-race', 'past-simple-continuous', 'recipes-some-any', 'present-perfect', 'places-directions', 'future-plans', 'health-emergency', 'wishes-conditional', 'clothes-shopping', 'food-dinner', 'people-relationships']
+export const A2_ORDER: TopicId[] = ['should-must', 'invitations', 'requests', 'instructions', 'past-simple', 'past-simple-comparatives', 'superlatives-comparatives-race', 'past-simple-continuous', 'recipes-some-any', 'present-perfect', 'places-directions', 'future-plans', 'health-emergency', 'wishes-conditional', 'clothes-shopping', 'food-dinner', 'people-relationships', 'housework', 'holidays']
 
 const LEVELS: { level: string; order: TopicId[] }[] = [
   { level: 'A1', order: A1_ORDER },

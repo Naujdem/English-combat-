@@ -39,6 +39,9 @@ export const A2_S3_MEET = 'a2-s3-meet'
 export const A2_S3_DUEL = 'a2-s3-maya-duel'
 export const A2_S3_CARD = 'a2-s3-card'
 export const A2_S3_CLOSE = 'a2-s3-close'
+/** Después de la fiesta (opcional, cap. 14): Leo enseña las tareas de la casa y la señora García reparte los turnos */
+export const A2_S3_CLEANUP = 'a2-s3-cleanup'
+export const A2_S3_CHORES = 'a2-s3-chores'
 
 /** La misión secundaria se abre al terminar A2-13 */
 export const isA2PartyUnlocked = (s: GameState) => s.opened.includes(A2_13_CLOSE)
@@ -160,6 +163,8 @@ export const A2_PARTY: SceneDef = {
     { label: 'Duelo con Maya', done: s.defeated.includes(A2_S3_DUEL) },
     { label: 'Tarjeta de deseos', done: s.opened.includes(A2_S3_CARD) },
     { label: '¡Sorpresa!', done: s.opened.includes(A2_S3_CLOSE) },
+    { label: 'Extra: recoger la fiesta', done: s.opened.includes(A2_S3_CLEANUP) },
+    { label: 'Extra: ¿a quién le toca?', done: s.opened.includes(A2_S3_CHORES) },
   ],
   intro: {
     first: 'Leo te escribió: "Come to my house. It\'s a secret!" Hoy es el cumpleaños de {iname}, y Leo prepara una fiesta sorpresa. Habla con Leo en la sala.',

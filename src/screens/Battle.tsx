@@ -695,8 +695,9 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       const base = { ...s, defeated: [...s.defeated, enemy.id], hp: s.maxHp }
       // El desconocido solo retrocede: no da fragmento, pieza, temas ni atuendo
       if (enemy.standoff) return base
-      // Jefe de A2: libera una anomalía (fragmento) en vez de pieza del reloj, temas o atuendo
-      if (enemy.release) return base
+      // Jefe de A2: libera una anomalía (fragmento) en vez de pieza del reloj o atuendo, y recupera sus temas
+      // (los momentos de amistad A2 los piden)
+      if (enemy.release) return { ...base, recovered: [...s.recovered, ...enemy.topics.filter((t) => !s.recovered.includes(t))] }
       if (enemy.echo) {
         // Esbirro de A2: da un escudo y, si lo tiene, un atuendo de regalo
         const r = enemy.reward

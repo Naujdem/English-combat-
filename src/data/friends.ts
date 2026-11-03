@@ -361,6 +361,54 @@ export const FRIENDS: Record<string, FriendDef> = {
           { who: 'friend', text: 'Next time, come to our family party. My grandma has already asked about you!', es: 'La próxima vez, ven a nuestra fiesta familiar. ¡Mi abuela ya preguntó por ti!' },
         ],
       },
+      {
+        // A2 (Busuu cap. 25): vacaciones y alojamiento. Abre en el repaso el tema de vacaciones
+        requires: 'wishes-conditional',
+        level: 'A2',
+        title: 'La postal de Maya',
+        lines: [
+          { who: 'friend', text: 'Look! My cousin Lucía sent me a postcard from her holiday. Read it with me!', es: '¡Mira! Mi prima Lucía me mandó una postal de sus vacaciones. ¡Léela conmigo!' },
+          {
+            who: 'narrator',
+            text: '"Dear Maya, we\'re staying at a small hotel near the beach. Our room has a sea view! Yesterday we went snorkeling and we saw a turtle. The food is delicious, but it\'s very expensive. We\'re coming back on Sunday. Wish you were here! Love, Lucía."',
+            es: '"Querida Maya: nos estamos quedando en un hotel pequeño cerca de la playa. ¡Nuestra habitación tiene vista al mar! Ayer fuimos a bucear y vimos una tortuga. La comida es deliciosa, pero muy cara. Volvemos el domingo. ¡Ojalá estuvieras aquí! Con cariño, Lucía."',
+          },
+          {
+            who: 'friend',
+            text: "So... where are they staying? I can't read her writing very well.",
+            es: 'Entonces... ¿dónde se están quedando? No entiendo muy bien su letra.',
+            options: [
+              { text: 'At a small hotel near the beach. Their room has a sea view!', reply: 'A sea view! Lucky Lucía.', es: '¡Vista al mar! Qué suerte tiene Lucía.', effect: 2 },
+              { text: 'At a campsite, I think.', reply: 'Hmm, no, look: "a small hotel near the beach".', es: 'Mmm, no, mira: "un hotel pequeño cerca de la playa".', effect: 1 },
+              { text: 'They is staying at a hotel.', reply: 'Ha ha, THEY ARE staying. But yes, a hotel!', es: 'Ja, ja, THEY ARE staying. ¡Pero sí, un hotel!', effect: 0 },
+              nonsense('The turtle is the hotel.', "The turtle? Ha ha, I don't understand.", '¿La tortuga? Ja, ja, no entiendo.'),
+            ],
+          },
+          {
+            who: 'friend',
+            text: 'Next summer my family wants to go on holiday too. Would you rather stay at a hotel or go camping?',
+            es: 'El próximo verano mi familia también quiere irse de vacaciones. ¿Prefieres quedarte en un hotel o ir de camping?',
+            options: [
+              { text: "I'd rather go camping. I love sleeping in a tent!", reply: 'Me too! And campsites are cheaper.', es: '¡Yo también! Y los campings son más baratos.', effect: 2 },
+              { text: "I'd rather stay at a hotel. I like comfortable beds.", reply: 'Ha ha, me too, but hotels are expensive!', es: 'Ja, ja, a mí también, ¡pero los hoteles son caros!', effect: 1 },
+              { text: "I'd rather to stay at a hotel.", reply: "Ha ha, I'd rather STAY, no TO. A hotel, OK!", es: 'Ja, ja, I\'d rather STAY, sin to. ¡Un hotel, bueno!', effect: 0 },
+              nonsense('My tent is a pizza.', "A pizza? Ha ha, I don't understand.", '¿Una pizza? Ja, ja, no entiendo.'),
+            ],
+          },
+          {
+            who: 'friend',
+            text: "If we go camping by the lake, will you come with us? My mom will book a place at the campsite.",
+            es: 'Si vamos de camping al lago, ¿vienes con nosotros? Mi mamá reservará un lugar en el camping.',
+            options: [
+              { text: "Yes! If my parents say yes, I'll pack my bag tonight!", reply: 'Ha ha, not tonight! But yes, great!', es: 'Ja, ja, ¡esta noche no! ¡Pero sí, genial!', effect: 2 },
+              { text: 'Maybe. When are you going?', reply: 'In July. I\'ll tell you the dates.', es: 'En julio. Te digo las fechas.', effect: 1 },
+              { text: 'Yes, I will to come!', reply: 'Ha ha, I WILL COME, no TO. Yay!', es: 'Ja, ja, I WILL COME, sin to. ¡Bien!', effect: 0 },
+              nonsense('The lake is my uncle.', "Your uncle? I don't understand...", '¿Tu tío? No entiendo...'),
+            ],
+          },
+          { who: 'friend', text: "Then it's a plan! I'll send YOU a postcard... from the tent next to yours. Ha ha!", es: '¡Entonces es un plan! Te mandaré una postal... desde la carpa de al lado. ¡Ja, ja!' },
+        ],
+      },
     ],
     casual: [
       {

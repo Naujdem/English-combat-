@@ -3,6 +3,7 @@ import type { GameState } from './types'
 import { SCHOOL } from '../data/school'
 import { STORY_POINTS } from './social'
 import { SCENES } from './helpers'
+import { ENEMIES } from '../data/enemies'
 
 const KEY = 'english-combat-save-v1'
 /** Copia de la última partida válida cargada, por si algo sale mal al seguir jugando */
@@ -66,6 +67,11 @@ export function loadSave(): GameState | null {
     if (!data.cards) data.cards = []
     if (!data.stats) data.stats = {}
     if (!data.lostFound) data.lostFound = { started: false, carrying: null, picked: [], returned: [] }
+    // Jefes de A2 vencidos antes de que devolvieran sus temas: se recuperan ahora (los piden los momentos de amistad A2)
+    for (const id of data.defeated) {
+      const e = ENEMIES[id]
+      if (e?.release) for (const t of e.topics) if (!data.recovered.includes(t)) data.recovered.push(t)
+    }
     // Escena que ya no existe: se lleva al jugador a la escuela sin tocar su progreso
     if (!SCENES[data.sceneId]) {
       data.sceneId = SCHOOL.id

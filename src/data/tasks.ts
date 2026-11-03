@@ -3574,8 +3574,99 @@ NPC_TASKS['a2-s3-close'] = {
   reward: {
     text: '{iname}: "This is the best birthday ever!"',
     es: '¡Este es el mejor cumpleaños de todos!',
-    sub: 'Misión secundaria completada: Make a Wish. Ganaste la ropa de fiesta. Habla otra vez con {iname} en el jardín.',
+    sub: 'Misión secundaria completada: Make a Wish. Ganaste la ropa de fiesta. Habla otra vez con {iname} en el jardín. Leo necesita ayuda para recoger la fiesta.',
     say: 'This is the best birthday ever!',
+  },
+}
+
+// Después de la fiesta (opcional, Busuu cap. 14): Leo enseña las tareas de la casa, do / make y Present Perfect con tareas
+NPC_TASKS['a2-s3-cleanup'] = {
+  npc: 'a2-s3-leo-garden',
+  done: 'a2-s3-cleanup',
+  lesson: 'housework',
+  activity: 'practice',
+  practice: 'housework',
+  practiceIds: ['a2-hw-p1', 'a2-hw-p2', 'a2-hw-p3', 'a2-hw-p4', 'a2-hw-p5', 'a2-hw-p6', 'a2-hw-p7'],
+  requires: {
+    id: 'a2-s3-close',
+    text: 'Leo: "Shh! Not yet. The party isn\'t over!"',
+    es: '¡Shh! Todavía no. ¡La fiesta no ha terminado!',
+    sub: 'Termina la fiesta sorpresa.',
+  },
+  steps: [],
+  reward: {
+    text: 'Leo: "Great! Now ask my mom. She always knows whose turn it is."',
+    es: '¡Genial! Ahora pregúntale a mi mamá. Ella siempre sabe a quién le toca.',
+    sub: 'Habla con la señora García en el jardín.',
+    say: 'Ask my mom.',
+  },
+}
+
+// ¿A quién le toca? (DebateTalk): la señora García reparte las tareas. Recompensa: escudo
+NPC_TASKS['a2-s3-chores'] = {
+  npc: 'a2-s3-garcia',
+  done: 'a2-s3-chores',
+  activity: 'debate',
+  shield: true,
+  requires: {
+    id: 'a2-s3-cleanup',
+    text: 'Mrs. Garcia: "What a lovely party! Leo wants to tell you something."',
+    es: '¡Qué fiesta tan bonita! Leo quiere decirte algo.',
+    sub: 'Leo está junto a la mesa del pastel.',
+  },
+  debate: {
+    title: 'Whose Turn Is It?',
+    ask: 'Ayuda a la mamá de Leo a repartir las tareas: di qué has hecho y qué vas a hacer.',
+    turns: [
+      {
+        text: "Thank you for helping, dear. Let's see... Have you done the dishes yet?",
+        es: 'Gracias por ayudar. A ver... ¿Ya lavaste los platos?',
+        options: [
+          { en: "Yes, I've already done them. They're in the cupboard.", es: 'Sí, ya los lavé. Están en el armario.', value: 'good' },
+          { en: 'Not yet, sorry.', es: 'Todavía no, perdón.', value: 'neutral', reply: { text: "That's OK. Do them after the garden.", es: 'Está bien. Lávalos después del jardín.' } },
+          { en: "Yes, I've already made them.", es: '(Frase mal dicha).', value: 'bad', reply: { text: 'You MADE the dishes? Ha ha, you DID the dishes!', es: '¿Hiciste los platos? Ja, ja, ¡los lavaste! (do the dishes).' } },
+        ],
+      },
+      {
+        text: 'Leo has swept the garden, but the bin is full. Whose turn is it to take out the rubbish?',
+        es: 'Leo barrió el jardín, pero la caneca está llena. ¿A quién le toca sacar la basura?',
+        options: [
+          { en: "It's my turn. I'll take it out now.", es: 'Me toca a mí. La saco ahora.', value: 'good' },
+          { en: "It's Leo's turn!", es: '¡Le toca a Leo!', value: 'neutral', reply: { text: 'Ha ha, poor Leo. OK, Leo, the rubbish!', es: 'Ja, ja, pobre Leo. ¡Bueno, Leo, la basura!' } },
+          { en: "It's my turn to taking it out.", es: '(Frase mal dicha).', value: 'bad', reply: { text: 'Your turn TO TAKE it out. Thank you!', es: 'Te toca SACARLA (to take). ¡Gracias!' } },
+        ],
+      },
+      {
+        text: 'Oh no, Maya made a mess in the living room with the balloons. Can you give me a hand?',
+        es: 'Ay no, Maya hizo un desorden en la sala con los globos. ¿Me das una mano?',
+        options: [
+          { en: "Of course! I'll tidy up the living room.", es: '¡Claro! Yo ordeno la sala.', value: 'good' },
+          { en: 'OK, give me a minute.', es: 'Bueno, dame un minuto.', value: 'neutral' },
+          { en: "Of course! I'll do up the living room.", es: '(Frase mal dicha).', value: 'bad', reply: { text: "You'll TIDY UP the living room? Thank you!", es: '¿Vas a ordenar (tidy up) la sala? ¡Gracias!' } },
+        ],
+      },
+      {
+        text: 'And what about you? What chores do you do at home?',
+        es: '¿Y tú? ¿Qué tareas haces en tu casa?',
+        options: [
+          { en: 'I make my bed every day and I do the dishes after dinner.', es: 'Tiendo mi cama todos los días y lavo los platos después de la cena.', value: 'good' },
+          { en: 'Not many, ha ha.', es: 'No muchas, ja, ja.', value: 'neutral', reply: { text: 'Ha ha, like Leo!', es: 'Ja, ja, ¡como Leo!' } },
+          { en: 'I do my bed every day.', es: '(Frase mal dicha).', value: 'bad', reply: { text: 'You MAKE your bed. Very good!', es: 'Tiendes (make) tu cama. ¡Muy bien!' } },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: 'What a helpful friend! Here, take this. You deserve it.', es: '¡Qué gran ayuda! Toma esto. Te lo mereces.' },
+      mid: { text: 'Thank you! Everything is clean now.', es: '¡Gracias! Ya todo está limpio.' },
+      low: { text: 'OK... thank you anyway.', es: 'Bueno... gracias de todas formas.' },
+    },
+  },
+  steps: [],
+  reward: {
+    text: 'Mrs. Garcia: "The house is clean, and the party was perfect. Thank you!"',
+    es: 'La casa está limpia y la fiesta fue perfecta. ¡Gracias!',
+    sub: 'Extra completado: recogiste la fiesta. Ganaste un escudo. En el repaso ya está el tema Tareas de la casa.',
+    say: 'Thank you!',
   },
 }
 
