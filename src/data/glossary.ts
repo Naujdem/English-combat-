@@ -202,12 +202,34 @@ export const PHRASAL: Record<string, string> = {
   'write down': 'anotar',
   'check in': 'registrarse (hotel, aeropuerto)',
   'grow up': 'crecer',
+  // ── B1 ──
+  'set off': 'salir de viaje, ponerse en marcha',
+  'pay in': 'ingresar dinero (en el banco)',
+  'plug in': 'enchufar',
+  'take on': 'contratar, asumir (un trabajo)',
+  'get on with': 'llevarse bien con',
+  'fall out': 'pelearse',
+  'make up': 'reconciliarse; inventar (una historia)',
+  'run out of': 'quedarse sin',
+  'lift up': 'levantar',
+  'pull down': 'bajar, tirar hacia abajo',
+  'push aside': 'apartar, empujar a un lado',
+  'climb up': 'trepar, subir (escalando)',
+  'switch on': 'encender',
+  'switch off': 'apagar',
+  'put down': 'dejar, poner en el suelo',
+  'turn around': 'darse la vuelta',
+  'look up': 'buscar (información)',
+  'take apart': 'desarmar',
+  'hand in': 'entregar (un trabajo)',
+  'look forward to': 'tener ganas de, esperar con ilusión',
 }
 
 const IRREGULAR: Record<string, string[]> = {
   get: ['got', 'gotten'], wake: ['woke', 'woken'], sit: ['sat'], stand: ['stood'], come: ['came'], go: ['went', 'gone', 'goes'],
   take: ['took', 'taken'], find: ['found'], give: ['gave', 'given'], run: ['ran'], blow: ['blew', 'blown'], break: ['broke', 'broken'],
   throw: ['threw', 'thrown'], write: ['wrote', 'written'], grow: ['grew', 'grown'], put: [], set: [],
+  pay: ['paid'], make: ['made'], fall: ['fell', 'fallen'], hand: [],
 }
 
 /** Todas las formas de un verbo: gets, got, getting… */
@@ -218,35 +240,65 @@ function verbForms(v: string): Set<string> {
   return f
 }
 /** Los que se pueden separar ("turn it on", "pick the box up"); los demás van juntos */
-const SEPARABLE = new Set(['wake up', 'turn on', 'turn off', 'try on', 'pick up', 'put on', 'take off', 'take out', 'fill in', 'set up', 'blow out', 'throw away', 'clean up', 'write down'])
+const SEPARABLE = new Set([
+  'wake up', 'turn on', 'turn off', 'try on', 'pick up', 'put on', 'take off', 'take out', 'fill in', 'set up', 'blow out', 'throw away', 'clean up', 'write down',
+  // B1
+  'plug in', 'take on', 'make up', 'lift up', 'pull down', 'push aside', 'switch on', 'switch off', 'put down', 'take apart', 'hand in', 'pay in', 'look up',
+])
+/** ¿El phrasal verb se puede separar? ("turn it on" sí; "climb up it", no se separa) */
+export const isSeparable = (phrase: string) => SEPARABLE.has(phrase.toLowerCase())
 /** Palabras que no pueden ir entre el verbo y la partícula ("go to school on the bus" no es "go on") */
 const NOT_BETWEEN = new Set(['to', 'at', 'for', 'with', 'from', 'of', 'and', 'but', 'or', 'by', 'into', 'in', 'on', 'up', 'off', 'out', 'down', 'back', 'away', 'is', 'are', 'was', 'were'])
+/** Phrasal verbs de tres palabras: entre la partícula y la última puede ir una palabra ("get on well with") */
 const PHRASAL_FORMS = Object.keys(PHRASAL).map((p) => {
-  const [verb, particle] = p.split(' ')
-  return { phrase: p, forms: verbForms(verb), particle, gap: SEPARABLE.has(p) ? 2 : 0 }
+  const [verb, particle, ...rest] = p.split(' ')
+  return { phrase: p, forms: verbForms(verb), particle, rest, gap: SEPARABLE.has(p) ? 2 : 0 }
 })
 
 /**
  * Busca un phrasal verb alrededor de la palabra tocada (words = palabras de la frase, i = la tocada).
  * El verbo y la partícula pueden estar separados por hasta 2 palabras ("pick the box up", "turn it on").
+ * Los de tres palabras ("get on with", "run out of") ganan a los de dos si la frase los tiene completos.
  */
 export function phrasalAt(words: string[], i: number): { phrase: string; meaning: string } | null {
   const w = words.map(normalizeWord)
   const ends = (k: number) => /[.,!?;:]$/.test(words[k] ?? '')
-  for (const { phrase, forms, particle, gap } of PHRASAL_FORMS) {
-    if (forms.has(w[i])) {
-      for (let k = i + 1; k <= i + 1 + gap && k < w.length; k++) {
-        if (w[k] === particle) return { phrase, meaning: PHRASAL[phrase] }
+  let best: { phrase: string; size: number } | null = null
+  for (const { phrase, forms, particle, rest, gap } of PHRASAL_FORMS) {
+    // Posibles lugares del verbo: la palabra tocada o alguna antes
+    for (let v = Math.max(0, i - 8); v <= i; v++) {
+      if (!forms.has(w[v])) continue
+      // La partícula, justo después o separada por hasta `gap` palabras
+      let p = -1
+      for (let k = v + 1; k <= v + 1 + gap && k < w.length; k++) {
+        if (w[k] === particle) {
+          p = k
+          break
+        }
         if (ends(k) || NOT_BETWEEN.has(w[k])) break
       }
-    }
-    if (w[i] === particle) {
-      for (let k = i - 1; k >= i - 1 - gap && k >= 0; k--) {
-        if (ends(k)) break
-        if (forms.has(w[k])) return { phrase, meaning: PHRASAL[phrase] }
-        if (NOT_BETWEEN.has(w[k])) break
+      if (p < 0 || ends(v)) continue
+      // Las palabras que siguen (tres palabras): cada una justo después, o con una palabra en medio ("get on well with")
+      const used = [v, p]
+      let last = p
+      let ok = true
+      for (const r of rest) {
+        if (ends(last)) {
+          ok = false
+          break
+        }
+        if (w[last + 1] === r) last = last + 1
+        else if (w[last + 2] === r && !ends(last + 1) && !NOT_BETWEEN.has(w[last + 1])) last = last + 2
+        else {
+          ok = false
+          break
+        }
+        used.push(last)
       }
+      if (!ok || !used.includes(i)) continue
+      const size = 2 + rest.length
+      if (!best || size > best.size) best = { phrase, size }
     }
   }
-  return null
+  return best ? { phrase: best.phrase, meaning: PHRASAL[best.phrase] } : null
 }
