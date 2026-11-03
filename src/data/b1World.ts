@@ -8,6 +8,9 @@ import { A2_13_CLOSE } from './a2Return'
  * Por ahora solo existe la apertura: los 14 lugares son placeholders (el 1 muestra "próximamente").
  */
 
+/** Escena de apertura de B1 (la casa del protagonista, data/b1Home.ts) */
+export const B1_HOME_ID = 'b1-home'
+
 /** Se guarda en `opened` al terminar la escena de apertura (abre el nodo 1) */
 export const B1_OPENING = 'b1-00-opening'
 
