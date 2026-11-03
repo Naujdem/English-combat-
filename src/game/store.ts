@@ -14,6 +14,8 @@ export const A1_FINAL_BOSS = 'office-future-boss'
 /** Prefijo obligatorio para los identificadores de A2 (escenas, jefes, puertas...) */
 export const A2_PREFIX = 'a2-'
 export const isA2Unlocked = (s: GameState) => s.defeated.includes(A1_FINAL_BOSS)
+/** Prefijo obligatorio para los identificadores de B1 (ver data/b1World.ts) */
+export const B1_PREFIX = 'b1-'
 
 export function newGame(): GameState {
   return {

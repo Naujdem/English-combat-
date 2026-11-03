@@ -4023,6 +4023,32 @@ NPC_TASKS['a2-s5-close'] = {
   },
 }
 
+// ── B1 · Apertura (tu cuarto, la noche antes del viaje; escena en data/b1Home.ts) ──
+// Ms. Haddad llama: te aceptaron en el intercambio de Lumen Bay. Al colgar, dos piezas del reloj se tocan.
+// Al terminar se guarda B1_CALL; luego Explore muestra FragmentJoinCue (mensaje de sistema y "You touch them") y guarda B1_OPENING.
+NPC_TASKS['b1-phone'] = {
+  done: 'b1-00-call',
+  steps: [
+    { text: '(It is evening. Your phone is ringing. Unknown number.)', es: '(Es de noche. Suena tu teléfono. Número desconocido.)' },
+    { text: 'Hello! Is that you? This is Noor Haddad, from the Lumen Bay Exchange Programme.', es: '¡Hola! ¿Eres tú? Habla Noor Haddad, del Programa de Intercambio de Lumen Bay.' },
+    { text: 'I have great news. You have been accepted! Leo, Maya and {iname} have been accepted too.', es: 'Tengo muy buenas noticias. ¡Te aceptaron! A Leo, a Maya y a {iname} también.' },
+    { text: 'Lumen Bay is a harbour city. People from all over the world live and study there. You will stay in a student residence.', es: 'Lumen Bay es una ciudad portuaria. Gente de todo el mundo vive y estudia allí. Te quedarás en una residencia de estudiantes.' },
+    {
+      text: "Your flight leaves tomorrow at nine. I'll meet you at the airport.",
+      es: 'Tu vuelo sale mañana a las nueve. Te veré en el aeropuerto.',
+      choice: { ask: '¿Qué le respondes?', options: ["That's wonderful! Thank you very much.", "That's wonderful! Thanks you very much.", 'That wonderful! Thank very much.'], answer: 0, tip: 'Para agradecer: Thank you (very much).' },
+    },
+    { text: 'See you tomorrow, then. Have a good night!', es: 'Entonces, hasta mañana. ¡Buenas noches!' },
+    { text: '(You hang up. On your desk, the clock is glowing. The empty core shines... and your throat hurts.)', es: '(Cuelgas. En tu escritorio, el reloj brilla. El centro vacío resplandece... y te duele la garganta.)' },
+    { text: '(Two pieces of the clock move by themselves... and touch each other.)', es: '(Dos piezas del reloj se mueven solas... y se tocan.)' },
+  ],
+  reward: {
+    text: '(Two pieces of the clock are shining.)',
+    es: '(Dos piezas del reloj brillan.)',
+    sub: 'Dos fragmentos se juntaron.',
+  },
+}
+
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */
 export function taskOf(npcId: string, opened: string[]): { id: string; task: NpcTask; blocked: boolean } | null {
   for (const [id, t] of Object.entries(NPC_TASKS)) {

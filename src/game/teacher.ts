@@ -22,7 +22,15 @@ import { A2_CITY, A2_03_CLOSE } from '../data/a2City'
 import { A2_WORKSHOP, A2_04_CLOSE } from '../data/a2Workshop'
 import { A2_LIBRARY, A2_05_CLOSE } from '../data/a2Library'
 import { A2_FARM_PAST, A2_06_CLOSE } from '../data/a2FarmPast'
-import { A2_RACE } from '../data/a2Race'
+import { A2_RACE, A2_07_CLOSE } from '../data/a2Race'
+import { A2_08_CLOSE } from '../data/a2Car'
+import { A2_09_CLOSE } from '../data/a2Mill'
+import { A2_10_CLOSE } from '../data/a2LeoHouse'
+import { A2_11_CLOSE } from '../data/a2Future'
+import { A2_12_CLOSE } from '../data/a2Control'
+import { A2_RETURN, A2_13_CLOSE } from '../data/a2Return'
+import { B1_HOME } from '../data/b1Home'
+import { B1_OPENING, closeId } from '../data/b1World'
 
 /**
  * Modo profesor: permisos especiales para revisar el juego sin jugarlo entero.
@@ -687,6 +695,37 @@ PRESETS.push(
   { id: 'a2-05', label: 'A2-05 · Biblioteca: recién llegado', apply: (s) => a2Start(s, A2_LIBRARY, [A2_03_CLOSE, A2_04_CLOSE], [A2_ECHO]) },
   { id: 'a2-06', label: 'A2-06 · Granja River: recién llegado', apply: (s) => a2Start(s, A2_FARM_PAST, [A2_03_CLOSE, A2_04_CLOSE, A2_05_CLOSE], [A2_ECHO]) },
   { id: 'a2-07', label: 'A2-07 · Hipódromo: recién llegado', apply: (s) => a2Start(s, A2_RACE, [A2_03_CLOSE, A2_04_CLOSE, A2_05_CLOSE, A2_06_CLOSE], [A2_ECHO]) },
+)
+
+/**
+ * B1: cada atajo parte de A2 terminado (todas las misiones principales cerradas, incluido A2_13_CLOSE),
+ * borra el avance de B1 y deja al jugador en el mapa, en la pestaña B1.
+ * done = ids de B1 que se marcan como hechos (la apertura y los cierres de las misiones anteriores).
+ */
+const A2_DONE = [A2_03_CLOSE, A2_04_CLOSE, A2_05_CLOSE, A2_06_CLOSE, A2_07_CLOSE, A2_08_CLOSE, A2_09_CLOSE, A2_10_CLOSE, A2_11_CLOSE, A2_12_CLOSE, A2_13_CLOSE]
+function b1Start(s: GameState, done: string[]): GameState {
+  const b = a2Start(s, A2_RETURN, A2_DONE, [A2_ECHO])
+  return {
+    ...b,
+    screen: 'world',
+    sceneId: B1_HOME.id,
+    pos: { ...B1_HOME.start },
+    battle: null,
+    opened: add(b.opened.filter((o) => !o.startsWith('b1-')), done),
+  }
+}
+
+PRESETS.push(
+  { id: 'b1-start', label: 'B1: inicio (A2 completo, sin apertura)', apply: (s) => b1Start(s, []) },
+  { id: 'b1-opened', label: 'B1: después de la apertura', apply: (s) => b1Start(s, [B1_OPENING]) },
+  ...Array.from({ length: 14 }, (_, k) => {
+    const n = k + 1
+    return {
+      id: `b1-node-${n}`,
+      label: `B1: abrir el nodo ${n}`,
+      apply: (s: GameState) => b1Start(s, [B1_OPENING, ...Array.from({ length: n - 1 }, (_, j) => closeId(j + 1))]),
+    }
+  }),
 )
 
 /** Marca todas las lecciones como vistas (para no repetirlas al revisar) */

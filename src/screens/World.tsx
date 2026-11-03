@@ -18,7 +18,10 @@ import { setSound, soundOn } from '../game/sfx'
 import { autoVoiceOn, setAutoVoice } from '../game/speech'
 import { DIARY, pageNotified, pageSeen, unlockedPages } from '../data/diary'
 import { dueCards } from '../game/cards'
-import { isA2Unlocked, type Update } from '../game/store'
+import { B1_PREFIX, isA2Unlocked, type Update } from '../game/store'
+import { B1Map } from '../components/B1Map'
+import { MemoryPlaceholder } from '../components/MemoryPlaceholder'
+import { B1_HOME_ID, B1_NODES, B1_OPENING, B1_PART_NAMES, B1_ERA_COLOR, b1LockedText, b1Message, b1NodeDone, b1NodeOpen, isB1Unlocked, type B1Node, type B1Part } from '../data/b1World'
 import { heroLook, SCENES } from '../game/helpers'
 import { interestFriend } from '../data/friends'
 import { clockCoreMissing } from '../data/a2Hospital'
@@ -74,11 +77,15 @@ const A2_NODES: A2Node[] = [
 
 export function World({ state, update, onEnter, onTitle }: { state: GameState; update: Update; onEnter: (sceneId: string) => void; onTitle: () => void }) {
   const desktop = useDesktop()
+  // Modo profesor: abre las épocas de A1 y todas las misiones de A2 para revisarlas sin jugar lo anterior
+  const teacher = useTeacher().on
   const [msg, setMsg] = useState<string>(
-    state.opened.includes(A2_13_CLOSE) && !(state.opened.includes(A2_S3_CLOSE) && state.opened.includes(A2_S4_CLOSE) && state.opened.includes(A2_S5_CLOSE))
-      ? '¡A2 completado! El núcleo del reloj brilla, pero no está lleno. En la pestaña Extras hay misiones secundarias: una fiesta sorpresa, un día de rebajas en la tienda de ropa y una cena en casa de Leo.'
+    state.sceneId.startsWith(B1_PREFIX) && (isB1Unlocked(state) || teacher)
+      ? b1Message(state)
+      : state.opened.includes(A2_13_CLOSE) && !(state.opened.includes(A2_S3_CLOSE) && state.opened.includes(A2_S4_CLOSE) && state.opened.includes(A2_S5_CLOSE))
+      ? '¡A2 completado! El núcleo del reloj brilla, pero no está lleno. En la pestaña Extras hay misiones secundarias: una fiesta sorpresa, un día de rebajas en la tienda de ropa y una cena en casa de Leo. B1 ya está disponible en la pestaña B1.'
       : state.opened.includes(A2_13_CLOSE)
-      ? '¡A2 completado! El núcleo del reloj brilla, pero no está lleno. Pronto: más misiones secundarias de A2 y después B1.'
+      ? '¡A2 completado! El núcleo del reloj brilla, pero no está lleno. B1 ya está disponible en la pestaña B1.'
       : isA2ReturnUnlocked(state)
       ? 'A2-13 · The Missing Voice: el reloj te lleva de vuelta al hospital donde empezó A2. Leo te espera en el pasillo.'
       : isA2ControlUnlocked(state) && !state.opened.includes(A2_12_CLOSE)
@@ -138,12 +145,27 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const [logros, setLogros] = useState(false)
   const [exam, setExam] = useState<EraId | null>(null)
   const [menu, setMenu] = useState(false)
-  // Modo profesor: abre las épocas de A1 y todas las misiones de A2 para revisarlas sin jugar lo anterior
-  const teacher = useTeacher().on
   const a2NodeOpen = (n: A2Node) => (teacher || n.open(state)) && !!SCENES[n.sceneId]
   // Nivel del mapa: al terminar A1 se puede elegir entre A1 y A2
   const a2Open = teacher || isA2Unlocked(state)
-  const [level, setLevel] = useState<'A1' | 'A2'>(a2Open && A2_NODES.some((n) => n.sceneId === state.sceneId) ? 'A2' : 'A1')
+  // B1: la pestaña aparece al terminar A2-13 (o en modo profesor). No se cambia de pestaña sola al terminar A2.
+  const b1Open = teacher || isB1Unlocked(state)
+  const [level, setLevel] = useState<'A1' | 'A2' | 'B1'>(
+    b1Open && state.sceneId.startsWith(B1_PREFIX) ? 'B1' : a2Open && A2_NODES.some((n) => n.sceneId === state.sceneId) ? 'A2' : 'A1',
+  )
+  // Partes de B1: una parte aparece cuando alguno de sus lugares está abierto (antes de la apertura se ve la parte 1 cerrada)
+  const b1PartsOpen = ([1, 2, 3, 4] as const).filter((p) => B1_NODES.some((n) => n.part === p && b1NodeOpen(n, state)))
+  const b1Parts: B1Part[] = b1PartsOpen.length ? [...b1PartsOpen] : [1]
+  const b1Next = B1_NODES.find((n) => n.num && b1NodeOpen(n, state) && !b1NodeDone(n, state)) ?? [...B1_NODES].reverse().find((n) => n.num && b1NodeOpen(n, state))
+  const [b1Part, setB1Part] = useState<B1Part>(b1Next?.part ?? 1)
+  const [memory, setMemory] = useState<B1Node | null>(null)
+  function tapB1(n: B1Node) {
+    const label = n.num ? `${n.num}. ${n.name}` : `★ ${n.name}`
+    if (!b1NodeOpen(n, state)) return setMsg(`${label} está cerrado. ${b1LockedText(n)}`)
+    // El recuerdo 1 todavía no es jugable: pantalla de "próximamente" (no guarda su cierre)
+    if (n.num === 1) return setMemory(n)
+    setMsg(`${n.name}: este lugar se construirá pronto.`)
+  }
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]
   // Épocas de A2: se ve una a la vez (pestañas), como en A1. Solo aparecen las épocas que ya tienen una misión abierta.
   const a2Parts = ([1, 2, 3, 4] as const).filter((p) => A2_NODES.some((n) => n.part === p && a2NodeOpen(n)))
@@ -231,13 +253,16 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
 
       {a2Open && (
         <div className="flex gap-1.5" role="tablist" aria-label="Nivel">
-          {(['A1', 'A2'] as const).map((l) => (
+          {(b1Open ? (['A1', 'A2', 'B1'] as const) : (['A1', 'A2'] as const)).map((l) => (
             <button
               key={l}
               role="tab"
               aria-selected={level === l}
               className={`flex-1 rounded-xl border-2 px-3 py-1.5 font-display text-[16px] ${level === l ? 'border-gold bg-gold/15 text-gold' : 'border-line text-paper/70'}`}
-              onClick={() => setLevel(l)}
+              onClick={() => {
+                setLevel(l)
+                if (l === 'B1') setMsg(b1Message(state))
+              }}
             >
               Nivel {l}
             </button>
@@ -262,6 +287,24 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         </div>
       )}
 
+      {level === 'B1' && b1Parts.length > 1 && (
+        <div className="flex flex-wrap gap-1.5" role="tablist" aria-label="Partes de B1">
+          {b1Parts.map((p) => (
+            <button
+              key={p}
+              role="tab"
+              aria-selected={b1Part === p}
+              className={`rounded-full border-2 px-3 py-1 text-sm font-semibold ${b1Part === p ? 'border-transparent text-ink' : 'border-line text-paper/70'}`}
+              style={b1Part === p ? { background: p === 4 ? B1_ERA_COLOR.Presente : B1_ERA_COLOR.Recuerdo } : undefined}
+              onClick={() => setB1Part(p)}
+            >
+              {B1_PART_NAMES[p]}
+            </button>
+          ))}
+        </div>
+      )}
+      {level === 'B1' && b1Parts.length === 1 && <p className="text-center text-sm font-semibold text-paper/70">{B1_PART_NAMES[b1Parts[0]]}</p>}
+
       {level === 'A1' && pastOpen && (
         <div className="flex gap-1.5" role="tablist" aria-label="Épocas">
           {(futureOpen ? (['Presente', 'Pasado', 'Futuro'] as const) : (['Presente', 'Pasado'] as const)).map((e) => (
@@ -280,7 +323,9 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       )}
 
       <div className={desktop ? 'grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_21rem] items-start gap-5' : 'contents'}>
-      {level === 'A2' ? (
+      {level === 'B1' ? (
+        <B1Map state={state} part={b1Parts.includes(b1Part) ? b1Part : b1Parts[0]} onTap={tapB1} style={desktop ? { height: 'calc(100svh - 96px)' } : { aspectRatio: '360 / 380' }} />
+      ) : level === 'A2' ? (
       <svg
         viewBox="0 0 360 380"
         className="w-full shrink-0 rounded-2xl border-2 border-line bg-[#2a2236]"
@@ -378,7 +423,13 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         <p className="text-[15px] text-paper/85">{msg}</p>
       </Panel>
 
-      {level === 'A2' ? (
+      {level === 'B1' ? (
+        !state.opened.includes(B1_OPENING) ? (
+          <button className={btnPrimary} onClick={() => onEnter(B1_HOME_ID)}>Contestar el teléfono</button>
+        ) : (
+          b1Next && <button className={btnPrimary} onClick={() => tapB1(b1Next)}>Entrar a {b1Next.num}. {b1Next.name}</button>
+        )
+      ) : level === 'A2' ? (
         <button className={btnPrimary} onClick={() => tapA2(a2Here)}>
           {state.sceneId === a2Here.sceneId ? 'Volver a' : 'Entrar a'} {a2Here.name}
         </button>
@@ -388,6 +439,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       </div>
       </div>
 
+      {memory && <MemoryPlaceholder title={`Recuerdo ${memory.num} · ${memory.name}`} onBack={() => setMemory(null)} />}
       {diary && <Diary state={state} update={update} onClose={closeDiary} />}
       {bus && (
         <BusRide

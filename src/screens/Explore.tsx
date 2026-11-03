@@ -36,6 +36,9 @@ import { CoachSays } from '../components/CoachSays'
 import { Directions } from '../components/Directions'
 import { CafeOrder } from '../components/CafeOrder'
 import { MiniTalk } from '../components/MiniTalk'
+import { FragmentJoinCue } from '../components/FragmentJoinCue'
+import { B1_CALL, B1_PHONE } from '../data/b1Home'
+import { B1_HOME_ID, B1_OPENING } from '../data/b1World'
 import { NPC_TASKS, PARTY_ITEMS, taskOf } from '../data/tasks'
 import { PartyAsk } from '../components/PartyAsk'
 import { AnimalSprite, ANIMALS } from '../components/Animals'
@@ -629,7 +632,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    <SpriteBody look={npcOf(e.id).look} />
+                    {e.id === B1_PHONE ? <PhoneIcon ringing={pending} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -1007,6 +1010,15 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         </Overlay>
       )}
 
+      {/* B1 · apertura: al colgar, dos fragmentos se juntan (punto de enganche de la animación: FragmentJoinCue) */}
+      {scene.id === B1_HOME_ID && state.opened.includes(B1_CALL) && !state.opened.includes(B1_OPENING) && !task && (
+        <FragmentJoinCue
+          onDone={() => {
+            update((s) => (s.opened.includes(B1_OPENING) ? s : { ...s, opened: [...s.opened, B1_OPENING] }))
+            onWorld()
+          }}
+        />
+      )}
       {task && NPC_TASKS[task]?.activity === 'practice' && NPC_TASKS[task].practice && (
         // Práctica guiada con Leo (pantalla completa): al terminarla se marca la tarea
         <Practice state={state} update={update} review={NPC_TASKS[task].practice} ids={NPC_TASKS[task].practiceIds} guided onClose={() => finishTask(task, false)} onDone={() => finishTask(task, true)} />
@@ -1306,5 +1318,17 @@ function Shop({ state, update }: { state: GameState; update: Update }) {
       {note && <p className="anim-fade-in mt-2 px-1 text-sm text-paper/80">{note}</p>}
       <p className="mt-1 px-1 text-xs text-paper/50">Ganas monedas en misiones y minijuegos.</p>
     </div>
+  )
+}
+
+/** El teléfono de tu cuarto (B1, apertura): vibra mientras suena */
+function PhoneIcon({ ringing }: { ringing: boolean }) {
+  return (
+    <g className={ringing ? 'anim-wobble' : undefined} style={{ transformBox: 'fill-box', transformOrigin: 'center' }}>
+      <ellipse cx="16" cy="27" rx="8" ry="2.2" fill="rgba(0,0,0,0.18)" />
+      <rect x="10.5" y="9" width="11" height="18" rx="2.2" fill="#2d2d3a" stroke="#c9c2d6" strokeWidth="1" />
+      <rect x="12" y="11" width="8" height="12" rx="1" fill={ringing ? '#8fd0d4' : '#4a5560'} />
+      {ringing && <path d="M7 12 q-2 4 0 8 M25 12 q2 4 0 8" fill="none" stroke="#e0a526" strokeWidth="1.4" strokeLinecap="round" />}
+    </g>
   )
 }
