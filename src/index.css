@@ -105,3 +105,16 @@ button { cursor: pointer; touch-action: manipulation; }
   .ins-glow { animation: none; box-shadow: 0 0 10px rgba(232,201,106,0.3); }
   .ins-translate { animation-name: fade-in !important; animation-duration: 0.2s !important; filter: none; }
 }
+
+/* B1: The Moving Stone escrito (objetos que cambian de estado y reaccionan a un error) */
+.stone-move { transition: transform 0.7s ease-in-out; transform-box: fill-box; }
+.stone-fade { transition: opacity 0.6s ease; }
+.stone-fill { transition: fill 0.6s ease; }
+@keyframes stone-flash { 0% { opacity: 0 } 25% { opacity: 0.45 } 100% { opacity: 0 } }
+.stone-flash { opacity: 0; animation: stone-flash 0.45s ease-out both; pointer-events: none; }
+/* Reducir movimiento: el objeto cambia de golpe (con un fundido corto) y no se sacude */
+@media (prefers-reduced-motion: reduce) {
+  .stone-move { transition: none !important; }
+  .stone-fade, .stone-fill { transition-duration: 0.2s !important; }
+  .stone-flash { animation-duration: 0.3s !important; }
+}

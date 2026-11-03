@@ -16,13 +16,15 @@ import { enterMemory } from '../game/memory'
 import { B1_MEMORY_DEMO } from '../data/b1MemoryDemo'
 import { Inscriptions } from './Inscriptions'
 import { INS_DEMOS } from '../data/b1InscriptionsDemo'
+import { CommandPuzzle } from './CommandPuzzle'
+import { STONE_DEMOS } from '../data/b1StoneDemo'
 
 /** Botón flotante y panel del modo profesor */
 export function TeacherPanel({ state, update }: { state: GameState; update: Update }) {
   const t = useTeacher()
   const [open, setOpen] = useState(false)
   // B1: vistas de prueba de la estética de los recuerdos (no cambian la partida)
-  const [demo, setDemo] = useState<'frag-first' | 'frag-next' | 'static' | 'ins-door' | 'ins-bridge' | null>(null)
+  const [demo, setDemo] = useState<'frag-first' | 'frag-next' | 'static' | 'ins-door' | 'ins-bridge' | 'stone-temple' | 'stone-room' | 'stone-tunnel' | null>(null)
   if (!t.on) return null
 
   const scene = SCENES[state.sceneId]
@@ -62,6 +64,18 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               const r = INS_DEMOS[demo === 'ins-door' ? 'door' : 'bridge']
               return <Inscriptions title={r.title} intro={r.intro} scene={r.scene} plates={r.plates} finish={r.finish} onClose={() => setDemo(null)} />
             })()}
+          </div>
+        </div>
+      )}
+      {(demo === 'stone-temple' || demo === 'stone-room' || demo === 'stone-tunnel') && (
+        <div className="fixed inset-0 z-[80] overflow-y-auto bg-ink/95 p-3">
+          <div className="mx-auto max-w-md">
+            <CommandPuzzle
+              mode="text"
+              name={demo === 'stone-temple' ? 'The temple' : demo === 'stone-room' ? 'Your room' : 'The tunnel'}
+              room={STONE_DEMOS[demo === 'stone-temple' ? 'temple' : demo === 'stone-room' ? 'room' : 'tunnel']}
+              onClose={() => setDemo(null)}
+            />
           </div>
         </div>
       )}
@@ -145,6 +159,12 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               >
                 Probar Inscriptions como tarea (tablilla)
               </button>
+              <p className="text-xs text-paper/55">Probar Moving Stone (escribir la orden):</p>
+              <div className="grid grid-cols-3 gap-2">
+                <button className={`${btn} px-2 text-sm`} onClick={() => { setOpen(false); setDemo('stone-temple') }}>Templo</button>
+                <button className={`${btn} px-2 text-sm`} onClick={() => { setOpen(false); setDemo('stone-room') }}>Cuarto</button>
+                <button className={`${btn} px-2 text-sm`} onClick={() => { setOpen(false); setDemo('stone-tunnel') }}>Túnel</button>
+              </div>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">Saltar a</p>

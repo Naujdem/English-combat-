@@ -22,6 +22,11 @@ import { NPC_TASKS } from '../src/data/tasks'
 import type { Question } from '../src/game/types'
 import { plateProblems, sentenceOf, type InscriptionRoom } from '../src/game/inscriptions'
 import { INS_DEMOS } from '../src/data/b1InscriptionsDemo'
+import { STONE_DEMOS } from '../src/data/b1StoneDemo'
+import { STONE_OBJECTS, objectNames } from '../src/components/StoneObjects'
+import type { TextCommandRoom } from '../src/components/TextCommand'
+import { matchCommand } from '../src/game/command'
+import { PHRASAL } from '../src/data/glossary'
 
 const useLT = process.argv.includes('--lt')
 const LT_URL = process.env.LT_URL ?? 'https://api.languagetool.org/v2/check'
@@ -85,6 +90,30 @@ for (const [where, room] of rooms) {
 // El chequeo se prueba a sí mismo: una tablilla con words y roles de distinto largo tiene que dar error
 if (!plateProblems({ words: ['The door', 'was', 'opened'], roles: ['subject', 'aux'], es: 'x', rule: { title: 'x', text: 'x' } }).length)
   structure.push({ where: 'validador de Inscriptions', msg: 'no detecta una tablilla con words y roles de distinto largo' })
+
+// ── 1c. The Moving Stone escrito (B1): los pasos de las salas de tareas y de prueba ──
+const stoneRooms: [string, TextCommandRoom][] = [
+  ...Object.entries(NPC_TASKS).flatMap(([id, t]) => (t.command?.mode === 'text' ? [[`tarea ${id}`, t.command] as [string, TextCommandRoom]] : [])),
+  ...Object.entries(STONE_DEMOS).map(([k, r]) => [`sala de prueba ${k}`, r] as [string, TextCommandRoom]),
+]
+for (const [where, room] of stoneRooms) {
+  for (const o of room.objects) if (!STONE_OBJECTS[o]) structure.push({ where, msg: `el objeto "${o}" no está en el registro (StoneObjects.tsx)` })
+  const names = objectNames(room.objects)
+  room.steps.forEach((st, i) => {
+    const w = `${where} · paso ${i + 1}`
+    if (!st.accept.length) structure.push({ where: w, msg: 'no tiene órdenes correctas (accept)' })
+    if (!room.objects.includes(st.target)) structure.push({ where: w, msg: `el objeto que cambia (target "${st.target}") no está en la sala` })
+    if (!st.tip?.trim()) structure.push({ where: w, msg: 'sin pista (tip)' })
+    for (const a of st.accept) {
+      if (!a.verb?.trim() || !a.object?.trim()) structure.push({ where: w, msg: 'una orden sin verbo u objeto' })
+      if (a.particle && !PHRASAL[`${a.verb} ${a.particle}`]) structure.push({ where: w, msg: `"${a.verb} ${a.particle}" no está en PHRASAL (glossary.ts)` })
+      if (!room.objects.includes(a.object)) structure.push({ where: w, msg: `el objeto "${a.object}" no está en la sala` })
+      // La orden de ejemplo tiene que pasar la revisión del juego
+      const sample = [a.verb, a.particle, 'the', STONE_OBJECTS[a.object]?.names[0] ?? a.object, a.complement?.[0]].filter(Boolean).join(' ')
+      if (!matchCommand(sample, st, names).ok) structure.push({ where: w, msg: `la orden "${sample}" no la acepta el juego` })
+    }
+  })
+}
 
 // ── 2. Diccionario: palabras en inglés sin traducción ──
 // Se leen los campos con texto en inglés de los archivos de datos. Para no confundir el español con el inglés,
@@ -154,6 +183,15 @@ for (const [where, room] of rooms) {
     add(sentenceOf(p.words), true, w)
     for (const a of p.alt ?? []) add(sentenceOf(a), true, `${w} (otro orden)`)
     for (const ex of p.rule.examples ?? []) add(ex, true, `${w} (ejemplo de la regla)`)
+  })
+}
+
+for (const [where, room] of stoneRooms) {
+  room.steps.forEach((st, i) => {
+    const w = `${where} · paso ${i + 1}`
+    add(st.problem.en.replace(/"/g, ''), true, `${w} (problema)`)
+    add(st.done.en, true, `${w} (al acertar)`)
+    for (const [v, f] of Object.entries(st.fails ?? {})) add(f.en, true, `${w} (reacción a ${v})`)
   })
 }
 

@@ -1079,6 +1079,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'command' && t.command) {
               const who = npcOf(t.npc ?? task)
               const c = t.command
+              if (c.mode === 'text') return <CommandPuzzle mode="text" name={who.name} look={who.look} room={c} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
               return <CommandPuzzle name={who.name} look={who.look} title={c.title} intro={c.intro} verbs={c.verbs} objects={c.objects} steps={c.steps} scene={c.scene} finish={c.finish} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             }
             if (t.activity === 'inscriptions' && t.inscriptions) {

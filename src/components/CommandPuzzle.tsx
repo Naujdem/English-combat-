@@ -7,6 +7,8 @@ import { SpriteIcon } from './Sprite'
 import { SpeakButton } from './SpeakButton'
 import { Tappable } from './Words'
 import { btnGhost, btnPrimary, Panel } from './ui'
+import { TextCommand, type TextCommandRoom } from './TextCommand'
+import type { StoneScene } from './StoneObjects'
 
 /** Un objeto que se puede tocar. id = el que dibuja la escena; en / es = su nombre */
 export type CommandObject = { id: string; en: string; es: string }
@@ -28,13 +30,43 @@ export type CommandStep = {
 const GLOW = '#f2c230'
 const WATER = '#5d8fd4'
 
+/** Escenas: con botones (A2), el molino y el centro de control; escritas (B1), el templo, el cuarto y el túnel */
+export type CommandScene = 'mill' | 'control' | StoneScene
+
+type ButtonProps = {
+  mode?: 'buttons'
+  name: string
+  look: SpriteLook
+  title: string
+  intro: { en: string; es: string }
+  verbs: string[]
+  objects: CommandObject[]
+  steps: CommandStep[]
+  /** Dibujo: el molino (A2-09) o el centro de control de movilidad (A2-12) */
+  scene?: 'mill' | 'control'
+  /** Frase final del personaje y texto del aviso al terminar (por defecto, los del molino) */
+  finish?: { en: string; es: string; banner: string }
+  onClose: (done: boolean, perfect: boolean) => void
+}
+/** The Moving Stone escrito (B1): la sala va completa en `room` (ver TextCommand.tsx) */
+type TextProps = { mode: 'text'; name: string; look?: SpriteLook; room: TextCommandRoom; onClose: (done: boolean, perfect: boolean) => void }
+
 /**
- * Command Puzzle (A2-09 · Wake the Mill; reutilizable con otra escena): el jugador PRODUCE la orden.
+ * Command Puzzle. mode 'buttons' (por defecto, A2): se elige el verbo con botones y se toca el objeto.
+ * mode 'text' (B1, The Moving Stone escrito): el jugador escribe la orden (components/TextCommand.tsx).
+ */
+export function CommandPuzzle(props: ButtonProps | TextProps) {
+  if (props.mode === 'text') return <TextCommand name={props.name} look={props.look} room={props.room} onClose={props.onClose} />
+  return <ButtonCommand {...props} />
+}
+
+/**
+ * Command Puzzle con botones (A2-09 · Wake the Mill; reutilizable con otra escena): el jugador PRODUCE la orden.
  * Ve un problema, elige un verbo (y DON'T si hace falta) y toca el objeto: se forma la frase y el objeto reacciona.
  * Un error no quita vida: el objeto reacciona sin resolver nada. 2.º error del paso → pista; 3.º → se ilumina el verbo.
  * Al terminar, onClose(true, perfect): perfect = 0 o 1 errores en total.
  */
-export function CommandPuzzle({
+function ButtonCommand({
   name,
   look,
   title,

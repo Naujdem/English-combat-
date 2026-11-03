@@ -6,6 +6,7 @@ import type { FixStep } from '../components/FixRadio'
 import type { ReconstructItem } from '../components/Reconstruct'
 import type { DebateEndings, DebateTurn } from '../components/DebateTalk'
 import type { CommandObject, CommandStep } from '../components/CommandPuzzle'
+import type { TextCommandRoom } from '../components/TextCommand'
 import type { MemoryPair } from '../components/MemoryChest'
 import type { InscriptionRoom } from '../game/inscriptions'
 import { INS_DEMO_DOOR } from './b1InscriptionsDemo'
@@ -53,7 +54,10 @@ export type NpcTask = {
   /** Para activity 'command' (Command Puzzle, A2-09 Wake the Mill): el jugador da la orden (verbo + objeto). Con 0-1 errores, escudo */
   /** Para activity 'memory' (The Memory Chest, A2-10): parejas que se emparejan volteando cartas */
   memory?: { title: string; intro: { en: string; es: string }; pairs: MemoryPair[] }
-  command?: { title: string; intro: { en: string; es: string }; verbs: string[]; objects: CommandObject[]; steps: CommandStep[]; scene?: 'mill' | 'control'; finish?: { en: string; es: string; banner: string } }
+  command?:
+    | { mode?: 'buttons'; title: string; intro: { en: string; es: string }; verbs: string[]; objects: CommandObject[]; steps: CommandStep[]; scene?: 'mill' | 'control'; finish?: { en: string; es: string; banner: string } }
+    /** B1 · The Moving Stone escrito: el jugador escribe la orden (components/TextCommand.tsx, game/command.ts) */
+    | TextCommandRoom
   /** Para activity 'inscriptions' (B1, templos): una sala de tablillas (game/inscriptions.ts). Sin reiniciar ninguna tablilla, escudo */
   inscriptions?: InscriptionRoom
   /** Para activity 'reconstruct' (Reconstruct the Story): contrastar pistas con una nota corrompida y elegir la frase verdadera */
