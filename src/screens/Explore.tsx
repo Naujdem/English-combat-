@@ -41,6 +41,8 @@ import { SpriteL } from '../components/SpriteL'
 import { BlurFace, BlurFaceIcon } from '../components/BlurFace'
 import { exitMemory, isMemoryScene } from '../game/memory'
 import { MemoriesTab } from '../components/MemoriesTab'
+import { Inscriptions } from '../components/Inscriptions'
+import { B1_DEMO_TABLET } from '../data/b1MemoryDemo'
 import { isB1Unlocked } from '../data/b1World'
 import { B1_CALL, B1_PHONE } from '../data/b1Home'
 import { B1_HOME_ID, B1_OPENING } from '../data/b1World'
@@ -644,7 +646,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE ? <PhoneIcon ringing={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET ? <TabletIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -1079,6 +1081,10 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               const c = t.command
               return <CommandPuzzle name={who.name} look={who.look} title={c.title} intro={c.intro} verbs={c.verbs} objects={c.objects} steps={c.steps} scene={c.scene} finish={c.finish} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             }
+            if (t.activity === 'inscriptions' && t.inscriptions) {
+              const r = t.inscriptions
+              return <Inscriptions title={r.title} intro={r.intro} scene={r.scene} plates={r.plates} finish={r.finish} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
+            }
             if (t.activity === 'memory' && t.memory) {
               const who = npcOf(t.npc ?? task)
               return <MemoryChest name={who.name} look={who.look} title={t.memory.title} intro={t.memory.intro} pairs={t.memory.pairs} onClose={finish} />
@@ -1346,6 +1352,17 @@ function PhoneIcon({ ringing }: { ringing: boolean }) {
       <rect x="10.5" y="9" width="11" height="18" rx="2.2" fill="#2d2d3a" stroke="#c9c2d6" strokeWidth="1" />
       <rect x="12" y="11" width="8" height="12" rx="1" fill={ringing ? '#8fd0d4' : '#4a5560'} />
       {ringing && <path d="M7 12 q-2 4 0 8 M25 12 q2 4 0 8" fill="none" stroke="#e0a526" strokeWidth="1.4" strokeLinecap="round" />}
+    </g>
+  )
+}
+
+/** Una tablilla de piedra con glifos (B1, Inscriptions): brilla mientras tiene algo que leer */
+function TabletIcon({ lit }: { lit: boolean }) {
+  return (
+    <g>
+      <ellipse cx="16" cy="29" rx="9" ry="2.2" fill="rgba(0,0,0,0.2)" />
+      <path d="M8 29 V9 Q8 4 16 4 Q24 4 24 9 V29 Z" fill="#4a5568" stroke={lit ? '#e0b84a' : '#2e3542'} strokeWidth="1.2" />
+      <path d="M11.5 11 h9 M11.5 15 h6 M11.5 19 h9 M11.5 23 h5" stroke={lit ? '#f6e7b4' : '#8d97a8'} strokeWidth="1.4" strokeLinecap="round" />
     </g>
   )
 }

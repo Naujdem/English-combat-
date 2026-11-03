@@ -9,6 +9,8 @@ import type { SceneDef } from '../game/types'
  */
 export const B1_DEMO_ID = 'b1-01-demo'
 export const B1_DEMO_NPC = 'b1-01-demo-friend'
+/** Tablilla de prueba de Inscriptions (tarea 0-C) */
+export const B1_DEMO_TABLET = 'b1-demo-tablet'
 
 const MAP = [
   '##############',
@@ -28,7 +30,10 @@ export const B1_MEMORY_DEMO: SceneDef = {
   start: { x: 2, y: 5 },
   bossDoor: { x: 0, y: 0 },
   keysNeeded: 0,
-  entities: [{ type: 'npc', id: B1_DEMO_NPC, x: 11, y: 2 }],
+  entities: [
+    { type: 'npc', id: B1_DEMO_NPC, x: 11, y: 2 },
+    { type: 'npc', id: B1_DEMO_TABLET, x: 6, y: 2 },
+  ],
   labels: [{ text: 'Pasillo', x: 7, y: 5 }],
   zoneAt: () => 'aula-futuro',
   examine: {},

@@ -14,13 +14,15 @@ import { SpriteL } from './SpriteL'
 import { BlurFace, BlurFaceIcon } from './BlurFace'
 import { enterMemory } from '../game/memory'
 import { B1_MEMORY_DEMO } from '../data/b1MemoryDemo'
+import { Inscriptions } from './Inscriptions'
+import { INS_DEMOS } from '../data/b1InscriptionsDemo'
 
 /** Botón flotante y panel del modo profesor */
 export function TeacherPanel({ state, update }: { state: GameState; update: Update }) {
   const t = useTeacher()
   const [open, setOpen] = useState(false)
   // B1: vistas de prueba de la estética de los recuerdos (no cambian la partida)
-  const [demo, setDemo] = useState<'frag-first' | 'frag-next' | 'static' | null>(null)
+  const [demo, setDemo] = useState<'frag-first' | 'frag-next' | 'static' | 'ins-door' | 'ins-bridge' | null>(null)
   if (!t.on) return null
 
   const scene = SCENES[state.sceneId]
@@ -52,6 +54,16 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
     <>
       {(demo === 'frag-first' || demo === 'frag-next') && (
         <FragmentJoin state={state} update={update} preview={demo === 'frag-first' ? 'first' : 'next'} onDone={() => setDemo(null)} />
+      )}
+      {(demo === 'ins-door' || demo === 'ins-bridge') && (
+        <div className="fixed inset-0 z-[80] overflow-y-auto bg-ink/95 p-3">
+          <div className="mx-auto max-w-md">
+            {(() => {
+              const r = INS_DEMOS[demo === 'ins-door' ? 'door' : 'bridge']
+              return <Inscriptions title={r.title} intro={r.intro} scene={r.scene} plates={r.plates} finish={r.finish} onClose={() => setDemo(null)} />
+            })()}
+          </div>
+        </div>
       )}
       {demo === 'static' && (
         <div className="fixed inset-0 z-[80] bg-ink">
@@ -117,6 +129,22 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
                 <button className={`${btn} text-sm`} onClick={() => { setOpen(false); setDemo('frag-next') }}>Fragmentos: siguientes</button>
               </div>
               <button className={`${btn} text-left text-sm`} onClick={() => { setOpen(false); setDemo('static') }}>Probar estática de nombre</button>
+              <div className="grid grid-cols-2 gap-2">
+                <button className={`${btn} text-sm`} onClick={() => { setOpen(false); setDemo('ins-door') }}>Probar Inscriptions (puerta)</button>
+                <button className={`${btn} text-sm`} onClick={() => { setOpen(false); setDemo('ins-bridge') }}>Probar Inscriptions (puente)</button>
+              </div>
+              <button
+                className={`${btn} text-left text-sm`}
+                onClick={() =>
+                  go((s) => {
+                    // La tablilla de prueba como tarea (activity 'inscriptions'), dentro de la escena de prueba del recuerdo 1
+                    const b = enterMemory(PRESETS.find((p) => p.id === 'b1-opened')!.apply(s), 1, B1_MEMORY_DEMO.id, { x: 6, y: 3 })
+                    return { ...b, opened: b.opened.filter((o) => o !== 'b1-01-demo-inscriptions') }
+                  })
+                }
+              >
+                Probar Inscriptions como tarea (tablilla)
+              </button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">Saltar a</p>

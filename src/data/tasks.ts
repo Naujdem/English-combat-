@@ -7,6 +7,8 @@ import type { ReconstructItem } from '../components/Reconstruct'
 import type { DebateEndings, DebateTurn } from '../components/DebateTalk'
 import type { CommandObject, CommandStep } from '../components/CommandPuzzle'
 import type { MemoryPair } from '../components/MemoryChest'
+import type { InscriptionRoom } from '../game/inscriptions'
+import { INS_DEMO_DOOR } from './b1InscriptionsDemo'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -30,7 +32,7 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -52,6 +54,8 @@ export type NpcTask = {
   /** Para activity 'memory' (The Memory Chest, A2-10): parejas que se emparejan volteando cartas */
   memory?: { title: string; intro: { en: string; es: string }; pairs: MemoryPair[] }
   command?: { title: string; intro: { en: string; es: string }; verbs: string[]; objects: CommandObject[]; steps: CommandStep[]; scene?: 'mill' | 'control'; finish?: { en: string; es: string; banner: string } }
+  /** Para activity 'inscriptions' (B1, templos): una sala de tablillas (game/inscriptions.ts). Sin reiniciar ninguna tablilla, escudo */
+  inscriptions?: InscriptionRoom
   /** Para activity 'reconstruct' (Reconstruct the Story): contrastar pistas con una nota corrompida y elegir la frase verdadera */
   reconstruct?: { title: string; intro: { en: string; es: string }; items: ReconstructItem[] }
   /** Para activity 'debate' (Dialogue Under Pressure, versión de debate): turnos con respuesta buena / neutral / mala y tres desenlaces */
@@ -4068,6 +4072,16 @@ NPC_TASKS['b1-01-demo-friend'] = {
     { text: '(The hallway starts to fade... The memory is ending.)', es: '(El pasillo empieza a desvanecerse... El recuerdo se acaba.)' },
   ],
   reward: { text: '(The memory fades.)', es: '(El recuerdo se desvanece.)', sub: 'Recuerdo de prueba terminado.' },
+}
+
+// ── B1 · DEMO de Inscriptions como tarea (tablilla en la escena de prueba del recuerdo 1, data/b1MemoryDemo.ts) ──
+// Se borra junto con la demo cuando se haga la misión 1. Las misiones 9, 11 y 13 declaran sus salas igual.
+NPC_TASKS['b1-demo-tablet'] = {
+  done: 'b1-01-demo-inscriptions',
+  activity: 'inscriptions',
+  inscriptions: INS_DEMO_DOOR,
+  steps: [],
+  reward: { text: '(The door is open.)', es: '(La puerta está abierta.)', sub: 'Sala de prueba de Inscriptions completada.' },
 }
 
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */
