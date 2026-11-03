@@ -236,7 +236,14 @@ Queda guardado en el dispositivo aparte de la partida. Es una clave dentro del c
 - Todos los identificadores de B1 llevan el prefijo `b1-` (`B1_PREFIX` en `src/game/store.ts`).
 - `src/data/b1World.ts`: los 14 lugares en 3 partes (Silence, Underworld, Temples and Voices) y los Extras, épocas Presente / Recuerdo, la apertura (`b1-00-opening`) y los cierres (`b1-01-close` … `b1-14-close`).
 - `src/components/B1Map.tsx`: el mapa de B1 (franja morada para los recuerdos, dorada para el presente, candado de dos fragmentos en los recuerdos cerrados).
-- La apertura (la llamada de Ms. Haddad) está en `src/data/b1Home.ts` y su tarea en `src/data/tasks.ts`. La animación de fragmentos se engancha en `src/components/FragmentJoinCue.tsx`.
+- La apertura (la llamada de Ms. Haddad) está en `src/data/b1Home.ts` y su tarea en `src/data/tasks.ts`. Al colgar sale la animación de fragmentos (`FragmentJoin`).
+- Estética de los recuerdos (para usar desde las misiones):
+  - `src/game/memory.ts`: `enterMemory` / `exitMemory` (entrada con estática, salida despertando con dolor de garganta y páginas del diario), `isMemoryScene` (escenas que empiezan por `b1-01-`, `b1-03-`… se ven con el filtro), `addLooseFragment`.
+  - `MemoryFrame` (filtro morado, viñeta, marca "Recuerdo · 20??"), `SpriteL` / `LIcon` (L sin cara), `BlurFace` (NPC con la cara borrosa), `FragmentJoin` y `LooseFragment`.
+  - Nombres con estática: escribe `[[?]]` en el texto (`src/game/staticName.ts`); se ve ▒▒▒ y la voz no lo lee.
+  - Diario de B1 en `src/data/b1Diary.ts` (páginas "Diario de L" con `kind: 'L'`) y resúmenes de la Mochila en `src/data/b1Memories.ts`.
+  - El nodo 1 abre una demo (`src/data/b1MemoryDemo.ts`) que se borra al hacer la misión 1.
+- Inscriptions (minijuego de los templos, misiones 9, 11 y 13): componente `src/components/Inscriptions.tsx` (glifos en `InsGlyph.tsx`), tipos y reglas en `src/game/inscriptions.ts`. Una sala se declara en una tarea con `activity: 'inscriptions'` e `inscriptions: { title, intro, scene, plates }`. El validador revisa las tablillas (largo de words y roles, regla, fichas repetidas, alternativas) y pasa sus frases por LanguageTool. Salas de prueba en `src/data/b1InscriptionsDemo.ts` (modo profesor).
 - La pestaña B1 aparece al terminar A2-13 (o en modo profesor, que también tiene saltos a cada nodo de B1).
 
 ## Validador de preguntas

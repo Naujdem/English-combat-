@@ -1,3 +1,4 @@
+import { staticForSpeech } from './staticName'
 /**
  * Voz en inglés usando la síntesis de voz del propio dispositivo (Web Speech API).
  * No necesita internet ni archivos de audio. Si el dispositivo no la tiene,
@@ -42,7 +43,8 @@ export function voiceOf(look?: { gender?: string } | null): Voice {
 
 /** Limpia el texto para leerlo: quita acotaciones entre paréntesis y cambia ___ por una pausa */
 function clean(text: string) {
-  return text.replace(/\([^)]*\)/g, '').replace(/_{2,}/g, ' ... ').replace(/\s*→\s*/g, ', ').trim()
+  // Nombres con estática ([[?]] o ▒▒▒): nunca se leen, se cambian por una pausa
+  return staticForSpeech(text).replace(/\([^)]*\)/g, '').replace(/_{2,}/g, ' ... ').replace(/\s*→\s*/g, ', ').trim()
 }
 
 export function speak(text: string, slow = false, who: Voice = 'neutral') {

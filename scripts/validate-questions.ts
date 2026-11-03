@@ -20,6 +20,8 @@ import { QUESTIONS } from '../src/data/questions'
 import { ENEMIES } from '../src/data/enemies'
 import { NPC_TASKS } from '../src/data/tasks'
 import type { Question } from '../src/game/types'
+import { plateProblems, sentenceOf, type InscriptionRoom } from '../src/game/inscriptions'
+import { INS_DEMOS } from '../src/data/b1InscriptionsDemo'
 
 const useLT = process.argv.includes('--lt')
 const LT_URL = process.env.LT_URL ?? 'https://api.languagetool.org/v2/check'
@@ -68,6 +70,21 @@ for (const e of Object.values(ENEMIES)) {
     if (m < 3) structure.push({ where: `enemigo ${e.id} · fase ${i + 1}`, msg: `solo ${m} preguntas propias` })
   })
 }
+
+// ── 1b. Inscriptions (B1): las tablillas de las tareas y de las salas de prueba ──
+const rooms: [string, InscriptionRoom][] = [
+  ...Object.entries(NPC_TASKS).flatMap(([id, t]) => (t.inscriptions ? [[`tarea ${id}`, t.inscriptions] as [string, InscriptionRoom]] : [])),
+  ...Object.entries(INS_DEMOS).map(([k, r]) => [`sala de prueba ${k}`, r] as [string, InscriptionRoom]),
+]
+for (const [where, room] of rooms) {
+  if (!room.plates.length) structure.push({ where, msg: 'la sala de Inscriptions no tiene tablillas' })
+  room.plates.forEach((p, i) => {
+    for (const msg of plateProblems(p)) structure.push({ where: `${where} · tablilla ${i + 1}`, msg })
+  })
+}
+// El chequeo se prueba a sí mismo: una tablilla con words y roles de distinto largo tiene que dar error
+if (!plateProblems({ words: ['The door', 'was', 'opened'], roles: ['subject', 'aux'], es: 'x', rule: { title: 'x', text: 'x' } }).length)
+  structure.push({ where: 'validador de Inscriptions', msg: 'no detecta una tablilla con words y roles de distinto largo' })
 
 // ── 2. Diccionario: palabras en inglés sin traducción ──
 // Se leen los campos con texto en inglés de los archivos de datos. Para no confundir el español con el inglés,
@@ -128,6 +145,15 @@ for (const [id, t] of Object.entries(NPC_TASKS)) {
   t.steps.forEach((s, i) => {
     // En las charlas, las opciones malas suelen ser malas por el contenido: solo se revisa la correcta
     if (s.choice) add(s.choice.options[s.choice.answer], true, `tarea ${id} · paso ${i + 1}`, false)
+  })
+}
+
+for (const [where, room] of rooms) {
+  room.plates.forEach((p, i) => {
+    const w = `${where} · tablilla ${i + 1}`
+    add(sentenceOf(p.words), true, w)
+    for (const a of p.alt ?? []) add(sentenceOf(a), true, `${w} (otro orden)`)
+    for (const ex of p.rule.examples ?? []) add(ex, true, `${w} (ejemplo de la regla)`)
   })
 }
 

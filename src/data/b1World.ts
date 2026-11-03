@@ -22,6 +22,9 @@ export const isB1Unlocked = (s: GameState) => s.opened.includes(A2_13_CLOSE)
 /** Nodo 1: se abre con la apertura. Nodo n (2 a 14): al cerrar el anterior */
 export const isB1NodeOpen = (n: number, s: GameState) => (n === 1 ? s.opened.includes(B1_OPENING) : s.opened.includes(closeId(n - 1)))
 
+/** Lo que abre el nodo n en el mapa (para la animación de fragmentos): la apertura para el 1, el cierre anterior para los demás */
+export const memoryOpenId = (n: number) => (n === 1 ? B1_OPENING : closeId(n - 1))
+
 /** Época de cada lugar: Presente (el protagonista en Lumen Bay) o Recuerdo (los recuerdos de L) */
 export type B1Era = 'Presente' | 'Recuerdo'
 export const B1_ERA_COLOR: Record<B1Era, string> = { Presente: '#d9a93a', Recuerdo: '#9b6ad6' }

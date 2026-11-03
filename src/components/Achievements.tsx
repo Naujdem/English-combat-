@@ -9,8 +9,8 @@ import { FRIENDS } from '../data/friends'
 import { OUTFITS } from '../data/school'
 import { ACHIEVEMENTS, ALBUM, ALBUM_SLOTS, achieved, albumCount, type AlbumSlot, type Era, type PortraitSrc } from '../data/collection'
 
-const ERA_COLOR: Record<Era, string> = { Pasado: '#c98b4a', Presente: '#3b9d5d', Futuro: '#5d8fd4', Viajero: '#a46fd0' }
-const ERA_LABEL: Record<Era, string> = { Pasado: '1996', Presente: 'Hoy', Futuro: '2056', Viajero: 'Viajero' }
+const ERA_COLOR: Record<Era, string> = { Pasado: '#c98b4a', Presente: '#3b9d5d', Futuro: '#5d8fd4', Viajero: '#a46fd0', Recuerdo: '#9b6ad6' }
+const ERA_LABEL: Record<Era, string> = { Pasado: '1996', Presente: 'Hoy', Futuro: '2056', Viajero: 'Viajero', Recuerdo: '20??' }
 
 function Portrait({ src, state, locked, size = 44 }: { src: PortraitSrc; state: GameState; locked: boolean; size?: number }) {
   if ('enemy' in src) {
