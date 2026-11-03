@@ -137,6 +137,8 @@ export default function App() {
     case 'world':
       screen = (
         <World
+          // Se vuelve a montar si un salto del modo profesor cambia la escena o el avance de B1 estando en el mapa
+          key={`${state.sceneId}|${state.opened.filter((o) => o.startsWith('b1-')).length}`}
           state={state}
           update={update}
           onTitle={() => go('title')}
