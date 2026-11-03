@@ -233,6 +233,12 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (/\b(could you|would you like)\b/i.test(sentence)) return { title: 'En la mesa: Could you pass…, please? · Would you like some more…?', parts: [K('Could you / Would you like'), '+', V('pass / some more'), '+', R('the salt / juice?')] }
       if (question) return { title: 'Preguntas con how: How was…? · How often…? · How do you make…?', parts: [K('How'), '+', V('was / often / do you make'), '+', R('...?')] }
       return { title: 'Describir un plato: sabor (sweet, spicy) y forma de cocinarlo (fried, roasted):', parts: [S('The chicken'), '+', V('is'), '+', K('roasted'), '+', R('and a bit spicy')] }
+    case 'people-relationships':
+      if (/\blook like\b/i.test(sentence)) return { title: 'Aspecto físico: What does + sujeto + look like?', parts: [K('What'), '+', V('does'), '+', S('he / she'), '+', K('look like?')] }
+      if (/\blike\?/i.test(sentence) || question) return { title: 'Personalidad: What + is / are + sujeto + like?', parts: [K('What'), '+', V('is / are'), '+', S('he / she / they'), '+', K('like?')] }
+      if (/\b(get on|fell out|fall out|made up|make up|in common|trust)\b/i.test(sentence)) return { title: 'Relaciones: get on well with · fall out · make up · have a lot in common:', parts: [S('Sujeto'), '+', K('get on well with / fell out / made up'), '+', R('...')] }
+      if (/'s\b/i.test(sentence)) return { title: "Familia con 's: my mother's brother = my uncle:", parts: [S("My mother's"), '+', K('brother'), '+', V('is'), '+', R('my uncle')] }
+      return { title: 'Describir a alguien: sujeto + is + (a bit / very) + adjetivo de personalidad:', parts: [S('Sujeto'), '+', V('is'), '+', K('a bit / very'), '+', R('shy / friendly / honest')] }
     case 'should-must':
       if (question) return { title: 'Para preguntar: Should + sujeto + verbo? · Do / Does + sujeto + have to + verbo?', parts: [V('Should / Do'), '+', S('Sujeto'), '+', K('(have to)'), '+', V('verbo'), '+', R('...?')] }
       if (negative) return { title: "shouldn't = mal consejo · mustn't = prohibido · don't have to = no es necesario:", parts: [S('Sujeto'), '+', K("shouldn't / mustn't / don't have to"), '+', V('verbo'), '+', R('...')] }

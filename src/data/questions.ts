@@ -36,6 +36,7 @@ import { A2_MARKET_PRACTICE } from './a2Market'
 import { A2_MARKET_QUESTIONS } from './questions-a2-s4'
 import { A2_DINNER_PRACTICE } from './a2Dinner'
 import { A2_DINNER_QUESTIONS } from './questions-a2-s5'
+import { A2_FRIENDS_QUESTIONS } from './questions-a2-friends'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -390,6 +391,7 @@ export const QUESTIONS: Question[] = [
   ...A2_MARKET_QUESTIONS,
   ...A2_DINNER_PRACTICE,
   ...A2_DINNER_QUESTIONS,
+  ...A2_FRIENDS_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -976,6 +978,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Cómo se cocina: fried (frito) · roasted (asado al horno) · grilled (a la parrilla) · boiled (hervido) · raw (crudo).',
       'Cantidades: How much + incontable (rice, salt, milk) · How many + plural (eggs, plates) · a lot of (los dos) · a little + incontable · a few + plural.',
       "En la mesa: How was…? · How often…? · How do you make…? · Could you pass the salt, please? · Would you like some more…? — Yes, please / No, thank you, I'm full.",
+    ],
+  },
+  'people-relationships': {
+    name: 'Personalidad, familia y relaciones',
+    level: 'A2',
+    lesson: [
+      'Personalidad: friendly · shy · kind · honest · generous · funny · hard-working · lazy · bossy (mandón) · easy-going (tranquilo).',
+      'What is he like? = ¿cómo es? (personalidad) · What does he look like? = ¿cómo se ve? · What does he like? = ¿qué le gusta?',
+      "Familia ampliada: uncle / aunt · cousin · nephew / niece · grandson / granddaughter · stepmother · half-sister · mother-in-law · an only child. Con 's: my mother's brother = my uncle.",
+      'Relaciones: get on (well) with (llevarse bien) · fall out with (pelearse) · make up (reconciliarse) · trust (confiar en) · have a lot in common (tener mucho en común).',
     ],
   },
   future: {
