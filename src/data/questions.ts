@@ -39,6 +39,7 @@ import { A2_DINNER_PRACTICE } from './a2Dinner'
 import { A2_DINNER_QUESTIONS } from './questions-a2-s5'
 import { A2_FRIENDS_QUESTIONS } from './questions-a2-friends'
 import { B1_01_QUESTIONS } from './questions-b1-01'
+import { B1_02_QUESTIONS } from './questions-b1-02'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -397,6 +398,7 @@ export const QUESTIONS: Question[] = [
   ...A2_FRIENDS_QUESTIONS,
   // ── B1 ──
   ...B1_01_QUESTIONS,
+  ...B1_02_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -1039,6 +1041,17 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Pedir ayuda: Help! · Is anybody there? · Call the firefighters! · We are on the third floor.',
       'Órdenes en una emergencia (verbo base al principio): Follow my voice! · Get out now! · Cover your mouth. · Don\'t use the lift!',
       'Vocabulario: fire, smoke, flames, fire alarm, fire exit, firefighters, trapped (atrapado), locked (cerrado con llave), injured (herido).',
+    ],
+  },
+  'pp-yet-already': {
+    name: 'Present perfect con yet, already y just',
+    level: 'B1',
+    lesson: [
+      "Ya (afirmativo): have / has + already + participio → I've already found my bag.",
+      "Todavía no (negativo): haven't / hasn't + participio + yet → I haven't found my phone yet.",
+      '¿Ya? (pregunta): Have / Has + sujeto + participio + yet? → Have you found your bag yet?',
+      "Hace muy poco: have / has + just + participio → I've just landed.",
+      'Con un momento terminado (yesterday, last night) se usa el past simple → I lost my bag yesterday.',
     ],
   },
 }

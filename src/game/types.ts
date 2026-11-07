@@ -30,7 +30,7 @@ export type Interest = {
 export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle' | 'epilogue'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
-export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'going-to-wh' | 'going-to-predict' | 'want-to' | 'should-must' | 'invitations' | 'requests' | 'instructions' | 'past-simple' | 'past-simple-comparatives' | 'superlatives-comparatives-race' | 'past-simple-continuous' | 'recipes-some-any' | 'present-perfect' | 'places-directions' | 'future-plans' | 'health-emergency' | 'wishes-conditional' | 'clothes-shopping' | 'food-dinner' | 'people-relationships' | 'housework' | 'holidays' | 'future' | 'cause-effect' | 'emergencies'
+export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'going-to-wh' | 'going-to-predict' | 'want-to' | 'should-must' | 'invitations' | 'requests' | 'instructions' | 'past-simple' | 'past-simple-comparatives' | 'superlatives-comparatives-race' | 'past-simple-continuous' | 'recipes-some-any' | 'present-perfect' | 'places-directions' | 'future-plans' | 'health-emergency' | 'wishes-conditional' | 'clothes-shopping' | 'food-dinner' | 'people-relationships' | 'housework' | 'holidays' | 'future' | 'cause-effect' | 'emergencies' | 'pp-yet-already'
 
 /**
  * fill: completar el espacio en blanco.
@@ -173,6 +173,8 @@ export type SceneDef = {
   door?: { text: string; sub: string }
   /** Objetos examinables por posición ("x,y"): al chocar con esa casilla se muestra este texto en vez del vocabulario */
   examine?: Record<string, { text: string; sub?: string; say?: string; tone?: 'info' | 'good' | 'warn' }>
+  /** Casillas cerradas por ahora (puertas de zonas que se abren después): si devuelve un texto, no se puede pasar */
+  locked?: (x: number, y: number, s: GameState) => { text: string; sub?: string } | null
 }
 
 export type Requirement = { id: string; name: string; line: StoryLine }
@@ -199,7 +201,7 @@ export type LessonStep = {
  * cada opción tiene una reacción del amigo y sube o baja la amistad.
  *  effect  2 = respuesta muy buena, 1 = buena, 0 = rara pero aceptable, -1 = sin sentido
  */
-export type ChatOption = { text: string; reply: string; es?: string; effect: -1 | 0 | 1 | 2 }
+export type ChatOption = { text: string; reply: string; es?: string; effect: -1 | 0 | 1 | 2; /** Traducción de la opción (se ve con Traducir) */ textEs?: string }
 
 export type DialogLine = {
   who: 'friend' | 'hero' | 'narrator'
@@ -213,6 +215,8 @@ export type DialogLine = {
 /** Charla corta y repetible: el amigo pregunta algo y tú respondes */
 export type CasualChat = {
   requires: TopicId | null
+  /** Nivel CEFR, para mostrarlo en la charla (las de B1 lo llevan) */
+  level?: 'A1' | 'A2' | 'B1'
   text: string
   es?: string
   options: ChatOption[]

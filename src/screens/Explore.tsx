@@ -44,6 +44,7 @@ import { MemoriesTab } from '../components/MemoriesTab'
 import { Inscriptions } from '../components/Inscriptions'
 import { B1_DEMO_TABLET } from '../data/b1TabletDemo'
 import { B1_01_FRIEND, B1_LEO_PHONE } from '../data/b1Accident'
+import { B1_02_LANDED, B1_02_LUMEN_ID, b1PlaneLines } from '../data/b1NewCity'
 import { TheAccident } from '../components/CallForHelp'
 import { isB1Unlocked } from '../data/b1World'
 import { B1_CALL, B1_PHONE } from '../data/b1Home'
@@ -109,7 +110,7 @@ type Talk = {
   level?: string
   note?: string
   /** Charla especial de una misión */
-  quest?: 'lostIntro'
+  quest?: 'lostIntro' | 'b1-02-plane'
 }
 
 export function Explore({ state, update, onBattle, onWorld }: { state: GameState; update: Update; onBattle: (enemyId: string) => void; onWorld: () => void }) {
@@ -169,6 +170,12 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   useEffect(() => {
     if (msg?.tone === 'good') sfx('item')
   }, [msg])
+
+  // B1-02 · A New City: al empezar, la charla del avión con la persona especial (una sola vez; se guarda al aterrizar)
+  useEffect(() => {
+    if (scene.id !== B1_02_LUMEN_ID || state.opened.includes(B1_02_LANDED) || talk) return
+    setTalk({ friendId: 'interest', story: null, lines: b1PlaneLines(state.interest), title: 'Charla casual', level: 'B1', quest: 'b1-02-plane' })
+  }, [scene.id, state.opened, state.interest, talk])
 
   const rows = scene.map.length
   const cols = scene.map[0].length
@@ -442,6 +449,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         return
       }
       const c = scene.map[ny][nx]
+      // Zonas cerradas por ahora (B1-02: la puerta del avión y lo que llenan los bloques siguientes)
+      const lock = scene.locked?.(nx, ny, state)
+      if (lock) {
+        if (facing !== state.facing) update((s) => ({ ...s, facing }))
+        setMsg({ ...lock, tone: 'warn' })
+        return
+      }
       if (walkable(c, doorOpen)) {
         setMsg(null)
         update((s) => ({
@@ -529,7 +543,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       const v = VOCAB[c]
       if (v && c !== '#') setMsg({ text: `${v.en[0].toUpperCase()}${v.en.slice(1)}`, sub: `= ${v.es}`, say: v.en })
     },
-    [alive, blocked, cols, doorOpen, interact, lf.carrying, lostOnMap, rows, scene, state.facing, state.opened, state.pos.x, state.pos.y, update],
+    [alive, blocked, cols, doorOpen, interact, lf.carrying, lostOnMap, rows, scene, state, state.facing, state.opened, state.pos.x, state.pos.y, update],
   )
 
   useEffect(() => {
@@ -798,6 +812,16 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               if (t.quest === 'lostIntro') {
                 update((s) => ({ ...s, lostFound: { ...s.lostFound, started: true } }))
                 setMsg({ text: 'Nueva misión: objetos perdidos.', sub: 'Busca la mochila de Maya y el libro de Leo por la escuela.', tone: 'good' })
+                return
+              }
+              if (t.quest === 'b1-02-plane') {
+                // Las dos charlas del avión: la amistad cambia con la regla de las charlas casuales y se abre la puerta del avión
+                update((s) => {
+                  const n = applyCasual(s, 'interest', delta)
+                  return { ...n, opened: n.opened.includes(B1_02_LANDED) ? n.opened : [...n.opened, B1_02_LANDED] }
+                })
+                if (delta < 0) setMsg({ text: `${talkFriend.name} no te entendió. La amistad bajó un poco.`, sub: 'La puerta del avión ya está abierta. Leo espera junto a la cinta de equipaje.', tone: 'warn' })
+                else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: 'La puerta del avión ya está abierta. Leo espera junto a la cinta de equipaje.', tone: 'good' })
                 return
               }
               if (t.story !== null) {

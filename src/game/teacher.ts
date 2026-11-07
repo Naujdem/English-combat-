@@ -31,6 +31,7 @@ import { A2_12_CLOSE } from '../data/a2Control'
 import { A2_RETURN, A2_13_CLOSE } from '../data/a2Return'
 import { B1_HOME } from '../data/b1Home'
 import { B1_OPENING, closeId } from '../data/b1World'
+import { B1_02_LANDED, B1_02_LUMEN } from '../data/b1NewCity'
 import { B1_01_ALARM, B1_01_ECHO, B1_01_MESSAGE, B1_01_PRACTICE, B1_01_SCHOOL, B1_01_TALKED } from '../data/b1Accident'
 import { enterMemory, memoryFlag } from './memory'
 
@@ -737,6 +738,17 @@ export function b1Mission1(s: GameState, stage: 'memory' | 'alarm' | 'call' | 'e
   const epi = { ...home, screen: 'explore' as const, pos: { x: 6, y: 4 }, opened: add(home.opened, [memoryFlag(1)]) }
   if (stage === 'epilogue') return epi
   return { ...epi, pos: { x: 7, y: 4 }, opened: add(epi.opened, [B1_01_MESSAGE, B1_01_PRACTICE]), seenLesson: add(epi.seenLesson, ['cause-effect']) as GameState['seenLesson'], defeated: epi.defeated.filter((d) => d !== B1_01_ECHO) }
+}
+
+/**
+ * Atajos de la misión B1-2 (A New City) para el panel del profe. Parten de "B1: abrir el nodo 2".
+ *  plane: empieza en el avión (la charla sale al entrar) · airport: ya aterrizó, en el aeropuerto junto a la puerta del avión
+ */
+export function b1Mission2(s: GameState, stage: 'plane' | 'airport'): GameState {
+  const b = b1Start(s, [B1_OPENING, closeId(1)])
+  const lumen = { ...b, screen: 'explore' as const, sceneId: B1_02_LUMEN.id, pos: { ...B1_02_LUMEN.start } }
+  if (stage === 'plane') return lumen
+  return { ...lumen, pos: { x: 6, y: 2 }, opened: add(lumen.opened, [B1_02_LANDED]) }
 }
 
 PRESETS.push(

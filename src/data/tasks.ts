@@ -4207,6 +4207,26 @@ NPC_TASKS['b1-01-close'] = {
   },
 }
 
+// ── B1-02 · A New City, bloque A (aeropuerto de Lumen Bay; escena en data/b1NewCity.ts) ──
+// La charla del avión no es una tarea (Explore.tsx, quest 'b1-02-plane'). Leo, junto a la cinta (aparece al aterrizar):
+// lección 'pp-yet-already' (data/lessons.ts) + práctica guiada. Si todas están bien, escudo. Aún NO cierra la misión (closeId(2)).
+NPC_TASKS['b1-02-practice'] = {
+  npc: 'b1-02-leo',
+  done: 'b1-02-practice',
+  lesson: 'pp-yet-already',
+  activity: 'practice',
+  practice: 'pp-yet-already',
+  practiceIds: ['b1-02-p1', 'b1-02-p2', 'b1-02-p3', 'b1-02-p4', 'b1-02-p5', 'b1-02-p6', 'b1-02-p7', 'b1-02-p8'],
+  practiceShield: true,
+  steps: [],
+  reward: {
+    text: 'Leo: "Good! Now, let\'s see what\'s going on at the baggage claim..."',
+    es: '¡Bien! Ahora veamos qué pasa en la zona de equipaje...',
+    sub: 'Lección y práctica hechas. (Si acertaste todas, ganaste un escudo).',
+    say: "Good! Now, let's see what's going on at the baggage claim...",
+  },
+}
+
 // ── B1 · DEMO de Inscriptions como tarea (tablilla en la sala de prueba de data/b1TabletDemo.ts, solo modo profesor) ──
 // Las misiones 9, 11 y 13 declaran sus salas igual.
 NPC_TASKS['b1-demo-tablet'] = {
