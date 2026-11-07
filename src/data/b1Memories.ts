@@ -13,7 +13,7 @@ export const B1_MEMORIES: B1Memory[] = [
     title: 'The Accident',
     summary: 'Un incendio en el edificio donde L daba clases de noche. L gritó para sacar a todos hasta quedarse sin voz. Un amigo, a su lado, no dijo nada.',
   },
-  { n: 3, title: 'Words on a Screen', summary: '(pendiente)' },
+  { n: 3, title: 'Words on a Screen', summary: 'L perdió la voz y los médicos dijeron que pasaría mucho tiempo sin hablar. Empezó a escribir mensajes a su amiga, a su director y a sus alumnos, y un cuaderno le ayudó a seguir enseñando sin voz.' },
   { n: 5, title: 'Nothing Left', summary: '(pendiente)' },
   { n: 7, title: 'The Underworld', summary: '(pendiente)' },
   { n: 9, title: 'Temples of Stones and Time', summary: '(pendiente)' },

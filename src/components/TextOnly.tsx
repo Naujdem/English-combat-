@@ -8,7 +8,8 @@ import { btnGhost, btnPrimary, Panel } from './ui'
 /** Contenido de Text Only (B1-03, data/b1TextOnly.ts): varios chats seguidos en el teléfono de L */
 export type TextOnlyContent = {
   title: string
-  intro: { text: string; es: string }
+  /** Sin intro (el cierre de B1-03): se pasa directo al chat */
+  intro?: { text: string; es: string }
   chats: { contact: string; steps: MiniStep[] }[]
   finish: { text: string; es: string }
 }
@@ -47,18 +48,21 @@ export function TextOnly({ content, before = [], onClose }: { content: TextOnlyC
   // Pasos: los de "before", la intro, los chats y el final
   const [k, setK] = useState(0)
   const nBefore = before.length
+  // Sin intro (el cierre de B1-03) se pasa directo al primer chat
+  const nIntro = content.intro ? 1 : 0
   const total = content.chats.length
   const exit = () => onClose(false)
 
   if (k < nBefore) return <LLine key={`b${k}`} line={before[k]} title={content.title} onNext={() => setK(k + 1)} onExit={exit} button="Siguiente" />
-  if (k === nBefore) return <LLine key="intro" line={content.intro} title={content.title} onNext={() => setK(k + 1)} onExit={exit} button="Empezar" />
-  const c = k - nBefore - 1
+  if (k === nBefore && content.intro) return <LLine key="intro" line={content.intro} title={content.title} onNext={() => setK(k + 1)} onExit={exit} button="Empezar" />
+  const c = k - nBefore - nIntro
   if (c < total) {
     const chat = content.chats[c]
     return (
       <div className="flex w-full flex-col gap-2">
         <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">
-          {content.title} · Chat {c + 1}/{total}
+          {content.title}
+          {total > 1 && ` · Chat ${c + 1}/${total}`}
         </p>
         <MiniTalk
           key={c}
