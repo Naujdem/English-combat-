@@ -772,6 +772,20 @@ export function interestFriend(interest: Interest, heroName = ''): FriendDef {
  * se juegan una sola vez al empezar la misión (data/b1NewCity.ts, b1PlaneLines; Explore.tsx, quest 'b1-02-plane').
  * La amistad sube o baja con la misma regla de las charlas casuales (game/social.ts, applyCasual).
  */
+/** B1-04 · House Rules: charla de amistad con Maya en el vestíbulo (forzada una vez, quest 'b1-04-maya' en Explore.tsx) */
+export const B1_04_MAYA_CHAT: CasualChat = {
+  requires: null,
+  level: 'B1',
+  text: 'Back home, we have to take off our shoes at the door. What rules do you have at home?',
+  es: 'En mi casa tenemos que quitarnos los zapatos en la puerta. ¿Qué reglas tienes tú en casa?',
+  options: [
+    { text: "We have to be home by ten, and we mustn't use our phones at dinner.", textEs: 'Tenemos que estar en casa a las diez y no podemos usar el celular en la cena.', reply: "Wow, that's strict! I like the phone rule, though.", es: '¡Uy, qué estricto! Aunque me gusta la regla del celular.', effect: 2 },
+    { text: "At home I don't have to cook, but I have to wash the dishes.", textEs: 'En casa no tengo que cocinar, pero tengo que lavar los platos.', reply: 'Fair deal! I hate washing dishes.', es: '¡Buen trato! Yo odio lavar platos.', effect: 2 },
+    { text: 'We have no rules. We just ask first.', textEs: 'No tenemos reglas. Solo preguntamos primero.', reply: 'Interesting! Rules are easier when everybody is kind.', es: '¡Interesante! Las reglas son más fáciles cuando todos son amables.', effect: 1 },
+    { text: 'House rules shoes the I are dinner.', textEs: '(No tiene sentido.)', reply: "Sorry, I didn't understand.", es: 'Perdón, no te entendí.', effect: -1 },
+  ],
+}
+
 export const B1_02_PLANE_CHATS: CasualChat[] = [
   {
     requires: null,

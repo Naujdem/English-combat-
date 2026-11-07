@@ -164,4 +164,50 @@ export const B1_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B1-04 · House Rules (presente). Se abre al cerrar la misión (closeId(4)). Sin página del Diario de L
+  {
+    id: 'b1-mission-4',
+    title: 'Misión 4: House Rules',
+    unlock: closeId(4),
+    words: [
+      // 'contract' ya está en la misión 2 (Celular)
+      { title: 'Alquiler', words: [['rent', 'alquiler'], ['deposit', 'depósito'], ['landlord / landlady', 'dueño / dueña'], ['tenant', 'inquilino'], ['bills included', 'cuentas incluidas']] },
+      { title: 'Banco', words: [['bank account', 'cuenta bancaria'], ['debit card', 'tarjeta de débito'], ['PIN', 'clave'], ['withdraw', 'retirar'], ['transfer', 'transferir'], ['statement', 'extracto']] },
+      { title: 'Phrasal verbs', words: [['fill in', 'llenar (un formulario)'], ['set up', 'instalar, configurar'], ['sign up', 'inscribirse'], ['pay in', 'ingresar dinero'], ['take out', 'sacar'], ['turn on', 'encender'], ['plug in', 'enchufar']] },
+    ],
+    versions: [
+      {
+        id: 'b1-mission-4-mine',
+        tense: 'n',
+        tab: 'Mi diario',
+        title: 'My first week',
+        unlock: closeId(4),
+        frame: 'Lo escribes el domingo, en tu cuarto ya arreglado.',
+        lines: [
+          { en: 'This week I [have signed]n my first contract and I [have opened]n a bank account.', es: 'Esta semana firmé mi primer contrato y abrí una cuenta bancaria.' },
+          { en: "I [have to]n pay the rent by the 5th, and I [mustn't]n make noise after ten.", es: 'Tengo que pagar el alquiler antes del 5 y no debo hacer ruido después de las diez.' },
+          { en: "I [don't have to]n clean the kitchen. Marisol does it!", es: 'No tengo que limpiar la cocina. ¡Marisol lo hace!' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b1-mission-4-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'The rules of the house',
+        unlock: closeId(4),
+        frame: 'Tu semana entera, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'Marisol [gave]p us the contract on Monday, and we [read]p it together.', es: 'Marisol nos dio el contrato el lunes y lo leímos juntos.' },
+          { en: "We [have to]n pay by the 5th. We [mustn't]n smoke in the rooms.", es: 'Tenemos que pagar antes del 5. No debemos fumar en los cuartos.' },
+          { en: "Marisol [cleans]n the kitchen, so we [don't have to]n do it.", es: 'Marisol limpia la cocina, así que no tenemos que hacerlo.' },
+        ],
+        questions: [
+          { q: 'What do they have to do by the 5th?', options: ['Pay the rent.', 'Clean the kitchen.', 'Open a bank account.'], answer: 0, tip: 'El diario dice: "We have to pay by the 5th".' },
+          { q: "What mustn't they do in the rooms?", options: ['Smoke.', 'Sleep.', 'Read.'], answer: 0, tip: 'El diario dice: "We mustn\'t smoke in the rooms".' },
+          { q: 'Who cleans the kitchen?', options: ['Marisol.', 'Maya.', 'The neighbours.'], answer: 0, tip: 'El diario dice: "Marisol cleans the kitchen".' },
+        ],
+      },
+    ],
+  },
 ]

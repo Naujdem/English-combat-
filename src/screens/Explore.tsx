@@ -49,7 +49,8 @@ import { TheAccident } from '../components/CallForHelp'
 import { MemoryScript } from '../components/MemoryScript'
 import { NotebookIcon } from '../components/LNotebook'
 import { B1_03_CLOSE_PHONE, B1_03_NOTEBOOK, B1_03_NOTEBOOK2, B1_03_PHONE } from '../data/b1Words'
-import { B1_04_MAYA, B1_04_MAYA_BANK, B1_04_MOSCU, B1_04_RICARDO } from '../data/b1Residence'
+import { B1_04_CLOSE, B1_04_FRAGMENTS, B1_04_FRIEND, B1_04_MAYA, B1_04_MAYA_BANK, B1_04_MAYA_LOBBY, B1_04_MOSCU, B1_04_RESIDENCE_ID, B1_04_RICARDO } from '../data/b1Residence'
+import { B1_04_MAYA_CHAT } from '../data/friends'
 /** B1-04: quién acompaña la práctica guiada (si no, Leo) */
 const PRACTICE_GUIDES = [B1_04_MAYA, B1_04_MAYA_BANK, B1_04_RICARDO]
 import { B1_04_TOOLBOX } from '../data/b1Neighbours'
@@ -144,7 +145,7 @@ type Talk = {
   level?: string
   note?: string
   /** Charla especial de una misión */
-  quest?: 'lostIntro' | 'b1-02-plane'
+  quest?: 'lostIntro' | 'b1-02-plane' | 'b1-04-maya'
 }
 
 export function Explore({ state, update, onBattle, onWorld }: { state: GameState; update: Update; onBattle: (enemyId: string) => void; onWorld: () => void }) {
@@ -306,6 +307,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
     (e: Entity) => {
       if (e.type === 'npc') {
         const npc = npcOf(e.id)
+        // B1-04 · House Rules: la charla de amistad con Maya en el vestíbulo (una sola vez; se guarda B1_04_FRIEND)
+        if (e.id === B1_04_MAYA_LOBBY && !state.opened.includes(B1_04_FRIEND)) {
+          setMsg(null)
+          const c = B1_04_MAYA_CHAT
+          setTalk({ friendId: 'maya', story: null, lines: [{ who: 'friend', text: c.text, es: c.es, options: c.options }], title: 'Charla casual', level: 'B1', quest: 'b1-04-maya' })
+          return
+        }
         const pend = taskOf(e.id, [...state.opened, ...state.defeated])
         if (pend && !pend.blocked) {
           const t = pend.task
@@ -875,6 +883,16 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: 'La puerta del avión ya está abierta. Leo espera junto a la cinta de equipaje.', tone: 'good' })
                 return
               }
+              if (t.quest === 'b1-04-maya') {
+                // Charla casual B1 con Maya: la amistad cambia con la regla de las charlas casuales. Después, Marisol cierra la misión
+                update((s) => {
+                  const n = applyCasual(s, 'maya', delta)
+                  return { ...n, opened: n.opened.includes(B1_04_FRIEND) ? n.opened : [...n.opened, B1_04_FRIEND] }
+                })
+                if (delta < 0) setMsg({ text: `${talkFriend.name} no te entendió. La amistad bajó un poco.`, sub: 'Marisol te espera en el mostrador.', tone: 'warn' })
+                else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: 'Marisol te espera en el mostrador.', tone: 'good' })
+                return
+              }
               if (t.story !== null) {
                 const index = t.story
                 update((s) => completeStory(s, t.friendId, index, delta))
@@ -1121,6 +1139,18 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           memoryNumber={3}
           onDone={() => {
             update((s) => (s.opened.includes(B1_02_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B1_02_FRAGMENTS] }))
+            onWorld()
+          }}
+        />
+      )}
+      {/* B1-04 · cierre: al guardar closeId(4), dos fragmentos se juntan (memoryOpenId(5) = closeId(4): el recuerdo 5 queda abierto) */}
+      {scene.id === B1_04_RESIDENCE_ID && state.opened.includes(B1_04_CLOSE) && !state.opened.includes(B1_04_FRAGMENTS) && !task && !outro && (
+        <FragmentJoin
+          state={state}
+          update={update}
+          memoryNumber={5}
+          onDone={() => {
+            update((s) => (s.opened.includes(B1_04_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B1_04_FRAGMENTS] }))
             onWorld()
           }}
         />

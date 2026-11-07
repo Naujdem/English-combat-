@@ -8,6 +8,8 @@ export type SpriteLook = {
   accessory?: 'cap' | 'mortarboard' | 'glasses'
   cape?: string
   book?: boolean
+  /** B1-04: llavero de la residencia (una casita con una llave) que cuelga del cinturón */
+  charm?: 'house-key'
 }
 
 /**
@@ -59,6 +61,16 @@ export function SpriteBody({ look, mood = 'normal', blur = false }: { look: Spri
           <circle cx="13.3" cy="11.3" r="2.2" fill="none" stroke="#2d2d3a" strokeWidth="0.7" />
           <circle cx="18.7" cy="11.3" r="2.2" fill="none" stroke="#2d2d3a" strokeWidth="0.7" />
         </>
+      )}
+      {look.charm === 'house-key' && (
+        <g aria-hidden="true">
+          <path d="M20.2 24.4 v1.4" stroke="#8a6210" strokeWidth="0.45" />
+          <path d="M18.7 27.1 L20.2 25.7 L21.7 27.1 Z" fill="#c0392b" />
+          <rect x="19" y="27" width="2.4" height="1.9" fill="#d4a63a" />
+          <rect x="19.9" y="27.8" width="0.6" height="1.1" fill="#8a6210" />
+          <circle cx="22.3" cy="27.6" r="0.55" fill="none" stroke="#b0b6bf" strokeWidth="0.35" />
+          <path d="M22.3 28.15 v1.3 h0.5 M22.3 28.9 h0.4" stroke="#b0b6bf" strokeWidth="0.35" fill="none" />
+        </g>
       )}
       {look.book && (
         <>
