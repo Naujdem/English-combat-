@@ -768,6 +768,18 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
     doneLine: { text: '(Tomorrow, the messages begin.)', es: '(Mañana empiezan los mensajes.)' },
   },
+  // B1-03 · bloque B: el teléfono del apartamento (Text Only) y el cuaderno de la página 2 (aparece al terminar Text Only)
+  'b1-03-phone': {
+    name: 'My phone',
+    look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
+    doneLine: { text: 'Three conversations, three different voices. And I never said a word.', es: 'Tres conversaciones, tres voces distintas. Y nunca dije una palabra.' },
+  },
+  'b1-03-notebook2': {
+    name: 'Cuaderno de L',
+    look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
+    after: 'b1-03-texts',
+    doneLine: { text: '(The messages keep coming. Something is wrong with them.)', es: '(Los mensajes siguen llegando. Algo anda mal con ellos.)' },
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

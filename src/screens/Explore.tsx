@@ -48,7 +48,8 @@ import { B1_02_CLOSE, B1_02_FRAGMENTS, B1_02_LANDED, B1_02_LUMEN_ID, b1PlaneLine
 import { TheAccident } from '../components/CallForHelp'
 import { MemoryScript } from '../components/MemoryScript'
 import { NotebookIcon, NotebookPage } from '../components/LNotebook'
-import { B1_03_NOTEBOOK } from '../data/b1Words'
+import { B1_03_NOTEBOOK, B1_03_NOTEBOOK2, B1_03_PHONE } from '../data/b1Words'
+import { TextOnly } from '../components/TextOnly'
 import { isB1Unlocked } from '../data/b1World'
 import { B1_CALL, B1_PHONE } from '../data/b1Home'
 import { B1_HOME_ID, B1_OPENING } from '../data/b1World'
@@ -676,7 +677,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK ? <NotebookIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_03_NOTEBOOK2 ? <NotebookIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -1195,6 +1196,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'luggage') return <LostLuggage content={t.luggage} onClose={finish} />
             if (t.activity === 'enough') return <EnoughForEveryone friend={state.interest.name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'fitting') return <FittingRoom friend={state.interest.name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
+            if (t.activity === 'textonly' && t.textOnly) return <TextOnly content={t.textOnly} before={t.steps.map((st) => ({ text: fill(st.text), es: fill(st.es) }))} onClose={finish} />
             if (t.activity === 'route') return <RouteChallenge name={npcOf(t.npc ?? task).name} content={t.route} onClose={finish} />
             if (t.activity === 'exam' && t.exam) {
               const era = t.exam

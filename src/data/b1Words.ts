@@ -6,7 +6,9 @@ import type { ScriptLine } from './b1Accident'
  * Bloque A (este): L despierta en el hospital → la médica (tarea 'b1-03-doctor', secuencia fija con MemoryScript;
  *   L no habla, solo "…") → se abre el pasillo al apartamento de L → el cuaderno del escritorio (tarea 'b1-03-notebook'):
  *   lección 'informal-messages' como página 1 del Cuaderno de L (components/LNotebook.tsx) + práctica (data/questions-b1-03.ts).
- * Bloques 3-B y 3-C (pendientes): Text Only, la página 2, los esbirros, el jefe, el diario y el cierre (closeId(3)).
+ * Bloque B: el teléfono (tarea 'b1-03-texts', Text Only: components/TextOnly.tsx, data/b1TextOnly.ts) → el cuaderno de la
+ *   página 2, junto a la cama (tarea 'b1-03-notebook2', lección 'present-perfect-cont' + práctica).
+ * Bloque 3-C (pendiente): los esbirros, el jefe The Static, el diario y el cierre (closeId(3)).
  * L se dibuja con SpriteL y la médica con la cara borrosa (Explore lo hace solo en las escenas de recuerdo).
  */
 export const B1_03_HOSPITAL_ID = 'b1-03-hospital'
@@ -14,6 +16,10 @@ export const B1_03_HOSPITAL_ID = 'b1-03-hospital'
 export const B1_03_DOCTOR = 'b1-03-doctor'
 /** El cuaderno sobre el escritorio del apartamento. Su tarea (página 1 + práctica) guarda este id */
 export const B1_03_NOTEBOOK = 'b1-03-notebook'
+/** Bloque B: el teléfono del apartamento (Text Only, tarea 'b1-03-texts') y el cuaderno de la página 2 (junto a la cama) */
+export const B1_03_PHONE = 'b1-03-phone'
+export const B1_03_TEXTS = 'b1-03-texts'
+export const B1_03_NOTEBOOK2 = 'b1-03-notebook2'
 
 /**
  * Dos zonas unidas por un pasillo. Izquierda: la habitación del hospital (leyenda de data/a2Hospital.ts:
@@ -52,6 +58,9 @@ export const B1_03_HOSPITAL: SceneDef = {
   entities: [
     { type: 'npc', id: B1_03_DOCTOR, x: 2, y: 3 },
     { type: 'npc', id: B1_03_NOTEBOOK, x: 16, y: 3 },
+    { type: 'npc', id: B1_03_PHONE, x: 18, y: 2 },
+    // Aparece al terminar Text Only (npcs.ts, after)
+    { type: 'npc', id: B1_03_NOTEBOOK2, x: 15, y: 5 },
   ],
   labels: [
     { text: 'Hospital', x: 3, y: 5 },
@@ -72,8 +81,9 @@ export const B1_03_HOSPITAL: SceneDef = {
   requirements: [],
   chips: (s: GameState) => [
     { label: 'Habla con la médica', done: s.opened.includes(B1_03_DOCTOR) },
-    { label: 'Lee el cuaderno del escritorio', done: s.seenLesson.includes('informal-messages') },
-    { label: 'Práctica de la primera página', done: s.opened.includes(B1_03_NOTEBOOK) },
+    { label: 'Cuaderno: página 1', done: s.opened.includes(B1_03_NOTEBOOK) },
+    { label: 'Text Only (el teléfono)', done: s.opened.includes(B1_03_TEXTS) },
+    { label: 'Cuaderno: página 2', done: s.opened.includes(B1_03_NOTEBOOK2) },
   ],
   intro: {
     first: 'Un recuerdo que no es tuyo. Hospital. Una voz amable, cara borrosa.',
