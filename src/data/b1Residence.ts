@@ -1,5 +1,6 @@
 import type { GameState, SceneDef, Zone } from '../game/types'
 import { closeId } from './b1World'
+import { B1_04_JEISON, B1_04_NEIGHBOUR1, B1_04_NEIGHBOUR2, B1_04_REPAIR, B1_04_TOOLBOX } from './b1Neighbours'
 
 /**
  * B1-04 · House Rules (presente). Bloque A: la residencia de estudiantes de Lumen Bay.
@@ -10,7 +11,9 @@ import { closeId } from './b1World'
  *   → pasillo con 3 puertas (dos cuartos de vecinos y tu cuarto) → calle corta con la puerta del banco.
  * Orden: Marisol da la bienvenida (tarea b1-04-welcome) → aparece Maya: lección 'obligation-b1' + práctica (b1-04-rules)
  *   → The Fine Print (b1-04-fineprint, components/FinePrint.tsx). El pasillo y la calle siguen cerrados: los abren 4-B y 4-C.
- * Este bloque NO guarda closeId(4). Preguntas en data/questions-b1-04.ts.
+ * Bloque B (data/b1Neighbours.ts): al terminar The Fine Print se abre el pasillo: Jeison (b1-04-jeison) → vecino 1 → vecina 2
+ *   (esbirros con banco compartido) → se abre tu cuarto: la caja de herramientas (Repair Shop, b1-04-repair, data/b1Repair.ts).
+ * El banco y la calle los abre 4-C. Ningún bloque A/B guarda closeId(4). Preguntas en data/questions-b1-04.ts.
  */
 export const B1_04_RESIDENCE_ID = 'b1-04-residence'
 export const B1_04_MARISOL = 'b1-04-marisol'
@@ -47,7 +50,7 @@ function zoneAt(x: number, y: number): Zone {
 }
 
 const NOT_YET = (sub: string) => ({ text: 'Todavía no.', sub })
-const LATER = NOT_YET('Se abre en los siguientes bloques.')
+const NEXT = NOT_YET('Se abre en el siguiente bloque.')
 
 const SOFA = { text: 'A comfortable sofa.', sub: 'Un sofá cómodo.', say: 'A comfortable sofa.' }
 const STAIRS = { text: 'The stairs go up to the rooms.', sub: 'Las escaleras suben a los cuartos.', say: 'The stairs go up to the rooms.' }
@@ -67,6 +70,11 @@ export const B1_04_RESIDENCE: SceneDef = {
     { type: 'npc', id: B1_04_MOSCU, x: 2, y: 2 },
     // Maya aparece cuando Marisol terminó la bienvenida (npcs.ts, after: b1-04-welcome)
     { type: 'npc', id: B1_04_MAYA, x: 3, y: 4 },
+    // Bloque B (data/b1Neighbours.ts): Jeison en el pasillo; los vecinos en cadena; la caja de herramientas en tu cuarto
+    { type: 'npc', id: B1_04_JEISON, x: 10, y: 3 },
+    { type: 'enemy', id: B1_04_NEIGHBOUR1, x: 12, y: 3, after: B1_04_JEISON },
+    { type: 'enemy', id: B1_04_NEIGHBOUR2, x: 13, y: 5, after: B1_04_NEIGHBOUR1 },
+    { type: 'npc', id: B1_04_TOOLBOX, x: 14, y: 1 },
   ],
   labels: [
     { text: 'Vestíbulo', x: 5, y: 6 },
@@ -86,11 +94,12 @@ export const B1_04_RESIDENCE: SceneDef = {
     '6,3': DESK,
     '4,0': { text: 'Rules: Quiet after ten.', sub: 'Reglas: silencio después de las diez.', say: 'Rules: Quiet after ten.' },
   },
-  // El pasillo se abre en el bloque 4-B; los cuartos, la calle y el banco, en 4-B y 4-C
+  // El pasillo se abre tras The Fine Print; tu cuarto, al vencer a los dos vecinos. Los cuartos de los vecinos, la calle y el banco siguen cerrados (4-C)
   locked: (x, y, s) => {
-    if (x === 8 && y === 4) return NOT_YET(s.opened.includes(B1_04_FINEPRINT) ? 'Se abre en el siguiente bloque.' : 'Primero lee el contrato con Maya.')
-    if (y === 2 && (x === 10 || x === 12 || x === 14 || x === 19)) return LATER
-    if (x === 16 && y === 4) return LATER
+    if (x === 8 && y === 4 && !s.opened.includes(B1_04_FINEPRINT)) return NOT_YET('Primero lee el contrato con Maya.')
+    if (x === 14 && y === 2 && !s.defeated.includes(B1_04_NEIGHBOUR2)) return NOT_YET('Primero habla con los vecinos ruidosos.')
+    if (y === 2 && (x === 10 || x === 12)) return NOT_YET('Es el cuarto de un vecino.')
+    if ((x === 19 && y === 2) || (x === 16 && y === 4)) return NEXT
     return null
   },
   requirements: [],
@@ -98,6 +107,9 @@ export const B1_04_RESIDENCE: SceneDef = {
     { label: 'Habla con Marisol', done: s.opened.includes(B1_04_WELCOME) },
     { label: 'Lección de Maya: las reglas', done: s.opened.includes(B1_04_RULES) },
     { label: 'The Fine Print: el contrato', done: s.opened.includes(B1_04_FINEPRINT) },
+    { label: 'Habla con Jeison', done: s.opened.includes(B1_04_JEISON) },
+    { label: 'Vecinos ruidosos (2)', done: s.defeated.includes(B1_04_NEIGHBOUR1) && s.defeated.includes(B1_04_NEIGHBOUR2) },
+    { label: 'Repair Shop: arregla tu cuarto', done: s.opened.includes(B1_04_REPAIR) },
   ],
   intro: {
     first: 'Presente. La residencia de estudiantes de Lumen Bay. Una gata te mira desde las escaleras.',

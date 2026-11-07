@@ -50,6 +50,8 @@ import { MemoryScript } from '../components/MemoryScript'
 import { NotebookIcon } from '../components/LNotebook'
 import { B1_03_CLOSE_PHONE, B1_03_NOTEBOOK, B1_03_NOTEBOOK2, B1_03_PHONE } from '../data/b1Words'
 import { B1_04_MAYA, B1_04_MOSCU } from '../data/b1Residence'
+import { B1_04_TOOLBOX } from '../data/b1Neighbours'
+import { ToolboxIcon, ToolboxPortrait } from '../components/ToolboxIcon'
 import { FinePrint } from '../components/FinePrint'
 import { TextOnly } from '../components/TextOnly'
 import { isB1Unlocked } from '../data/b1World'
@@ -705,7 +707,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE || e.id === B1_03_CLOSE_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_03_NOTEBOOK2 ? <NotebookIcon lit={pending} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE || e.id === B1_03_CLOSE_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_03_NOTEBOOK2 ? <NotebookIcon lit={pending} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -1114,13 +1116,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           }}
         />
       )}
-      {task && NPC_TASKS[task]?.activity === 'practice' && !!NPC_TASKS[task].intro?.length && introSeen !== task && (
-        // Lo que dice el personaje antes de la práctica (B1-02: el empleado de la tienda presenta los planes)
+      {task && (NPC_TASKS[task]?.activity === 'practice' || NPC_TASKS[task]?.activity === 'command') && !!NPC_TASKS[task].intro?.length && introSeen !== task && (
+        // Lo que se dice antes de la práctica o del juego (B1-02: el empleado de la tienda presenta los planes; B1-04: el narrador antes del Repair Shop)
         <Overlay>
           {(() => {
             const who = npcOf(NPC_TASKS[task].npc ?? task)
             const steps = NPC_TASKS[task].intro!.map((st) => ({ text: fill(st.text), es: fill(st.es) }))
-            return <MiniTalk name={who.name} look={who.look} steps={steps} onClose={(done) => (done ? setIntroSeen(task) : setTask(null))} />
+            return <MiniTalk name={who.name} look={who.look} steps={steps} icon={NPC_TASKS[task].npc === B1_04_TOOLBOX ? <ToolboxPortrait /> : undefined} onClose={(done) => (done ? setIntroSeen(task) : setTask(null))} />
           })()}
         </Overlay>
       )}
@@ -1139,7 +1141,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         <TheAccident state={state} update={update} friend={npcOf(B1_01_FRIEND).look} onDone={() => finishTask(task, true)} />
       )}
 
-      {task && NPC_TASKS[task] && NPC_TASKS[task].activity !== 'practice' && NPC_TASKS[task].activity !== 'callforhelp' && NPC_TASKS[task].activity !== 'script' && (
+      {task && NPC_TASKS[task] && NPC_TASKS[task].activity !== 'practice' && NPC_TASKS[task].activity !== 'callforhelp' && NPC_TASKS[task].activity !== 'script' && (NPC_TASKS[task].activity !== 'command' || !NPC_TASKS[task].intro?.length || introSeen === task) && (
         <Overlay>
           {(() => {
             const t = NPC_TASKS[task]

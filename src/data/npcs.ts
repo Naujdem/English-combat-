@@ -810,6 +810,18 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b1-04-welcome',
     doneLine: { text: "That's a long contract! OK, let's meet the neighbours.", es: '¡Qué contrato tan largo! Bueno, conozcamos a los vecinos.' },
   },
+  // B1-04 · bloque B (data/b1Neighbours.ts): Jeison, el vecino amable del pasillo
+  'b1-04-jeison': {
+    name: 'Jeison',
+    look: { shirt: '#3b9d5d', hair: '#2b2b33', skin: '#c68642', gender: 'male' },
+    doneLine: { text: 'Good luck! My room is the first door, if you need anything.', es: '¡Suerte! Mi cuarto es la primera puerta, si necesitan algo.' },
+  },
+  // La caja de herramientas de tu cuarto: se dibuja con ToolboxIcon (components/ToolboxIcon.tsx)
+  'b1-04-toolbox': {
+    name: 'Toolbox',
+    look: { shirt: '#c0392b', hair: '#55606e', skin: '#c0392b' },
+    doneLine: { text: '(Warm, bright and online. Now you need to open a bank account.)', es: '(Cálido, iluminado y con internet. Ahora toca abrir una cuenta en el banco.)' },
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

@@ -23,6 +23,7 @@ import { B1_03_CLOSE_CHAT, B1_TEXT_ONLY } from './b1TextOnly'
 import type { FinePrintContent } from '../components/FinePrint'
 import { B1_04_FINE_PRINT } from './b1FinePrint'
 import { B1_04_PRACTICE1_IDS } from './questions-b1-04'
+import { B1_REPAIR } from './b1Repair'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -108,7 +109,7 @@ export type NpcTask = {
   pressure?: number
   /** Para activity 'route': otro contenido de Route Challenge (B1-02). Sin el campo, el de A2-11 */
   route?: RouteContent
-  /** Para activity 'practice': lo que dice el personaje antes de la práctica (charla corta, B1-02 tienda de celulares) */
+  /** Para activity 'practice' (o 'command'): lo que se dice antes del juego (charla corta, B1-02 tienda de celulares, B1-04 Repair Shop) */
   intro?: MiniStep[]
   /** Para activity 'luggage': otro contenido de Lost Luggage (B1-02). Sin el campo, el de A2-11 */
   luggage?: LuggageContent
@@ -4531,6 +4532,50 @@ NPC_TASKS['b1-04-fineprint'] = {
     es: '¡Qué contrato tan largo! Bueno, conozcamos a los vecinos.',
     sub: 'Ya conoces las reglas de la casa. El pasillo se abre en el siguiente bloque. (Sin errores, ganaste un escudo).',
     say: "That's a long contract! OK, let's meet the neighbours.",
+  },
+}
+
+// ── B1-04 · bloque B (data/b1Neighbours.ts): el pasillo se abre tras The Fine Print ──
+// Jeison, el vecino amable (narrativa + una elección). Después aparecen los vecinos ruidosos en cadena
+NPC_TASKS['b1-04-jeison'] = {
+  npc: 'b1-04-jeison',
+  done: 'b1-04-jeison',
+  requires: { id: 'b1-04-fineprint', text: 'Jeison is busy.', es: 'Jeison está ocupado.', sub: 'Primero lee el contrato con Maya.' },
+  steps: [
+    { text: "Hi! I'm Jeison, your neighbour. Welcome to the corridor!", es: '¡Hola! Soy Jeison, su vecino. ¡Bienvenidos al pasillo!' },
+    { text: "A little advice: Marisol is kind, but you mustn't make noise after ten. Some of our neighbours forget the rules.", es: 'Un consejo: Marisol es amable, pero no deben hacer ruido después de las diez. Algunos vecinos olvidan las reglas.' },
+    {
+      text: 'Oh, listen... that noise again. Please, talk to them.',
+      es: 'Oh, escuchen... ese ruido otra vez. Por favor, hablen con ellos.',
+      choice: { ask: '¿Qué le dices a Jeison?', options: ['Thanks! We must follow the rules, too.', 'Thanks! We must to follow the rules, too.', 'Thanks! We musts follow the rules too.'], answer: 0, tip: 'must + verbo base, sin to.' },
+    },
+  ],
+  reward: {
+    text: 'Jeison: "Good luck! My room is the first door, if you need anything."',
+    es: '¡Suerte! Mi cuarto es la primera puerta, si necesitan algo.',
+    sub: 'Los vecinos ruidosos están en el pasillo.',
+    say: 'Good luck! My room is the first door, if you need anything.',
+  },
+}
+
+// Tu cuarto (se abre al vencer a los dos vecinos): la caja de herramientas → Repair Shop escrito (data/b1Repair.ts).
+// Antes del juego, dos líneas del narrador (intro). Con 0 o 1 errores, escudo. Este bloque NO guarda closeId(4)
+NPC_TASKS['b1-04-repair'] = {
+  npc: 'b1-04-toolbox',
+  done: 'b1-04-repair',
+  requires: { id: 'b1-04-neighbour2', text: 'Your room. It is too noisy to work.', es: 'Tu cuarto. Hay demasiado ruido para trabajar.', sub: 'Primero habla con los vecinos ruidosos.' },
+  activity: 'command',
+  command: B1_REPAIR,
+  intro: [
+    { text: "(Your room. It's cold and dark, and there's no wifi. There's a toolbox on the floor.)", es: '(Tu cuarto. Hace frío, está oscuro y no hay wifi. Hay una caja de herramientas en el piso.)' },
+    { text: "(A note from Jeison is on the door: 'In English, small words change verbs: turn on, plug in, set up. Type the order!')", es: '(Hay una nota de Jeison en la puerta: «En inglés, las palabras pequeñas cambian los verbos: turn on, plug in, set up. ¡Escribe la orden!»)' },
+  ],
+  steps: [],
+  reward: {
+    text: '(Warm, bright and online. Now you need to open a bank account.)',
+    es: '(Cálido, iluminado y con internet. Ahora toca abrir una cuenta en el banco.)',
+    sub: 'Tu cuarto está listo. (Con 0 o 1 errores, ganaste un escudo). El banco se abre en el siguiente bloque.',
+    say: 'Warm, bright and online. Now you need to open a bank account.',
   },
 }
 
