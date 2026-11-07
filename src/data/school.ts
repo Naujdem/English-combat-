@@ -317,6 +317,8 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   impermeable: { name: 'Impermeable amarillo (B1)', color: '#e0b526' },
   // B1-02 · A New City: regalo de la viajera perdida (al liberarla)
   'almohada-de-viaje': { name: 'Almohada de viaje', color: '#7a9cc6' },
+  // B1-02 · A New City: regalo de Captain Delay (jefe)
+  'gorra-de-capitan': { name: 'Gorra de capitán', color: '#1f3c58' },
   // Regalos de algunos esbirros de A2 (al liberarlos)
   'chaleco-mesero': { name: 'Chaleco de mesero (A2)', color: '#5a3a2e' },
   'overol-taller': { name: 'Overol del taller de Hale (A2)', color: '#4a5560' },

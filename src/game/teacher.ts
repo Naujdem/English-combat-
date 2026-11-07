@@ -32,8 +32,8 @@ import { A2_RETURN, A2_13_CLOSE } from '../data/a2Return'
 import { B1_HOME } from '../data/b1Home'
 import { B1_OPENING, closeId } from '../data/b1World'
 import { B1_02_LANDED, B1_02_LUMEN, B1_02_PRACTICE } from '../data/b1NewCity'
-import { B1_02_JACK, B1_02_LUGGAGE, B1_02_TRAV1, B1_02_TRAV2 } from '../data/b1Airport'
-import { B1_02_AGENDA, B1_02_FUTURES, B1_02_SHOP } from '../data/b1Office'
+import { B1_02_BOSS, B1_02_JACK, B1_02_LUGGAGE, B1_02_TRAV1, B1_02_TRAV2 } from '../data/b1Airport'
+import { B1_02_AGENDA, B1_02_FUTURES, B1_02_ROUTE, B1_02_SHOP } from '../data/b1Office'
 import { B1_01_ALARM, B1_01_ECHO, B1_01_MESSAGE, B1_01_PRACTICE, B1_01_SCHOOL, B1_01_TALKED } from '../data/b1Accident'
 import { enterMemory, memoryFlag } from './memory'
 
@@ -748,8 +748,9 @@ export function b1Mission1(s: GameState, stage: 'memory' | 'alarm' | 'call' | 'e
  *  trav1: lección y práctica de Leo hechas (viajero 1 junto a la cinta) · luggage: viajeros vencidos (empleado de Objetos Perdidos)
  *  jack: Lost Luggage hecho (Jack junto a las puertas de la derecha)
  *  shop: Jack vencido (frente a la tienda) · office: tienda hecha (frente a la oficina) · route: oficina hecha (frente a la calle)
+ *  boss: Route Challenge hecho (Captain Delay al final de la calle) · close: jefe vencido (Leo en la calle, listo para el cierre)
  */
-export function b1Mission2(s: GameState, stage: 'plane' | 'airport' | 'trav1' | 'luggage' | 'jack' | 'shop' | 'office' | 'route'): GameState {
+export function b1Mission2(s: GameState, stage: 'plane' | 'airport' | 'trav1' | 'luggage' | 'jack' | 'shop' | 'office' | 'route' | 'boss' | 'close'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1)])
   const lumen = { ...b, screen: 'explore' as const, sceneId: B1_02_LUMEN.id, pos: { ...B1_02_LUMEN.start } }
   if (stage === 'plane') return lumen
@@ -765,7 +766,11 @@ export function b1Mission2(s: GameState, stage: 'plane' | 'airport' | 'trav1' | 
   if (stage === 'shop') return shop
   const office = { ...shop, pos: { x: 15, y: 4 }, opened: add(shop.opened, [B1_02_SHOP]) }
   if (stage === 'office') return office
-  return { ...office, pos: { x: 15, y: 7 }, opened: add(office.opened, [B1_02_AGENDA, B1_02_FUTURES]), seenLesson: add(office.seenLesson, ['futures-b1']) as GameState['seenLesson'] }
+  const route = { ...office, pos: { x: 15, y: 7 }, opened: add(office.opened, [B1_02_AGENDA, B1_02_FUTURES]), seenLesson: add(office.seenLesson, ['futures-b1']) as GameState['seenLesson'] }
+  if (stage === 'route') return route
+  const boss = { ...route, pos: { x: 21, y: 7 }, opened: add(route.opened, [B1_02_ROUTE]) }
+  if (stage === 'boss') return boss
+  return { ...boss, pos: { x: 18, y: 7 }, defeated: add(boss.defeated, [B1_02_BOSS]) }
 }
 
 PRESETS.push(

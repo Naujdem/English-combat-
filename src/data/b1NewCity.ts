@@ -1,7 +1,7 @@
 import type { DialogLine, GameState, Interest, SceneDef, Zone } from '../game/types'
 import { closeId } from './b1World'
 import { B1_02_PLANE_CHATS } from './friends'
-import { B1_02_CLERK, B1_02_JACK, B1_02_LUGGAGE, B1_02_TRAV1, B1_02_TRAV2 } from './b1Airport'
+import { B1_02_BOSS, B1_02_CLERK, B1_02_JACK, B1_02_LUGGAGE, B1_02_TRAV1, B1_02_TRAV2 } from './b1Airport'
 import { B1_02_AGENDA, B1_02_ASSISTANT, B1_02_FUTURES, B1_02_HADDAD, B1_02_LEO_OFFICE, B1_02_LEO_STREET, B1_02_ROUTE, B1_02_SHOP } from './b1Office'
 
 /**
@@ -25,6 +25,8 @@ export const B1_02_LEO = 'b1-02-leo'
 export const B1_02_INTEREST_PLANE = 'b1-02-interest-plane'
 export const B1_02_INTEREST = 'b1-02-interest'
 export const B1_02_CLOSE = closeId(2)
+/** Ya se vio la animación de los fragmentos tras el cierre (FragmentJoin, memoryNumber 3) */
+export const B1_02_FRAGMENTS = 'b1-02-fragments'
 
 /**
  * Leyenda (Tiles.tsx, sin dibujos nuevos): , acera · # pared · s asientos · d puerta · h letrero · v pantalla (tablero de vuelos)
@@ -39,7 +41,8 @@ const MAP = [
   '######..CCCCC...d..O..F#',
   '######.........C#.....p#',
   '######.p....OO..########',
-  '######..........d,,,====',
+  '######..........d,,,,,,,',
+  '################,,,,,,,#',
   '########################',
 ]
 
@@ -80,6 +83,8 @@ export const B1_02_LUMEN: SceneDef = {
     { type: 'npc', id: B1_02_HADDAD, x: 20, y: 4 },
     { type: 'npc', id: B1_02_LEO_OFFICE, x: 18, y: 5 },
     { type: 'npc', id: B1_02_LEO_STREET, x: 19, y: 7 },
+    // Bloque D: el jefe aparece al final de la calle tras Route Challenge; luego Leo cierra la misión
+    { type: 'enemy', id: B1_02_BOSS, x: 22, y: 7, after: B1_02_ROUTE },
   ],
   labels: [
     { text: 'Avión', x: 3, y: 3 },
@@ -124,10 +129,15 @@ export const B1_02_LUMEN: SceneDef = {
     { label: 'Tienda de celulares', done: s.opened.includes(B1_02_SHOP) },
     { label: 'Oficina del intercambio', done: s.opened.includes(B1_02_AGENDA) && s.opened.includes(B1_02_FUTURES) },
     { label: 'Route Challenge', done: s.opened.includes(B1_02_ROUTE) },
+    { label: 'Captain Delay', done: s.defeated.includes(B1_02_BOSS) },
+    { label: 'Cierre', done: s.opened.includes(B1_02_CLOSE) },
   ],
   intro: {
     first: 'Presente. Vas en el avión hacia Lumen Bay.',
-    later: 'Lumen Bay. El aeropuerto: Leo espera junto a la cinta de equipaje.',
+    later: (s) =>
+      s.opened.includes(B1_02_CLOSE)
+        ? 'Lumen Bay. Los anuncios del aeropuerto están normales otra vez y la misión 2 terminó: el recuerdo 3 te espera en el mapa.'
+        : 'Lumen Bay. El aeropuerto: Leo espera junto a la cinta de equipaje.',
   },
 }
 
