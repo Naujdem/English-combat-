@@ -418,6 +418,8 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'Leo',
     look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
     after: 'b1-02-agenda',
+    // Se va a la calle al terminar la práctica de la oficina (ahí aparece b1-02-leo-street)
+    until: 'b1-02-futures',
     doneLine: { text: "Great! Now let's get to the residence. Ms. Haddad gave us a map.", es: '¡Muy bien! Ahora vamos a la residencia. La Sra. Haddad nos dio un mapa.' },
   },
   'b1-02-leo-street': {
@@ -430,6 +432,8 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'Leo',
     look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
     after: 'b1-02-landed',
+    // Se va a la oficina cuando Ms. Haddad entrega la agenda (ahí aparece b1-02-leo-office)
+    until: 'b1-02-agenda',
     doneLine: { text: "Good! Now, let's see what's going on at the baggage claim...", es: '¡Bien! Ahora veamos qué pasa en la zona de equipaje...' },
   },
   // ── B1 · DEMO de Inscriptions: una tablilla de piedra (se dibuja como tablilla en Explore) ──
