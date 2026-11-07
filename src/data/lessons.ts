@@ -652,4 +652,17 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: "You are at a café and you suddenly decide to order a coffee. You say: 'I ___ a coffee.'", choice: { options: ['will have', 'am going have', 'have will'], answer: 0, tip: 'Decisión en el momento: will + verbo base.' } },
     { who: 'leo', text: "Ready? Let's practice, and then we'll find the residence.", es: '¿Listo? Practiquemos y después buscamos la residencia.' },
   ],
+  // B1-03 · Cuaderno de L, página 1 (recuerdo 3). Pasos 'notebook': se ven como una página del cuaderno (components/LNotebook.tsx)
+  'informal-messages': [
+    { who: 'notebook', text: "Day 20. The doctors say no talking. So I will write. If I can't teach with my voice, I'll teach with this notebook.", es: 'Día 20. Los médicos dicen que no hable. Así que escribiré. Si no puedo enseñar con mi voz, enseñaré con este cuaderno.' },
+    { who: 'notebook', text: "Lesson 1: Texting. When we text, we write fast. We cut the words we don't need.", es: 'Lección 1: Mensajes. Cuando mandamos mensajes, escribimos rápido. Quitamos las palabras que no necesitamos.' },
+    { who: 'notebook', text: '', table: { head: ['Mensaje completo', 'Mensaje rápido'], rows: [['I have got it.', 'Got it.'], ['That sounds good to me.', 'Sounds good.'], ['I will see you there.', 'See you there.'], ['Please send me a message.', 'Drop me a line.']] } },
+    { who: 'notebook', text: "What do we cut? Often the subject ('I', 'it'), the small verbs, and sometimes the beginning. But we keep the important words.", es: "¿Qué quitamos? A menudo el sujeto ('I', 'it'), los verbos pequeños y a veces el comienzo. Pero dejamos las palabras importantes." },
+    { who: 'notebook', text: "A friend writes: 'Meeting at five?' You agree. The best quick reply is:", choice: { options: ['Sounds good. See you there.', "I am agreeing with you to meet at five o'clock sir.", 'Good sounds see there you.'], answer: 0, tip: 'Mensaje rápido y natural: Sounds good. See you there.' } },
+    { who: 'notebook', text: "Four useful verbs for messages: text, message, reply, ping. 'Text me later.' 'Please reply soon.' 'Ping me when you arrive.'", es: 'Cuatro verbos útiles para mensajes: text, message, reply, ping. «Escríbeme luego». «Por favor responde pronto». «Avísame cuando llegues».' },
+    { who: 'notebook', text: "'Ping me when you arrive.' Ping me means:", choice: { options: ['Avísame (mándame un mensaje rápido).', 'Llámame por teléfono.', 'Olvídame.'], answer: 0, tip: 'ping = mandar un mensaje rápido para avisar.' } },
+    { who: 'notebook', text: "Careful: with friends we write 'Got it, thanks!'. With my director I write: 'Thank you. I have received your message.'", es: 'Ojo: con amigos escribo «Got it, thanks!». Con mi director escribo: «Thank you. I have received your message.»' },
+    { who: 'notebook', text: "Your boss writes: 'Please send the report by Friday.' Which answer is better?", choice: { options: ['Understood. I will send it by Friday.', 'Got it lol.', 'Thx k.'], answer: 0, tip: 'Con un jefe: completo y cortés.' } },
+    { who: 'notebook', text: "That's enough for today. Tomorrow, the messages begin.", es: 'Basta por hoy. Mañana empiezan los mensajes.' },
+  ],
 }

@@ -340,8 +340,9 @@ function plain(text: string) {
 }
 
 /** Tinta del Diario de L */
-const L_INK = '#3a2f5c'
-const L_HAND = '"Segoe Print", "Bradley Hand", "Comic Sans MS", "Chalkboard SE", cursive'
+export const L_INK = '#3a2f5c'
+/** Letra a mano del Diario de L (también la usa el Cuaderno de L, components/LNotebook.tsx) */
+export const L_HAND = '"Segoe Print", "Bradley Hand", "Comic Sans MS", "Chalkboard SE", cursive'
 
 /**
  * Página del Diario de L (B1): letra a mano, tachones decorativos y una firma que es solo una mancha de tinta.

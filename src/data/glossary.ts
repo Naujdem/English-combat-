@@ -123,6 +123,7 @@ cough=toser, tos;dry=seco;exhausted=agotado;fire=incendio, fuego (fire exit = sa
 heat=calor;injured=herido;marker=marcador;mix=mezclar;noun=sustantivo;plane=avión;rang=sonó (ring);rescue=rescatar, rescate;result=resultado (as a result = como resultado);seen=visto (participio de see);
 smoke=humo;starving=muerto de hambre;tense=tiempo verbal;tenses=tiempos verbales;thick=espeso, grueso;thicker=más espeso;trap=atrapar;trapped=atrapado;typing=escribiendo (en el teclado);
 until=hasta;while=mientras;whoosh=fuum (sonido del fuego);
+text=mensaje de texto, escribir un mensaje (text me = escríbeme);reply=responder, respuesta;ping=avisar con un mensaje rápido (ping me = avísame);dm=mensaje directo (DM, en redes sociales);vocal=vocal (vocal cords = cuerdas vocales);cords=cuerdas (vocal cords = cuerdas vocales);drop=soltar, dejar caer (drop me a line = mándame un mensaje);sounds=suena (sound) (sounds good = me parece bien);damaged=dañado;communicate=comunicarse;
 `
 
 const BASE: Record<string, string> = Object.fromEntries(

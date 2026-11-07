@@ -8,13 +8,14 @@ import { Tappable } from './Words'
 import { withStatic } from './StaticText'
 import { btnGhost, btnPrimary, Panel } from './ui'
 import { sfx } from '../game/sfx'
+import { voiceOf } from '../game/speech'
 
 /**
  * Secuencia fija de un recuerdo de B1 (sin elecciones): L narra o habla (retrato de L, sin cara) y los demás
  * hablan con la cara borrosa. Los nombres con [[?]] salen con estática. fx 'alarm': suena la alarma y la pantalla
  * destella en rojo suave (con "reducir movimiento", solo un tinte rojo quieto).
  */
-export function MemoryScript({ lines, friend, onDone }: { lines: ScriptLine[]; friend: SpriteLook; onDone: () => void }) {
+export function MemoryScript({ lines, friend, onDone, friendName = 'Amigo' }: { lines: ScriptLine[]; friend: SpriteLook; onDone: () => void; /** Nombre del otro personaje (B1-03: "The doctor") */ friendName?: string }) {
   const [i, setI] = useState(0)
   const [showEs, setShowEs] = useState(false)
   const line = lines[i]
@@ -26,7 +27,7 @@ export function MemoryScript({ lines, friend, onDone }: { lines: ScriptLine[]; f
 
   if (!line) return null
   const portrait = line.who === 'friend' ? <BlurFaceIcon look={friend} size={48} /> : <LIcon size={48} pose="profile" />
-  const name = line.who === 'friend' ? 'Amigo' : line.who === 'L' ? 'L' : 'L recuerda'
+  const name = line.who === 'friend' ? friendName : line.who === 'L' ? 'L' : 'L recuerda'
 
   return (
     <>
@@ -35,7 +36,7 @@ export function MemoryScript({ lines, friend, onDone }: { lines: ScriptLine[]; f
         <div className="flex items-center gap-3">
           {portrait}
           <p className="flex-1 font-display text-lg text-[#c9b8e8]">{name}</p>
-          <SpeakButton text={line.text} size="sm" auto voice="male" />
+          {/[a-z]/i.test(line.text) && <SpeakButton text={line.text} size="sm" auto voice={line.who === 'friend' ? voiceOf(friend) : 'male'} />}
         </div>
         <p key={i} className={`anim-fade-in mt-2 text-[17px] leading-relaxed ${line.who === 'narrator' ? 'italic text-paper/90' : ''}`}>
           {withStatic(line.text, (p, k) => <Tappable key={k} text={p} />)}

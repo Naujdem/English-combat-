@@ -22,6 +22,7 @@ import { B1_PREFIX, isA2Unlocked, type Update } from '../game/store'
 import { B1Map } from '../components/B1Map'
 import { enterMemory, memoryFlag } from '../game/memory'
 import { B1_01_SCHOOL } from '../data/b1Accident'
+import { B1_03_HOSPITAL } from '../data/b1Words'
 import { B1_HOME } from '../data/b1Home'
 import { B1_02_LUMEN_ID } from '../data/b1NewCity'
 import { LooseFragment } from '../components/FragmentJoin'
@@ -173,6 +174,9 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     }
     // Nodo 2 (presente): el avión y el aeropuerto de Lumen Bay (data/b1NewCity.ts)
     if (n.num === 2) return onEnter(B1_02_LUMEN_ID)
+    // Nodo 3 (recuerdo): Words on a Screen (data/b1Words.ts). L empieza en la habitación del hospital;
+    // al salir del recuerdo se vuelve al último lugar del presente (exitMemory)
+    if (n.num === 3) return update((s) => enterMemory(s, 3, B1_03_HOSPITAL.id, B1_03_HOSPITAL.start))
     setMsg(`${n.name}: este lugar se construirá pronto.`)
   }
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]

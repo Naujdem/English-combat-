@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { autoVoiceOn, canSpeak, speak, type Voice } from '../game/speech'
 
 /** Botón de bocina que lee el texto en inglés. Un toque: velocidad normal. Dos toques seguidos: más lento. */
-export function SpeakButton({ text, size = 'md', label = 'Escuchar en inglés', auto, voice = 'neutral' }: { text: string; size?: 'sm' | 'md' | 'lg'; label?: string; auto?: boolean; voice?: Voice }) {
+export function SpeakButton({ text, size = 'md', label = 'Escuchar en inglés', auto, voice = 'neutral', icon: kind = 'speaker' }: { text: string; size?: 'sm' | 'md' | 'lg'; label?: string; auto?: boolean; voice?: Voice; /** 'pencil': el Cuaderno de L (B1) se lee con un lápiz en vez del altavoz */ icon?: 'speaker' | 'pencil' }) {
   const last = useRef(0)
   // auto: la frase se lee sola cuando aparece (si la voz automática está activada)
   useEffect(() => {
@@ -27,11 +27,18 @@ export function SpeakButton({ text, size = 'md', label = 'Escuchar en inglés', 
         last.current = now
       }}
     >
-      <svg width={icon} height={icon} viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M4 9 H8 L13 5 V19 L8 15 H4 Z" fill="currentColor" />
-        <path d="M16 8.5 Q18.5 12 16 15.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        <path d="M18.5 6 Q22.5 12 18.5 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      </svg>
+      {kind === 'pencil' ? (
+        <svg width={icon} height={icon} viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 20 L5.2 15.2 L15.8 4.6 Q17 3.4 18.2 4.6 L19.4 5.8 Q20.6 7 19.4 8.2 L8.8 18.8 Z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+          <path d="M14 6.4 L17.6 10 M5.2 15.2 L8.8 18.8" stroke="currentColor" strokeWidth="2" />
+        </svg>
+      ) : (
+        <svg width={icon} height={icon} viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 9 H8 L13 5 V19 L8 15 H4 Z" fill="currentColor" />
+          <path d="M16 8.5 Q18.5 12 16 15.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          <path d="M18.5 6 Q22.5 12 18.5 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      )}
     </button>
   )
 }

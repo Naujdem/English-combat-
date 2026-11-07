@@ -46,6 +46,9 @@ import { B1_DEMO_TABLET } from '../data/b1TabletDemo'
 import { B1_01_FRIEND, B1_LEO_PHONE } from '../data/b1Accident'
 import { B1_02_CLOSE, B1_02_FRAGMENTS, B1_02_LANDED, B1_02_LUMEN_ID, b1PlaneLines } from '../data/b1NewCity'
 import { TheAccident } from '../components/CallForHelp'
+import { MemoryScript } from '../components/MemoryScript'
+import { NotebookIcon, NotebookPage } from '../components/LNotebook'
+import { B1_03_NOTEBOOK } from '../data/b1Words'
 import { isB1Unlocked } from '../data/b1World'
 import { B1_CALL, B1_PHONE } from '../data/b1Home'
 import { B1_HOME_ID, B1_OPENING } from '../data/b1World'
@@ -81,7 +84,7 @@ import { FittingRoom } from '../components/FittingRoom'
 import { EnoughForEveryone } from '../components/EnoughForEveryone'
 import { SHOP, isShopOpen } from '../data/a2Market'
 import { voiceOf, type Voice } from '../game/speech'
-import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
+import { btn, btnGhost, btnPrimary, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
 
 const VIEW = 11
 
@@ -133,6 +136,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [task, setTask] = useState<string | null>(null)
   // Práctica con charla previa (NpcTask.intro, B1-02 tienda): id de la tarea cuya charla ya se vio en esta visita
   const [introSeen, setIntroSeen] = useState<string | null>(null)
+  /** Práctica terminada de una tarea con outro (lo que narra L antes de la recompensa): se muestra antes de cerrarla */
+  const [outro, setOutro] = useState<{ task: string; perfect: boolean } | null>(null)
   // Al cerrar un escenario sin final de capítulo (A2), su página del diario se abre sola aquí, como en A1
   const [diary, setDiary] = useState(false)
   // Misión de la fiesta de Leo (barrio): lo que falta y a quién se le está preguntando
@@ -166,7 +171,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [ask, setAsk] = useState<{ itemId: string; npcId: string; npcName: string } | null>(null)
   const lf = state.lostFound
   const lostOnMap = lf.started && scene.id === 'school' ? LOST_ITEMS.filter((it) => !lf.picked.includes(it.id)) : []
-  const blocked = !!talk || friendsOpen || !!lesson || !!activity || notebook || !!ask || !!task || !!party
+  const blocked = !!talk || friendsOpen || !!lesson || !!activity || notebook || !!ask || !!task || !!party || !!outro
 
   // Sonido al conseguir algo (llave, objeto, recompensa)
   useEffect(() => {
@@ -671,7 +676,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET ? <TabletIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK ? <NotebookIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -1088,14 +1093,50 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       )}
       {task && NPC_TASKS[task]?.activity === 'practice' && NPC_TASKS[task].practice && (!NPC_TASKS[task].intro?.length || introSeen === task) && (
         // Práctica guiada con Leo (pantalla completa): al terminarla se marca la tarea
-        <Practice state={state} update={update} review={NPC_TASKS[task].practice} ids={NPC_TASKS[task].practiceIds} guided onClose={() => finishTask(task, false)} onDone={(perfect) => finishTask(task, true, [], perfect && !!NPC_TASKS[task].practiceShield)} />
+        <Practice state={state} update={update} review={NPC_TASKS[task].practice} ids={NPC_TASKS[task].practiceIds} guided onClose={() => finishTask(task, false)} onDone={(perfect) => {
+          const t = NPC_TASKS[task]
+          const shield = perfect && !!t.practiceShield
+          // B1-03 (PROVISIONAL: lo reemplaza el bloque 3-B): L narra una línea y se ve la recompensa antes de salir del recuerdo
+          if (t.outro) {
+            setTask(null)
+            setOutro({ task, perfect: shield })
+          } else finishTask(task, true, [], shield)
+        }} />
+      )}
+      {outro && NPC_TASKS[outro.task]?.outro && (
+        <div className="absolute inset-0 z-40 flex items-center justify-center overflow-y-auto bg-ink/90 px-4 py-6">
+          <div className="w-full max-w-md">
+            {(() => {
+              const t = NPC_TASKS[outro.task]
+              const page = t.notebookPage
+              const body = (
+                <>
+                  <p className="text-[18px] italic leading-relaxed">{t.outro!.text}</p>
+                  <p className="mt-1 text-sm opacity-70">{t.outro!.es}</p>
+                  <p className="mt-4 font-display text-xl">{t.reward.text}</p>
+                  <p className="text-sm opacity-80">{t.reward.sub}</p>
+                  <div className="mt-4 flex justify-end">
+                    <button className={btnPrimary} autoFocus onClick={() => { const o = outro; setOutro(null); finishTask(o.task, true, [], o.perfect) }}>Seguir</button>
+                  </div>
+                </>
+              )
+              return page ? <NotebookPage page={page}>{body}</NotebookPage> : <Panel>{body}</Panel>
+            })()}
+          </div>
+        </div>
+      )}
+      {task && NPC_TASKS[task]?.activity === 'script' && NPC_TASKS[task].script && (
+        // B1 (recuerdos): secuencia fija con el personaje de la tarea (cara borrosa) y L narrando
+        <Overlay>
+          <MemoryScript lines={NPC_TASKS[task].script!} friend={npcOf(NPC_TASKS[task].npc ?? task).look} friendName={npcOf(NPC_TASKS[task].npc ?? task).name} onDone={() => finishTask(task, true)} />
+        </Overlay>
       )}
       {task && NPC_TASKS[task]?.activity === 'callforhelp' && (
         // B1-01: la secuencia del recuerdo 1 (charla, alarma, Call for Help y rescate). Al terminar, se sale del recuerdo
         <TheAccident state={state} update={update} friend={npcOf(B1_01_FRIEND).look} onDone={() => finishTask(task, true)} />
       )}
 
-      {task && NPC_TASKS[task] && NPC_TASKS[task].activity !== 'practice' && NPC_TASKS[task].activity !== 'callforhelp' && (
+      {task && NPC_TASKS[task] && NPC_TASKS[task].activity !== 'practice' && NPC_TASKS[task].activity !== 'callforhelp' && NPC_TASKS[task].activity !== 'script' && (
         <Overlay>
           {(() => {
             const t = NPC_TASKS[task]
@@ -1250,8 +1291,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           <Lesson
             state={state}
             steps={lesson.topics.flatMap((t) => (LESSONS[t] ?? []).map((st) => ({ ...st, topic: t })))}
-            title={lesson.enemyId ? 'Leo te alcanza antes del combate' : lesson.task && NPC_TASKS[lesson.task]?.phoneLesson ? 'Leo te escribe' : 'Leo te ayuda'}
+            title={lesson.enemyId ? 'Leo te alcanza antes del combate' : lesson.task && NPC_TASKS[lesson.task]?.notebookPage ? 'Cuaderno de L' : lesson.task && NPC_TASKS[lesson.task]?.phoneLesson ? 'Leo te escribe' : 'Leo te ayuda'}
             phone={lesson.task ? NPC_TASKS[lesson.task]?.phoneLesson : undefined}
+            notebook={lesson.task ? NPC_TASKS[lesson.task]?.notebookPage : undefined}
             onDone={() => {
               const { topics, enemyId, then, task: taskId } = lesson
               update((s) => ({ ...s, seenLesson: [...s.seenLesson, ...topics.filter((t) => !s.seenLesson.includes(t))] }))
