@@ -4635,6 +4635,32 @@ NPC_TASKS['b1-04-phrasal'] = {
   },
 }
 
+// ── B1-04 · bloque D: cierre (Marisol en el vestíbulo, después de vencer a Mr. Fine Print y de la charla con Maya).
+// done = closeId(4) = 'b1-04-close': abre el nodo 5 (recuerdo 5). Al guardarse, Explore muestra FragmentJoin (memoryNumber 5)
+NPC_TASKS['b1-04-close'] = {
+  npc: 'b1-04-marisol',
+  done: 'b1-04-close',
+  recover: ['obligation-b1', 'bank-phrasal'],
+  coins: 20,
+  requires: {
+    id: 'b1-04-friend',
+    text: 'Marisol: "Go and read the rules with your friend. I\'m here if you have questions."',
+    es: 'Vayan a leer las reglas con su amiga. Estoy aquí si tienen preguntas.',
+    sub: 'Antes, vence a Mr. Fine Print y habla con Maya en el vestíbulo.',
+  },
+  steps: [
+    { text: "Thank you so much! I don't know what happened to that contract.", es: '¡Muchas gracias! No sé qué le pasó a ese contrato.' },
+    { text: '(Moscú hides under the sofa. The clock in your pocket is shining.)', es: '(Moscú se esconde bajo el sofá. El reloj en tu bolsillo brilla.)' },
+    { text: '(Two fragments move... and touch each other.)', es: '(Dos fragmentos se mueven... y se tocan.)' },
+  ],
+  reward: {
+    text: 'Mission 4: House Rules',
+    es: 'Misión 4: Reglas de la casa',
+    sub: 'Ganaste el llavero de la residencia. Dos fragmentos se juntaron: se abrió el recuerdo 5.',
+    say: 'House rules.',
+  },
+}
+
 export function taskOf(npcId: string, opened: string[]): { id: string; task: NpcTask; blocked: boolean } | null {
   for (const [id, t] of Object.entries(NPC_TASKS)) {
     if ((t.npc ?? id) !== npcId || opened.includes(t.done)) continue

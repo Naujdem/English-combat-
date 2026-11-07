@@ -45,7 +45,9 @@ export function heroLook(s: GameState, extra: Partial<SpriteLook> = {}): SpriteL
   const outfit = OUTFITS[s.outfit] ?? OUTFITS.base
   return {
     accessory: s.outfit === 'gafas' ? 'glasses' : s.outfit === 'gorra' ? 'cap' : undefined,
-    shirt: s.outfit === 'capa' ? OUTFITS.base.color : outfit.color,
+    // B1-04: el llavero de la residencia no cambia la camisa; se dibuja como una casita con llave en el cinturón
+    shirt: s.outfit === 'capa' || s.outfit === 'llavero-residencia' ? OUTFITS.base.color : outfit.color,
+    charm: s.outfit === 'llavero-residencia' ? 'house-key' : undefined,
     cape: s.outfit === 'capa' ? outfit.color : '#c0392b',
     hair: s.hero.look.hair,
     skin: s.hero.look.skin,

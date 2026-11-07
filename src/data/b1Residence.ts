@@ -14,7 +14,9 @@ import { B1_04_JEISON, B1_04_NEIGHBOUR1, B1_04_NEIGHBOUR2, B1_04_REPAIR, B1_04_T
  * Bloque B (data/b1Neighbours.ts): al terminar The Fine Print se abre el pasillo: Jeison (b1-04-jeison) → vecino 1 → vecina 2
  *   (esbirros con banco compartido) → se abre tu cuarto: la caja de herramientas (Repair Shop, b1-04-repair, data/b1Repair.ts).
  * Bloque C: al terminar el Repair Shop se abren la calle y el banco: Ricardo (b1-04-ricardo, práctica de escucha)
- *   → Maya en el banco: lección 'bank-phrasal' + práctica (b1-04-phrasal) → mensaje de Marisol (gancho del jefe de 4-D). Ningún bloque A/B guarda closeId(4). Preguntas en data/questions-b1-04.ts.
+ *   → Maya en el banco: lección 'bank-phrasal' + práctica (b1-04-phrasal) → mensaje de Marisol (gancho del jefe).
+ * Bloque D: Mr. Fine Print en el vestíbulo (jefe, 2 fases) → Maya en el vestíbulo (charla de amistad, quest 'b1-04-maya')
+ *   → Marisol cierra la misión (tarea b1-04-close = closeId(4)) → FragmentJoin abre el recuerdo 5. Ningún bloque A/B guarda closeId(4). Preguntas en data/questions-b1-04.ts.
  */
 export const B1_04_RESIDENCE_ID = 'b1-04-residence'
 export const B1_04_MARISOL = 'b1-04-marisol'
@@ -31,6 +33,13 @@ export const B1_04_RICARDO = 'b1-04-ricardo'
 export const B1_04_RICARDO_DONE = 'b1-04-ricardo'
 export const B1_04_MAYA_BANK = 'b1-04-maya-bank'
 export const B1_04_PHRASAL = 'b1-04-phrasal'
+/** Bloque D: el jefe (data/b1FinePrintBoss.ts), Maya en el vestíbulo (charla de amistad) y el cierre con Marisol */
+export const B1_04_BOSS = 'b1-04-boss'
+export const B1_04_MAYA_LOBBY = 'b1-04-maya-lobby'
+/** Se guarda al terminar la charla de amistad con Maya (Explore.tsx, quest 'b1-04-maya') */
+export const B1_04_FRIEND = 'b1-04-friend'
+/** Ya se vio la animación de los fragmentos tras el cierre (FragmentJoin, memoryNumber 5) */
+export const B1_04_FRAGMENTS = 'b1-04-fragments'
 
 /**
  * Leyenda (Tiles.tsx, sin dibujos nuevos): # pared · h letrero · ^ escaleras · p planta · C mostrador · A sofá · d puerta
@@ -85,6 +94,9 @@ export const B1_04_RESIDENCE: SceneDef = {
     // Bloque C: el banco. Ricardo detrás del mostrador; Maya aparece al terminar con Ricardo (npcs.ts, after: b1-04-ricardo)
     { type: 'npc', id: B1_04_RICARDO, x: 26, y: 1 },
     { type: 'npc', id: B1_04_MAYA_BANK, x: 25, y: 4 },
+    // Bloque D: el jefe junto al mostrador de Marisol (tras el mensaje de 4-C); al vencerlo, Maya vuelve al vestíbulo
+    { type: 'enemy', id: B1_04_BOSS, x: 7, y: 3, after: B1_04_PHRASAL },
+    { type: 'npc', id: B1_04_MAYA_LOBBY, x: 3, y: 4 },
   ],
   labels: [
     { text: 'Vestíbulo', x: 5, y: 6 },
@@ -122,6 +134,7 @@ export const B1_04_RESIDENCE: SceneDef = {
   },
   requirements: [],
   chips: (s: GameState) => [
+    { label: 'B1-04 · House Rules', done: s.opened.includes(B1_04_CLOSE) },
     { label: 'Habla con Marisol', done: s.opened.includes(B1_04_WELCOME) },
     { label: 'Lección de Maya: las reglas', done: s.opened.includes(B1_04_RULES) },
     { label: 'The Fine Print: el contrato', done: s.opened.includes(B1_04_FINEPRINT) },
@@ -130,9 +143,17 @@ export const B1_04_RESIDENCE: SceneDef = {
     { label: 'Repair Shop: arregla tu cuarto', done: s.opened.includes(B1_04_REPAIR) },
     { label: 'Habla con Ricardo', done: s.opened.includes(B1_04_RICARDO_DONE) },
     { label: 'Lección de Maya: phrasal verbs', done: s.opened.includes(B1_04_PHRASAL) },
+    { label: 'Mr. Fine Print', done: s.defeated.includes(B1_04_BOSS) },
+    { label: 'Charla con Maya', done: s.opened.includes(B1_04_FRIEND) },
+    { label: 'Cierre', done: s.opened.includes(B1_04_CLOSE) },
   ],
   intro: {
     first: 'Presente. La residencia de estudiantes de Lumen Bay. Una gata te mira desde las escaleras.',
-    later: 'La residencia de Lumen Bay.',
+    later: (s) =>
+      s.opened.includes(B1_04_CLOSE)
+        ? 'La residencia de Lumen Bay. Las reglas vuelven a ser justas y la misión 4 terminó: el recuerdo 5 te espera en el mapa.'
+        : s.opened.includes(B1_04_PHRASAL)
+          ? 'La residencia de Lumen Bay. Algo extraño pasa con los contratos en el vestíbulo.'
+          : 'La residencia de Lumen Bay.',
   },
 }

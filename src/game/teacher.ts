@@ -32,7 +32,7 @@ import { A2_RETURN, A2_13_CLOSE } from '../data/a2Return'
 import { B1_HOME } from '../data/b1Home'
 import { B1_OPENING, closeId } from '../data/b1World'
 import { B1_02_LANDED, B1_02_LUMEN, B1_02_PRACTICE } from '../data/b1NewCity'
-import { B1_04_FINEPRINT, B1_04_RESIDENCE, B1_04_RULES, B1_04_WELCOME } from '../data/b1Residence'
+import { B1_04_BOSS, B1_04_FINEPRINT, B1_04_FRIEND, B1_04_PHRASAL, B1_04_RESIDENCE, B1_04_RULES, B1_04_WELCOME } from '../data/b1Residence'
 import { B1_04_JEISON, B1_04_NEIGHBOUR1, B1_04_NEIGHBOUR2, B1_04_REPAIR } from '../data/b1Neighbours'
 import { B1_03_DOCTOR, B1_03_HOSPITAL, B1_03_NOTEBOOK, B1_03_NOTEBOOK2, B1_03_STATIC, B1_03_TEXTS, B1_03_UNREAD1, B1_03_UNREAD2, B1_03_UNREAD3 } from '../data/b1Words'
 import { B1_02_BOSS, B1_02_JACK, B1_02_LUGGAGE, B1_02_TRAV1, B1_02_TRAV2 } from '../data/b1Airport'
@@ -802,8 +802,10 @@ export function b1Mission3(s: GameState, stage: 'memory' | 'notebook' | 'texts' 
  *  jeison: The Fine Print hecho (en el pasillo, junto a Jeison) · neighbours: Jeison hecho (vecino 1 en el pasillo)
  *  repair: los dos vecinos vencidos (frente a tu cuarto, listo para el Repair Shop)
  *  bank: Repair Shop hecho (en el banco, frente a Ricardo) · phrasal: ya hablaste con Ricardo (junto a Maya; la lección sale de nuevo)
+ *  boss: todo lo anterior hecho (en el vestíbulo, frente a Mr. Fine Print) · maya: jefe vencido (junto a Maya, la charla sale al hablarle)
+ *  close: charla con Maya hecha (frente al mostrador de Marisol, listo para el cierre)
  */
-export function b1Mission4(s: GameState, stage: 'start' | 'lesson' | 'fineprint' | 'jeison' | 'neighbours' | 'repair' | 'bank' | 'phrasal'): GameState {
+export function b1Mission4(s: GameState, stage: 'start' | 'lesson' | 'fineprint' | 'jeison' | 'neighbours' | 'repair' | 'bank' | 'phrasal' | 'boss' | 'maya' | 'close'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3)])
   const home = { ...b, screen: 'explore' as const, sceneId: B1_04_RESIDENCE.id, pos: { ...B1_04_RESIDENCE.start }, seenLesson: b.seenLesson.filter((t) => t !== 'obligation-b1') }
   if (stage === 'start') return home
@@ -819,7 +821,20 @@ export function b1Mission4(s: GameState, stage: 'start' | 'lesson' | 'fineprint'
   if (stage === 'repair') return rep
   const bank = { ...rep, pos: { x: 24, y: 2 }, opened: add(rep.opened, [B1_04_REPAIR]), seenLesson: rep.seenLesson.filter((t) => t !== 'bank-phrasal') }
   if (stage === 'bank') return bank
-  return { ...bank, pos: { x: 25, y: 5 }, opened: add(bank.opened, ['b1-04-ricardo']) }
+  const phr = { ...bank, pos: { x: 25, y: 5 }, opened: add(bank.opened, ['b1-04-ricardo']) }
+  if (stage === 'phrasal') return phr
+  // La charla de Maya y el cierre (y su animación de fragmentos) vuelven a salir
+  const boss = {
+    ...phr,
+    pos: { x: 6, y: 4 },
+    opened: add(phr.opened, [B1_04_PHRASAL]).filter((o) => o !== B1_04_FRIEND && o !== 'b1-04-close' && o !== 'b1-04-fragments'),
+    seenLesson: add(phr.seenLesson, ['bank-phrasal']) as GameState['seenLesson'],
+    defeated: phr.defeated.filter((d) => d !== B1_04_BOSS),
+  }
+  if (stage === 'boss') return boss
+  const maya = { ...boss, pos: { x: 3, y: 5 }, defeated: add(boss.defeated, [B1_04_BOSS]) }
+  if (stage === 'maya') return maya
+  return { ...maya, pos: { x: 5, y: 4 }, opened: add(maya.opened, [B1_04_FRIEND]) }
 }
 
 PRESETS.push(

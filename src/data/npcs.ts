@@ -808,6 +808,8 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'Maya',
     look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
     after: 'b1-04-welcome',
+    // Se va con el grupo al banco (allí está b1-04-maya-bank)
+    until: 'b1-04-ricardo',
     doneLine: { text: "That's a long contract! OK, let's meet the neighbours.", es: '¡Qué contrato tan largo! Bueno, conozcamos a los vecinos.' },
   },
   // B1-04 · bloque B (data/b1Neighbours.ts): Jeison, el vecino amable del pasillo
@@ -821,6 +823,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'Toolbox',
     look: { shirt: '#c0392b', hair: '#55606e', skin: '#c0392b' },
     doneLine: { text: '(Warm, bright and online. Now you need to open a bank account.)', es: '(Cálido, iluminado y con internet. Ahora toca abrir una cuenta en el banco.)' },
+  },
+  // B1-04 · bloque D: Maya vuelve al vestíbulo al vencer a Mr. Fine Print (charla de amistad, quest 'b1-04-maya' en Explore.tsx)
+  'b1-04-maya-lobby': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    after: 'b1-04-boss',
+    doneLine: { text: 'Interesting! Rules are easier when everybody is kind.', es: '¡Interesante! Las reglas son más fáciles cuando todos son amables.' },
   },
   // B1-04 · bloque C: el banco (data/b1Residence.ts). Ricardo, el empleado
   'b1-04-ricardo': {

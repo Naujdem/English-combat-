@@ -5,7 +5,8 @@ import type { Question } from '../game/types'
  *  - Práctica guiada de Maya después de su lección 'obligation-b1' (lista fija en data/tasks.ts): tag b1-04-practice1.
  * Bloque B (data/b1Neighbours.ts): los dos vecinos ruidosos (esbirros, banco compartido): tag b1-04-neighbour.
  * Bloque C (el banco): práctica de escucha de Ricardo (tag b1-04-bank) y práctica de Maya después de su lección 'bank-phrasal'
- *   (tag b1-04-practice2); listas fijas en data/tasks.ts. El bloque 4-D agrega sus preguntas aquí.
+ *   (tag b1-04-practice2); listas fijas en data/tasks.ts.
+ * Bloque D: Mr. Fine Print (data/b1FinePrintBoss.ts), fase 1 obligación (tag b1-04-boss-ob) y fase 2 phrasal verbs y banco (tag b1-04-boss-ph).
  * Regla: en las preguntas de elegir solo UNA opción es gramaticalmente correcta.
  */
 const PRACTICE1 = ['b1-04-practice1']
@@ -14,6 +15,8 @@ const NEIGHBOUR = ['b1-04-neighbour']
 const BANK = ['b1-04-bank']
 const PRACTICE2 = ['b1-04-practice2']
 const BP = 'bank-phrasal' as const
+const BOSS_OB = ['b1-04-boss', 'b1-04-boss-ob']
+const BOSS_PH = ['b1-04-boss', 'b1-04-boss-ph']
 /** Bloque C: lo que explica Ricardo (b1 a b4 usan el mismo audio) */
 const BANK_AUDIO =
   "To open a student account you need three documents: your passport, a proof of address, and your student ID. You have to fill in a form, and then you can pay in some money. We'll give you a debit card, and you can take out money from any cash machine. Your PIN must be secret."
@@ -85,4 +88,43 @@ export const B1_04_QUESTIONS: Question[] = [
   { id: 'b1-04-f6', topic: BP, prompt: 'I need to ___ some money into my account.', options: ['pay in', 'pay on', 'pay at'], answer: 0, tip: 'pay in = ingresar dinero.', tags: PRACTICE2 },
   { id: 'b1-04-f7', topic: BP, prompt: 'I need cash. Where is the ___?', options: ['cash machine', 'machine cash', 'cash of machine'], answer: 0, tip: 'El primer sustantivo describe al segundo: cash machine.', tags: PRACTICE2 },
   { id: 'b1-04-f8', topic: BP, kind: 'order', prompt: 'Quisiera abrir una cuenta bancaria.', options: ["I'd", 'like', 'to', 'open', 'a', 'bank', 'account.'], answer: 0, tip: "I'd like to + verbo base. bank account = cuenta bancaria.", tags: PRACTICE2 },
+  // ── Bloque D · Mr. Fine Print, fase 1: obligación ──
+  { id: 'b1-04-bo1', topic: OB, kind: 'fix', prompt: 'You must to sign here.', options: ['You must sign here.', 'You must signing here.', 'You musts sign here.'], answer: 0, tip: 'must + verbo base, sin to.', tags: BOSS_OB },
+  { id: 'b1-04-bo2', topic: OB, kind: 'fix', prompt: "You don't must make noise.", options: ["You mustn't make noise.", "You don't must to make noise.", 'You not must make noise.'], answer: 0, tip: "Prohibido: mustn't (no 'don't must').", tags: BOSS_OB },
+  { id: 'b1-04-bo3', topic: OB, kind: 'fix', prompt: 'He have to pay today.', options: ['He has to pay today.', 'He haves to pay today.', 'He have to pays today.'], answer: 0, tip: 'He = has to + verbo base.', tags: BOSS_OB },
+  { id: 'b1-04-bo4', topic: OB, prompt: "It's forbidden to open the door to strangers. You ___ open it.", options: ["mustn't", "don't have to", "needn't to"], answer: 0, tip: "Prohibido: mustn't.", tags: BOSS_OB },
+  { id: 'b1-04-bo5', topic: OB, prompt: 'Marisol takes out the rubbish on Mondays. You ___ do it.', options: ["don't have to", "mustn't", 'must'], answer: 0, tip: "Lo hace Marisol: no es necesario, don't have to.", tags: BOSS_OB },
+  { id: 'b1-04-bo6', topic: OB, kind: 'order', prompt: 'Tengo que firmar el contrato hoy.', options: ['I', 'have', 'to', 'sign', 'the', 'contract', 'today.'], answer: 0, tip: 'have to + verbo base.', tags: BOSS_OB },
+  {
+    id: 'b1-04-bo7',
+    topic: OB,
+    kind: 'listen',
+    audio: "Please remember: you have to keep your key safe. You mustn't give it to strangers. And you don't have to tell me when you go out.",
+    voice: 'female',
+    prompt: '¿Qué no es necesario hacer?',
+    options: ['Avisarle a Marisol cuando salen.', 'Cuidar la llave.', 'Darle la llave a extraños.'],
+    answer: 0,
+    tip: "you don't have to tell me when you go out.",
+    tags: BOSS_OB,
+  },
+
+  // ── Bloque D · Mr. Fine Print, fase 2: phrasal verbs y banco ──
+  { id: 'b1-04-bp1', topic: BP, kind: 'fix', prompt: 'Fill in it, please.', options: ['Fill it in, please.', 'Fill in to it, please.', 'Fill it to in, please.'], answer: 0, tip: 'Con pronombre, va en medio: fill it in.', tags: BOSS_PH },
+  { id: 'b1-04-bp2', topic: BP, kind: 'fix', prompt: 'Plug in it, please.', options: ['Plug it in, please.', 'Plug in to it, please.', 'Plug it to in, please.'], answer: 0, tip: 'Con pronombre, va en medio: plug it in.', tags: BOSS_PH },
+  { id: 'b1-04-bp3', topic: BP, kind: 'fix', prompt: 'Pick up them, please.', options: ['Pick them up, please.', 'Pick up to them, please.', 'Pick them to up, please.'], answer: 0, tip: 'Con pronombre, va en medio: pick them up.', tags: BOSS_PH },
+  { id: 'b1-04-bp4', topic: BP, prompt: 'I want to ___ money at the cash machine.', options: ['take out', 'take down', 'take under'], answer: 0, tip: 'take out = sacar.', tags: BOSS_PH },
+  { id: 'b1-04-bp5', topic: BP, prompt: 'I need a ___ to pay in the shop.', options: ['debit card', 'card debit', 'debit of card'], answer: 0, tip: 'El primer sustantivo describe al segundo: debit card.', tags: BOSS_PH },
+  { id: 'b1-04-bp6', topic: BP, kind: 'order', prompt: 'Tengo que llenar este formulario.', options: ['I', 'have', 'to', 'fill', 'in', 'this', 'form.'], answer: 0, tip: 'have to + fill in + objeto.', tags: BOSS_PH },
+  {
+    id: 'b1-04-bp7',
+    topic: BP,
+    kind: 'listen',
+    audio: 'Please fill in this form and sign it. Then pay in the money at the counter. You can take out cash at any cash machine.',
+    voice: 'male',
+    prompt: '¿Dónde ingresan el dinero?',
+    options: ['En el mostrador.', 'En el cajero automático.', 'En la residencia.'],
+    answer: 0,
+    tip: 'pay in the money at the counter.',
+    tags: BOSS_PH,
+  },
 ]
