@@ -32,7 +32,7 @@ import { A2_RETURN, A2_13_CLOSE } from '../data/a2Return'
 import { B1_HOME } from '../data/b1Home'
 import { B1_OPENING, closeId } from '../data/b1World'
 import { B1_02_LANDED, B1_02_LUMEN, B1_02_PRACTICE } from '../data/b1NewCity'
-import { B1_03_DOCTOR, B1_03_HOSPITAL, B1_03_NOTEBOOK, B1_03_TEXTS } from '../data/b1Words'
+import { B1_03_DOCTOR, B1_03_HOSPITAL, B1_03_NOTEBOOK, B1_03_NOTEBOOK2, B1_03_STATIC, B1_03_TEXTS, B1_03_UNREAD1, B1_03_UNREAD2, B1_03_UNREAD3 } from '../data/b1Words'
 import { B1_02_BOSS, B1_02_JACK, B1_02_LUGGAGE, B1_02_TRAV1, B1_02_TRAV2 } from '../data/b1Airport'
 import { B1_02_AGENDA, B1_02_FUTURES, B1_02_ROUTE, B1_02_SHOP } from '../data/b1Office'
 import { B1_01_ALARM, B1_01_ECHO, B1_01_MESSAGE, B1_01_PRACTICE, B1_01_SCHOOL, B1_01_TALKED } from '../data/b1Accident'
@@ -778,16 +778,19 @@ export function b1Mission2(s: GameState, stage: 'plane' | 'airport' | 'trav1' | 
  * Atajos de la misión B1-3 (Words on a Screen, recuerdo) para el panel del profe. Parten de "B1: abrir el nodo 3".
  *  memory: entra al recuerdo (habitación del hospital) · notebook: ya hablaste con la médica (junto al cuaderno del apartamento)
  *  texts: página 1 hecha (junto al teléfono, Text Only) · notebook2: Text Only hecho (junto al cuaderno de la página 2)
+ *  unread: página 2 hecha (primer Unread Message) · static: los 3 Unread Messages vencidos (The Static) · close: jefe vencido (teléfono del cierre)
  */
-export function b1Mission3(s: GameState, stage: 'memory' | 'notebook' | 'texts' | 'notebook2'): GameState {
+export function b1Mission3(s: GameState, stage: 'memory' | 'notebook' | 'texts' | 'notebook2' | 'unread' | 'static' | 'close'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2)])
   // Las lecciones del cuaderno vuelven a salir
   const present = { ...b, sceneId: B1_02_LUMEN.id, pos: { x: 18, y: 7 }, seenLesson: b.seenLesson.filter((t) => t !== 'informal-messages' && t !== 'present-perfect-cont') }
-  const pos = { memory: B1_03_HOSPITAL.start, notebook: { x: 15, y: 3 }, texts: { x: 17, y: 2 }, notebook2: { x: 15, y: 4 } }[stage]
+  const pos = { memory: B1_03_HOSPITAL.start, notebook: { x: 15, y: 3 }, texts: { x: 17, y: 2 }, notebook2: { x: 15, y: 4 }, unread: { x: 17, y: 3 }, static: { x: 15, y: 2 }, close: { x: 17, y: 3 } }[stage]
   const m = enterMemory(present, 3, B1_03_HOSPITAL.id, pos)
-  const flags = { memory: [], notebook: [B1_03_DOCTOR], texts: [B1_03_DOCTOR, B1_03_NOTEBOOK], notebook2: [B1_03_DOCTOR, B1_03_NOTEBOOK, B1_03_TEXTS] }[stage]
-  const seen = stage === 'texts' || stage === 'notebook2' ? add(m.seenLesson, ['informal-messages']) : m.seenLesson
-  return { ...m, opened: add(m.opened, flags), seenLesson: seen as GameState['seenLesson'] }
+  const all = [B1_03_DOCTOR, B1_03_NOTEBOOK, B1_03_TEXTS, B1_03_NOTEBOOK2]
+  const flags = { memory: [], notebook: [B1_03_DOCTOR], texts: [B1_03_DOCTOR, B1_03_NOTEBOOK], notebook2: [B1_03_DOCTOR, B1_03_NOTEBOOK, B1_03_TEXTS], unread: all, static: all, close: all }[stage]
+  const beaten = { static: [B1_03_UNREAD1, B1_03_UNREAD2, B1_03_UNREAD3], close: [B1_03_UNREAD1, B1_03_UNREAD2, B1_03_UNREAD3, B1_03_STATIC] }[stage as 'static' | 'close'] ?? []
+  const lessons = stage === 'texts' || stage === 'notebook2' ? ['informal-messages'] : stage === 'unread' || stage === 'static' || stage === 'close' ? ['informal-messages', 'present-perfect-cont'] : []
+  return { ...m, opened: add(m.opened, flags), defeated: add(m.defeated, beaten), seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
 }
 
 PRESETS.push(

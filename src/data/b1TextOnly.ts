@@ -42,3 +42,21 @@ export const B1_TEXT_ONLY: TextOnlyContent = {
   ],
   finish: { text: 'Three conversations, three different voices. And I never said a word.', es: 'Tres conversaciones, tres voces distintas. Y nunca dije una palabra.' },
 }
+
+/** B1-03 · cierre (tarea 'b1-03-close'): la amiga escribe y L responde. Lo que narra L antes va en los steps de la tarea */
+export const B1_03_CLOSE_CHAT: TextOnlyContent = {
+  title: 'Words on a Screen',
+  chats: [
+    {
+      contact: '[[?]]',
+      steps: [
+        {
+          text: 'How are you today, L? Any news?',
+          es: '¿Cómo estás hoy, L? ¿Alguna novedad?',
+          choice: { ask: 'L le responde:', options: ["I've been trying to speak every day. Nothing.", 'I try to speak every day since weeks. Nothing.', 'I have tried speak every day. Nothing.'], answer: 0, tip: 'Llevo intentándolo todos los días: present perfect continuous (have been trying).' },
+        },
+      ],
+    },
+  ],
+  finish: { text: '(Three dots appear on the screen. Then they disappear.)', es: '(Aparecen tres puntos en la pantalla. Luego desaparecen.)' },
+}

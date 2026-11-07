@@ -109,4 +109,59 @@ export const B1_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B1-03 · Words on a Screen (recuerdo 3). Se abre al cerrar la misión (closeId(3), al salir del recuerdo)
+  {
+    id: 'b1-memory-3',
+    title: 'Recuerdo 3: Words on a Screen',
+    unlock: closeId(3),
+    words: [
+      { title: 'Mensajes', words: [['text', 'mensaje de texto, escribir'], ['reply', 'responder'], ['DM', 'mensaje directo'], ['voice note', 'nota de voz'], ['read receipt', 'confirmación de lectura'], ['typing', 'escribiendo'], ['ping', 'avisar con un mensaje rápido']] },
+      { title: 'Salud mental', words: [['stressed', 'estresado'], ['overwhelmed', 'abrumado'], ['anxious', 'ansioso'], ['unwind', 'relajarse'], ['take a break', 'tomar un descanso'], ['recover', 'recuperarse']] },
+      { title: 'Expresiones con time', words: [['take your time', 'tómate tu tiempo'], ['run out of time', 'quedarse sin tiempo'], ['have a hard time', 'pasarla mal']] },
+    ],
+    versions: [
+      {
+        id: 'b1-memory-3-mine',
+        tense: 'n',
+        tab: 'Mi diario',
+        title: 'What I saw',
+        unlock: closeId(3),
+        frame: 'Lo escribes al despertar, todavía con dolor de garganta.',
+        lines: [{ en: "The man in the memory [couldn't speak]p. He [has been writing]n every day: to his friend, to his director, to his students.", es: 'El hombre del recuerdo no podía hablar. Ha estado escribiendo todos los días: a su amiga, a su director y a sus alumnos.' }],
+        questions: [],
+      },
+      {
+        id: 'b1-memory-3-l',
+        kind: 'L',
+        tense: 'n',
+        tab: 'Diario de L',
+        title: 'Everybody talks. I type.',
+        frame: 'Una página de un cuaderno ajeno, escrita a mano. No tiene nombre.',
+        lines: [
+          { en: 'Everybody [talks]n. I [type]n.', es: 'Todos hablan. Yo escribo.' },
+          { en: 'I [have been writing]n for fifteen days. ~~I can~~ My thumbs [are]n tired.', es: 'Llevo quince días escribiendo. Mis pulgares están cansados.' },
+          { en: "My friend [has been texting]n me every day. ~~I don't~~ I [don't answer]n much.", es: 'Mi amiga me escribe todos los días. Yo no contesto mucho.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b1-memory-3-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'Three voices, one silence',
+        unlock: closeId(3),
+        frame: 'Juntas tu página y la de L. Activa "Ver verbos" para ver cada tiempo con su color.',
+        lines: [
+          { en: "The man [has been writing]n messages for weeks, but he [can't speak]n.", es: 'El hombre lleva semanas escribiendo mensajes, pero no puede hablar.' },
+          { en: "Last night he [wrote]p to his friend: 'I've been trying to speak every day. Nothing.'", es: 'Anoche le escribió a su amiga: «Llevo intentando hablar todos los días. Nada».' },
+          { en: 'He [writes]n to a friend in a casual way and to his director in a formal way.', es: 'Le escribe a una amiga de forma informal y a su director de forma formal.' },
+        ],
+        questions: [
+          { q: 'How long has the man been writing messages?', options: ['For weeks.', 'Since Monday.', 'For one day.'], answer: 0, tip: 'El diario dice: "has been writing messages for weeks".' },
+          { q: 'Who does he write to in a formal way?', options: ['His director.', 'His friend.', 'His student.'], answer: 0, tip: 'El diario dice: "to his director in a formal way".' },
+          { q: 'What did he write to his friend last night?', options: ["I've been trying to speak every day. Nothing.", "I'm fine, thanks.", 'I will come tomorrow.'], answer: 0, tip: 'Anoche escribió: "I\'ve been trying to speak every day. Nothing."' },
+        ],
+      },
+    ],
+  },
 ]

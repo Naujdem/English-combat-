@@ -784,6 +784,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b1-03-texts',
     doneLine: { text: '(The messages keep coming. Something is wrong with them.)', es: '(Los mensajes siguen llegando. Algo anda mal con ellos.)' },
   },
+  // B1-03 · bloque C: el teléfono del cierre (aparece al vencer a The Static; after admite un enemigo vencido)
+  'b1-03-close': {
+    name: 'My phone',
+    look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
+    after: 'b1-03-static',
+    doneLine: { text: '(Three dots appear on the screen. Then they disappear.)', es: '(Aparecen tres puntos en la pantalla. Luego desaparecen.)' },
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

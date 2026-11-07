@@ -19,7 +19,7 @@ import type { ScriptLine } from './b1Accident'
 import { B1_03_DOCTOR_SCRIPT } from './b1Words'
 import { B1_03_PRACTICE1_IDS, B1_03_PRACTICE2_IDS } from './questions-b1-03'
 import type { TextOnlyContent } from '../components/TextOnly'
-import { B1_TEXT_ONLY } from './b1TextOnly'
+import { B1_03_CLOSE_CHAT, B1_TEXT_ONLY } from './b1TextOnly'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -94,8 +94,6 @@ export type NpcTask = {
   script?: ScriptLine[]
   /** Para activity 'textonly' (B1-03, Text Only): los chats en el teléfono de L. Los steps de la tarea los narra L antes */
   textOnly?: TextOnlyContent
-  /** Para activity 'practice': lo que narra L al terminar la práctica, antes de la recompensa (se ve en una página aparte) */
-  outro?: { text: string; es: string }
   /** B1: al terminar la tarea se sale del recuerdo con ese número (game/memory.ts, exitMemory). closeMemory: además se guarda el cierre de la misión */
   exitMemory?: number
   closeMemory?: boolean
@@ -4437,8 +4435,7 @@ NPC_TASKS['b1-03-texts'] = {
 }
 
 // El cuaderno junto a la cama (aparece al terminar Text Only): página 2 (lección 'present-perfect-cont') + práctica.
-// Si todas están bien, escudo. PROVISIONAL: lo reemplaza el bloque 3-C. Al terminar sale del recuerdo SIN cerrar la misión
-// (no guarda closeId(3)).
+// Si todas están bien, escudo. Al terminar aparece el primer Unread Message, junto al teléfono (data/b1Words.ts)
 NPC_TASKS['b1-03-notebook2'] = {
   npc: 'b1-03-notebook2',
   done: 'b1-03-notebook2',
@@ -4448,11 +4445,32 @@ NPC_TASKS['b1-03-notebook2'] = {
   practice: 'present-perfect-cont',
   practiceIds: B1_03_PRACTICE2_IDS,
   practiceShield: true,
-  // PROVISIONAL: lo reemplaza el bloque 3-C
-  outro: { text: '(The messages keep coming. Something is wrong with them.)', es: '(Los mensajes siguen llegando. Algo anda mal con ellos.)' },
-  exitMemory: 3,
   steps: [],
-  reward: { text: 'Memory 3 (part 2)', sub: 'Continuará.' },
+  reward: {
+    text: '(The messages keep coming. Something is wrong with them.)',
+    es: '(Los mensajes siguen llegando. Algo anda mal con ellos.)',
+    sub: 'Página 2 del cuaderno terminada. Un mensaje sin leer apareció junto al teléfono. (Si acertaste todas, ganaste un escudo).',
+    say: 'The messages keep coming.',
+  },
+}
+
+// ── B1-03 · bloque C: cierre (el teléfono, aparece al vencer a The Static). L le responde a su amiga por mensaje.
+// Recupera los dos temas y sale del recuerdo con el cierre: exitMemory 3 + closeMemory → closeId(3) (abre el nodo 4)
+NPC_TASKS['b1-03-close'] = {
+  npc: 'b1-03-close',
+  done: 'b1-03-close',
+  activity: 'textonly',
+  textOnly: B1_03_CLOSE_CHAT,
+  recover: ['informal-messages', 'present-perfect-cont'],
+  exitMemory: 3,
+  closeMemory: true,
+  steps: [{ text: "(The noise stops. My phone buzzes. It's her.)", es: '(El ruido se detiene. Mi teléfono vibra. Es ella.)' }],
+  reward: {
+    text: 'Memory 3: Words on a Screen',
+    es: 'Recuerdo 3: Palabras en una pantalla',
+    sub: 'Todos hablan. Él escribe. Despiertas en el presente con dolor de garganta.',
+    say: 'Words on a screen.',
+  },
 }
 
 export function taskOf(npcId: string, opened: string[]): { id: string; task: NpcTask; blocked: boolean } | null {
