@@ -125,6 +125,7 @@ smoke=humo;starving=muerto de hambre;tense=tiempo verbal;tenses=tiempos verbales
 until=hasta;while=mientras;whoosh=fuum (sonido del fuego);
 text=mensaje de texto, escribir un mensaje (text me = escríbeme);reply=responder, respuesta;ping=avisar con un mensaje rápido (ping me = avísame);dm=mensaje directo (DM, en redes sociales);vocal=vocal (vocal cords = cuerdas vocales);cords=cuerdas (vocal cords = cuerdas vocales);drop=soltar, dejar caer (drop me a line = mándame un mensaje);sounds=suena (sound) (sounds good = me parece bien);damaged=dañado;communicate=comunicarse;
 receipt=recibo (read receipt = confirmación de lectura);stressed=estresado;overwhelmed=abrumado;anxious=ansioso;unwind=relajarse, desconectarse;inquiry=consulta, pregunta;certainly=claro, por supuesto;thumb=pulgar;thumbs=pulgares;buzz=vibrar, zumbar;buzzes=vibra (buzz);honoured=honrado (inglés británico);comprehended=comprendido (comprehend);delighted=encantado;conversations=conversaciones;duration=duración;period=período;casual=informal, casual;dots=puntos;
+rent=alquiler, arriendo;deposit=depósito;landlord=dueño (el que arrienda);landlady=dueña (la que arrienda);tenant=inquilino;bills=cuentas, recibos (bills included = cuentas incluidas);included=incluido;rubbish=basura;forbidden=prohibido;stranger=desconocido, extraño;strangers=desconocidos;needn't=no necesitas, no es necesario;neighbour=vecino;neighbours=vecinos;prohibited=prohibido;similar=parecido, similar
 `
 
 const BASE: Record<string, string> = Object.fromEntries(

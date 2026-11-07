@@ -791,6 +791,25 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b1-03-static',
     doneLine: { text: '(Three dots appear on the screen. Then they disappear.)', es: '(Aparecen tres puntos en la pantalla. Luego desaparecen.)' },
   },
+  // ── B1-04 · House Rules, bloque A (residencia de Lumen Bay, data/b1Residence.ts) ──
+  'b1-04-marisol': {
+    name: 'Marisol',
+    look: { shirt: '#b5653a', hair: '#5a3a22', skin: '#d7a77a', gender: 'female' },
+    doneLine: { text: "Go and read the rules with your friend. I'm here if you have questions.", es: 'Vayan a leer las reglas con su amiga. Estoy aquí si tienen preguntas.' },
+  },
+  // La gata gris de la residencia: se dibuja con AnimalSprite 'cat' (Explore.tsx). Solo examinable
+  'b1-04-moscu': {
+    name: 'Moscú',
+    look: { shirt: '#9a9a9a', hair: '#9a9a9a', skin: '#9a9a9a' },
+    doneLine: { text: 'Meow.', es: 'Miau.' },
+  },
+  // Maya (mismo look que FRIENDS.maya): aparece al terminar la bienvenida de Marisol
+  'b1-04-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    after: 'b1-04-welcome',
+    doneLine: { text: "That's a long contract! OK, let's meet the neighbours.", es: '¡Qué contrato tan largo! Bueno, conozcamos a los vecinos.' },
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */
