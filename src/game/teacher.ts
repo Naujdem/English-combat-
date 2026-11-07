@@ -32,7 +32,8 @@ import { A2_RETURN, A2_13_CLOSE } from '../data/a2Return'
 import { B1_HOME } from '../data/b1Home'
 import { B1_OPENING, closeId } from '../data/b1World'
 import { B1_02_LANDED, B1_02_LUMEN, B1_02_PRACTICE } from '../data/b1NewCity'
-import { B1_04_RESIDENCE, B1_04_WELCOME } from '../data/b1Residence'
+import { B1_04_FINEPRINT, B1_04_RESIDENCE, B1_04_RULES, B1_04_WELCOME } from '../data/b1Residence'
+import { B1_04_JEISON, B1_04_NEIGHBOUR1, B1_04_NEIGHBOUR2 } from '../data/b1Neighbours'
 import { B1_03_DOCTOR, B1_03_HOSPITAL, B1_03_NOTEBOOK, B1_03_NOTEBOOK2, B1_03_STATIC, B1_03_TEXTS, B1_03_UNREAD1, B1_03_UNREAD2, B1_03_UNREAD3 } from '../data/b1Words'
 import { B1_02_BOSS, B1_02_JACK, B1_02_LUGGAGE, B1_02_TRAV1, B1_02_TRAV2 } from '../data/b1Airport'
 import { B1_02_AGENDA, B1_02_FUTURES, B1_02_ROUTE, B1_02_SHOP } from '../data/b1Office'
@@ -798,14 +799,22 @@ export function b1Mission3(s: GameState, stage: 'memory' | 'notebook' | 'texts' 
  * Atajos de la misión B1-4 (House Rules) para el panel del profe. Parten de "B1: abrir el nodo 4".
  *  start: entra a la residencia (frente al mostrador de Marisol) · lesson: ya hablaste con Marisol (junto a Maya, la lección sale de nuevo)
  *  fineprint: lección y práctica de Maya hechas (junto a Maya, listo para The Fine Print)
+ *  jeison: The Fine Print hecho (en el pasillo, junto a Jeison) · neighbours: Jeison hecho (vecino 1 en el pasillo)
+ *  repair: los dos vecinos vencidos (frente a tu cuarto, listo para el Repair Shop)
  */
-export function b1Mission4(s: GameState, stage: 'start' | 'lesson' | 'fineprint'): GameState {
+export function b1Mission4(s: GameState, stage: 'start' | 'lesson' | 'fineprint' | 'jeison' | 'neighbours' | 'repair'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3)])
   const home = { ...b, screen: 'explore' as const, sceneId: B1_04_RESIDENCE.id, pos: { ...B1_04_RESIDENCE.start }, seenLesson: b.seenLesson.filter((t) => t !== 'obligation-b1') }
   if (stage === 'start') return home
   const lesson = { ...home, pos: { x: 3, y: 5 }, opened: add(home.opened, [B1_04_WELCOME]) }
   if (stage === 'lesson') return lesson
-  return { ...lesson, opened: add(lesson.opened, ['b1-04-rules']), seenLesson: add(lesson.seenLesson, ['obligation-b1']) as GameState['seenLesson'] }
+  const fine = { ...lesson, opened: add(lesson.opened, [B1_04_RULES]), seenLesson: add(lesson.seenLesson, ['obligation-b1']) as GameState['seenLesson'] }
+  if (stage === 'fineprint') return fine
+  const jeison = { ...fine, pos: { x: 11, y: 3 }, opened: add(fine.opened, [B1_04_FINEPRINT]) }
+  if (stage === 'jeison') return jeison
+  const nb = { ...jeison, pos: { x: 11, y: 4 }, opened: add(jeison.opened, [B1_04_JEISON]), defeated: jeison.defeated.filter((d) => d !== B1_04_NEIGHBOUR1 && d !== B1_04_NEIGHBOUR2) }
+  if (stage === 'neighbours') return nb
+  return { ...nb, pos: { x: 14, y: 3 }, defeated: add(nb.defeated, [B1_04_NEIGHBOUR1, B1_04_NEIGHBOUR2]) }
 }
 
 PRESETS.push(
