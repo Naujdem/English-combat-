@@ -48,7 +48,7 @@ export const B1_04_FRAGMENTS = 'b1-04-fragments'
  * Calle x 17-22 (puerta desde el pasillo en 16,4). Banco x 24-29 (puerta desde la calle en 23,4; mostrador en y 2, Ricardo detrás).
  */
 const MAP = [
-  '####h#####################h####',
+  '####h######################h###',
   '#^.....p##.#.#.#########.....F#',
   '#^......##d#d#d#########.CCCC.#',
   '#...CCC.#.......#,,,,,,#......#',
@@ -85,7 +85,8 @@ export const B1_04_RESIDENCE: SceneDef = {
     { type: 'npc', id: B1_04_MARISOL, x: 5, y: 2 },
     { type: 'npc', id: B1_04_MOSCU, x: 2, y: 2 },
     // Maya aparece cuando Marisol terminó la bienvenida (npcs.ts, after: b1-04-welcome)
-    { type: 'npc', id: B1_04_MAYA, x: 3, y: 4 },
+    // Fuera del paso (3,4)-(3,3): es la única entrada al mostrador cuando el jefe está en (7,3)
+    { type: 'npc', id: B1_04_MAYA, x: 5, y: 5 },
     // Bloque B (data/b1Neighbours.ts): Jeison en el pasillo; los vecinos en cadena; la caja de herramientas en tu cuarto
     { type: 'npc', id: B1_04_JEISON, x: 10, y: 3 },
     { type: 'enemy', id: B1_04_NEIGHBOUR1, x: 12, y: 3, after: B1_04_JEISON },
@@ -96,7 +97,7 @@ export const B1_04_RESIDENCE: SceneDef = {
     { type: 'npc', id: B1_04_MAYA_BANK, x: 25, y: 4 },
     // Bloque D: el jefe junto al mostrador de Marisol (tras el mensaje de 4-C); al vencerlo, Maya vuelve al vestíbulo
     { type: 'enemy', id: B1_04_BOSS, x: 7, y: 3, after: B1_04_PHRASAL },
-    { type: 'npc', id: B1_04_MAYA_LOBBY, x: 3, y: 4 },
+    { type: 'npc', id: B1_04_MAYA_LOBBY, x: 5, y: 5 },
   ],
   labels: [
     { text: 'Vestíbulo', x: 5, y: 6 },
@@ -119,7 +120,7 @@ export const B1_04_RESIDENCE: SceneDef = {
     '27,2': COUNTER,
     '28,2': COUNTER,
     '29,6': { text: 'A cash machine. You can take out money here.', sub: 'Un cajero automático. Aquí puedes sacar dinero.', say: 'A cash machine. You can take out money here.' },
-    '26,0': { text: 'BANK. Open from nine to five.', sub: 'BANCO. Abierto de nueve a cinco.', say: 'Bank. Open from nine to five.' },
+    '27,0': { text: 'BANK. Open from nine to five.', sub: 'BANCO. Abierto de nueve a cinco.', say: 'Bank. Open from nine to five.' },
     '29,5': { text: 'Forms to fill in.', sub: 'Formularios para llenar.', say: 'Forms to fill in.' },
     '4,0': { text: 'Rules: Quiet after ten.', sub: 'Reglas: silencio después de las diez.', say: 'Rules: Quiet after ten.' },
   },

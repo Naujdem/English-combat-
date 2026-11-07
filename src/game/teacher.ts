@@ -809,7 +809,7 @@ export function b1Mission4(s: GameState, stage: 'start' | 'lesson' | 'fineprint'
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3)])
   const home = { ...b, screen: 'explore' as const, sceneId: B1_04_RESIDENCE.id, pos: { ...B1_04_RESIDENCE.start }, seenLesson: b.seenLesson.filter((t) => t !== 'obligation-b1') }
   if (stage === 'start') return home
-  const lesson = { ...home, pos: { x: 3, y: 5 }, opened: add(home.opened, [B1_04_WELCOME]) }
+  const lesson = { ...home, pos: { x: 4, y: 5 }, opened: add(home.opened, [B1_04_WELCOME]) }
   if (stage === 'lesson') return lesson
   const fine = { ...lesson, opened: add(lesson.opened, [B1_04_RULES]), seenLesson: add(lesson.seenLesson, ['obligation-b1']) as GameState['seenLesson'] }
   if (stage === 'fineprint') return fine
@@ -832,7 +832,7 @@ export function b1Mission4(s: GameState, stage: 'start' | 'lesson' | 'fineprint'
     defeated: phr.defeated.filter((d) => d !== B1_04_BOSS),
   }
   if (stage === 'boss') return boss
-  const maya = { ...boss, pos: { x: 3, y: 5 }, defeated: add(boss.defeated, [B1_04_BOSS]) }
+  const maya = { ...boss, pos: { x: 4, y: 5 }, defeated: add(boss.defeated, [B1_04_BOSS]) }
   if (stage === 'maya') return maya
   return { ...maya, pos: { x: 5, y: 4 }, opened: add(maya.opened, [B1_04_FRIEND]) }
 }
