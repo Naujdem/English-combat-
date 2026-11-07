@@ -396,6 +396,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     interest: true,
     after: 'b1-02-landed',
   },
+  // Bloque B: el empleado de Objetos Perdidos (Lost Luggage). Aparece al vencer a la viajera 2 (after admite un enemigo vencido)
+  'b1-02-clerk': {
+    name: 'The clerk',
+    look: { shirt: '#5d8fd4', hair: '#3b2a1a', skin: '#e0ac69', gender: 'male' },
+    after: 'b1-02-trav2',
+    doneLine: { text: 'Welcome to Lumen Bay! Have a nice stay.', es: '¡Bienvenido a Lumen Bay! Disfruta tu estadía.' },
+  },
   'b1-02-leo': {
     name: 'Leo',
     look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
