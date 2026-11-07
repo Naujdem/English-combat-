@@ -9,7 +9,7 @@ import { btn, btnGhost, btnPrimary, Panel } from './ui'
  * y tocar en los estantes lo que el robot describe con preposiciones. Los errores no quitan vida: el robot no entiende
  * ("Sorry? I don't understand.") o explica qué tocaste.
  */
-type ThingId = 'green' | 'backpack' | 'box' | 'suitcase' | 'red' | 'small' | 'map'
+export type ThingId = 'green' | 'backpack' | 'box' | 'suitcase' | 'red' | 'small' | 'map'
 
 const THINGS: Record<ThingId, { en: string; es: string; whereEs: string }> = {
   green: { en: 'green suitcase', es: 'la maleta verde', whereEs: 'en el estante de arriba, a la izquierda' },
@@ -21,11 +21,11 @@ const THINGS: Record<ThingId, { en: string; es: string; whereEs: string }> = {
   map: { en: 'old map', es: 'el mapa viejo', whereEs: 'debajo de la banca, cerca de la puerta' },
 }
 
-type Round =
+export type LuggageRound =
   | { mode: 'choose'; bot: string; es: string; options: string[]; answer: number; tip: string; ok: { text: string; es: string } }
   | { mode: 'tap'; bot: string; es: string; target: ThingId; ok: { text: string; es: string } }
 
-const ROUNDS: Round[] = [
+const A2_ROUNDS: LuggageRound[] = [
   {
     mode: 'choose',
     bot: 'Good morning. This is Lost and Found. How can I help you?',
@@ -69,7 +69,23 @@ const ROUNDS: Round[] = [
   },
 ]
 
-export function LostLuggage({ onClose }: { onClose: (done: boolean) => void }) {
+/**
+ * Contenido de otra oficina de objetos perdidos (B1-02, aeropuerto de Lumen Bay: data/b1Luggage.ts).
+ * Los estantes y los objetos (THINGS) son los mismos; cambian las rondas, el título, la despedida y quién atiende.
+ * Sin `content`, el juego es el de A2-11 (estación 2056, robot).
+ */
+export type LuggageContent = {
+  title: string
+  rounds: LuggageRound[]
+  finish: { text: string; es: string }
+  clerk: 'robot' | 'human'
+}
+
+const A2_FINISH = { text: 'Have a nice trip, and take care of your bag!', es: '¡Buen viaje, y cuida tu mochila!' }
+
+export function LostLuggage({ onClose, content }: { onClose: (done: boolean) => void; content?: LuggageContent }) {
+  const ROUNDS = content?.rounds ?? A2_ROUNDS
+  const human = content?.clerk === 'human'
   const [r, setR] = useState(0)
   const [solved, setSolved] = useState(false)
   const [tip, setTip] = useState<string | null>(null)
@@ -79,7 +95,7 @@ export function LostLuggage({ onClose }: { onClose: (done: boolean) => void }) {
   const round = ROUNDS[Math.min(r, ROUNDS.length - 1)]
 
   const line = done
-    ? { text: 'Have a nice trip, and take care of your bag!', es: '¡Buen viaje, y cuida tu mochila!' }
+    ? (content?.finish ?? A2_FINISH)
     : solved
       ? round.ok
       : { text: round.bot, es: round.es }
@@ -115,23 +131,37 @@ export function LostLuggage({ onClose }: { onClose: (done: boolean) => void }) {
   return (
     <Panel>
       <div className="mb-2 flex items-center justify-between">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gold">Estación 2056 · Lost Luggage</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-gold">{content?.title ?? 'Estación 2056 · Lost Luggage'}</p>
         <button className={btnGhost} onClick={() => onClose(false)}>Salir</button>
       </div>
 
       <svg viewBox="0 0 320 200" className="w-full rounded-xl border-2 border-line" role="img" aria-label="Oficina de objetos perdidos con estantes de maletas">
         <rect width="320" height="150" fill="#dce9f4" />
         <rect y="150" width="320" height="50" fill="#b8c8d6" />
-        <text x="58" y="20" textAnchor="middle" fontSize="10" fontWeight="700" fill="#1f3c58" fontFamily="Fredoka, Nunito, system-ui, sans-serif">LOST &amp; FOUND</text>
+        <text x="58" y="20" textAnchor="middle" fontSize="10" fontWeight="700" fill="#1f3c58" fontFamily="Fredoka, Nunito, system-ui, sans-serif">{human ? 'LOST PROPERTY' : 'LOST & FOUND'}</text>
 
-        {/* Robot detrás del mostrador */}
-        <rect x="40" y="34" width="36" height="28" rx="8" fill="#9aa6b2" stroke="#5a6672" strokeWidth="2" />
-        <rect x="46" y="42" width="24" height="9" rx="4" fill="#2f8f9d" />
-        <circle cx="53" cy="46.5" r="2" fill="#cff6ff" />
-        <circle cx="63" cy="46.5" r="2" fill="#cff6ff" />
-        <line x1="58" y1="34" x2="58" y2="26" stroke="#5a6672" strokeWidth="2" />
-        <circle cx="58" cy="25" r="3" fill="#e0a526" />
-        <rect x="44" y="62" width="28" height="34" rx="5" fill="#b8c4d0" stroke="#5a6672" strokeWidth="2" />
+        {human ? (
+          <>
+            {/* Empleado detrás del mostrador (B1): cabeza circular y cuerpo con chaleco, con los colores del mostrador */}
+            <circle cx="58" cy="46" r="13" fill="#e0ac69" stroke="#4a77b5" strokeWidth="2" />
+            <circle cx="53" cy="45" r="1.8" fill="#1f3c58" />
+            <circle cx="63" cy="45" r="1.8" fill="#1f3c58" />
+            <rect x="42" y="60" width="32" height="36" rx="6" fill="#f4efe4" stroke="#4a77b5" strokeWidth="2" />
+            <path d="M42 66 h11 l5 30 h-16 z" fill="#5d8fd4" />
+            <path d="M74 66 h-11 l-5 30 h16 z" fill="#5d8fd4" />
+          </>
+        ) : (
+          <>
+            {/* Robot detrás del mostrador */}
+            <rect x="40" y="34" width="36" height="28" rx="8" fill="#9aa6b2" stroke="#5a6672" strokeWidth="2" />
+            <rect x="46" y="42" width="24" height="9" rx="4" fill="#2f8f9d" />
+            <circle cx="53" cy="46.5" r="2" fill="#cff6ff" />
+            <circle cx="63" cy="46.5" r="2" fill="#cff6ff" />
+            <line x1="58" y1="34" x2="58" y2="26" stroke="#5a6672" strokeWidth="2" />
+            <circle cx="58" cy="25" r="3" fill="#e0a526" />
+            <rect x="44" y="62" width="28" height="34" rx="5" fill="#b8c4d0" stroke="#5a6672" strokeWidth="2" />
+          </>
+        )}
         {/* Mostrador */}
         <rect x="10" y="96" width="96" height="54" rx="3" fill="#5d8fd4" />
         <rect x="10" y="96" width="96" height="6" fill="#4a77b5" />
@@ -182,7 +212,7 @@ export function LostLuggage({ onClose }: { onClose: (done: boolean) => void }) {
       </svg>
 
       <div className="mt-3 flex items-center justify-between">
-        <p className="font-display text-lg text-gold">Lost &amp; Found Bot</p>
+        <p className="font-display text-lg text-gold">{human ? 'The clerk' : 'Lost & Found Bot'}</p>
         <SpeakButton text={line.text} size="sm" auto />
       </div>
       <p key={`${r}-${solved}`} className="anim-fade-in text-[17px] leading-relaxed">{line.text}</p>
@@ -195,7 +225,7 @@ export function LostLuggage({ onClose }: { onClose: (done: boolean) => void }) {
           ))}
         </div>
       )}
-      {canTap && <p className="mt-2 text-sm text-paper/70">Toca en el dibujo lo que describe el robot.</p>}
+      {canTap && <p className="mt-2 text-sm text-paper/70">Toca en el dibujo lo que describe {human ? 'el empleado' : 'el robot'}.</p>}
       {tip && <p className="anim-fade-in mt-3 rounded-lg bg-danger/15 px-3 py-2 text-sm text-[#f3b0b0]">Casi. {tip}</p>}
       {solved && round.mode === 'choose' && (
         <div className="anim-fade-in mt-3 flex items-center gap-2 rounded-lg bg-hp/15 px-3 py-2">
@@ -203,12 +233,12 @@ export function LostLuggage({ onClose }: { onClose: (done: boolean) => void }) {
           <SpeakButton text={round.options[round.answer]} size="sm" />
         </div>
       )}
-      {done && <p className="anim-fade-in mt-3 rounded-lg bg-hp/15 px-3 py-2 text-sm text-hp">Recuperaste tu mochila… y el viejo mapa de papel de la oficial Rosa.</p>}
+      {done && !content && <p className="anim-fade-in mt-3 rounded-lg bg-hp/15 px-3 py-2 text-sm text-hp">Recuperaste tu mochila… y el viejo mapa de papel de la oficial Rosa.</p>}
 
       <div className="mt-4 flex items-center justify-between gap-2">
         <button className={btnGhost} onClick={() => setShowEs((v) => !v)}>{showEs ? 'Ocultar' : 'Traducir'}</button>
         {done ? (
-          <button className={btnPrimary} onClick={() => onClose(true)} autoFocus>Tomar mi mochila</button>
+          <button className={btnPrimary} onClick={() => onClose(true)} autoFocus>{content ? 'Terminar' : 'Tomar mi mochila'}</button>
         ) : solved ? (
           <button className={btnPrimary} onClick={next} autoFocus>Siguiente</button>
         ) : null}

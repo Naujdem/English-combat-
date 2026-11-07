@@ -186,7 +186,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         // Los enemigos vencidos se quedan en el mapa como estudiantes normales
         if (e.type === 'chest') return !state.opened.includes(e.id)
         // Personajes que solo aparecen después de cierto momento de la historia
-        if (e.type === 'npc' && NPCS[e.id]?.after && !state.opened.includes(NPCS[e.id].after!)) return false
+        if (e.type === 'npc' && NPCS[e.id]?.after && !state.opened.includes(NPCS[e.id].after!) && !state.defeated.includes(NPCS[e.id].after!)) return false
         // Personajes que se van en cierto momento (el mesero del café se convierte en el eco)
         if (e.type === 'npc' && NPCS[e.id]?.until && state.opened.includes(NPCS[e.id].until!)) return false
         // `after` puede ser una tarea cumplida o un enemigo ya vencido (el desconocido de A2-13 sale tras The Silence)
@@ -1127,7 +1127,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               const who = npcOf(t.npc ?? task)
               return <MemoryChest name={who.name} look={who.look} title={t.memory.title} intro={t.memory.intro} pairs={t.memory.pairs} onClose={finish} />
             }
-            if (t.activity === 'luggage') return <LostLuggage onClose={finish} />
+            if (t.activity === 'luggage') return <LostLuggage content={t.luggage} onClose={finish} />
             if (t.activity === 'enough') return <EnoughForEveryone friend={state.interest.name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'fitting') return <FittingRoom friend={state.interest.name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'route') return <RouteChallenge name={npcOf(t.npc ?? task).name} onClose={finish} />

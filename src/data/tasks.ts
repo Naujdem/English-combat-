@@ -10,6 +10,8 @@ import type { TextCommandRoom } from '../components/TextCommand'
 import type { MemoryPair } from '../components/MemoryChest'
 import type { InscriptionRoom } from '../game/inscriptions'
 import { INS_DEMO_DOOR } from './b1InscriptionsDemo'
+import type { LuggageContent } from '../components/LostLuggage'
+import { B1_LUGGAGE } from './b1Luggage'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -85,6 +87,8 @@ export type NpcTask = {
   exam?: 'a2'
   /** Dialogue Under Pressure: segundos para cada elección de la charla */
   pressure?: number
+  /** Para activity 'luggage': otro contenido de Lost Luggage (B1-02). Sin el campo, el de A2-11 */
+  luggage?: LuggageContent
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
   vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
@@ -4224,6 +4228,22 @@ NPC_TASKS['b1-02-practice'] = {
     es: '¡Bien! Ahora veamos qué pasa en la zona de equipaje...',
     sub: 'Lección y práctica hechas. (Si acertaste todas, ganaste un escudo).',
     say: "Good! Now, let's see what's going on at the baggage claim...",
+  },
+}
+
+// B1-02 · bloque B (data/b1Airport.ts): el empleado de Objetos Perdidos (aparece al vencer a la viajera 2) → Lost Luggage.
+// Al terminar aparece Jack the Rival junto a las puertas de la derecha
+NPC_TASKS['b1-02-luggage'] = {
+  npc: 'b1-02-clerk',
+  done: 'b1-02-luggage',
+  activity: 'luggage',
+  luggage: B1_LUGGAGE,
+  steps: [],
+  reward: {
+    text: 'The clerk: "Welcome to Lumen Bay! Have a nice stay."',
+    es: '¡Bienvenido a Lumen Bay! Disfruta tu estadía.',
+    sub: 'Recuperaste tu maleta y la de tu amigo. Alguien te espera junto a las puertas de la derecha.',
+    say: 'Welcome to Lumen Bay! Have a nice stay.',
   },
 }
 

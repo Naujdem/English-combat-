@@ -1,6 +1,7 @@
 import type { DialogLine, GameState, Interest, SceneDef, Zone } from '../game/types'
 import { closeId } from './b1World'
 import { B1_02_PLANE_CHATS } from './friends'
+import { B1_02_CLERK, B1_02_JACK, B1_02_LUGGAGE, B1_02_TRAV1, B1_02_TRAV2 } from './b1Airport'
 
 /**
  * B1-02 · A New City (presente). Bloque A: el avión, el aeropuerto y la lección de Leo.
@@ -26,7 +27,7 @@ export const B1_02_CLOSE = closeId(2)
 
 /**
  * Leyenda (Tiles.tsx, sin dibujos nuevos): # pared · s asientos · d puerta · h letrero · v pantalla (tablero de vuelos)
- * C mostrador (cinta de equipaje) · O escritorio (mostrador de check-in) · p planta · K mesa · F archivador · = calle.
+ * C mostrador (cinta de equipaje; en 15,5 el mostrador de Objetos Perdidos) · O escritorio (mostrador de check-in) · p planta · K mesa · F archivador · = calle.
  * Avión x 1-4, y 1-3 (puerta de salida en 5,2). Aeropuerto x 6-15. Cerrado (x 16): tienda (16,1), oficina (16,4), calle (16,7).
  */
 const MAP = [
@@ -35,7 +36,7 @@ const MAP = [
   '#....d..........#......#',
   '#ss.s#..........########',
   '######..CCCCC...d..O..F#',
-  '######..........#.....p#',
+  '######.........C#.....p#',
   '######.p....OO..########',
   '######..........d=======',
   '########################',
@@ -68,6 +69,11 @@ export const B1_02_LUMEN: SceneDef = {
     { type: 'npc', id: B1_02_INTEREST_PLANE, x: 1, y: 2 },
     { type: 'npc', id: B1_02_INTEREST, x: 7, y: 2 },
     { type: 'npc', id: B1_02_LEO, x: 10, y: 5 },
+    // Bloque B (data/b1Airport.ts): cada paso aparece cuando el anterior está hecho
+    { type: 'enemy', id: B1_02_TRAV1, x: 13, y: 4, after: B1_02_PRACTICE },
+    { type: 'enemy', id: B1_02_TRAV2, x: 11, y: 6, after: B1_02_TRAV1 },
+    { type: 'npc', id: B1_02_CLERK, x: 15, y: 6 },
+    { type: 'enemy', id: B1_02_JACK, x: 15, y: 3, after: B1_02_LUGGAGE },
   ],
   labels: [
     { text: 'Avión', x: 3, y: 3 },
@@ -89,12 +95,13 @@ export const B1_02_LUMEN: SceneDef = {
     '12,4': BELT,
     '12,6': DESK,
     '13,6': DESK,
+    '15,5': { text: 'The Lost Property desk.', sub: 'El mostrador de Objetos Perdidos.', say: 'Lost Property.' },
     '6,0': { text: 'A sign: "Welcome to Lumen Bay".', sub: 'Un letrero: "Bienvenidos a Lumen Bay".', say: 'Welcome to Lumen Bay.' },
   },
   // La puerta del avión se abre al aterrizar; lo de la derecha lo llenan los bloques 2-B y 2-C
   locked: (x, y, s) => {
     if (x === 5 && y === 2 && !s.opened.includes(B1_02_LANDED)) return NOT_YET('El avión todavía no ha aterrizado.')
-    if (x === 16 && y === 1) return NOT_YET('La tienda de celulares.')
+    if (x === 16 && y === 1) return NOT_YET(s.defeated.includes(B1_02_JACK) ? 'Se abre en el siguiente bloque.' : 'La tienda de celulares.')
     if (x === 16 && y === 4) return NOT_YET('La oficina del intercambio.')
     if (x === 16 && y === 7) return NOT_YET('La calle hacia la residencia.')
     return null
@@ -104,6 +111,9 @@ export const B1_02_LUMEN: SceneDef = {
     { label: 'B1-02 · A New City', done: s.opened.includes(B1_02_CLOSE) },
     { label: 'Charla en el avión', done: s.opened.includes(B1_02_LANDED) },
     { label: 'Lección y práctica de Leo, junto a la cinta', done: s.opened.includes(B1_02_PRACTICE) },
+    { label: 'Viajeros perdidos', done: s.defeated.includes(B1_02_TRAV1) && s.defeated.includes(B1_02_TRAV2) },
+    { label: 'Lost Luggage', done: s.opened.includes(B1_02_LUGGAGE) },
+    { label: 'Jack the Rival', done: s.defeated.includes(B1_02_JACK) },
   ],
   intro: {
     first: 'Presente. Vas en el avión hacia Lumen Bay.',
