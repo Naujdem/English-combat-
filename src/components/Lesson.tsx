@@ -8,6 +8,8 @@ import { FRIENDS } from '../data/friends'
 import { SpeakButton } from './SpeakButton'
 import { Tappable } from './Words'
 import { GrammarPattern, GrammarTable, RoleSentence } from './Grammar'
+import { NotebookPage, NotebookTable, NotebookText, notebookSay } from './LNotebook'
+import { L_INK } from './Diary'
 
 export const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
@@ -83,6 +85,7 @@ export function Lesson({
   title,
   onDone,
   phone,
+  notebook,
 }: {
   state: GameState
   steps: LessonStep[]
@@ -90,6 +93,8 @@ export function Lesson({
   onDone: (completed: boolean) => void
   /** B1: por mensajes en el teléfono. Es tu mensaje (a la derecha); la pizarra son las burbujas de Leo */
   phone?: { mine: string }
+  /** B1 (recuerdos 3, 5 y 7): la lección es una página del Cuaderno de L con ese número (components/LNotebook.tsx) */
+  notebook?: number
 }) {
   // La muletilla de Leo: empieza cada lección con "Hi, hi!"
   const steps = useMemo(() => {
@@ -127,7 +132,7 @@ export function Lesson({
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 px-4 py-6">
       {title && <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{title}</p>}
-      {phone ? (
+      {notebook ? null : phone ? (
         <PhoneStage board={board} mine={phone.mine} />
       ) : (
         <ClassroomStage board={board}>
@@ -144,6 +149,54 @@ export function Lesson({
 
       {s.who === 'board' && s.topic && <GrammarPattern topic={s.topic} sentence={text} compact />}
 
+      {notebook ? (
+        // Cuaderno de L: la página (sin retrato). El audio lo lee la voz neutral, con un lápiz
+        <NotebookPage page={notebook}>
+          <div key={i} className="anim-fade-in" style={{ transform: `rotate(${i % 2 ? 0.4 : -0.4}deg)` }}>
+            {text && (
+              <div className="flex items-start gap-2">
+                <p className="flex-1 text-[18px] leading-relaxed">
+                  <NotebookText text={text} />
+                </p>
+                {notebookSay(text) && <SpeakButton text={notebookSay(text)} size="sm" auto icon="pencil" />}
+              </div>
+            )}
+            {!hideEs && s.es && <p className="mt-1 text-sm opacity-70">{s.es}</p>}
+            {s.table && <NotebookTable table={s.table} />}
+          </div>
+          {waiting && (
+            <div className="mt-3 grid gap-2">
+              {mixed(s.choice!.options).map(([o, k]) => (
+                <button key={k} className="rounded-lg border-2 border-dashed px-3 py-2 text-left text-[16px] transition active:scale-[0.98]" style={{ borderColor: `${L_INK}66` }} onClick={() => choose(k)}>
+                  {o}
+                </button>
+              ))}
+            </div>
+          )}
+          {tip && <p className="anim-fade-in mt-3 rounded-lg bg-[#c0605a]/15 px-3 py-2 text-sm">Casi. {tip}</p>}
+          {s.choice && solved && (
+            <div className="anim-fade-in mt-2 flex items-center gap-2">
+              <p className="text-sm font-semibold">✓ {s.choice.options[s.choice.answer]}</p>
+            </div>
+          )}
+          <div className="mt-4 flex items-center justify-between gap-2" style={{ fontFamily: 'inherit' }}>
+            <div className="flex gap-1">
+              {s.es && (
+                <button className="rounded-lg px-2 py-1 text-sm underline underline-offset-4" onClick={() => setHideEs((v) => !v)}>{hideEs ? 'Traducir' : 'Ocultar'}</button>
+              )}
+              <button className="rounded-lg px-2 py-1 text-sm underline underline-offset-4" onClick={() => onDone(false)}>Saltar guía</button>
+            </div>
+            {!waiting && (
+              <button className={btnPrimary} onClick={next} autoFocus>
+                {last ? 'Listo' : 'Siguiente'}
+              </button>
+            )}
+          </div>
+          <div className="mt-3 h-1 w-full overflow-hidden rounded-full" style={{ background: `${L_INK}22` }} aria-hidden="true">
+            <div className="h-full rounded-full transition-[width] duration-300" style={{ background: L_INK, width: `${((i + 1) / steps.length) * 100}%` }} />
+          </div>
+        </NotebookPage>
+      ) : (
       <Panel>
         {s.who === 'leo' && (
           <div className="flex items-center justify-between">
@@ -196,6 +249,7 @@ export function Lesson({
           <div className="h-full rounded-full bg-gold transition-[width] duration-300" style={{ width: `${((i + 1) / steps.length) * 100}%` }} />
         </div>
       </Panel>
+      )}
     </div>
   )
 }

@@ -15,6 +15,9 @@ import { B1_LUGGAGE } from './b1Luggage'
 import type { RouteContent } from '../components/RouteChallenge'
 import { B1_ROUTE } from './b1Route'
 import { canRecognize } from '../game/mic'
+import type { ScriptLine } from './b1Accident'
+import { B1_03_DOCTOR_SCRIPT } from './b1Words'
+import { B1_03_PRACTICE1_IDS } from './questions-b1-03'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -38,7 +41,7 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -83,6 +86,12 @@ export type NpcTask = {
   recover?: TopicId[]
   /** B1: la lección de Leo se ve por mensajes en el teléfono (no en el salón). mine = tu mensaje, a la derecha */
   phoneLesson?: { mine: string }
+  /** B1 (recuerdos 3, 5 y 7): la lección es una página del Cuaderno de L con ese número (components/LNotebook.tsx) */
+  notebookPage?: number
+  /** Para activity 'script' (B1, recuerdos): secuencia fija sin elecciones (MemoryScript); 'friend' = el personaje de la tarea */
+  script?: ScriptLine[]
+  /** Para activity 'practice': lo que narra L al terminar la práctica, antes de la recompensa (se ve en una página aparte) */
+  outro?: { text: string; es: string }
   /** B1: al terminar la tarea se sale del recuerdo con ese número (game/memory.ts, exitMemory). closeMemory: además se guarda el cierre de la misión */
   exitMemory?: number
   closeMemory?: boolean
@@ -4372,6 +4381,39 @@ NPC_TASKS['b1-demo-tablet'] = {
 }
 
 /** La tarea pendiente de un personaje: la primera que no ha terminado. blocked = le falta su requisito */
+// ── B1-03 · Words on a Screen, bloque A (recuerdo 3; escena en data/b1Words.ts) ──
+// La médica, junto a la cama: secuencia fija (L no habla, solo "…"). Al terminar se abre el camino al apartamento
+NPC_TASKS['b1-03-doctor'] = {
+  done: 'b1-03-doctor',
+  activity: 'script',
+  script: B1_03_DOCTOR_SCRIPT,
+  steps: [],
+  reward: {
+    text: '(I go home. On the desk there is a notebook.)',
+    es: '(Vuelvo a mi apartamento. En el escritorio hay un cuaderno.)',
+    sub: 'El camino a tu apartamento está abierto. Lee el cuaderno del escritorio.',
+  },
+}
+
+// El cuaderno del escritorio: página 1 del Cuaderno de L (lección 'informal-messages') + práctica. Si todas están bien, escudo.
+// PROVISIONAL: lo reemplaza el bloque 3-B. Al terminar sale del recuerdo SIN cerrar la misión (no guarda closeId(3)).
+NPC_TASKS['b1-03-notebook'] = {
+  npc: 'b1-03-notebook',
+  done: 'b1-03-notebook',
+  lesson: 'informal-messages',
+  notebookPage: 1,
+  activity: 'practice',
+  practice: 'informal-messages',
+  practiceIds: B1_03_PRACTICE1_IDS,
+  practiceShield: true,
+  requires: { id: 'b1-03-doctor', text: 'A notebook. The first page is empty.', es: 'Un cuaderno. La primera página está vacía.', sub: 'Primero habla con la médica.' },
+  // PROVISIONAL: lo reemplaza el bloque 3-B
+  outro: { text: '(Tomorrow, the messages begin.)', es: '(Mañana empiezan los mensajes.)' },
+  exitMemory: 3,
+  steps: [],
+  reward: { text: 'Memory 3 (part 1)', sub: 'Continuará.' },
+}
+
 export function taskOf(npcId: string, opened: string[]): { id: string; task: NpcTask; blocked: boolean } | null {
   for (const [id, t] of Object.entries(NPC_TASKS)) {
     if ((t.npc ?? id) !== npcId || opened.includes(t.done)) continue

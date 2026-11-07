@@ -756,6 +756,18 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#5d8fd4', hair: '#6b4a2e', skin: '#f1c27d', gender: 'female' },
     doneLine: { text: 'Take care, and have a nice day!', es: '¡Cuídate y que tengas un buen día!' },
   },
+  // ── B1-03 · Words on a Screen (recuerdo 3, data/b1Words.ts): la médica (cara borrosa, sin nombre propio) y el cuaderno del escritorio ──
+  'b1-03-doctor': {
+    name: 'The doctor',
+    look: { shirt: '#eef3f6', hair: '#4a3a2a', skin: '#d7a77a', gender: 'female' },
+    doneLine: { text: "Use your phone to communicate. Text, message, reply. It's not the end of the world.", es: 'Usa tu teléfono para comunicarte. Escribe, manda mensajes, responde. No es el fin del mundo.' },
+  },
+  // Se dibuja como un cuaderno abierto (components/LNotebook.tsx, NotebookIcon)
+  'b1-03-notebook': {
+    name: 'Cuaderno de L',
+    look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
+    doneLine: { text: '(Tomorrow, the messages begin.)', es: '(Mañana empiezan los mensajes.)' },
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

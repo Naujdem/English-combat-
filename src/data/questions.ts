@@ -40,6 +40,7 @@ import { A2_DINNER_QUESTIONS } from './questions-a2-s5'
 import { A2_FRIENDS_QUESTIONS } from './questions-a2-friends'
 import { B1_01_QUESTIONS } from './questions-b1-01'
 import { B1_02_QUESTIONS } from './questions-b1-02'
+import { B1_03_QUESTIONS } from './questions-b1-03'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -399,6 +400,7 @@ export const QUESTIONS: Question[] = [
   // ── B1 ──
   ...B1_01_QUESTIONS,
   ...B1_02_QUESTIONS,
+  ...B1_03_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -1072,6 +1074,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       "Cita fija con hora o día: presente continuo (am / is / are + -ing) → We're meeting Ms. Haddad at nine.",
       "Decisión en el momento: will + verbo base → The bus is late. I'll take a taxi.",
       'Predicción: will + verbo base → It will be a great week. Con algo que se ve venir: is going to → Look at the sky! It is going to rain.',
+    ],
+  },
+  'informal-messages': {
+    name: 'Mensajes informales y formales',
+    level: 'B1',
+    lesson: [
+      'Mensaje rápido (con amigos): se quitan las palabras que no hacen falta → I have got it. = Got it. · That sounds good to me. = Sounds good.',
+      'Verbos para mensajes: text, message, reply, ping → Text me later. · Please reply soon. · Ping me when you arrive.',
+      'Con un jefe o un director: completo y cortés → Thank you. I have received your message. · Understood. I will send it by Friday.',
     ],
   },
 }

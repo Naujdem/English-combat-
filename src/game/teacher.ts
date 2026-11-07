@@ -32,6 +32,7 @@ import { A2_RETURN, A2_13_CLOSE } from '../data/a2Return'
 import { B1_HOME } from '../data/b1Home'
 import { B1_OPENING, closeId } from '../data/b1World'
 import { B1_02_LANDED, B1_02_LUMEN, B1_02_PRACTICE } from '../data/b1NewCity'
+import { B1_03_DOCTOR, B1_03_HOSPITAL } from '../data/b1Words'
 import { B1_02_BOSS, B1_02_JACK, B1_02_LUGGAGE, B1_02_TRAV1, B1_02_TRAV2 } from '../data/b1Airport'
 import { B1_02_AGENDA, B1_02_FUTURES, B1_02_ROUTE, B1_02_SHOP } from '../data/b1Office'
 import { B1_01_ALARM, B1_01_ECHO, B1_01_MESSAGE, B1_01_PRACTICE, B1_01_SCHOOL, B1_01_TALKED } from '../data/b1Accident'
@@ -771,6 +772,18 @@ export function b1Mission2(s: GameState, stage: 'plane' | 'airport' | 'trav1' | 
   const boss = { ...route, pos: { x: 21, y: 7 }, opened: add(route.opened, [B1_02_ROUTE]) }
   if (stage === 'boss') return boss
   return { ...boss, pos: { x: 18, y: 7 }, defeated: add(boss.defeated, [B1_02_BOSS]) }
+}
+
+/**
+ * Atajos de la misión B1-3 (Words on a Screen, recuerdo) para el panel del profe. Parten de "B1: abrir el nodo 3".
+ *  memory: entra al recuerdo (habitación del hospital) · notebook: ya hablaste con la médica (junto al cuaderno del apartamento)
+ */
+export function b1Mission3(s: GameState, stage: 'memory' | 'notebook'): GameState {
+  const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2)])
+  // La lección del cuaderno vuelve a salir
+  const present = { ...b, sceneId: B1_02_LUMEN.id, pos: { x: 18, y: 7 }, seenLesson: b.seenLesson.filter((t) => t !== 'informal-messages') }
+  const m = enterMemory(present, 3, B1_03_HOSPITAL.id, stage === 'memory' ? B1_03_HOSPITAL.start : { x: 15, y: 3 })
+  return stage === 'memory' ? m : { ...m, opened: add(m.opened, [B1_03_DOCTOR]) }
 }
 
 PRESETS.push(
