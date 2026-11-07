@@ -4441,14 +4441,14 @@ NPC_TASKS['b1-03-texts'] = {
   reward: {
     text: 'Three conversations, three different voices. And I never said a word.',
     es: 'Tres conversaciones, tres voces distintas. Y nunca dije una palabra.',
-    sub: 'Text Only terminado. Hay otro cuaderno junto a la cama.',
+    sub: 'Text Only terminado. El cuaderno del escritorio tiene una página nueva.',
   },
 }
 
-// El cuaderno junto a la cama (aparece al terminar Text Only): página 2 (lección 'present-perfect-cont') + práctica.
+// El mismo cuaderno del escritorio, al terminar Text Only: página 2 (lección 'present-perfect-cont') + práctica.
 // Si todas están bien, escudo. Al terminar aparece el primer Unread Message, junto al teléfono (data/b1Words.ts)
 NPC_TASKS['b1-03-notebook2'] = {
-  npc: 'b1-03-notebook2',
+  npc: 'b1-03-notebook',
   done: 'b1-03-notebook2',
   lesson: 'present-perfect-cont',
   notebookPage: 2,
@@ -4456,6 +4456,7 @@ NPC_TASKS['b1-03-notebook2'] = {
   practice: 'present-perfect-cont',
   practiceIds: B1_03_PRACTICE2_IDS,
   practiceShield: true,
+  requires: { id: 'b1-03-texts', text: '(Tomorrow, the messages begin.)', es: '(Mañana empiezan los mensajes.)', sub: 'Primero responde los mensajes del teléfono.' },
   steps: [],
   reward: {
     text: '(The messages keep coming. Something is wrong with them.)',
@@ -4465,11 +4466,12 @@ NPC_TASKS['b1-03-notebook2'] = {
   },
 }
 
-// ── B1-03 · bloque C: cierre (el teléfono, aparece al vencer a The Static). L le responde a su amiga por mensaje.
+// ── B1-03 · bloque C: cierre (el mismo teléfono de Text Only vuelve a vibrar al vencer a The Static). L le responde a su amiga por mensaje.
 // Recupera los dos temas y sale del recuerdo con el cierre: exitMemory 3 + closeMemory → closeId(3) (abre el nodo 4)
 NPC_TASKS['b1-03-close'] = {
-  npc: 'b1-03-close',
+  npc: 'b1-03-phone',
   done: 'b1-03-close',
+  requires: { id: 'b1-03-static', text: 'Three conversations, three different voices. And I never said a word.', es: 'Tres conversaciones, tres voces distintas. Y nunca dije una palabra.', sub: 'Primero calla el ruido: vence a The Static.' },
   activity: 'textonly',
   textOnly: B1_03_CLOSE_CHAT,
   recover: ['informal-messages', 'present-perfect-cont'],

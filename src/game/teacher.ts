@@ -786,7 +786,7 @@ export function b1Mission3(s: GameState, stage: 'memory' | 'notebook' | 'texts' 
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2)])
   // Las lecciones del cuaderno vuelven a salir
   const present = { ...b, sceneId: B1_02_LUMEN.id, pos: { x: 18, y: 7 }, seenLesson: b.seenLesson.filter((t) => t !== 'informal-messages' && t !== 'present-perfect-cont') }
-  const pos = { memory: B1_03_HOSPITAL.start, notebook: { x: 15, y: 3 }, texts: { x: 17, y: 2 }, notebook2: { x: 15, y: 4 }, unread: { x: 17, y: 3 }, static: { x: 15, y: 2 }, close: { x: 17, y: 3 } }[stage]
+  const pos = { memory: B1_03_HOSPITAL.start, notebook: { x: 15, y: 3 }, texts: { x: 17, y: 2 }, notebook2: { x: 15, y: 3 }, unread: { x: 17, y: 3 }, static: { x: 15, y: 2 }, close: { x: 17, y: 3 } }[stage]
   const m = enterMemory(present, 3, B1_03_HOSPITAL.id, pos)
   const all = [B1_03_DOCTOR, B1_03_NOTEBOOK, B1_03_TEXTS, B1_03_NOTEBOOK2]
   const flags = { memory: [], notebook: [B1_03_DOCTOR], texts: [B1_03_DOCTOR, B1_03_NOTEBOOK], notebook2: [B1_03_DOCTOR, B1_03_NOTEBOOK, B1_03_TEXTS], unread: all, static: all, close: all }[stage]
