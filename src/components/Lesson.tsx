@@ -107,6 +107,9 @@ export function Lesson({
   const [solved, setSolved] = useState(false)
   const [tip, setTip] = useState<string | null>(null)
   const s = steps[i]
+  // Guía de la lección: Leo, o Maya si la lección tiene pasos 'maya' (B1-04). Mismo tratamiento: retrato, nombre y voz
+  const guide = steps.some((x) => x.who === 'maya') ? { name: 'Maya', look: FRIENDS.maya.look, voice: 'female' as const } : { name: 'Leo', look: FRIENDS.leo.look, voice: 'male' as const }
+  const talks = s.who === 'leo' || s.who === 'maya'
   const last = i === steps.length - 1
   const waiting = !!s.choice && !solved
   // La pizarra conserva lo último escrito si el paso actual no trae nada nuevo
@@ -141,7 +144,7 @@ export function Lesson({
           </g>
           <g className="anim-appear">
             <g transform="translate(280 92) scale(-3 3)">
-              <SpriteBody look={FRIENDS.leo.look} />
+              <SpriteBody look={guide.look} />
             </g>
           </g>
         </ClassroomStage>
@@ -198,10 +201,10 @@ export function Lesson({
         </NotebookPage>
       ) : (
       <Panel>
-        {s.who === 'leo' && (
+        {talks && (
           <div className="flex items-center justify-between">
-            <p className="font-display text-lg text-gold">Leo</p>
-            <SpeakButton text={s.text} size="sm" auto voice="male" />
+            <p className="font-display text-lg text-gold">{guide.name}</p>
+            <SpeakButton text={s.text} size="sm" auto voice={guide.voice} />
           </div>
         )}
         {s.who === 'board' && <p className="text-xs font-semibold uppercase tracking-wide text-hp">Escribe en la pizarra</p>}
@@ -209,7 +212,7 @@ export function Lesson({
           key={i}
           className={`anim-fade-in leading-relaxed ${s.who === 'narrator' ? 'text-[17px] italic text-paper/85' : s.who === 'board' ? 'font-display text-[22px]' : 'text-[17px]'}`}
         >
-          {s.who === 'leo' ? <Tappable text={text} /> : text}
+          {talks ? <Tappable text={text} /> : text}
         </p>
         {!hideEs && s.es && <p className="mt-1 text-sm text-paper/60">{s.es}</p>}
         {s.table && <GrammarTable key={`t${i}`} table={s.table} />}
@@ -223,7 +226,7 @@ export function Lesson({
             ))}
           </div>
         )}
-        {tip && <p className="anim-fade-in mt-3 rounded-lg bg-danger/15 px-3 py-2 text-sm text-[#f3b0b0]">Leo: casi. {tip}</p>}
+        {tip && <p className="anim-fade-in mt-3 rounded-lg bg-danger/15 px-3 py-2 text-sm text-[#f3b0b0]">{guide.name}: casi. {tip}</p>}
         {s.choice && solved && (
           <div className="anim-fade-in mt-2 flex items-center gap-2">
             <p className="text-sm font-semibold text-hp">¡Bien hecho!</p>

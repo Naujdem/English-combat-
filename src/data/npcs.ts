@@ -418,6 +418,8 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'Leo',
     look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
     after: 'b1-02-agenda',
+    // Se va a la calle al terminar la práctica de la oficina (ahí aparece b1-02-leo-street)
+    until: 'b1-02-futures',
     doneLine: { text: "Great! Now let's get to the residence. Ms. Haddad gave us a map.", es: '¡Muy bien! Ahora vamos a la residencia. La Sra. Haddad nos dio un mapa.' },
   },
   'b1-02-leo-street': {
@@ -430,6 +432,8 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'Leo',
     look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
     after: 'b1-02-landed',
+    // Se va a la oficina cuando Ms. Haddad entrega la agenda (ahí aparece b1-02-leo-office)
+    until: 'b1-02-agenda',
     doneLine: { text: "Good! Now, let's see what's going on at the baggage claim...", es: '¡Bien! Ahora veamos qué pasa en la zona de equipaje...' },
   },
   // ── B1 · DEMO de Inscriptions: una tablilla de piedra (se dibuja como tablilla en Explore) ──
@@ -773,6 +777,59 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'My phone',
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
     doneLine: { text: '(Three dots appear on the screen. Then they disappear.)', es: '(Aparecen tres puntos en la pantalla. Luego desaparecen.)' },
+  },
+  // ── B1-04 · House Rules, bloque A (residencia de Lumen Bay, data/b1Residence.ts) ──
+  'b1-04-marisol': {
+    name: 'Marisol',
+    look: { shirt: '#b5653a', hair: '#5a3a22', skin: '#d7a77a', gender: 'female' },
+    doneLine: { text: "Go and read the rules with your friend. I'm here if you have questions.", es: 'Vayan a leer las reglas con su amiga. Estoy aquí si tienen preguntas.' },
+  },
+  // La gata gris de la residencia: se dibuja con AnimalSprite 'cat' (Explore.tsx). Solo examinable
+  'b1-04-moscu': {
+    name: 'Moscú',
+    look: { shirt: '#9a9a9a', hair: '#9a9a9a', skin: '#9a9a9a' },
+    doneLine: { text: 'Meow.', es: 'Miau.' },
+  },
+  // Maya (mismo look que FRIENDS.maya): aparece al terminar la bienvenida de Marisol
+  'b1-04-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    after: 'b1-04-welcome',
+    // Se va con el grupo al banco (allí está b1-04-maya-bank)
+    until: 'b1-04-ricardo',
+    doneLine: { text: "That's a long contract! OK, let's meet the neighbours.", es: '¡Qué contrato tan largo! Bueno, conozcamos a los vecinos.' },
+  },
+  // B1-04 · bloque B (data/b1Neighbours.ts): Jeison, el vecino amable del pasillo
+  'b1-04-jeison': {
+    name: 'Jeison',
+    look: { shirt: '#3b9d5d', hair: '#2b2b33', skin: '#c68642', gender: 'male' },
+    doneLine: { text: 'Good luck! My room is the first door, if you need anything.', es: '¡Suerte! Mi cuarto es la primera puerta, si necesitan algo.' },
+  },
+  // La caja de herramientas de tu cuarto: se dibuja con ToolboxIcon (components/ToolboxIcon.tsx)
+  'b1-04-toolbox': {
+    name: 'Toolbox',
+    look: { shirt: '#c0392b', hair: '#55606e', skin: '#c0392b' },
+    doneLine: { text: '(Warm, bright and online. Now you need to open a bank account.)', es: '(Cálido, iluminado y con internet. Ahora toca abrir una cuenta en el banco.)' },
+  },
+  // B1-04 · bloque D: Maya vuelve al vestíbulo al vencer a Mr. Fine Print (charla de amistad, quest 'b1-04-maya' en Explore.tsx)
+  'b1-04-maya-lobby': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    after: 'b1-04-boss',
+    doneLine: { text: 'Interesting! Rules are easier when everybody is kind.', es: '¡Interesante! Las reglas son más fáciles cuando todos son amables.' },
+  },
+  // B1-04 · bloque C: el banco (data/b1Residence.ts). Ricardo, el empleado
+  'b1-04-ricardo': {
+    name: 'Ricardo',
+    look: { shirt: '#f4f4f0', hair: '#2b2b33', skin: '#d7a77a', gender: 'male' },
+    doneLine: { text: 'Good. Now talk to your friend. She will explain a few words we use at the bank.', es: 'Bien. Ahora hablen con su amiga. Ella les explicará unas palabras que usamos en el banco.' },
+  },
+  // Maya en el banco (mismo look que FRIENDS.maya): aparece al terminar con Ricardo
+  'b1-04-maya-bank': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    after: 'b1-04-ricardo',
+    doneLine: { text: "(Your phone buzzes. A message from Marisol: 'Please come to the residence. Something strange is happening with the contracts!')", es: '(Tu teléfono vibra. Un mensaje de Marisol: «Por favor vengan a la residencia. ¡Algo extraño pasa con los contratos!»)' },
   },
 }
 

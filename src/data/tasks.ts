@@ -20,6 +20,10 @@ import { B1_03_DOCTOR_SCRIPT } from './b1Words'
 import { B1_03_PRACTICE1_IDS, B1_03_PRACTICE2_IDS } from './questions-b1-03'
 import type { TextOnlyContent } from '../components/TextOnly'
 import { B1_03_CLOSE_CHAT, B1_TEXT_ONLY } from './b1TextOnly'
+import type { FinePrintContent } from '../components/FinePrint'
+import { B1_04_FINE_PRINT } from './b1FinePrint'
+import { B1_04_BANK_IDS, B1_04_PRACTICE1_IDS, B1_04_PRACTICE2_IDS } from './questions-b1-04'
+import { B1_REPAIR } from './b1Repair'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -43,7 +47,9 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint'
+  /** Para activity 'fineprint' (The Fine Print, B1-04): las cláusulas del contrato que se sellan. Sin errores, escudo */
+  fineprint?: FinePrintContent
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -103,7 +109,12 @@ export type NpcTask = {
   pressure?: number
   /** Para activity 'route': otro contenido de Route Challenge (B1-02). Sin el campo, el de A2-11 */
   route?: RouteContent
-  /** Para activity 'practice': lo que dice el personaje antes de la práctica (charla corta, B1-02 tienda de celulares) */
+  /**
+   * Lo que se dice al terminar, antes del mensaje de recompensa (B1-04: Ricardo y el mensaje de Marisol).
+   * npc: quién lo dice (si no, el personaje de la tarea)
+   */
+  outro?: { npc?: string; steps: MiniStep[] }
+  /** Para activity 'practice' (o 'command'): lo que se dice antes del juego (charla corta, B1-02 tienda de celulares, B1-04 Repair Shop) */
   intro?: MiniStep[]
   /** Para activity 'luggage': otro contenido de Lost Luggage (B1-02). Sin el campo, el de A2-11 */
   luggage?: LuggageContent
@@ -4472,6 +4483,183 @@ NPC_TASKS['b1-03-close'] = {
     es: 'Recuerdo 3: Palabras en una pantalla',
     sub: 'Todos hablan. Él escribe. Despiertas en el presente con dolor de garganta.',
     say: 'Words on a screen.',
+  },
+}
+
+// ── B1-04 · House Rules, bloque A (residencia de Lumen Bay; escena en data/b1Residence.ts) ──
+// Marisol da la bienvenida (narrativa + una elección). Después aparece Maya en el vestíbulo
+NPC_TASKS['b1-04-welcome'] = {
+  npc: 'b1-04-marisol',
+  done: 'b1-04-welcome',
+  steps: [
+    { text: "Welcome to the residence! I'm Marisol, the landlady. This is Moscú. She lives here, too.", es: '¡Bienvenidos a la residencia! Soy Marisol, la dueña. Ella es Moscú. También vive aquí.' },
+    {
+      text: 'Here are your keys and your contract. Please read the rules carefully.',
+      es: 'Aquí están sus llaves y su contrato. Por favor, lean las reglas con atención.',
+      choice: { ask: '¿Qué le respondes?', options: ["Thank you, Marisol. We'll read it now.", 'Thank you, Marisol. We read will it now.', "Thanks, Marisol. We reading it."], answer: 0, tip: "Decisión en el momento: will + verbo base: We'll read it now." },
+    },
+  ],
+  reward: {
+    text: 'Marisol: "Go and read the rules with your friend. I\'m here if you have questions."',
+    es: 'Vayan a leer las reglas con su amiga. Estoy aquí si tienen preguntas.',
+    sub: 'Tienes las llaves y el contrato. Maya te espera en el vestíbulo.',
+    say: "Go and read the rules with your friend. I'm here if you have questions.",
+  },
+}
+
+// Maya en el vestíbulo: lección 'obligation-b1' (Maya la guía) + práctica guiada. Si todas están bien, escudo
+NPC_TASKS['b1-04-rules'] = {
+  npc: 'b1-04-maya',
+  done: 'b1-04-rules',
+  lesson: 'obligation-b1',
+  requires: { id: 'b1-04-welcome', text: 'Maya is waiting for you.', es: 'Maya te está esperando.', sub: 'Primero habla con Marisol.' },
+  activity: 'practice',
+  practice: 'obligation-b1',
+  practiceIds: B1_04_PRACTICE1_IDS,
+  practiceShield: true,
+  steps: [],
+  reward: {
+    text: 'Maya: "Good! Now let\'s look at the contract. Look for the rules."',
+    es: '¡Bien! Ahora miremos el contrato. Busquemos las reglas.',
+    sub: 'Lección y práctica hechas. (Si acertaste todas, ganaste un escudo). Habla otra vez con Maya para leer el contrato.',
+    say: "Good! Now let's look at the contract. Look for the rules.",
+  },
+}
+
+// Maya: The Fine Print (components/FinePrint.tsx). Sin errores, escudo. Este bloque NO guarda closeId(4)
+NPC_TASKS['b1-04-fineprint'] = {
+  npc: 'b1-04-maya',
+  done: 'b1-04-fineprint',
+  requires: { id: 'b1-04-rules', text: 'Maya is waiting for you.', es: 'Maya te está esperando.', sub: 'Primero haz la lección de Maya.' },
+  activity: 'fineprint',
+  fineprint: B1_04_FINE_PRINT,
+  steps: [],
+  reward: {
+    text: 'Maya: "That\'s a long contract! OK, let\'s meet the neighbours."',
+    es: '¡Qué contrato tan largo! Bueno, conozcamos a los vecinos.',
+    sub: 'Ya conoces las reglas de la casa. El pasillo se abre en el siguiente bloque. (Sin errores, ganaste un escudo).',
+    say: "That's a long contract! OK, let's meet the neighbours.",
+  },
+}
+
+// ── B1-04 · bloque B (data/b1Neighbours.ts): el pasillo se abre tras The Fine Print ──
+// Jeison, el vecino amable (narrativa + una elección). Después aparecen los vecinos ruidosos en cadena
+NPC_TASKS['b1-04-jeison'] = {
+  npc: 'b1-04-jeison',
+  done: 'b1-04-jeison',
+  requires: { id: 'b1-04-fineprint', text: 'Jeison is busy.', es: 'Jeison está ocupado.', sub: 'Primero lee el contrato con Maya.' },
+  steps: [
+    { text: "Hi! I'm Jeison, your neighbour. Welcome to the corridor!", es: '¡Hola! Soy Jeison, su vecino. ¡Bienvenidos al pasillo!' },
+    { text: "A little advice: Marisol is kind, but you mustn't make noise after ten. Some of our neighbours forget the rules.", es: 'Un consejo: Marisol es amable, pero no deben hacer ruido después de las diez. Algunos vecinos olvidan las reglas.' },
+    {
+      text: 'Oh, listen... that noise again. Please, talk to them.',
+      es: 'Oh, escuchen... ese ruido otra vez. Por favor, hablen con ellos.',
+      choice: { ask: '¿Qué le dices a Jeison?', options: ['Thanks! We must follow the rules, too.', 'Thanks! We must to follow the rules, too.', 'Thanks! We musts follow the rules too.'], answer: 0, tip: 'must + verbo base, sin to.' },
+    },
+  ],
+  reward: {
+    text: 'Jeison: "Good luck! My room is the first door, if you need anything."',
+    es: '¡Suerte! Mi cuarto es la primera puerta, si necesitan algo.',
+    sub: 'Los vecinos ruidosos están en el pasillo.',
+    say: 'Good luck! My room is the first door, if you need anything.',
+  },
+}
+
+// Tu cuarto (se abre al vencer a los dos vecinos): la caja de herramientas → Repair Shop escrito (data/b1Repair.ts).
+// Antes del juego, dos líneas del narrador (intro). Con 0 o 1 errores, escudo. Este bloque NO guarda closeId(4)
+NPC_TASKS['b1-04-repair'] = {
+  npc: 'b1-04-toolbox',
+  done: 'b1-04-repair',
+  requires: { id: 'b1-04-neighbour2', text: 'Your room. It is too noisy to work.', es: 'Tu cuarto. Hay demasiado ruido para trabajar.', sub: 'Primero habla con los vecinos ruidosos.' },
+  activity: 'command',
+  command: B1_REPAIR,
+  intro: [
+    { text: "(Your room. It's cold and dark, and there's no wifi. There's a toolbox on the floor.)", es: '(Tu cuarto. Hace frío, está oscuro y no hay wifi. Hay una caja de herramientas en el piso.)' },
+    { text: "(A note from Jeison is on the door: 'In English, small words change verbs: turn on, plug in, set up. Type the order!')", es: '(Hay una nota de Jeison en la puerta: «En inglés, las palabras pequeñas cambian los verbos: turn on, plug in, set up. ¡Escribe la orden!»)' },
+  ],
+  steps: [],
+  reward: {
+    text: '(Warm, bright and online. Now you need to open a bank account.)',
+    es: '(Cálido, iluminado y con internet. Ahora toca abrir una cuenta en el banco.)',
+    sub: 'Tu cuarto está listo. (Con 0 o 1 errores, ganaste un escudo). El banco se abre en el siguiente bloque.',
+    say: 'Warm, bright and online. Now you need to open a bank account.',
+  },
+}
+
+// ── B1-04 · bloque C: el banco (se abre al terminar el Repair Shop) ──
+// Ricardo presenta la cuenta (intro con una elección) y luego la práctica de escucha. Si todas están bien, escudo
+NPC_TASKS['b1-04-ricardo'] = {
+  npc: 'b1-04-ricardo',
+  done: 'b1-04-ricardo',
+  requires: { id: 'b1-04-repair', text: 'The bank is closed.', es: 'El banco está cerrado.', sub: 'Primero arregla tu cuarto.' },
+  activity: 'practice',
+  practice: 'bank-phrasal',
+  practiceIds: B1_04_BANK_IDS,
+  practiceShield: true,
+  intro: [
+    {
+      text: 'Good morning! Welcome to the bank. Are you here to open an account?',
+      es: '¡Buenos días! Bienvenidos al banco. ¿Vienen a abrir una cuenta?',
+      choice: { ask: '¿Qué le respondes?', options: ["Yes, please. We'd like to open a bank account.", "Yes, please. We'd like open a bank account.", 'Yes, please. We like to opening a bank account.'], answer: 0, tip: "We'd like to + verbo base." },
+    },
+    { text: 'Great. Listen carefully, because there are some documents you need.', es: 'Perfecto. Escuchen con atención, porque necesitan algunos documentos.' },
+  ],
+  steps: [],
+  reward: {
+    text: 'Ricardo: "Good. Now talk to your friend. She will explain a few words we use at the bank."',
+    es: 'Bien. Ahora hablen con su amiga. Ella les explicará unas palabras que usamos en el banco.',
+    sub: 'Práctica de escucha hecha. (Si acertaste todas, ganaste un escudo). Maya te espera en el banco.',
+    say: 'Good. Now talk to your friend. She will explain a few words we use at the bank.',
+  },
+}
+
+// Maya en el banco: lección 'bank-phrasal' (Maya la guía) + práctica. Al terminar, Ricardo entrega la tarjeta (outro)
+// y llega el mensaje de Marisol: el gancho del jefe (bloque 4-D). Este bloque NO guarda closeId(4)
+NPC_TASKS['b1-04-phrasal'] = {
+  npc: 'b1-04-maya-bank',
+  done: 'b1-04-phrasal',
+  lesson: 'bank-phrasal',
+  requires: { id: 'b1-04-ricardo', text: 'Maya is waiting for you.', es: 'Maya te está esperando.', sub: 'Primero habla con Ricardo.' },
+  activity: 'practice',
+  practice: 'bank-phrasal',
+  practiceIds: B1_04_PRACTICE2_IDS,
+  practiceShield: true,
+  steps: [],
+  outro: {
+    npc: 'b1-04-ricardo',
+    steps: [{ text: 'Perfect! Your account is open. Here is your debit card. Welcome to Lumen Bay!', es: '¡Perfecto! Su cuenta está abierta. Aquí tienen su tarjeta de débito. ¡Bienvenidos a Lumen Bay!' }],
+  },
+  reward: {
+    text: "(Your phone buzzes. A message from Marisol: 'Please come to the residence. Something strange is happening with the contracts!')",
+    es: '(Tu teléfono vibra. Un mensaje de Marisol: «Por favor vengan a la residencia. ¡Algo extraño pasa con los contratos!»)',
+    sub: 'Tienes tu cuenta y tu tarjeta de débito. (Si acertaste todas, ganaste un escudo).',
+    say: "Your phone buzzes. A message from Marisol: 'Please come to the residence. Something strange is happening with the contracts!'",
+  },
+}
+
+// ── B1-04 · bloque D: cierre (Marisol en el vestíbulo, después de vencer a Mr. Fine Print y de la charla con Maya).
+// done = closeId(4) = 'b1-04-close': abre el nodo 5 (recuerdo 5). Al guardarse, Explore muestra FragmentJoin (memoryNumber 5)
+NPC_TASKS['b1-04-close'] = {
+  npc: 'b1-04-marisol',
+  done: 'b1-04-close',
+  recover: ['obligation-b1', 'bank-phrasal'],
+  coins: 20,
+  requires: {
+    id: 'b1-04-friend',
+    text: 'Marisol: "Go and read the rules with your friend. I\'m here if you have questions."',
+    es: 'Vayan a leer las reglas con su amiga. Estoy aquí si tienen preguntas.',
+    sub: 'Antes, vence a Mr. Fine Print y habla con Maya en el vestíbulo.',
+  },
+  steps: [
+    { text: "Thank you so much! I don't know what happened to that contract.", es: '¡Muchas gracias! No sé qué le pasó a ese contrato.' },
+    { text: '(Moscú hides under the sofa. The clock in your pocket is shining.)', es: '(Moscú se esconde bajo el sofá. El reloj en tu bolsillo brilla.)' },
+    { text: '(Two fragments move... and touch each other.)', es: '(Dos fragmentos se mueven... y se tocan.)' },
+  ],
+  reward: {
+    text: 'Mission 4: House Rules',
+    es: 'Misión 4: Reglas de la casa',
+    sub: 'Ganaste el llavero de la residencia. Dos fragmentos se juntaron: se abrió el recuerdo 5.',
+    say: 'House rules.',
   },
 }
 

@@ -49,6 +49,13 @@ import { TheAccident } from '../components/CallForHelp'
 import { MemoryScript } from '../components/MemoryScript'
 import { NotebookIcon } from '../components/LNotebook'
 import { B1_03_NOTEBOOK, B1_03_PHONE } from '../data/b1Words'
+import { B1_04_CLOSE, B1_04_FRAGMENTS, B1_04_FRIEND, B1_04_MAYA, B1_04_MAYA_BANK, B1_04_MAYA_LOBBY, B1_04_MOSCU, B1_04_RESIDENCE_ID, B1_04_RICARDO } from '../data/b1Residence'
+import { B1_04_MAYA_CHAT } from '../data/friends'
+/** B1-04: quién acompaña la práctica guiada (si no, Leo) */
+const PRACTICE_GUIDES = [B1_04_MAYA, B1_04_MAYA_BANK, B1_04_RICARDO]
+import { B1_04_TOOLBOX } from '../data/b1Neighbours'
+import { ToolboxIcon, ToolboxPortrait } from '../components/ToolboxIcon'
+import { FinePrint } from '../components/FinePrint'
 import { TextOnly } from '../components/TextOnly'
 import { isB1Unlocked } from '../data/b1World'
 import { B1_CALL, B1_PHONE } from '../data/b1Home'
@@ -86,8 +93,32 @@ import { EnoughForEveryone } from '../components/EnoughForEveryone'
 import { SHOP, isShopOpen } from '../data/a2Market'
 import { voiceOf, type Voice } from '../game/speech'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
+import { ExploreTutorial, tutorialSeen } from '../components/ExploreTutorial'
 
 const VIEW = 11
+
+/**
+ * En el celular el mapa usa todo el ancho y muestra más filas si el alto lo permite
+ * (la cámara sigue al personaje). Se reserva espacio para la barra de arriba, los mensajes y los controles.
+ */
+function useViewRows(desktop: boolean) {
+  const calc = () => {
+    if (desktop || typeof window === 'undefined') return VIEW
+    const w = Math.min(window.innerWidth, 448) - 24
+    const tile = w / VIEW
+    const free = window.innerHeight - 350
+    return Math.max(8, Math.min(15, Math.floor(free / tile)))
+  }
+  const [n, setN] = useState(calc)
+  useEffect(() => {
+    const on = () => setN(calc())
+    on()
+    window.addEventListener('resize', on)
+    return () => window.removeEventListener('resize', on)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [desktop])
+  return n
+}
 
 /** Quién habla en un mensaje 'Nombre: "..."', para leerlo con voz de hombre o de mujer */
 function voiceFor(text: string, state: GameState): Voice {
@@ -114,7 +145,7 @@ type Talk = {
   level?: string
   note?: string
   /** Charla especial de una misión */
-  quest?: 'lostIntro' | 'b1-02-plane'
+  quest?: 'lostIntro' | 'b1-02-plane' | 'b1-04-maya'
 }
 
 export function Explore({ state, update, onBattle, onWorld }: { state: GameState; update: Update; onBattle: (enemyId: string) => void; onWorld: () => void }) {
@@ -137,6 +168,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [task, setTask] = useState<string | null>(null)
   // Práctica con charla previa (NpcTask.intro, B1-02 tienda): id de la tarea cuya charla ya se vio en esta visita
   const [introSeen, setIntroSeen] = useState<string | null>(null)
+  /** B1-04: lo que se dice al terminar una tarea (outro), antes de su mensaje de recompensa */
+  const [outro, setOutro] = useState<string | null>(null)
   // Al cerrar un escenario sin final de capítulo (A2), su página del diario se abre sola aquí, como en A1
   const [diary, setDiary] = useState(false)
   // Misión de la fiesta de Leo (barrio): lo que falta y a quién se le está preguntando
@@ -158,6 +191,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [showEs, setShowEs] = useState(false)
   // Controles: flechas o joystick, a elección (se recuerda en este dispositivo)
   const desktop = useDesktop()
+  const viewRowsMax = useViewRows(desktop)
   const [controls, setControls] = useState<'dpad' | 'joystick'>(() => {
     try {
       return localStorage.getItem('english-combat-controls') === 'joystick' ? 'joystick' : 'dpad'
@@ -168,6 +202,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [notebook, setNotebook] = useState(false)
   // Preguntar "Is this your...?" mientras llevas un objeto perdido
   const [ask, setAsk] = useState<{ itemId: string; npcId: string; npcName: string } | null>(null)
+  // Tutorial corto la primera vez que se explora (una sola vez por dispositivo)
+  const [tutorial, setTutorial] = useState(() => !tutorialSeen())
   const lf = state.lostFound
   const lostOnMap = lf.started && scene.id === 'school' ? LOST_ITEMS.filter((it) => !lf.picked.includes(it.id)) : []
   const blocked = !!talk || friendsOpen || !!lesson || !!activity || notebook || !!ask || !!task || !!party
@@ -245,9 +281,14 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       update((s) => exitMemory(s, t.exitMemory!, { close: t.closeMemory }))
       return
     }
-    setMsg({ text: fill(t.reward.text), es: t.reward.es && fill(t.reward.es), sub: fill(t.reward.sub), say: t.reward.say && fill(t.reward.say), tone: 'good' })
+    if (t.outro) setOutro(id)
+    else showReward(t)
 
     if (DIARY.some((c) => c.unlock === t.done) && !state.opened.includes(t.done)) setDiary(true)
+  }
+
+  function showReward(t: (typeof NPC_TASKS)[string]) {
+    setMsg({ text: fill(t.reward.text), es: t.reward.es && fill(t.reward.es), sub: fill(t.reward.sub), say: t.reward.say && fill(t.reward.say), tone: 'good' })
   }
 
   /** Igual que en el mapa: al cerrar, el diario ya avisó de las páginas abiertas */
@@ -266,6 +307,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
     (e: Entity) => {
       if (e.type === 'npc') {
         const npc = npcOf(e.id)
+        // B1-04 · House Rules: la charla de amistad con Maya en el vestíbulo (una sola vez; se guarda B1_04_FRIEND)
+        if (e.id === B1_04_MAYA_LOBBY && !state.opened.includes(B1_04_FRIEND)) {
+          setMsg(null)
+          const c = B1_04_MAYA_CHAT
+          setTalk({ friendId: 'maya', story: null, lines: [{ who: 'friend', text: c.text, es: c.es, options: c.options }], title: 'Charla casual', level: 'B1', quest: 'b1-04-maya' })
+          return
+        }
         const pend = taskOf(e.id, [...state.opened, ...state.defeated])
         if (pend && !pend.blocked) {
           const t = pend.task
@@ -568,8 +616,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
     return () => window.removeEventListener('keydown', onKey)
   }, [move])
 
+  const viewRows = Math.min(viewRowsMax, rows)
   const camX = Math.max(0, Math.min(cols - VIEW, state.pos.x - Math.floor(VIEW / 2)))
-  const camY = Math.max(0, Math.min(rows - VIEW, state.pos.y - Math.floor(VIEW / 2)))
+  const camY = Math.max(0, Math.min(rows - viewRows, state.pos.y - Math.floor(viewRows / 2)))
   const look = heroLook(state)
   /** B1: escena de recuerdo (el héroe es L y las caras se ven borrosas) */
   const inMemory = isMemoryScene(scene.id)
@@ -602,9 +651,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       {/* El mapa se achica en pantallas bajas para que no tape los controles */}
       <div
         className="mx-auto w-full shrink-0 overflow-hidden rounded-2xl border-2 border-line bg-ink"
-        style={{ maxWidth: desktop ? 'min(100%, calc(100svh - 110px))' : 'min(100%, 44svh)', ...(desktop ? { flex: '1 1 auto', margin: 0 } : {}) }}
+        style={{ maxWidth: desktop ? 'min(100%, calc(100svh - 110px))' : '100%', ...(desktop ? { flex: '1 1 auto', margin: 0 } : {}) }}
       >
-        <svg viewBox={`0 0 ${VIEW * T} ${VIEW * T}`} className="block w-full" role="img" aria-label={`${scene.name}, vista desde arriba`}>
+        <svg viewBox={`0 0 ${VIEW * T} ${viewRows * T}`} className="block w-full" role="img" aria-label={`${scene.name}, vista desde arriba`}>
           <g style={{ transform: `translate(${-camX * T}px, ${-camY * T}px)`, transition: 'transform 180ms ease-out' }}>
             {tiles}
             {scene.labels.map((l) => (
@@ -675,7 +724,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK ? <NotebookIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK ? <NotebookIcon lit={pending} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -804,6 +853,10 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       </div>
       </div>
 
+      {tutorial && !talk && !lesson && !task && !activity && !diary && !party && !notebook && !ask && !friendsOpen && (
+        <ExploreTutorial desktop={desktop} onClose={() => setTutorial(false)} />
+      )}
+
       {talk && talkFriend && (
         <Overlay>
           <ConversationView
@@ -828,6 +881,16 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 })
                 if (delta < 0) setMsg({ text: `${talkFriend.name} no te entendió. La amistad bajó un poco.`, sub: 'La puerta del avión ya está abierta. Leo espera junto a la cinta de equipaje.', tone: 'warn' })
                 else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: 'La puerta del avión ya está abierta. Leo espera junto a la cinta de equipaje.', tone: 'good' })
+                return
+              }
+              if (t.quest === 'b1-04-maya') {
+                // Charla casual B1 con Maya: la amistad cambia con la regla de las charlas casuales. Después, Marisol cierra la misión
+                update((s) => {
+                  const n = applyCasual(s, 'maya', delta)
+                  return { ...n, opened: n.opened.includes(B1_04_FRIEND) ? n.opened : [...n.opened, B1_04_FRIEND] }
+                })
+                if (delta < 0) setMsg({ text: `${talkFriend.name} no te entendió. La amistad bajó un poco.`, sub: 'Marisol te espera en el mostrador.', tone: 'warn' })
+                else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: 'Marisol te espera en el mostrador.', tone: 'good' })
                 return
               }
               if (t.story !== null) {
@@ -1080,19 +1143,46 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           }}
         />
       )}
-      {task && NPC_TASKS[task]?.activity === 'practice' && !!NPC_TASKS[task].intro?.length && introSeen !== task && (
-        // Lo que dice el personaje antes de la práctica (B1-02: el empleado de la tienda presenta los planes)
+      {/* B1-04 · cierre: al guardar closeId(4), dos fragmentos se juntan (memoryOpenId(5) = closeId(4): el recuerdo 5 queda abierto) */}
+      {scene.id === B1_04_RESIDENCE_ID && state.opened.includes(B1_04_CLOSE) && !state.opened.includes(B1_04_FRAGMENTS) && !task && !outro && (
+        <FragmentJoin
+          state={state}
+          update={update}
+          memoryNumber={5}
+          onDone={() => {
+            update((s) => (s.opened.includes(B1_04_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B1_04_FRAGMENTS] }))
+            onWorld()
+          }}
+        />
+      )}
+      {outro && NPC_TASKS[outro]?.outro && (
+        // B1-04: lo que se dice al terminar (Ricardo entrega la tarjeta) y luego el mensaje de recompensa
+        <Overlay>
+          {(() => {
+            const t = NPC_TASKS[outro]
+            const who = npcOf(t.outro!.npc ?? t.npc ?? outro)
+            const steps = t.outro!.steps.map((st) => ({ text: fill(st.text), es: fill(st.es) }))
+            const close = () => {
+              setOutro(null)
+              showReward(t)
+            }
+            return <MiniTalk name={who.name} look={who.look} steps={steps} onClose={close} />
+          })()}
+        </Overlay>
+      )}
+      {task && (NPC_TASKS[task]?.activity === 'practice' || NPC_TASKS[task]?.activity === 'command') && !!NPC_TASKS[task].intro?.length && introSeen !== task && (
+        // Lo que se dice antes de la práctica o del juego (B1-02: el empleado de la tienda presenta los planes; B1-04: el narrador antes del Repair Shop)
         <Overlay>
           {(() => {
             const who = npcOf(NPC_TASKS[task].npc ?? task)
-            const steps = NPC_TASKS[task].intro!.map((st) => ({ text: fill(st.text), es: fill(st.es) }))
-            return <MiniTalk name={who.name} look={who.look} steps={steps} onClose={(done) => (done ? setIntroSeen(task) : setTask(null))} />
+            const steps = NPC_TASKS[task].intro!.map((st) => ({ text: fill(st.text), es: fill(st.es), choice: st.choice && { ...st.choice, ask: fill(st.choice.ask), options: st.choice.options.map(fill), tip: fill(st.choice.tip) } }))
+            return <MiniTalk name={who.name} look={who.look} steps={steps} icon={NPC_TASKS[task].npc === B1_04_TOOLBOX ? <ToolboxPortrait /> : undefined} onClose={(done) => (done ? setIntroSeen(task) : setTask(null))} />
           })()}
         </Overlay>
       )}
       {task && NPC_TASKS[task]?.activity === 'practice' && NPC_TASKS[task].practice && (!NPC_TASKS[task].intro?.length || introSeen === task) && (
         // Práctica guiada con Leo (pantalla completa): al terminarla se marca la tarea
-        <Practice state={state} update={update} review={NPC_TASKS[task].practice} ids={NPC_TASKS[task].practiceIds} guided onClose={() => finishTask(task, false)} onDone={(perfect) => finishTask(task, true, [], perfect && !!NPC_TASKS[task].practiceShield)} />
+        <Practice state={state} update={update} review={NPC_TASKS[task].practice} ids={NPC_TASKS[task].practiceIds} guided guide={PRACTICE_GUIDES.includes(NPC_TASKS[task].npc ?? '') ? npcOf(NPC_TASKS[task].npc!) : undefined} onClose={() => finishTask(task, false)} onDone={(perfect) => finishTask(task, true, [], perfect && !!NPC_TASKS[task].practiceShield)} />
       )}
       {task && NPC_TASKS[task]?.activity === 'script' && NPC_TASKS[task].script && (
         // B1 (recuerdos): secuencia fija con el personaje de la tarea (cara borrosa) y L narrando
@@ -1105,7 +1195,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         <TheAccident state={state} update={update} friend={npcOf(B1_01_FRIEND).look} onDone={() => finishTask(task, true)} />
       )}
 
-      {task && NPC_TASKS[task] && NPC_TASKS[task].activity !== 'practice' && NPC_TASKS[task].activity !== 'callforhelp' && NPC_TASKS[task].activity !== 'script' && (
+      {task && NPC_TASKS[task] && NPC_TASKS[task].activity !== 'practice' && NPC_TASKS[task].activity !== 'callforhelp' && NPC_TASKS[task].activity !== 'script' && (NPC_TASKS[task].activity !== 'command' || !NPC_TASKS[task].intro?.length || introSeen === task) && (
         <Overlay>
           {(() => {
             const t = NPC_TASKS[task]
@@ -1165,6 +1255,10 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'enough') return <EnoughForEveryone friend={state.interest.name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'fitting') return <FittingRoom friend={state.interest.name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'textonly' && t.textOnly) return <TextOnly content={t.textOnly} before={t.steps.map((st) => ({ text: fill(st.text), es: fill(st.es) }))} onClose={finish} />
+            if (t.activity === 'fineprint' && t.fineprint) {
+              const who = npcOf(t.npc ?? task)
+              return <FinePrint name={who.name} look={who.look} {...t.fineprint} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
+            }
             if (t.activity === 'route') return <RouteChallenge name={npcOf(t.npc ?? task).name} content={t.route} onClose={finish} />
             if (t.activity === 'exam' && t.exam) {
               const era = t.exam
@@ -1261,7 +1355,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           <Lesson
             state={state}
             steps={lesson.topics.flatMap((t) => (LESSONS[t] ?? []).map((st) => ({ ...st, topic: t })))}
-            title={lesson.enemyId ? 'Leo te alcanza antes del combate' : lesson.task && NPC_TASKS[lesson.task]?.notebookPage ? 'Cuaderno de L' : lesson.task && NPC_TASKS[lesson.task]?.phoneLesson ? 'Leo te escribe' : 'Leo te ayuda'}
+            title={lesson.enemyId ? 'Leo te alcanza antes del combate' : lesson.task && NPC_TASKS[lesson.task]?.notebookPage ? 'Cuaderno de L' : lesson.task && NPC_TASKS[lesson.task]?.phoneLesson ? 'Leo te escribe' : lesson.task && (NPC_TASKS[lesson.task]?.npc === B1_04_MAYA || NPC_TASKS[lesson.task]?.npc === B1_04_MAYA_BANK) ? 'Maya te ayuda' : 'Leo te ayuda'}
             phone={lesson.task ? NPC_TASKS[lesson.task]?.phoneLesson : undefined}
             notebook={lesson.task ? NPC_TASKS[lesson.task]?.notebookPage : undefined}
             onDone={() => {

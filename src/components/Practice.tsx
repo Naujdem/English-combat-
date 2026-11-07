@@ -6,7 +6,7 @@ import { recordAnswer } from '../game/helpers'
 import { FRIENDS } from '../data/friends'
 import { QuestionCard, correctSentence } from './QuestionCard'
 import { GrammarPattern, RoleSentence } from './Grammar'
-import { SpriteBody } from './Sprite'
+import { SpriteBody, type SpriteLook } from './Sprite'
 import { SpeakButton } from './SpeakButton'
 import { btnGhost, btnPrimary, Panel } from './ui'
 
@@ -25,6 +25,7 @@ export function Practice({
   ids,
   onClose,
   onDone,
+  guide,
 }: {
   state: GameState
   update: Update
@@ -39,7 +40,10 @@ export function Practice({
   onClose: () => void
   /** Al terminar todas las preguntas (si no se indica, se usa onClose). perfect: todas correctas */
   onDone?: (perfect: boolean) => void
+  /** Quién acompaña la práctica guiada (si no se indica, Leo). B1-04: Maya */
+  guide?: { name: string; look: SpriteLook }
 }) {
+  const who = guide ?? { name: 'Leo', look: FRIENDS.leo.look }
   const [queue] = useState<Question[]>(() => {
     if (ids?.length) return ids.map((id) => questionById(id)).filter((q): q is Question => !!q)
     if (review) {
@@ -91,7 +95,7 @@ export function Practice({
       <div className="mx-auto flex max-w-md flex-col gap-3 px-3 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-gold">{review && !guided ? `Repaso · ${TOPICS[review].name}` : 'Práctica con Leo'}</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-gold">{review && !guided ? `Repaso · ${TOPICS[review].name}` : `Práctica con ${who.name}`}</p>
             <p className="font-display text-lg">{i < 0 ? (review ? 'La estructura' : 'Antes de volver a intentarlo') : done ? 'Resultado' : `Pregunta ${i + 1} de ${queue.length}`}</p>
           </div>
           <button className={btnGhost} onClick={onClose}>Salir</button>
@@ -101,11 +105,11 @@ export function Practice({
           <Panel>
             <div className="flex items-center gap-3">
               <svg width="56" height="56" viewBox="0 0 32 32" aria-hidden="true">
-                <SpriteBody look={FRIENDS.leo.look} />
+                <SpriteBody look={who.look} />
               </svg>
               <div className="flex-1">
                 <div className="flex items-center justify-between">
-                  <p className="font-display text-lg text-gold">Leo</p>
+                  <p className="font-display text-lg text-gold">{who.name}</p>
                   <SpeakButton text="Don't worry! Let's practice together." size="sm" />
                 </div>
                 <p className="text-[16px]">"Don't worry! Let's practice together."</p>
@@ -138,7 +142,7 @@ export function Practice({
               <QuestionCard q={q} speaker="La frase" colorTiles onAnswer={answer} />
               {result !== null && (
                 <div className={`anim-fade-in mt-3 rounded-xl p-3 ${result ? 'bg-hp/10' : 'bg-panel-2'}`}>
-                  <p className={`text-sm font-semibold ${result ? 'text-hp' : 'text-gold'}`}>{result ? '¡Muy bien!' : 'Leo te explica'}</p>
+                  <p className={`text-sm font-semibold ${result ? 'text-hp' : 'text-gold'}`}>{result ? '¡Muy bien!' : `${who.name} te explica`}</p>
                   {!result && <p className="mt-0.5 text-[15px] leading-snug">{q.tip}</p>}
                   <div className="mt-2 flex items-center gap-2">
                     <RoleSentence text={correctSentence(q)} topic={q.topic} size="sm" />
@@ -161,8 +165,8 @@ export function Practice({
             <p className="mt-1 text-[16px]">
               {guided
                 ? ready
-                  ? 'Leo: "Great job! You\'re ready." Ya sabes dar consejos y entender las reglas.'
-                  : 'Leo: "Good try! You can review it later in your notebook." Puedes repasar este tema cuando quieras.'
+                  ? `${who.name}: "Great job! You're ready." Ya sabes dar consejos y entender las reglas.`
+                  : `${who.name}: "Good try! You can review it later in your notebook." Puedes repasar este tema cuando quieras.`
                 : review
                 ? ready
                   ? 'Leo: "Great job!" Dominas cada vez mejor este tema.'
