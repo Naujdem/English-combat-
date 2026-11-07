@@ -33,7 +33,7 @@ import { B1_HOME } from '../data/b1Home'
 import { B1_OPENING, closeId } from '../data/b1World'
 import { B1_02_LANDED, B1_02_LUMEN, B1_02_PRACTICE } from '../data/b1NewCity'
 import { B1_04_FINEPRINT, B1_04_RESIDENCE, B1_04_RULES, B1_04_WELCOME } from '../data/b1Residence'
-import { B1_04_JEISON, B1_04_NEIGHBOUR1, B1_04_NEIGHBOUR2 } from '../data/b1Neighbours'
+import { B1_04_JEISON, B1_04_NEIGHBOUR1, B1_04_NEIGHBOUR2, B1_04_REPAIR } from '../data/b1Neighbours'
 import { B1_03_DOCTOR, B1_03_HOSPITAL, B1_03_NOTEBOOK, B1_03_NOTEBOOK2, B1_03_STATIC, B1_03_TEXTS, B1_03_UNREAD1, B1_03_UNREAD2, B1_03_UNREAD3 } from '../data/b1Words'
 import { B1_02_BOSS, B1_02_JACK, B1_02_LUGGAGE, B1_02_TRAV1, B1_02_TRAV2 } from '../data/b1Airport'
 import { B1_02_AGENDA, B1_02_FUTURES, B1_02_ROUTE, B1_02_SHOP } from '../data/b1Office'
@@ -801,8 +801,9 @@ export function b1Mission3(s: GameState, stage: 'memory' | 'notebook' | 'texts' 
  *  fineprint: lección y práctica de Maya hechas (junto a Maya, listo para The Fine Print)
  *  jeison: The Fine Print hecho (en el pasillo, junto a Jeison) · neighbours: Jeison hecho (vecino 1 en el pasillo)
  *  repair: los dos vecinos vencidos (frente a tu cuarto, listo para el Repair Shop)
+ *  bank: Repair Shop hecho (en el banco, frente a Ricardo) · phrasal: ya hablaste con Ricardo (junto a Maya; la lección sale de nuevo)
  */
-export function b1Mission4(s: GameState, stage: 'start' | 'lesson' | 'fineprint' | 'jeison' | 'neighbours' | 'repair'): GameState {
+export function b1Mission4(s: GameState, stage: 'start' | 'lesson' | 'fineprint' | 'jeison' | 'neighbours' | 'repair' | 'bank' | 'phrasal'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3)])
   const home = { ...b, screen: 'explore' as const, sceneId: B1_04_RESIDENCE.id, pos: { ...B1_04_RESIDENCE.start }, seenLesson: b.seenLesson.filter((t) => t !== 'obligation-b1') }
   if (stage === 'start') return home
@@ -814,7 +815,11 @@ export function b1Mission4(s: GameState, stage: 'start' | 'lesson' | 'fineprint'
   if (stage === 'jeison') return jeison
   const nb = { ...jeison, pos: { x: 11, y: 4 }, opened: add(jeison.opened, [B1_04_JEISON]), defeated: jeison.defeated.filter((d) => d !== B1_04_NEIGHBOUR1 && d !== B1_04_NEIGHBOUR2) }
   if (stage === 'neighbours') return nb
-  return { ...nb, pos: { x: 14, y: 3 }, defeated: add(nb.defeated, [B1_04_NEIGHBOUR1, B1_04_NEIGHBOUR2]) }
+  const rep = { ...nb, pos: { x: 14, y: 3 }, defeated: add(nb.defeated, [B1_04_NEIGHBOUR1, B1_04_NEIGHBOUR2]) }
+  if (stage === 'repair') return rep
+  const bank = { ...rep, pos: { x: 24, y: 2 }, opened: add(rep.opened, [B1_04_REPAIR]), seenLesson: rep.seenLesson.filter((t) => t !== 'bank-phrasal') }
+  if (stage === 'bank') return bank
+  return { ...bank, pos: { x: 25, y: 5 }, opened: add(bank.opened, ['b1-04-ricardo']) }
 }
 
 PRESETS.push(

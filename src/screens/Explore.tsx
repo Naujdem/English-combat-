@@ -49,7 +49,9 @@ import { TheAccident } from '../components/CallForHelp'
 import { MemoryScript } from '../components/MemoryScript'
 import { NotebookIcon } from '../components/LNotebook'
 import { B1_03_CLOSE_PHONE, B1_03_NOTEBOOK, B1_03_NOTEBOOK2, B1_03_PHONE } from '../data/b1Words'
-import { B1_04_MAYA, B1_04_MOSCU } from '../data/b1Residence'
+import { B1_04_MAYA, B1_04_MAYA_BANK, B1_04_MOSCU, B1_04_RICARDO } from '../data/b1Residence'
+/** B1-04: quién acompaña la práctica guiada (si no, Leo) */
+const PRACTICE_GUIDES = [B1_04_MAYA, B1_04_MAYA_BANK, B1_04_RICARDO]
 import { B1_04_TOOLBOX } from '../data/b1Neighbours'
 import { ToolboxIcon, ToolboxPortrait } from '../components/ToolboxIcon'
 import { FinePrint } from '../components/FinePrint'
@@ -165,6 +167,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [task, setTask] = useState<string | null>(null)
   // Práctica con charla previa (NpcTask.intro, B1-02 tienda): id de la tarea cuya charla ya se vio en esta visita
   const [introSeen, setIntroSeen] = useState<string | null>(null)
+  /** B1-04: lo que se dice al terminar una tarea (outro), antes de su mensaje de recompensa */
+  const [outro, setOutro] = useState<string | null>(null)
   // Al cerrar un escenario sin final de capítulo (A2), su página del diario se abre sola aquí, como en A1
   const [diary, setDiary] = useState(false)
   // Misión de la fiesta de Leo (barrio): lo que falta y a quién se le está preguntando
@@ -276,9 +280,14 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       update((s) => exitMemory(s, t.exitMemory!, { close: t.closeMemory }))
       return
     }
-    setMsg({ text: fill(t.reward.text), es: t.reward.es && fill(t.reward.es), sub: fill(t.reward.sub), say: t.reward.say && fill(t.reward.say), tone: 'good' })
+    if (t.outro) setOutro(id)
+    else showReward(t)
 
     if (DIARY.some((c) => c.unlock === t.done) && !state.opened.includes(t.done)) setDiary(true)
+  }
+
+  function showReward(t: (typeof NPC_TASKS)[string]) {
+    setMsg({ text: fill(t.reward.text), es: t.reward.es && fill(t.reward.es), sub: fill(t.reward.sub), say: t.reward.say && fill(t.reward.say), tone: 'good' })
   }
 
   /** Igual que en el mapa: al cerrar, el diario ya avisó de las páginas abiertas */
@@ -1116,19 +1125,34 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           }}
         />
       )}
+      {outro && NPC_TASKS[outro]?.outro && (
+        // B1-04: lo que se dice al terminar (Ricardo entrega la tarjeta) y luego el mensaje de recompensa
+        <Overlay>
+          {(() => {
+            const t = NPC_TASKS[outro]
+            const who = npcOf(t.outro!.npc ?? t.npc ?? outro)
+            const steps = t.outro!.steps.map((st) => ({ text: fill(st.text), es: fill(st.es) }))
+            const close = () => {
+              setOutro(null)
+              showReward(t)
+            }
+            return <MiniTalk name={who.name} look={who.look} steps={steps} onClose={close} />
+          })()}
+        </Overlay>
+      )}
       {task && (NPC_TASKS[task]?.activity === 'practice' || NPC_TASKS[task]?.activity === 'command') && !!NPC_TASKS[task].intro?.length && introSeen !== task && (
         // Lo que se dice antes de la práctica o del juego (B1-02: el empleado de la tienda presenta los planes; B1-04: el narrador antes del Repair Shop)
         <Overlay>
           {(() => {
             const who = npcOf(NPC_TASKS[task].npc ?? task)
-            const steps = NPC_TASKS[task].intro!.map((st) => ({ text: fill(st.text), es: fill(st.es) }))
+            const steps = NPC_TASKS[task].intro!.map((st) => ({ text: fill(st.text), es: fill(st.es), choice: st.choice && { ...st.choice, ask: fill(st.choice.ask), options: st.choice.options.map(fill), tip: fill(st.choice.tip) } }))
             return <MiniTalk name={who.name} look={who.look} steps={steps} icon={NPC_TASKS[task].npc === B1_04_TOOLBOX ? <ToolboxPortrait /> : undefined} onClose={(done) => (done ? setIntroSeen(task) : setTask(null))} />
           })()}
         </Overlay>
       )}
       {task && NPC_TASKS[task]?.activity === 'practice' && NPC_TASKS[task].practice && (!NPC_TASKS[task].intro?.length || introSeen === task) && (
         // Práctica guiada con Leo (pantalla completa): al terminarla se marca la tarea
-        <Practice state={state} update={update} review={NPC_TASKS[task].practice} ids={NPC_TASKS[task].practiceIds} guided guide={NPC_TASKS[task].npc === B1_04_MAYA ? npcOf(B1_04_MAYA) : undefined} onClose={() => finishTask(task, false)} onDone={(perfect) => finishTask(task, true, [], perfect && !!NPC_TASKS[task].practiceShield)} />
+        <Practice state={state} update={update} review={NPC_TASKS[task].practice} ids={NPC_TASKS[task].practiceIds} guided guide={PRACTICE_GUIDES.includes(NPC_TASKS[task].npc ?? '') ? npcOf(NPC_TASKS[task].npc!) : undefined} onClose={() => finishTask(task, false)} onDone={(perfect) => finishTask(task, true, [], perfect && !!NPC_TASKS[task].practiceShield)} />
       )}
       {task && NPC_TASKS[task]?.activity === 'script' && NPC_TASKS[task].script && (
         // B1 (recuerdos): secuencia fija con el personaje de la tarea (cara borrosa) y L narrando
@@ -1301,7 +1325,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           <Lesson
             state={state}
             steps={lesson.topics.flatMap((t) => (LESSONS[t] ?? []).map((st) => ({ ...st, topic: t })))}
-            title={lesson.enemyId ? 'Leo te alcanza antes del combate' : lesson.task && NPC_TASKS[lesson.task]?.notebookPage ? 'Cuaderno de L' : lesson.task && NPC_TASKS[lesson.task]?.phoneLesson ? 'Leo te escribe' : lesson.task && NPC_TASKS[lesson.task]?.npc === B1_04_MAYA ? 'Maya te ayuda' : 'Leo te ayuda'}
+            title={lesson.enemyId ? 'Leo te alcanza antes del combate' : lesson.task && NPC_TASKS[lesson.task]?.notebookPage ? 'Cuaderno de L' : lesson.task && NPC_TASKS[lesson.task]?.phoneLesson ? 'Leo te escribe' : lesson.task && (NPC_TASKS[lesson.task]?.npc === B1_04_MAYA || NPC_TASKS[lesson.task]?.npc === B1_04_MAYA_BANK) ? 'Maya te ayuda' : 'Leo te ayuda'}
             phone={lesson.task ? NPC_TASKS[lesson.task]?.phoneLesson : undefined}
             notebook={lesson.task ? NPC_TASKS[lesson.task]?.notebookPage : undefined}
             onDone={() => {

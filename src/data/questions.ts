@@ -1107,4 +1107,14 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       "No es necesario (pero puedes): don't / doesn't have to · needn't + verbo base → You don't have to clean the kitchen.",
     ],
   },
+  'bank-phrasal': {
+    name: 'Banco, phrasal verbs y sustantivos compuestos',
+    level: 'B1',
+    lesson: [
+      'Phrasal verb = verbo + palabra pequeña que cambia el significado: turn (girar) → turn on (encender) · take out (sacar) · pay in (ingresar dinero) · fill in (llenar).',
+      'Separables: el objeto puede ir en medio → Fill in the form. = Fill the form in.',
+      'Con pronombre (it, them, me), el pronombre va EN MEDIO → Fill it in. (nunca Fill in it).',
+      'Sustantivo + sustantivo: el primero describe al segundo → bank account, debit card, cash machine, student ID.',
+    ],
+  },
 }

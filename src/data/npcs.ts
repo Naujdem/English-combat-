@@ -822,6 +822,19 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#c0392b', hair: '#55606e', skin: '#c0392b' },
     doneLine: { text: '(Warm, bright and online. Now you need to open a bank account.)', es: '(Cálido, iluminado y con internet. Ahora toca abrir una cuenta en el banco.)' },
   },
+  // B1-04 · bloque C: el banco (data/b1Residence.ts). Ricardo, el empleado
+  'b1-04-ricardo': {
+    name: 'Ricardo',
+    look: { shirt: '#f4f4f0', hair: '#2b2b33', skin: '#d7a77a', gender: 'male' },
+    doneLine: { text: 'Good. Now talk to your friend. She will explain a few words we use at the bank.', es: 'Bien. Ahora hablen con su amiga. Ella les explicará unas palabras que usamos en el banco.' },
+  },
+  // Maya en el banco (mismo look que FRIENDS.maya): aparece al terminar con Ricardo
+  'b1-04-maya-bank': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    after: 'b1-04-ricardo',
+    doneLine: { text: "(Your phone buzzes. A message from Marisol: 'Please come to the residence. Something strange is happening with the contracts!')", es: '(Tu teléfono vibra. Un mensaje de Marisol: «Por favor vengan a la residencia. ¡Algo extraño pasa con los contratos!»)' },
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

@@ -712,4 +712,47 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: "You ___ park here. It's forbidden.", choice: { options: ["mustn't", "don't have to", "aren't have to"], answer: 0, tip: "Prohibido: mustn't." } },
     { who: 'maya', text: "Ready? Let's practice first. Then we'll find the rules in the contract.", es: '¿Listo? Practiquemos primero. Después buscamos las reglas en el contrato.' },
   ],
+  // B1-04 · bloque C (el banco): Maya explica los phrasal verbs y los sustantivos compuestos
+  'bank-phrasal': [
+    { who: 'maya', text: "Ricardo said 'fill in a form' and 'take out money'. Those are phrasal verbs!", es: 'Ricardo dijo «fill in a form» y «take out money». ¡Esos son phrasal verbs!' },
+    { who: 'maya', text: "A phrasal verb is a verb + a small word. The small word changes the meaning. 'Turn' is to rotate. 'Turn on' is to start something.", es: 'Un phrasal verb es un verbo + una palabra pequeña. La palabra pequeña cambia el significado. «Turn» es girar. «Turn on» es encender.' },
+    {
+      who: 'board',
+      text: 'turn → turn on. fill → fill in.',
+      board: ['turn → turn on', 'fill → fill in'],
+      table: { head: ['Verbo', 'Phrasal verb'], rows: [['turn (girar)', 'turn on (encender)'], ['take (tomar)', 'take out (sacar)'], ['pay (pagar)', 'pay in (ingresar dinero)']] },
+    },
+    { who: 'board', text: "'Take out money' means:", choice: { options: ['sacar dinero', 'guardar dinero', 'perder dinero'], answer: 0, tip: 'take out = sacar.' } },
+    { who: 'maya', text: "Some phrasal verbs are separable: the object can go in the middle. 'Fill in the form' or 'fill the form in'. Both are correct.", es: 'Algunos phrasal verbs son separables: el objeto puede ir en medio. «Fill in the form» o «fill the form in». Las dos son correctas.' },
+    {
+      who: 'board',
+      text: 'I fill in the form. I fill the form in.',
+      board: ['I fill in the form.', 'I fill the form in.'],
+      table: { head: ['Forma 1', 'Forma 2'], rows: [['I fill in the form.', 'I fill the form in.'], ['Turn on the light.', 'Turn the light on.'], ['Plug in the lamp.', 'Plug the lamp in.']] },
+    },
+    { who: 'board', text: 'Which sentence is correct?', choice: { options: ['Fill the form in.', 'Fill in it the form.', 'Fill the in form.'], answer: 0, tip: 'El objeto puede ir en medio: fill the form in.' } },
+    { who: 'maya', text: "Important rule! With a pronoun (it, them, me), the pronoun goes IN THE MIDDLE: 'Fill it in', never 'Fill in it'.", es: '¡Regla importante! Con un pronombre (it, them, me), el pronombre va EN MEDIO: «Fill it in», nunca «Fill in it».' },
+    {
+      who: 'board',
+      text: 'Fill it in. Turn it on.',
+      board: ['Fill it in.', 'Turn it on.'],
+      table: { head: ['Con pronombre (correcto)', 'Incorrecto'], rows: [['Fill it in.', '✗ Fill in it.'], ['Turn it on.', '✗ Turn on it.'], ['Plug them in.', '✗ Plug in them.']] },
+    },
+    { who: 'board', text: 'The form? ___ now, please.', choice: { options: ['Fill it in', 'Fill in it', 'Fill it on'], answer: 0, tip: 'Con pronombre, va en medio: fill it in.' } },
+    { who: 'maya', text: 'You already know many phrasal verbs from before: get up, get on, get off, try on, turn off, look for, find out, come back, pick up... You were using them without knowing their name!', es: 'Ya conoces muchos phrasal verbs de antes: get up, get on, get off, try on, turn off, look for, find out, come back, pick up... ¡Los usabas sin saber su nombre!' },
+    {
+      who: 'board',
+      text: 'try the jacket on. look for my bag.',
+      board: ['try the jacket on', 'look for my bag'],
+      table: { head: ['Separables', 'No separables'], rows: [['try on (try the jacket on)', 'get on (get on the bus)'], ['turn off (turn the radio off)', 'look for (look for my bag)'], ['pick up (pick the book up)', 'come back (come back soon)']] },
+    },
+    { who: 'maya', text: "One more thing. Ricardo said 'bank account', 'debit card' and 'cash machine'. In English, two nouns can work together: the first one describes the second.", es: 'Una cosa más. Ricardo dijo «bank account», «debit card» y «cash machine». En inglés, dos sustantivos pueden trabajar juntos: el primero describe al segundo.' },
+    {
+      who: 'board',
+      text: 'A card to pay from your account is a ___.',
+      table: { head: ['Sustantivo + sustantivo', 'Significado'], rows: [['bank account', 'cuenta bancaria'], ['debit card', 'tarjeta de débito'], ['cash machine', 'cajero automático'], ['student ID', 'carné de estudiante']] },
+      choice: { options: ['debit card', 'card debit', 'debit of card'], answer: 0, tip: 'El primer sustantivo describe al segundo: debit card.' },
+    },
+    { who: 'maya', text: "Now let's practice. Then we'll open your account.", es: 'Ahora practiquemos. Después abrimos su cuenta.' },
+  ],
 }
