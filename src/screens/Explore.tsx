@@ -48,7 +48,7 @@ import { B1_02_CLOSE, B1_02_FRAGMENTS, B1_02_LANDED, B1_02_LUMEN_ID, b1PlaneLine
 import { TheAccident } from '../components/CallForHelp'
 import { MemoryScript } from '../components/MemoryScript'
 import { NotebookIcon } from '../components/LNotebook'
-import { B1_03_CLOSE_PHONE, B1_03_NOTEBOOK, B1_03_NOTEBOOK2, B1_03_PHONE } from '../data/b1Words'
+import { B1_03_NOTEBOOK, B1_03_PHONE } from '../data/b1Words'
 import { TextOnly } from '../components/TextOnly'
 import { isB1Unlocked } from '../data/b1World'
 import { B1_CALL, B1_PHONE } from '../data/b1Home'
@@ -675,7 +675,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE || e.id === B1_03_CLOSE_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_03_NOTEBOOK2 ? <NotebookIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK ? <NotebookIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />

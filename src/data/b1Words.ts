@@ -6,10 +6,10 @@ import type { ScriptLine } from './b1Accident'
  * Bloque A (este): L despierta en el hospital → la médica (tarea 'b1-03-doctor', secuencia fija con MemoryScript;
  *   L no habla, solo "…") → se abre el pasillo al apartamento de L → el cuaderno del escritorio (tarea 'b1-03-notebook'):
  *   lección 'informal-messages' como página 1 del Cuaderno de L (components/LNotebook.tsx) + práctica (data/questions-b1-03.ts).
- * Bloque B: el teléfono (tarea 'b1-03-texts', Text Only: components/TextOnly.tsx, data/b1TextOnly.ts) → el cuaderno de la
- *   página 2, junto a la cama (tarea 'b1-03-notebook2', lección 'present-perfect-cont' + práctica).
- * Bloque C: al terminar la página 2 aparecen los 3 Unread Messages (uno tras otro) → The Static (jefe, 2 fases) → el teléfono
- *   del cierre (tarea 'b1-03-close'): responde a la amiga, recupera los temas y sale del recuerdo con closeId(3) (abre el nodo 4).
+ * Bloque B: el teléfono (tarea 'b1-03-texts', Text Only: components/TextOnly.tsx, data/b1TextOnly.ts) → el mismo cuaderno
+ *   del escritorio da la página 2 (tarea 'b1-03-notebook2', lección 'present-perfect-cont' + práctica).
+ * Bloque C: al terminar la página 2 aparecen los 3 Unread Messages (uno tras otro) → The Static (jefe, 2 fases) → el mismo teléfono
+ *   vibra con el cierre (tarea 'b1-03-close'): responde a la amiga, recupera los temas y sale del recuerdo con closeId(3) (abre el nodo 4).
  *   Preguntas en data/questions-b1-03.ts; diario en data/b1Diary.ts. En los recuerdos no se ganan atuendos.
  * L se dibuja con SpriteL y la médica con la cara borrosa (Explore lo hace solo en las escenas de recuerdo).
  */
@@ -18,11 +18,11 @@ export const B1_03_HOSPITAL_ID = 'b1-03-hospital'
 export const B1_03_DOCTOR = 'b1-03-doctor'
 /** El cuaderno sobre el escritorio del apartamento. Su tarea (página 1 + práctica) guarda este id */
 export const B1_03_NOTEBOOK = 'b1-03-notebook'
-/** Bloque B: el teléfono del apartamento (Text Only, tarea 'b1-03-texts') y el cuaderno de la página 2 (junto a la cama) */
+/** Bloque B: el teléfono del apartamento (Text Only, tarea 'b1-03-texts'). La página 2 (tarea 'b1-03-notebook2') sale del mismo cuaderno */
 export const B1_03_PHONE = 'b1-03-phone'
 export const B1_03_TEXTS = 'b1-03-texts'
 export const B1_03_NOTEBOOK2 = 'b1-03-notebook2'
-/** Bloque C: los esbirros (en cadena), el jefe y el teléfono del cierre (aparece al vencer al jefe) */
+/** Bloque C: los esbirros (en cadena), el jefe y la tarea del cierre (en el mismo teléfono de Text Only, al vencer al jefe) */
 export const B1_03_UNREAD1 = 'b1-03-unread1'
 export const B1_03_UNREAD2 = 'b1-03-unread2'
 export const B1_03_UNREAD3 = 'b1-03-unread3'
@@ -67,16 +67,12 @@ export const B1_03_HOSPITAL: SceneDef = {
     { type: 'npc', id: B1_03_DOCTOR, x: 2, y: 3 },
     { type: 'npc', id: B1_03_NOTEBOOK, x: 16, y: 3 },
     { type: 'npc', id: B1_03_PHONE, x: 18, y: 2 },
-    // Aparece al terminar Text Only (npcs.ts, after)
-    { type: 'npc', id: B1_03_NOTEBOOK2, x: 15, y: 5 },
     // Bloque C: junto al teléfono, junto al escritorio y junto a la ventana; cada uno al vencer al anterior
     { type: 'enemy', id: B1_03_UNREAD1, x: 18, y: 3, after: B1_03_NOTEBOOK2 },
     { type: 'enemy', id: B1_03_UNREAD2, x: 17, y: 2, after: B1_03_UNREAD1 },
     { type: 'enemy', id: B1_03_UNREAD3, x: 15, y: 1, after: B1_03_UNREAD2 },
     // El jefe, cerca de la puerta del apartamento
     { type: 'enemy', id: B1_03_STATIC, x: 14, y: 2, after: B1_03_UNREAD3 },
-    // El teléfono del cierre: aparece al vencer al jefe (npcs.ts, after)
-    { type: 'npc', id: B1_03_CLOSE_PHONE, x: 17, y: 4 },
   ],
   labels: [
     { text: 'Hospital', x: 3, y: 5 },
