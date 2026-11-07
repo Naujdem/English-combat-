@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
-import { PRESETS, b1Mission1, setTeacher, skipLessons, useTeacher } from '../game/teacher'
+import { PRESETS, b1Mission1, b1Mission2, setTeacher, skipLessons, useTeacher } from '../game/teacher'
 import { SCENES } from '../game/helpers'
 import { walkable } from './Tiles'
 import { ENEMIES } from '../data/enemies'
@@ -139,6 +139,12 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} col-span-2 px-2 text-sm`} onClick={() => go((s) => b1Mission1(s, 'echo'))}>B1-1: Smoke Echo</button>
             </div>
             <p className="mt-1 text-xs text-paper/55">En el recuerdo, habla con el amigo (junto a la puerta) para empezar o seguir la secuencia.</p>
+
+            <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1-2 · A New City</p>
+            <div className="mt-1 grid grid-cols-2 gap-2">
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission2(s, 'plane'))}>B1-2: empezar en el avión</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission2(s, 'airport'))}>B1-2: llegar al aeropuerto (después de las charlas)</button>
+            </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>
             <div className="mt-1 grid gap-2">

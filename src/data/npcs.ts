@@ -383,6 +383,25 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#5a6a7e', hair: '#2b2b33', skin: '#c9a888' },
     doneLine: { text: '...', es: '(No dice nada).' },
   },
+  // ── B1-02 · A New City (data/b1NewCity.ts): la persona especial (en el avión hasta aterrizar, luego en el aeropuerto) y Leo junto a la cinta ──
+  'b1-02-interest-plane': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    until: 'b1-02-landed',
+  },
+  'b1-02-interest': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    after: 'b1-02-landed',
+  },
+  'b1-02-leo': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    after: 'b1-02-landed',
+    doneLine: { text: "Good! Now, let's see what's going on at the baggage claim...", es: '¡Bien! Ahora veamos qué pasa en la zona de equipaje...' },
+  },
   // ── B1 · DEMO de Inscriptions: una tablilla de piedra (se dibuja como tablilla en Explore) ──
   'b1-demo-tablet': {
     name: 'Stone tablet',

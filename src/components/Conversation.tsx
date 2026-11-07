@@ -103,6 +103,7 @@ export function ConversationView({
             <span className="font-semibold text-[#9cc0f0]">{state.hero.name}: </span>
             {picked.text}
           </p>
+          {showEs && picked.textEs && <p className="text-sm text-paper/60">{picked.textEs}</p>}
           <div className="flex items-start gap-2">
             <p className="flex-1 text-[17px] leading-relaxed">
               <span className="font-semibold text-gold">{friend.name}: </span>"{picked.reply}"

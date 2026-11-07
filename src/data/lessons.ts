@@ -597,4 +597,28 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'The alarm rang, ___ everybody left the building.', board: ['…, so + resultado', 'As a result, + oración'], choice: { options: ['so', 'because of', 'as a result of'], answer: 0, tip: 'Es el resultado: so (así que).' } },
     { who: 'leo', text: 'Reason: because / because of. Result: so / as a result. Ready to practice?', es: 'Causa: because / because of. Resultado: so / as a result. ¿Listo para practicar?', board: ['because · because of', 'so · as a result'] },
   ],
+  // B1-02 · A New City: Leo en el aeropuerto, junto a la cinta de equipaje
+  'pp-yet-already': [
+    { who: 'leo', text: "We've landed! Welcome to Lumen Bay. Let's find our bags.", es: '¡Aterrizamos! Bienvenido a Lumen Bay. Busquemos nuestras maletas.' },
+    { who: 'leo', text: "Look at the board. Some things have already happened. Other things haven't happened yet.", es: 'Mira el tablero. Algunas cosas ya pasaron. Otras todavía no.' },
+    {
+      who: 'board',
+      text: "I've already found my bag. I haven't found my phone yet.",
+      board: ["I've already found my bag.", "I haven't found my phone yet."],
+      table: { head: ['Idea', 'Ejemplo'], rows: [['Ya (afirmativo)', '<I> [have] {already} [found] my bag.'], ['Todavía no (negativo)', "<I> [haven't] [found] my phone {yet}."], ['¿Ya? (pregunta)', '[Have] <you> [found] your bag {yet}?']] },
+    },
+    { who: 'leo', text: "'Already' goes in the middle: have + already + participle. 'Yet' goes at the end, in questions and negatives.", es: "'Already' va en medio: have + already + participio. 'Yet' va al final, en preguntas y negativas." },
+    { who: 'board', text: "I haven't found my bag ___.", choice: { options: ['yet', 'already', 'just'], answer: 0, tip: "Negativa, 'todavía no': yet, al final." } },
+    { who: 'leo', text: "'Just' means a very short time ago: 'I've just landed.' It also goes in the middle.", es: "'Just' significa hace muy poco: 'I've just landed.' También va en medio." },
+    { who: 'board', text: 'Look! The plane ___ landed.', choice: { options: ['has just', 'just has', 'has yet'], answer: 0, tip: "'just' va entre has y el participio: has just landed." } },
+    { who: 'leo', text: "Careful: with a finished time like 'yesterday' or 'last night', we use the past simple, not the present perfect.", es: "Ojo: con un momento terminado como 'yesterday' o 'last night', usamos el past simple, no el present perfect." },
+    {
+      who: 'board',
+      text: "I've lost my bag. I lost my bag yesterday.",
+      board: ["I've lost my bag. (it is missing now)", 'I lost my bag yesterday. (finished time)'],
+      table: { head: ['Present perfect', 'Past simple'], rows: [['Resultado que importa ahora: <I> [have lost] my bag.', 'Momento terminado: <I> [lost] my bag {yesterday}.']] },
+    },
+    { who: 'board', text: 'I ___ my passport at the hotel yesterday.', choice: { options: ['left', 'have left', 'has left'], answer: 0, tip: "'yesterday' es un momento terminado: past simple (left)." } },
+    { who: 'leo', text: "Ready? Let's practice, and then we'll find those bags.", es: '¿Listo? Practiquemos y después buscamos esas maletas.' },
+  ],
 }

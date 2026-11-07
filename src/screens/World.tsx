@@ -23,6 +23,7 @@ import { B1Map } from '../components/B1Map'
 import { enterMemory, memoryFlag } from '../game/memory'
 import { B1_01_SCHOOL } from '../data/b1Accident'
 import { B1_HOME } from '../data/b1Home'
+import { B1_02_LUMEN_ID } from '../data/b1NewCity'
 import { LooseFragment } from '../components/FragmentJoin'
 import { B1_HOME_ID, B1_NODES, B1_OPENING, B1_PART_NAMES, B1_ERA_COLOR, b1LockedText, b1Message, b1NodeDone, b1NodeOpen, isB1Unlocked, type B1Node, type B1Part } from '../data/b1World'
 import { heroLook, SCENES } from '../game/helpers'
@@ -170,6 +171,8 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       // El recuerdo empieza desde tu cuarto: al despertar vuelves ahí (exitMemory regresa al último lugar del presente)
       return update((s) => enterMemory({ ...s, sceneId: B1_HOME_ID, pos: { ...B1_HOME.start } }, 1, B1_01_SCHOOL.id, B1_01_SCHOOL.start))
     }
+    // Nodo 2 (presente): el avión y el aeropuerto de Lumen Bay (data/b1NewCity.ts)
+    if (n.num === 2) return onEnter(B1_02_LUMEN_ID)
     setMsg(`${n.name}: este lugar se construirá pronto.`)
   }
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]

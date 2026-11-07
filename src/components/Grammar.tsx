@@ -79,6 +79,8 @@ export function wordRole(word: string, topic?: TopicId): Role {
   if (/'s$/.test(w) && topic === 'possessives') return 'key'
   // B1 · causa y efecto: los conectores van en morado
   if (topic === 'cause-effect' && ['because', 'so', 'result', 'when', 'while'].includes(w)) return 'key'
+  // B1 · present perfect con yet / already / just
+  if (topic === 'pp-yet-already' && ['yet', 'already', 'just'].includes(w)) return 'key'
   // Cada tema resalta sus palabras clave; las demás quedan neutras para no saturar
   if (KEY.has(w)) {
     if (topic === 'possessives') return ['my', 'your', 'his', 'her', 'its', 'our', 'their'].includes(w) ? 'key' : 'rest'
@@ -276,6 +278,11 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
     case 'recipes-some-any':
       if (question || negative) return { title: 'En negativas y preguntas: any:', parts: [V("Is there / There isn't"), '+', K('any'), '+', R('cosa')] }
       return { title: "Receta: el verbo va primero (Don't + verbo para prohibir) · en afirmativas: some:", parts: [V('Put / Add / Mix'), '+', K('some'), '+', R('cosa')] }
+    case 'pp-yet-already':
+      if (/\b(yesterday|last night|ago)\b/i.test(sentence)) return { title: 'Momento terminado (yesterday, last night): past simple, no present perfect:', parts: [S('Sujeto'), '+', V('pasado'), '+', R('...'), '+', K('yesterday')] }
+      if (question) return { title: '¿Ya? Have / Has + sujeto + participio + yet?', parts: [V('Have / Has'), '+', S('sujeto'), '+', V('participio'), '+', R('...'), '+', K('yet?')] }
+      if (negative) return { title: "Todavía no: haven't / hasn't + participio + yet (al final):", parts: [S('Sujeto'), '+', V("haven't / hasn't"), '+', V('participio'), '+', R('...'), '+', K('yet')] }
+      return { title: 'Ya / hace muy poco: have / has + already / just + participio:', parts: [S('Sujeto'), '+', V('have / has'), '+', K('already / just'), '+', V('participio'), '+', R('...')] }
     case 'present-perfect':
       if (question) return { title: 'Para preguntar por experiencias: Have / Has + sujeto + ever + participio?', parts: [V('Have / Has'), '+', S('Sujeto'), '+', K('ever'), '+', V('participio'), '+', R('...?')] }
       if (negative) return { title: "Para negar: haven't / hasn't + participio (… yet):", parts: [S('Sujeto'), '+', K("haven't / hasn't"), '+', V('participio'), '+', R('... yet')] }

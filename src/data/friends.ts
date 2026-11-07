@@ -1,4 +1,4 @@
-import type { ChatOption, FriendDef, Interest } from '../game/types'
+import type { CasualChat, ChatOption, FriendDef, Interest } from '../game/types'
 
 /**
  * Amigos de la escuela.
@@ -765,3 +765,36 @@ export function interestFriend(interest: Interest, heroName = ''): FriendDef {
     ],
   }
 }
+
+/**
+ * B1-02 · A New City: las dos charlas casuales con la persona especial en el avión (nivel B1).
+ * No van en el banco de charlas al azar (tienen requires: null y saldrían en cualquier momento):
+ * se juegan una sola vez al empezar la misión (data/b1NewCity.ts, b1PlaneLines; Explore.tsx, quest 'b1-02-plane').
+ * La amistad sube o baja con la misma regla de las charlas casuales (game/social.ts, applyCasual).
+ */
+export const B1_02_PLANE_CHATS: CasualChat[] = [
+  {
+    requires: null,
+    level: 'B1',
+    text: "Are you nervous? I'm a little nervous. What are you going to do first in Lumen Bay?",
+    es: '¿Estás nervioso? Yo estoy un poco nervioso. ¿Qué vas a hacer primero en Lumen Bay?',
+    options: [
+      { text: "I'm going to explore the harbour.", textEs: 'Voy a explorar el puerto.', reply: "Nice! I'd love to see the old port too.", es: '¡Qué bien! A mí también me encantaría ver el puerto viejo.', effect: 2 },
+      { text: "I'd love to try the local food.", textEs: 'Me encantaría probar la comida local.', reply: "Me too! I'm going to try everything.", es: '¡Yo también! Voy a probarlo todo.', effect: 2 },
+      { text: "I'm going to sleep for two days.", textEs: 'Voy a dormir dos días.', reply: "Ha! Good plan. I'll wake you up for dinner.", es: '¡Ja! Buen plan. Te despierto para la cena.', effect: 1 },
+      { text: 'Yes, the harbour I am pizza.', textEs: '(No tiene sentido.)', reply: "Sorry, I didn't understand.", es: 'Perdón, no te entendí.', effect: -1 },
+    ],
+  },
+  {
+    requires: null,
+    level: 'B1',
+    text: "I'd love to make friends from other countries. What about you?",
+    es: 'Me encantaría hacer amigos de otros países. ¿Y tú?',
+    options: [
+      { text: "Me too. I'm going to talk to everybody!", textEs: 'Yo también. ¡Voy a hablar con todo el mundo!', reply: "Great! Then let's start with the taxi driver.", es: '¡Genial! Entonces empecemos con el taxista.', effect: 2 },
+      { text: "I'd like to meet people, but I'm shy.", textEs: 'Me gustaría conocer gente, pero soy tímido.', reply: "That's OK. We can be shy together.", es: 'Está bien. Podemos ser tímidos juntos.', effect: 2 },
+      { text: "Maybe. I'll see.", textEs: 'Tal vez. Ya veré.', reply: "Fair enough. Let's see what happens.", es: 'Me parece bien. Veamos qué pasa.', effect: 0 },
+      { text: 'Friends the country is big.', textEs: '(No tiene sentido.)', reply: 'Sorry, what?', es: 'Perdón, ¿qué?', effect: -1 },
+    ],
+  },
+]
