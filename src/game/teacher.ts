@@ -32,6 +32,7 @@ import { A2_RETURN, A2_13_CLOSE } from '../data/a2Return'
 import { B1_HOME } from '../data/b1Home'
 import { B1_OPENING, closeId } from '../data/b1World'
 import { B1_02_LANDED, B1_02_LUMEN, B1_02_PRACTICE } from '../data/b1NewCity'
+import { B1_04_RESIDENCE, B1_04_WELCOME } from '../data/b1Residence'
 import { B1_03_DOCTOR, B1_03_HOSPITAL, B1_03_NOTEBOOK, B1_03_NOTEBOOK2, B1_03_STATIC, B1_03_TEXTS, B1_03_UNREAD1, B1_03_UNREAD2, B1_03_UNREAD3 } from '../data/b1Words'
 import { B1_02_BOSS, B1_02_JACK, B1_02_LUGGAGE, B1_02_TRAV1, B1_02_TRAV2 } from '../data/b1Airport'
 import { B1_02_AGENDA, B1_02_FUTURES, B1_02_ROUTE, B1_02_SHOP } from '../data/b1Office'
@@ -791,6 +792,20 @@ export function b1Mission3(s: GameState, stage: 'memory' | 'notebook' | 'texts' 
   const beaten = { static: [B1_03_UNREAD1, B1_03_UNREAD2, B1_03_UNREAD3], close: [B1_03_UNREAD1, B1_03_UNREAD2, B1_03_UNREAD3, B1_03_STATIC] }[stage as 'static' | 'close'] ?? []
   const lessons = stage === 'texts' || stage === 'notebook2' ? ['informal-messages'] : stage === 'unread' || stage === 'static' || stage === 'close' ? ['informal-messages', 'present-perfect-cont'] : []
   return { ...m, opened: add(m.opened, flags), defeated: add(m.defeated, beaten), seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
+}
+
+/**
+ * Atajos de la misión B1-4 (House Rules) para el panel del profe. Parten de "B1: abrir el nodo 4".
+ *  start: entra a la residencia (frente al mostrador de Marisol) · lesson: ya hablaste con Marisol (junto a Maya, la lección sale de nuevo)
+ *  fineprint: lección y práctica de Maya hechas (junto a Maya, listo para The Fine Print)
+ */
+export function b1Mission4(s: GameState, stage: 'start' | 'lesson' | 'fineprint'): GameState {
+  const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3)])
+  const home = { ...b, screen: 'explore' as const, sceneId: B1_04_RESIDENCE.id, pos: { ...B1_04_RESIDENCE.start }, seenLesson: b.seenLesson.filter((t) => t !== 'obligation-b1') }
+  if (stage === 'start') return home
+  const lesson = { ...home, pos: { x: 3, y: 5 }, opened: add(home.opened, [B1_04_WELCOME]) }
+  if (stage === 'lesson') return lesson
+  return { ...lesson, opened: add(lesson.opened, ['b1-04-rules']), seenLesson: add(lesson.seenLesson, ['obligation-b1']) as GameState['seenLesson'] }
 }
 
 PRESETS.push(

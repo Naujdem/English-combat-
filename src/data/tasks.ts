@@ -20,6 +20,9 @@ import { B1_03_DOCTOR_SCRIPT } from './b1Words'
 import { B1_03_PRACTICE1_IDS, B1_03_PRACTICE2_IDS } from './questions-b1-03'
 import type { TextOnlyContent } from '../components/TextOnly'
 import { B1_03_CLOSE_CHAT, B1_TEXT_ONLY } from './b1TextOnly'
+import type { FinePrintContent } from '../components/FinePrint'
+import { B1_04_FINE_PRINT } from './b1FinePrint'
+import { B1_04_PRACTICE1_IDS } from './questions-b1-04'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -43,7 +46,9 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint'
+  /** Para activity 'fineprint' (The Fine Print, B1-04): las cláusulas del contrato que se sellan. Sin errores, escudo */
+  fineprint?: FinePrintContent
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -4470,6 +4475,62 @@ NPC_TASKS['b1-03-close'] = {
     es: 'Recuerdo 3: Palabras en una pantalla',
     sub: 'Todos hablan. Él escribe. Despiertas en el presente con dolor de garganta.',
     say: 'Words on a screen.',
+  },
+}
+
+// ── B1-04 · House Rules, bloque A (residencia de Lumen Bay; escena en data/b1Residence.ts) ──
+// Marisol da la bienvenida (narrativa + una elección). Después aparece Maya en el vestíbulo
+NPC_TASKS['b1-04-welcome'] = {
+  npc: 'b1-04-marisol',
+  done: 'b1-04-welcome',
+  steps: [
+    { text: "Welcome to the residence! I'm Marisol, the landlady. This is Moscú. She lives here, too.", es: '¡Bienvenidos a la residencia! Soy Marisol, la dueña. Ella es Moscú. También vive aquí.' },
+    {
+      text: 'Here are your keys and your contract. Please read the rules carefully.',
+      es: 'Aquí están sus llaves y su contrato. Por favor, lean las reglas con atención.',
+      choice: { ask: '¿Qué le respondes?', options: ["Thank you, Marisol. We'll read it now.", 'Thank you, Marisol. We read will it now.', "Thanks, Marisol. We reading it."], answer: 0, tip: "Decisión en el momento: will + verbo base: We'll read it now." },
+    },
+  ],
+  reward: {
+    text: 'Marisol: "Go and read the rules with your friend. I\'m here if you have questions."',
+    es: 'Vayan a leer las reglas con su amiga. Estoy aquí si tienen preguntas.',
+    sub: 'Tienes las llaves y el contrato. Maya te espera en el vestíbulo.',
+    say: "Go and read the rules with your friend. I'm here if you have questions.",
+  },
+}
+
+// Maya en el vestíbulo: lección 'obligation-b1' (Maya la guía) + práctica guiada. Si todas están bien, escudo
+NPC_TASKS['b1-04-rules'] = {
+  npc: 'b1-04-maya',
+  done: 'b1-04-rules',
+  lesson: 'obligation-b1',
+  requires: { id: 'b1-04-welcome', text: 'Maya is waiting for you.', es: 'Maya te está esperando.', sub: 'Primero habla con Marisol.' },
+  activity: 'practice',
+  practice: 'obligation-b1',
+  practiceIds: B1_04_PRACTICE1_IDS,
+  practiceShield: true,
+  steps: [],
+  reward: {
+    text: 'Maya: "Good! Now let\'s look at the contract. Look for the rules."',
+    es: '¡Bien! Ahora miremos el contrato. Busquemos las reglas.',
+    sub: 'Lección y práctica hechas. (Si acertaste todas, ganaste un escudo). Habla otra vez con Maya para leer el contrato.',
+    say: "Good! Now let's look at the contract. Look for the rules.",
+  },
+}
+
+// Maya: The Fine Print (components/FinePrint.tsx). Sin errores, escudo. Este bloque NO guarda closeId(4)
+NPC_TASKS['b1-04-fineprint'] = {
+  npc: 'b1-04-maya',
+  done: 'b1-04-fineprint',
+  requires: { id: 'b1-04-rules', text: 'Maya is waiting for you.', es: 'Maya te está esperando.', sub: 'Primero haz la lección de Maya.' },
+  activity: 'fineprint',
+  fineprint: B1_04_FINE_PRINT,
+  steps: [],
+  reward: {
+    text: 'Maya: "That\'s a long contract! OK, let\'s meet the neighbours."',
+    es: '¡Qué contrato tan largo! Bueno, conozcamos a los vecinos.',
+    sub: 'Ya conoces las reglas de la casa. El pasillo se abre en el siguiente bloque. (Sin errores, ganaste un escudo).',
+    say: "That's a long contract! OK, let's meet the neighbours.",
   },
 }
 

@@ -41,6 +41,7 @@ import { A2_FRIENDS_QUESTIONS } from './questions-a2-friends'
 import { B1_01_QUESTIONS } from './questions-b1-01'
 import { B1_02_QUESTIONS } from './questions-b1-02'
 import { B1_03_QUESTIONS } from './questions-b1-03'
+import { B1_04_QUESTIONS } from './questions-b1-04'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -401,6 +402,7 @@ export const QUESTIONS: Question[] = [
   ...B1_01_QUESTIONS,
   ...B1_02_QUESTIONS,
   ...B1_03_QUESTIONS,
+  ...B1_04_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -1093,6 +1095,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'for + un período (for two weeks, for an hour) · since + un punto de inicio (since Monday, since March).',
       'Para preguntar la duración: How long have you been...? → How long have you been feeling like this?',
       "Algunos verbos no usan -ing (know, be, have = poseer, want): I've known her for years.",
+    ],
+  },
+  'obligation-b1': {
+    name: "Obligación: have to, must, mustn't, don't have to",
+    level: 'B1',
+    lesson: [
+      'Obligación fuerte o regla: must + verbo base (sin to) → You must pay by the 5th.',
+      'Algo necesario: have to / has to + verbo base → You have to show your ID. · She has to show her ID.',
+      "Prohibido: mustn't + verbo base → You mustn't smoke here.",
+      "No es necesario (pero puedes): don't / doesn't have to · needn't + verbo base → You don't have to clean the kitchen.",
     ],
   },
 }

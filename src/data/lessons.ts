@@ -681,4 +681,35 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'notebook', text: 'I ___ her for ten years.', choice: { options: ['have known', 'have been knowing', 'know'], answer: 0, tip: 'know no usa -ing: I have known her for ten years.' } },
     { who: 'notebook', text: 'Enough. Let me test myself with the next messages.', es: 'Suficiente. Me pondré a prueba con los siguientes mensajes.' },
   ],
+  // B1-04 · House Rules (residencia de Lumen Bay): Maya guía la lección (who 'maya': su retrato y su voz)
+  'obligation-b1': [
+    { who: 'maya', text: "Hi! Marisol gave me the contract, too. Let's read it together. Look: it says 'You must pay by the 5th'. 'Must' is for a strong obligation.", es: '¡Hola! Marisol también me dio el contrato. Leámoslo juntos. Mira: dice «You must pay by the 5th». «Must» es para una obligación fuerte.' },
+    {
+      who: 'board',
+      text: 'You must pay by the 5th. You have to show your ID.',
+      board: ['You must pay by the 5th.', 'You have to show your ID.'],
+      table: { head: ['Obligación', 'Ejemplo'], rows: [['must + verbo base (regla fuerte)', '<You> {must} [pay] by the 5th.'], ['have to + verbo base (algo necesario)', '<You> {have to} [show] your ID.']] },
+    },
+    { who: 'maya', text: "'Must' and 'have to' are very similar. Both mean it is necessary.", es: '«Must» y «have to» son muy parecidos. Los dos significan que es necesario.' },
+    { who: 'board', text: "You ___ pay the rent by the 5th. It's in the contract.", choice: { options: ['must', 'must to', 'musts'], answer: 0, tip: 'must + verbo base, sin to.' } },
+    { who: 'maya', text: "Now the opposite. 'Mustn't' means it is forbidden: you can't do it.", es: 'Ahora lo contrario. «Mustn\'t» significa que está prohibido: no se puede.' },
+    {
+      who: 'board',
+      text: "You mustn't smoke here. You mustn't make noise at night.",
+      board: ["You mustn't smoke here.", "You mustn't make noise at night."],
+      table: { head: ['Prohibido', 'Ejemplo'], rows: [["mustn't + verbo base", "<You> {mustn't} [smoke] in your room."], ["mustn't + verbo base", "<You> {mustn't} [make] noise at night."]] },
+    },
+    { who: 'board', text: "You ___ smoke in the room. It's forbidden.", choice: { options: ["mustn't", "don't have to", "haven't to"], answer: 0, tip: "Prohibido: mustn't." } },
+    { who: 'maya', text: "Careful! 'Don't have to' is NOT the same. It means it is not necessary, but you can do it if you want.", es: '¡Cuidado! «Don\'t have to» NO es lo mismo. Significa que no es necesario, pero puedes hacerlo si quieres.' },
+    {
+      who: 'board',
+      text: "You don't have to clean the kitchen. You needn't pay in cash.",
+      board: ["You don't have to clean the kitchen.", "You needn't pay in cash."],
+      table: { head: ['No es obligatorio', 'Ejemplo'], rows: [["don't / doesn't have to + verbo base", "<You> {don't have to} [clean] the kitchen."], ["needn't + verbo base", "<You> {needn't} [pay] in cash."]] },
+    },
+    { who: 'board', text: 'Marisol cleans the kitchen. You ___ clean it.', choice: { options: ["don't have to", "mustn't", 'must'], answer: 0, tip: "No es necesario (pero podrías): don't have to." } },
+    { who: 'maya', text: "Compare: mustn't = prohibited. Don't have to = not necessary. Very different!", es: "Compara: mustn't = prohibido. Don't have to = no es necesario. ¡Muy distintos!" },
+    { who: 'board', text: "You ___ park here. It's forbidden.", choice: { options: ["mustn't", "don't have to", "aren't have to"], answer: 0, tip: "Prohibido: mustn't." } },
+    { who: 'maya', text: "Ready? Let's practice first. Then we'll find the rules in the contract.", es: '¿Listo? Practiquemos primero. Después buscamos las reglas en el contrato.' },
+  ],
 }

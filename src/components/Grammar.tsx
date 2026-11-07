@@ -254,6 +254,10 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (question) return { title: 'Para preguntar: Should + sujeto + verbo? · Do / Does + sujeto + have to + verbo?', parts: [V('Should / Do'), '+', S('Sujeto'), '+', K('(have to)'), '+', V('verbo'), '+', R('...?')] }
       if (negative) return { title: "shouldn't = mal consejo · mustn't = prohibido · don't have to = no es necesario:", parts: [S('Sujeto'), '+', K("shouldn't / mustn't / don't have to"), '+', V('verbo'), '+', R('...')] }
       return { title: 'Consejo: should · Regla: must · Obligación: have to / has to. Después, el verbo va solo:', parts: [S('Sujeto'), '+', K('should / must / have to'), '+', V('verbo'), '+', R('...')] }
+    case 'obligation-b1':
+      if (/\bmustn't\b/i.test(sentence)) return { title: "Prohibido: mustn't + verbo base:", parts: [S('Sujeto'), '+', K("mustn't"), '+', V('verbo'), '+', R('...')] }
+      if (/\b(don't|doesn't) have to\b|\bneedn't\b/i.test(sentence)) return { title: "No es necesario: don't / doesn't have to · needn't + verbo base:", parts: [S('Sujeto'), '+', K("don't have to / needn't"), '+', V('verbo'), '+', R('...')] }
+      return { title: 'Obligación: must + verbo base (sin to) · have to / has to + verbo base:', parts: [S('Sujeto'), '+', K('must / have to / has to'), '+', V('verbo'), '+', R('...')] }
     case 'invitations':
       if (question) return { title: 'Para invitar: Would + you + like to + verbo? · How about + verbo con -ing?', parts: [K('Would you like to / How about'), '+', V('verbo / verbo-ing'), '+', R('...?')] }
       return { title: "Let's + verbo · la frecuencia (always, usually, sometimes, never) va antes del verbo:", parts: [S('Sujeto'), '+', K('always / usually / sometimes / never'), '+', V('verbo'), '+', R('...')] }

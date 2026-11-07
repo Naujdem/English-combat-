@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
-import { PRESETS, b1Mission1, b1Mission2, b1Mission3, setTeacher, skipLessons, useTeacher } from '../game/teacher'
+import { PRESETS, b1Mission1, b1Mission2, b1Mission3, b1Mission4, setTeacher, skipLessons, useTeacher } from '../game/teacher'
 import { SCENES } from '../game/helpers'
 import { walkable } from './Tiles'
 import { ENEMIES } from '../data/enemies'
@@ -163,6 +163,13 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission3(s, 'unread'))}>B1-3: Unread Messages</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission3(s, 'static'))}>B1-3: The Static</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission3(s, 'close'))}>B1-3: cierre</button>
+            </div>
+
+            <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1-4 · House Rules</p>
+            <div className="mt-1 grid grid-cols-2 gap-2">
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission4(s, 'start'))}>B1-4: empezar</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission4(s, 'lesson'))}>B1-4: lección de Maya (ya hablaste con Marisol)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission4(s, 'fineprint'))}>B1-4: The Fine Print</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>
