@@ -665,4 +665,20 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'notebook', text: "Your boss writes: 'Please send the report by Friday.' Which answer is better?", choice: { options: ['Understood. I will send it by Friday.', 'Got it lol.', 'Thx k.'], answer: 0, tip: 'Con un jefe: completo y cortés.' } },
     { who: 'notebook', text: "That's enough for today. Tomorrow, the messages begin.", es: 'Basta por hoy. Mañana empiezan los mensajes.' },
   ],
+  // B1-03 · Cuaderno de L, página 2 (recuerdo 3, bloque B)
+  'present-perfect-cont': [
+    { who: 'notebook', text: "Day 35. Fifteen days of texting. My thumbs are tired, not my voice. Today's lesson: how long something has been happening.", es: 'Día 35. Quince días escribiendo mensajes. Mis pulgares están cansados, no mi voz. Lección de hoy: cuánto tiempo lleva pasando algo.' },
+    { who: 'notebook', text: 'Present perfect continuous: have/has + been + verb-ing. I use it for things that started in the past and are still happening now.', es: 'Present perfect continuous: have/has + been + verbo con -ing. Se usa para cosas que empezaron en el pasado y siguen pasando ahora.' },
+    { who: 'notebook', text: '', table: { head: ['Estructura', 'Ejemplo'], rows: [['I / you / we / they + have been + -ing', 'I have been waiting for weeks.'], ['he / she / it + has been + -ing', 'She has been calling every day.']] } },
+    { who: 'notebook', text: 'He ___ for an hour.', choice: { options: ['has been waiting', 'have been waiting', 'has waiting'], answer: 0, tip: 'He = has been + -ing.' } },
+    { who: 'notebook', text: 'For + a period of time: for two weeks, for an hour. Since + a starting point: since Monday, since March.', es: 'For + un período: for two weeks, for an hour. Since + un punto de inicio: since Monday, since March.' },
+    { who: 'notebook', text: '', table: { head: ['for (cuánto tiempo)', 'since (desde cuándo)'], rows: [['for two weeks', 'since Monday'], ['for an hour', "since eight o'clock"], ['for a long time', 'since March']] } },
+    { who: 'notebook', text: "I've been writing in this notebook ___ three weeks.", choice: { options: ['for', 'since', 'from'], answer: 0, tip: 'Un período de tiempo: for three weeks.' } },
+    { who: 'notebook', text: 'She has been waiting ___ Monday.', choice: { options: ['since', 'for', 'during'], answer: 0, tip: 'Un punto de inicio (Monday): since.' } },
+    { who: 'notebook', text: "To ask about duration: How long...? 'How long have you been feeling like this?' 'I've been trying to speak every day.'", es: 'Para preguntar la duración: How long...? «¿Cuánto tiempo llevas sintiéndote así?» «Llevo intentando hablar todos los días.»' },
+    { who: 'notebook', text: '___ have you been waiting?', choice: { options: ['How long', 'How much', 'How many'], answer: 0, tip: 'Duración: How long...?' } },
+    { who: 'notebook', text: "Careful: some verbs don't like -ing: know, be, have (to own), want. I say 'I've known her for years', not 'I've been knowing'.", es: "Ojo: algunos verbos no se usan con -ing: know, be, have (poseer), want. Digo «I've known her for years», no «I've been knowing»." },
+    { who: 'notebook', text: 'I ___ her for ten years.', choice: { options: ['have known', 'have been knowing', 'know'], answer: 0, tip: 'know no usa -ing: I have known her for ten years.' } },
+    { who: 'notebook', text: 'Enough. Let me test myself with the next messages.', es: 'Suficiente. Me pondré a prueba con los siguientes mensajes.' },
+  ],
 }

@@ -17,7 +17,9 @@ import { B1_ROUTE } from './b1Route'
 import { canRecognize } from '../game/mic'
 import type { ScriptLine } from './b1Accident'
 import { B1_03_DOCTOR_SCRIPT } from './b1Words'
-import { B1_03_PRACTICE1_IDS } from './questions-b1-03'
+import { B1_03_PRACTICE1_IDS, B1_03_PRACTICE2_IDS } from './questions-b1-03'
+import type { TextOnlyContent } from '../components/TextOnly'
+import { B1_TEXT_ONLY } from './b1TextOnly'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -41,7 +43,7 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly'
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
@@ -90,6 +92,8 @@ export type NpcTask = {
   notebookPage?: number
   /** Para activity 'script' (B1, recuerdos): secuencia fija sin elecciones (MemoryScript); 'friend' = el personaje de la tarea */
   script?: ScriptLine[]
+  /** Para activity 'textonly' (B1-03, Text Only): los chats en el teléfono de L. Los steps de la tarea los narra L antes */
+  textOnly?: TextOnlyContent
   /** Para activity 'practice': lo que narra L al terminar la práctica, antes de la recompensa (se ve en una página aparte) */
   outro?: { text: string; es: string }
   /** B1: al terminar la tarea se sale del recuerdo con ese número (game/memory.ts, exitMemory). closeMemory: además se guarda el cierre de la misión */
@@ -4396,7 +4400,7 @@ NPC_TASKS['b1-03-doctor'] = {
 }
 
 // El cuaderno del escritorio: página 1 del Cuaderno de L (lección 'informal-messages') + práctica. Si todas están bien, escudo.
-// PROVISIONAL: lo reemplaza el bloque 3-B. Al terminar sale del recuerdo SIN cerrar la misión (no guarda closeId(3)).
+// Al terminar, el teléfono del apartamento ya tiene mensajes (Text Only)
 NPC_TASKS['b1-03-notebook'] = {
   npc: 'b1-03-notebook',
   done: 'b1-03-notebook',
@@ -4407,11 +4411,48 @@ NPC_TASKS['b1-03-notebook'] = {
   practiceIds: B1_03_PRACTICE1_IDS,
   practiceShield: true,
   requires: { id: 'b1-03-doctor', text: 'A notebook. The first page is empty.', es: 'Un cuaderno. La primera página está vacía.', sub: 'Primero habla con la médica.' },
-  // PROVISIONAL: lo reemplaza el bloque 3-B
-  outro: { text: '(Tomorrow, the messages begin.)', es: '(Mañana empiezan los mensajes.)' },
+  steps: [],
+  reward: {
+    text: '(Tomorrow, the messages begin.)',
+    es: '(Mañana empiezan los mensajes.)',
+    sub: 'Página 1 del cuaderno terminada. (Si acertaste todas, ganaste un escudo).',
+    say: 'Tomorrow, the messages begin.',
+  },
+}
+
+// ── B1-03 · bloque B: Text Only (el teléfono del apartamento) y la página 2 del cuaderno ──
+// El teléfono: L narra y empieza Text Only (3 chats: la amiga, el director y un alumno; data/b1TextOnly.ts)
+NPC_TASKS['b1-03-texts'] = {
+  npc: 'b1-03-phone',
+  done: 'b1-03-texts',
+  activity: 'textonly',
+  textOnly: B1_TEXT_ONLY,
+  requires: { id: 'b1-03-notebook', text: 'My phone. No messages yet.', es: 'Mi teléfono. Todavía no hay mensajes.', sub: 'Primero lee el cuaderno del escritorio.' },
+  steps: [{ text: '(My phone buzzes. A message from a friend.)', es: '(Mi teléfono vibra. Un mensaje de una amiga.)' }],
+  reward: {
+    text: 'Three conversations, three different voices. And I never said a word.',
+    es: 'Tres conversaciones, tres voces distintas. Y nunca dije una palabra.',
+    sub: 'Text Only terminado. Hay otro cuaderno junto a la cama.',
+  },
+}
+
+// El cuaderno junto a la cama (aparece al terminar Text Only): página 2 (lección 'present-perfect-cont') + práctica.
+// Si todas están bien, escudo. PROVISIONAL: lo reemplaza el bloque 3-C. Al terminar sale del recuerdo SIN cerrar la misión
+// (no guarda closeId(3)).
+NPC_TASKS['b1-03-notebook2'] = {
+  npc: 'b1-03-notebook2',
+  done: 'b1-03-notebook2',
+  lesson: 'present-perfect-cont',
+  notebookPage: 2,
+  activity: 'practice',
+  practice: 'present-perfect-cont',
+  practiceIds: B1_03_PRACTICE2_IDS,
+  practiceShield: true,
+  // PROVISIONAL: lo reemplaza el bloque 3-C
+  outro: { text: '(The messages keep coming. Something is wrong with them.)', es: '(Los mensajes siguen llegando. Algo anda mal con ellos.)' },
   exitMemory: 3,
   steps: [],
-  reward: { text: 'Memory 3 (part 1)', sub: 'Continuará.' },
+  reward: { text: 'Memory 3 (part 2)', sub: 'Continuará.' },
 }
 
 export function taskOf(npcId: string, opened: string[]): { id: string; task: NpcTask; blocked: boolean } | null {

@@ -1085,4 +1085,14 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Con un jefe o un director: completo y cortés → Thank you. I have received your message. · Understood. I will send it by Friday.',
     ],
   },
+  'present-perfect-cont': {
+    name: 'Present perfect continuous: for, since, how long',
+    level: 'B1',
+    lesson: [
+      'have / has + been + verbo con -ing: algo que empezó en el pasado y sigue ahora → I have been waiting for weeks.',
+      'for + un período (for two weeks, for an hour) · since + un punto de inicio (since Monday, since March).',
+      'Para preguntar la duración: How long have you been...? → How long have you been feeling like this?',
+      "Algunos verbos no usan -ing (know, be, have = poseer, want): I've known her for years.",
+    ],
+  },
 }

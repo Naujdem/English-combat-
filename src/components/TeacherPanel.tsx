@@ -158,6 +158,8 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
             <div className="mt-1 grid grid-cols-2 gap-2">
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission3(s, 'memory'))}>B1-3: entrar al recuerdo</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission3(s, 'notebook'))}>B1-3: ir al cuaderno (ya hablaste con la médica)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission3(s, 'texts'))}>B1-3: Text Only</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission3(s, 'notebook2'))}>B1-3: página 2 del cuaderno</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>
