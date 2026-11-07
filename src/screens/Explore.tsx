@@ -86,8 +86,32 @@ import { EnoughForEveryone } from '../components/EnoughForEveryone'
 import { SHOP, isShopOpen } from '../data/a2Market'
 import { voiceOf, type Voice } from '../game/speech'
 import { btn, btnGhost, Hearts, KeyIcon, Overlay, Panel } from '../components/ui'
+import { ExploreTutorial, tutorialSeen } from '../components/ExploreTutorial'
 
 const VIEW = 11
+
+/**
+ * En el celular el mapa usa todo el ancho y muestra más filas si el alto lo permite
+ * (la cámara sigue al personaje). Se reserva espacio para la barra de arriba, los mensajes y los controles.
+ */
+function useViewRows(desktop: boolean) {
+  const calc = () => {
+    if (desktop || typeof window === 'undefined') return VIEW
+    const w = Math.min(window.innerWidth, 448) - 24
+    const tile = w / VIEW
+    const free = window.innerHeight - 350
+    return Math.max(8, Math.min(15, Math.floor(free / tile)))
+  }
+  const [n, setN] = useState(calc)
+  useEffect(() => {
+    const on = () => setN(calc())
+    on()
+    window.addEventListener('resize', on)
+    return () => window.removeEventListener('resize', on)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [desktop])
+  return n
+}
 
 /** Quién habla en un mensaje 'Nombre: "..."', para leerlo con voz de hombre o de mujer */
 function voiceFor(text: string, state: GameState): Voice {
@@ -158,6 +182,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [showEs, setShowEs] = useState(false)
   // Controles: flechas o joystick, a elección (se recuerda en este dispositivo)
   const desktop = useDesktop()
+  const viewRowsMax = useViewRows(desktop)
   const [controls, setControls] = useState<'dpad' | 'joystick'>(() => {
     try {
       return localStorage.getItem('english-combat-controls') === 'joystick' ? 'joystick' : 'dpad'
@@ -168,6 +193,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [notebook, setNotebook] = useState(false)
   // Preguntar "Is this your...?" mientras llevas un objeto perdido
   const [ask, setAsk] = useState<{ itemId: string; npcId: string; npcName: string } | null>(null)
+  // Tutorial corto la primera vez que se explora (una sola vez por dispositivo)
+  const [tutorial, setTutorial] = useState(() => !tutorialSeen())
   const lf = state.lostFound
   const lostOnMap = lf.started && scene.id === 'school' ? LOST_ITEMS.filter((it) => !lf.picked.includes(it.id)) : []
   const blocked = !!talk || friendsOpen || !!lesson || !!activity || notebook || !!ask || !!task || !!party
@@ -568,8 +595,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
     return () => window.removeEventListener('keydown', onKey)
   }, [move])
 
+  const viewRows = Math.min(viewRowsMax, rows)
   const camX = Math.max(0, Math.min(cols - VIEW, state.pos.x - Math.floor(VIEW / 2)))
-  const camY = Math.max(0, Math.min(rows - VIEW, state.pos.y - Math.floor(VIEW / 2)))
+  const camY = Math.max(0, Math.min(rows - viewRows, state.pos.y - Math.floor(viewRows / 2)))
   const look = heroLook(state)
   /** B1: escena de recuerdo (el héroe es L y las caras se ven borrosas) */
   const inMemory = isMemoryScene(scene.id)
@@ -602,9 +630,9 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       {/* El mapa se achica en pantallas bajas para que no tape los controles */}
       <div
         className="mx-auto w-full shrink-0 overflow-hidden rounded-2xl border-2 border-line bg-ink"
-        style={{ maxWidth: desktop ? 'min(100%, calc(100svh - 110px))' : 'min(100%, 44svh)', ...(desktop ? { flex: '1 1 auto', margin: 0 } : {}) }}
+        style={{ maxWidth: desktop ? 'min(100%, calc(100svh - 110px))' : '100%', ...(desktop ? { flex: '1 1 auto', margin: 0 } : {}) }}
       >
-        <svg viewBox={`0 0 ${VIEW * T} ${VIEW * T}`} className="block w-full" role="img" aria-label={`${scene.name}, vista desde arriba`}>
+        <svg viewBox={`0 0 ${VIEW * T} ${viewRows * T}`} className="block w-full" role="img" aria-label={`${scene.name}, vista desde arriba`}>
           <g style={{ transform: `translate(${-camX * T}px, ${-camY * T}px)`, transition: 'transform 180ms ease-out' }}>
             {tiles}
             {scene.labels.map((l) => (
@@ -803,6 +831,10 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       </div>
       </div>
       </div>
+
+      {tutorial && !talk && !lesson && !task && !activity && !diary && !party && !notebook && !ask && !friendsOpen && (
+        <ExploreTutorial desktop={desktop} onClose={() => setTutorial(false)} />
+      )}
 
       {talk && talkFriend && (
         <Overlay>
