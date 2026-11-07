@@ -33,6 +33,7 @@ import { B1_HOME } from '../data/b1Home'
 import { B1_OPENING, closeId } from '../data/b1World'
 import { B1_02_LANDED, B1_02_LUMEN, B1_02_PRACTICE } from '../data/b1NewCity'
 import { B1_04_BOSS, B1_04_FINEPRINT, B1_04_FRIEND, B1_04_PHRASAL, B1_04_RESIDENCE, B1_04_RULES, B1_04_WELCOME } from '../data/b1Residence'
+import { B1_05_FLAT, B1_05_LETTER, B1_05_USED_TO } from '../data/b1Flat'
 import { B1_04_JEISON, B1_04_NEIGHBOUR1, B1_04_NEIGHBOUR2, B1_04_REPAIR } from '../data/b1Neighbours'
 import { B1_03_DOCTOR, B1_03_HOSPITAL, B1_03_NOTEBOOK, B1_03_NOTEBOOK2, B1_03_STATIC, B1_03_TEXTS, B1_03_UNREAD1, B1_03_UNREAD2, B1_03_UNREAD3 } from '../data/b1Words'
 import { B1_02_BOSS, B1_02_JACK, B1_02_LUGGAGE, B1_02_TRAV1, B1_02_TRAV2 } from '../data/b1Airport'
@@ -835,6 +836,20 @@ export function b1Mission4(s: GameState, stage: 'start' | 'lesson' | 'fineprint'
   const maya = { ...boss, pos: { x: 4, y: 5 }, defeated: add(boss.defeated, [B1_04_BOSS]) }
   if (stage === 'maya') return maya
   return { ...maya, pos: { x: 5, y: 4 }, opened: add(maya.opened, [B1_04_FRIEND]) }
+}
+
+/**
+ * Atajos de la misión B1-5 (Nothing Left, recuerdo) para el panel del profe. Parten de "B1: abrir el nodo 5".
+ *  letter: entra al recuerdo (el apartamento de L, frente al director) · notebook: carta hecha (junto al cuaderno; la lección sale de nuevo)
+ *  jobs: página 12 hecha (junto al periódico y el computador, listo para los anuncios)
+ */
+export function b1Mission5(s: GameState, stage: 'letter' | 'notebook' | 'jobs'): GameState {
+  const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4)])
+  const present = { ...b, sceneId: B1_04_RESIDENCE.id, pos: { ...B1_04_RESIDENCE.start }, seenLesson: b.seenLesson.filter((t) => t !== 'used-to'), opened: b.opened.filter((o) => !o.startsWith('b1-05-')) }
+  const pos = { letter: { x: 9, y: 2 }, notebook: { x: 5, y: 4 }, jobs: { x: 3, y: 5 } }[stage]
+  const m = enterMemory(present, 5, B1_05_FLAT.id, pos)
+  const flags = { letter: [], notebook: [B1_05_LETTER], jobs: [B1_05_LETTER, B1_05_USED_TO] }[stage]
+  return { ...m, opened: add(m.opened, flags), seenLesson: add(m.seenLesson, stage === 'jobs' ? ['used-to'] : []) as GameState['seenLesson'] }
 }
 
 PRESETS.push(

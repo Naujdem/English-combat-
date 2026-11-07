@@ -755,4 +755,15 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     },
     { who: 'maya', text: "Now let's practice. Then we'll open your account.", es: 'Ahora practiquemos. Después abrimos su cuenta.' },
   ],
+  // B1-05 · Cuaderno de L, página 12 (recuerdo 5, bloque A). 'board' = la pizarra
+  'used-to': [
+    { who: 'notebook', text: 'Page 12. I used to have a different life.', es: 'Página 12. Yo solía tener otra vida.' },
+    { who: 'notebook', text: 'I used to teach five classes a day. I used to sing in the car.', es: 'Yo solía dar cinco clases al día. Yo solía cantar en el carro.' },
+    { who: 'board', text: 'used to + verbo base: algo que hacías antes y ya no haces.', es: 'used to + verbo base: algo que hacías antes y ya no haces.', topic: 'used-to' },
+    { who: 'board', text: 'I used to play the guitar. (Ahora ya no la toco.)', topic: 'used-to' },
+    { who: 'board', text: "Negativa: I didn't use to like mornings. Pregunta: Did you use to sing? Con 'did' el pasado ya está en did: se escribe 'use to', sin d.", topic: 'used-to' },
+    { who: 'board', text: 'Contraste: Yesterday I taught a class (una vez, con fecha). I used to teach five classes a day (un hábito de antes).', topic: 'used-to' },
+    { who: 'board', text: "No uses 'used to' con una fecha exacta ni con un número exacto de veces.", topic: 'used-to' },
+    { who: 'board', text: 'Errores típicos: ✗ I use to sing → ✓ I used to sing. ✗ I used to singing → ✓ I used to sing. ✗ Did you used to sing? → ✓ Did you use to sing?', topic: 'used-to' },
+  ],
 }

@@ -26,6 +26,7 @@ import { B1_03_HOSPITAL } from '../data/b1Words'
 import { B1_HOME } from '../data/b1Home'
 import { B1_02_LUMEN_ID } from '../data/b1NewCity'
 import { B1_04_RESIDENCE_ID } from '../data/b1Residence'
+import { B1_05_FLAT } from '../data/b1Flat'
 import { LooseFragment } from '../components/FragmentJoin'
 import { B1_HOME_ID, B1_NODES, B1_OPENING, B1_PART_NAMES, B1_ERA_COLOR, b1LockedText, b1Message, b1NodeDone, b1NodeOpen, isB1Unlocked, type B1Node, type B1Part } from '../data/b1World'
 import { heroLook, SCENES } from '../game/helpers'
@@ -180,6 +181,9 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     if (n.num === 3) return update((s) => enterMemory(s, 3, B1_03_HOSPITAL.id, B1_03_HOSPITAL.start))
     // Nodo 4 (presente): House Rules, la residencia de estudiantes de Lumen Bay (data/b1Residence.ts)
     if (n.num === 4) return onEnter(B1_04_RESIDENCE_ID)
+    // Nodo 5 (recuerdo): Nothing Left (data/b1Flat.ts). L empieza en su apartamento; al salir del recuerdo se vuelve
+    // al último lugar del presente (exitMemory). Sin FragmentJoin extra: ya se animó al abrir el nodo
+    if (n.num === 5) return update((s) => enterMemory(s, 5, B1_05_FLAT.id, B1_05_FLAT.start))
     setMsg(`${n.name}: este lugar se construirá pronto.`)
   }
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]

@@ -42,6 +42,7 @@ import { B1_01_QUESTIONS } from './questions-b1-01'
 import { B1_02_QUESTIONS } from './questions-b1-02'
 import { B1_03_QUESTIONS } from './questions-b1-03'
 import { B1_04_QUESTIONS } from './questions-b1-04'
+import { B1_05_QUESTIONS } from './questions-b1-05'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -403,6 +404,7 @@ export const QUESTIONS: Question[] = [
   ...B1_02_QUESTIONS,
   ...B1_03_QUESTIONS,
   ...B1_04_QUESTIONS,
+  ...B1_05_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -1115,6 +1117,24 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Separables: el objeto puede ir en medio → Fill in the form. = Fill the form in.',
       'Con pronombre (it, them, me), el pronombre va EN MEDIO → Fill it in. (nunca Fill in it).',
       'Sustantivo + sustantivo: el primero describe al segundo → bank account, debit card, cash machine, student ID.',
+    ],
+  },
+  'used-to': {
+    name: 'Used to',
+    level: 'B1',
+    lesson: [
+      'used to + verbo base: algo que hacías antes y ya no haces → I used to teach five classes a day.',
+      "Negativa: didn't use to (sin d) → I didn't use to like mornings. Pregunta: Did you use to sing?",
+      'Una vez, con fecha: pasado simple → Yesterday I taught a class. No uses used to con una fecha exacta ni con un número exacto de veces.',
+    ],
+  },
+  'jobs-b1': {
+    name: 'Buscar trabajo',
+    level: 'B1',
+    lesson: [
+      'Un anuncio de empleo (job advert) tiene partes: Job (el puesto), Requirements (requisitos), Pay (el sueldo) y How to apply (cómo postularse).',
+      'Send your CV by Friday = manda tu hoja de vida a más tardar el viernes (by + día = fecha límite, deadline).',
+      'Vocabulario: apply (postularse), salary (salario), experience (experiencia), unemployed (desempleado), fired (despedido).',
     ],
   },
 }
