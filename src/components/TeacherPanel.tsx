@@ -150,6 +150,8 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission2(s, 'shop'))}>B1-2: tienda</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission2(s, 'office'))}>B1-2: oficina (Ms. Haddad)</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission2(s, 'route'))}>B1-2: Route Challenge</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission2(s, 'boss'))}>B1-2: Captain Delay</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission2(s, 'close'))}>B1-2: cierre</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>

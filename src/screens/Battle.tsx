@@ -719,6 +719,11 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
           outfits: r && !s.outfits.includes(r) ? [...s.outfits, r] : s.outfits,
         }
       }
+      // Jefe de B1: solo da su atuendo. Sin pieza del reloj; sus temas se recuperan en el cierre de la misión
+      if (s.sceneId.startsWith('b1-')) {
+        const r = enemy.reward
+        return r && !s.outfits.includes(r) ? { ...base, outfits: [...s.outfits, r] } : base
+      }
       return {
         ...base,
         recovered: [...s.recovered, ...enemy.topics.filter((t) => !s.recovered.includes(t))],

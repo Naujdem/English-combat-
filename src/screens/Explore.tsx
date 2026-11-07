@@ -44,7 +44,7 @@ import { MemoriesTab } from '../components/MemoriesTab'
 import { Inscriptions } from '../components/Inscriptions'
 import { B1_DEMO_TABLET } from '../data/b1TabletDemo'
 import { B1_01_FRIEND, B1_LEO_PHONE } from '../data/b1Accident'
-import { B1_02_LANDED, B1_02_LUMEN_ID, b1PlaneLines } from '../data/b1NewCity'
+import { B1_02_CLOSE, B1_02_FRAGMENTS, B1_02_LANDED, B1_02_LUMEN_ID, b1PlaneLines } from '../data/b1NewCity'
 import { TheAccident } from '../components/CallForHelp'
 import { isB1Unlocked } from '../data/b1World'
 import { B1_CALL, B1_PHONE } from '../data/b1Home'
@@ -764,7 +764,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           </Panel>
         ) : (
           <p className="px-1 pt-2 text-sm text-paper/55">
-            {fill(firstVisit ? scene.intro.first : scene.intro.later)}
+            {fill(firstVisit ? scene.intro.first : typeof scene.intro.later === 'function' ? scene.intro.later(state) : scene.intro.later)}
           </p>
         )}
       </div>
@@ -1063,6 +1063,18 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       {/* B1 · apertura: al colgar, dos fragmentos se juntan. FragmentJoin guarda la apertura (abre el recuerdo 1) */}
       {scene.id === B1_HOME_ID && state.opened.includes(B1_CALL) && !state.opened.includes(B1_OPENING) && !task && (
         <FragmentJoin state={state} update={update} memoryNumber={1} onDone={onWorld} />
+      )}
+      {/* B1-02 · cierre: al guardar closeId(2), dos fragmentos se juntan (memoryOpenId(3) = closeId(2): el recuerdo 3 queda abierto) */}
+      {scene.id === B1_02_LUMEN_ID && state.opened.includes(B1_02_CLOSE) && !state.opened.includes(B1_02_FRAGMENTS) && !task && (
+        <FragmentJoin
+          state={state}
+          update={update}
+          memoryNumber={3}
+          onDone={() => {
+            update((s) => (s.opened.includes(B1_02_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B1_02_FRAGMENTS] }))
+            onWorld()
+          }}
+        />
       )}
       {task && NPC_TASKS[task]?.activity === 'practice' && !!NPC_TASKS[task].intro?.length && introSeen !== task && (
         // Lo que dice el personaje antes de la práctica (B1-02: el empleado de la tienda presenta los planes)

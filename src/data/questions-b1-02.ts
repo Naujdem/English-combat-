@@ -16,6 +16,8 @@ const SHOP = ['b1-02-shop']
 const FUT = ['b1-02-practice-fut']
 const TP = 'travel-phones' as const
 const FB = 'futures-b1' as const
+const BOSS_PP = ['b1-02-boss', 'b1-02-boss-pp']
+const BOSS_FUT = ['b1-02-boss', 'b1-02-boss-fut']
 /** Bloque C: lo que explica el empleado de la tienda (s1-s3 usan el mismo audio) */
 const PLANS_AUDIO =
   'We have two plans. The Blue Plan is prepaid. It costs twenty dollars a month, it has ten gigabytes of data, and you can top up online. There is no contract. The Gold Plan has a one-year contract. It costs thirty dollars a month, it includes unlimited data, and the coverage works in six countries.'
@@ -110,6 +112,47 @@ export const B1_02_QUESTIONS: Question[] = [
     answer: 0,
     tip: "we're visiting the old port at ten.",
     tags: FUT,
+  },
+
+  // ── Captain Delay (jefe, bloque D) · fase 1: present perfect ──
+  { id: 'b1-02-b1-1', topic: PP, kind: 'fix', prompt: "The flight hasn't leave yet.", options: ["The flight hasn't left yet.", "The flight didn't left yet.", "The flight hasn't leaving yet."], answer: 0, tip: "hasn't + participio: left.", tags: BOSS_PP },
+  { id: 'b1-02-b1-2', topic: PP, prompt: 'Flight 12 has ___ landed. Passengers are coming out!', options: ['just', 'yet', 'ago'], answer: 0, tip: 'Hace muy poco: has just landed.', tags: BOSS_PP },
+  { id: 'b1-02-b1-3', topic: PP, prompt: 'Have all the passengers boarded ___?', options: ['yet', 'yesterday', 'last week'], answer: 0, tip: "Pregunta con present perfect: 'ya' al final (yet).", tags: BOSS_PP },
+  { id: 'b1-02-b1-4', topic: PP, kind: 'fix', prompt: "I haven't finish my announcement yet.", options: ["I haven't finished my announcement yet.", "I didn't finished my announcement yet.", "I hasn't finished my announcement yet."], answer: 0, tip: "haven't + participio: finished.", tags: BOSS_PP },
+  { id: 'b1-02-b1-5', topic: PP, prompt: 'The captain ___ already checked the engines.', options: ['has', 'have', 'is'], answer: 0, tip: 'The captain = he: has already checked.', tags: BOSS_PP },
+  { id: 'b1-02-b1-6', topic: PP, prompt: "The plane ___ at five yesterday. It's in Madrid now.", options: ['landed', 'has landed', 'has land'], answer: 0, tip: "'yesterday' es momento terminado: past simple (landed).", tags: BOSS_PP },
+  { id: 'b1-02-b1-7', topic: PP, kind: 'order', prompt: 'Todavía no han anunciado la puerta.', options: ['They', "haven't", 'announced', 'the', 'gate', 'yet.'], answer: 0, tip: "haven't + participio + yet al final.", tags: BOSS_PP },
+  {
+    id: 'b1-02-b1-8',
+    topic: PP,
+    kind: 'listen',
+    audio: 'Attention, please. Flight twelve has just landed. Flight forty has not left yet. Passengers for flight forty, please go to gate nine.',
+    voice: 'male',
+    prompt: '¿Qué vuelo todavía no ha salido?',
+    options: ['El vuelo cuarenta.', 'El vuelo doce.', 'Ninguno.'],
+    answer: 0,
+    tip: 'Flight forty has not left yet.',
+    tags: BOSS_PP,
+  },
+  // ── Captain Delay · fase 2: los tres futuros ──
+  { id: 'b1-02-b2-1', topic: FB, kind: 'fix', prompt: 'The plane will leaving at six.', options: ['The plane will leave at six.', 'The plane will leaves at six.', 'The plane is will leave at six.'], answer: 0, tip: 'will + verbo base: will leave.', tags: BOSS_FUT },
+  { id: 'b1-02-b2-2', topic: FB, kind: 'fix', prompt: 'Tomorrow I going to cancel every flight.', options: ["Tomorrow I'm going to cancel every flight.", 'Tomorrow I going cancel every flight.', "Tomorrow I'm going cancel every flight."], answer: 0, tip: 'I am going to + verbo base.', tags: BOSS_FUT },
+  { id: 'b1-02-b2-3', topic: FB, prompt: "My family arrives tomorrow. We ___ at the airport at nine. It's all arranged.", options: ['are meeting', 'will meeting', 'meet to'], answer: 0, tip: 'Cita fija con hora: presente continuo.', tags: BOSS_FUT },
+  { id: 'b1-02-b2-4', topic: FB, prompt: 'The screen shows a delay. I ___ a coffee while I wait.', options: ['will have', 'am going have', 'have will'], answer: 0, tip: 'Decisión en el momento: will + verbo base.', tags: BOSS_FUT },
+  { id: 'b1-02-b2-5', topic: FB, prompt: 'Look at those dark clouds! It ___ rain, and the flights will be late.', options: ['is going to', 'will to', 'going to'], answer: 0, tip: 'Con evidencia visible: is going to + verbo base.', tags: BOSS_FUT },
+  { id: 'b1-02-b2-6', topic: FB, kind: 'fix', prompt: 'I will to wait at gate nine.', options: ['I will wait at gate nine.', 'I will waiting at gate nine.', 'I wills wait at gate nine.'], answer: 0, tip: 'will + verbo base, sin to.', tags: BOSS_FUT },
+  { id: 'b1-02-b2-7', topic: FB, kind: 'order', prompt: 'Esta tarde voy a llamar a mi familia.', options: ['This', 'afternoon', "I'm", 'going', 'to', 'call', 'my', 'family.'], answer: 0, tip: "Plan decidido: I'm going to + verbo base.", tags: BOSS_FUT },
+  {
+    id: 'b1-02-b2-8',
+    topic: FB,
+    kind: 'listen',
+    audio: "Good evening, passengers. Tomorrow morning we're boarding at seven, and we're going to land before noon.",
+    voice: 'female',
+    prompt: '¿A qué hora empiezan a abordar mañana?',
+    options: ['A las siete.', 'A las doce.', 'A las nueve.'],
+    answer: 0,
+    tip: "we're boarding at seven.",
+    tags: BOSS_FUT,
   },
 
   { id: 'b1-02-j-6', topic: PP, kind: 'order', prompt: 'Ya he comprado mi tarjeta SIM.', options: ["I've", 'already', 'bought', 'my', 'SIM', 'card.'], answer: 0, tip: 'have + already + participio.', tags: JACK },

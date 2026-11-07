@@ -4330,6 +4330,37 @@ NPC_TASKS['b1-02-route'] = {
   },
 }
 
+// ── B1-02 · bloque D: cierre (Leo en la calle, después de vencer a Captain Delay). done = closeId(2) = 'b1-02-close':
+// abre el nodo 3 (recuerdo 3). Misión sin cierre del jefe: los tres temas se recuperan aquí (recover).
+// Al guardarse, Explore muestra FragmentJoin (memoryNumber 3), como en la apertura de B1
+NPC_TASKS['b1-02-close'] = {
+  npc: 'b1-02-leo-street',
+  done: 'b1-02-close',
+  recover: ['pp-yet-already', 'futures-b1', 'travel-phones'],
+  coins: 15,
+  requires: {
+    id: 'b1-02-boss',
+    text: 'Leo: "We\'re home! Well... almost. Did you hear that? The airport speakers are making a strange noise."',
+    es: '¡Ya estamos! Bueno... casi. ¿Oíste eso? Los altavoces del aeropuerto hacen un ruido raro.',
+    sub: 'Vence a Captain Delay, al final de la calle.',
+  },
+  steps: [
+    {
+      text: "(You write in your diary:) 'Today I have arrived in Lumen Bay. I have already found my suitcase, and tomorrow we're meeting Ms. Haddad.'",
+      es: '(Escribes en tu diario:) «Hoy he llegado a Lumen Bay. Ya encontré mi maleta, y mañana nos reunimos con la Sra. Haddad».',
+    },
+    { text: 'The announcements are normal again. What a day!', es: 'Los anuncios están normales otra vez. ¡Qué día!' },
+    { text: "I... *cough* ... sorry. My throat feels strange. It's nothing. Maybe I'm allergic to airports. Ha!", es: 'Yo... *tos* ... perdón. Siento la garganta rara. No es nada. Quizá soy alérgico a los aeropuertos. ¡Ja!' },
+    { text: '(Your clock is shining in your pocket. Two fragments move... and touch each other.)', es: '(Tu reloj brilla en el bolsillo. Dos fragmentos se mueven... y se tocan.)' },
+  ],
+  reward: {
+    text: 'Mission 2: A New City',
+    es: 'Misión 2: Una ciudad nueva',
+    sub: 'Ganaste la gorra de capitán. Dos fragmentos se juntaron: se abrió el recuerdo 3.',
+    say: 'A new city.',
+  },
+}
+
 // ── B1 · DEMO de Inscriptions como tarea (tablilla en la sala de prueba de data/b1TabletDemo.ts, solo modo profesor) ──
 // Las misiones 9, 11 y 13 declaran sus salas igual.
 NPC_TASKS['b1-demo-tablet'] = {

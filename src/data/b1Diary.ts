@@ -4,6 +4,7 @@ import { closeId } from './b1World'
 
 /**
  * Diario de B1: un capítulo por recuerdo, que se abre al salir de él (memoryFlag(n), game/memory.ts).
+ * Las misiones del presente (B1-02…) tienen su propio capítulo, sin página de L, que se abre al cerrarlas (closeId(n)).
  * Cada capítulo tiene tu página ("Mi diario": la línea que escribes en el cierre de la misión), la página del "Diario de L"
  * (kind 'L': letra a mano, tachones y firma con una mancha de tinta, nunca con nombre) y una página mezclada que junta
  * los dos puntos de vista (como la "Mezcla" de A1 y A2). En las páginas de L, ~~texto~~ se ve tachado.
@@ -60,6 +61,50 @@ export const B1_DIARY: DiaryChapter[] = [
           { q: 'Why did the man lose his voice?', options: ['Because of the smoke.', 'Because of the alarm.', 'Because he was tired.'], answer: 0, tip: 'El diario dice: "Because of the smoke, he lost his voice".' },
           { q: 'What was the man doing when the alarm rang?', options: ['He was cleaning the board.', 'He was waiting at the door.', 'He was walking home.'], answer: 0, tip: 'El diario dice: "was cleaning the board when the fire alarm rang".' },
           { q: 'Did his friend help him?', options: ["No, he didn't. He was silent.", 'Yes, he did. He shouted too.', "No, he wasn't. He was silent."], answer: 0, tip: 'Pregunta con did → respuesta con did: No, he didn\'t.' },
+        ],
+      },
+    ],
+  },
+  // B1-02 · A New City (presente): sin página de L. Se abre al cerrar la misión 2
+  {
+    id: 'b1-mission-2',
+    title: 'Misión 2: A New City',
+    unlock: closeId(2),
+    words: [
+      { title: 'Viaje', words: [['check in', 'registrarse'], ['boarding pass', 'pase de abordar'], ['departure', 'salida'], ['arrival', 'llegada'], ['delay', 'retraso'], ['luggage', 'equipaje'], ['suitcase', 'maleta'], ['baggage claim', 'recogida de equipaje']] },
+      { title: 'Celular', words: [['data plan', 'plan de datos'], ['prepaid', 'prepago'], ['contract', 'contrato'], ['coverage', 'cobertura'], ['top up', 'recargar'], ['signal', 'señal'], ['SIM card', 'tarjeta SIM'], ['unlimited', 'ilimitado']] },
+      { title: 'Ciudad', words: [['downtown', 'centro de la ciudad'], ['harbour', 'puerto'], ['residence', 'residencia'], ['sightseeing', 'turismo'], ['backpacking', 'viaje con mochila'], ['package holiday', 'viaje todo incluido']] },
+    ],
+    versions: [
+      {
+        id: 'b1-mission-2-mine',
+        tense: 'n',
+        tab: 'Mi diario',
+        title: 'My first day',
+        unlock: closeId(2),
+        frame: 'Lo escribes esa noche en la residencia.',
+        lines: [
+          { en: "I [have just arrived]n in Lumen Bay. I [haven't unpacked]n yet, but I [have already found]n my suitcase.", es: 'Acabo de llegar a Lumen Bay. Todavía no he desempacado, pero ya encontré mi maleta.' },
+          { en: 'Tomorrow we [are meeting]f Ms. Haddad at nine.', es: 'Mañana nos reunimos con la Sra. Haddad a las nueve.' },
+          { en: 'On Saturday we [are going to visit]f the old port.', es: 'El sábado vamos a visitar el puerto viejo.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b1-mission-2-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'A day in Lumen Bay',
+        unlock: closeId(2),
+        frame: 'Tu día entero, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'This morning we [landed]p in Lumen Bay. We [have already found]n our suitcases, and we [have just bought]n a SIM card.', es: 'Esta mañana aterrizamos en Lumen Bay. Ya encontramos nuestras maletas y acabamos de comprar una tarjeta SIM.' },
+          { en: 'Tomorrow we [are meeting]f Ms. Haddad, and on Saturday we [are going to visit]f the old port.', es: 'Mañana nos reunimos con la Sra. Haddad y el sábado vamos a visitar el puerto viejo.' },
+        ],
+        questions: [
+          { q: 'What have they already found?', options: ['Their suitcases.', 'Their tickets.', 'Their passports.'], answer: 0, tip: 'El diario dice: "We have already found our suitcases".' },
+          { q: 'What are they going to do on Saturday?', options: ['Visit the old port.', 'Start classes.', 'Buy a SIM card.'], answer: 0, tip: 'El diario dice: "on Saturday we are going to visit the old port".' },
+          { q: 'When are they meeting Ms. Haddad?', options: ['Tomorrow.', 'On Saturday.', 'Next week.'], answer: 0, tip: 'El diario dice: "Tomorrow we are meeting Ms. Haddad".' },
         ],
       },
     ],

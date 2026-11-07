@@ -159,7 +159,7 @@ export type SceneDef = {
   /** Objetivos que se muestran bajo el mapa */
   chips: (s: GameState) => { label: string; done: boolean }[]
   /** Texto de ayuda bajo el mapa: la primera visita y las siguientes */
-  intro: { first: string; later: string }
+  intro: { first: string; later: string | ((s: GameState) => string) }
   /** Si existe, al vencer al jefe se muestra el final del capítulo hasta que este id esté en `opened` */
   epilogue?: string
   /**
