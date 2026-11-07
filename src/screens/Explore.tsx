@@ -131,6 +131,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [lesson, setLesson] = useState<{ topics: TopicId[]; enemyId?: string; then?: 'where' | 'coach' | 'directions' | 'cafe'; task?: string } | null>(null)
   // Tarea de un personaje (charla corta con elecciones), ver data/tasks.ts
   const [task, setTask] = useState<string | null>(null)
+  // Práctica con charla previa (NpcTask.intro, B1-02 tienda): id de la tarea cuya charla ya se vio en esta visita
+  const [introSeen, setIntroSeen] = useState<string | null>(null)
   // Al cerrar un escenario sin final de capítulo (A2), su página del diario se abre sola aquí, como en A1
   const [diary, setDiary] = useState(false)
   // Misión de la fiesta de Leo (barrio): lo que falta y a quién se le está preguntando
@@ -1062,7 +1064,17 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       {scene.id === B1_HOME_ID && state.opened.includes(B1_CALL) && !state.opened.includes(B1_OPENING) && !task && (
         <FragmentJoin state={state} update={update} memoryNumber={1} onDone={onWorld} />
       )}
-      {task && NPC_TASKS[task]?.activity === 'practice' && NPC_TASKS[task].practice && (
+      {task && NPC_TASKS[task]?.activity === 'practice' && !!NPC_TASKS[task].intro?.length && introSeen !== task && (
+        // Lo que dice el personaje antes de la práctica (B1-02: el empleado de la tienda presenta los planes)
+        <Overlay>
+          {(() => {
+            const who = npcOf(NPC_TASKS[task].npc ?? task)
+            const steps = NPC_TASKS[task].intro!.map((st) => ({ text: fill(st.text), es: fill(st.es) }))
+            return <MiniTalk name={who.name} look={who.look} steps={steps} onClose={(done) => (done ? setIntroSeen(task) : setTask(null))} />
+          })()}
+        </Overlay>
+      )}
+      {task && NPC_TASKS[task]?.activity === 'practice' && NPC_TASKS[task].practice && (!NPC_TASKS[task].intro?.length || introSeen === task) && (
         // Práctica guiada con Leo (pantalla completa): al terminarla se marca la tarea
         <Practice state={state} update={update} review={NPC_TASKS[task].practice} ids={NPC_TASKS[task].practiceIds} guided onClose={() => finishTask(task, false)} onDone={(perfect) => finishTask(task, true, [], perfect && !!NPC_TASKS[task].practiceShield)} />
       )}
@@ -1130,7 +1142,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'luggage') return <LostLuggage content={t.luggage} onClose={finish} />
             if (t.activity === 'enough') return <EnoughForEveryone friend={state.interest.name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'fitting') return <FittingRoom friend={state.interest.name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
-            if (t.activity === 'route') return <RouteChallenge name={npcOf(t.npc ?? task).name} onClose={finish} />
+            if (t.activity === 'route') return <RouteChallenge name={npcOf(t.npc ?? task).name} content={t.route} onClose={finish} />
             if (t.activity === 'exam' && t.exam) {
               const era = t.exam
               return (

@@ -12,6 +12,9 @@ import type { InscriptionRoom } from '../game/inscriptions'
 import { INS_DEMO_DOOR } from './b1InscriptionsDemo'
 import type { LuggageContent } from '../components/LostLuggage'
 import { B1_LUGGAGE } from './b1Luggage'
+import type { RouteContent } from '../components/RouteChallenge'
+import { B1_ROUTE } from './b1Route'
+import { canRecognize } from '../game/mic'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -87,6 +90,10 @@ export type NpcTask = {
   exam?: 'a2'
   /** Dialogue Under Pressure: segundos para cada elección de la charla */
   pressure?: number
+  /** Para activity 'route': otro contenido de Route Challenge (B1-02). Sin el campo, el de A2-11 */
+  route?: RouteContent
+  /** Para activity 'practice': lo que dice el personaje antes de la práctica (charla corta, B1-02 tienda de celulares) */
+  intro?: MiniStep[]
   /** Para activity 'luggage': otro contenido de Lost Luggage (B1-02). Sin el campo, el de A2-11 */
   luggage?: LuggageContent
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
@@ -4244,6 +4251,82 @@ NPC_TASKS['b1-02-luggage'] = {
     es: '¡Bienvenido a Lumen Bay! Disfruta tu estadía.',
     sub: 'Recuperaste tu maleta y la de tu amigo. Alguien te espera junto a las puertas de la derecha.',
     say: 'Welcome to Lumen Bay! Have a nice stay.',
+  },
+}
+
+// ── B1-02 · bloque C (data/b1Office.ts): tienda de celulares → oficina (Ms. Haddad + Leo) → calle (Route Challenge) ──
+// La tienda: el empleado presenta los planes (intro) y luego la práctica. s8 se dice en voz alta (S-) o, sin micrófono, se escribe (T-)
+NPC_TASKS['b1-02-shop'] = {
+  npc: 'b1-02-assistant',
+  done: 'b1-02-shop',
+  activity: 'practice',
+  practice: 'travel-phones',
+  practiceIds: ['b1-02-s1', 'b1-02-s2', 'b1-02-s3', 'b1-02-s4', 'b1-02-s5', 'b1-02-s6', 'b1-02-s7', canRecognize ? 'S-b1-02-s8' : 'T-b1-02-s8'],
+  intro: [
+    { text: 'Welcome! Are you looking for a phone plan?', es: '¡Bienvenidos! ¿Buscan un plan de celular?' },
+    { text: "Listen carefully. I'll explain our two plans.", es: 'Escuchen con atención. Les voy a explicar nuestros dos planes.' },
+  ],
+  steps: [],
+  reward: {
+    text: 'The shop assistant: "Here is your SIM card. Welcome to Lumen Bay!"',
+    es: 'Aquí tienes tu tarjeta SIM. ¡Bienvenido a Lumen Bay!',
+    sub: 'La puerta de la oficina del intercambio ya está abierta.',
+    say: 'Here is your SIM card. Welcome to Lumen Bay!',
+  },
+}
+
+// La oficina: Ms. Haddad entrega la agenda (solo narrativa + una elección). Luego aparece Leo en la oficina
+NPC_TASKS['b1-02-agenda'] = {
+  npc: 'b1-02-haddad',
+  done: 'b1-02-agenda',
+  steps: [
+    { text: "Welcome to the Lumen Bay Exchange Office! I'm Noor Haddad. We've been waiting for you.", es: '¡Bienvenidos a la Oficina de Intercambio de Lumen Bay! Soy Noor Haddad. Los estábamos esperando.' },
+    { text: "Here is your agenda. Tomorrow at nine we're meeting here for the welcome talk.", es: 'Aquí está su agenda. Mañana a las nueve nos reunimos aquí para la charla de bienvenida.' },
+    { text: "On Saturday we're going to visit the old port. And next week, you're going to start your classes.", es: 'El sábado vamos a visitar el puerto viejo. Y la próxima semana van a empezar sus clases.' },
+    {
+      text: "Your residence is across the city. Take the bus, or I'll call you a taxi if you prefer.",
+      es: 'Su residencia está al otro lado de la ciudad. Tomen el bus, o les pido un taxi si prefieren.',
+      choice: { ask: '¿Qué le respondes?', options: ["Thank you, Ms. Haddad. We'll take the bus.", 'Thank you, Ms. Haddad. We take will the bus.', "Thank you, Ms. Haddad. We're going bus."], answer: 0, tip: "Decisión en el momento: will + verbo base: We'll take the bus." },
+    },
+  ],
+  reward: {
+    text: 'Ms. Haddad: "Here is your agenda."',
+    es: 'Aquí está su agenda.',
+    sub: 'Tienes la agenda del intercambio. Leo te espera en la oficina.',
+    say: 'Here is your agenda.',
+  },
+}
+
+// Leo en la oficina: lección 'futures-b1' + práctica guiada. Si todas están bien, escudo. Abre la puerta de la calle
+NPC_TASKS['b1-02-futures'] = {
+  npc: 'b1-02-leo-office',
+  done: 'b1-02-futures',
+  lesson: 'futures-b1',
+  activity: 'practice',
+  practice: 'futures-b1',
+  practiceIds: ['b1-02-f1', 'b1-02-f2', 'b1-02-f3', 'b1-02-f4', 'b1-02-f5', 'b1-02-f6', 'b1-02-f7', 'b1-02-f8'],
+  practiceShield: true,
+  steps: [],
+  reward: {
+    text: 'Leo: "Great! Now let\'s get to the residence. Ms. Haddad gave us a map."',
+    es: '¡Muy bien! Ahora vamos a la residencia. La Sra. Haddad nos dio un mapa.',
+    sub: 'La puerta de la calle ya está abierta. Leo te espera afuera. (Si acertaste todas, ganaste un escudo).',
+    say: "Great! Now let's get to the residence. Ms. Haddad gave us a map.",
+  },
+}
+
+// La calle: Leo abre Route Challenge con el contenido de Lumen Bay (data/b1Route.ts). Captain Delay llega en el bloque 2-D
+NPC_TASKS['b1-02-route'] = {
+  npc: 'b1-02-leo-street',
+  done: 'b1-02-route',
+  activity: 'route',
+  route: B1_ROUTE,
+  steps: [],
+  reward: {
+    text: 'Leo: "We\'re home! Well... almost. Did you hear that? The airport speakers are making a strange noise."',
+    es: '¡Ya estamos! Bueno... casi. ¿Oíste eso? Los altavoces del aeropuerto hacen un ruido raro.',
+    sub: 'Llegaste a la residencia.',
+    say: "We're home! Well... almost. Did you hear that? The airport speakers are making a strange noise.",
   },
 }
 

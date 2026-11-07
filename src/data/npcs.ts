@@ -403,6 +403,29 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b1-02-trav2',
     doneLine: { text: 'Welcome to Lumen Bay! Have a nice stay.', es: '¡Bienvenido a Lumen Bay! Disfruta tu estadía.' },
   },
+  // Bloque C (data/b1Office.ts): el empleado de la tienda, Ms. Haddad y Leo en la oficina y en la calle
+  'b1-02-assistant': {
+    name: 'The shop assistant',
+    look: { shirt: '#3b9d5d', hair: '#2b1d12', skin: '#c68642', gender: 'male' },
+    doneLine: { text: 'Here is your SIM card. Welcome to Lumen Bay!', es: 'Aquí tienes tu tarjeta SIM. ¡Bienvenido a Lumen Bay!' },
+  },
+  'b1-02-haddad': {
+    name: 'Ms. Haddad',
+    look: { shirt: '#2f6f73', hair: '#1f1f1f', skin: '#c68642', gender: 'female' },
+    doneLine: { text: 'Here is your agenda. Tomorrow at nine we\'re meeting here for the welcome talk.', es: 'Aquí está su agenda. Mañana a las nueve nos reunimos aquí para la charla de bienvenida.' },
+  },
+  'b1-02-leo-office': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    after: 'b1-02-agenda',
+    doneLine: { text: "Great! Now let's get to the residence. Ms. Haddad gave us a map.", es: '¡Muy bien! Ahora vamos a la residencia. La Sra. Haddad nos dio un mapa.' },
+  },
+  'b1-02-leo-street': {
+    name: 'Leo',
+    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    after: 'b1-02-futures',
+    doneLine: { text: "We're home! Well... almost. Did you hear that? The airport speakers are making a strange noise.", es: '¡Ya estamos! Bueno... casi. ¿Oíste eso? Los altavoces del aeropuerto hacen un ruido raro.' },
+  },
   'b1-02-leo': {
     name: 'Leo',
     look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },

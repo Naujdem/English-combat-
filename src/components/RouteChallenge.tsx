@@ -10,9 +10,9 @@ import { btn, btnGhost, btnPrimary, Panel } from './ui'
  * (barrera morada en el puente). Preposiciones de movimiento: across, through, along, past.
  * El jugador empieza en la estación, abajo, mirando hacia arriba (norte). Los errores no quitan vida.
  */
-type PlaceId = 'park' | 'cafe' | 'library' | 'stop' | 'museum' | 'tower'
+export type PlaceId = 'park' | 'cafe' | 'library' | 'stop' | 'museum' | 'tower'
 
-const PLACES: Record<PlaceId, { en: string; es: string; x: number; y: number; w: number; h: number; color: string; text?: string }> = {
+const A2_PLACES: Record<PlaceId, { en: string; es: string; x: number; y: number; w: number; h: number; color: string; text?: string }> = {
   park: { en: 'park', es: 'el parque', x: 86, y: 20, w: 54, h: 76, color: '#7fb85a' },
   cafe: { en: 'café', es: 'el café', x: 98, y: 150, w: 42, h: 44, color: '#d4537e' },
   library: { en: 'library', es: 'la biblioteca', x: 18, y: 150, w: 60, h: 44, color: '#8a6ab0' },
@@ -22,13 +22,13 @@ const PLACES: Record<PlaceId, { en: string; es: string; x: number; y: number; w:
 }
 
 type Line = { text: string; es: string }
-type Round =
+export type RouteRound =
   | { mode: 'choose'; say: string; es: string; options: string[]; answer: number; tip: string; path?: string }
   | { mode: 'follow'; say: string; es: string; target: PlaceId; path: string }
 
 const TO_MUSEUM = '160,232 160,206 262,206 262,60 274,60'
 
-const ROUNDS: Round[] = [
+const A2_ROUNDS: RouteRound[] = [
   {
     mode: 'follow',
     say: 'We are at the station. Go straight along Sky Avenue and walk past the café. The tram stop is on your right. Touch it!',
@@ -84,7 +84,26 @@ const ROUNDS: Round[] = [
   },
 ]
 
-export function RouteChallenge({ name, onClose }: { name: string; onClose: (done: boolean) => void }) {
+/**
+ * Contenido de otra ciudad (B1-02, Lumen Bay: data/b1Route.ts). La geometría del mapa no cambia:
+ * places solo cambia el nombre (en/es) o el color de cada lugar. barrierFromRound: ronda desde la que se ve la barrera (null = nunca).
+ * Sin `content`, el juego es el de A2-11 (2056, hacia el museo; barrera desde la ronda 2).
+ */
+export type RouteContent = {
+  title: string
+  places?: Partial<Record<PlaceId, { en?: string; es?: string; color?: string }>>
+  intro: Line
+  finish: Line
+  rounds: RouteRound[]
+  barrierFromRound: number | null
+}
+
+const A2_INTRO: Line = { text: "I've got Officer Rosa's old map! But look… the city has changed so much. Let's find the museum together.", es: '¡Tengo el viejo mapa de la oficial Rosa! Pero mira… la ciudad ha cambiado mucho. Busquemos el museo juntos.' }
+const A2_FINISH: Line = { text: 'Perfect directions! Look, Leo is already inside the museum.', es: '¡Indicaciones perfectas! Mira, Leo ya está dentro del museo.' }
+
+export function RouteChallenge({ name, onClose, content }: { name: string; onClose: (done: boolean) => void; content?: RouteContent }) {
+  const ROUNDS = content?.rounds ?? A2_ROUNDS
+  const PLACES = Object.fromEntries((Object.keys(A2_PLACES) as PlaceId[]).map((id) => [id, { ...A2_PLACES[id], ...content?.places?.[id] }])) as typeof A2_PLACES
   const [intro, setIntro] = useState(true)
   const [r, setR] = useState(0)
   const [solved, setSolved] = useState(false)
@@ -93,12 +112,13 @@ export function RouteChallenge({ name, onClose }: { name: string; onClose: (done
   const done = r >= ROUNDS.length
   const round = ROUNDS[Math.min(r, ROUNDS.length - 1)]
   // La barrera morada aparece desde la ronda del puente cerrado
-  const bridgeClosed = r >= 2
+  const barrier = content ? content.barrierFromRound : 2
+  const bridgeClosed = barrier !== null && r >= barrier
 
   const line: Line = intro
-    ? { text: "I've got Officer Rosa's old map! But look… the city has changed so much. Let's find the museum together.", es: '¡Tengo el viejo mapa de la oficial Rosa! Pero mira… la ciudad ha cambiado mucho. Busquemos el museo juntos.' }
+    ? (content?.intro ?? A2_INTRO)
     : done
-      ? { text: 'Perfect directions! Look, Leo is already inside the museum.', es: '¡Indicaciones perfectas! Mira, Leo ya está dentro del museo.' }
+      ? (content?.finish ?? A2_FINISH)
       : { text: round.say, es: round.es }
 
   function ok() {
@@ -130,7 +150,7 @@ export function RouteChallenge({ name, onClose }: { name: string; onClose: (done
   return (
     <Panel>
       <div className="mb-2 flex items-center justify-between">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gold">2056 · Route Challenge</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-gold">{content?.title ?? '2056 · Route Challenge'}</p>
         <button className={btnGhost} onClick={() => onClose(false)}>Salir</button>
       </div>
 
@@ -213,7 +233,7 @@ export function RouteChallenge({ name, onClose }: { name: string; onClose: (done
         {intro ? (
           <button className={btnPrimary} onClick={() => setIntro(false)} autoFocus>Siguiente</button>
         ) : done ? (
-          <button className={btnPrimary} onClick={() => onClose(true)} autoFocus>Entrar al museo</button>
+          <button className={btnPrimary} onClick={() => onClose(true)} autoFocus>{content ? 'Terminar' : 'Entrar al museo'}</button>
         ) : solved ? (
           <button className={btnPrimary} onClick={next} autoFocus>Siguiente</button>
         ) : null}

@@ -146,7 +146,10 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission2(s, 'airport'))}>B1-2: llegar al aeropuerto (después de las charlas)</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission2(s, 'trav1'))}>B1-2: viajero 1</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission2(s, 'luggage'))}>B1-2: Lost Luggage</button>
-              <button className={`${btn} col-span-2 px-2 text-sm`} onClick={() => go((s) => b1Mission2(s, 'jack'))}>B1-2: Jack</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission2(s, 'jack'))}>B1-2: Jack</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission2(s, 'shop'))}>B1-2: tienda</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission2(s, 'office'))}>B1-2: oficina (Ms. Haddad)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission2(s, 'route'))}>B1-2: Route Challenge</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>

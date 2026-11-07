@@ -621,4 +621,35 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'I ___ my passport at the hotel yesterday.', choice: { options: ['left', 'have left', 'has left'], answer: 0, tip: "'yesterday' es un momento terminado: past simple (left)." } },
     { who: 'leo', text: "Ready? Let's practice, and then we'll find those bags.", es: '¿Listo? Practiquemos y después buscamos esas maletas.' },
   ],
+  // B1-02 · A New City: Leo en la oficina del intercambio, después de la agenda de Ms. Haddad
+  'futures-b1': [
+    { who: 'leo', text: 'This is the Exchange Office. Ms. Haddad uses three different ways to talk about the future.', es: 'Esta es la oficina del intercambio. La Sra. Haddad usa tres formas distintas de hablar del futuro.' },
+    { who: 'leo', text: "First: 'going to' is for plans we have already decided. 'We're going to visit the old port.'", es: "Primero: 'going to' es para planes que ya decidimos. 'We're going to visit the old port.'" },
+    {
+      who: 'board',
+      text: "We're going to visit the old port. I'm going to buy a SIM card.",
+      board: ["We're going to visit the old port.", "I'm going to buy a SIM card."],
+      table: { head: ['Uso', 'Ejemplo'], rows: [['Plan ya decidido', '<We> [are going to] [visit] the old port.'], ['Plan personal', '<I> [am going to] [buy] a SIM card.']] },
+    },
+    { who: 'board', text: "I ___ a new phone next week. I've already decided.", choice: { options: ['am going to buy', 'am going buy', 'going to buying'], answer: 0, tip: 'Plan decidido: am going to + verbo base.' } },
+    { who: 'leo', text: "Second: the present continuous, for fixed appointments with a time. 'We're meeting Ms. Haddad at nine.'", es: "Segundo: el presente continuo, para citas fijas con una hora. 'We're meeting Ms. Haddad at nine.'" },
+    {
+      who: 'board',
+      text: "We're meeting Ms. Haddad at nine. I'm flying home on Friday.",
+      board: ["We're meeting Ms. Haddad at nine.", "I'm flying home on Friday."],
+      table: { head: ['Uso', 'Ejemplo'], rows: [['Cita fija (hora o día)', '<We> [are meeting] Ms. Haddad {at nine}.'], ['Viaje ya organizado', '<I> [am flying] home {on Friday}.']] },
+    },
+    { who: 'board', text: "We ___ Ms. Haddad at nine tomorrow. It's on the agenda.", choice: { options: ['are meeting', 'will meeting', 'meet to'], answer: 0, tip: 'Cita fija con hora: presente continuo (are meeting).' } },
+    { who: 'leo', text: "Third: 'will', for decisions we make at the moment of speaking, and for predictions. 'The bus is late. I'll take a taxi.'", es: "Tercero: 'will', para decisiones que tomamos al hablar y para predicciones. 'The bus is late. I'll take a taxi.'" },
+    {
+      who: 'board',
+      text: "I'll take the bus. It will be a great week.",
+      board: ["I'll take the bus.", 'It will be a great week.'],
+      table: { head: ['Uso', 'Ejemplo'], rows: [['Decisión en el momento', '<I> {will} [take] the bus.'], ['Predicción', '<It> {will} [be] a great week.']] },
+    },
+    { who: 'board', text: 'The bus is late! OK, I ___ a taxi.', choice: { options: ['will take', 'will to take', 'going to take'], answer: 0, tip: 'Decisión en el momento: will + verbo base.' } },
+    { who: 'leo', text: 'So: a plan we decided = going to. A fixed appointment = present continuous. A quick decision or a prediction = will.', es: 'Entonces: un plan decidido = going to. Una cita fija = presente continuo. Una decisión rápida o una predicción = will.' },
+    { who: 'board', text: "You are at a café and you suddenly decide to order a coffee. You say: 'I ___ a coffee.'", choice: { options: ['will have', 'am going have', 'have will'], answer: 0, tip: 'Decisión en el momento: will + verbo base.' } },
+    { who: 'leo', text: "Ready? Let's practice, and then we'll find the residence.", es: '¿Listo? Practiquemos y después buscamos la residencia.' },
+  ],
 }
