@@ -2,6 +2,7 @@ import type { DialogLine, GameState, Interest, SceneDef, Zone } from '../game/ty
 import { closeId } from './b1World'
 import { B1_02_PLANE_CHATS } from './friends'
 import { B1_02_CLERK, B1_02_JACK, B1_02_LUGGAGE, B1_02_TRAV1, B1_02_TRAV2 } from './b1Airport'
+import { B1_02_AGENDA, B1_02_ASSISTANT, B1_02_FUTURES, B1_02_HADDAD, B1_02_LEO_OFFICE, B1_02_LEO_STREET, B1_02_ROUTE, B1_02_SHOP } from './b1Office'
 
 /**
  * B1-02 · A New City (presente). Bloque A: el avión, el aeropuerto y la lección de Leo.
@@ -26,19 +27,19 @@ export const B1_02_INTEREST = 'b1-02-interest'
 export const B1_02_CLOSE = closeId(2)
 
 /**
- * Leyenda (Tiles.tsx, sin dibujos nuevos): # pared · s asientos · d puerta · h letrero · v pantalla (tablero de vuelos)
+ * Leyenda (Tiles.tsx, sin dibujos nuevos): , acera · # pared · s asientos · d puerta · h letrero · v pantalla (tablero de vuelos)
  * C mostrador (cinta de equipaje; en 15,5 el mostrador de Objetos Perdidos) · O escritorio (mostrador de check-in) · p planta · K mesa · F archivador · = calle.
  * Avión x 1-4, y 1-3 (puerta de salida en 5,2). Aeropuerto x 6-15. Cerrado (x 16): tienda (16,1), oficina (16,4), calle (16,7).
  */
 const MAP = [
   '######h##vv#############',
-  '#ss.s#.........pd..K..K#',
+  '#ss.s#..........d..K..K#',
   '#....d..........#......#',
   '#ss.s#..........########',
   '######..CCCCC...d..O..F#',
   '######.........C#.....p#',
   '######.p....OO..########',
-  '######..........d=======',
+  '######..........d,,,====',
   '########################',
 ]
 
@@ -74,6 +75,11 @@ export const B1_02_LUMEN: SceneDef = {
     { type: 'enemy', id: B1_02_TRAV2, x: 11, y: 6, after: B1_02_TRAV1 },
     { type: 'npc', id: B1_02_CLERK, x: 15, y: 6 },
     { type: 'enemy', id: B1_02_JACK, x: 15, y: 3, after: B1_02_LUGGAGE },
+    // Bloque C (data/b1Office.ts): tienda de celulares, oficina del intercambio y la calle (Route Challenge)
+    { type: 'npc', id: B1_02_ASSISTANT, x: 21, y: 1 },
+    { type: 'npc', id: B1_02_HADDAD, x: 20, y: 4 },
+    { type: 'npc', id: B1_02_LEO_OFFICE, x: 18, y: 5 },
+    { type: 'npc', id: B1_02_LEO_STREET, x: 19, y: 7 },
   ],
   labels: [
     { text: 'Avión', x: 3, y: 3 },
@@ -101,9 +107,10 @@ export const B1_02_LUMEN: SceneDef = {
   // La puerta del avión se abre al aterrizar; lo de la derecha lo llenan los bloques 2-B y 2-C
   locked: (x, y, s) => {
     if (x === 5 && y === 2 && !s.opened.includes(B1_02_LANDED)) return NOT_YET('El avión todavía no ha aterrizado.')
-    if (x === 16 && y === 1) return NOT_YET(s.defeated.includes(B1_02_JACK) ? 'Se abre en el siguiente bloque.' : 'La tienda de celulares.')
-    if (x === 16 && y === 4) return NOT_YET('La oficina del intercambio.')
-    if (x === 16 && y === 7) return NOT_YET('La calle hacia la residencia.')
+    // En cadena: Jack → tienda → oficina → calle
+    if (x === 16 && y === 1 && !s.defeated.includes(B1_02_JACK)) return NOT_YET('Primero termina con Jack.')
+    if (x === 16 && y === 4 && !s.opened.includes(B1_02_SHOP)) return NOT_YET('Primero consigue tu tarjeta SIM en la tienda de celulares.')
+    if (x === 16 && y === 7 && !s.opened.includes(B1_02_FUTURES)) return NOT_YET('Primero habla con Ms. Haddad y con Leo en la oficina.')
     return null
   },
   requirements: [],
@@ -114,6 +121,9 @@ export const B1_02_LUMEN: SceneDef = {
     { label: 'Viajeros perdidos', done: s.defeated.includes(B1_02_TRAV1) && s.defeated.includes(B1_02_TRAV2) },
     { label: 'Lost Luggage', done: s.opened.includes(B1_02_LUGGAGE) },
     { label: 'Jack the Rival', done: s.defeated.includes(B1_02_JACK) },
+    { label: 'Tienda de celulares', done: s.opened.includes(B1_02_SHOP) },
+    { label: 'Oficina del intercambio', done: s.opened.includes(B1_02_AGENDA) && s.opened.includes(B1_02_FUTURES) },
+    { label: 'Route Challenge', done: s.opened.includes(B1_02_ROUTE) },
   ],
   intro: {
     first: 'Presente. Vas en el avión hacia Lumen Bay.',

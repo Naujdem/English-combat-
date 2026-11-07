@@ -4,12 +4,22 @@ import type { Question } from '../game/types'
  * B1-02 · A New City (presente, aeropuerto de Lumen Bay). Bloque A:
  *  - Práctica guiada de Leo junto a la cinta de equipaje (lista fija en data/tasks.ts): tag b1-02-practice.
  * Bloque B (data/b1Airport.ts): esbirros con onlyTags: tags b1-02-trav1, b1-02-trav2 y b1-02-jack.
+ * Bloque C (data/b1Office.ts): práctica de la tienda (b1-02-shop, tema travel-phones; s8 se dice en voz alta: S-b1-02-s8,
+ *   o se escribe sin micrófono: T-b1-02-s8) y práctica de Leo en la oficina (b1-02-practice-fut, tema futures-b1).
  * Regla: en las preguntas de elegir solo UNA opción es gramaticalmente correcta.
  */
 const PRACTICE = ['b1-02-practice']
 const TRAV1 = ['b1-02-trav1']
 const TRAV2 = ['b1-02-trav2']
 const JACK = ['b1-02-jack']
+const SHOP = ['b1-02-shop']
+const FUT = ['b1-02-practice-fut']
+const TP = 'travel-phones' as const
+const FB = 'futures-b1' as const
+/** Bloque C: lo que explica el empleado de la tienda (s1-s3 usan el mismo audio) */
+const PLANS_AUDIO =
+  'We have two plans. The Blue Plan is prepaid. It costs twenty dollars a month, it has ten gigabytes of data, and you can top up online. There is no contract. The Gold Plan has a one-year contract. It costs thirty dollars a month, it includes unlimited data, and the coverage works in six countries.'
+
 const PP = 'pp-yet-already' as const
 
 /** Práctica guiada de Leo, en orden */
@@ -70,5 +80,37 @@ export const B1_02_QUESTIONS: Question[] = [
   { id: 'b1-02-j-3', topic: PP, prompt: '___ you seen the harbour yet?', options: ['Have', 'Did', 'Are'], answer: 0, tip: 'Present perfect: Have + sujeto + participio.', tags: JACK },
   { id: 'b1-02-j-4', topic: PP, prompt: 'I ___ the harbour yet. Do you want to go together?', options: ["haven't seen", "didn't saw", "hasn't seen"], answer: 0, tip: "Con I: haven't + participio.", tags: JACK },
   { id: 'b1-02-j-5', topic: PP, prompt: 'We ___ to the harbour last Sunday.', options: ['went', 'have gone', 'have went'], answer: 0, tip: "'last Sunday' es momento terminado: past simple.", tags: JACK },
+  // ── Tienda de celulares (bloque C) ──
+  { id: 'b1-02-s1', topic: TP, kind: 'listen', audio: PLANS_AUDIO, voice: 'male', prompt: '¿Qué plan no tiene contrato?', options: ['El plan Blue.', 'El plan Gold.', 'Los dos planes.'], answer: 0, tip: 'The Blue Plan is prepaid: no hay contrato.', tags: SHOP },
+  { id: 'b1-02-s2', topic: TP, kind: 'listen', audio: PLANS_AUDIO, voice: 'male', prompt: '¿En cuántos países funciona la cobertura del plan Gold?', options: ['En seis.', 'En diez.', 'En uno.'], answer: 0, tip: 'the coverage works in six countries.', tags: SHOP },
+  { id: 'b1-02-s3', topic: TP, kind: 'listen', audio: PLANS_AUDIO, voice: 'male', prompt: '¿Cuánto cuesta el plan Gold al mes?', options: ['Treinta dólares.', 'Veinte dólares.', 'Diez dólares.'], answer: 0, tip: 'It costs thirty dollars a month.', tags: SHOP },
+  { id: 'b1-02-s4', topic: TP, prompt: "You are staying in Lumen Bay for three months and you don't want a contract. You say: ___", options: ["I'd like the Blue Plan, please.", "I'd like the Gold Plan, please.", "I'd like both contracts, please."], answer: 0, tip: 'Solo tres meses y sin contrato: prepago, el plan Blue.', tags: SHOP },
+  { id: 'b1-02-s5', topic: TP, prompt: 'You want coverage in several countries and you can sign a contract. You say: ___', options: ["I'd like the Gold Plan, please.", "I'd like the Blue Plan, please.", "I'd like no plan, please."], answer: 0, tip: 'Cobertura en varios países y contrato de un año: el plan Gold.', tags: SHOP },
+  { id: 'b1-02-s6', topic: TP, kind: 'order', prompt: 'Quisiera recargar mi plan, por favor.', options: ["I'd", 'like', 'to', 'top', 'up', 'my', 'plan,', 'please.'], answer: 0, tip: "I'd like to + verbo. top up = recargar.", tags: SHOP },
+  { id: 'b1-02-s7', topic: TP, prompt: 'Excuse me, how much ___ the Blue Plan cost?', options: ['does', 'do', 'is'], answer: 0, tip: "Con 'the Blue Plan' (it): does + verbo base.", tags: SHOP },
+  // s8: se usa como S-b1-02-s8 (decirlo en voz alta) o, sin micrófono, T-b1-02-s8 (escribirlo), como la ronda 5 de Call for Help
+  { id: 'b1-02-s8', topic: TP, kind: 'order', prompt: 'Ahora pídelo con tus palabras: «Hola, quisiera el plan Blue, por favor.»', options: ['Hello,', "I'd", 'like', 'the', 'Blue', 'Plan,', 'please.'], answer: 0, tip: "I'd like + el plan, please.", tags: SHOP },
+
+  // ── Práctica de Leo en la oficina (bloque C) ──
+  { id: 'b1-02-f1', topic: FB, prompt: "We ___ visit the old port on Saturday. We've planned it.", options: ['are going to', 'will to', 'going'], answer: 0, tip: 'Plan decidido: are going to + verbo base.', tags: FUT },
+  { id: 'b1-02-f2', topic: FB, prompt: 'I ___ my cousin at the station at six. We arranged it yesterday.', options: ['am meeting', 'will meeting', 'meet to'], answer: 0, tip: 'Cita fija: presente continuo.', tags: FUT },
+  { id: 'b1-02-f3', topic: FB, prompt: "It's cold in here. I ___ the window.", options: ['will close', 'am going closing', 'close to'], answer: 0, tip: 'Decisión en el momento: will + verbo base.', tags: FUT },
+  { id: 'b1-02-f4', topic: FB, kind: 'fix', prompt: "I'm going to meets Ms. Haddad tomorrow.", options: ["I'm going to meet Ms. Haddad tomorrow.", "I'm going meet Ms. Haddad tomorrow.", 'I going to meet Ms. Haddad tomorrow.'], answer: 0, tip: 'going to + verbo base (sin -s).', tags: FUT },
+  { id: 'b1-02-f5', topic: FB, kind: 'fix', prompt: 'We will to take the bus.', options: ['We will take the bus.', 'We will taking the bus.', 'We wills take the bus.'], answer: 0, tip: 'will + verbo base, sin to.', tags: FUT },
+  { id: 'b1-02-f6', topic: FB, kind: 'order', prompt: 'Esta noche nos encontramos con Leo.', options: ["We're", 'meeting', 'Leo', 'tonight.'], answer: 0, tip: "Cita fija: presente continuo (We're meeting).", tags: FUT },
+  { id: 'b1-02-f7', topic: FB, prompt: 'Look at the sky! It ___ rain.', options: ['is going to', 'will to', 'going to'], answer: 0, tip: 'Con evidencia visible: is going to + verbo base.', tags: FUT },
+  {
+    id: 'b1-02-f8',
+    topic: FB,
+    kind: 'listen',
+    audio: "Tomorrow we're visiting the old port at ten. After that, we're going to have lunch, and in the afternoon I'll show you the university.",
+    voice: 'female',
+    prompt: '¿A qué hora visitan el puerto?',
+    options: ['A las diez.', 'A las doce.', 'Por la tarde.'],
+    answer: 0,
+    tip: "we're visiting the old port at ten.",
+    tags: FUT,
+  },
+
   { id: 'b1-02-j-6', topic: PP, kind: 'order', prompt: 'Ya he comprado mi tarjeta SIM.', options: ["I've", 'already', 'bought', 'my', 'SIM', 'card.'], answer: 0, tip: 'have + already + participio.', tags: JACK },
 ]

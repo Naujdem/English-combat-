@@ -290,6 +290,7 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
     case 'places-directions':
       if (question) return { title: 'Para preguntar el camino:', parts: [K('How can I get to'), '+', R('lugar?')] }
       return { title: 'Dónde está: next to / between / opposite · cómo llegar: turn left / go straight:', parts: [S('Lugar'), '+', V('is'), '+', K('next to / between / opposite'), '+', R('...')] }
+    case 'futures-b1':
     case 'future-plans':
       if (/\bwill\b|'ll\b/i.test(sentence)) return { title: 'Decisión ahora, oferta o promesa: will + verbo (sin to):', parts: [S('Sujeto'), '+', K('will'), '+', V('verbo'), '+', R('...')] }
       if (/\bgoing to\b/i.test(sentence)) return { title: 'Intención o algo que se ve venir: am / is / are + going to + verbo:', parts: [S('Sujeto'), '+', K('am / is / are going to'), '+', V('verbo'), '+', R('...')] }

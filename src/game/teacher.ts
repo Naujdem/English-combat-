@@ -32,7 +32,8 @@ import { A2_RETURN, A2_13_CLOSE } from '../data/a2Return'
 import { B1_HOME } from '../data/b1Home'
 import { B1_OPENING, closeId } from '../data/b1World'
 import { B1_02_LANDED, B1_02_LUMEN, B1_02_PRACTICE } from '../data/b1NewCity'
-import { B1_02_LUGGAGE, B1_02_TRAV1, B1_02_TRAV2 } from '../data/b1Airport'
+import { B1_02_JACK, B1_02_LUGGAGE, B1_02_TRAV1, B1_02_TRAV2 } from '../data/b1Airport'
+import { B1_02_AGENDA, B1_02_FUTURES, B1_02_SHOP } from '../data/b1Office'
 import { B1_01_ALARM, B1_01_ECHO, B1_01_MESSAGE, B1_01_PRACTICE, B1_01_SCHOOL, B1_01_TALKED } from '../data/b1Accident'
 import { enterMemory, memoryFlag } from './memory'
 
@@ -746,8 +747,9 @@ export function b1Mission1(s: GameState, stage: 'memory' | 'alarm' | 'call' | 'e
  *  plane: empieza en el avión (la charla sale al entrar) · airport: ya aterrizó, en el aeropuerto junto a la puerta del avión
  *  trav1: lección y práctica de Leo hechas (viajero 1 junto a la cinta) · luggage: viajeros vencidos (empleado de Objetos Perdidos)
  *  jack: Lost Luggage hecho (Jack junto a las puertas de la derecha)
+ *  shop: Jack vencido (frente a la tienda) · office: tienda hecha (frente a la oficina) · route: oficina hecha (frente a la calle)
  */
-export function b1Mission2(s: GameState, stage: 'plane' | 'airport' | 'trav1' | 'luggage' | 'jack'): GameState {
+export function b1Mission2(s: GameState, stage: 'plane' | 'airport' | 'trav1' | 'luggage' | 'jack' | 'shop' | 'office' | 'route'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1)])
   const lumen = { ...b, screen: 'explore' as const, sceneId: B1_02_LUMEN.id, pos: { ...B1_02_LUMEN.start } }
   if (stage === 'plane') return lumen
@@ -757,7 +759,13 @@ export function b1Mission2(s: GameState, stage: 'plane' | 'airport' | 'trav1' | 
   if (stage === 'trav1') return t1
   const lug = { ...t1, pos: { x: 14, y: 6 }, defeated: add(t1.defeated, [B1_02_TRAV1, B1_02_TRAV2]) }
   if (stage === 'luggage') return lug
-  return { ...lug, pos: { x: 14, y: 3 }, opened: add(lug.opened, [B1_02_LUGGAGE]) }
+  const jack = { ...lug, pos: { x: 14, y: 3 }, opened: add(lug.opened, [B1_02_LUGGAGE]) }
+  if (stage === 'jack') return jack
+  const shop = { ...jack, pos: { x: 15, y: 1 }, defeated: add(jack.defeated, [B1_02_JACK]) }
+  if (stage === 'shop') return shop
+  const office = { ...shop, pos: { x: 15, y: 4 }, opened: add(shop.opened, [B1_02_SHOP]) }
+  if (stage === 'office') return office
+  return { ...office, pos: { x: 15, y: 7 }, opened: add(office.opened, [B1_02_AGENDA, B1_02_FUTURES]), seenLesson: add(office.seenLesson, ['futures-b1']) as GameState['seenLesson'] }
 }
 
 PRESETS.push(

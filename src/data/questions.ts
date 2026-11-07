@@ -1054,4 +1054,24 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Con un momento terminado (yesterday, last night) se usa el past simple → I lost my bag yesterday.',
     ],
   },
+  'travel-phones': {
+    name: 'Celular y pedir en una tienda',
+    level: 'B1',
+    lesson: [
+      "Pedir algo: I'd like + cosa → I'd like the Blue Plan, please.",
+      "Pedir hacer algo: I'd like to + verbo → I'd like to top up my plan, please.",
+      'Preguntar el precio: How much does + cosa + cost? → How much does the Blue Plan cost?',
+      'Vocabulario: prepaid (prepago), contract (contrato), data (datos), coverage (cobertura), signal (señal), unlimited (ilimitado), top up (recargar), SIM card (tarjeta SIM).',
+    ],
+  },
+  'futures-b1': {
+    name: 'Futuros: going to, presente continuo y will',
+    level: 'B1',
+    lesson: [
+      "Plan ya decidido: am / is / are going to + verbo base → We're going to visit the old port.",
+      "Cita fija con hora o día: presente continuo (am / is / are + -ing) → We're meeting Ms. Haddad at nine.",
+      "Decisión en el momento: will + verbo base → The bus is late. I'll take a taxi.",
+      'Predicción: will + verbo base → It will be a great week. Con algo que se ve venir: is going to → Look at the sky! It is going to rain.',
+    ],
+  },
 }
