@@ -22,7 +22,7 @@ import type { TextOnlyContent } from '../components/TextOnly'
 import { B1_03_CLOSE_CHAT, B1_TEXT_ONLY } from './b1TextOnly'
 import type { FinePrintContent } from '../components/FinePrint'
 import { B1_04_FINE_PRINT } from './b1FinePrint'
-import { B1_04_PRACTICE1_IDS } from './questions-b1-04'
+import { B1_04_BANK_IDS, B1_04_PRACTICE1_IDS, B1_04_PRACTICE2_IDS } from './questions-b1-04'
 import { B1_REPAIR } from './b1Repair'
 
 /**
@@ -109,6 +109,11 @@ export type NpcTask = {
   pressure?: number
   /** Para activity 'route': otro contenido de Route Challenge (B1-02). Sin el campo, el de A2-11 */
   route?: RouteContent
+  /**
+   * Lo que se dice al terminar, antes del mensaje de recompensa (B1-04: Ricardo y el mensaje de Marisol).
+   * npc: quién lo dice (si no, el personaje de la tarea)
+   */
+  outro?: { npc?: string; steps: MiniStep[] }
   /** Para activity 'practice' (o 'command'): lo que se dice antes del juego (charla corta, B1-02 tienda de celulares, B1-04 Repair Shop) */
   intro?: MiniStep[]
   /** Para activity 'luggage': otro contenido de Lost Luggage (B1-02). Sin el campo, el de A2-11 */
@@ -4576,6 +4581,57 @@ NPC_TASKS['b1-04-repair'] = {
     es: '(Cálido, iluminado y con internet. Ahora toca abrir una cuenta en el banco.)',
     sub: 'Tu cuarto está listo. (Con 0 o 1 errores, ganaste un escudo). El banco se abre en el siguiente bloque.',
     say: 'Warm, bright and online. Now you need to open a bank account.',
+  },
+}
+
+// ── B1-04 · bloque C: el banco (se abre al terminar el Repair Shop) ──
+// Ricardo presenta la cuenta (intro con una elección) y luego la práctica de escucha. Si todas están bien, escudo
+NPC_TASKS['b1-04-ricardo'] = {
+  npc: 'b1-04-ricardo',
+  done: 'b1-04-ricardo',
+  requires: { id: 'b1-04-repair', text: 'The bank is closed.', es: 'El banco está cerrado.', sub: 'Primero arregla tu cuarto.' },
+  activity: 'practice',
+  practice: 'bank-phrasal',
+  practiceIds: B1_04_BANK_IDS,
+  practiceShield: true,
+  intro: [
+    {
+      text: 'Good morning! Welcome to the bank. Are you here to open an account?',
+      es: '¡Buenos días! Bienvenidos al banco. ¿Vienen a abrir una cuenta?',
+      choice: { ask: '¿Qué le respondes?', options: ["Yes, please. We'd like to open a bank account.", "Yes, please. We'd like open a bank account.", 'Yes, please. We like to opening a bank account.'], answer: 0, tip: "We'd like to + verbo base." },
+    },
+    { text: 'Great. Listen carefully, because there are some documents you need.', es: 'Perfecto. Escuchen con atención, porque necesitan algunos documentos.' },
+  ],
+  steps: [],
+  reward: {
+    text: 'Ricardo: "Good. Now talk to your friend. She will explain a few words we use at the bank."',
+    es: 'Bien. Ahora hablen con su amiga. Ella les explicará unas palabras que usamos en el banco.',
+    sub: 'Práctica de escucha hecha. (Si acertaste todas, ganaste un escudo). Maya te espera en el banco.',
+    say: 'Good. Now talk to your friend. She will explain a few words we use at the bank.',
+  },
+}
+
+// Maya en el banco: lección 'bank-phrasal' (Maya la guía) + práctica. Al terminar, Ricardo entrega la tarjeta (outro)
+// y llega el mensaje de Marisol: el gancho del jefe (bloque 4-D). Este bloque NO guarda closeId(4)
+NPC_TASKS['b1-04-phrasal'] = {
+  npc: 'b1-04-maya-bank',
+  done: 'b1-04-phrasal',
+  lesson: 'bank-phrasal',
+  requires: { id: 'b1-04-ricardo', text: 'Maya is waiting for you.', es: 'Maya te está esperando.', sub: 'Primero habla con Ricardo.' },
+  activity: 'practice',
+  practice: 'bank-phrasal',
+  practiceIds: B1_04_PRACTICE2_IDS,
+  practiceShield: true,
+  steps: [],
+  outro: {
+    npc: 'b1-04-ricardo',
+    steps: [{ text: 'Perfect! Your account is open. Here is your debit card. Welcome to Lumen Bay!', es: '¡Perfecto! Su cuenta está abierta. Aquí tienen su tarjeta de débito. ¡Bienvenidos a Lumen Bay!' }],
+  },
+  reward: {
+    text: "(Your phone buzzes. A message from Marisol: 'Please come to the residence. Something strange is happening with the contracts!')",
+    es: '(Tu teléfono vibra. Un mensaje de Marisol: «Por favor vengan a la residencia. ¡Algo extraño pasa con los contratos!»)',
+    sub: 'Tienes tu cuenta y tu tarjeta de débito. (Si acertaste todas, ganaste un escudo).',
+    say: "Your phone buzzes. A message from Marisol: 'Please come to the residence. Something strange is happening with the contracts!'",
   },
 }
 

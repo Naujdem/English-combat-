@@ -258,6 +258,10 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (/\bmustn't\b/i.test(sentence)) return { title: "Prohibido: mustn't + verbo base:", parts: [S('Sujeto'), '+', K("mustn't"), '+', V('verbo'), '+', R('...')] }
       if (/\b(don't|doesn't) have to\b|\bneedn't\b/i.test(sentence)) return { title: "No es necesario: don't / doesn't have to · needn't + verbo base:", parts: [S('Sujeto'), '+', K("don't have to / needn't"), '+', V('verbo'), '+', R('...')] }
       return { title: 'Obligación: must + verbo base (sin to) · have to / has to + verbo base:', parts: [S('Sujeto'), '+', K('must / have to / has to'), '+', V('verbo'), '+', R('...')] }
+    case 'bank-phrasal':
+      if (/\b(it|them|me)\s+(in|on|out|up|off)\b/i.test(sentence)) return { title: 'Con pronombre, el pronombre va en medio: fill it in · turn it on:', parts: [V('Verbo'), '+', S('it / them / me'), '+', K('in / on / out / up')] }
+      if (/\b(account|card|machine|ID)\b/.test(sentence) && !/\b(fill|pay|take|sign)\s/i.test(sentence)) return { title: 'Sustantivo + sustantivo: el primero describe al segundo (bank account, cash machine):', parts: [K('bank / debit / cash'), '+', R('account / card / machine')] }
+      return { title: 'Phrasal verb: verbo + palabra pequeña (fill in, take out, pay in, sign up):', parts: [S('Sujeto'), '+', V('verbo'), '+', K('in / out / up / on'), '+', R('...')] }
     case 'invitations':
       if (question) return { title: 'Para invitar: Would + you + like to + verbo? · How about + verbo con -ing?', parts: [K('Would you like to / How about'), '+', V('verbo / verbo-ing'), '+', R('...?')] }
       return { title: "Let's + verbo · la frecuencia (always, usually, sometimes, never) va antes del verbo:", parts: [S('Sujeto'), '+', K('always / usually / sometimes / never'), '+', V('verbo'), '+', R('...')] }
