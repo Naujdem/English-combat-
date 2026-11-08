@@ -6,7 +6,7 @@ import { OUTFITS } from '../data/school'
 import { ENEMIES } from '../data/enemies'
 import { LESSONS } from '../data/lessons'
 import { Lesson } from '../components/Lesson'
-import type { TopicId } from '../game/types'
+import type { LessonStep, TopicId } from '../game/types'
 import { applyCasual, completeStory, FRIEND_REWARDS, talkTo } from '../game/social'
 import { ReadingActivity, Timetable, VocabActivity } from '../components/Activities'
 import { nextSession, SESSIONS, sessionFor } from '../data/schedule'
@@ -71,6 +71,7 @@ import { WhichDog } from '../components/WhichDog'
 import { ShelterDog } from '../components/ShelterDog'
 import { B1_06_DOG_NPCS } from '../data/b1Kennels'
 import { B1_07_NOTEBOOK, B1_07_TV } from '../data/b1Room'
+import { B1_07_CRACK } from '../data/b1Market'
 import { AnimalPens } from '../components/AnimalPens'
 import { Planner } from '../components/Planner'
 import { Attendance } from '../components/Attendance'
@@ -170,7 +171,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [friendsOpen, setFriendsOpen] = useState(false)
   // Lección de Leo que se muestra antes de un combate con un tema nuevo
   // (o antes de una actividad que enseña un tema nuevo)
-  const [lesson, setLesson] = useState<{ topics: TopicId[]; enemyId?: string; then?: 'where' | 'coach' | 'directions' | 'cafe'; task?: string } | null>(null)
+  const [lesson, setLesson] = useState<{ topics: TopicId[]; enemyId?: string; then?: 'where' | 'coach' | 'directions' | 'cafe'; task?: string; /** B1-07: pasos propios de la tarea (NpcTask.lessonSteps) */ steps?: LessonStep[] } | null>(null)
   // Tarea de un personaje (charla corta con elecciones), ver data/tasks.ts
   const [task, setTask] = useState<string | null>(null)
   // Práctica con charla previa (NpcTask.intro, B1-02 tienda): id de la tarea cuya charla ya se vio en esta visita
@@ -332,7 +333,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         if (pend && !pend.blocked) {
           const t = pend.task
           setMsg(null)
-          if (t.lesson && !state.seenLesson.includes(t.lesson)) setLesson({ topics: [t.lesson], task: pend.id })
+          if (t.lessonSteps?.length) setLesson({ topics: [], task: pend.id, steps: t.lessonSteps })
+          else if (t.lesson && !state.seenLesson.includes(t.lesson)) setLesson({ topics: [t.lesson], task: pend.id })
           else setTask(pend.id)
           return
         }
@@ -745,7 +747,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS || e.id === B1_07_TV ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_07_NOTEBOOK || e.id === B1_05_ENVELOPE || e.id === B1_06_BOARD || e.id === B1_06_DESK || e.id === 'b1-06-orders' ? <NotebookIcon lit={pending} /> : B1_06_DOG_NPCS[e.id] ? <ShelterDog who={B1_06_DOG_NPCS[e.id]} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS || e.id === B1_07_TV || e.id === B1_07_CRACK ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_07_NOTEBOOK || e.id === B1_05_ENVELOPE || e.id === B1_06_BOARD || e.id === B1_06_DESK || e.id === 'b1-06-orders' ? <NotebookIcon lit={pending} /> : B1_06_DOG_NPCS[e.id] ? <ShelterDog who={B1_06_DOG_NPCS[e.id]} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -1398,7 +1400,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         <div className="absolute inset-0 z-40 overflow-y-auto bg-ink">
           <Lesson
             state={state}
-            steps={lesson.topics.flatMap((t) => (LESSONS[t] ?? []).map((st) => ({ ...st, topic: t })))}
+            steps={lesson.steps ?? lesson.topics.flatMap((t) => (LESSONS[t] ?? []).map((st) => ({ ...st, topic: t })))}
             title={lesson.enemyId ? 'Leo te alcanza antes del combate' : lesson.task && NPC_TASKS[lesson.task]?.notebookPage ? 'Cuaderno de L' : lesson.task && NPC_TASKS[lesson.task]?.phoneLesson ? 'Leo te escribe' : lesson.task && (NPC_TASKS[lesson.task]?.npc === B1_04_MAYA || NPC_TASKS[lesson.task]?.npc === B1_04_MAYA_BANK) ? 'Maya te ayuda' : 'Leo te ayuda'}
             phone={lesson.task ? NPC_TASKS[lesson.task]?.phoneLesson : undefined}
             notebook={lesson.task ? NPC_TASKS[lesson.task]?.notebookPage : undefined}

@@ -8,7 +8,7 @@ import type { GameState, SceneDef, Zone } from '../game/types'
  *   el mensaje de la amiga) → el cuaderno del escritorio.
  * Bloque B: el mismo cuaderno, dos tareas encadenadas: página 15 ('b1-07-deduce-now', tema 'deduction') y
  *   página 16 ('b1-07-deduce-past', tema 'deduction-past'), con data/questions-b1-07.ts
- *   → la puerta a la calle: "Próximamente: el bajo mundo (bloque 7-C)". Ningún bloque A guarda closeId(7) (se guarda en 7-E).
+ *   → la puerta a la calle: lleva al bajo mundo (bloque C, data/b1Market.ts). Ningún bloque A guarda closeId(7) (se guarda en 7-E).
  */
 export const B1_07_ROOM_ID = 'b1-07-room'
 /** La tele vieja: su tarea guarda B1_07_NEWS al terminar */
@@ -61,15 +61,16 @@ export const B1_07_ROOM: SceneDef = {
   locked: (x, y, s) => {
     if (x !== 11 || y !== 3) return null
     if (!s.opened.includes(B1_07_NEWS)) return { text: 'Todavía no.', sub: 'Primero mira la televisión.' }
-    return { text: 'Todavía no.', sub: 'Próximamente: el bajo mundo (bloque 7-C).' }
+    if (!s.opened.includes(B1_07_DEDUCE_PAST)) return { text: 'Todavía no.', sub: 'Primero termina el cuaderno (páginas 15 y 16).' }
+    return null
   },
-  links: {},
+  // Bloque C: la puerta a la calle lleva al bajo mundo (data/b1Market.ts)
+  links: { '11,3': { sceneId: 'b1-07-market', pos: { x: 1, y: 3 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'La televisión', done: s.opened.includes(B1_07_NEWS) },
     { label: "Cuaderno: página 15 (must / might / can't)", done: s.opened.includes(B1_07_DEDUCE_NOW) },
     { label: 'Cuaderno: página 16 (deducción en el pasado)', done: s.opened.includes(B1_07_DEDUCE_PAST) },
-    { label: 'Próximamente: el bajo mundo (bloque 7-C)', done: false },
   ],
   // Tarjeta de apertura del recuerdo
   intro: {

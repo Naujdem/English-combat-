@@ -1,4 +1,4 @@
-import type { TopicId } from '../game/types'
+import type { LessonStep, TopicId } from '../game/types'
 import type { MiniStep } from '../components/MiniTalk'
 import type { RoundItem, RoundLines } from '../components/OneMoreRound'
 import type { RaceLeg, SequenceStep } from '../components/SequenceMaster'
@@ -31,7 +31,8 @@ import { B1_06_JOB_ADVERT } from './b1Shelter'
 import { B1_06_WHICH_DOG } from './b1Kennels'
 import type { WhichDogRound } from '../components/WhichDog'
 import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
-import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS } from './questions-b1-07'
+import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS, B1_07_PRACTICE4_IDS } from './questions-b1-07'
+import { B1_07_DETECTIVE_CONTENT } from './b1Market'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -104,6 +105,8 @@ export type NpcTask = {
   recover?: TopicId[]
   /** B1: la lección de Leo se ve por mensajes en el teléfono (no en el salón). mine = tu mensaje, a la derecha */
   phoneLesson?: { mine: string }
+  /** B1-07: lección propia de la tarea (sale cada vez que se empieza, aunque su tema ya esté aprendido). Va antes de la práctica */
+  lessonSteps?: LessonStep[]
   /** B1 (recuerdos 3, 5 y 7): la lección es una página del Cuaderno de L con ese número (components/LNotebook.tsx) */
   notebookPage?: number
   /** Para activity 'script' (B1, recuerdos): secuencia fija sin elecciones (MemoryScript); 'friend' = el personaje de la tarea */
@@ -5099,4 +5102,44 @@ NPC_TASKS['b1-07-deduce-past'] = {
   requires: { id: 'b1-07-deduce-now', text: 'My notebook.', es: 'Mi cuaderno.', sub: 'Primero termina la página 15.' },
   steps: [],
   reward: { text: 'I know where to go.', es: 'Ya sé adónde ir.', sub: 'Página 16 del cuaderno terminada. La puerta a la calle: próximamente, el bajo mundo (bloque 7-C).', say: 'I know where to go.' },
+}
+
+// ── B1-07 · The Underworld, bloque C (el bajo mundo, data/b1Market.ts). NO guarda closeId(7) ──
+// El informante: lección propia (página 17 del Cuaderno de L; el tema 'relative-clauses' ya estaba aprendido, por eso
+// lessonSteps y no lesson) + práctica b1-07-r1…r8. Al terminar se abre la rendija de la trastienda
+NPC_TASKS['b1-07-informant'] = {
+  npc: 'b1-07-informant',
+  done: 'b1-07-informant',
+  notebookPage: 17,
+  lessonSteps: [
+    { who: 'narrator', text: 'Informant: Welcome to the Underworld. The man who sells old tech is in the back room.', es: 'Informante: Bienvenido al bajo mundo. El hombre que vende tecnología vieja está en el cuarto del fondo.' },
+    { who: 'narrator', text: 'Informant: His assistant, who never sleeps, watches the door.', es: 'Informante: Su asistente, que nunca duerme, vigila la puerta.' },
+    { who: 'notebook', text: 'Page 17. The informant gave me a lot of information. I wrote it down.', es: 'Página 17. El informante me dio mucha información. La anoté.' },
+    { who: 'board', text: 'who = personas; that / which = cosas; whose = posesión; where = lugares. Puedes quitar who / that si es el objeto: the box (that) he keeps.', topic: 'relative-clauses' },
+    { who: 'board', text: 'Dato extra: va entre comas. Mr. Vega, who sells old tech, is in the back room. Con that NO se usan comas.', topic: 'relative-clauses' },
+    { who: 'board', text: 'Errores típicos: ✗ Mr. Vega, that sells old tech, is here → ✓ Mr. Vega, who sells old tech, is here. ✗ The market where I bought it there → ✓ The market where I bought it.', topic: 'relative-clauses' },
+  ],
+  activity: 'practice',
+  practice: 'relative-clauses',
+  practiceIds: B1_07_PRACTICE4_IDS,
+  steps: [],
+  reward: { text: 'Informant: His assistant, who never sleeps, watches the door.', es: 'Informante: Su asistente, que nunca duerme, vigila la puerta.', sub: 'Práctica hecha. Mira por la rendija de la trastienda.', say: 'His assistant, who never sleeps, watches the door.' },
+}
+
+// La rendija de la trastienda: el Detective (components/Reconstruct.tsx, contenido en data/b1Market.ts). 5 monedas.
+// Al terminar aparece el guardia delante de la puerta roja
+NPC_TASKS['b1-07-detective'] = {
+  npc: 'b1-07-crack',
+  done: 'b1-07-detective',
+  activity: 'reconstruct',
+  reconstruct: B1_07_DETECTIVE_CONTENT,
+  coins: 5,
+  requires: { id: 'b1-07-informant', text: 'A crack in the wall.', es: 'Una rendija en la pared.', sub: 'Primero habla con el informante.' },
+  steps: [],
+  reward: {
+    text: '(It must be behind the shelf. But the guard is at the door.)',
+    es: '(Debe de estar detrás del estante. Pero el guardia está en la puerta.)',
+    sub: 'Ganaste 5 monedas. Vence al guardia de la puerta roja.',
+    say: 'It must be behind the shelf. But the guard is at the door.',
+  },
 }
