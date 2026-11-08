@@ -268,6 +268,8 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       return { title: 'Hábito de antes: used to + verbo base:', parts: [S('Sujeto'), '+', K('used to'), '+', V('verbo'), '+', R('...')] }
     case 'deduction':
       return { title: "Deducción: must (seguro) · might (quizá) · can't (imposible) + verbo base:", parts: [S('Sujeto'), '+', K("must / might / can't"), '+', V('be / verbo base'), '+', R('...')] }
+    case 'superlatives-b1':
+      return { title: 'Superlativo: the + adjetivo corto con -est · the most + adjetivo largo (good → the best):', parts: [S('Sujeto'), '+', V('is / are'), '+', K('the -est / the most'), '+', R('... in / of ...')] }
     case 'deduction-past':
       return { title: "Deducción en el pasado: must / might / can't + have + participio:", parts: [S('Sujeto'), '+', K("must / might / can't"), '+', V('have + participio'), '+', R('...')] }
     case 'passive-news':
