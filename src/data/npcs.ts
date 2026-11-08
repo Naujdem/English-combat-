@@ -831,6 +831,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   'b1-07-notebook': {
     name: 'El cuaderno de L',
     look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
+    doneLine: { text: 'I know where to go.', es: 'Ya sé adónde ir.' },
   },
   // ── B1-04 · House Rules, bloque A (residencia de Lumen Bay, data/b1Residence.ts) ──
   'b1-04-marisol': {

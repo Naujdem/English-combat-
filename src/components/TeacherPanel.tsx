@@ -212,6 +212,8 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1-7 · The Underworld</p>
             <div className="mt-1 grid gap-2">
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission7(s, 'news'))}>B1-7: las noticias (pasiva)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission7(s, 'now'))}>B1-7: Cuaderno p.15 (must / might / can't)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission7(s, 'past'))}>B1-7: Cuaderno p.16 (deducción en el pasado)</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>

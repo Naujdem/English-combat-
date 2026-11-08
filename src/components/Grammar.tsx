@@ -266,6 +266,10 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (question) return { title: 'Pregunta: Did + sujeto + use to + verbo base? (sin d):', parts: [V('Did'), '+', S('Sujeto'), '+', K('use to'), '+', V('verbo'), '+', R('...?')] }
       if (negative) return { title: "Negativa: didn't use to + verbo base (sin d):", parts: [S('Sujeto'), '+', K("didn't use to"), '+', V('verbo'), '+', R('...')] }
       return { title: 'Hábito de antes: used to + verbo base:', parts: [S('Sujeto'), '+', K('used to'), '+', V('verbo'), '+', R('...')] }
+    case 'deduction':
+      return { title: "Deducción: must (seguro) · might (quizá) · can't (imposible) + verbo base:", parts: [S('Sujeto'), '+', K("must / might / can't"), '+', V('be / verbo base'), '+', R('...')] }
+    case 'deduction-past':
+      return { title: "Deducción en el pasado: must / might / can't + have + participio:", parts: [S('Sujeto'), '+', K("must / might / can't"), '+', V('have + participio'), '+', R('...')] }
     case 'passive-news':
       if (/\b(has|have) been\b/i.test(sentence)) return { title: 'Presente perfecto pasivo: has / have been + participio (by ... es opcional):', parts: [S('Sujeto'), '+', V('has / have been'), '+', K('participio'), '+', R('by ...')] }
       return { title: 'Pasiva: be + participio (by ... es opcional):', parts: [S('Sujeto'), '+', V('is / was / were'), '+', K('participio'), '+', R('by ...')] }

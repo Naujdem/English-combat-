@@ -5,15 +5,19 @@ import type { GameState, SceneDef, Zone } from '../game/types'
  * los demás con la cara borrosa (Explore lo hace solo en las escenas de recuerdo). Sin atuendos.
  * Bloque A (este): el cuarto alquilado de L, pequeño y sucio, un año después del incendio.
  *   La televisión (tarea 'b1-07-news': lección 'passive-news' + práctica b1-07-n1…n8, data/questions-b1-07.ts; al final,
- *   el mensaje de la amiga) → el cuaderno del escritorio ("Próximamente: el Cuaderno de L (bloque 7-B)")
+ *   el mensaje de la amiga) → el cuaderno del escritorio.
+ * Bloque B: el mismo cuaderno, dos tareas encadenadas: página 15 ('b1-07-deduce-now', tema 'deduction') y
+ *   página 16 ('b1-07-deduce-past', tema 'deduction-past'), con data/questions-b1-07.ts
  *   → la puerta a la calle: "Próximamente: el bajo mundo (bloque 7-C)". Ningún bloque A guarda closeId(7) (se guarda en 7-E).
  */
 export const B1_07_ROOM_ID = 'b1-07-room'
 /** La tele vieja: su tarea guarda B1_07_NEWS al terminar */
 export const B1_07_TV = 'b1-07-tv'
 export const B1_07_NEWS = 'b1-07-news'
-/** El cuaderno del escritorio: se desbloquea al terminar la tele; su lección llega en el bloque 7-B */
+/** El cuaderno del escritorio: se desbloquea al terminar la tele (bloque B: páginas 15 y 16) */
 export const B1_07_NOTEBOOK = 'b1-07-notebook'
+export const B1_07_DEDUCE_NOW = 'b1-07-deduce-now'
+export const B1_07_DEDUCE_PAST = 'b1-07-deduce-past'
 
 /**
  * Un solo cuarto (leyenda de data/b1Words.ts: 5 colchón · K escritorio · W ventana con persianas · d puerta).
@@ -43,7 +47,7 @@ export const B1_07_ROOM: SceneDef = {
   entities: [
     // La tele vieja: la primera tarea
     { type: 'npc', id: B1_07_TV, x: 8, y: 2 },
-    // El cuaderno, sobre el escritorio (cerrado hasta terminar la tele; Explore muestra su aviso)
+    // El cuaderno, sobre el escritorio (sus tareas piden terminar la tele: data/tasks.ts, requires)
     { type: 'npc', id: B1_07_NOTEBOOK, x: 2, y: 5 },
   ],
   labels: [{ text: 'Cuarto alquilado', x: 6, y: 5 }],
@@ -63,7 +67,8 @@ export const B1_07_ROOM: SceneDef = {
   requirements: [],
   chips: (s: GameState) => [
     { label: 'La televisión', done: s.opened.includes(B1_07_NEWS) },
-    { label: 'El cuaderno de L', done: false },
+    { label: "Cuaderno: página 15 (must / might / can't)", done: s.opened.includes(B1_07_DEDUCE_NOW) },
+    { label: 'Cuaderno: página 16 (deducción en el pasado)', done: s.opened.includes(B1_07_DEDUCE_PAST) },
     { label: 'Próximamente: el bajo mundo (bloque 7-C)', done: false },
   ],
   // Tarjeta de apertura del recuerdo
