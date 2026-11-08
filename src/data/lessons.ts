@@ -806,6 +806,23 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'Pasiva: The device was made in 2060. Activa: Scientists made the device.', topic: 'passive-news' },
     { who: 'board', text: 'Errores típicos: ✗ The device was develop by scientists → ✓ The device was developed by scientists. ✗ A device has developed by scientists → ✓ A device has been developed by scientists.', topic: 'passive-news' },
   ],
+  // B1-07 · The Underworld, bloque B: Cuaderno de L, página 15 (deducción en el presente). 'board' = la pizarra
+  deduction: [
+    { who: 'notebook', text: 'Page 15. Where is the device now? I need to think like a detective.', es: 'Página 15. ¿Dónde está el aparato ahora? Tengo que pensar como detective.' },
+    { who: 'board', text: "Deducción en el presente: must be = seguro que es; might be = quizá es; can't be = es imposible.", topic: 'deduction' },
+    { who: 'board', text: "It must be expensive. (Seguro que es caro.) It might be in the city. (Quizá está en la ciudad.) It can't be free. (Es imposible que sea gratis.)", topic: 'deduction' },
+    { who: 'board', text: "Después de must, might y can't va el verbo base. ✗ It must to be there → ✓ It must be there.", topic: 'deduction' },
+    { who: 'board', text: "Para deducir NO usamos mustn't: ✗ It mustn't be free → ✓ It can't be free.", topic: 'deduction' },
+    { who: 'notebook', text: "The device is new and very rare. It can't be in a normal shop. It might be somewhere hidden.", es: 'El aparato es nuevo y muy raro. No puede estar en una tienda normal. Quizá esté escondido en alguna parte.' },
+  ],
+  // B1-07 · The Underworld, bloque B: Cuaderno de L, página 16 (deducción en el pasado). 'board' = la pizarra
+  'deduction-past': [
+    { who: 'notebook', text: 'Page 16. Who has the device? I need to think about the past too.', es: 'Página 16. ¿Quién tiene el aparato? También tengo que pensar en el pasado.' },
+    { who: 'board', text: "Deducción en el pasado: must have + participio = seguro que pasó; might / could have + participio = quizá pasó; can't have + participio = es imposible que pasara.", topic: 'deduction-past' },
+    { who: 'board', text: "He must have been a scientist. (Seguro que era científico.) She can't have known. (Es imposible que ella lo supiera.) They might have sold it. (Quizá lo vendieron.)", topic: 'deduction-past' },
+    { who: 'board', text: "Errores típicos: ✗ It must be stole → ✓ It must have been stolen. ✗ He can't has known → ✓ He can't have known.", topic: 'deduction-past' },
+    { who: 'notebook', text: "The scientists can't have sold it. A thief must have taken it. It must be in the black market.", es: 'Los científicos no pueden haberlo vendido. Un ladrón debe de haberlo tomado. Debe de estar en el mercado negro.' },
+  ],
   // B1-06 · First Job, bloque C (las jaulas): Nayi repasa cómo contar tu experiencia antes de la entrevista
   'experience-b1': [
     { who: 'nayi', text: "Before the interview, let's practise how to talk about your experience.", es: 'Antes de la entrevista, practiquemos cómo contar tu experiencia.' },

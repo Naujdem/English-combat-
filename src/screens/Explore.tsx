@@ -70,7 +70,7 @@ import { GuessAnimal } from '../components/GuessAnimal'
 import { WhichDog } from '../components/WhichDog'
 import { ShelterDog } from '../components/ShelterDog'
 import { B1_06_DOG_NPCS } from '../data/b1Kennels'
-import { B1_07_NEWS, B1_07_NOTEBOOK, B1_07_TV } from '../data/b1Room'
+import { B1_07_NOTEBOOK, B1_07_TV } from '../data/b1Room'
 import { AnimalPens } from '../components/AnimalPens'
 import { Planner } from '../components/Planner'
 import { Attendance } from '../components/Attendance'
@@ -326,12 +326,6 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           setMsg(null)
           const c = B1_06_LEO_CHAT
           setTalk({ friendId: 'leo', story: null, lines: [{ who: 'friend', text: c.text, es: c.es, options: c.options }], title: 'Charla casual', level: 'B1', quest: 'b1-06-leo' })
-          return
-        }
-        // B1-07 · The Underworld: el cuaderno del escritorio se desbloquea al terminar la tele; su lección llega en el bloque 7-B
-        if (e.id === B1_07_NOTEBOOK) {
-          if (!state.opened.includes(B1_07_NEWS)) setMsg({ text: 'Todavía no.', sub: 'Primero mira la televisión.', tone: 'warn' })
-          else setMsg({ text: 'El cuaderno de L', sub: 'Próximamente: el Cuaderno de L (bloque 7-B)' })
           return
         }
         const pend = taskOf(e.id, [...state.opened, ...state.defeated])

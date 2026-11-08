@@ -1150,6 +1150,24 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Vocabulario: apply (postularse), salary (salario), experience (experiencia), unemployed (desempleado), fired (despedido).',
     ],
   },
+  deduction: {
+    name: "Deducción: must / might / can't",
+    level: 'B1',
+    lesson: [
+      "Deducción en el presente: must be = seguro que es; might be = quizá es; can't be = es imposible.",
+      'Después de must, might y can\'t va el verbo base. ✗ It must to be there → ✓ It must be there.',
+      "Para deducir NO usamos mustn't: ✗ It mustn't be free → ✓ It can't be free.",
+    ],
+  },
+  'deduction-past': {
+    name: 'Deducción en el pasado',
+    level: 'B1',
+    lesson: [
+      "Deducción en el pasado: must have + participio = seguro que pasó; might / could have + participio = quizá pasó; can't have + participio = es imposible que pasara.",
+      "He must have been a scientist. (Seguro que era científico.) She can't have known. (Es imposible que ella lo supiera.) They might have sold it. (Quizá lo vendieron.)",
+      "Errores típicos: ✗ It must be stole → ✓ It must have been stolen. ✗ He can't has known → ✓ He can't have known.",
+    ],
+  },
   'passive-news': {
     name: 'La pasiva en las noticias',
     level: 'B1',

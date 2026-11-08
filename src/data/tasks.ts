@@ -31,7 +31,7 @@ import { B1_06_JOB_ADVERT } from './b1Shelter'
 import { B1_06_WHICH_DOG } from './b1Kennels'
 import type { WhichDogRound } from '../components/WhichDog'
 import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
-import { B1_07_PRACTICE_IDS } from './questions-b1-07'
+import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS } from './questions-b1-07'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -5069,4 +5069,34 @@ NPC_TASKS['b1-07-news'] = {
     sub: "(You don't answer. You look at your notebook.) — (No contestas. Miras tu cuaderno.)",
     say: "Your phone shines. A message from your friend: 'Don't do anything stupid, L.'",
   },
+}
+
+// ── B1-07 · The Underworld, bloque B (el cuaderno del escritorio, data/b1Room.ts). Sin monedas. NO guarda closeId(7) ──
+// Página 15 del Cuaderno de L (lección 'deduction') + práctica b1-07-m1…m8. Al terminar, la página 16
+NPC_TASKS['b1-07-deduce-now'] = {
+  npc: 'b1-07-notebook',
+  done: 'b1-07-deduce-now',
+  lesson: 'deduction',
+  notebookPage: 15,
+  activity: 'practice',
+  practice: 'deduction',
+  practiceIds: B1_07_PRACTICE2_IDS,
+  requires: { id: 'b1-07-news', text: 'My notebook.', es: 'Mi cuaderno.', sub: 'Primero mira la televisión.' },
+  steps: [],
+  reward: { text: 'It might be somewhere hidden.', es: 'Quizá esté escondido en alguna parte.', sub: 'Página 15 del cuaderno terminada. El cuaderno tiene una página nueva.', say: 'It might be somewhere hidden.' },
+}
+
+// Página 16 del Cuaderno de L (lección 'deduction-past') + práctica b1-07-p1…p8. Al terminar: "I know where to go."
+// La puerta a la calle sigue con "Próximamente: el bajo mundo (bloque 7-C)"
+NPC_TASKS['b1-07-deduce-past'] = {
+  npc: 'b1-07-notebook',
+  done: 'b1-07-deduce-past',
+  lesson: 'deduction-past',
+  notebookPage: 16,
+  activity: 'practice',
+  practice: 'deduction-past',
+  practiceIds: B1_07_PRACTICE3_IDS,
+  requires: { id: 'b1-07-deduce-now', text: 'My notebook.', es: 'Mi cuaderno.', sub: 'Primero termina la página 15.' },
+  steps: [],
+  reward: { text: 'I know where to go.', es: 'Ya sé adónde ir.', sub: 'Página 16 del cuaderno terminada. La puerta a la calle: próximamente, el bajo mundo (bloque 7-C).', say: 'I know where to go.' },
 }
