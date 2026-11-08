@@ -822,6 +822,16 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b1-05-boss',
     doneLine: { text: "(You read it three times. You don't answer.)", es: '(Lo lees tres veces. No contestas.)' },
   },
+  // ── B1-07 · The Underworld (recuerdo 7, data/b1Room.ts): la tele vieja (TabletIcon) y el cuaderno del escritorio (NotebookIcon) ──
+  'b1-07-tv': {
+    name: 'La televisión',
+    look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
+    doneLine: { text: 'It was designed using ancient temple writings.', es: 'Fue diseñado usando escritos antiguos de templos.' },
+  },
+  'b1-07-notebook': {
+    name: 'El cuaderno de L',
+    look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
+  },
   // ── B1-04 · House Rules, bloque A (residencia de Lumen Bay, data/b1Residence.ts) ──
   'b1-04-marisol': {
     name: 'Marisol',

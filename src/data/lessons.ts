@@ -796,6 +796,16 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'nayi', text: 'Zirius is the dog that plays with the ball. Lupe is the dog that barks at everything. Fresas is the dog I walked yesterday.', es: 'Zirius es el perro que juega con la pelota. Lupe es el perro que ladra a todo. Fresas es el perro que paseé ayer.' },
     { who: 'board', text: "Errores típicos: ✗ The girl which works here → ✓ The girl who works here. ✗ The dog who's collar is red → ✓ The dog whose collar is red. (who's = who is)" },
   ],
+  // B1-07 · The Underworld, bloque A (recuerdo 7): la tele del cuarto de L y la página 14 del Cuaderno de L. 'board' = la pizarra
+  'passive-news': [
+    { who: 'narrator', text: '(The TV is on. Nobody lives with you, but the news is talking to you.)', es: '(La tele está prendida. Nadie vive contigo, pero las noticias te hablan.)' },
+    { who: 'narrator', text: 'A device that can restore lost human abilities has been developed by scientists.', es: 'Un aparato que puede restaurar habilidades humanas perdidas ha sido desarrollado por científicos.' },
+    { who: 'narrator', text: 'It was designed using ancient temple writings.', es: 'Fue diseñado usando escritos antiguos de templos.' },
+    { who: 'notebook', text: "Page 14. I turned off the TV. 'Has been developed.' 'Was designed.' Why do the news speak like this?", es: "Página 14. Apagué la tele. 'Has been developed.' 'Was designed.' ¿Por qué las noticias hablan así?" },
+    { who: 'board', text: "Pasiva = be + participio. Se usa cuando importa más lo que pasó que quién lo hizo. Presente perfecto pasivo: has been developed. Pasado pasivo: was designed. 'by scientists' es opcional.", topic: 'passive-news' },
+    { who: 'board', text: 'Pasiva: The device was made in 2060. Activa: Scientists made the device.', topic: 'passive-news' },
+    { who: 'board', text: 'Errores típicos: ✗ The device was develop by scientists → ✓ The device was developed by scientists. ✗ A device has developed by scientists → ✓ A device has been developed by scientists.', topic: 'passive-news' },
+  ],
   // B1-06 · First Job, bloque C (las jaulas): Nayi repasa cómo contar tu experiencia antes de la entrevista
   'experience-b1': [
     { who: 'nayi', text: "Before the interview, let's practise how to talk about your experience.", es: 'Antes de la entrevista, practiquemos cómo contar tu experiencia.' },

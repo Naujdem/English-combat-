@@ -165,7 +165,8 @@ export function Lesson({
           <div key={i} className="anim-fade-in" style={{ transform: `rotate(${i % 2 ? 0.4 : -0.4}deg)` }}>
             {text && (
               <div className="flex items-start gap-2">
-                <p className="flex-1 text-[18px] leading-relaxed">
+                {/* 'narrator' (B1-07: la tele): en cursiva, para que no parezca escrito por L */}
+                <p className={`flex-1 text-[18px] leading-relaxed ${s.who === 'narrator' ? 'italic opacity-80' : ''}`}>
                   <NotebookText text={text} />
                 </p>
                 {notebookSay(text) && <SpeakButton text={notebookSay(text)} size="sm" auto icon="pencil" />}
