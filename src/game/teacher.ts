@@ -33,7 +33,7 @@ import { B1_HOME } from '../data/b1Home'
 import { B1_OPENING, closeId } from '../data/b1World'
 import { B1_02_LANDED, B1_02_LUMEN, B1_02_PRACTICE } from '../data/b1NewCity'
 import { B1_04_BOSS, B1_04_FINEPRINT, B1_04_FRIEND, B1_04_PHRASAL, B1_04_RESIDENCE, B1_04_RULES, B1_04_WELCOME } from '../data/b1Residence'
-import { B1_05_BANK, B1_05_FLAT, B1_05_GET_USED_TO, B1_05_JOBS, B1_05_LETTER, B1_05_USED_TO } from '../data/b1Flat'
+import { B1_05_BANK, B1_05_CHEST, B1_05_FLAT, B1_05_GET_USED_TO, B1_05_JOBS, B1_05_LETTER, B1_05_NOTICE1, B1_05_NOTICE2, B1_05_NOTICE_LETTER, B1_05_USED_TO } from '../data/b1Flat'
 import { B1_05_BANK_SCENE } from '../data/b1Bank'
 import { B1_04_JEISON, B1_04_NEIGHBOUR1, B1_04_NEIGHBOUR2, B1_04_REPAIR } from '../data/b1Neighbours'
 import { B1_03_DOCTOR, B1_03_HOSPITAL, B1_03_NOTEBOOK, B1_03_NOTEBOOK2, B1_03_STATIC, B1_03_TEXTS, B1_03_UNREAD1, B1_03_UNREAD2, B1_03_UNREAD3 } from '../data/b1Words'
@@ -845,16 +845,17 @@ export function b1Mission4(s: GameState, stage: 'start' | 'lesson' | 'fineprint'
  *  jobs: página 12 hecha (junto al periódico y el computador, listo para los anuncios)
  *  bank: anuncios hechos (en el banco, frente al banquero) · notebook2: banco hecho (junto al cuaderno; la página 13 sale de nuevo)
  *  chest: página 13 hecha (junto a las cajas, listo para el Memory Chest)
+ *  notice: Memory Chest hecho (junto a la carta bajo la puerta) · evictions: carta leída (los 2 Eviction Notice, frente al primero)
  */
-export function b1Mission5(s: GameState, stage: 'letter' | 'notebook' | 'jobs' | 'bank' | 'notebook2' | 'chest'): GameState {
+export function b1Mission5(s: GameState, stage: 'letter' | 'notebook' | 'jobs' | 'bank' | 'notebook2' | 'chest' | 'notice' | 'evictions'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4)])
   const present = { ...b, sceneId: B1_04_RESIDENCE.id, pos: { ...B1_04_RESIDENCE.start }, seenLesson: b.seenLesson.filter((t) => t !== 'used-to' && t !== 'get-used-to'), opened: b.opened.filter((o) => !o.startsWith('b1-05-')) }
-  const pos = { letter: { x: 9, y: 2 }, notebook: { x: 5, y: 4 }, jobs: { x: 3, y: 5 }, bank: { x: 4, y: 3 }, notebook2: { x: 5, y: 4 }, chest: { x: 7, y: 5 } }[stage]
+  const pos = { letter: { x: 9, y: 2 }, notebook: { x: 5, y: 4 }, jobs: { x: 3, y: 5 }, bank: { x: 4, y: 3 }, notebook2: { x: 5, y: 4 }, chest: { x: 7, y: 5 }, notice: { x: 10, y: 3 }, evictions: { x: 8, y: 3 } }[stage]
   const m = enterMemory(present, 5, stage === 'bank' ? B1_05_BANK_SCENE.id : B1_05_FLAT.id, pos)
   const a = [B1_05_LETTER, B1_05_USED_TO, B1_05_JOBS]
-  const flags = { letter: [], notebook: [B1_05_LETTER], jobs: [B1_05_LETTER, B1_05_USED_TO], bank: a, notebook2: [...a, B1_05_BANK], chest: [...a, B1_05_BANK, B1_05_GET_USED_TO] }[stage]
-  const lessons = stage === 'letter' || stage === 'notebook' ? [] : stage === 'chest' ? ['used-to', 'get-used-to'] : ['used-to']
-  return { ...m, opened: add(m.opened, flags), seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
+  const flags = { letter: [], notebook: [B1_05_LETTER], jobs: [B1_05_LETTER, B1_05_USED_TO], bank: a, notebook2: [...a, B1_05_BANK], chest: [...a, B1_05_BANK, B1_05_GET_USED_TO], notice: [...a, B1_05_BANK, B1_05_GET_USED_TO, B1_05_CHEST], evictions: [...a, B1_05_BANK, B1_05_GET_USED_TO, B1_05_CHEST, B1_05_NOTICE_LETTER] }[stage]
+  const lessons = stage === 'letter' || stage === 'notebook' ? [] : stage === 'chest' || stage === 'notice' || stage === 'evictions' ? ['used-to', 'get-used-to'] : ['used-to']
+  return { ...m, opened: add(m.opened, flags), defeated: m.defeated.filter((d) => d !== B1_05_NOTICE1 && d !== B1_05_NOTICE2), seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
 }
 
 PRESETS.push(

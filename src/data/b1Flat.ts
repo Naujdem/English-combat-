@@ -1,4 +1,4 @@
-import type { GameState, SceneDef, Zone } from '../game/types'
+import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
 import type { FinePrintContent } from '../components/FinePrint'
 import type { MemoryPair } from '../components/MemoryChest'
@@ -28,6 +28,11 @@ export const B1_05_BANK = 'b1-05-bank'
 export const B1_05_GET_USED_TO = 'b1-05-get-used-to'
 export const B1_05_BOXES = 'b1-05-boxes'
 export const B1_05_CHEST = 'b1-05-chest'
+/** Bloque C: la carta bajo la puerta (tarea 'b1-05-notice-letter') y los 2 esbirros Eviction Notice (en cadena, banco compartido) */
+export const B1_05_ENVELOPE = 'b1-05-envelope'
+export const B1_05_NOTICE_LETTER = 'b1-05-notice-letter'
+export const B1_05_NOTICE1 = 'b1-05-notice1'
+export const B1_05_NOTICE2 = 'b1-05-notice2'
 
 /**
  * Un solo cuarto (leyenda de data/b1Words.ts: 5 cama · K mesa · W ventana · d puerta).
@@ -63,6 +68,10 @@ export const B1_05_FLAT: SceneDef = {
     { type: 'npc', id: B1_05_PAPERS, x: 2, y: 5 },
     // Bloque B: las cajas aparecen al terminar la página 13 (npcs.ts, after)
     { type: 'npc', id: B1_05_BOXES, x: 8, y: 5 },
+    // Bloque C: la carta aparece al terminar el Memory Chest (npcs.ts, after); los avisos, uno tras otro
+    { type: 'npc', id: B1_05_ENVELOPE, x: 10, y: 4 },
+    { type: 'enemy', id: B1_05_NOTICE1, x: 7, y: 3, after: B1_05_NOTICE_LETTER },
+    { type: 'enemy', id: B1_05_NOTICE2, x: 4, y: 4, after: B1_05_NOTICE1 },
   ],
   labels: [{ text: 'Apartamento', x: 6, y: 5 }],
   zoneAt: () => zoneAt(),
@@ -72,11 +81,12 @@ export const B1_05_FLAT: SceneDef = {
     '6,1': { text: 'The window.', sub: 'La ventana.', say: 'The window.' },
   },
   // La puerta a la calle: cerrada hasta terminar los anuncios; después lleva al banco (b1-05-bank).
-  // Al terminar el Memory Chest: el aviso de desalojo llega en el bloque 5-C
+  // Al terminar el Memory Chest: la carta y los avisos de desalojo (bloque C); al vencerlos, The Collector llega en el bloque 5-D
   locked: (x, y, s) => {
     if (x !== 11 || y !== 3) return null
     if (!s.opened.includes(B1_05_JOBS)) return NOT_YET('Primero lee los anuncios de empleo.')
-    if (s.opened.includes(B1_05_CHEST)) return { text: 'Próximamente: el aviso de desalojo (bloque 5-C)' }
+    if (s.defeated.includes(B1_05_NOTICE1) && s.defeated.includes(B1_05_NOTICE2)) return { text: 'Próximamente: The Collector (bloque 5-D)' }
+    if (s.opened.includes(B1_05_CHEST)) return NOT_YET('Primero lee la carta bajo la puerta.')
     return null
   },
   links: { '11,3': { sceneId: 'b1-05-bank', pos: { x: 1, y: 3 } } },
@@ -88,7 +98,9 @@ export const B1_05_FLAT: SceneDef = {
     { label: 'El banco', done: s.opened.includes(B1_05_BANK) },
     { label: 'Cuaderno: página 13 (be / get used to)', done: s.opened.includes(B1_05_GET_USED_TO) },
     { label: 'Las cajas (Memory Chest)', done: s.opened.includes(B1_05_CHEST) },
-    ...(s.opened.includes(B1_05_CHEST) ? [{ label: 'Próximamente: el aviso de desalojo (bloque 5-C)', done: false }] : []),
+    { label: 'La carta bajo la puerta', done: s.opened.includes(B1_05_NOTICE_LETTER) },
+    { label: 'Avisos de desalojo (2)', done: s.defeated.includes(B1_05_NOTICE1) && s.defeated.includes(B1_05_NOTICE2) },
+    ...(s.defeated.includes(B1_05_NOTICE1) && s.defeated.includes(B1_05_NOTICE2) ? [{ label: 'Próximamente: The Collector (bloque 5-D)', done: false }] : []),
   ],
   // Tarjeta de apertura del recuerdo
   intro: {
@@ -152,4 +164,48 @@ export const B1_05_PACKING: { title: string; intro: { en: string; es: string }; 
     { a: 'the books', b: 'I used to read them in bed.', example: { en: 'I used to read them in bed.', es: 'Los libros: solía leerlos en la cama.' } },
     { a: 'the microphone', b: 'I used to sing into it.', example: { en: 'I used to sing into it.', es: 'El micrófono: solía cantar con él.' } },
   ],
+}
+
+/** La carta bajo la puerta (secuencia fija, MemoryScript): 'narrator' = L narra · 'board' = la pizarra con el vocabulario */
+export const B1_05_NOTICE_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(Someone puts a letter under the door.)', es: '(Alguien mete una carta por debajo de la puerta.)' },
+  { who: 'board', text: 'evict = desalojar. owe = deber (dinero). debt = deuda. loan = préstamo. savings = ahorros. pay back = devolver (dinero).', es: 'evict = desalojar. owe = deber (dinero). debt = deuda. loan = préstamo. savings = ahorros. pay back = devolver (dinero).' },
+  { who: 'board', text: "Con pronombre, pay back va dividido: pay it back (no 'pay back it').", es: "Con pronombre, pay back va dividido: pay it back (no 'pay back it')." },
+  { who: 'narrator', text: "(The letter says: 'You owe three months of rent. Pay it back, or we will evict you.')", es: "(La carta dice: 'Debes tres meses de alquiler. Devuélvelo o te desalojaremos'.)" },
+  { who: 'narrator', text: '(The paper moves. The ink is running. Two letters stand up.)', es: '(El papel se mueve. La tinta corre. Dos cartas se ponen de pie.)' },
+]
+
+// ── Bloque C · esbirros Eviction Notice (modelo de los vecinos ruidosos de 4-B). Sin atuendos (es un recuerdo) ──
+const NOTICE_TAGS = ['b1-05-notice']
+const NOTICE = (id: string, before: { text: string; es: string }, after: { text: string; es: string }, freed: { text: string; es: string }): EnemyDef => ({
+  id,
+  name: 'Eviction Notice',
+  person: 'Eviction Notice',
+  kind: 'minion',
+  echo: true,
+  hp: 5,
+  topics: ['used-to', 'get-used-to', 'bank-phrasal'],
+  kinds: ['fix', 'fill', 'order', 'listen'],
+  tags: NOTICE_TAGS,
+  onlyTags: true,
+  zone: 'casa',
+  look: { shirt: '#f2e6c8', hair: '#c9b48a', skin: '#e8dcc8' },
+  before: [before],
+  after: [after],
+  freed,
+})
+
+export const B1_05_ENEMIES: Record<string, EnemyDef> = {
+  [B1_05_NOTICE1]: NOTICE(
+    B1_05_NOTICE1,
+    { text: "I use to live here! I'm used to wake up early! Pay or leave!", es: "I use to live here y I'm used to wake up early: mal. (¡Paga o vete!)" },
+    { text: "The ink is running... I'm just paper now.", es: 'La tinta se corre... ahora solo soy papel.' },
+    { text: "Sorry. I didn't want to scare you.", es: 'Perdón. No quería asustarte.' },
+  ),
+  [B1_05_NOTICE2]: NOTICE(
+    B1_05_NOTICE2,
+    { text: 'Did you used to pay? You owe a lot! Pay back it today!', es: 'Did you used to pay y pay back it: mal. (¡Debes mucho!)' },
+    { text: 'The letter is blank again.', es: 'La carta vuelve a estar en blanco.' },
+    { text: 'Good luck, L. You are not alone.', es: 'Buena suerte, L. No estás solo.' },
+  ),
 }

@@ -24,7 +24,7 @@ import type { FinePrintContent } from '../components/FinePrint'
 import { B1_04_FINE_PRINT } from './b1FinePrint'
 import { B1_04_BANK_IDS, B1_04_PRACTICE1_IDS, B1_04_PRACTICE2_IDS } from './questions-b1-04'
 import { B1_REPAIR } from './b1Repair'
-import { B1_05_JOB_ADS, B1_05_LETTER_SCRIPT, B1_05_PACKING } from './b1Flat'
+import { B1_05_JOB_ADS, B1_05_LETTER_SCRIPT, B1_05_NOTICE_SCRIPT, B1_05_PACKING } from './b1Flat'
 import { B1_05_BANK_IDS, B1_05_PRACTICE2_IDS, B1_05_PRACTICE_IDS } from './questions-b1-05'
 
 /**
@@ -4810,4 +4810,15 @@ NPC_TASKS['b1-05-chest'] = {
     es: '(El apartamento está vacío. Todo lo que solías hacer está en estas cajas.)',
     sub: 'Memory Chest terminado. Próximamente: el aviso de desalojo (bloque 5-C).',
   },
+}
+
+// ── B1-05 · Nothing Left, bloque C (data/b1Flat.ts). La carta bajo la puerta: secuencia fija con el vocabulario de dinero.
+// Sin monedas ni práctica. Al terminar aparecen los 2 Eviction Notice. NO guarda closeId(5) ──
+NPC_TASKS['b1-05-notice-letter'] = {
+  npc: 'b1-05-envelope',
+  done: 'b1-05-notice-letter',
+  activity: 'script',
+  script: B1_05_NOTICE_SCRIPT,
+  steps: [],
+  reward: { text: '(The paper moves. The ink is running. Two letters stand up.)', es: '(El papel se mueve. La tinta corre. Dos cartas se ponen de pie.)', sub: 'Vence a los dos avisos de desalojo.' },
 }
