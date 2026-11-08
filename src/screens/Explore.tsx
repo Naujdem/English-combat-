@@ -48,7 +48,7 @@ import { B1_02_CLOSE, B1_02_FRAGMENTS, B1_02_LANDED, B1_02_LUMEN_ID, b1PlaneLine
 import { TheAccident } from '../components/CallForHelp'
 import { MemoryScript } from '../components/MemoryScript'
 import { NotebookIcon } from '../components/LNotebook'
-import { B1_03_CLOSE_PHONE, B1_03_NOTEBOOK, B1_03_NOTEBOOK2, B1_03_PHONE } from '../data/b1Words'
+import { B1_03_NOTEBOOK, B1_03_PHONE } from '../data/b1Words'
 import { B1_05_BOXES, B1_05_NOTEBOOK, B1_05_PAPERS } from '../data/b1Flat'
 import { B1_04_CLOSE, B1_04_FRAGMENTS, B1_04_FRIEND, B1_04_MAYA, B1_04_MAYA_BANK, B1_04_MAYA_LOBBY, B1_04_MOSCU, B1_04_RESIDENCE_ID, B1_04_RICARDO } from '../data/b1Residence'
 import { B1_04_MAYA_CHAT } from '../data/friends'
@@ -732,7 +732,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE || e.id === B1_03_CLOSE_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_03_NOTEBOOK2 || e.id === B1_05_NOTEBOOK ? <NotebookIcon lit={pending} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK ? <NotebookIcon lit={pending} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
