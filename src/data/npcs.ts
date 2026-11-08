@@ -373,7 +373,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // ── B1-01 · epílogo: el mismo teléfono, ahora con Leo escribiendo (retrato de Leo). Aparece con memoryFlag(1) ──
   'b1-01-leo-phone': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     after: 'b1-01-memory',
     doneLine: { text: 'Get some sleep. We have a plane to catch.', es: 'Duerme un poco. Tenemos un avión que tomar.' },
   },
@@ -416,7 +416,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   },
   'b1-02-leo-office': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     after: 'b1-02-agenda',
     // Se va a la calle al terminar la práctica de la oficina (ahí aparece b1-02-leo-street)
     until: 'b1-02-futures',
@@ -424,13 +424,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   },
   'b1-02-leo-street': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     after: 'b1-02-futures',
     doneLine: { text: "We're home! Well... almost. Did you hear that? The airport speakers are making a strange noise.", es: '¡Ya estamos! Bueno... casi. ¿Oíste eso? Los altavoces del aeropuerto hacen un ruido raro.' },
   },
   'b1-02-leo': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     after: 'b1-02-landed',
     // Se va a la oficina cuando Ms. Haddad entrega la agenda (ahí aparece b1-02-leo-office)
     until: 'b1-02-agenda',
@@ -450,7 +450,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   },
   'a2-friend': {
     name: 'Your friend',
-    look: { shirt: '#3b9d5d', hair: '#2b1d12', skin: '#e0ac69' },
+    look: { shirt: '#d4743a', hair: '#2b1d12', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
     doneLine: { text: "Take it easy, OK? I'm right here.", es: 'Tómalo con calma, ¿sí? Aquí estoy.' },
   },
   // La persona especial (nombre y aspecto del jugador). Te trajo al hospital: está contigo desde el inicio de A2-01
@@ -463,20 +463,20 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // A2-02: Leo se quedó en el ascensor al final de A1. Llega al hospital cuando la persona especial lo llama
   'a2-leo': {
     name: 'Leo',
-    // Misma piel y pelo que Leo en A1; camisa naranja y gafas para no confundirlo con tu amigo (verde)
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    // Mismo aspecto que Leo en A1 (camisa verde, sin gafas); tu amigo es el de gafas y camisa naranja
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     after: 'a2-02-pieces',
     doneLine: { text: 'You should rest a little. I have to stay with you. Doctor\'s orders!', es: 'Deberías descansar un poco. Tengo que quedarme contigo. ¡Órdenes de la médica!' },
   },
   // ── A2-03, la ciudad: Leo y tu amigo (mismo aspecto que en el hospital) ──
   'a2-03-leo': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     doneLine: { text: "I usually walk here on Sundays. Let's enjoy the day!", es: 'Normalmente camino por aquí los domingos. ¡Disfrutemos el día!' },
   },
   'a2-03-friend': {
     name: 'Your friend',
-    look: { shirt: '#3b9d5d', hair: '#2b1d12', skin: '#e0ac69' },
+    look: { shirt: '#d4743a', hair: '#2b1d12', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
     doneLine: { text: "What a day! Let's do it again sometime.", es: '¡Qué día! Repitámoslo alguna vez.' },
   },
   // La persona especial (nombre y aspecto del jugador) te acompaña en la ciudad
@@ -496,7 +496,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // ── A2-04, el taller del señor Hale: Leo, la persona especial y Mr. Hale (antes de corromperse) ──
   'a2-04-leo': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     doneLine: { text: 'Could you keep that little stone safe? I think it is important.', es: '¿Podrías guardar bien esa piedrita? Creo que es importante.' },
   },
   'a2-04-interest': {
@@ -515,7 +515,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // ── A2-05, la biblioteca: Leo, la persona especial y Mrs. Okafor (la bibliotecaria) ──
   'a2-05-leo': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     doneLine: { text: 'Two little stones now... Yesterday we found one, today another. We need to keep them safe.', es: 'Ya son dos piedritas... Ayer encontramos una, hoy otra. Tenemos que guardarlas bien.' },
   },
   'a2-05-interest': {
@@ -532,7 +532,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // ── A2-06, la granja de los River: Leo (solo la lección), Elena, el abuelo y el vecino joven ──
   'a2-06-leo': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     until: 'a2-06-practice',
   },
   'a2-06-elena': {
@@ -553,7 +553,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // ── A2-07, el hipódromo: Leo (lección y cierre) y JoJo (testigo del accidente del carro; no combate) ──
   'a2-07-leo': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     doneLine: { text: 'The core is still empty… but we are getting closer.', es: 'El núcleo todavía está vacío… pero nos estamos acercando.' },
   },
   'a2-07-jojo': {
@@ -564,7 +564,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // ── A2-08, el camino: Leo (lección, Reconstruct y cierre) y JoJo (DebateTalk junto al carro) ──
   'a2-08-leo': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     doneLine: { text: 'The purple light keeps appearing. We should keep going.', es: 'La luz morada sigue apareciendo. Debemos seguir.' },
   },
   'a2-08-jojo': {
@@ -575,7 +575,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // ── A2-09, el molino: Leo (lección y cierre) y Mr. Bell, el molinero (charla y receta de pan) ──
   'a2-09-leo': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     doneLine: { text: 'The cart stopped by the mill. But why here?', es: 'El carro se detuvo junto al molino. Pero ¿por qué aquí?' },
   },
   'a2-09-miller': {
@@ -586,12 +586,12 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // ── A2-10, la casa de Leo: Leo abajo (lección) y arriba en el ático (investigación y cierre), y la persona especial (reunión) ──
   'a2-10-leo': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     until: 'a2-10-practice',
   },
   'a2-10-leo-up': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     after: 'a2-10-practice',
     doneLine: { text: 'The cart is still there… in the future.', es: 'La carreta sigue allí… en el futuro.' },
   },
@@ -609,13 +609,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   },
   'a2-11-leo': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     until: 'a2-11-route',
     doneLine: { text: "Let's find the museum. The signal is very strong.", es: 'Busquemos el museo. La señal es muy fuerte.' },
   },
   'a2-11-leo-museum': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     after: 'a2-11-route',
     doneLine: { text: 'The cargo box is empty. Somebody has the fragment.', es: 'La caja de carga está vacía. Alguien tiene el fragmento.' },
   },
@@ -634,13 +634,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // ── A2-12, el centro de control de 2056: Leo (sala de boletos y pasillo), el robot de control y la persona especial ──
   'a2-12-leo': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     until: 'a2-12-practice',
     doneLine: { text: 'The announcer is blocking the door. Be careful.', es: 'El anunciador bloquea la puerta. Ten cuidado.' },
   },
   'a2-12-leo-hall': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     after: 'a2-12-practice',
     doneLine: { text: "We're going back to the present. I'm sure of it.", es: 'Vamos a volver al presente. Estoy seguro.' },
   },
@@ -658,13 +658,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // ── A2-13, de vuelta al hospital: Leo (pasillo), la recepcionista sin voz, la médica y la persona especial ──
   'a2-13-leo': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     until: 'a2-13-doctor',
     doneLine: { text: '(cough) I am OK… Go to the reception. The doctor can help us.', es: '(tose) Estoy bien… Ve a la recepción. La médica nos puede ayudar.' },
   },
   'a2-13-leo-hall': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     after: 'a2-13-call',
     doneLine: { text: 'My voice is back. Thanks to you.', es: 'Mi voz volvió. Gracias a ti.' },
   },
@@ -687,12 +687,12 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // ── Misión secundaria Make a Wish (casa de Leo y jardín): Leo (sala y jardín), Maya, la mamá de Leo y la persona especial ──
   'a2-s3-leo': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     until: 'a2-s3-practice',
   },
   'a2-s3-leo-garden': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     after: 'a2-s3-practice',
     doneLine: { text: "If you eat more cake, you'll explode! Ha ha.", es: '¡Si comes más pastel, vas a explotar! Ja, ja.' },
   },
@@ -719,7 +719,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // ── Misión secundaria Market Day (tienda de ropa y mercado): Leo, la persona especial y Nadia, la dependienta ──
   'a2-s4-leo': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     doneLine: { text: "I'd like a new hat... but it's too expensive. Ha ha.", es: 'Me gustaría un sombrero nuevo... pero es demasiado caro. Ja, ja.' },
   },
   'a2-s4-interest': {
@@ -736,7 +736,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // ── Misión secundaria A Dinner to Remember (casa de Leo): Leo, la señora García, la persona especial y el abuelo Joe ──
   'a2-s5-leo': {
     name: 'Leo',
-    look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     doneLine: { text: "I'm so full... but there's always room for dessert!", es: 'Estoy tan lleno... ¡pero siempre hay espacio para el postre!' },
   },
   'a2-s5-garcia': {
