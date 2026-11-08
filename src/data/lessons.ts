@@ -776,4 +776,14 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: "Cuidado: used to + verbo base = hábito de antes (I used to wake up early). be used to + -ing = estar acostumbrado (I'm used to waking up early).", topic: 'get-used-to' },
     { who: 'board', text: "Errores típicos: ✗ I'm used to wake up early → ✓ I'm used to waking up early. ✗ She is getting used to live alone → ✓ She is getting used to living alone.", topic: 'get-used-to' },
   ],
+  // B1-06 · First Job, bloque A (refugio Lumen Paws): Ms. Haddad explica el anuncio de empleo
+  'work-english': [
+    { who: 'haddad', text: "Welcome to Lumen Paws! I'm Noor Haddad, the coordinator. Let's read our job advert together.", es: '¡Bienvenido a Lumen Paws! Soy Noor Haddad, la coordinadora. Leamos juntos nuestro anuncio de empleo.' },
+    { who: 'board', text: 'Un anuncio tiene: título, About us (quiénes somos), Duties (tareas), Requirements (requisitos), Hours (horario) y How to apply (cómo postularse).' },
+    { who: 'haddad', text: 'Duties tell you what you will do. Requirements tell you what you must have.', es: 'Duties dice lo que harás. Requirements dice lo que debes tener.' },
+    { who: 'board', text: 'Sustantivo + preposición: experience in animal care, responsible for the dogs, application for a job, interest in animals, reason for the visit.' },
+    { who: 'board', text: 'Cada palabra va con su preposición. Aprende la pareja completa.' },
+    { who: 'board', text: 'suit = quedar bien, convenir (Red suits you). fit = quedar de talla (These boots fit me). match = combinar, coincidir (Her shirt matches her shoes).' },
+    { who: 'board', text: 'Errores típicos: ✗ experience on animal care → ✓ experience in animal care. ✗ responsible of the dogs → ✓ responsible for the dogs.' },
+  ],
 }

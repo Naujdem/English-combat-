@@ -5,6 +5,7 @@ import { SpriteBody } from './Sprite'
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
 import { heroLook } from '../game/helpers'
 import { FRIENDS } from '../data/friends'
+import { B1_06_HADDAD_LOOK } from '../data/b1Shelter'
 import { SpeakButton } from './SpeakButton'
 import { Tappable } from './Words'
 import { GrammarPattern, GrammarTable, RoleSentence } from './Grammar'
@@ -108,8 +109,11 @@ export function Lesson({
   const [tip, setTip] = useState<string | null>(null)
   const s = steps[i]
   // Guía de la lección: Leo, o Maya si la lección tiene pasos 'maya' (B1-04). Mismo tratamiento: retrato, nombre y voz
-  const guide = steps.some((x) => x.who === 'maya') ? { name: 'Maya', look: FRIENDS.maya.look, voice: 'female' as const } : { name: 'Leo', look: FRIENDS.leo.look, voice: 'male' as const }
-  const talks = s.who === 'leo' || s.who === 'maya'
+  // B1-06: Ms. Haddad guía la lección si tiene pasos 'haddad'
+  const guide = steps.some((x) => x.who === 'haddad')
+    ? { name: 'Ms. Haddad', look: B1_06_HADDAD_LOOK, voice: 'female' as const }
+    : steps.some((x) => x.who === 'maya') ? { name: 'Maya', look: FRIENDS.maya.look, voice: 'female' as const } : { name: 'Leo', look: FRIENDS.leo.look, voice: 'male' as const }
+  const talks = s.who === 'leo' || s.who === 'maya' || s.who === 'haddad'
   const last = i === steps.length - 1
   const waiting = !!s.choice && !solved
   // La pizarra conserva lo último escrito si el paso actual no trae nada nuevo

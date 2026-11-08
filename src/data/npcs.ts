@@ -875,6 +875,23 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b1-04-ricardo',
     doneLine: { text: "(Your phone buzzes. A message from Marisol: 'Please come to the residence. Something strange is happening with the contracts!')", es: '(Tu teléfono vibra. Un mensaje de Marisol: «Por favor vengan a la residencia. ¡Algo extraño pasa con los contratos!»)' },
   },
+  // ── B1-06 · First Job, bloque A (refugio Lumen Paws, data/b1Shelter.ts) ──
+  'b1-06-haddad': {
+    name: 'Ms. Noor Haddad',
+    look: { shirt: '#2f7f7a', hair: '#2a1c14', skin: '#c68e6a', gender: 'female' },
+    doneLine: { text: 'Read the advert on the notice board. Then you can apply at the desk.', es: 'Lee el anuncio del tablón. Después puedes postularte en la mesa.' },
+  },
+  // El tablón y la mesa: se dibujan con NotebookIcon (Explore.tsx)
+  'b1-06-board': {
+    name: 'El tablón de anuncios',
+    look: { shirt: '#efe6d2', hair: '#2f7f7a', skin: '#efe6d2' },
+    doneLine: { text: 'Volunteer helper wanted — Lumen Paws Shelter', es: 'Se busca ayudante voluntario — Refugio Lumen Paws' },
+  },
+  'b1-06-desk': {
+    name: 'La mesa de postulación',
+    look: { shirt: '#efe6d2', hair: '#2f7f7a', skin: '#efe6d2' },
+    doneLine: { text: 'Perfect! Now come and meet Nayi and the dogs.', es: '¡Perfecto! Ahora ven a conocer a Nayi y a los perros.' },
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

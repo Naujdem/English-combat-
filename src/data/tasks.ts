@@ -26,6 +26,8 @@ import { B1_04_BANK_IDS, B1_04_PRACTICE1_IDS, B1_04_PRACTICE2_IDS } from './ques
 import { B1_REPAIR } from './b1Repair'
 import { B1_05_CLOSE_SCRIPT, B1_05_JOB_ADS, B1_05_LETTER_SCRIPT, B1_05_NOTICE_SCRIPT, B1_05_PACKING } from './b1Flat'
 import { B1_05_BANK_IDS, B1_05_PRACTICE2_IDS, B1_05_PRACTICE_IDS } from './questions-b1-05'
+import { B1_06_PRACTICE_IDS } from './questions-b1-06'
+import { B1_06_JOB_ADVERT } from './b1Shelter'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -4836,4 +4838,65 @@ NPC_TASKS['b1-05-close'] = {
   closeMemory: true,
   steps: [],
   reward: { text: 'Memory 5: Nothing Left', es: 'Recuerdo 5: Sin nada', sub: 'Recuperaste los temas de la misión. Se abrió la misión 6.', say: 'Stay with me.' },
+}
+
+// ── B1-06 · First Job, bloque A (refugio Lumen Paws; escena en data/b1Shelter.ts). NO guarda closeId(6) ──
+// Ms. Haddad: lección 'work-english' (ella la guía) + práctica b1-06-w1…w8
+NPC_TASKS['b1-06-advert'] = {
+  npc: 'b1-06-haddad',
+  done: 'b1-06-advert',
+  lesson: 'work-english',
+  activity: 'practice',
+  practice: 'work-english',
+  practiceIds: B1_06_PRACTICE_IDS,
+  steps: [],
+  reward: {
+    text: 'Ms. Haddad: "Read the advert on the notice board. Then you can apply at the desk."',
+    es: 'Lee el anuncio del tablón. Después puedes postularte en la mesa.',
+    sub: 'Lección y práctica hechas. Ve al tablón de anuncios.',
+    say: 'Read the advert on the notice board. Then you can apply at the desk.',
+  },
+}
+
+// El tablón: el anuncio de empleo (components/FinePrint.tsx en modo anuncios) + preguntas b1-06-r1…r3
+NPC_TASKS['b1-06-read'] = {
+  npc: 'b1-06-board',
+  done: 'b1-06-read',
+  activity: 'fineprint',
+  fineprint: B1_06_JOB_ADVERT,
+  requires: { id: 'b1-06-advert', text: 'The notice board.', es: 'El tablón de anuncios.', sub: 'Primero habla con Ms. Haddad.' },
+  steps: [],
+  reward: {
+    text: 'Now you know the job. Time to apply!',
+    es: 'Ya conoces el trabajo. ¡Hora de postularte!',
+    sub: 'Anuncio leído. Ve a la mesa de postulación.',
+  },
+}
+
+// La mesa: Sequence Master "How to apply". Al terminar, Ms. Haddad habla y se dan 5 monedas.
+// La puerta de las jaulas muestra "Próximamente: Nayi y los perros (bloque 6-B)"
+NPC_TASKS['b1-06-apply'] = {
+  npc: 'b1-06-desk',
+  done: 'b1-06-apply',
+  activity: 'sequence',
+  requires: { id: 'b1-06-read', text: 'The application desk.', es: 'La mesa de postulación.', sub: 'Primero lee el anuncio del tablón.' },
+  sequence: {
+    title: 'How to apply',
+    intro: { en: 'Put the steps in order.', es: 'Pon los pasos en orden.' },
+    steps: [
+      { en: 'Read the job advert.', es: 'Lee el anuncio de empleo.' },
+      { en: 'Write your CV.', es: 'Escribe tu CV.' },
+      { en: 'Send your application.', es: 'Envía tu postulación.' },
+      { en: 'Go to the interview.', es: 'Ve a la entrevista.' },
+      { en: 'Wait for the answer.', es: 'Espera la respuesta.' },
+    ],
+  },
+  coins: 5,
+  steps: [],
+  reward: {
+    text: 'Ms. Haddad: "Perfect! Now come and meet Nayi and the dogs."',
+    es: '¡Perfecto! Ahora ven a conocer a Nayi y a los perros.',
+    sub: 'Ganaste 5 monedas. Próximamente: Nayi y los perros (bloque 6-B).',
+    say: 'Perfect! Now come and meet Nayi and the dogs.',
+  },
 }

@@ -32,6 +32,7 @@ import { A2_RETURN, A2_13_CLOSE } from '../data/a2Return'
 import { B1_HOME } from '../data/b1Home'
 import { B1_OPENING, closeId } from '../data/b1World'
 import { B1_02_LANDED, B1_02_LUMEN, B1_02_PRACTICE } from '../data/b1NewCity'
+import { B1_06_ADVERT, B1_06_READ, B1_06_SHELTER } from '../data/b1Shelter'
 import { B1_04_BOSS, B1_04_FINEPRINT, B1_04_FRIEND, B1_04_PHRASAL, B1_04_RESIDENCE, B1_04_RULES, B1_04_WELCOME } from '../data/b1Residence'
 import { B1_05_BANK, B1_05_CHEST, B1_05_FLAT, B1_05_GET_USED_TO, B1_05_JOBS, B1_05_LETTER, B1_05_NOTICE1, B1_05_NOTICE2, B1_05_NOTICE_LETTER, B1_05_USED_TO, B1_05_BOSS } from '../data/b1Flat'
 import { B1_05_BANK_SCENE } from '../data/b1Bank'
@@ -857,6 +858,20 @@ export function b1Mission5(s: GameState, stage: 'letter' | 'notebook' | 'jobs' |
   const flags = { letter: [], notebook: [B1_05_LETTER], jobs: [B1_05_LETTER, B1_05_USED_TO], bank: a, notebook2: [...a, B1_05_BANK], chest: [...a, B1_05_BANK, B1_05_GET_USED_TO], notice: [...a, B1_05_BANK, B1_05_GET_USED_TO, B1_05_CHEST], evictions: [...a, B1_05_BANK, B1_05_GET_USED_TO, B1_05_CHEST, B1_05_NOTICE_LETTER], boss: [...a, B1_05_BANK, B1_05_GET_USED_TO, B1_05_CHEST, B1_05_NOTICE_LETTER], close: [...a, B1_05_BANK, B1_05_GET_USED_TO, B1_05_CHEST, B1_05_NOTICE_LETTER] }[stage]
   const lessons = stage === 'letter' || stage === 'notebook' ? [] : stage === 'chest' || stage === 'notice' || stage === 'evictions' || stage === 'boss' || stage === 'close' ? ['used-to', 'get-used-to'] : ['used-to']
   return { ...m, opened: add(m.opened, flags), defeated: add(m.defeated.filter((d) => d !== B1_05_NOTICE1 && d !== B1_05_NOTICE2 && d !== B1_05_BOSS), stage === 'boss' ? [B1_05_NOTICE1, B1_05_NOTICE2] : stage === 'close' ? [B1_05_NOTICE1, B1_05_NOTICE2, B1_05_BOSS] : []), seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
+}
+
+/**
+ * Atajos de la misión B1-6 (First Job, presente) para el panel del profe. Parten de "B1: abrir el nodo 6".
+ *  lesson: en el refugio, frente a Ms. Haddad (la lección sale de nuevo) · board: lección hecha (junto al tablón)
+ *  apply: tablón hecho (junto a la mesa de postulación)
+ */
+export function b1Mission6(s: GameState, stage: 'lesson' | 'board' | 'apply'): GameState {
+  const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5)])
+  const home = { ...b, screen: 'explore' as const, sceneId: B1_06_SHELTER.id, pos: { x: 6, y: 3 }, opened: b.opened.filter((o) => !o.startsWith('b1-06-')), seenLesson: b.seenLesson.filter((t) => t !== 'work-english') }
+  if (stage === 'lesson') return home
+  const board = { ...home, pos: { x: 8, y: 2 }, opened: add(home.opened, [B1_06_ADVERT]), seenLesson: add(home.seenLesson, ['work-english']) as GameState['seenLesson'] }
+  if (stage === 'board') return board
+  return { ...board, pos: { x: 8, y: 3 }, opened: add(board.opened, [B1_06_READ]) }
 }
 
 PRESETS.push(
