@@ -927,17 +927,19 @@ export function skipLessons(s: GameState): GameState {
  *  news: entra al recuerdo (el cuarto alquilado de L, frente a la tele; la lección sale de nuevo)
  *  now: tele hecha (junto al cuaderno; la página 15 sale de nuevo) · past: página 15 hecha (junto al cuaderno; la página 16 sale de nuevo)
  *  informant: cuaderno hecho (en el bajo mundo, frente al informante) · detective: informante hecho (junto a la rendija)
- *  guard: Detective hecho (frente al guardia)
+ *  guard: Detective hecho (frente al guardia) · boss: guardia vencido (frente a The Broker)
+ *  take: jefe vencido (junto a "Detrás del estante") · escape: aparato tomado (junto a la salida de emergencia)
  */
-export function b1Mission7(s: GameState, stage: 'news' | 'now' | 'past' | 'informant' | 'detective' | 'guard'): GameState {
+export function b1Mission7(s: GameState, stage: 'news' | 'now' | 'past' | 'informant' | 'detective' | 'guard' | 'boss' | 'take' | 'escape'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6)])
   const mine = ['passive-news', 'deduction', 'deduction-past']
   const present = { ...b, sceneId: B1_06_SHELTER.id, pos: { ...B1_06_SHELTER.start }, recovered: b.recovered.filter((t) => !mine.includes(t)), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)), opened: b.opened.filter((o) => !o.startsWith('b1-07-')) }
-  const pos = { news: { x: 7, y: 2 }, now: { x: 3, y: 5 }, past: { x: 3, y: 5 }, informant: { x: 3, y: 3 }, detective: { x: 9, y: 3 }, guard: { x: 11, y: 3 } }[stage]
-  const market = stage === 'informant' || stage === 'detective' || stage === 'guard'
+  const pos = { news: { x: 7, y: 2 }, now: { x: 3, y: 5 }, past: { x: 3, y: 5 }, informant: { x: 3, y: 3 }, detective: { x: 9, y: 3 }, guard: { x: 11, y: 3 }, boss: { x: 10, y: 2 }, take: { x: 10, y: 4 }, escape: { x: 12, y: 2 } }[stage]
+  const market = stage === 'informant' || stage === 'detective' || stage === 'guard' || stage === 'boss' || stage === 'take' || stage === 'escape'
   const m = enterMemory(present, 7, market ? 'b1-07-market' : B1_07_ROOM.id, pos)
   const book = ['b1-07-news', 'b1-07-deduce-now', 'b1-07-deduce-past']
-  const flags = { news: [], now: ['b1-07-news'], past: ['b1-07-news', 'b1-07-deduce-now'], informant: book, detective: [...book, 'b1-07-informant'], guard: [...book, 'b1-07-informant', 'b1-07-detective'] }[stage]
+  const flags = { news: [], now: ['b1-07-news'], past: ['b1-07-news', 'b1-07-deduce-now'], informant: book, detective: [...book, 'b1-07-informant'], guard: [...book, 'b1-07-informant', 'b1-07-detective'], boss: [...book, 'b1-07-informant', 'b1-07-detective'], take: [...book, 'b1-07-informant', 'b1-07-detective'], escape: [...book, 'b1-07-informant', 'b1-07-detective', 'b1-07-take'] }[stage]
   const lessons = stage === 'news' ? [] : stage === 'now' ? ['passive-news'] : stage === 'past' ? ['passive-news', 'deduction'] : mine
-  return { ...m, opened: add(m.opened, flags), defeated: m.defeated.filter((d) => d !== 'b1-07-guard'), seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
+  const beaten = stage === 'boss' ? ['b1-07-guard'] : stage === 'take' || stage === 'escape' ? ['b1-07-guard', 'b1-07-boss'] : []
+  return { ...m, opened: add(m.opened, flags), defeated: add(m.defeated.filter((d) => d !== 'b1-07-guard' && d !== 'b1-07-boss'), beaten), seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
 }

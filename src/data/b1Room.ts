@@ -71,6 +71,8 @@ export const B1_07_ROOM: SceneDef = {
     { label: 'La televisión', done: s.opened.includes(B1_07_NEWS) },
     { label: "Cuaderno: página 15 (must / might / can't)", done: s.opened.includes(B1_07_DEDUCE_NOW) },
     { label: 'Cuaderno: página 16 (deducción en el pasado)', done: s.opened.includes(B1_07_DEDUCE_PAST) },
+    // Bloque D: al volver de la Escape Room
+    ...(s.opened.includes('b1-07-escape') ? [{ label: 'Próximamente: el aparato (bloque 7-E)', done: false }] : []),
   ],
   // Tarjeta de apertura del recuerdo
   intro: {

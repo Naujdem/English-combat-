@@ -32,7 +32,8 @@ import { B1_06_WHICH_DOG } from './b1Kennels'
 import type { WhichDogRound } from '../components/WhichDog'
 import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
 import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS, B1_07_PRACTICE4_IDS } from './questions-b1-07'
-import { B1_07_DETECTIVE_CONTENT } from './b1Market'
+import { B1_07_DETECTIVE_CONTENT, B1_07_TAKE_SCRIPT } from './b1Market'
+import { B1_07_ESCAPE_ROOM } from './b1Escape'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -115,6 +116,8 @@ export type NpcTask = {
   textOnly?: TextOnlyContent
   /** B1: al terminar la tarea se sale del recuerdo con ese número (game/memory.ts, exitMemory). closeMemory: además se guarda el cierre de la misión */
   exitMemory?: number
+  /** B1-07: al terminar la tarea se pasa a esta escena (misma misión de recuerdo; Escape Room → el cuarto de L) */
+  goto?: { sceneId: string; pos: { x: number; y: number } }
   closeMemory?: boolean
   /** Para activity 'exam': el examen escrito de una época o nivel (EraExam). Al guardar las frases se completa la tarea */
   exam?: 'a2'
@@ -5142,4 +5145,27 @@ NPC_TASKS['b1-07-detective'] = {
     sub: 'Ganaste 5 monedas. Vence al guardia de la puerta roja.',
     say: 'It must be behind the shelf. But the guard is at the door.',
   },
+}
+
+// ── B1-07 · The Underworld, bloque D (el bajo mundo, data/b1Market.ts; Escape Room en data/b1Escape.ts). NO guarda closeId(7) ──
+// "Detrás del estante" (aparece al vencer a The Broker): secuencia fija (L narra). Al terminar aparece la salida de emergencia
+NPC_TASKS['b1-07-take'] = {
+  npc: 'b1-07-device',
+  done: 'b1-07-take',
+  activity: 'script',
+  script: B1_07_TAKE_SCRIPT,
+  steps: [],
+  reward: { text: '(An alarm rings. Red lights everywhere. Run!)', es: '(Suena una alarma. Luces rojas por todas partes. ¡Corre!)', sub: 'Tienes el aparato. Busca la salida de emergencia.' },
+}
+
+// "La salida de emergencia": Escape Room (The Moving Stone escrito, como Repair Shop). 5 monedas. Al terminar, L vuelve al cuarto
+NPC_TASKS['b1-07-escape'] = {
+  npc: 'b1-07-escape',
+  done: 'b1-07-escape',
+  activity: 'command',
+  command: B1_07_ESCAPE_ROOM,
+  coins: 5,
+  goto: { sceneId: 'b1-07-room', pos: { x: 10, y: 3 } },
+  steps: [],
+  reward: { text: 'You escaped from the Underworld.', es: 'Escapaste del bajo mundo.', sub: 'Ganaste 5 monedas. Volviste a tu cuarto con el aparato. Próximamente: el aparato (bloque 7-E).' },
 }
