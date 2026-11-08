@@ -19,6 +19,9 @@ const PRACTICE2 = ['b1-05-practice2']
 /** Bloque C: los 2 Eviction Notice (banco compartido) */
 const NOTICE = ['b1-05-notice']
 const UT2 = 'used-to' as const
+/** Bloque D: The Collector, fase 1 (used-to) y fase 2 (get-used-to) */
+const BOSS_U = ['b1-05-boss', 'b1-05-boss-u']
+const BOSS_G = ['b1-05-boss', 'b1-05-boss-g']
 
 /** Práctica del banco, en orden */
 export const B1_05_BANK_IDS = ['b1-05-k1', 'b1-05-k2', 'b1-05-k3', 'b1-05-k4']
@@ -125,5 +128,44 @@ export const B1_05_QUESTIONS: Question[] = [
     answer: 0,
     tip: 'or we will evict you.',
     tags: NOTICE,
+  },
+
+  // ── Bloque D · The Collector, fase 1 (used to) ──
+  { id: 'b1-05-bu1', topic: UT2, kind: 'fix', prompt: 'I use to collect coins when I was young.', options: ['I used to collect coins when I was young.', 'I used to collecting coins when I was young.', 'I use to collected coins when I was young.'], answer: 0, tip: 'Hábito de antes: used to + verbo base.', tags: BOSS_U },
+  { id: 'b1-05-bu2', topic: UT2, kind: 'fix', prompt: "He didn't used to be so rude.", options: ["He didn't use to be so rude.", "He didn't used to being so rude.", 'He not used to be so rude.'], answer: 0, tip: "Negativa: didn't use to (sin d).", tags: BOSS_U },
+  { id: 'b1-05-bu3', topic: UT2, prompt: 'My grandfather ___ tell us stories every night.', options: ['used to', 'is used to', 'is getting used to'], answer: 0, tip: 'Hábito de antes: used to + verbo base.', tags: BOSS_U },
+  { id: 'b1-05-bu4', topic: UT2, prompt: '___ you use to play the guitar?', options: ['Did', 'Were', 'Are'], answer: 0, tip: 'Pregunta: Did + sujeto + use to.', tags: BOSS_U },
+  { id: 'b1-05-bu5', topic: UT2, prompt: "I ___ eat meat, but now I'm vegetarian.", options: ['used to', 'am used to', 'use to'], answer: 0, tip: 'Hábito de antes: used to + verbo base.', tags: BOSS_U },
+  { id: 'b1-05-bu6', topic: UT2, kind: 'order', prompt: '¿Solías cantar en el carro?', options: ['Did', 'you', 'use', 'to', 'sing', 'in', 'the', 'car?'], answer: 0, tip: 'Did + sujeto + use to + verbo base.', tags: BOSS_U },
+  {
+    id: 'b1-05-bu7',
+    topic: UT2,
+    kind: 'listen',
+    audio: 'I used to be a banker. I used to have a big house and three cars. Now I only collect debts.',
+    voice: 'male',
+    prompt: '¿Qué tenía antes?',
+    options: ['Una casa grande y tres carros.', 'Un barco.', 'Un perro.'],
+    answer: 0,
+    tip: 'I used to have a big house and three cars.',
+    tags: BOSS_U,
+  },
+  // ── Bloque D · The Collector, fase 2 (be / get used to) ──
+  { id: 'b1-05-bg1', topic: GUT, kind: 'fix', prompt: "I'm used to get up late.", options: ["I'm used to getting up late.", "I'm used to got up late.", "I'm use to getting up late."], answer: 0, tip: 'be used to + -ing.', tags: BOSS_G },
+  { id: 'b1-05-bg2', topic: GUT, kind: 'fix', prompt: 'She is getting used to wear glasses.', options: ['She is getting used to wearing glasses.', 'She is getting used to wore glasses.', 'She is getting use to wearing glasses.'], answer: 0, tip: 'get used to + -ing.', tags: BOSS_G },
+  { id: 'b1-05-bg3', topic: GUT, prompt: 'He lives alone, so he ___ used to cooking for one.', options: ['is', 'does', 'will'], answer: 0, tip: 'be used to + -ing.', tags: BOSS_G },
+  { id: 'b1-05-bg4', topic: GUT, prompt: "It's cold here, but I'm ___ used to it slowly.", options: ['getting', 'taking', 'doing'], answer: 0, tip: 'Es un proceso: get used to.', tags: BOSS_G },
+  { id: 'b1-05-bg5', topic: GUT, prompt: 'I used to live in a flat, but now I ___ living in a house.', options: ['am used to', 'used to', 'use to'], answer: 0, tip: 'Ya estás acostumbrado: be used to + -ing.', tags: BOSS_G },
+  { id: 'b1-05-bg6', topic: GUT, kind: 'order', prompt: 'Me estoy acostumbrando a vivir solo.', options: ['I', 'am', 'getting', 'used', 'to', 'living', 'alone.'], answer: 0, tip: 'get used to + -ing.', tags: BOSS_G },
+  {
+    id: 'b1-05-bg7',
+    topic: GUT,
+    kind: 'listen',
+    audio: "I'm not used to this job yet. But I'm getting used to the work. And I'm used to the people now.",
+    voice: 'female',
+    prompt: '¿A qué ya está acostumbrada?',
+    options: ['A la gente.', 'Al trabajo.', 'A la ciudad.'],
+    answer: 0,
+    tip: "I'm used to the people now.",
+    tags: BOSS_G,
   },
 ]

@@ -210,4 +210,52 @@ export const B1_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B1-05 · Nothing Left (recuerdo). Se abre al cerrar la misión (closeId(5)). Con página del Diario de L
+  {
+    id: 'b1-mission-5',
+    title: 'Misión 5: Nothing Left',
+    unlock: closeId(5),
+    words: [
+      { title: 'Dinero y desalojo', words: [['evict', 'desalojar'], ['owe', 'deber (dinero)'], ['debt', 'deuda'], ['loan', 'préstamo'], ['savings', 'ahorros'], ['pay back', 'devolver (dinero)']] },
+      { title: 'Empleo', words: [['job advert', 'anuncio de empleo'], ['requirements', 'requisitos'], ['apply', 'postularse'], ['unemployed', 'desempleado'], ['fired', 'despedido']] },
+    ],
+    versions: [
+      {
+        id: 'b1-mission-5-l',
+        kind: 'L',
+        tense: 'p',
+        tab: 'Diario de L',
+        title: 'What I used to have',
+        unlock: closeId(5),
+        frame: 'Una página de L, escrita en la calle, con su caja al lado.',
+        lines: [
+          { en: 'I [used to have]p a voice, a job and a home.', es: 'Yo solía tener una voz, un trabajo y un hogar.' },
+          { en: 'I [used to sing]p in the car. I [used to teach]p five classes a day.', es: 'Yo solía cantar en el carro. Yo solía dar cinco clases al día.' },
+          { en: 'Now I [am not used]n to the silence, but I [am getting used]n to it.', es: 'Ahora no estoy acostumbrado al silencio, pero me estoy acostumbrando.' },
+          { en: "A friend [wrote]p to me: 'Stay with me, L.' I [did not answer]p.", es: "Una amiga me escribió: 'Quédate conmigo, L'. No contesté." },
+        ],
+        questions: [
+          { q: 'What did L use to do in the car?', options: ['Sing.', 'Sleep.', 'Read.'], answer: 0, tip: 'La página dice: "I used to sing in the car".' },
+          { q: 'Who wrote to L?', options: ['A friend.', 'The director.', 'The bank.'], answer: 0, tip: 'La página dice: "A friend wrote to me".' },
+        ],
+      },
+      {
+        id: 'b1-mission-5-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'Then and now',
+        unlock: closeId(5),
+        frame: 'Antes y ahora, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'L [used to teach]p five classes a day. Now he [has]n no job.', es: 'L solía dar cinco clases al día. Ahora no tiene trabajo.' },
+          { en: 'He [is getting used]n to the silence, but it [is]n not easy.', es: 'Se está acostumbrando al silencio, pero no es fácil.' },
+          { en: 'Tomorrow he [will look]f for a new job.', es: 'Mañana buscará un nuevo trabajo.' },
+        ],
+        questions: [
+          { q: 'What did L use to do?', options: ['Teach five classes a day.', 'Sell books.', 'Work at a bank.'], answer: 0, tip: 'El diario dice: "used to teach five classes a day".' },
+          { q: 'What will he do tomorrow?', options: ['Look for a new job.', 'Sing in the car.', 'Pay back the loan.'], answer: 0, tip: 'El diario dice: "will look for a new job".' },
+        ],
+      },
+    ],
+  },
 ]

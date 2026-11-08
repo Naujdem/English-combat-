@@ -3,6 +3,7 @@ import type { ScriptLine } from './b1Accident'
 import type { FinePrintContent } from '../components/FinePrint'
 import type { MemoryPair } from '../components/MemoryChest'
 import { B1_05_AD_IDS, B1_05_QUESTIONS } from './questions-b1-05'
+import { closeId } from './b1World'
 
 /**
  * B1-05 — Nothing Left. Recuerdo 5 (escena b1-05-flat; es recuerdo por el prefijo "b1-05-"). Juegas como L (SpriteL);
@@ -33,6 +34,10 @@ export const B1_05_ENVELOPE = 'b1-05-envelope'
 export const B1_05_NOTICE_LETTER = 'b1-05-notice-letter'
 export const B1_05_NOTICE1 = 'b1-05-notice1'
 export const B1_05_NOTICE2 = 'b1-05-notice2'
+/** Bloque D: el jefe The Collector (junto a la puerta) y "Tu caja" (tarea de cierre 'b1-05-close' = closeId(5)) */
+export const B1_05_BOSS = 'b1-05-boss'
+export const B1_05_BOX = 'b1-05-box'
+export const B1_05_CLOSE = closeId(5)
 
 /**
  * Un solo cuarto (leyenda de data/b1Words.ts: 5 cama · K mesa · W ventana · d puerta).
@@ -72,6 +77,9 @@ export const B1_05_FLAT: SceneDef = {
     { type: 'npc', id: B1_05_ENVELOPE, x: 10, y: 4 },
     { type: 'enemy', id: B1_05_NOTICE1, x: 7, y: 3, after: B1_05_NOTICE_LETTER },
     { type: 'enemy', id: B1_05_NOTICE2, x: 4, y: 4, after: B1_05_NOTICE1 },
+    // Bloque D: el jefe junto a la puerta (tras los 2 avisos); al vencerlo aparece tu caja (npcs.ts, after)
+    { type: 'enemy', id: B1_05_BOSS, x: 10, y: 3, after: B1_05_NOTICE2 },
+    { type: 'npc', id: B1_05_BOX, x: 9, y: 4 },
   ],
   labels: [{ text: 'Apartamento', x: 6, y: 5 }],
   zoneAt: () => zoneAt(),
@@ -81,11 +89,12 @@ export const B1_05_FLAT: SceneDef = {
     '6,1': { text: 'The window.', sub: 'La ventana.', say: 'The window.' },
   },
   // La puerta a la calle: cerrada hasta terminar los anuncios; después lleva al banco (b1-05-bank).
-  // Al terminar el Memory Chest: la carta y los avisos de desalojo (bloque C); al vencerlos, The Collector llega en el bloque 5-D
+  // Al terminar el Memory Chest: la carta y los avisos de desalojo (bloque C); después The Collector y tu caja (bloque D): se sale con la caja
   locked: (x, y, s) => {
     if (x !== 11 || y !== 3) return null
     if (!s.opened.includes(B1_05_JOBS)) return NOT_YET('Primero lee los anuncios de empleo.')
-    if (s.defeated.includes(B1_05_NOTICE1) && s.defeated.includes(B1_05_NOTICE2)) return { text: 'Próximamente: The Collector (bloque 5-D)' }
+    if (s.defeated.includes(B1_05_BOSS)) return NOT_YET('Toma tu caja.')
+    if (s.defeated.includes(B1_05_NOTICE1) && s.defeated.includes(B1_05_NOTICE2)) return NOT_YET('Primero vence a The Collector.')
     if (s.opened.includes(B1_05_CHEST)) return NOT_YET('Primero lee la carta bajo la puerta.')
     return null
   },
@@ -100,12 +109,16 @@ export const B1_05_FLAT: SceneDef = {
     { label: 'Las cajas (Memory Chest)', done: s.opened.includes(B1_05_CHEST) },
     { label: 'La carta bajo la puerta', done: s.opened.includes(B1_05_NOTICE_LETTER) },
     { label: 'Avisos de desalojo (2)', done: s.defeated.includes(B1_05_NOTICE1) && s.defeated.includes(B1_05_NOTICE2) },
-    ...(s.defeated.includes(B1_05_NOTICE1) && s.defeated.includes(B1_05_NOTICE2) ? [{ label: 'Próximamente: The Collector (bloque 5-D)', done: false }] : []),
+    { label: 'The Collector', done: s.defeated.includes(B1_05_BOSS) },
+    { label: 'Salir con tu caja', done: s.opened.includes(B1_05_CLOSE) },
   ],
   // Tarjeta de apertura del recuerdo
   intro: {
     first: 'I used to live a different life. — Yo solía vivir otra vida.',
-    later: 'I used to live a different life. — Yo solía vivir otra vida.',
+    later: (s) =>
+      s.opened.includes(B1_05_CLOSE)
+        ? 'Nothing Left. La misión 5 terminó: la misión 6 te espera en el mapa.'
+        : 'I used to live a different life. — Yo solía vivir otra vida.',
   },
 }
 
@@ -209,3 +222,50 @@ export const B1_05_ENEMIES: Record<string, EnemyDef> = {
     { text: 'Good luck, L. You are not alone.', es: 'Buena suerte, L. No estás solo.' },
   ),
 }
+
+// ── Bloque D · jefe The Collector (2 fases; modelo Mr. Fine Print). Sin reward: en los recuerdos no se ganan atuendos.
+// Sus temas se recuperan en el cierre (b1-05-close) ──
+export const B1_05_BOSS_ENEMIES: Record<string, EnemyDef> = {
+  [B1_05_BOSS]: {
+    id: B1_05_BOSS,
+    name: 'The Collector',
+    person: 'The Collector',
+    kind: 'boss',
+    hp: 8,
+    topics: ['used-to', 'get-used-to'],
+    kinds: ['fix', 'fill', 'order', 'listen'],
+    tags: ['b1-05-boss'],
+    phases: [
+      {
+        hp: 4,
+        title: 'Used to',
+        topics: ['used-to'],
+        kinds: ['fix', 'fill', 'order', 'listen'],
+        tags: ['b1-05-boss-u'],
+        line: { text: "I use to be rich! I didn't used to be kind! Did you used to pay?", es: "I use to be, I didn't used to y Did you used to: mal." },
+      },
+      {
+        hp: 4,
+        title: 'Be / get used to',
+        topics: ['get-used-to'],
+        kinds: ['fix', 'fill', 'order', 'listen'],
+        tags: ['b1-05-boss-g'],
+        line: { text: "I'm used to take everything! You get used to lose!", es: "I'm used to take y get used to lose: mal." },
+      },
+    ],
+    onlyTags: true,
+    zone: 'casa',
+    look: { shirt: '#2b2b2b', hair: '#555555', skin: '#d8c2a8' },
+    before: [{ text: "I use to collect gold! Now I'm used to take everything! You owe me!", es: "I use to collect e I'm used to take: mal. (¡Me debes!)" }],
+    after: [{ text: 'The coins turn into paper... and the paper into ashes.', es: 'Las monedas se vuelven papel... y el papel, ceniza.' }],
+    freed: { text: 'I forgot I used to be a person.', es: 'Olvidé que yo solía ser una persona.' },
+    farewell: { q: "The Collector says: 'Good luck, L!' What do you answer?", options: ["Thank you. I'm getting used to the silence.", "Thank you. I'm get used to the silence.", 'Thank you. I used to getting the silence.'], answer: 0, tip: "Proceso: I'm getting used to + sustantivo." },
+  },
+}
+
+/** El cierre (secuencia fija, MemoryScript): L narra */
+export const B1_05_CLOSE_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(The apartment is empty. You pick up your box and go out to the street.)', es: '(El apartamento está vacío. Tomas tu caja y sales a la calle.)' },
+  { who: 'narrator', text: "(Your phone shines. A message from your friend: 'Stay with me, L.')", es: "(Tu teléfono brilla. Un mensaje de tu amiga: 'Quédate conmigo, L.')" },
+  { who: 'narrator', text: "(You read it three times. You don't answer.)", es: '(Lo lees tres veces. No contestas.)' },
+]
