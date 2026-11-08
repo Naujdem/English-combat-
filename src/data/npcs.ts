@@ -815,6 +815,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b1-05-chest',
     doneLine: { text: "(The letter says: 'You owe three months of rent. Pay it back, or we will evict you.')", es: "(La carta dice: 'Debes tres meses de alquiler. Devuélvelo o te desalojaremos'.)" },
   },
+  // B1-05 · bloque D: tu caja (aparece al vencer a The Collector; after admite un enemigo vencido). Se dibuja como caja (ToolboxIcon)
+  'b1-05-box': {
+    name: 'Tu caja',
+    look: { shirt: '#b08a5a', hair: '#8a6a40', skin: '#c9a06a' },
+    after: 'b1-05-boss',
+    doneLine: { text: "(You read it three times. You don't answer.)", es: '(Lo lees tres veces. No contestas.)' },
+  },
   // ── B1-04 · House Rules, bloque A (residencia de Lumen Bay, data/b1Residence.ts) ──
   'b1-04-marisol': {
     name: 'Marisol',

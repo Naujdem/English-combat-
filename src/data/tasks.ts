@@ -24,7 +24,7 @@ import type { FinePrintContent } from '../components/FinePrint'
 import { B1_04_FINE_PRINT } from './b1FinePrint'
 import { B1_04_BANK_IDS, B1_04_PRACTICE1_IDS, B1_04_PRACTICE2_IDS } from './questions-b1-04'
 import { B1_REPAIR } from './b1Repair'
-import { B1_05_JOB_ADS, B1_05_LETTER_SCRIPT, B1_05_NOTICE_SCRIPT, B1_05_PACKING } from './b1Flat'
+import { B1_05_CLOSE_SCRIPT, B1_05_JOB_ADS, B1_05_LETTER_SCRIPT, B1_05_NOTICE_SCRIPT, B1_05_PACKING } from './b1Flat'
 import { B1_05_BANK_IDS, B1_05_PRACTICE2_IDS, B1_05_PRACTICE_IDS } from './questions-b1-05'
 
 /**
@@ -4821,4 +4821,19 @@ NPC_TASKS['b1-05-notice-letter'] = {
   script: B1_05_NOTICE_SCRIPT,
   steps: [],
   reward: { text: '(The paper moves. The ink is running. Two letters stand up.)', es: '(El papel se mueve. La tinta corre. Dos cartas se ponen de pie.)', sub: 'Vence a los dos avisos de desalojo.' },
+}
+
+// ── B1-05 · Nothing Left, bloque D: cierre (tu caja, aparece al vencer a The Collector). L sale a la calle y lee el mensaje de su amiga.
+// Recupera los temas y sale del recuerdo con el cierre: exitMemory 5 + closeMemory → closeId(5) (abre el nodo 6, sin FragmentJoin) ──
+NPC_TASKS['b1-05-close'] = {
+  npc: 'b1-05-box',
+  done: 'b1-05-close',
+  activity: 'script',
+  script: B1_05_CLOSE_SCRIPT,
+  recover: ['used-to', 'get-used-to', 'jobs-b1'],
+  coins: 20,
+  exitMemory: 5,
+  closeMemory: true,
+  steps: [],
+  reward: { text: 'Memory 5: Nothing Left', es: 'Recuerdo 5: Sin nada', sub: 'Recuperaste los temas de la misión. Se abrió la misión 6.', say: 'Stay with me.' },
 }
