@@ -26,8 +26,16 @@ export function MemoryScript({ lines, friend, onDone, friendName = 'Amigo' }: { 
   }, [line])
 
   if (!line) return null
-  const portrait = line.who === 'friend' ? <BlurFaceIcon look={friend} size={48} /> : <LIcon size={48} pose="profile" />
-  const name = line.who === 'friend' ? friendName : line.who === 'L' ? 'L' : 'L recuerda'
+  const board = line.who === 'board'
+  const portrait =
+    line.who === 'friend' ? (
+      <BlurFaceIcon look={friend} size={48} />
+    ) : board ? (
+      <span className="flex h-12 w-12 items-center justify-center rounded-md border-2 border-[#8a6a40] bg-[#24402f] text-xl text-paper" aria-hidden="true">✎</span>
+    ) : (
+      <LIcon size={48} pose="profile" />
+    )
+  const name = line.who === 'friend' ? friendName : line.who === 'L' ? 'L' : board ? 'Pizarra' : 'L recuerda'
 
   return (
     <>
@@ -36,12 +44,12 @@ export function MemoryScript({ lines, friend, onDone, friendName = 'Amigo' }: { 
         <div className="flex items-center gap-3">
           {portrait}
           <p className="flex-1 font-display text-lg text-[#c9b8e8]">{name}</p>
-          {/[a-z]/i.test(line.text) && <SpeakButton text={line.text} size="sm" auto voice={line.who === 'friend' ? voiceOf(friend) : 'male'} />}
+          {!board && /[a-z]/i.test(line.text) && <SpeakButton text={line.text} size="sm" auto voice={line.who === 'friend' ? voiceOf(friend) : 'male'} />}
         </div>
-        <p key={i} className={`anim-fade-in mt-2 text-[17px] leading-relaxed ${line.who === 'narrator' ? 'italic text-paper/90' : ''}`}>
+        <p key={i} className={`anim-fade-in mt-2 text-[17px] leading-relaxed ${line.who === 'narrator' ? 'italic text-paper/90' : ''} ${board ? 'rounded-lg border-2 border-[#8a6a40] bg-[#24402f] px-3 py-2 text-paper' : ''}`}>
           {withStatic(line.text, (p, k) => <Tappable key={k} text={p} />)}
         </p>
-        {showEs && <p className="mt-1 text-sm text-paper/60">{withStatic(line.es.replace(/▒+/g, '[[?]]'))}</p>}
+        {showEs && !board && <p className="mt-1 text-sm text-paper/60">{withStatic(line.es.replace(/▒+/g, '[[?]]'))}</p>}
         {line.fx === 'alarm' && <p className="mt-2 text-sm font-semibold text-[#f3b0b0]">(¡Suena la alarma de incendio!)</p>}
         <div className="mt-4 flex items-center justify-between gap-2">
           <button className={btnGhost} onClick={() => setShowEs((v) => !v)}>{showEs ? 'Ocultar' : 'Traducir'}</button>

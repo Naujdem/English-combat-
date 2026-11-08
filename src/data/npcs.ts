@@ -821,6 +821,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b1-05-get-used-to',
     doneLine: { text: '(The apartment is empty. Everything you used to do is in these boxes.)', es: '(El apartamento está vacío. Todo lo que solías hacer está en estas cajas.)' },
   },
+  // B1-05 · bloque C: la carta bajo la puerta (aparece al terminar el Memory Chest; se dibuja como papel, NotebookIcon)
+  'b1-05-envelope': {
+    name: 'La carta bajo la puerta',
+    look: { shirt: '#f2e6c8', hair: '#c9b48a', skin: '#e8dcc8' },
+    after: 'b1-05-chest',
+    doneLine: { text: "(The letter says: 'You owe three months of rent. Pay it back, or we will evict you.')", es: "(La carta dice: 'Debes tres meses de alquiler. Devuélvelo o te desalojaremos'.)" },
+  },
   // ── B1-04 · House Rules, bloque A (residencia de Lumen Bay, data/b1Residence.ts) ──
   'b1-04-marisol': {
     name: 'Marisol',

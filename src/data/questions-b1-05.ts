@@ -16,6 +16,9 @@ const BP = 'bank-phrasal' as const
 const BANK = ['b1-05-bank']
 const GUT = 'get-used-to' as const
 const PRACTICE2 = ['b1-05-practice2']
+/** Bloque C: los 2 Eviction Notice (banco compartido) */
+const NOTICE = ['b1-05-notice']
+const UT2 = 'used-to' as const
 
 /** Práctica del banco, en orden */
 export const B1_05_BANK_IDS = ['b1-05-k1', 'b1-05-k2', 'b1-05-k3', 'b1-05-k4']
@@ -99,5 +102,28 @@ export const B1_05_QUESTIONS: Question[] = [
     answer: 0,
     tip: 'I used to live in a small town.',
     tags: PRACTICE2,
+  },
+
+  // ── Bloque C · Eviction Notice (2 esbirros, banco compartido) ──
+  { id: 'b1-05-e1', topic: UT2, kind: 'fix', prompt: 'I use to live here when I was a child.', options: ['I used to live here when I was a child.', 'I used to living here when I was a child.', 'I use to lived here when I was a child.'], answer: 0, tip: 'Hábito de antes: used to + verbo base.', tags: NOTICE },
+  { id: 'b1-05-e2', topic: GUT, kind: 'fix', prompt: 'He is used to work at night.', options: ['He is used to working at night.', 'He is used to worked at night.', 'He is use to working at night.'], answer: 0, tip: 'be used to + -ing.', tags: NOTICE },
+  { id: 'b1-05-e3', topic: UT2, kind: 'fix', prompt: 'Did you used to pay the rent here?', options: ['Did you use to pay the rent here?', 'Did you used to paying the rent here?', 'Do you used to pay the rent here?'], answer: 0, tip: 'Pregunta: Did + sujeto + use to (sin d).', tags: NOTICE },
+  { id: 'b1-05-e4', topic: BP, prompt: 'You ___ 800. Pay it today.', options: ['owe', 'own', 'lend'], answer: 0, tip: 'owe = deber (dinero).', tags: NOTICE },
+  { id: 'b1-05-e5', topic: BP, prompt: 'The landlord wants to ___ me from the flat.', options: ['evict', 'erase', 'envy'], answer: 0, tip: 'evict = desalojar.', tags: NOTICE },
+  { id: 'b1-05-e6', topic: GUT, prompt: "I'm not ___ to living without a job yet.", options: ['used', 'use', 'using'], answer: 0, tip: 'be used to + -ing.', tags: NOTICE },
+  { id: 'b1-05-e7', topic: BP, prompt: 'I have a big ___: I owe the bank 3,000.', options: ['debt', 'savings', 'deposit'], answer: 0, tip: 'debt = deuda.', tags: NOTICE },
+  { id: 'b1-05-e8', topic: BP, kind: 'fix', prompt: 'Please pay back it today.', options: ['Please pay it back today.', 'Please pay back to it today.', 'Please pay it to back today.'], answer: 0, tip: 'Con pronombre, va en medio: pay it back.', tags: NOTICE },
+  { id: 'b1-05-e9', topic: GUT, kind: 'order', prompt: 'Todavía no estoy acostumbrado al silencio.', options: ['I', 'am', 'not', 'used', 'to', 'the', 'silence', 'yet.'], answer: 0, tip: 'be used to + sustantivo.', tags: NOTICE },
+  {
+    id: 'b1-05-e10',
+    topic: BP,
+    kind: 'listen',
+    audio: 'Dear tenant. You owe three months of rent. Please pay it back before Friday, or we will evict you.',
+    voice: 'female',
+    prompt: '¿Qué pasará si no paga antes del viernes?',
+    options: ['Lo desalojarán.', 'Le darán un préstamo.', 'Le subirán el sueldo.'],
+    answer: 0,
+    tip: 'or we will evict you.',
+    tags: NOTICE,
   },
 ]
