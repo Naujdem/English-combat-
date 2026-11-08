@@ -778,6 +778,24 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
     doneLine: { text: '(Three dots appear on the screen. Then they disappear.)', es: '(Aparecen tres puntos en la pantalla. Luego desaparecen.)' },
   },
+  // ── B1-05 · Nothing Left (recuerdo 5, data/b1Flat.ts): el director (cara borrosa, traje gris), el cuaderno de la mesa y el periódico con el computador ──
+  'b1-05-director': {
+    name: 'The director',
+    look: { shirt: '#7d8189', hair: '#3a3a3a', skin: '#d7a77a' },
+    doneLine: { text: 'We need a teacher who can speak.', es: 'Necesitamos un profesor que pueda hablar.' },
+  },
+  // Se dibuja como un cuaderno abierto (NotebookIcon)
+  'b1-05-notebook': {
+    name: 'Cuaderno de L',
+    look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
+    doneLine: { text: 'Page 12. I used to have a different life.', es: 'Página 12. Yo solía tener otra vida.' },
+  },
+  // Se dibuja como una pantalla (TabletIcon)
+  'b1-05-papers': {
+    name: 'El periódico y el computador',
+    look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
+    doneLine: { text: "(Every ad asks for the same thing: 'excellent spoken communication'.)", es: "(Todos los anuncios piden lo mismo: 'excelente comunicación oral'.)" },
+  },
   // ── B1-04 · House Rules, bloque A (residencia de Lumen Bay, data/b1Residence.ts) ──
   'b1-04-marisol': {
     name: 'Marisol',

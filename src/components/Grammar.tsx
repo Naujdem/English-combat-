@@ -262,6 +262,10 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (/\b(it|them|me)\s+(in|on|out|up|off)\b/i.test(sentence)) return { title: 'Con pronombre, el pronombre va en medio: fill it in · turn it on:', parts: [V('Verbo'), '+', S('it / them / me'), '+', K('in / on / out / up')] }
       if (/\b(account|card|machine|ID)\b/.test(sentence) && !/\b(fill|pay|take|sign)\s/i.test(sentence)) return { title: 'Sustantivo + sustantivo: el primero describe al segundo (bank account, cash machine):', parts: [K('bank / debit / cash'), '+', R('account / card / machine')] }
       return { title: 'Phrasal verb: verbo + palabra pequeña (fill in, take out, pay in, sign up):', parts: [S('Sujeto'), '+', V('verbo'), '+', K('in / out / up / on'), '+', R('...')] }
+    case 'used-to':
+      if (question) return { title: 'Pregunta: Did + sujeto + use to + verbo base? (sin d):', parts: [V('Did'), '+', S('Sujeto'), '+', K('use to'), '+', V('verbo'), '+', R('...?')] }
+      if (negative) return { title: "Negativa: didn't use to + verbo base (sin d):", parts: [S('Sujeto'), '+', K("didn't use to"), '+', V('verbo'), '+', R('...')] }
+      return { title: 'Hábito de antes: used to + verbo base:', parts: [S('Sujeto'), '+', K('used to'), '+', V('verbo'), '+', R('...')] }
     case 'invitations':
       if (question) return { title: 'Para invitar: Would + you + like to + verbo? · How about + verbo con -ing?', parts: [K('Would you like to / How about'), '+', V('verbo / verbo-ing'), '+', R('...?')] }
       return { title: "Let's + verbo · la frecuencia (always, usually, sometimes, never) va antes del verbo:", parts: [S('Sujeto'), '+', K('always / usually / sometimes / never'), '+', V('verbo'), '+', R('...')] }

@@ -24,6 +24,8 @@ import type { FinePrintContent } from '../components/FinePrint'
 import { B1_04_FINE_PRINT } from './b1FinePrint'
 import { B1_04_BANK_IDS, B1_04_PRACTICE1_IDS, B1_04_PRACTICE2_IDS } from './questions-b1-04'
 import { B1_REPAIR } from './b1Repair'
+import { B1_05_JOB_ADS, B1_05_LETTER_SCRIPT } from './b1Flat'
+import { B1_05_PRACTICE_IDS } from './questions-b1-05'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -4714,3 +4716,46 @@ export const PARTY_ITEMS: PartyItem[] = [
     no: { text: "No, I haven't. Mr. Hill has got an old radio... but he is very angry today.", es: 'No, no tengo. El señor Hill tiene una radio vieja... pero hoy está muy enojado.' },
   },
 ]
+
+// ── B1-05 · Nothing Left, bloque A (recuerdo 5; escena en data/b1Flat.ts). Sin monedas. Este bloque NO guarda closeId(5) ──
+// El director en la puerta: secuencia fija (L no habla). Al terminar se abre el cuaderno de la mesa
+NPC_TASKS['b1-05-letter'] = {
+  npc: 'b1-05-director',
+  done: 'b1-05-letter',
+  activity: 'script',
+  script: B1_05_LETTER_SCRIPT,
+  steps: [],
+  reward: { text: '(You have lost your job.)', es: '(Perdiste tu trabajo.)', sub: 'Lee el cuaderno de la mesa.' },
+}
+
+// El cuaderno de la mesa: página 12 del Cuaderno de L (lección 'used-to') + práctica. Si todas están bien, escudo.
+// Al terminar se abren el periódico y el computador
+NPC_TASKS['b1-05-used-to'] = {
+  npc: 'b1-05-notebook',
+  done: 'b1-05-used-to',
+  lesson: 'used-to',
+  notebookPage: 12,
+  activity: 'practice',
+  practice: 'used-to',
+  practiceIds: B1_05_PRACTICE_IDS,
+  practiceShield: true,
+  requires: { id: 'b1-05-letter', text: 'My notebook.', es: 'Mi cuaderno.', sub: 'Primero habla con el director.' },
+  steps: [],
+  reward: { text: 'I used to have a different life.', es: 'Yo solía tener otra vida.', sub: 'Página 12 del cuaderno terminada. Mira el periódico y el computador. (Si acertaste todas, ganaste un escudo).', say: 'I used to have a different life.' },
+}
+
+// El periódico y el computador: anuncios de empleo (components/FinePrint.tsx en modo anuncios). Sin errores, escudo.
+// Al terminar, la puerta a la calle muestra "Próximamente: el banco (bloque 5-B)"
+NPC_TASKS['b1-05-jobs'] = {
+  npc: 'b1-05-papers',
+  done: 'b1-05-jobs',
+  activity: 'fineprint',
+  fineprint: B1_05_JOB_ADS,
+  requires: { id: 'b1-05-used-to', text: 'A newspaper and a computer.', es: 'Un periódico y un computador.', sub: 'Primero lee el cuaderno de la mesa.' },
+  steps: [],
+  reward: {
+    text: "(Every ad asks for the same thing: 'excellent spoken communication'.)",
+    es: "(Todos los anuncios piden lo mismo: 'excelente comunicación oral'.)",
+    sub: 'Anuncios leídos. La puerta a la calle: próximamente, el banco (bloque 5-B).',
+  },
+}
