@@ -43,6 +43,7 @@ import { B1_02_QUESTIONS } from './questions-b1-02'
 import { B1_03_QUESTIONS } from './questions-b1-03'
 import { B1_04_QUESTIONS } from './questions-b1-04'
 import { B1_05_QUESTIONS } from './questions-b1-05'
+import { B1_06_QUESTIONS } from './questions-b1-06'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -405,6 +406,7 @@ export const QUESTIONS: Question[] = [
   ...B1_03_QUESTIONS,
   ...B1_04_QUESTIONS,
   ...B1_05_QUESTIONS,
+  ...B1_06_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -1144,6 +1146,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Un anuncio de empleo (job advert) tiene partes: Job (el puesto), Requirements (requisitos), Pay (el sueldo) y How to apply (cómo postularse).',
       'Send your CV by Friday = manda tu hoja de vida a más tardar el viernes (by + día = fecha límite, deadline).',
       'Vocabulario: apply (postularse), salary (salario), experience (experiencia), unemployed (desempleado), fired (despedido).',
+    ],
+  },
+  'work-english': {
+    name: 'Inglés en el trabajo',
+    level: 'B1',
+    lesson: [
+      'Un anuncio tiene: título, About us (quiénes somos), Duties (tareas), Requirements (requisitos), Hours (horario) y How to apply (cómo postularse).',
+      'Sustantivo + preposición: experience in animal care, responsible for the dogs, application for a job, interest in animals, reason for the visit.',
+      'suit = quedar bien, convenir (Red suits you). fit = quedar de talla (These boots fit me). match = combinar, coincidir (Her shirt matches her shoes).',
     ],
   },
 }

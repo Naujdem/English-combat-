@@ -55,6 +55,7 @@ import { B1_04_MAYA_CHAT } from '../data/friends'
 /** B1-04: quién acompaña la práctica guiada (si no, Leo) */
 const PRACTICE_GUIDES = [B1_04_MAYA, B1_04_MAYA_BANK, B1_04_RICARDO]
 import { B1_04_TOOLBOX } from '../data/b1Neighbours'
+import { B1_06_BOARD, B1_06_DESK } from '../data/b1Shelter'
 import { ToolboxIcon, ToolboxPortrait } from '../components/ToolboxIcon'
 import { FinePrint } from '../components/FinePrint'
 import { TextOnly } from '../components/TextOnly'
@@ -732,7 +733,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_05_ENVELOPE ? <NotebookIcon lit={pending} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_05_ENVELOPE || e.id === B1_06_BOARD || e.id === B1_06_DESK ? <NotebookIcon lit={pending} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
