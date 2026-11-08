@@ -28,7 +28,7 @@ const MAP = [
   '#G,,,,,,,,,G#',
   '#,,,,,,,,,,,#',
   '#...........#',
-  '#ss.......ssd',
+  '#ss.......s.d',
   '#ss.......ss#',
   '######d######',
 ]
@@ -59,7 +59,6 @@ export const B1_08_STANDS: SceneDef = {
     '1,4': { text: 'The fans.', sub: 'Los hinchas.', say: 'The fans.' },
     '2,4': { text: 'The fans.', sub: 'Los hinchas.', say: 'The fans.' },
     '10,4': { text: 'The fans.', sub: 'Los hinchas.', say: 'The fans.' },
-    '11,4': { text: 'The fans.', sub: 'Los hinchas.', say: 'The fans.' },
   },
   // La cancha no se pisa. El portón: cerrado hasta terminar con Jose Kike; después lleva al pasillo (bloque 8-C, data/b1Concourse.ts). La puerta de abajo vuelve a la plaza
   locked: (x, y, s) => {
