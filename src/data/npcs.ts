@@ -857,6 +857,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b1-07-take',
     doneLine: { text: 'You escaped from the Underworld.', es: 'Escapaste del bajo mundo.' },
   },
+  // B1-07 · bloque E: el aparato sobre la mesa del cuarto (aparece al volver de la Escape Room; ToolboxIcon). Su tarea es el cierre
+  'b1-07-device-room': {
+    name: 'El aparato',
+    look: { shirt: '#b08a5a', hair: '#8a6a40', skin: '#c9a06a' },
+    after: 'b1-07-escape',
+    doneLine: { text: 'These words are older than English.', es: 'Estas palabras son más antiguas que el inglés.' },
+  },
   // ── B1-04 · House Rules, bloque A (residencia de Lumen Bay, data/b1Residence.ts) ──
   'b1-04-marisol': {
     name: 'Marisol',

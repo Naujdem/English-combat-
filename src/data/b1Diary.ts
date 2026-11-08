@@ -304,4 +304,53 @@ export const B1_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B1-07 · The Underworld (recuerdo). Se abre al cerrar la misión (closeId(7)). Con página del Diario de L
+  {
+    id: 'b1-mission-7',
+    title: 'Misión 7: The Underworld',
+    unlock: closeId(7),
+    words: [
+      { title: 'Noticias y tecnología', words: [['device', 'aparato'], ['scientists', 'científicos'], ['restore', 'restaurar'], ['ability', 'habilidad'], ['invent', 'inventar'], ['develop', 'desarrollar'], ['design', 'diseñar']] },
+      { title: 'Mercado negro', words: [['black market', 'mercado negro'], ['vendor', 'vendedor'], ['thief', 'ladrón'], ['guard', 'guardia'], ['informant', 'informante'], ['escape', 'escapar']] },
+    ],
+    versions: [
+      {
+        id: 'b1-mission-7-l',
+        kind: 'L',
+        tense: 'p',
+        tab: 'Diario de L',
+        title: 'The device',
+        unlock: closeId(7),
+        frame: 'Una página de L, escrita de noche, con el aparato sobre la mesa.',
+        lines: [
+          { en: 'I [saw]p it on the news: a device that restores lost abilities.', es: 'Lo vi en las noticias: un aparato que restaura habilidades perdidas.' },
+          { en: 'It [must be]n in the black market, I [thought]p.', es: 'Debe de estar en el mercado negro, pensé.' },
+          { en: 'I [went]p down to the Underworld, and I [took]p it.', es: 'Bajé al bajo mundo y lo tomé.' },
+          { en: 'The symbols on it [are]n older than English.', es: 'Los símbolos que tiene son más antiguos que el inglés.' },
+        ],
+        questions: [
+          { q: 'What did L see on the news?', options: ['A fire.', 'A device.', 'A school.'], answer: 1, tip: 'La página dice: "I saw it on the news: a device".' },
+          { q: 'Where did L think the device was?', options: ['At the school.', 'In a shop.', 'In the black market.'], answer: 2, tip: 'La página dice: "It must be in the black market".' },
+        ],
+      },
+      {
+        id: 'b1-mission-7-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'News and clues',
+        unlock: closeId(7),
+        frame: 'Las noticias y las pistas, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'The device [was designed]p using ancient writings.', es: 'El aparato fue diseñado usando escritos antiguos.' },
+          { en: "The thief [can't have been]p a scientist.", es: 'El ladrón no puede haber sido un científico.' },
+          { en: 'Tomorrow L [will read]f the symbols.', es: 'Mañana L leerá los símbolos.' },
+        ],
+        questions: [
+          { q: 'What was designed using ancient writings?', options: ['The device.', 'The market.', 'The shelf.'], answer: 0, tip: 'El diario dice: "The device was designed using ancient writings".' },
+          { q: "What can't the thief have been?", options: ['A guard.', 'A scientist.', 'A teacher.'], answer: 1, tip: 'El diario dice: "The thief can\'t have been a scientist".' },
+          { q: 'What will L do tomorrow?', options: ['Sell the device.', 'Go to school.', 'Read the symbols.'], answer: 2, tip: 'El diario dice: "Tomorrow L will read the symbols".' },
+        ],
+      },
+    ],
+  },
 ]

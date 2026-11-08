@@ -1,4 +1,6 @@
 import type { GameState, SceneDef, Zone } from '../game/types'
+import type { ScriptLine } from './b1Accident'
+import { closeId } from './b1World'
 
 /**
  * B1-07 — The Underworld. Recuerdo 7 (escena b1-07-room; es recuerdo por el prefijo "b1-07-"). Juegas como L (SpriteL);
@@ -18,6 +20,9 @@ export const B1_07_NEWS = 'b1-07-news'
 export const B1_07_NOTEBOOK = 'b1-07-notebook'
 export const B1_07_DEDUCE_NOW = 'b1-07-deduce-now'
 export const B1_07_DEDUCE_PAST = 'b1-07-deduce-past'
+/** Bloque E: el aparato sobre la mesa (aparece al volver de la Escape Room); su tarea es el cierre closeId(7) */
+export const B1_07_DEVICE_ROOM = 'b1-07-device-room'
+export const B1_07_CLOSE = closeId(7)
 
 /**
  * Un solo cuarto (leyenda de data/b1Words.ts: 5 colchón · K escritorio · W ventana con persianas · d puerta).
@@ -49,6 +54,8 @@ export const B1_07_ROOM: SceneDef = {
     { type: 'npc', id: B1_07_TV, x: 8, y: 2 },
     // El cuaderno, sobre el escritorio (sus tareas piden terminar la tele: data/tasks.ts, requires)
     { type: 'npc', id: B1_07_NOTEBOOK, x: 2, y: 5 },
+    // Bloque E: el aparato, sobre la mesa (npcs.ts, after: 'b1-07-escape')
+    { type: 'npc', id: B1_07_DEVICE_ROOM, x: 1, y: 4 },
   ],
   labels: [{ text: 'Cuarto alquilado', x: 6, y: 5 }],
   zoneAt: () => zoneAt(),
@@ -71,12 +78,28 @@ export const B1_07_ROOM: SceneDef = {
     { label: 'La televisión', done: s.opened.includes(B1_07_NEWS) },
     { label: "Cuaderno: página 15 (must / might / can't)", done: s.opened.includes(B1_07_DEDUCE_NOW) },
     { label: 'Cuaderno: página 16 (deducción en el pasado)', done: s.opened.includes(B1_07_DEDUCE_PAST) },
-    // Bloque D: al volver de la Escape Room
-    ...(s.opened.includes('b1-07-escape') ? [{ label: 'Próximamente: el aparato (bloque 7-E)', done: false }] : []),
+    // Bloque E: al volver de la Escape Room
+    ...(s.opened.includes('b1-07-escape')
+      ? [
+          { label: 'El aparato', done: s.opened.includes(B1_07_CLOSE) },
+          { label: 'Salir del recuerdo', done: s.opened.includes(B1_07_CLOSE) },
+        ]
+      : []),
   ],
   // Tarjeta de apertura del recuerdo
   intro: {
     first: 'One year after the fire. — Un año después del incendio.',
-    later: 'One year after the fire. — Un año después del incendio.',
+    later: (s) =>
+      s.opened.includes(B1_07_CLOSE)
+        ? 'The Underworld. La misión 7 terminó: la misión 8 te espera en el mapa.'
+        : 'One year after the fire. — Un año después del incendio.',
   },
 }
+
+/** El cierre (secuencia fija, MemoryScript): L narra; 'L' = lo que L escribe */
+export const B1_07_CLOSE_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(Back in your room, you put the device on the table. It is small, cold and heavy.)', es: '(De vuelta en tu cuarto, pones el aparato sobre la mesa. Es pequeño, frío y pesado.)' },
+  { who: 'narrator', text: "(You see strange symbols on its side. You don't understand them.)", es: '(Ves símbolos extraños en un costado. No los entiendes.)' },
+  { who: 'L', text: 'These words are older than English.', es: 'Estas palabras son más antiguas que el inglés.' },
+  { who: 'narrator', text: "(Your phone is quiet. Your friend's message is still there: 'Don't do anything stupid, L.')", es: "(Tu teléfono está en silencio. El mensaje de tu amiga sigue ahí: 'No hagas ninguna tontería, L'.)" },
+]

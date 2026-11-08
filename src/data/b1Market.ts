@@ -85,7 +85,7 @@ export const B1_07_MARKET: SceneDef = {
   ],
   intro: {
     first: 'The Underworld. — El bajo mundo.',
-    later: 'The Underworld. — El bajo mundo.',
+    later: (s) => (s.opened.includes('b1-07-close') ? 'The Underworld. La misión 7 terminó: la misión 8 te espera en el mapa.' : 'The Underworld. — El bajo mundo.'),
   },
 }
 

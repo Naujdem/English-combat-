@@ -34,6 +34,7 @@ import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
 import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS, B1_07_PRACTICE4_IDS } from './questions-b1-07'
 import { B1_07_DETECTIVE_CONTENT, B1_07_TAKE_SCRIPT } from './b1Market'
 import { B1_07_ESCAPE_ROOM } from './b1Escape'
+import { B1_07_CLOSE_SCRIPT } from './b1Room'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -5168,4 +5169,19 @@ NPC_TASKS['b1-07-escape'] = {
   goto: { sceneId: 'b1-07-room', pos: { x: 10, y: 3 } },
   steps: [],
   reward: { text: 'You escaped from the Underworld.', es: 'Escapaste del bajo mundo.', sub: 'Ganaste 5 monedas. Volviste a tu cuarto con el aparato. Próximamente: el aparato (bloque 7-E).' },
+}
+
+// ── B1-07 · bloque E: cierre (el aparato sobre la mesa del cuarto, al volver de la Escape Room).
+// done = closeId(7) = 'b1-07-close': se sale del recuerdo, se vuelve al mapa y se abre el nodo 8 (sin FragmentJoin, como el 5 → 6) ──
+NPC_TASKS['b1-07-close'] = {
+  npc: 'b1-07-device-room',
+  done: 'b1-07-close',
+  activity: 'script',
+  script: B1_07_CLOSE_SCRIPT,
+  recover: ['passive-news', 'deduction', 'deduction-past'],
+  coins: 20,
+  exitMemory: 7,
+  closeMemory: true,
+  steps: [],
+  reward: { text: 'Memory 7: The Underworld', es: 'Recuerdo 7: El bajo mundo', sub: 'Recuperaste los temas de la misión. Se abrió la misión 8.', say: 'Older than English.' },
 }
