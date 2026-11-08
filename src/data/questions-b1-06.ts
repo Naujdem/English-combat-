@@ -14,6 +14,13 @@ const ADS = ['b1-06-ads']
 /** Bloque B (las jaulas): práctica de la lección de Nayi (tarea b1-06-nayi, tema relative-clauses) */
 const RC = 'relative-clauses' as const
 const PRACTICE2 = ['b1-06-practice2']
+/** Bloque C: práctica de la lección de experiencia (tarea b1-06-experience) y banco compartido de los voluntarios */
+const EX = 'experience-b1' as const
+const PRACTICE3 = ['b1-06-practice3']
+const VOL = ['b1-06-volunteer']
+
+/** Práctica de la lección de experiencia, en orden */
+export const B1_06_PRACTICE3_IDS = ['b1-06-x1', 'b1-06-x2', 'b1-06-x3', 'b1-06-x4', 'b1-06-x5', 'b1-06-x6', 'b1-06-x7', 'b1-06-x8']
 
 /** Práctica de la lección de Nayi, en orden */
 export const B1_06_PRACTICE2_IDS = ['b1-06-d1', 'b1-06-d2', 'b1-06-d3', 'b1-06-d4', 'b1-06-d5', 'b1-06-d6', 'b1-06-d7', 'b1-06-d8']
@@ -69,5 +76,47 @@ export const B1_06_QUESTIONS: Question[] = [
     answer: 0,
     tip: 'the dog that has a red collar.',
     tags: PRACTICE2,
+  },
+  // ── Bloque C: contar tu experiencia (Nayi) ──
+  { id: 'b1-06-x1', topic: EX, kind: 'fix', prompt: 'I worked here since three years.', options: ["I've worked here for three years.", "I've worked here since three years.", 'I worked here since three year.'], answer: 0, tip: 'Dura hasta hoy: present perfect + for.', tags: PRACTICE3 },
+  { id: 'b1-06-x2', topic: EX, kind: 'fix', prompt: 'I have volunteered at a shelter last year.', options: ['I volunteered at a shelter last year.', 'I have volunteer at a shelter last year.', 'I volunteering at a shelter last year.'], answer: 0, tip: 'Last year es un momento terminado: past simple.', tags: PRACTICE3 },
+  { id: 'b1-06-x3', topic: EX, prompt: 'I ___ at a bakery in 2022.', options: ['worked', 'have worked', 'work'], answer: 0, tip: 'In 2022: past simple.', tags: PRACTICE3 },
+  { id: 'b1-06-x4', topic: EX, prompt: 'I ___ with animals since 2020.', options: ['have worked', 'worked', 'work'], answer: 0, tip: 'Since + desde cuándo: present perfect.', tags: PRACTICE3 },
+  { id: 'b1-06-x5', topic: EX, prompt: 'She ___ dogs for three months last summer.', options: ['walked', 'has walked', 'walks'], answer: 0, tip: 'Last summer: past simple.', tags: PRACTICE3 },
+  { id: 'b1-06-x6', topic: EX, prompt: '___ you ever worked with cats?', options: ['Have', 'Did', 'Are'], answer: 0, tip: 'Experiencia hasta ahora: Have you ever + participio.', tags: PRACTICE3 },
+  { id: 'b1-06-x7', topic: EX, kind: 'order', prompt: 'He trabajado con animales por tres años.', options: ['I', 'have', 'worked', 'with', 'animals', 'for', 'three', 'years.'], answer: 0, tip: 'have worked + for.', tags: PRACTICE3 },
+  {
+    id: 'b1-06-x8',
+    topic: EX,
+    kind: 'listen',
+    audio: "Have you worked with animals before? I'd like to know about your experience. Please tell me about your last job.",
+    voice: 'male',
+    prompt: '¿Qué quiere saber Esteban?',
+    options: ['Su experiencia con animales.', 'Cuánto cobra.', 'Dónde vive.'],
+    answer: 0,
+    tip: 'Have you worked with animals before?',
+    tags: PRACTICE3,
+  },
+  // ── Bloque C: banco compartido de los 2 Tired Volunteer ──
+  { id: 'b1-06-v1', topic: RC, kind: 'fix', prompt: "The dog who's collar is red is Kitay.", options: ['The dog whose collar is red is Kitay.', 'The dog who collar is red is Kitay.', "The dog which's collar is red is Kitay."], answer: 0, tip: 'Posesión: whose.', tags: VOL },
+  { id: 'b1-06-v2', topic: RC, kind: 'fix', prompt: 'The boy which feeds the cats is tired.', options: ['The boy who feeds the cats is tired.', 'The boy whose feeds the cats is tired.', 'The boy where feeds the cats is tired.'], answer: 0, tip: 'Personas: who.', tags: VOL },
+  { id: 'b1-06-v3', topic: RC, prompt: 'This is the kennel ___ the puppies sleep.', options: ['where', 'who', 'whose'], answer: 0, tip: 'Lugares: where.', tags: VOL },
+  { id: 'b1-06-v4', topic: RC, prompt: 'Mr. Díaz is the man ___ dog is very old.', options: ['whose', 'who', 'that'], answer: 0, tip: 'Posesión: whose.', tags: VOL },
+  { id: 'b1-06-v5', topic: EX, kind: 'fix', prompt: 'She has worked here since two weeks.', options: ['She has worked here for two weeks.', 'She worked here since two weeks.', 'She has work here for two weeks.'], answer: 0, tip: 'Cuánto tiempo: for.', tags: VOL },
+  { id: 'b1-06-v6', topic: EX, kind: 'fix', prompt: 'I have walked the dogs yesterday.', options: ['I walked the dogs yesterday.', 'I have walk the dogs yesterday.', 'I walking the dogs yesterday.'], answer: 0, tip: 'Yesterday: past simple.', tags: VOL },
+  { id: 'b1-06-v7', topic: EX, prompt: "I've known Nayi ___ 2021.", options: ['since', 'for', 'during'], answer: 0, tip: 'Desde cuándo: since.', tags: VOL },
+  { id: 'b1-06-v8', topic: EX, prompt: 'We have fed the dogs ___ two hours.', options: ['for', 'since', 'from'], answer: 0, tip: 'Cuánto tiempo: for.', tags: VOL },
+  { id: 'b1-06-v9', topic: RC, kind: 'order', prompt: 'El perro que paseé ayer es Fresas.', options: ['The', 'dog', 'I', 'walked', 'yesterday', 'is', 'Fresas.'], answer: 0, tip: 'Sin pronombre: the dog I walked.', tags: VOL },
+  {
+    id: 'b1-06-v10',
+    topic: EX,
+    kind: 'listen',
+    audio: "I'm Sam. I've volunteered here for two years. The dog that I like best is Laica, because she sleeps all day.",
+    voice: 'female',
+    prompt: '¿Hace cuánto es voluntaria?',
+    options: ['Hace dos años.', 'Hace dos meses.', 'Desde ayer.'],
+    answer: 0,
+    tip: "I've volunteered here for two years.",
+    tags: VOL,
   },
 ]

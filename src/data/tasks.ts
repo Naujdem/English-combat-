@@ -30,7 +30,7 @@ import { B1_06_PRACTICE_IDS } from './questions-b1-06'
 import { B1_06_JOB_ADVERT } from './b1Shelter'
 import { B1_06_WHICH_DOG } from './b1Kennels'
 import type { WhichDogRound } from '../components/WhichDog'
-import { B1_06_PRACTICE2_IDS } from './questions-b1-06'
+import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -4925,7 +4925,7 @@ NPC_TASKS['b1-06-nayi'] = {
 }
 
 // El tablero de pedidos: Which Dog? (components/WhichDog.tsx). Al terminar, 5 monedas y Nayi habla.
-// La puerta de la oficina muestra "Próximamente: la oficina de Esteban (bloque 6-C)"
+// Después, Nayi tiene una segunda tarea (bloque C): la lección de experiencia
 NPC_TASKS['b1-06-dogs'] = {
   npc: 'b1-06-orders',
   done: 'b1-06-dogs',
@@ -4937,7 +4937,87 @@ NPC_TASKS['b1-06-dogs'] = {
   reward: {
     text: 'Nayi: "Perfect! You know all the dogs now."',
     es: '¡Perfecto! Ya conoces a todos los perros.',
-    sub: 'Ganaste 5 monedas. Próximamente: la oficina de Esteban (bloque 6-C).',
+    sub: 'Ganaste 5 monedas. Habla otra vez con Nayi.',
     say: 'Perfect! You know all the dogs now.',
+  },
+}
+
+// ── B1-06 · First Job, bloque C (las jaulas y la oficina; escenas en data/b1Kennels.ts y data/b1EstebanOffice.ts). NO guarda closeId(6) ──
+// Nayi (segunda tarea, al terminar Which Dog?): lección 'experience-b1' + práctica b1-06-x1…x8. Después aparecen los voluntarios cansados
+NPC_TASKS['b1-06-experience'] = {
+  npc: 'b1-06-nayi',
+  done: 'b1-06-experience',
+  lesson: 'experience-b1',
+  requires: { id: 'b1-06-dogs', text: 'Nayi is busy.', es: 'Nayi está ocupada.', sub: 'Primero resuelve el tablero de pedidos.' },
+  activity: 'practice',
+  practice: 'experience-b1',
+  practiceIds: B1_06_PRACTICE3_IDS,
+  steps: [],
+  reward: {
+    text: 'Nayi: "Oh no... the volunteers look very tired. Can you help them?"',
+    es: 'Ay, no... los voluntarios se ven muy cansados. ¿Puedes ayudarlos?',
+    sub: 'Lección y práctica hechas. Ayuda a los 2 voluntarios cansados; después se abre la oficina.',
+    say: 'Oh no... the volunteers look very tired. Can you help them?',
+  },
+}
+
+// Esteban: la entrevista (DebateTalk, 4 turnos y 3 desenlaces). Siempre termina; no se contrata todavía (bloque 6-D)
+NPC_TASKS['b1-06-interview'] = {
+  npc: 'b1-06-esteban',
+  done: 'b1-06-interview',
+  activity: 'debate',
+  debate: {
+    title: 'Job interview',
+    ask: 'Responde a Esteban.',
+    turns: [
+      {
+        text: 'Thank you for coming. Have you worked with animals before?',
+        es: 'Gracias por venir. ¿Has trabajado antes con animales?',
+        options: [
+          { en: 'Yes, I have. I volunteered at an animal shelter last year.', es: 'Sí. Fui voluntario en un refugio de animales el año pasado.', value: 'good', reply: { text: "Great! That's exactly what we need.", es: '¡Genial! Eso es justo lo que necesitamos.' } },
+          { en: 'Yes. Animals.', es: 'Sí. Animales.', value: 'neutral', reply: { text: 'Hmm... can you tell me a little more?', es: 'Mmm... ¿puede contarme un poco más?' } },
+          { en: 'I worked here since three years.', es: '(Trabajé aquí desde tres años: mal.)', value: 'bad', reply: { text: "Sorry? You haven't worked here before...", es: '¿Perdón? Usted no ha trabajado aquí antes...' } },
+        ],
+      },
+      {
+        text: 'What are your strengths?',
+        es: '¿Cuáles son tus fortalezas?',
+        options: [
+          { en: "I'm reliable and patient, and I love dogs.", es: 'Soy confiable y paciente, y me encantan los perros.', value: 'good', reply: { text: 'Reliable and patient: perfect for the shelter.', es: 'Confiable y paciente: perfecto para el refugio.' } },
+          { en: 'I like... things.', es: 'Me gustan... las cosas.', value: 'neutral', reply: { text: 'I see. Think about it a little.', es: 'Ya veo. Piénselo un poco.' } },
+          { en: "I'm strong... I eat a lot.", es: 'Soy fuerte... como mucho.', value: 'bad', reply: { text: "Ha ha. That's... not exactly a skill.", es: 'Ja, ja. Eso... no es exactamente una habilidad.' } },
+        ],
+      },
+      {
+        text: 'Why do you suit this job?',
+        es: '¿Por qué eres adecuado para este trabajo?',
+        options: [
+          { en: "I've learned a lot about dogs, and the job suits my free time.", es: 'He aprendido mucho sobre perros, y el trabajo se adapta a mi tiempo libre.', value: 'good', reply: { text: 'Good answer. The hours are very flexible.', es: 'Buena respuesta. El horario es muy flexible.' } },
+          { en: 'I need money.', es: 'Necesito dinero.', value: 'neutral', reply: { text: 'Honest, at least.', es: 'Al menos es honesto.' } },
+          { en: "I'm a dog. Woof!", es: 'Soy un perro. ¡Guau!', value: 'bad', reply: { text: 'Ha ha! Funny, but please be serious.', es: '¡Ja, ja! Gracioso, pero hable en serio, por favor.' } },
+        ],
+      },
+      {
+        text: 'Tell me about one thing you did at your last job.',
+        es: 'Cuénteme algo que hizo en su último trabajo.',
+        options: [
+          { en: 'I fed the dogs and I cleaned the kennels every morning.', es: 'Daba de comer a los perros y limpiaba las jaulas cada mañana.', value: 'good', reply: { text: 'Excellent. You have real experience.', es: 'Excelente. Tiene experiencia de verdad.' } },
+          { en: 'I did many things.', es: 'Hice muchas cosas.', value: 'neutral', reply: { text: 'Can you give me an example?', es: '¿Puede darme un ejemplo?' } },
+          { en: 'I have cleaned the kennels last Monday.', es: '(Limpié las jaulas el lunes pasado: mal.)', value: 'bad', reply: { text: "Last Monday? Let's try that again later.", es: '¿El lunes pasado? Intentémoslo otra vez más tarde.' } },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: 'That was a very good interview. I think you are the right person.', es: 'Fue una muy buena entrevista. Creo que usted es la persona adecuada.' },
+      mid: { text: 'That was an OK interview. I need to think about it.', es: 'Fue una entrevista regular. Tengo que pensarlo.' },
+      low: { text: 'Hmm... we need to talk more about this.', es: 'Mmm... tenemos que hablar más de esto.' },
+    },
+  },
+  coins: 5,
+  steps: [],
+  reward: {
+    text: "(A grey light comes out of Esteban's pen.)",
+    es: '(Una luz gris sale de la pluma de Esteban.)',
+    sub: 'Ganaste 5 monedas. Próximamente: The Interviewer (bloque 6-D).',
   },
 }
