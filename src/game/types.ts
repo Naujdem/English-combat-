@@ -30,7 +30,7 @@ export type Interest = {
 export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle' | 'epilogue'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
-export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'going-to-wh' | 'going-to-predict' | 'want-to' | 'should-must' | 'invitations' | 'requests' | 'instructions' | 'past-simple' | 'past-simple-comparatives' | 'superlatives-comparatives-race' | 'past-simple-continuous' | 'recipes-some-any' | 'present-perfect' | 'places-directions' | 'future-plans' | 'health-emergency' | 'wishes-conditional' | 'clothes-shopping' | 'food-dinner' | 'people-relationships' | 'housework' | 'holidays' | 'future' | 'cause-effect' | 'emergencies' | 'pp-yet-already' | 'travel-phones' | 'futures-b1' | 'informal-messages' | 'present-perfect-cont' | 'obligation-b1' | 'bank-phrasal' | 'used-to' | 'jobs-b1' | 'get-used-to' | 'work-english'
+export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'going-to-wh' | 'going-to-predict' | 'want-to' | 'should-must' | 'invitations' | 'requests' | 'instructions' | 'past-simple' | 'past-simple-comparatives' | 'superlatives-comparatives-race' | 'past-simple-continuous' | 'recipes-some-any' | 'present-perfect' | 'places-directions' | 'future-plans' | 'health-emergency' | 'wishes-conditional' | 'clothes-shopping' | 'food-dinner' | 'people-relationships' | 'housework' | 'holidays' | 'future' | 'cause-effect' | 'emergencies' | 'pp-yet-already' | 'travel-phones' | 'futures-b1' | 'informal-messages' | 'present-perfect-cont' | 'obligation-b1' | 'bank-phrasal' | 'used-to' | 'jobs-b1' | 'get-used-to' | 'work-english' | 'relative-clauses'
 
 /**
  * fill: completar el espacio en blanco.
@@ -186,7 +186,8 @@ export type LessonStep = {
   /** 'notebook' (B1, recuerdos 3, 5 y 7): una página del Cuaderno de L, con letra a mano (components/LNotebook.tsx) */
   /** 'maya' (B1-04): Maya guía la lección (su retrato y su voz, igual que 'leo') */
   /** 'haddad' (B1-06): Ms. Noor Haddad guía la lección (su retrato y su voz, igual que 'maya') */
-  who: 'leo' | 'maya' | 'haddad' | 'board' | 'narrator' | 'notebook'
+  /** 'nayi' (B1-06, bloque B): Nayi guía la lección (su retrato y su voz) */
+  who: 'leo' | 'maya' | 'haddad' | 'nayi' | 'board' | 'narrator' | 'notebook'
   text: string
   es?: string
   /** Lo que aparece escrito en la pizarra */

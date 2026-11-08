@@ -8,7 +8,7 @@ import { B1_06_AD_IDS, B1_06_QUESTIONS } from './questions-b1-06'
  * NO es recuerdo (game/memory.ts solo toma las misiones impares).
  *
  * Un recibidor luminoso: mostrador con Ms. Noor Haddad (la coordinadora), el tablón con el anuncio,
- * la mesa de postulación, la puerta del fondo a las jaulas (cerrada: bloque 6-B) y la puerta de salida.
+ * la mesa de postulación, la puerta del fondo a las jaulas (bloque 6-B, data/b1Kennels.ts) y la puerta de salida.
  * Orden: Ms. Haddad: lección 'work-english' + práctica (b1-06-advert) → el tablón: el anuncio con FinePrint
  *   en modo anuncios (b1-06-read) → la mesa: Sequence Master "How to apply" (b1-06-apply, 5 monedas).
  * Ningún bloque A guarda closeId(6) (se guarda en 6-D). La camiseta del refugio se entrega en 6-D.
@@ -41,7 +41,6 @@ const MAP = [
 const zoneAt = (): Zone => 'recepcion'
 
 const NOT_YET = (sub: string) => ({ text: 'Todavía no.', sub })
-export const B1_06_SOON = 'Próximamente: Nayi y los perros (bloque 6-B)'
 
 /** El anuncio del tablón (FinePrint en modo anuncios). Las preguntas salen de data/questions-b1-06.ts (b1-06-r1…r3) */
 export const B1_06_JOB_ADVERT: FinePrintContent = {
@@ -89,21 +88,19 @@ export const B1_06_SHELTER: SceneDef = {
     '4,3': { text: 'The reception desk.', sub: 'El mostrador de recepción.', say: 'The reception desk.' },
     '2,0': { text: 'LUMEN PAWS. Animal shelter.', sub: 'LUMEN PAWS. Refugio de animales.', say: 'Lumen Paws. Animal shelter.' },
   },
-  // La puerta del fondo (jaulas): cerrada hasta postularse; después, el aviso del bloque 6-B. La salida: con el botón Mapa
+  // La puerta del fondo (jaulas): cerrada hasta postularse; después lleva a las jaulas (bloque B, data/b1Kennels.ts). La salida: con el botón Mapa
   locked: (x, y, s) => {
-    if (x === 5 && y === 0) {
-      if (!s.opened.includes(B1_06_APPLY)) return NOT_YET('Primero postúlate en la mesa de postulación.')
-      return { text: 'You can hear the dogs.', sub: B1_06_SOON }
-    }
+    if (x === 5 && y === 0 && !s.opened.includes(B1_06_APPLY)) return NOT_YET('Primero postúlate en la mesa de postulación.')
     if (x === 5 && y === 6) return { text: 'The way out.', sub: 'Para volver al mapa, toca el botón Mapa.' }
     return null
   },
+  links: { '5,0': { sceneId: 'b1-06-kennels', pos: { x: 5, y: 4 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'Habla con Ms. Haddad', done: s.opened.includes(B1_06_ADVERT) },
     { label: 'El tablón de anuncios', done: s.opened.includes(B1_06_READ) },
     { label: 'La mesa de postulación', done: s.opened.includes(B1_06_APPLY) },
-    { label: B1_06_SOON, done: false },
+    { label: 'Los perros y Nayi', done: s.opened.includes('b1-06-dogs') },
   ],
   intro: {
     first: 'My first real job. — Mi primer trabajo de verdad.',

@@ -892,6 +892,44 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#efe6d2', hair: '#2f7f7a', skin: '#efe6d2' },
     doneLine: { text: 'Perfect! Now come and meet Nayi and the dogs.', es: '¡Perfecto! Ahora ven a conocer a Nayi y a los perros.' },
   },
+  // ── B1-06 · bloque B (las jaulas, data/b1Kennels.ts) ──
+  'b1-06-nayi': {
+    name: 'Nayi',
+    look: { shirt: '#e0873a', hair: '#6b3a2a', skin: '#d9a37a', gender: 'female' },
+    doneLine: { text: 'The order board is next to the office. Find the right dogs!', es: 'El tablero de pedidos está junto a la oficina. ¡Encuentra los perros correctos!' },
+  },
+  // El tablero de pedidos: se dibuja con NotebookIcon (Explore.tsx)
+  'b1-06-orders': {
+    name: 'El tablero de pedidos',
+    look: { shirt: '#efe6d2', hair: '#e0873a', skin: '#efe6d2' },
+    doneLine: { text: 'Perfect! You know all the dogs now.', es: '¡Perfecto! Ya conoces a todos los perros.' },
+  },
+  // Los 5 perros: solo examinables (se dibujan con ShelterDog, Explore.tsx)
+  'b1-06-zirius': {
+    name: 'Zirius',
+    look: { shirt: '#2b2b33', hair: '#2b2b33', skin: '#2b2b33' },
+    doneLine: { text: "Zirius is the dog that plays with the ball.", es: 'Zirius es el perro que juega con la pelota.' },
+  },
+  'b1-06-laica': {
+    name: 'Laica',
+    look: { shirt: '#d9a441', hair: '#d9a441', skin: '#d9a441' },
+    doneLine: { text: "Laica is the dog that sleeps all day.", es: 'Laica es el perro que duerme todo el día.' },
+  },
+  'b1-06-kitay': {
+    name: 'Kitay',
+    look: { shirt: '#f2eee6', hair: '#f2eee6', skin: '#f2eee6' },
+    doneLine: { text: "Kitay is the one whose collar is red.", es: 'Kitay es el que tiene el collar rojo.' },
+  },
+  'b1-06-fresas': {
+    name: 'Fresas',
+    look: { shirt: '#a8502e', hair: '#a8502e', skin: '#a8502e' },
+    doneLine: { text: "Fresas is the dog I walked yesterday.", es: 'Fresas es el perro que paseé ayer.' },
+  },
+  'b1-06-lupe': {
+    name: 'Lupe',
+    look: { shirt: '#9a9aa2', hair: '#9a9aa2', skin: '#9a9aa2' },
+    doneLine: { text: "Lupe is the dog that barks at everything.", es: 'Lupe es el perro que ladra a todo.' },
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */
