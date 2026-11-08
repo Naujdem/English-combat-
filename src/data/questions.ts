@@ -1148,6 +1148,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Vocabulario: apply (postularse), salary (salario), experience (experiencia), unemployed (desempleado), fired (despedido).',
     ],
   },
+  'experience-b1': {
+    name: 'Contar tu experiencia',
+    level: 'B1',
+    lesson: [
+      'Past simple: algo terminado, con un momento del pasado. I volunteered at a shelter last year. I walked dogs for two months in 2023.',
+      "Present perfect: experiencia hasta ahora, sin decir cuándo. I've worked with animals. I've walked many dogs.",
+      "for + cuánto tiempo (for three years). since + desde cuándo (since 2022). Con for o since la acción sigue hasta hoy: I've worked here for three years.",
+    ],
+  },
   'relative-clauses': {
     name: 'Oraciones de relativo',
     level: 'B1',

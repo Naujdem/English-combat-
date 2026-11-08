@@ -1,7 +1,7 @@
 import type { WhichDogRound } from '../components/WhichDog'
 import type { ShelterDogId } from '../components/ShelterDog'
 import type { SpriteLook } from '../components/Sprite'
-import type { GameState, SceneDef, Zone } from '../game/types'
+import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 
 /**
  * B1-06 · First Job (presente). Bloque B: la zona de las jaulas del refugio Lumen Paws (escena b1-06-kennels).
@@ -29,7 +29,10 @@ export const B1_06_DOG_NPCS: Record<string, ShelterDogId> = {
   'b1-06-lupe': 'lupe',
 }
 
-export const B1_06_OFFICE_SOON = 'Próximamente: la oficina de Esteban (bloque 6-C)'
+/** Bloque C: la segunda tarea de Nayi (lección 'experience-b1') y los 2 voluntarios cansados (esbirros encadenados) */
+export const B1_06_EXPERIENCE = 'b1-06-experience'
+export const B1_06_VOLUNTEER1 = 'b1-06-volunteer1'
+export const B1_06_VOLUNTEER2 = 'b1-06-volunteer2'
 
 /** Which Dog?: las peticiones de Nayi, en orden */
 export const B1_06_WHICH_DOG: WhichDogRound[] = [
@@ -74,6 +77,9 @@ export const B1_06_KENNELS: SceneDef = {
     { type: 'npc', id: 'b1-06-fresas', x: 8, y: 1 },
     { type: 'npc', id: 'b1-06-lupe', x: 2, y: 3 },
     { type: 'npc', id: B1_06_ORDERS, x: 9, y: 2 },
+    // Bloque C: al terminar la lección de experiencia, los voluntarios cansados, uno tras otro
+    { type: 'enemy', id: B1_06_VOLUNTEER1, x: 6, y: 3, after: B1_06_EXPERIENCE },
+    { type: 'enemy', id: B1_06_VOLUNTEER2, x: 7, y: 4, after: B1_06_VOLUNTEER1 },
   ],
   labels: [
     { text: 'Jaulas', x: 5, y: 2 },
@@ -81,22 +87,61 @@ export const B1_06_KENNELS: SceneDef = {
   ],
   zoneAt: () => zoneAt(),
   examine: {},
-  // La oficina: cerrada; al terminar Which Dog?, el aviso del bloque 6-C
+  // La oficina: cerrada hasta vencer a los 2 voluntarios cansados; después lleva a la oficina de Esteban (data/b1EstebanOffice.ts)
   locked: (x, y, s) => {
     if (x !== 10 || y !== 3) return null
     if (!s.opened.includes(B1_06_DOGS)) return NOT_YET('Primero ayuda a Nayi con los perros.')
-    return { text: 'The office.', sub: B1_06_OFFICE_SOON }
+    if (!s.opened.includes(B1_06_EXPERIENCE)) return NOT_YET('Primero habla otra vez con Nayi.')
+    if (!s.defeated.includes(B1_06_VOLUNTEER1) || !s.defeated.includes(B1_06_VOLUNTEER2)) return NOT_YET('Primero ayuda a los voluntarios cansados.')
+    return null
   },
-  // Vuelta al recibidor (data/b1Shelter.ts)
-  links: { '5,5': { sceneId: 'b1-06-shelter', pos: { x: 5, y: 1 } } },
+  // Vuelta al recibidor (data/b1Shelter.ts) y la oficina (data/b1EstebanOffice.ts)
+  links: { '5,5': { sceneId: 'b1-06-shelter', pos: { x: 5, y: 1 } }, '10,3': { sceneId: 'b1-06-office', pos: { x: 1, y: 3 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'Habla con Nayi', done: s.opened.includes(B1_06_NAYI_DONE) },
     { label: 'El tablero de pedidos', done: s.opened.includes(B1_06_DOGS) },
-    { label: B1_06_OFFICE_SOON, done: false },
+    { label: 'Nayi: cómo contar tu experiencia', done: s.opened.includes(B1_06_EXPERIENCE) },
+    { label: 'Voluntarios cansados (2)', done: s.defeated.includes(B1_06_VOLUNTEER1) && s.defeated.includes(B1_06_VOLUNTEER2) },
+    { label: 'La oficina', done: s.opened.includes('b1-06-interview') },
   ],
   intro: {
     first: 'Who is who? — ¿Quién es quién?',
     later: 'Who is who? — ¿Quién es quién?',
   },
+}
+
+// ── Bloque C · esbirros Tired Volunteer (modelo de los Eviction Notice de 5-C): banco compartido b1-06-v1…v10 ──
+const VOLUNTEER_TAGS = ['b1-06-volunteer']
+const VOLUNTEER = (id: string, before: { text: string; es: string }, after: { text: string; es: string }, freed: { text: string; es: string }): EnemyDef => ({
+  id,
+  name: 'Tired Volunteer',
+  person: 'Tired Volunteer',
+  kind: 'minion',
+  echo: true,
+  hp: 5,
+  topics: ['relative-clauses', 'experience-b1'],
+  kinds: ['fix', 'fill', 'order', 'listen'],
+  tags: VOLUNTEER_TAGS,
+  onlyTags: true,
+  zone: 'recepcion',
+  look: { shirt: '#6e8b5f', hair: '#7a6a58', skin: '#d6b08c' },
+  before: [before],
+  after: [after],
+  freed,
+})
+
+export const B1_06_ENEMIES: Record<string, EnemyDef> = {
+  [B1_06_VOLUNTEER1]: VOLUNTEER(
+    B1_06_VOLUNTEER1,
+    { text: "The dog who's collar is red is tired! The girl which works here is tired too!", es: "The dog who's collar y The girl which works here: mal. (¡Estoy cansado!)" },
+    { text: 'The dogs are quiet... I just needed some sleep.', es: 'Los perros están callados... solo necesitaba dormir.' },
+    { text: "Sorry! I wasn't myself.", es: '¡Perdón! No era yo.' },
+  ),
+  [B1_06_VOLUNTEER2]: VOLUNTEER(
+    B1_06_VOLUNTEER2,
+    { text: 'I worked here since three years! I have walked the dogs yesterday!', es: 'I worked here since three years y I have walked the dogs yesterday: mal.' },
+    { text: 'I feel awake again.', es: 'Me siento despierto otra vez.' },
+    { text: 'Good luck with Esteban!', es: '¡Suerte con Esteban!' },
+  ),
 }

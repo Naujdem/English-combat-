@@ -904,6 +904,12 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#efe6d2', hair: '#e0873a', skin: '#efe6d2' },
     doneLine: { text: 'Perfect! You know all the dogs now.', es: '¡Perfecto! Ya conoces a todos los perros.' },
   },
+  // ── B1-06 · bloque C (la oficina, data/b1EstebanOffice.ts) ──
+  'b1-06-esteban': {
+    name: 'Esteban',
+    look: { shirt: '#38527a', hair: '#3a3a3a', skin: '#e1b896', gender: 'male' },
+    doneLine: { text: 'Thank you. I need to think about it.', es: 'Gracias. Tengo que pensarlo.' },
+  },
   // Los 5 perros: solo examinables (se dibujan con ShelterDog, Explore.tsx)
   'b1-06-zirius': {
     name: 'Zirius',

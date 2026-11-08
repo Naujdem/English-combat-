@@ -796,4 +796,13 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'nayi', text: 'Zirius is the dog that plays with the ball. Lupe is the dog that barks at everything. Fresas is the dog I walked yesterday.', es: 'Zirius es el perro que juega con la pelota. Lupe es el perro que ladra a todo. Fresas es el perro que paseé ayer.' },
     { who: 'board', text: "Errores típicos: ✗ The girl which works here → ✓ The girl who works here. ✗ The dog who's collar is red → ✓ The dog whose collar is red. (who's = who is)" },
   ],
+  // B1-06 · First Job, bloque C (las jaulas): Nayi repasa cómo contar tu experiencia antes de la entrevista
+  'experience-b1': [
+    { who: 'nayi', text: "Before the interview, let's practise how to talk about your experience.", es: 'Antes de la entrevista, practiquemos cómo contar tu experiencia.' },
+    { who: 'board', text: 'Past simple: algo terminado, con un momento del pasado. I volunteered at a shelter last year. I walked dogs for two months in 2023.' },
+    { who: 'board', text: "Present perfect: experiencia hasta ahora, sin decir cuándo. I've worked with animals. I've walked many dogs." },
+    { who: 'board', text: "for + cuánto tiempo (for three years). since + desde cuándo (since 2022). Con for o since la acción sigue hasta hoy: I've worked here for three years." },
+    { who: 'nayi', text: "Esteban will ask: 'Have you worked with animals before?' You can say: 'Yes, I have. I volunteered at a shelter last year.'", es: "Esteban preguntará: '¿Has trabajado antes con animales?' Puedes decir: 'Sí. Fui voluntario en un refugio el año pasado.'" },
+    { who: 'board', text: "Errores típicos: ✗ I worked here since three years → ✓ I've worked here for three years. ✗ I have volunteered last year → ✓ I volunteered last year." },
+  ],
 }
