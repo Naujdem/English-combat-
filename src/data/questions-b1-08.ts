@@ -18,6 +18,9 @@ const EMPHASIS = ['b1-08-emphasis']
 const QT = 'question-tags' as const
 const TAGS = ['b1-08-tags']
 const FAN = ['b1-08-fan']
+/** Bloque D: el jefe The Champion (data/b1ChampionBoss.ts). Fase 1 superlativos · fase 2 resultados y énfasis */
+const BOSS_S = ['b1-08-boss', 'b1-08-boss-s']
+const BOSS_E = ['b1-08-boss', 'b1-08-boss-e']
 
 /** Práctica de la invitación, en orden */
 export const B1_08_PRACTICE_IDS = ['b1-08-s1', 'b1-08-s2', 'b1-08-s3', 'b1-08-s4', 'b1-08-s5', 'b1-08-s6', 'b1-08-s7', 'b1-08-s8']
@@ -181,5 +184,43 @@ export const B1_08_QUESTIONS: Question[] = [
     answer: 0,
     tip: "It's the loudest crowd in the league.",
     tags: FAN,
+  },
+  // Bloque D · The Champion, fase 1: superlativos
+  { id: 'b1-08-bs1', topic: SU, kind: 'fix', prompt: 'She is the most strong girl in the team.', options: ['She is the strongest girl in the team.', 'She is the most strongest girl in the team.', 'She is the strongger girl in the team.'], answer: 0, tip: 'Adjetivo corto: the + -est.', tags: BOSS_S },
+  { id: 'b1-08-bs2', topic: SU, kind: 'fix', prompt: 'This is the most good match of my life.', options: ['This is the most best match of my life.', 'This is the goodest match of my life.', 'This is the best match of my life.'], answer: 2, tip: 'good es irregular: the best.', tags: BOSS_S },
+  { id: 'b1-08-bs3', topic: SU, prompt: "It's the ___ goal of the season. Nobody can score a worse one.", options: ['most bad', 'worst', 'baddest'], answer: 1, tip: 'bad → the worst.', tags: BOSS_S },
+  { id: 'b1-08-bs4', topic: SU, prompt: 'Ilva is the ___ coach of all.', options: ['experiencedest', 'most experiencest', 'most experienced'], answer: 2, tip: 'Adjetivo largo: the most + adjetivo.', tags: BOSS_S },
+  { id: 'b1-08-bs5', topic: SU, prompt: 'Mateo is the second ___ player in the team.', options: ['tallest', 'most tall', 'tallestest'], answer: 0, tip: 'tall → the tallest.', tags: BOSS_S },
+  { id: 'b1-08-bs6', topic: SU, kind: 'order', prompt: 'Es el tercer estadio más grande del país.', options: ['It', 'is', 'the', 'third', 'biggest', 'stadium', 'in', 'the', 'country.'], answer: 0, tip: 'the third biggest + sustantivo.', tags: BOSS_S },
+  {
+    id: 'b1-08-bs7',
+    topic: SU,
+    kind: 'listen',
+    audio: "The Champion is the fastest player in the league, but Julian is the most creative. The best goal this year was Julian's, and the worst mistake was the referee's.",
+    voice: 'male',
+    prompt: '¿Quién es el más creativo?',
+    options: ['El campeón.', 'Julian.', 'El árbitro.'],
+    answer: 1,
+    tip: 'Julian is the most creative.',
+    tags: BOSS_S,
+  },
+  // Bloque D · The Champion, fase 2: resultados y énfasis
+  { id: 'b1-08-be1', topic: EM, kind: 'fix', prompt: 'It was such exciting final!', options: ['It was such an exciting final!', 'It was such exciting a final!', 'It was so an exciting final!'], answer: 0, tip: 'such an + adjetivo + sustantivo.', tags: BOSS_E },
+  { id: 'b1-08-be2', topic: FR, kind: 'fix', prompt: 'We won to Lumen Bay yesterday.', options: ['We won Lumen Bay to yesterday.', 'We beat Lumen Bay yesterday.', 'We beaten Lumen Bay yesterday.'], answer: 1, tip: 'Contra un equipo: beat + equipo.', tags: BOSS_E },
+  { id: 'b1-08-be3', topic: EM, prompt: 'What ___ penalty! The referee was right.', options: ['an', 'the', 'a'], answer: 2, tip: 'What a + sustantivo singular.', tags: BOSS_E },
+  { id: 'b1-08-be4', topic: FR, prompt: 'It ended 1–1. It was a ___.', options: ['draw', 'win', 'goal'], answer: 0, tip: 'Empate = draw.', tags: BOSS_E },
+  { id: 'b1-08-be5', topic: EM, prompt: "The crowd was ___ loud that I couldn't hear the whistle.", options: ['such', 'so', 'such a'], answer: 1, tip: 'so + adjetivo.', tags: BOSS_E },
+  { id: 'b1-08-be6', topic: FR, kind: 'order', prompt: 'Van perdiendo por dos goles.', options: ['They', 'are', 'two', 'goals', 'down.'], answer: 0, tip: 'two goals down.', tags: BOSS_E },
+  {
+    id: 'b1-08-be7',
+    topic: EM,
+    kind: 'listen',
+    audio: 'What a final last year! It ended in a draw, two–two, and then Lumen Bay won on penalties. It was such a thrilling match, and I was so nervous.',
+    voice: 'female',
+    prompt: '¿Cómo terminó el tiempo normal?',
+    options: ['Con victoria de Lumen Bay.', 'Con victoria del otro equipo.', 'En empate.'],
+    answer: 2,
+    tip: 'It ended in a draw.',
+    tags: BOSS_E,
   },
 ]

@@ -5306,3 +5306,33 @@ NPC_TASKS['b1-08-tags'] = {
     say: 'Listen to the fans.',
   },
 }
+
+// ── B1-08 · Game Day, bloque D (el pasillo, data/b1Concourse.ts): la puerta a las gradas cierra la misión (closeId(8) = 'b1-08-close') ──
+// Al guardarlo, dos fragmentos se juntan (FragmentJoin en Explore.tsx, memoryNumber 9): se abre el recuerdo 9
+NPC_TASKS['b1-08-close'] = {
+  npc: 'b1-08-return',
+  done: 'b1-08-close',
+  activity: 'script',
+  script: [
+    { who: 'narrator', text: '(The grey light leaves The Champion. He stands up and shakes your hand.)', es: '(La luz gris deja a The Champion. Se levanta y te da la mano.)' },
+    { who: 'narrator', text: '(You go back to the stands. In the last minute, Julian scores!)', es: '(Vuelves a las gradas. ¡En el último minuto, Julian anota!)' },
+    { who: 'narrator', text: 'Jose Kike: Lumen Bay wins 2–1! What a final! What a team!', es: 'Jose Kike: ¡Lumen Bay gana 2 a 1! ¡Qué final! ¡Qué equipo!' },
+    { who: 'narrator', text: "(The Champion's jersey drops two fragments. They float toward each other.)", es: '(La camiseta de The Champion suelta dos fragmentos. Flotan el uno hacia el otro.)' },
+    { who: 'narrator', text: '(The clock in your pocket is shining.)', es: '(El reloj en tu bolsillo brilla.)' },
+  ],
+  recover: ['superlatives-b1', 'football-results', 'emphasis-b1', 'question-tags'],
+  coins: 20,
+  requires: {
+    id: 'b1-08-friend',
+    text: 'La puerta a las gradas.',
+    es: 'La puerta a las gradas.',
+    sub: 'Antes, vence a The Champion y habla con la persona especial.',
+  },
+  steps: [],
+  reward: {
+    text: 'Mission 8: Game Day',
+    es: 'Misión 8: Día de partido',
+    sub: 'Ganaste la bufanda del equipo. Dos fragmentos se juntaron: se abrió el recuerdo 9.',
+    say: 'What a final!',
+  },
+}

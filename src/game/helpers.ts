@@ -56,8 +56,9 @@ export function heroLook(s: GameState, extra: Partial<SpriteLook> = {}): SpriteL
   return {
     accessory: s.outfit === 'gafas' ? 'glasses' : s.outfit === 'gorra' ? 'cap' : undefined,
     // B1-04: el llavero de la residencia no cambia la camisa; se dibuja como una casita con llave en el cinturón
-    shirt: s.outfit === 'capa' || s.outfit === 'llavero-residencia' ? OUTFITS.base.color : outfit.color,
-    charm: s.outfit === 'llavero-residencia' ? 'house-key' : undefined,
+    // B1-08: la bufanda del equipo tampoco cambia la camisa; se dibuja al cuello
+    shirt: s.outfit === 'capa' || s.outfit === 'llavero-residencia' || s.outfit === 'bufanda-lumen' ? OUTFITS.base.color : outfit.color,
+    charm: s.outfit === 'llavero-residencia' ? 'house-key' : s.outfit === 'bufanda-lumen' ? 'scarf' : undefined,
     cape: s.outfit === 'capa' ? outfit.color : '#c0392b',
     hair: s.hero.look.hair,
     skin: s.hero.look.skin,

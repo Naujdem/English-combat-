@@ -1028,6 +1028,24 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
     interest: true,
     doneLine: { text: "It's half time!", es: '¡Es el medio tiempo!' },
+    // Bloque D: al vencer a The Champion la reemplaza 'b1-08-special-chat' (la charla de amistad)
+    until: 'b1-08-boss',
+  },
+  // ── B1-08 · bloque D (el pasillo, data/b1Concourse.ts) ──
+  // La persona especial: aparece al vencer a The Champion (charla de amistad, quest 'b1-08-special' en Explore.tsx)
+  'b1-08-special-chat': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    after: 'b1-08-boss',
+    doneLine: { text: "In my country, football is the most popular sport.", es: 'En mi país, el fútbol es el deporte más popular.' },
+  },
+  // La puerta a las gradas: aparece tras la charla; cierra la misión (tarea b1-08-close). Se dibuja con NotebookIcon (Explore.tsx)
+  'b1-08-return': {
+    name: 'La puerta a las gradas',
+    look: { shirt: '#8a5a32', hair: '#1f5fa8', skin: '#8a5a32' },
+    after: 'b1-08-friend',
+    doneLine: { text: 'What a final!', es: '¡Qué final!' },
   },
   // Jose Kike, el comentarista, en su cabina (tareas b1-08-results y b1-08-emphasis)
   'b1-08-josekike': {

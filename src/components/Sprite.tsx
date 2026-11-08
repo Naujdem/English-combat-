@@ -9,7 +9,7 @@ export type SpriteLook = {
   cape?: string
   book?: boolean
   /** B1-04: llavero de la residencia (una casita con una llave) que cuelga del cinturón */
-  charm?: 'house-key'
+  charm?: 'house-key' | 'scarf'
 }
 
 /**
@@ -70,6 +70,16 @@ export function SpriteBody({ look, mood = 'normal', blur = false }: { look: Spri
           <rect x="19.9" y="27.8" width="0.6" height="1.1" fill="#8a6210" />
           <circle cx="22.3" cy="27.6" r="0.55" fill="none" stroke="#b0b6bf" strokeWidth="0.35" />
           <path d="M22.3 28.15 v1.3 h0.5 M22.3 28.9 h0.4" stroke="#b0b6bf" strokeWidth="0.35" fill="none" />
+        </g>
+      )}
+      {look.charm === 'scarf' && (
+        // B1-08: la bufanda del equipo de Lumen Bay: azul con una franja dorada, al cuello, con una punta colgando
+        <g aria-hidden="true">
+          <rect x="10.4" y="15.4" width="11.2" height="2.6" rx="1.3" fill="#1f5fa8" />
+          <rect x="10.8" y="16.3" width="10.4" height="0.7" fill="#e0b84a" />
+          <rect x="17.4" y="17.2" width="2.4" height="5.4" rx="0.5" fill="#1f5fa8" />
+          <rect x="17.4" y="20" width="2.4" height="0.7" fill="#e0b84a" />
+          <path d="M17.8 22.6 v0.9 M18.6 22.6 v0.9 M19.4 22.6 v0.9" stroke="#e0b84a" strokeWidth="0.35" />
         </g>
       )}
       {look.book && (

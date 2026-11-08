@@ -131,7 +131,7 @@ device=aparato, dispositivo;devices=aparatos;scientist=científico;scientists=ci
 thief=ladrón;broken=roto (break);hidden=escondido (hide);rare=raro, poco común;stolen=robado (steal)
 informant=informante;guard=guardia;crack=rendija, grieta;mark=marca;footprints=huellas (de pies);tech=tecnología (old tech = tecnología vieja);ceiling=techo (por dentro);vendor=vendedor;broker=intermediario, comerciante;mud=barro, lodo;symbols=símbolos;symbol=símbolo
 final=final (el último partido);goalkeeper=portero, portera;stadium=estadio;atmosphere=ambiente;crowd=multitud, público;strongest=el más fuerte (strong);tallest=el más alto (tall);exciting=emocionante;loudest=el más ruidoso (loud)
-score=marcador, anotar (un gol);beat=ganarle a (un equipo);win=ganar (un partido o una copa);fans=hinchas, aficionados;fan=hincha, aficionado;referee=árbitro;penalty=penalti;thrilling=emocionantísimo, apasionante;disappointing=decepcionante;commentator=comentarista;nil=cero (en un marcador);winning=ganando (win);tunnel=túnel
+score=marcador, anotar (un gol);beat=ganarle a (un equipo);win=ganar (un partido o una copa);fans=hinchas, aficionados;fan=hincha, aficionado;referee=árbitro;penalty=penalti;thrilling=emocionantísimo, apasionante;disappointing=decepcionante;commentator=comentarista;nil=cero (en un marcador);winning=ganando (win);tunnel=túnel;cheer=animar, aclamar;tournament=torneo;worse=peor (bad)
 `
 
 const BASE: Record<string, string> = Object.fromEntries(

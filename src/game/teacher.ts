@@ -38,7 +38,7 @@ import { B1_06_KENNELS, B1_06_VOLUNTEER1, B1_06_VOLUNTEER2 } from '../data/b1Ken
 import { B1_06_OFFICE } from '../data/b1EstebanOffice'
 import { B1_08_STADIUM } from '../data/b1Stadium'
 import { B1_08_STANDS } from '../data/b1Stands'
-import { B1_08_CONCOURSE, B1_08_FAN1, B1_08_FAN2 } from '../data/b1Concourse'
+import { B1_08_BOSS, B1_08_CONCOURSE, B1_08_FAN1, B1_08_FAN2 } from '../data/b1Concourse'
 import { B1_04_BOSS, B1_04_FINEPRINT, B1_04_FRIEND, B1_04_PHRASAL, B1_04_RESIDENCE, B1_04_RULES, B1_04_WELCOME } from '../data/b1Residence'
 import { B1_05_BANK, B1_05_CHEST, B1_05_FLAT, B1_05_GET_USED_TO, B1_05_JOBS, B1_05_LETTER, B1_05_NOTICE1, B1_05_NOTICE2, B1_05_NOTICE_LETTER, B1_05_USED_TO, B1_05_BOSS } from '../data/b1Flat'
 import { B1_05_BANK_SCENE } from '../data/b1Bank'
@@ -953,7 +953,7 @@ export function b1Mission7(s: GameState, stage: 'news' | 'now' | 'past' | 'infor
  *  invite: en el estadio, frente a la persona especial (la lección 'superlatives-b1' sale de nuevo)
  *  team: invitación hecha (frente a Julian y la entrenadora Ilva)
  */
-export function b1Mission8(s: GameState, stage: 'invite' | 'team' | 'predict' | 'results' | 'emphasis' | 'tags' | 'fans'): GameState {
+export function b1Mission8(s: GameState, stage: 'invite' | 'team' | 'predict' | 'results' | 'emphasis' | 'tags' | 'fans' | 'boss' | 'special' | 'close'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7)])
   const home = { ...b, screen: 'explore' as const, sceneId: B1_08_STADIUM.id, pos: { x: 4, y: 5 }, opened: b.opened.filter((o) => !o.startsWith('b1-08-')), seenLesson: b.seenLesson.filter((t) => t !== 'superlatives-b1') }
   if (stage === 'invite') return home
@@ -971,5 +971,17 @@ export function b1Mission8(s: GameState, stage: 'invite' | 'team' | 'predict' | 
   const fans = [B1_08_FAN1, B1_08_FAN2]
   const tags = { ...emphasis, sceneId: B1_08_CONCOURSE.id, pos: { x: 3, y: 3 }, opened: add(emphasis.opened, ['b1-08-emphasis']), defeated: emphasis.defeated.filter((d) => !fans.includes(d)), seenLesson: add(emphasis.seenLesson, ['emphasis-b1']).filter((t) => t !== 'question-tags') as GameState['seenLesson'] }
   if (stage === 'tags') return tags
-  return { ...tags, pos: { x: 5, y: 2 }, opened: add(tags.opened, ['b1-08-tags']), seenLesson: add(tags.seenLesson, ['question-tags']) as GameState['seenLesson'] }
+  const fanStage = { ...tags, pos: { x: 5, y: 2 }, opened: add(tags.opened, ['b1-08-tags']), seenLesson: add(tags.seenLesson, ['question-tags']) as GameState['seenLesson'] }
+  if (stage === 'fans') return fanStage
+  // Bloque D. boss: hinchas vencidos (frente a The Champion) · special: jefe vencido (frente a la persona especial; la charla sale) · close: charla hecha (frente a la puerta a las gradas)
+  const boss = {
+    ...fanStage,
+    pos: { x: 5, y: 2 },
+    defeated: add(fanStage.defeated.filter((d) => d !== B1_08_BOSS), fans),
+    opened: fanStage.opened.filter((o) => o !== 'b1-08-friend' && o !== 'b1-08-close' && o !== 'b1-08-fragments'),
+  }
+  if (stage === 'boss') return boss
+  const special = { ...boss, pos: { x: 3, y: 3 }, defeated: add(boss.defeated, [B1_08_BOSS]) }
+  if (stage === 'special') return special
+  return { ...special, pos: { x: 1, y: 3 }, opened: add(special.opened, ['b1-08-friend']) }
 }
