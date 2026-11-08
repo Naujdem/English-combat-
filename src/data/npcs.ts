@@ -770,25 +770,12 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   'b1-03-notebook': {
     name: 'Cuaderno de L',
     look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
-    doneLine: { text: '(Tomorrow, the messages begin.)', es: '(Mañana empiezan los mensajes.)' },
+    doneLine: { text: '(The messages keep coming. Something is wrong with them.)', es: '(Los mensajes siguen llegando. Algo anda mal con ellos.)' },
   },
-  // B1-03 · bloque B: el teléfono del apartamento (Text Only) y el cuaderno de la página 2 (aparece al terminar Text Only)
+  // B1-03 · bloque B: el teléfono del apartamento (Text Only y, al vencer a The Static, el cierre). La página 2 sale del cuaderno del escritorio
   'b1-03-phone': {
     name: 'My phone',
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
-    doneLine: { text: 'Three conversations, three different voices. And I never said a word.', es: 'Tres conversaciones, tres voces distintas. Y nunca dije una palabra.' },
-  },
-  'b1-03-notebook2': {
-    name: 'Cuaderno de L',
-    look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
-    after: 'b1-03-texts',
-    doneLine: { text: '(The messages keep coming. Something is wrong with them.)', es: '(Los mensajes siguen llegando. Algo anda mal con ellos.)' },
-  },
-  // B1-03 · bloque C: el teléfono del cierre (aparece al vencer a The Static; after admite un enemigo vencido)
-  'b1-03-close': {
-    name: 'My phone',
-    look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
-    after: 'b1-03-static',
     doneLine: { text: '(Three dots appear on the screen. Then they disappear.)', es: '(Aparecen tres puntos en la pantalla. Luego desaparecen.)' },
   },
   // ── B1-05 · Nothing Left (recuerdo 5, data/b1Flat.ts): el director (cara borrosa, traje gris), el cuaderno de la mesa y el periódico con el computador ──
