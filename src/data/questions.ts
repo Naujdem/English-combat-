@@ -1128,6 +1128,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Una vez, con fecha: pasado simple → Yesterday I taught a class. No uses used to con una fecha exacta ni con un número exacto de veces.',
     ],
   },
+  'get-used-to': {
+    name: 'Be / get used to',
+    level: 'B1',
+    lesson: [
+      'be used to + -ing o sustantivo = estar acostumbrado a: ya es normal para ti → I\'m used to waking up early.',
+      'get used to + -ing o sustantivo = acostumbrarse: el proceso → I\'m getting used to the silence.',
+      'Cuidado: used to + verbo base = hábito de antes (I used to wake up early).',
+    ],
+  },
   'jobs-b1': {
     name: 'Buscar trabajo',
     level: 'B1',

@@ -11,6 +11,17 @@ const UT = 'used-to' as const
 const PRACTICE = ['b1-05-practice']
 const JOBS = 'jobs-b1' as const
 const ADS = ['b1-05-ads']
+/** Bloque B: el banco (bank-phrasal) y la página 13 del cuaderno (get-used-to) */
+const BP = 'bank-phrasal' as const
+const BANK = ['b1-05-bank']
+const GUT = 'get-used-to' as const
+const PRACTICE2 = ['b1-05-practice2']
+
+/** Práctica del banco, en orden */
+export const B1_05_BANK_IDS = ['b1-05-k1', 'b1-05-k2', 'b1-05-k3', 'b1-05-k4']
+
+/** Práctica de la página 13 del cuaderno, en orden */
+export const B1_05_PRACTICE2_IDS = ['b1-05-g1', 'b1-05-g2', 'b1-05-g3', 'b1-05-g4', 'b1-05-g5', 'b1-05-g6', 'b1-05-g7', 'b1-05-g8']
 
 /** Práctica de la página 12 del cuaderno, en orden */
 export const B1_05_PRACTICE_IDS = ['b1-05-p1', 'b1-05-p2', 'b1-05-p3', 'b1-05-p4', 'b1-05-p5', 'b1-05-p6', 'b1-05-p7', 'b1-05-p8']
@@ -51,4 +62,42 @@ export const B1_05_QUESTIONS: Question[] = [
   { id: 'b1-05-a4', topic: JOBS, kind: 'listen', audio: `${AD1} ${AD2} ${AD3}`, voice: 'female', prompt: 'Which requirement is in all three ads?', options: ['Excellent spoken communication.', 'Two years of experience.', 'Weekends free.'], answer: 0, tip: 'Los tres piden: excellent spoken communication.', tags: ADS },
   { id: 'b1-05-a5', topic: JOBS, kind: 'listen', audio: AD3, voice: 'female', prompt: 'In ad 3, what does the job pay?', options: ['800 a month.', '900 a month.', '1,200 a month.'], answer: 0, tip: 'Pay: 800 a month.', tags: ADS },
   { id: 'b1-05-a6', topic: JOBS, kind: 'listen', audio: AD2, voice: 'female', prompt: "L can't speak. Which job can he NOT do?", options: ['Call centre assistant.', 'Write a CV.', 'Read the ads.'], answer: 0, tip: 'Un call centre necesita comunicación oral.', tags: ADS },
+
+  // ── Bloque B · el banco (bank-phrasal) ──
+  { id: 'b1-05-k1', topic: BP, prompt: "I don't have savings, so I need a ___ from the bank.", options: ['loan', 'saving', 'owe'], answer: 0, tip: 'loan = préstamo.', tags: BANK },
+  { id: 'b1-05-k2', topic: BP, prompt: 'I ___ the bank 500. I have to pay it back.', options: ['owe', 'lend', 'own'], answer: 0, tip: 'owe = deber (dinero).', tags: BANK },
+  { id: 'b1-05-k3', topic: BP, kind: 'fix', prompt: 'You have to pay back it by June.', options: ['You have to pay it back by June.', 'You have to pay back to it by June.', 'You have to pay it to back by June.'], answer: 0, tip: 'Con pronombre, va en medio: pay it back.', tags: BANK },
+  {
+    id: 'b1-05-k4',
+    topic: BP,
+    kind: 'listen',
+    audio: "I'm sorry. We can't give you a loan. You don't have a job, and you have debts.",
+    voice: 'male',
+    prompt: '¿Por qué no le dan el préstamo?',
+    options: ['No tiene trabajo y tiene deudas.', 'No tiene cuenta bancaria.', 'Llegó tarde.'],
+    answer: 0,
+    tip: "You don't have a job, and you have debts.",
+    tags: BANK,
+  },
+
+  // ── Bloque B · Cuaderno · página 13 (be / get used to) ──
+  { id: 'b1-05-g1', topic: GUT, kind: 'fix', prompt: "I'm used to wake up early.", options: ["I'm used to waking up early.", "I'm used to woke up early.", "I'm use to waking up early."], answer: 0, tip: 'be used to + -ing.', tags: PRACTICE2 },
+  { id: 'b1-05-g2', topic: GUT, kind: 'fix', prompt: 'She is getting used to live alone.', options: ['She is getting used to living alone.', 'She is getting used to lived alone.', 'She is getting use to living alone.'], answer: 0, tip: 'get used to + -ing.', tags: PRACTICE2 },
+  { id: 'b1-05-g3', topic: GUT, prompt: "I ___ used to the silence now. It's normal for me.", options: ['am', 'do', 'will'], answer: 0, tip: 'Ya estás acostumbrado: be used to.', tags: PRACTICE2 },
+  { id: 'b1-05-g4', topic: GUT, prompt: "It's my first week here. I'm ___ used to the noise.", options: ['getting', 'having', 'doing'], answer: 0, tip: 'Es un proceso: get used to.', tags: PRACTICE2 },
+  { id: 'b1-05-g5', topic: GUT, prompt: 'When I was a child, I ___ play in the street.', options: ['used to', 'am used to', 'am getting used to'], answer: 0, tip: 'Hábito de antes: used to + verbo base.', tags: PRACTICE2 },
+  { id: 'b1-05-g6', topic: GUT, prompt: 'Now I ___ living in a small flat.', options: ['am used to', 'used to', 'use to'], answer: 0, tip: 'Ya estás acostumbrado: be used to + -ing.', tags: PRACTICE2 },
+  { id: 'b1-05-g7', topic: GUT, kind: 'order', prompt: 'Me estoy acostumbrando al silencio.', options: ['I', 'am', 'getting', 'used', 'to', 'the', 'silence.'], answer: 0, tip: 'get used to + sustantivo.', tags: PRACTICE2 },
+  {
+    id: 'b1-05-g8',
+    topic: GUT,
+    kind: 'listen',
+    audio: "I'm not used to this city. But I'm getting used to the noise. I used to live in a small town.",
+    voice: 'male',
+    prompt: '¿Dónde vivía antes?',
+    options: ['En un pueblo pequeño.', 'En esta ciudad.', 'En un barco.'],
+    answer: 0,
+    tip: 'I used to live in a small town.',
+    tags: PRACTICE2,
+  },
 ]

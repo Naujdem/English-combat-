@@ -30,7 +30,7 @@ export type Interest = {
 export type Screen = 'title' | 'intro' | 'world' | 'explore' | 'battle' | 'epilogue'
 
 /** Un tema de gramática que el protagonista puede recuperar (fragmento de su voz) */
-export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'going-to-wh' | 'going-to-predict' | 'want-to' | 'should-must' | 'invitations' | 'requests' | 'instructions' | 'past-simple' | 'past-simple-comparatives' | 'superlatives-comparatives-race' | 'past-simple-continuous' | 'recipes-some-any' | 'present-perfect' | 'places-directions' | 'future-plans' | 'health-emergency' | 'wishes-conditional' | 'clothes-shopping' | 'food-dinner' | 'people-relationships' | 'housework' | 'holidays' | 'future' | 'cause-effect' | 'emergencies' | 'pp-yet-already' | 'travel-phones' | 'futures-b1' | 'informal-messages' | 'present-perfect-cont' | 'obligation-b1' | 'bank-phrasal' | 'used-to' | 'jobs-b1'
+export type TopicId = 'greetings' | 'to-be' | 'possessives' | 'prepositions' | 'imperatives' | 'there-is' | 'demonstratives' | 'ordering' | 'present-simple' | 'likes' | 'can' | 'present-continuous' | 'have-got' | 'do-does' | 'plurals' | 'time' | 'object-pronouns' | 'could-you' | 'was-were' | 'past-regular' | 'past-irregular' | 'past-did' | 'past-time' | 'going-to' | 'going-to-neg' | 'going-to-wh' | 'going-to-predict' | 'want-to' | 'should-must' | 'invitations' | 'requests' | 'instructions' | 'past-simple' | 'past-simple-comparatives' | 'superlatives-comparatives-race' | 'past-simple-continuous' | 'recipes-some-any' | 'present-perfect' | 'places-directions' | 'future-plans' | 'health-emergency' | 'wishes-conditional' | 'clothes-shopping' | 'food-dinner' | 'people-relationships' | 'housework' | 'holidays' | 'future' | 'cause-effect' | 'emergencies' | 'pp-yet-already' | 'travel-phones' | 'futures-b1' | 'informal-messages' | 'present-perfect-cont' | 'obligation-b1' | 'bank-phrasal' | 'used-to' | 'jobs-b1' | 'get-used-to'
 
 /**
  * fill: completar el espacio en blanco.
@@ -175,6 +175,8 @@ export type SceneDef = {
   examine?: Record<string, { text: string; sub?: string; say?: string; tone?: 'info' | 'good' | 'warn' }>
   /** Casillas cerradas por ahora (puertas de zonas que se abren después): si devuelve un texto, no se puede pasar */
   locked?: (x: number, y: number, s: GameState) => { text: string; sub?: string } | null
+  /** Puertas que llevan a otra escena ("x,y" → escena y posición de llegada). Si la casilla está en locked, no se pasa */
+  links?: Record<string, { sceneId: string; pos: { x: number; y: number } }>
 }
 
 export type Requirement = { id: string; name: string; line: StoryLine }

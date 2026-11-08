@@ -266,6 +266,9 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (question) return { title: 'Pregunta: Did + sujeto + use to + verbo base? (sin d):', parts: [V('Did'), '+', S('Sujeto'), '+', K('use to'), '+', V('verbo'), '+', R('...?')] }
       if (negative) return { title: "Negativa: didn't use to + verbo base (sin d):", parts: [S('Sujeto'), '+', K("didn't use to"), '+', V('verbo'), '+', R('...')] }
       return { title: 'Hábito de antes: used to + verbo base:', parts: [S('Sujeto'), '+', K('used to'), '+', V('verbo'), '+', R('...')] }
+    case 'get-used-to':
+      if (/\bgett?ing used to\b|\bget used to\b/i.test(sentence)) return { title: 'Acostumbrarse (el proceso): get used to + -ing o sustantivo:', parts: [S('Sujeto'), '+', V('am / is getting'), '+', K('used to'), '+', R('-ing / sustantivo')] }
+      return { title: 'Estar acostumbrado: be used to + -ing o sustantivo:', parts: [S('Sujeto'), '+', V('am / is / are'), '+', K('used to'), '+', R('-ing / sustantivo')] }
     case 'invitations':
       if (question) return { title: 'Para invitar: Would + you + like to + verbo? · How about + verbo con -ing?', parts: [K('Would you like to / How about'), '+', V('verbo / verbo-ing'), '+', R('...?')] }
       return { title: "Let's + verbo · la frecuencia (always, usually, sometimes, never) va antes del verbo:", parts: [S('Sujeto'), '+', K('always / usually / sometimes / never'), '+', V('verbo'), '+', R('...')] }

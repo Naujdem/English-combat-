@@ -766,4 +766,14 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: "No uses 'used to' con una fecha exacta ni con un número exacto de veces.", topic: 'used-to' },
     { who: 'board', text: 'Errores típicos: ✗ I use to sing → ✓ I used to sing. ✗ I used to singing → ✓ I used to sing. ✗ Did you used to sing? → ✓ Did you use to sing?', topic: 'used-to' },
   ],
+  // B1-05 · Cuaderno de L, página 13 (recuerdo 5, bloque B). 'board' = la pizarra
+  'get-used-to': [
+    { who: 'notebook', text: "Page 13. I'm not used to silence.", es: 'Página 13. No estoy acostumbrado al silencio.' },
+    { who: 'notebook', text: "I'm getting used to it.", es: 'Me estoy acostumbrando.' },
+    { who: 'board', text: 'be used to + -ing o sustantivo = estar acostumbrado a: ya es normal para ti.', topic: 'get-used-to' },
+    { who: 'board', text: "I'm used to waking up early. She's used to the noise.", topic: 'get-used-to' },
+    { who: 'board', text: "get used to + -ing o sustantivo = acostumbrarse: el proceso. I'm getting used to the silence.", topic: 'get-used-to' },
+    { who: 'board', text: "Cuidado: used to + verbo base = hábito de antes (I used to wake up early). be used to + -ing = estar acostumbrado (I'm used to waking up early).", topic: 'get-used-to' },
+    { who: 'board', text: "Errores típicos: ✗ I'm used to wake up early → ✓ I'm used to waking up early. ✗ She is getting used to live alone → ✓ She is getting used to living alone.", topic: 'get-used-to' },
+  ],
 }

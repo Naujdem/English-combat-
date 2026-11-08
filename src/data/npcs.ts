@@ -796,6 +796,18 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
     doneLine: { text: "(Every ad asks for the same thing: 'excellent spoken communication'.)", es: "(Todos los anuncios piden lo mismo: 'excelente comunicación oral'.)" },
   },
+  // B1-05 · bloque B: el banquero (data/b1Bank.ts) y las cajas del apartamento (aparecen al terminar la página 13)
+  'b1-05-banker': {
+    name: 'The banker',
+    look: { shirt: '#7d8189', hair: '#5a4a3a', skin: '#e0b48c' },
+    doneLine: { text: "I'm sorry. We can't give you a loan.", es: 'Lo siento. No podemos darle un préstamo.' },
+  },
+  'b1-05-boxes': {
+    name: 'Las cajas',
+    look: { shirt: '#b08a5a', hair: '#8a6a40', skin: '#c9a06a' },
+    after: 'b1-05-get-used-to',
+    doneLine: { text: '(The apartment is empty. Everything you used to do is in these boxes.)', es: '(El apartamento está vacío. Todo lo que solías hacer está en estas cajas.)' },
+  },
   // ── B1-04 · House Rules, bloque A (residencia de Lumen Bay, data/b1Residence.ts) ──
   'b1-04-marisol': {
     name: 'Marisol',
