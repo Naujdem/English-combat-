@@ -258,4 +258,50 @@ export const B1_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B1-06 · First Job (presente). Se abre al cerrar la misión (closeId(6)). Sin página del Diario de L
+  // ('job advert' y 'apply' ya están en la misión 5)
+  {
+    id: 'b1-mission-6',
+    title: 'Misión 6: First Job',
+    unlock: closeId(6),
+    words: [
+      { title: 'Trabajo', words: [['application', 'postulación'], ['CV', 'hoja de vida'], ['interview', 'entrevista'], ['part-time', 'medio tiempo'], ['skills', 'habilidades'], ['strengths', 'fortalezas'], ['reliable', 'confiable']] },
+      { title: 'Refugio', words: [['collar', 'collar'], ['leash', 'correa'], ['feed', 'dar de comer'], ['walk the dogs', 'pasear a los perros'], ['shelter', 'refugio'], ['adopt', 'adoptar']] },
+    ],
+    versions: [
+      {
+        id: 'b1-mission-6-mine',
+        tense: 'n',
+        tab: 'Mi diario',
+        title: 'My first job',
+        unlock: closeId(6),
+        frame: 'Lo escribes el domingo por la noche, con la camiseta nueva sobre la silla.',
+        lines: [
+          { en: 'Today I [have got]n my first job at Lumen Paws!', es: '¡Hoy conseguí mi primer trabajo en Lumen Paws!' },
+          { en: 'I [work]n with Nayi, who [loves]n dogs.', es: 'Trabajo con Nayi, que ama a los perros.' },
+          { en: 'Laica is the dog that [sleeps]n all day.', es: 'Laica es el perro que duerme todo el día.' },
+          { en: 'I [start]n on Monday.', es: 'Empiezo el lunes.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b1-mission-6-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'The interview',
+        unlock: closeId(6),
+        frame: 'Tu entrevista, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'Esteban [asked]p me about my experience.', es: 'Esteban me preguntó sobre mi experiencia.' },
+          { en: 'I [volunteered]p at a shelter last year, and I [have learned]n a lot.', es: 'Fui voluntario en un refugio el año pasado y he aprendido mucho.' },
+          { en: 'Next week I [will feed]f the dogs.', es: 'La próxima semana les daré de comer a los perros.' },
+        ],
+        questions: [
+          { q: 'Who asked about the experience?', options: ['Esteban.', 'Nayi.', 'Leo.'], answer: 0, tip: 'El diario dice: "Esteban asked me about my experience".' },
+          { q: 'Where did the writer volunteer?', options: ['At a shelter.', 'At a bank.', 'At a school.'], answer: 0, tip: 'El diario dice: "I volunteered at a shelter last year".' },
+          { q: 'What will the writer do next week?', options: ['Feed the dogs.', 'Fill in a form.', 'Sing in the car.'], answer: 0, tip: 'El diario dice: "Next week I will feed the dogs".' },
+        ],
+      },
+    ],
+  },
 ]

@@ -5018,6 +5018,34 @@ NPC_TASKS['b1-06-interview'] = {
   reward: {
     text: "(A grey light comes out of Esteban's pen.)",
     es: '(Una luz gris sale de la pluma de Esteban.)',
-    sub: 'Ganaste 5 monedas. Próximamente: The Interviewer (bloque 6-D).',
+    sub: 'Ganaste 5 monedas. La pluma de Esteban brilla con una luz gris...',
+  },
+}
+
+// ── B1-06 · First Job, bloque D (la oficina, data/b1EstebanOffice.ts): Esteban cierra la misión (closeId(6) = 'b1-06-close') ──
+// Al guardarlo, dos fragmentos se juntan (FragmentJoin en Explore.tsx, memoryNumber 7): se abre el recuerdo 7
+NPC_TASKS['b1-06-close'] = {
+  npc: 'b1-06-esteban-close',
+  done: 'b1-06-close',
+  recover: ['work-english', 'relative-clauses', 'experience-b1'],
+  coins: 20,
+  requires: {
+    id: 'b1-06-friend',
+    text: 'Esteban: "Welcome to Lumen Paws. You start on Monday."',
+    es: 'Bienvenido a Lumen Paws. Empieza el lunes.',
+    sub: 'Antes, vence a The Interviewer y habla con Leo.',
+  },
+  steps: [
+    { text: 'You did very well today. The job is yours, if you want it.', es: 'Hoy lo hizo muy bien. El trabajo es suyo, si lo quiere.' },
+    { text: 'Welcome to Lumen Paws. You start on Monday.', es: 'Bienvenido a Lumen Paws. Empieza el lunes.' },
+    { text: "(Esteban's pen drops two fragments. They float toward each other.)", es: '(La pluma de Esteban suelta dos fragmentos. Flotan el uno hacia el otro.)' },
+    { text: '(Lupe barks at the light.)', es: '(Lupe ladra a la luz.)' },
+    { text: '(The clock in your pocket is shining.)', es: '(El reloj en tu bolsillo brilla.)' },
+  ],
+  reward: {
+    text: 'Mission 6: First Job',
+    es: 'Misión 6: Primer trabajo',
+    sub: 'Ganaste la camiseta del refugio. Dos fragmentos se juntaron: se abrió el recuerdo 7.',
+    say: 'My first job.',
   },
 }

@@ -18,6 +18,9 @@ const PRACTICE2 = ['b1-06-practice2']
 const EX = 'experience-b1' as const
 const PRACTICE3 = ['b1-06-practice3']
 const VOL = ['b1-06-volunteer']
+/** Bloque D: The Interviewer, fase 1 (relativos) y fase 2 (experiencia) */
+const BOSS_R = ['b1-06-boss', 'b1-06-boss-r']
+const BOSS_E = ['b1-06-boss', 'b1-06-boss-e']
 
 /** Práctica de la lección de experiencia, en orden */
 export const B1_06_PRACTICE3_IDS = ['b1-06-x1', 'b1-06-x2', 'b1-06-x3', 'b1-06-x4', 'b1-06-x5', 'b1-06-x6', 'b1-06-x7', 'b1-06-x8']
@@ -118,5 +121,43 @@ export const B1_06_QUESTIONS: Question[] = [
     answer: 0,
     tip: "I've volunteered here for two years.",
     tags: VOL,
+  },
+  // ── Bloque D: The Interviewer, fase 1 (relativos) ──
+  { id: 'b1-06-bo1', topic: RC, kind: 'fix', prompt: 'The woman which hires you is late.', options: ['The woman who hires you is late.', 'The woman whose hires you is late.', 'The woman where hires you is late.'], answer: 0, tip: 'Personas: who.', tags: BOSS_R },
+  { id: 'b1-06-bo2', topic: RC, kind: 'fix', prompt: "The man who's tie is grey is angry.", options: ['The man whose tie is grey is angry.', 'The man who tie is grey is angry.', "The man which's tie is grey is angry."], answer: 0, tip: 'Posesión: whose.', tags: BOSS_R },
+  { id: 'b1-06-bo3', topic: RC, prompt: 'This is the office ___ I had my interview.', options: ['where', 'who', 'whose'], answer: 0, tip: 'Lugares: where.', tags: BOSS_R },
+  { id: 'b1-06-bo4', topic: RC, prompt: 'The shelter has a dog ___ eyes are blue.', options: ['whose', 'who', 'where'], answer: 0, tip: 'Posesión: whose.', tags: BOSS_R },
+  { id: 'b1-06-bo5', topic: RC, kind: 'fix', prompt: 'The dog that I fed it is Lupe.', options: ['The dog that I fed is Lupe.', 'The dog that I fed him is Lupe.', 'The dog that fed I is Lupe.'], answer: 0, tip: 'El pronombre ya es el objeto: no repitas it.', tags: BOSS_R },
+  { id: 'b1-06-bo6', topic: RC, kind: 'order', prompt: 'La chica que trabaja aquí es Nayi.', options: ['The', 'girl', 'who', 'works', 'here', 'is', 'Nayi.'], answer: 0, tip: 'the girl who + verbo.', tags: BOSS_R },
+  {
+    id: 'b1-06-bo7',
+    topic: RC,
+    kind: 'listen',
+    audio: 'The woman who works at the desk is Ms. Haddad. The man whose office is at the back is Esteban. The dog that sleeps all day is Laica.',
+    voice: 'male',
+    prompt: '¿Quién es Esteban?',
+    options: ['El hombre cuya oficina está al fondo.', 'La mujer que trabaja en el escritorio.', 'El perro que duerme todo el día.'],
+    answer: 0,
+    tip: 'The man whose office is at the back is Esteban.',
+    tags: BOSS_R,
+  },
+  // ── Bloque D: The Interviewer, fase 2 (experiencia) ──
+  { id: 'b1-06-be1', topic: EX, kind: 'fix', prompt: 'He worked here since March.', options: ['He has worked here since March.', 'He worked here for March.', 'He has work here since March.'], answer: 0, tip: 'Desde cuándo y sigue: present perfect + since.', tags: BOSS_E },
+  { id: 'b1-06-be2', topic: EX, kind: 'fix', prompt: 'I have visited the shelter in 2022.', options: ['I visited the shelter in 2022.', 'I have visit the shelter in 2022.', 'I visiting the shelter in 2022.'], answer: 0, tip: 'In 2022: past simple.', tags: BOSS_E },
+  { id: 'b1-06-be3', topic: EX, prompt: 'I ___ a dog when I was ten.', options: ['had', 'have had', 'has'], answer: 0, tip: 'When I was ten: past simple.', tags: BOSS_E },
+  { id: 'b1-06-be4', topic: EX, prompt: 'She ___ with dogs for five years now.', options: ['has worked', 'worked', 'works'], answer: 0, tip: 'For + hasta hoy: present perfect.', tags: BOSS_E },
+  { id: 'b1-06-be5', topic: EX, prompt: 'Have you ___ a dog before?', options: ['walked', 'walk', 'walking'], answer: 0, tip: 'Have you + participio.', tags: BOSS_E },
+  { id: 'b1-06-be6', topic: EX, kind: 'order', prompt: 'Trabajé aquí el año pasado.', options: ['I', 'worked', 'here', 'last', 'year.'], answer: 0, tip: 'Last year: past simple.', tags: BOSS_E },
+  {
+    id: 'b1-06-be7',
+    topic: EX,
+    kind: 'listen',
+    audio: "I've worked at the shelter since 2021. Last summer I trained two puppies. I've never worked with cats.",
+    voice: 'female',
+    prompt: '¿Qué no ha hecho?',
+    options: ['Trabajar con gatos.', 'Entrenar cachorros.', 'Trabajar en el refugio.'],
+    answer: 0,
+    tip: "I've never worked with cats.",
+    tags: BOSS_E,
   },
 ]
