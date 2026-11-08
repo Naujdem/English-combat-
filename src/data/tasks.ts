@@ -24,8 +24,8 @@ import type { FinePrintContent } from '../components/FinePrint'
 import { B1_04_FINE_PRINT } from './b1FinePrint'
 import { B1_04_BANK_IDS, B1_04_PRACTICE1_IDS, B1_04_PRACTICE2_IDS } from './questions-b1-04'
 import { B1_REPAIR } from './b1Repair'
-import { B1_05_JOB_ADS, B1_05_LETTER_SCRIPT } from './b1Flat'
-import { B1_05_PRACTICE_IDS } from './questions-b1-05'
+import { B1_05_JOB_ADS, B1_05_LETTER_SCRIPT, B1_05_PACKING } from './b1Flat'
+import { B1_05_BANK_IDS, B1_05_PRACTICE2_IDS, B1_05_PRACTICE_IDS } from './questions-b1-05'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -4755,5 +4755,57 @@ NPC_TASKS['b1-05-jobs'] = {
     text: "(Every ad asks for the same thing: 'excellent spoken communication'.)",
     es: "(Todos los anuncios piden lo mismo: 'excelente comunicación oral'.)",
     sub: 'Anuncios leídos. La puerta a la calle: próximamente, el banco (bloque 5-B).',
+  },
+}
+
+// ── B1-05 · Nothing Left, bloque B (banco en data/b1Bank.ts; cuaderno y cajas en data/b1Flat.ts). Sin monedas. NO guarda closeId(5) ──
+// El banquero: charla (L no habla) + práctica b1-05-k1…k4. Si todas están bien, escudo. Al terminar se abre la página 13
+NPC_TASKS['b1-05-bank'] = {
+  npc: 'b1-05-banker',
+  done: 'b1-05-bank',
+  activity: 'practice',
+  practice: 'bank-phrasal',
+  practiceIds: B1_05_BANK_IDS,
+  practiceShield: true,
+  intro: [
+    { text: 'Good morning. How can I help you?', es: 'Buenos días. ¿En qué puedo ayudarle?' },
+    { text: "(You show him the papers. You can't say a word.)", es: '(Le muestras los papeles. No puedes decir ni una palabra.)' },
+    { text: "I'm sorry. We can't give you a loan. You don't have a job, and you have debts.", es: 'Lo siento. No podemos darle un préstamo. No tiene trabajo y tiene deudas.' },
+    { text: '(You leave the bank. Nobody sees you cry.)', es: '(Sales del banco. Nadie te ve llorar.)' },
+  ],
+  steps: [],
+  reward: {
+    text: '(You leave the bank. Nobody sees you cry.)',
+    es: '(Sales del banco. Nadie te ve llorar.)',
+    sub: 'Práctica del banco hecha. (Si acertaste todas, ganaste un escudo). Vuelve al apartamento: el cuaderno tiene una página nueva.',
+  },
+}
+
+// El mismo cuaderno de la mesa: página 13 (lección 'get-used-to') + práctica. Si todas están bien, escudo. Al terminar aparecen las cajas
+NPC_TASKS['b1-05-get-used-to'] = {
+  npc: 'b1-05-notebook',
+  done: 'b1-05-get-used-to',
+  lesson: 'get-used-to',
+  notebookPage: 13,
+  activity: 'practice',
+  practice: 'get-used-to',
+  practiceIds: B1_05_PRACTICE2_IDS,
+  practiceShield: true,
+  requires: { id: 'b1-05-bank', text: 'Page 12. I used to have a different life.', es: 'Página 12. Yo solía tener otra vida.', sub: 'Primero ve al banco.' },
+  steps: [],
+  reward: { text: "I'm getting used to it.", es: 'Me estoy acostumbrando.', sub: 'Página 13 del cuaderno terminada. Aparecieron las cajas. (Si acertaste todas, ganaste un escudo).', say: "I'm getting used to it." },
+}
+
+// Las cajas: Memory Chest (empacar el apartamento). Al terminar, la puerta muestra "Próximamente: el aviso de desalojo (bloque 5-C)"
+NPC_TASKS['b1-05-chest'] = {
+  npc: 'b1-05-boxes',
+  done: 'b1-05-chest',
+  activity: 'memory',
+  memory: B1_05_PACKING,
+  steps: [],
+  reward: {
+    text: '(The apartment is empty. Everything you used to do is in these boxes.)',
+    es: '(El apartamento está vacío. Todo lo que solías hacer está en estas cajas.)',
+    sub: 'Memory Chest terminado. Próximamente: el aviso de desalojo (bloque 5-C).',
   },
 }

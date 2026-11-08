@@ -1,6 +1,7 @@
 import type { GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
 import type { FinePrintContent } from '../components/FinePrint'
+import type { MemoryPair } from '../components/MemoryChest'
 import { B1_05_AD_IDS, B1_05_QUESTIONS } from './questions-b1-05'
 
 /**
@@ -22,6 +23,11 @@ export const B1_05_USED_TO = 'b1-05-used-to'
 /** El periódico y el computador: anuncios de empleo */
 export const B1_05_PAPERS = 'b1-05-papers'
 export const B1_05_JOBS = 'b1-05-jobs'
+/** Bloque B: el banco (data/b1Bank.ts), la página 13 del mismo cuaderno y las cajas (Memory Chest) */
+export const B1_05_BANK = 'b1-05-bank'
+export const B1_05_GET_USED_TO = 'b1-05-get-used-to'
+export const B1_05_BOXES = 'b1-05-boxes'
+export const B1_05_CHEST = 'b1-05-chest'
 
 /**
  * Un solo cuarto (leyenda de data/b1Words.ts: 5 cama · K mesa · W ventana · d puerta).
@@ -55,6 +61,8 @@ export const B1_05_FLAT: SceneDef = {
     { type: 'npc', id: B1_05_DIRECTOR, x: 10, y: 2 },
     { type: 'npc', id: B1_05_NOTEBOOK, x: 5, y: 3 },
     { type: 'npc', id: B1_05_PAPERS, x: 2, y: 5 },
+    // Bloque B: las cajas aparecen al terminar la página 13 (npcs.ts, after)
+    { type: 'npc', id: B1_05_BOXES, x: 8, y: 5 },
   ],
   labels: [{ text: 'Apartamento', x: 6, y: 5 }],
   zoneAt: () => zoneAt(),
@@ -63,18 +71,24 @@ export const B1_05_FLAT: SceneDef = {
     '1,2': { text: 'My bed.', sub: 'Mi cama.', say: 'My bed.' },
     '6,1': { text: 'The window.', sub: 'La ventana.', say: 'The window.' },
   },
-  // La puerta a la calle: cerrada hasta terminar los anuncios; después, el banco llega en el bloque 5-B
+  // La puerta a la calle: cerrada hasta terminar los anuncios; después lleva al banco (b1-05-bank).
+  // Al terminar el Memory Chest: el aviso de desalojo llega en el bloque 5-C
   locked: (x, y, s) => {
     if (x !== 11 || y !== 3) return null
     if (!s.opened.includes(B1_05_JOBS)) return NOT_YET('Primero lee los anuncios de empleo.')
-    return { text: 'Próximamente: el banco (bloque 5-B)' }
+    if (s.opened.includes(B1_05_CHEST)) return { text: 'Próximamente: el aviso de desalojo (bloque 5-C)' }
+    return null
   },
+  links: { '11,3': { sceneId: 'b1-05-bank', pos: { x: 1, y: 3 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'Habla con el director', done: s.opened.includes(B1_05_LETTER) },
     { label: 'Cuaderno: página 12 (used to)', done: s.opened.includes(B1_05_USED_TO) },
     { label: 'Anuncios de empleo', done: s.opened.includes(B1_05_JOBS) },
-    ...(s.opened.includes(B1_05_JOBS) ? [{ label: 'Próximamente: el banco (bloque 5-B)', done: false }] : []),
+    { label: 'El banco', done: s.opened.includes(B1_05_BANK) },
+    { label: 'Cuaderno: página 13 (be / get used to)', done: s.opened.includes(B1_05_GET_USED_TO) },
+    { label: 'Las cajas (Memory Chest)', done: s.opened.includes(B1_05_CHEST) },
+    ...(s.opened.includes(B1_05_CHEST) ? [{ label: 'Próximamente: el aviso de desalojo (bloque 5-C)', done: false }] : []),
   ],
   // Tarjeta de apertura del recuerdo
   intro: {
@@ -125,4 +139,17 @@ export const B1_05_JOB_ADS: FinePrintContent = {
   ],
   questions: B1_05_AD_IDS.map((id) => B1_05_QUESTIONS.find((q) => q.id === id)!).map((q) => ({ prompt: q.prompt, options: q.options, answer: q.answer, tip: q.tip })),
   finish: { en: "(Every ad asks for the same thing: 'excellent spoken communication'.)", es: "(Todos los anuncios piden lo mismo: 'excelente comunicación oral'.)" },
+}
+
+/** Las cajas (Memory Chest): cada objeto con lo que L solía hacer con él */
+export const B1_05_PACKING: { title: string; intro: { en: string; es: string }; pairs: MemoryPair[] } = {
+  title: 'Packing',
+  intro: { en: 'Pack your things. Match each object with what you used to do with it.', es: 'Empaca tus cosas. Une cada objeto con lo que solías hacer con él.' },
+  pairs: [
+    { a: 'the guitar', b: 'I used to play it every night.', example: { en: 'I used to play it every night.', es: 'La guitarra: solía tocarla todas las noches.' } },
+    { a: 'the markers', b: 'I used to write on the board with them.', example: { en: 'I used to write on the board with them.', es: 'Los marcadores: solía escribir en la pizarra con ellos.' } },
+    { a: 'the mug', b: 'I used to drink tea from it.', example: { en: 'I used to drink tea from it.', es: 'La taza: solía tomar té en ella.' } },
+    { a: 'the books', b: 'I used to read them in bed.', example: { en: 'I used to read them in bed.', es: 'Los libros: solía leerlos en la cama.' } },
+    { a: 'the microphone', b: 'I used to sing into it.', example: { en: 'I used to sing into it.', es: 'El micrófono: solía cantar con él.' } },
+  ],
 }
