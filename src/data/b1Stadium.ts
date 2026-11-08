@@ -1,4 +1,6 @@
 import type { GameState, SceneDef, Zone } from '../game/types'
+import { closeId } from './b1World'
+import { B1_08_DONE_TEXT } from './b1Concourse'
 
 /**
  * B1-08 · Game Day (presente). Bloque A: la entrada del estadio de Lumen Bay un día de partido (escena b1-08-stadium).
@@ -76,6 +78,6 @@ export const B1_08_STADIUM: SceneDef = {
   ],
   intro: {
     first: 'Game day! — ¡Día de partido!',
-    later: 'Game day! — ¡Día de partido!',
+    later: (s) => (s.opened.includes(closeId(8)) ? B1_08_DONE_TEXT : 'Game day! — ¡Día de partido!'),
   },
 }

@@ -1,4 +1,6 @@
 import type { GameState, SceneDef, Zone } from '../game/types'
+import { closeId } from './b1World'
+import { B1_08_DONE_TEXT } from './b1Concourse'
 
 /**
  * B1-08 · Game Day (presente). Bloque B: las gradas del estadio (escena b1-08-stands).
@@ -76,6 +78,6 @@ export const B1_08_STANDS: SceneDef = {
   ],
   intro: {
     first: 'The final begins! — ¡Comienza la final!',
-    later: 'The final begins! — ¡Comienza la final!',
+    later: (s) => (s.opened.includes(closeId(8)) ? B1_08_DONE_TEXT : 'The final begins! — ¡Comienza la final!'),
   },
 }

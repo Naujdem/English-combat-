@@ -353,4 +353,49 @@ export const B1_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B1-08 · Game Day (presente). Se abre al cerrar la misión (closeId(8)). Sin página del Diario de L
+  {
+    id: 'b1-mission-8',
+    title: 'Misión 8: Game Day',
+    unlock: closeId(8),
+    words: [
+      { title: 'Fútbol y resultados', words: [['match', 'partido'], ['final', 'final'], ['score', 'marcador'], ['draw', 'empate'], ['beat', 'ganarle a'], ['lose', 'perder'], ['goal', 'gol'], ['fans', 'hinchas'], ['referee', 'árbitro'], ['penalty', 'penal']] },
+      { title: 'Ambiente', words: [['atmosphere', 'ambiente'], ['crowd', 'multitud'], ['cheer', 'animar'], ['thrilling', 'emocionante'], ['disappointing', 'decepcionante']] },
+    ],
+    versions: [
+      {
+        id: 'b1-mission-8-mine',
+        tense: 'n',
+        tab: 'Mi diario',
+        title: 'Game day',
+        unlock: closeId(8),
+        frame: 'Lo escribes esa noche, con la bufanda todavía puesta.',
+        lines: [
+          { en: 'Today I [am]n at the final of the tournament!', es: '¡Hoy estoy en la final del torneo!' },
+          { en: 'Julian [is]n the fastest player on the field.', es: 'Julian es el jugador más rápido de la cancha.' },
+          { en: "What a goal! It [is]n such a great match, isn't it?", es: '¡Qué gol! Es un partido genial, ¿no?' },
+          { en: 'Lumen Bay [has won]n 2–1!', es: '¡Lumen Bay ganó 2 a 1!' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b1-mission-8-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'The final',
+        unlock: closeId(8),
+        frame: 'La final entera, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'Lumen Bay [was]p one goal down at half time.', es: 'Lumen Bay iba perdiendo por un gol en el medio tiempo.' },
+          { en: 'In the last minute Julian [scored]p, and Lumen Bay [beat]p the Red Lions 2–1.', es: 'En el último minuto Julian anotó y Lumen Bay le ganó 2 a 1 a los Leones Rojos.' },
+          { en: 'Next year we [will come]f again!', es: '¡El próximo año vendremos otra vez!' },
+        ],
+        questions: [
+          { q: 'What was the score at half time?', options: ['Lumen Bay was two goals up.', 'Lumen Bay was one goal down.', 'It was a draw.'], answer: 1, tip: 'El diario dice: "Lumen Bay was one goal down at half time".' },
+          { q: 'Who scored in the last minute?', options: ['The Champion.', 'Ilva.', 'Julian.'], answer: 2, tip: 'El diario dice: "In the last minute Julian scored".' },
+          { q: 'What will they do next year?', options: ['Come again.', 'Stay at home.', 'Play in the final.'], answer: 0, tip: 'El diario dice: "Next year we will come again".' },
+        ],
+      },
+    ],
+  },
 ]

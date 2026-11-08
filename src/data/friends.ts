@@ -800,6 +800,20 @@ export const B1_06_LEO_CHAT: CasualChat = {
   ],
 }
 
+/** B1-08 · Game Day, bloque D: la charla de amistad con la persona especial en el pasillo (una vez; se guarda B1_08_FRIEND en Explore.tsx) */
+export const B1_08_SPECIAL_CHAT: CasualChat = {
+  requires: null,
+  level: 'B1',
+  text: 'In my country, football is the most popular sport. What is the most popular sport in your country?',
+  es: 'En mi país, el fútbol es el deporte más popular. ¿Cuál es el deporte más popular en tu país?',
+  options: [
+    { text: "Football, too! It's the most popular sport in Colombia. Everybody watches the national team.", textEs: '¡El fútbol también! Es el deporte más popular de Colombia. Todos ven a la selección.', reply: "Really? We're the same! The fans are so passionate, aren't they?", es: '¿En serio? ¡Somos iguales! Los hinchas son muy apasionados, ¿no?', effect: 2 },
+    { text: 'Cycling is very popular too. We have some of the best cyclists in the world.', textEs: 'El ciclismo también es muy popular. Tenemos a algunos de los mejores ciclistas del mundo.', reply: "Cycling? What an amazing sport! I'd love to see a race.", es: '¿Ciclismo? ¡Qué deporte tan increíble! Me encantaría ver una carrera.', effect: 2 },
+    { text: "I don't really like sports. I prefer music.", textEs: 'No me gustan mucho los deportes. Prefiero la música.', reply: "That's fine! Not everybody likes sports.", es: '¡Está bien! No a todos les gustan los deportes.', effect: 1 },
+    { text: 'Sport the popular is country most my.', textEs: '(No tiene sentido.)', reply: "Sorry, I didn't understand.", es: 'Perdón, no te entendí.', effect: -1 },
+  ],
+}
+
 export const B1_02_PLANE_CHATS: CasualChat[] = [
   {
     requires: null,
