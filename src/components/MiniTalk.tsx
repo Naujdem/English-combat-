@@ -10,7 +10,13 @@ import { withStatic } from './StaticText'
 import { staticPlain } from '../game/staticName'
 
 /** Una charla corta con un personaje: frases y elecciones con una sola respuesta correcta */
-export type MiniStep = { text: string; es: string; choice?: { ask: string; options: string[]; answer: number; tip: string; /** Reacción propia de cada opción equivocada (si no, se usa tip) */ tips?: string[] } }
+export type MiniStep = {
+  text: string
+  es: string
+  /** Lo dice otro personaje dentro de la misma charla (A2-07/08: JoJo en la charla de Leo): su nombre y su retrato */
+  speaker?: { name: string; look: SpriteLook }
+  choice?: { ask: string; options: string[]; answer: number; tip: string; /** Reacción propia de cada opción equivocada (si no, se usa tip) */ tips?: string[] }
+}
 
 /**
  * pressure (opcional, Dialogue Under Pressure): segundos para cada elección. Si se acaba el tiempo
@@ -163,9 +169,9 @@ export function MiniTalk({
   return (
     <Panel>
       <div className="flex items-center gap-3">
-        {icon ?? <SpriteIcon look={look} size={48} />}
-        <p className="flex-1 font-display text-lg text-gold">{name}</p>
-        <SpeakButton text={s.text} size="sm" auto voice={voiceOf(look)} />
+        {s.speaker ? <SpriteIcon look={s.speaker.look} size={48} /> : icon ?? <SpriteIcon look={look} size={48} />}
+        <p className="flex-1 font-display text-lg text-gold">{s.speaker?.name ?? name}</p>
+        <SpeakButton text={s.text} size="sm" auto voice={voiceOf(s.speaker?.look ?? look)} />
       </div>
       <p key={i} className="anim-fade-in mt-2 text-[17px] leading-relaxed">
         <Tappable text={s.text} />

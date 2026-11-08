@@ -1,7 +1,8 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import { mixed } from '../game/mix'
 import type { GameState, LessonStep } from '../game/types'
-import { SpriteBody } from './Sprite'
+import { SpriteBody, type SpriteLook } from './Sprite'
+import type { Voice } from '../game/speech'
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
 import { heroLook } from '../game/helpers'
 import { FRIENDS, interestFriend } from '../data/friends'
@@ -88,6 +89,7 @@ export function Lesson({
   onDone,
   phone,
   notebook,
+  defaultGuide,
 }: {
   state: GameState
   steps: LessonStep[]
@@ -97,6 +99,8 @@ export function Lesson({
   phone?: { mine: string }
   /** B1 (recuerdos 3, 5 y 7): la lección es una página del Cuaderno de L con ese número (components/LNotebook.tsx) */
   notebook?: number
+  /** B1: el personaje de la tarea, si la lección no trae pasos de un guía propio (Leo solo si no hay nadie más) */
+  defaultGuide?: { name: string; look: SpriteLook; voice: Voice }
 }) {
   // La muletilla de Leo: empieza cada lección con "Hi, hi!"
   const steps = useMemo(() => {
@@ -118,7 +122,11 @@ export function Lesson({
     ? { name: 'Nayi', look: B1_06_NAYI_LOOK, voice: 'female' as const }
     : steps.some((x) => x.who === 'haddad')
     ? { name: 'Ms. Haddad', look: B1_06_HADDAD_LOOK, voice: 'female' as const }
-    : steps.some((x) => x.who === 'maya') ? { name: 'Maya', look: FRIENDS.maya.look, voice: 'female' as const } : { name: 'Leo', look: FRIENDS.leo.look, voice: 'male' as const }
+    : steps.some((x) => x.who === 'maya')
+    ? { name: 'Maya', look: FRIENDS.maya.look, voice: 'female' as const }
+    : steps.some((x) => x.who === 'leo') || !defaultGuide
+    ? { name: 'Leo', look: FRIENDS.leo.look, voice: 'male' as const }
+    : defaultGuide
   const talks = s.who === 'leo' || s.who === 'maya' || s.who === 'haddad' || s.who === 'nayi' || s.who === 'special'
   const last = i === steps.length - 1
   const waiting = !!s.choice && !solved
@@ -144,7 +152,7 @@ export function Lesson({
 
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 px-4 py-6">
-      {title && <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{title}</p>}
+      {(title ?? !notebook) && <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{title ?? `${guide.name} te ayuda`}</p>}
       {notebook ? null : phone ? (
         <PhoneStage board={board} mine={phone.mine} />
       ) : (

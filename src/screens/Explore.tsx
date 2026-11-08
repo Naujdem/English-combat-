@@ -25,7 +25,7 @@ import { LOST_INTRO, LOST_ITEMS } from '../data/lostFound'
 import { NPCS } from '../data/npcs'
 import { ALL_DIARY as DIARY, fillNames, unlockedPages } from '../data/diary'
 import { Diary } from '../components/Diary'
-import { interestFriend } from '../data/friends'
+import { FRIENDS, interestFriend } from '../data/friends'
 import { OneMoreRound } from '../components/OneMoreRound'
 import { Practice } from '../components/Practice'
 import { Registration } from '../components/Registration'
@@ -167,6 +167,26 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
     return { ...n, name: f.name, look: f.look }
   }
   const scene = SCENES[state.sceneId]
+  /**
+   * Quién guía la lección y la práctica de una tarea. En A1 y A2 es Leo (salvo Maya y Ricardo, B1-04).
+   * En B1 es el personaje con el que hablas (cara borrosa en los recuerdos) o el Cuaderno de L; Leo solo si la tarea es suya.
+   */
+  const taskGuide = (taskId: string) => {
+    const t = NPC_TASKS[taskId]
+    const id = t?.npc ?? taskId
+    if (!t || (!taskId.startsWith('b1-') && !PRACTICE_GUIDES.includes(id))) return undefined
+    if (t.notebookPage)
+      return {
+        name: 'Cuaderno de L',
+        look: FRIENDS.leo.look,
+        voice: 'neutral' as const,
+        quiet: true,
+        icon: <span className="flex h-14 w-14 items-center justify-center rounded-md border-2 border-[#8a6a40] bg-[#f4efe4] text-2xl text-[#3a2f25]" aria-hidden="true">✎</span>,
+      }
+    const n = npcOf(id)
+    if (!n || /(^|-)leo(-|$)/.test(id) || n.name === 'Leo') return undefined
+    return { name: n.name, look: n.look, voice: voiceOf(n.look), icon: isMemoryScene(scene.id) ? <BlurFaceIcon look={n.look} size={56} /> : undefined }
+  }
   const [msg, setMsg] = useState<Msg | null>(null)
   const [talk, setTalk] = useState<Talk | null>(null)
   const [friendsOpen, setFriendsOpen] = useState(false)
@@ -1239,7 +1259,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           {(() => {
             const t = NPC_TASKS[outro]
             const who = npcOf(t.outro!.npc ?? t.npc ?? outro)
-            const steps = t.outro!.steps.map((st) => ({ text: fill(st.text), es: fill(st.es) }))
+            const steps = t.outro!.steps.map((st) => ({ speaker: st.speaker, text: fill(st.text), es: fill(st.es) }))
             const close = () => {
               setOutro(null)
               showReward(t)
@@ -1253,14 +1273,14 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         <Overlay>
           {(() => {
             const who = npcOf(NPC_TASKS[task].npc ?? task)
-            const steps = NPC_TASKS[task].intro!.map((st) => ({ text: fill(st.text), es: fill(st.es), choice: st.choice && { ...st.choice, ask: fill(st.choice.ask), options: st.choice.options.map(fill), tip: fill(st.choice.tip) } }))
+            const steps = NPC_TASKS[task].intro!.map((st) => ({ speaker: st.speaker, text: fill(st.text), es: fill(st.es), choice: st.choice && { ...st.choice, ask: fill(st.choice.ask), options: st.choice.options.map(fill), tip: fill(st.choice.tip) } }))
             return <MiniTalk name={who.name} look={who.look} steps={steps} icon={NPC_TASKS[task].npc === B1_04_TOOLBOX ? <ToolboxPortrait /> : undefined} onClose={(done) => (done ? setIntroSeen(task) : setTask(null))} />
           })()}
         </Overlay>
       )}
       {task && NPC_TASKS[task]?.activity === 'practice' && NPC_TASKS[task].practice && (!NPC_TASKS[task].intro?.length || introSeen === task) && (
         // Práctica guiada con Leo (pantalla completa): al terminarla se marca la tarea
-        <Practice state={state} update={update} review={NPC_TASKS[task].practice} ids={NPC_TASKS[task].practiceIds} guided guide={PRACTICE_GUIDES.includes(NPC_TASKS[task].npc ?? '') ? npcOf(NPC_TASKS[task].npc!) : undefined} onClose={() => finishTask(task, false)} onDone={(perfect) => finishTask(task, true, [], perfect && !!NPC_TASKS[task].practiceShield)} />
+        <Practice state={state} update={update} review={NPC_TASKS[task].practice} ids={NPC_TASKS[task].practiceIds} guided guide={taskGuide(task)} onClose={() => finishTask(task, false)} onDone={(perfect) => finishTask(task, true, [], perfect && !!NPC_TASKS[task].practiceShield)} />
       )}
       {task && NPC_TASKS[task]?.activity === 'script' && NPC_TASKS[task].script && (
         // B1 (recuerdos): secuencia fija con el personaje de la tarea (cara borrosa) y L narrando
@@ -1377,6 +1397,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               return <VocabActivity state={state} words={t.vocab.words} place={t.vocab.place} title={t.vocab.title} rewardText={t.reward.sub} onClose={finish} />
             const who = npcOf(t.npc ?? task)
             const steps = t.steps.map((st) => ({
+              speaker: st.speaker,
               text: fill(st.text),
               es: fill(st.es),
               choice: st.choice && { ...st.choice, ask: fill(st.choice.ask), options: st.choice.options.map(fill), tip: fill(st.choice.tip) },
@@ -1434,7 +1455,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           <Lesson
             state={state}
             steps={lesson.steps ?? lesson.topics.flatMap((t) => (LESSONS[t] ?? []).map((st) => ({ ...st, topic: t })))}
-            title={lesson.enemyId ? 'Leo te alcanza antes del combate' : lesson.task && NPC_TASKS[lesson.task]?.npc?.startsWith('b1-08-') ? 'Día de partido' : lesson.task && NPC_TASKS[lesson.task]?.notebookPage ? 'Cuaderno de L' : lesson.task && NPC_TASKS[lesson.task]?.phoneLesson ? 'Leo te escribe' : lesson.task && (NPC_TASKS[lesson.task]?.npc === B1_04_MAYA || NPC_TASKS[lesson.task]?.npc === B1_04_MAYA_BANK) ? 'Maya te ayuda' : 'Leo te ayuda'}
+            title={lesson.enemyId ? 'Leo te alcanza antes del combate' : lesson.task && NPC_TASKS[lesson.task]?.npc?.startsWith('b1-08-') ? 'Día de partido' : lesson.task && NPC_TASKS[lesson.task]?.notebookPage ? 'Cuaderno de L' : lesson.task && NPC_TASKS[lesson.task]?.phoneLesson ? 'Leo te escribe' : lesson.task && taskGuide(lesson.task) ? undefined : 'Leo te ayuda'}
+            defaultGuide={lesson.task ? taskGuide(lesson.task) : undefined}
             phone={lesson.task ? NPC_TASKS[lesson.task]?.phoneLesson : undefined}
             notebook={lesson.task ? NPC_TASKS[lesson.task]?.notebookPage : undefined}
             onDone={() => {

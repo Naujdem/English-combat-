@@ -137,8 +137,9 @@ export const A2_MARKET: SceneDef = {
     { type: 'npc', id: 'a2-s4-interest', x: 6, y: 2 },
     // Nadia, la dependienta, en el mostrador
     { type: 'npc', id: 'a2-s4-nadia', x: 3, y: 5 },
-    // Rita aparece en la tienda después de la devolución
-    { type: 'enemy', id: A2_S4_DUEL, x: 9, y: 5, after: A2_S4_RETURN },
+    // Rita aparece en la tienda después de la devolución. No va en (9,5): ese es el único paso entre la tienda y la calle,
+    // y vencida se queda ahí; si volvías por la calle, la persona especial (el cierre) quedaba encerrada al otro lado
+    { type: 'enemy', id: A2_S4_DUEL, x: 8, y: 4, after: A2_S4_RETURN },
   ],
   labels: [
     { text: 'Clothes shop', x: 3, y: 4 },
