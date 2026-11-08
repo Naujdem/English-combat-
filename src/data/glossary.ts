@@ -130,6 +130,7 @@ duties=tareas, funciones (de un trabajo);duty=tarea, función;hours=horas, horar
 device=aparato, dispositivo;devices=aparatos;scientist=científico;scientists=científicos;ability=habilidad, capacidad;abilities=habilidades;invent=inventar;invented=inventado, inventó (invent);develop=desarrollar;developed=desarrollado, desarrolló (develop);design=diseñar, diseño;designed=diseñado, diseñó (design);writings=escritos
 thief=ladrón;broken=roto (break);hidden=escondido (hide);rare=raro, poco común;stolen=robado (steal)
 informant=informante;guard=guardia;crack=rendija, grieta;mark=marca;footprints=huellas (de pies);tech=tecnología (old tech = tecnología vieja);ceiling=techo (por dentro);vendor=vendedor;broker=intermediario, comerciante;mud=barro, lodo;symbols=símbolos;symbol=símbolo
+final=final (el último partido);goalkeeper=portero, portera;stadium=estadio;atmosphere=ambiente;crowd=multitud, público;strongest=el más fuerte (strong);tallest=el más alto (tall);exciting=emocionante;loudest=el más ruidoso (loud)
 `
 
 const BASE: Record<string, string> = Object.fromEntries(

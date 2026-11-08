@@ -994,6 +994,26 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#9a9aa2', hair: '#9a9aa2', skin: '#9a9aa2' },
     doneLine: { text: "Lupe is the dog that barks at everything.", es: 'Lupe es el perro que ladra a todo.' },
   },
+  // ── B1-08 · Game Day, bloque A (la entrada del estadio, data/b1Stadium.ts) ──
+  // La persona especial (nombre y aspecto del jugador): te invita a la final (lección 'superlatives-b1', tarea b1-08-invite)
+  'b1-08-special': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: "It's the biggest match of the year!", es: '¡Es el partido más grande del año!' },
+  },
+  // Julian, capitán del equipo de Lumen Bay (tarea b1-08-team)
+  'b1-08-julian': {
+    name: 'Julian',
+    look: { shirt: '#1f5fa8', hair: '#3a2a1a', skin: '#d9a37a', gender: 'male' },
+    doneLine: { text: '(The gates are open. The match is about to begin.)', es: '(Las puertas están abiertas. El partido está por empezar.)' },
+  },
+  // La entrenadora Ilva, al lado de Julian (solo se examina)
+  'b1-08-ilva': {
+    name: 'La entrenadora Ilva',
+    look: { shirt: '#c0392b', hair: '#8a5a32', skin: '#e6b894', gender: 'female' },
+    doneLine: { text: 'Ilva is the coach of Lumen Bay.', es: 'Ilva es la entrenadora de Lumen Bay.' },
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

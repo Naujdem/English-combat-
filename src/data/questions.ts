@@ -45,6 +45,7 @@ import { B1_04_QUESTIONS } from './questions-b1-04'
 import { B1_05_QUESTIONS } from './questions-b1-05'
 import { B1_06_QUESTIONS } from './questions-b1-06'
 import { B1_07_QUESTIONS } from './questions-b1-07'
+import { B1_08_QUESTIONS } from './questions-b1-08'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -409,6 +410,7 @@ export const QUESTIONS: Question[] = [
   ...B1_05_QUESTIONS,
   ...B1_06_QUESTIONS,
   ...B1_07_QUESTIONS,
+  ...B1_08_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -1157,6 +1159,17 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       "Deducción en el presente: must be = seguro que es; might be = quizá es; can't be = es imposible.",
       'Después de must, might y can\'t va el verbo base. ✗ It must to be there → ✓ It must be there.',
       "Para deducir NO usamos mustn't: ✗ It mustn't be free → ✓ It can't be free.",
+    ],
+  },
+  'superlatives-b1': {
+    name: 'Superlativos',
+    level: 'B1',
+    lesson: [
+      'Superlativos: adjetivo corto + -est (the fastest, the biggest); adjetivo largo con most (the most exciting, the most expensive). Siempre con the.',
+      'Reglas: -y → -iest (happy → the happiest); una consonante final se duplica (big → the biggest, hot → the hottest).',
+      'Irregulares: good → the best; bad → the worst; far → the furthest.',
+      'Posición: the second best team, the third biggest stadium. Con grupos: one of the best players in the league.',
+      'Errores típicos: ✗ The most fast player → ✓ The fastest player. ✗ He is the most good → ✓ He is the best.',
     ],
   },
   'deduction-past': {

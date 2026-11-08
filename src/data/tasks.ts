@@ -32,6 +32,7 @@ import { B1_06_WHICH_DOG } from './b1Kennels'
 import type { WhichDogRound } from '../components/WhichDog'
 import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
 import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS, B1_07_PRACTICE4_IDS } from './questions-b1-07'
+import { B1_08_PRACTICE_IDS, B1_08_TEAM_IDS } from './questions-b1-08'
 import { B1_07_DETECTIVE_CONTENT, B1_07_TAKE_SCRIPT } from './b1Market'
 import { B1_07_ESCAPE_ROOM } from './b1Escape'
 import { B1_07_CLOSE_SCRIPT } from './b1Room'
@@ -5184,4 +5185,47 @@ NPC_TASKS['b1-07-close'] = {
   closeMemory: true,
   steps: [],
   reward: { text: 'Memory 7: The Underworld', es: 'Recuerdo 7: El bajo mundo', sub: 'Recuperaste los temas de la misión. Se abrió la misión 8.', say: 'Older than English.' },
+}
+
+// ── B1-08 · Game Day, bloque A (la entrada del estadio; escena en data/b1Stadium.ts). NO guarda closeId(8) ──
+// La persona especial: lección 'superlatives-b1' (ella la guía, who 'special') + práctica b1-08-s1…s8
+NPC_TASKS['b1-08-invite'] = {
+  npc: 'b1-08-special',
+  done: 'b1-08-invite',
+  lesson: 'superlatives-b1',
+  activity: 'practice',
+  practice: 'superlatives-b1',
+  practiceIds: B1_08_PRACTICE_IDS,
+  steps: [],
+  reward: {
+    text: "It's the biggest match of the year!",
+    es: '¡Es el partido más grande del año!',
+    sub: 'Lección y práctica hechas. Habla con Julian y la entrenadora Ilva.',
+    say: "It's the biggest match of the year!",
+  },
+}
+
+// Julian y la entrenadora Ilva: la charla (lessonSteps con el narrador; el tema ya está aprendido) + escucha b1-08-t1…t4. 5 monedas.
+// Al terminar, la puerta de las gradas muestra "Próximamente: el partido (bloque 8-B)". Sin closeId
+NPC_TASKS['b1-08-team'] = {
+  npc: 'b1-08-julian',
+  done: 'b1-08-team',
+  lessonSteps: [
+    { who: 'narrator', text: 'Julian: Coach Ilva, the other team is the strongest in the league.', es: 'Julian: Entrenadora Ilva, el otro equipo es el más fuerte de la liga.' },
+    { who: 'narrator', text: 'Ilva: I know. But you are the fastest player on the field, Julian. And our goalkeeper is the best.', es: 'Ilva: Lo sé. Pero tú eres el jugador más rápido de la cancha, Julian. Y nuestra portera es la mejor.' },
+    { who: 'narrator', text: 'Julian: What is the most important thing today?', es: 'Julian: ¿Qué es lo más importante hoy?' },
+    { who: 'narrator', text: "Ilva: Play together. It's the worst mistake to play alone.", es: 'Ilva: Jugar juntos. Jugar solos es el peor error.' },
+  ],
+  activity: 'practice',
+  practice: 'superlatives-b1',
+  practiceIds: B1_08_TEAM_IDS,
+  coins: 5,
+  requires: { id: 'b1-08-invite', text: 'Julian.', es: 'Julian.', sub: 'Primero habla con la persona especial.' },
+  steps: [],
+  reward: {
+    text: '(The gates are open. The match is about to begin.)',
+    es: '(Las puertas están abiertas. El partido está por empezar.)',
+    sub: 'Ganaste 5 monedas. La puerta de las gradas: próximamente, el partido (bloque 8-B).',
+    say: 'The gates are open. The match is about to begin.',
+  },
 }

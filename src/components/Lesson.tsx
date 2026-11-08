@@ -4,7 +4,7 @@ import type { GameState, LessonStep } from '../game/types'
 import { SpriteBody } from './Sprite'
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
 import { heroLook } from '../game/helpers'
-import { FRIENDS } from '../data/friends'
+import { FRIENDS, interestFriend } from '../data/friends'
 import { B1_06_HADDAD_LOOK } from '../data/b1Shelter'
 import { B1_06_NAYI_LOOK } from '../data/b1Kennels'
 import { SpeakButton } from './SpeakButton'
@@ -111,12 +111,15 @@ export function Lesson({
   const s = steps[i]
   // Guía de la lección: Leo, o Maya si la lección tiene pasos 'maya' (B1-04). Mismo tratamiento: retrato, nombre y voz
   // B1-06: Ms. Haddad guía la lección si tiene pasos 'haddad'
-  const guide = steps.some((x) => x.who === 'nayi')
+  // B1-08: la persona especial guía la lección si tiene pasos 'special' (nombre, aspecto y voz que eligió el jugador)
+  const guide = steps.some((x) => x.who === 'special')
+    ? { name: state.interest.name, look: interestFriend(state.interest).look, voice: state.interest.gender === 'female' ? ('female' as const) : ('male' as const) }
+    : steps.some((x) => x.who === 'nayi')
     ? { name: 'Nayi', look: B1_06_NAYI_LOOK, voice: 'female' as const }
     : steps.some((x) => x.who === 'haddad')
     ? { name: 'Ms. Haddad', look: B1_06_HADDAD_LOOK, voice: 'female' as const }
     : steps.some((x) => x.who === 'maya') ? { name: 'Maya', look: FRIENDS.maya.look, voice: 'female' as const } : { name: 'Leo', look: FRIENDS.leo.look, voice: 'male' as const }
-  const talks = s.who === 'leo' || s.who === 'maya' || s.who === 'haddad' || s.who === 'nayi'
+  const talks = s.who === 'leo' || s.who === 'maya' || s.who === 'haddad' || s.who === 'nayi' || s.who === 'special'
   const last = i === steps.length - 1
   const waiting = !!s.choice && !solved
   // La pizarra conserva lo último escrito si el paso actual no trae nada nuevo

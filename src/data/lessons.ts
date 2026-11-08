@@ -823,6 +823,15 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: "Errores típicos: ✗ It must be stole → ✓ It must have been stolen. ✗ He can't has known → ✓ He can't have known.", topic: 'deduction-past' },
     { who: 'notebook', text: "The scientists can't have sold it. A thief must have taken it. It must be in the black market.", es: 'Los científicos no pueden haberlo vendido. Un ladrón debe de haberlo tomado. Debe de estar en el mercado negro.' },
   ],
+  // B1-08 · Game Day, bloque A (la entrada del estadio, data/b1Stadium.ts): la persona especial te invita a la final. 'board' = la pizarra
+  'superlatives-b1': [
+    { who: 'special', text: "The final is tomorrow! Are you coming with me? It's the biggest match of the year!", es: '¡La final es mañana! ¿Vienes conmigo? ¡Es el partido más grande del año!' },
+    { who: 'board', text: 'Superlativos: adjetivo corto + -est (the fastest, the biggest); adjetivo largo con most (the most exciting, the most expensive). Siempre con the.', topic: 'superlatives-b1' },
+    { who: 'board', text: 'Reglas: -y → -iest (happy → the happiest); una consonante final se duplica (big → the biggest, hot → the hottest).', topic: 'superlatives-b1' },
+    { who: 'board', text: 'Irregulares: good → the best; bad → the worst; far → the furthest.', topic: 'superlatives-b1' },
+    { who: 'board', text: 'Posición: the second best team, the third biggest stadium. Con grupos: one of the best players in the league.', topic: 'superlatives-b1' },
+    { who: 'board', text: 'Errores típicos: ✗ The most fast player → ✓ The fastest player. ✗ He is the most good → ✓ He is the best.', topic: 'superlatives-b1' },
+  ],
   // B1-06 · First Job, bloque C (las jaulas): Nayi repasa cómo contar tu experiencia antes de la entrevista
   'experience-b1': [
     { who: 'nayi', text: "Before the interview, let's practise how to talk about your experience.", es: 'Antes de la entrevista, practiquemos cómo contar tu experiencia.' },
