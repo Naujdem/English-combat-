@@ -12,6 +12,14 @@ const DE = 'deduction' as const
 const PRACTICE2 = ['b1-07-practice2']
 const DP = 'deduction-past' as const
 const PRACTICE3 = ['b1-07-practice3']
+/** Bloque C: práctica del informante (tema existente relative-clauses) y banco del guardia (b1-07-guard) */
+const RC = 'relative-clauses' as const
+const PRACTICE4 = ['b1-07-practice4']
+const GUARD = ['b1-07-guard']
+const PN2 = 'passive-news' as const
+
+/** Práctica del informante, en orden */
+export const B1_07_PRACTICE4_IDS = ['b1-07-r1', 'b1-07-r2', 'b1-07-r3', 'b1-07-r4', 'b1-07-r5', 'b1-07-r6', 'b1-07-r7', 'b1-07-r8']
 
 /** Práctica de la página 15, en orden */
 export const B1_07_PRACTICE2_IDS = ['b1-07-m1', 'b1-07-m2', 'b1-07-m3', 'b1-07-m4', 'b1-07-m5', 'b1-07-m6', 'b1-07-m7', 'b1-07-m8']
@@ -80,5 +88,45 @@ export const B1_07_QUESTIONS: Question[] = [
     answer: 0,
     tip: "It can't have been a scientist, because they have no key.",
     tags: PRACTICE3,
+  },
+  // Bloque C · el informante: relativos para dar más información
+  { id: 'b1-07-r1', topic: RC, kind: 'fix', prompt: 'Mr. Vega, that sells old tech, is in the back room.', options: ['Mr. Vega, who sells old tech, is in the back room.', 'Mr. Vega, which sells old tech, is in the back room.', 'Mr. Vega, whose sells old tech, is in the back room.'], answer: 0, tip: 'Con comas y personas: who.', tags: PRACTICE4 },
+  { id: 'b1-07-r2', topic: RC, kind: 'fix', prompt: 'The market where I bought it there is dark.', options: ['The market where I bought it is dark.', 'The market where I bought it in is dark there.', 'The market that I bought it is dark.'], answer: 0, tip: 'where ya indica el lugar: no repitas there.', tags: PRACTICE4 },
+  { id: 'b1-07-r3', topic: RC, prompt: 'The guard ___ never sleeps is at the door.', options: ['who', 'whose', 'where'], answer: 0, tip: 'Personas: who.', tags: PRACTICE4 },
+  { id: 'b1-07-r4', topic: RC, prompt: 'The man ___ shop is in the back room is Mr. Vega.', options: ['whose', 'who', 'which'], answer: 0, tip: 'Posesión: whose.', tags: PRACTICE4 },
+  { id: 'b1-07-r5', topic: RC, prompt: 'The box ___ he keeps under the desk is empty.', options: ['that', 'who', 'whose'], answer: 0, tip: 'Cosas: that.', tags: PRACTICE4 },
+  { id: 'b1-07-r6', topic: RC, prompt: 'The black market is a place ___ you can buy anything.', options: ['where', 'who', 'whose'], answer: 0, tip: 'Lugares: where.', tags: PRACTICE4 },
+  { id: 'b1-07-r7', topic: RC, kind: 'order', prompt: 'El guardia, que nunca duerme, vigila la puerta.', options: ['The', 'guard,', 'who', 'never', 'sleeps,', 'watches', 'the', 'door.'], answer: 0, tip: 'El dato extra va entre comas.', tags: PRACTICE4 },
+  {
+    id: 'b1-07-r8',
+    topic: RC,
+    kind: 'listen',
+    audio: 'The man who sells old tech is Mr. Vega. His assistant, who never sleeps, is called Dax. The back room, where he keeps everything, is behind the red door.',
+    voice: 'male',
+    prompt: '¿Dónde guarda todo?',
+    options: ['En el cuarto del fondo, tras la puerta roja.', 'En la calle.', 'En su casa.'],
+    answer: 0,
+    tip: 'The back room, where he keeps everything, is behind the red door.',
+    tags: PRACTICE4,
+  },
+  // Bloque C · banco del guardia (b1-07-guard)
+  { id: 'b1-07-g1', topic: DP, kind: 'fix', prompt: 'The box must have been steal.', options: ['The box must have been stolen.', 'The box must have been stole.', 'The box must been stolen.'], answer: 0, tip: 'must have been + participio.', tags: GUARD },
+  { id: 'b1-07-g2', topic: DP, kind: 'fix', prompt: "She can't has seen us.", options: ["She can't have seen us.", "She can't has saw us.", "She can't have see us."], answer: 0, tip: "can't have + participio.", tags: GUARD },
+  { id: 'b1-07-g3', topic: DE, prompt: 'The man is twenty years old. He ___ be my grandfather.', options: ["can't", 'must', 'might'], answer: 0, tip: "Imposible: can't be.", tags: GUARD },
+  { id: 'b1-07-g4', topic: DE, prompt: "I'm not sure, but the door ___ be open. Let's try.", options: ['might', 'must', "can't"], answer: 0, tip: 'No estoy seguro: might be.', tags: GUARD },
+  { id: 'b1-07-g5', topic: DP, prompt: 'The floor is wet and there are footprints. Somebody ___ have walked here.', options: ['must', "can't", "mustn't"], answer: 0, tip: 'Hay una prueba: must have.', tags: GUARD },
+  { id: 'b1-07-g6', topic: PN2, kind: 'fix', prompt: 'The device was steal last night.', options: ['The device was stolen last night.', 'The device was stole last night.', 'The device stolen last night.'], answer: 0, tip: 'Pasiva: was + participio.', tags: GUARD },
+  { id: 'b1-07-g7', topic: DP, kind: 'order', prompt: 'Ella no puede haberlo sabido.', options: ['She', "can't", 'have', 'known.'], answer: 0, tip: "can't have + participio.", tags: GUARD },
+  {
+    id: 'b1-07-g8',
+    topic: DP,
+    kind: 'listen',
+    audio: "The guard says: the box must have been moved. It can't have been the boss, because he was away. It might have been the assistant.",
+    voice: 'male',
+    prompt: '¿Quién pudo haberla movido?',
+    options: ['El asistente.', 'El jefe.', 'Un científico.'],
+    answer: 0,
+    tip: 'It might have been the assistant.',
+    tags: GUARD,
   },
 ]

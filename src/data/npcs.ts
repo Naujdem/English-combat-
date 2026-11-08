@@ -833,6 +833,17 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
     doneLine: { text: 'I know where to go.', es: 'Ya sé adónde ir.' },
   },
+  // B1-07 · bloque C (el bajo mundo, data/b1Market.ts): el informante (cara borrosa) y la rendija de la trastienda (TabletIcon)
+  'b1-07-informant': {
+    name: 'El informante',
+    look: { shirt: '#4a3a6b', hair: '#1b1b24', skin: '#c9a27e' },
+    doneLine: { text: 'The man who sells old tech is in the back room.', es: 'El hombre que vende tecnología vieja está en el cuarto del fondo.' },
+  },
+  'b1-07-crack': {
+    name: 'La rendija de la trastienda',
+    look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
+    doneLine: { text: '(It must be behind the shelf. But the guard is at the door.)', es: '(Debe de estar detrás del estante. Pero el guardia está en la puerta.)' },
+  },
   // ── B1-04 · House Rules, bloque A (residencia de Lumen Bay, data/b1Residence.ts) ──
   'b1-04-marisol': {
     name: 'Marisol',
