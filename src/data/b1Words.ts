@@ -150,14 +150,14 @@ export const B1_03_ENEMIES: Record<string, EnemyDef> = {
     { text: 'Unread: How long are you feeling this? Answer me! Bzzzt!', es: 'Sin leer: ¿Cuánto tiempo estás sintiendo esto? ¡Respóndeme! Bzzzt! (How long are you feeling this: mal).' },
     { text: 'Answered... quiet now.', es: 'Respondido... ya hay silencio.' },
     { text: 'Thanks for answering me.', es: 'Gracias por responderme.' },
-    { q: 'Elige la pregunta correcta:', options: ['How long have you been waiting?', 'How long are you been waiting?', 'How long you have waiting?'], answer: 0, tip: 'Duración: How long + have you been + -ing?' },
+    { q: 'Elige la pregunta correcta:', options: ['How long are you been waiting?', 'How long have you been waiting?', 'How long you have waiting?'], answer: 1, tip: 'Duración: How long + have you been + -ing?' },
   ),
   [B1_03_UNREAD3]: UNREAD(
     B1_03_UNREAD3,
     { text: 'Unread: See tomorrow you! Sounds goods! Reply me!', es: 'Sin leer: ¡Nos vemos mañana! ¡Suena bien! ¡Respóndeme! (See tomorrow you, Sounds goods y Reply me: mal).' },
     { text: 'Replied... all done.', es: 'Respondido... todo listo.' },
     { text: 'Thanks. Now I can rest.', es: 'Gracias. Ahora puedo descansar.' },
-    { q: 'Elige el mensaje correcto:', options: ['Sounds good. See you tomorrow.', 'Sounds goods. See you tomorrow.', 'Sound good. See tomorrow you.'], answer: 0, tip: 'Mensaje rápido y correcto: Sounds good. See you tomorrow.' },
+    { q: 'Elige el mensaje correcto:', options: ['Sounds goods. See you tomorrow.', 'Sound good. See tomorrow you.', 'Sounds good. See you tomorrow.'], answer: 2, tip: 'Mensaje rápido y correcto: Sounds good. See you tomorrow.' },
   ),
   // Jefe (2 fases). Sin reward: en los recuerdos no se ganan atuendos. Sus temas se recuperan en el cierre (b1-03-close)
   [B1_03_STATIC]: {
@@ -193,6 +193,6 @@ export const B1_03_ENEMIES: Record<string, EnemyDef> = {
     before: [{ text: 'Bzzzt... I have been talking since three weeks! How long you have been silent? Bzzzt!', es: 'Bzzzt... ¡Llevo hablando desde hace tres semanas! ¿Cuánto tiempo llevas callado? Bzzzt! (since three weeks y How long you have been: mal).' }],
     after: [{ text: 'Bzzzt... quiet... I... hear nothing... finally.', es: 'Bzzzt... silencio... no... oigo nada... por fin.' }],
     freed: { text: '...', es: '(El ruido se apagó.)' },
-    farewell: { q: "The Static whispers: 'See you around...' What do you answer?", options: ['See you! Take care.', 'See you! Takes care.', 'See you! Taking care.'], answer: 0, tip: 'Despedida natural: See you! Take care.' },
+    farewell: { q: "The Static whispers: 'See you around...' What do you answer?", options: ['See you! Takes care.', 'See you! Take care.', 'See you! Taking care.'], answer: 1, tip: 'Despedida natural: See you! Take care.' },
   },
 }

@@ -53,6 +53,6 @@ export const B1_04_ENEMIES: Record<string, EnemyDef> = {
     before: [{ text: "I have to sing at night! She have to listen! You mustn't to complain!", es: '¡Tengo que cantar de noche! ¡Ella tiene que escuchar! ¡No debes quejarte! (She have to listen y mustn\'t to complain: mal).' }],
     after: [{ text: "Fine... I'll sing quietly. Or in the shower.", es: 'Está bien... cantaré bajito. O en la ducha.' }],
     freed: { text: 'Thanks for understanding. Sweet dreams!', es: 'Gracias por entender. ¡Dulces sueños!' },
-    bonus: { q: 'Elige la frase correcta:', options: ['She has to be quiet.', 'She have to be quiet.', 'She must to be quiet.'], answer: 0, tip: 'She = has to + verbo base.' },
+    bonus: { q: 'Elige la frase correcta:', options: ['She have to be quiet.', 'She has to be quiet.', 'She must to be quiet.'], answer: 1, tip: 'She = has to + verbo base.' },
   },
 }

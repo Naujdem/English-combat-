@@ -59,8 +59,8 @@ export const B1_DIARY: DiaryChapter[] = [
         ],
         questions: [
           { q: 'Why did the man lose his voice?', options: ['Because of the smoke.', 'Because of the alarm.', 'Because he was tired.'], answer: 0, tip: 'El diario dice: "Because of the smoke, he lost his voice".' },
-          { q: 'What was the man doing when the alarm rang?', options: ['He was cleaning the board.', 'He was waiting at the door.', 'He was walking home.'], answer: 0, tip: 'El diario dice: "was cleaning the board when the fire alarm rang".' },
-          { q: 'Did his friend help him?', options: ["No, he didn't. He was silent.", 'Yes, he did. He shouted too.', "No, he wasn't. He was silent."], answer: 0, tip: 'Pregunta con did → respuesta con did: No, he didn\'t.' },
+          { q: 'What was the man doing when the alarm rang?', options: ['He was waiting at the door.', 'He was cleaning the board.', 'He was walking home.'], answer: 1, tip: 'El diario dice: "was cleaning the board when the fire alarm rang".' },
+          { q: 'Did his friend help him?', options: ['Yes, he did. He shouted too.', "No, he wasn't. He was silent.", "No, he didn't. He was silent."], answer: 2, tip: 'Pregunta con did → respuesta con did: No, he didn\'t.' },
         ],
       },
     ],
@@ -102,9 +102,9 @@ export const B1_DIARY: DiaryChapter[] = [
           { en: 'Tomorrow we [are meeting]f Ms. Haddad, and on Saturday we [are going to visit]f the old port.', es: 'Mañana nos reunimos con la Sra. Haddad y el sábado vamos a visitar el puerto viejo.' },
         ],
         questions: [
-          { q: 'What have they already found?', options: ['Their suitcases.', 'Their tickets.', 'Their passports.'], answer: 0, tip: 'El diario dice: "We have already found our suitcases".' },
+          { q: 'What have they already found?', options: ['Their tickets.', 'Their suitcases.', 'Their passports.'], answer: 1, tip: 'El diario dice: "We have already found our suitcases".' },
           { q: 'What are they going to do on Saturday?', options: ['Visit the old port.', 'Start classes.', 'Buy a SIM card.'], answer: 0, tip: 'El diario dice: "on Saturday we are going to visit the old port".' },
-          { q: 'When are they meeting Ms. Haddad?', options: ['Tomorrow.', 'On Saturday.', 'Next week.'], answer: 0, tip: 'El diario dice: "Tomorrow we are meeting Ms. Haddad".' },
+          { q: 'When are they meeting Ms. Haddad?', options: ['On Saturday.', 'Next week.', 'Tomorrow.'], answer: 2, tip: 'El diario dice: "Tomorrow we are meeting Ms. Haddad".' },
         ],
       },
     ],
@@ -158,8 +158,8 @@ export const B1_DIARY: DiaryChapter[] = [
         ],
         questions: [
           { q: 'How long has the man been writing messages?', options: ['For weeks.', 'Since Monday.', 'For one day.'], answer: 0, tip: 'El diario dice: "has been writing messages for weeks".' },
-          { q: 'Who does he write to in a formal way?', options: ['His director.', 'His friend.', 'His student.'], answer: 0, tip: 'El diario dice: "to his director in a formal way".' },
-          { q: 'What did he write to his friend last night?', options: ["I've been trying to speak every day. Nothing.", "I'm fine, thanks.", 'I will come tomorrow.'], answer: 0, tip: 'Anoche escribió: "I\'ve been trying to speak every day. Nothing."' },
+          { q: 'Who does he write to in a formal way?', options: ['His friend.', 'His director.', 'His student.'], answer: 1, tip: 'El diario dice: "to his director in a formal way".' },
+          { q: 'What did he write to his friend last night?', options: ["I'm fine, thanks.", 'I will come tomorrow.', "I've been trying to speak every day. Nothing."], answer: 2, tip: 'Anoche escribió: "I\'ve been trying to speak every day. Nothing."' },
         ],
       },
     ],
@@ -203,9 +203,9 @@ export const B1_DIARY: DiaryChapter[] = [
           { en: "Marisol [cleans]n the kitchen, so we [don't have to]n do it.", es: 'Marisol limpia la cocina, así que no tenemos que hacerlo.' },
         ],
         questions: [
-          { q: 'What do they have to do by the 5th?', options: ['Pay the rent.', 'Clean the kitchen.', 'Open a bank account.'], answer: 0, tip: 'El diario dice: "We have to pay by the 5th".' },
+          { q: 'What do they have to do by the 5th?', options: ['Clean the kitchen.', 'Pay the rent.', 'Open a bank account.'], answer: 1, tip: 'El diario dice: "We have to pay by the 5th".' },
           { q: "What mustn't they do in the rooms?", options: ['Smoke.', 'Sleep.', 'Read.'], answer: 0, tip: 'El diario dice: "We mustn\'t smoke in the rooms".' },
-          { q: 'Who cleans the kitchen?', options: ['Marisol.', 'Maya.', 'The neighbours.'], answer: 0, tip: 'El diario dice: "Marisol cleans the kitchen".' },
+          { q: 'Who cleans the kitchen?', options: ['Maya.', 'The neighbours.', 'Marisol.'], answer: 2, tip: 'El diario dice: "Marisol cleans the kitchen".' },
         ],
       },
     ],
@@ -236,7 +236,7 @@ export const B1_DIARY: DiaryChapter[] = [
         ],
         questions: [
           { q: 'What did L use to do in the car?', options: ['Sing.', 'Sleep.', 'Read.'], answer: 0, tip: 'La página dice: "I used to sing in the car".' },
-          { q: 'Who wrote to L?', options: ['A friend.', 'The director.', 'The bank.'], answer: 0, tip: 'La página dice: "A friend wrote to me".' },
+          { q: 'Who wrote to L?', options: ['The director.', 'A friend.', 'The bank.'], answer: 1, tip: 'La página dice: "A friend wrote to me".' },
         ],
       },
       {
@@ -252,8 +252,8 @@ export const B1_DIARY: DiaryChapter[] = [
           { en: 'Tomorrow he [will look]f for a new job.', es: 'Mañana buscará un nuevo trabajo.' },
         ],
         questions: [
-          { q: 'What did L use to do?', options: ['Teach five classes a day.', 'Sell books.', 'Work at a bank.'], answer: 0, tip: 'El diario dice: "used to teach five classes a day".' },
-          { q: 'What will he do tomorrow?', options: ['Look for a new job.', 'Sing in the car.', 'Pay back the loan.'], answer: 0, tip: 'El diario dice: "will look for a new job".' },
+          { q: 'What did L use to do?', options: ['Sell books.', 'Work at a bank.', 'Teach five classes a day.'], answer: 2, tip: 'El diario dice: "used to teach five classes a day".' },
+          { q: 'What will he do tomorrow?', options: ['Sing in the car.', 'Look for a new job.', 'Pay back the loan.'], answer: 1, tip: 'El diario dice: "will look for a new job".' },
         ],
       },
     ],
@@ -298,7 +298,7 @@ export const B1_DIARY: DiaryChapter[] = [
         ],
         questions: [
           { q: 'Who asked about the experience?', options: ['Esteban.', 'Nayi.', 'Leo.'], answer: 0, tip: 'El diario dice: "Esteban asked me about my experience".' },
-          { q: 'Where did the writer volunteer?', options: ['At a shelter.', 'At a bank.', 'At a school.'], answer: 0, tip: 'El diario dice: "I volunteered at a shelter last year".' },
+          { q: 'Where did the writer volunteer?', options: ['At a bank.', 'At a school.', 'At a shelter.'], answer: 2, tip: 'El diario dice: "I volunteered at a shelter last year".' },
           { q: 'What will the writer do next week?', options: ['Feed the dogs.', 'Fill in a form.', 'Sing in the car.'], answer: 0, tip: 'El diario dice: "Next week I will feed the dogs".' },
         ],
       },

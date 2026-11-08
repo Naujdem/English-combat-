@@ -4137,7 +4137,7 @@ NPC_TASKS['b1-01-message'] = {
     {
       text: '(You grab your phone and write to Leo.)',
       es: '(Agarras tu teléfono y le escribes a Leo.)',
-      choice: { ask: '¿Qué le escribes?', options: ['I saw a fire. A man lost his voice.', 'I seen a fire. A man lose his voice.', 'I was see a fire. A man lost voice.'], answer: 0, tip: 'Pasado de see: saw. Pasado de lose: lost.' },
+      choice: { ask: '¿Qué le escribes?', options: ['I seen a fire. A man lose his voice.', 'I saw a fire. A man lost his voice.', 'I was see a fire. A man lost voice.'], answer: 1, tip: 'Pasado de see: saw. Pasado de lose: lost.' },
     },
   ],
   reward: {
@@ -4185,16 +4185,16 @@ NPC_TASKS['b1-01-blurry'] = {
         source: 'Page 1 · The stairs',
         clue: { en: 'Fact: the stairs were full of smoke. Result: we used the fire exit.', es: 'Hecho: las escaleras estaban llenas de humo. Resultado: usamos la salida de emergencia.' },
         claim: { en: 'The stairs were full of smoke because we used the fire exit.', es: 'Las escaleras estaban llenas de humo porque usamos la salida de emergencia.' },
-        options: ['The stairs were full of smoke, so we used the fire exit.', 'The stairs were full of smoke, so of we used the fire exit.', 'The stairs were full of smoke because of we used the fire exit.'],
-        answer: 0,
+        options: ['The stairs were full of smoke, so of we used the fire exit.', 'The stairs were full of smoke because of we used the fire exit.', 'The stairs were full of smoke, so we used the fire exit.'],
+        answer: 2,
         tip: 'El humo es la causa y usar la salida es el resultado: so.',
       },
       {
         source: 'Page 1 · The man',
         clue: { en: 'Fact: he lost his voice. Cause: the smoke.', es: 'Hecho: perdió la voz. Causa: el humo.' },
         claim: { en: 'He lost his voice so the smoke.', es: 'Perdió la voz así que el humo.' },
-        options: ['He lost his voice because of the smoke.', 'He lost his voice because the smoke.', 'He lost his voice so of the smoke.'],
-        answer: 0,
+        options: ['He lost his voice because the smoke.', 'He lost his voice because of the smoke.', 'He lost his voice so of the smoke.'],
+        answer: 1,
         tip: 'Causa + sustantivo: because of.',
       },
       {
@@ -4219,8 +4219,8 @@ NPC_TASKS['b1-01-blurry'] = {
         source: 'Page 3 · The end',
         clue: { en: 'Fact: the smoke was thick. Result: he lost his voice.', es: 'Hecho: el humo era espeso. Resultado: perdió la voz.' },
         claim: { en: 'The smoke was thick. As a result of, he lost his voice.', es: 'El humo era espeso. Como resultado de, perdió la voz.' },
-        options: ['The smoke was thick. As a result, he lost his voice.', 'The smoke was thick. As a result of, he lost his voice.', 'The smoke was thick. As a result he lost of his voice.'],
-        answer: 0,
+        options: ['The smoke was thick. As a result of, he lost his voice.', 'The smoke was thick. As a result he lost of his voice.', 'The smoke was thick. As a result, he lost his voice.'],
+        answer: 2,
         tip: "As a result, + oración nueva (con coma, sin 'of').",
       },
     ],
@@ -4512,7 +4512,7 @@ NPC_TASKS['b1-04-welcome'] = {
     {
       text: 'Here are your keys and your contract. Please read the rules carefully.',
       es: 'Aquí están sus llaves y su contrato. Por favor, lean las reglas con atención.',
-      choice: { ask: '¿Qué le respondes?', options: ["Thank you, Marisol. We'll read it now.", 'Thank you, Marisol. We read will it now.', "Thanks, Marisol. We reading it."], answer: 0, tip: "Decisión en el momento: will + verbo base: We'll read it now." },
+      choice: { ask: '¿Qué le respondes?', options: ['Thank you, Marisol. We read will it now.', "Thank you, Marisol. We'll read it now.", "Thanks, Marisol. We reading it."], answer: 1, tip: "Decisión en el momento: will + verbo base: We'll read it now." },
     },
   ],
   reward: {
@@ -4570,7 +4570,7 @@ NPC_TASKS['b1-04-jeison'] = {
     {
       text: 'Oh, listen... that noise again. Please, talk to them.',
       es: 'Oh, escuchen... ese ruido otra vez. Por favor, hablen con ellos.',
-      choice: { ask: '¿Qué le dices a Jeison?', options: ['Thanks! We must follow the rules, too.', 'Thanks! We must to follow the rules, too.', 'Thanks! We musts follow the rules too.'], answer: 0, tip: 'must + verbo base, sin to.' },
+      choice: { ask: '¿Qué le dices a Jeison?', options: ['Thanks! We must to follow the rules, too.', 'Thanks! We musts follow the rules too.', 'Thanks! We must follow the rules, too.'], answer: 2, tip: 'must + verbo base, sin to.' },
     },
   ],
   reward: {
@@ -4616,7 +4616,7 @@ NPC_TASKS['b1-04-ricardo'] = {
     {
       text: 'Good morning! Welcome to the bank. Are you here to open an account?',
       es: '¡Buenos días! Bienvenidos al banco. ¿Vienen a abrir una cuenta?',
-      choice: { ask: '¿Qué le respondes?', options: ["Yes, please. We'd like to open a bank account.", "Yes, please. We'd like open a bank account.", 'Yes, please. We like to opening a bank account.'], answer: 0, tip: "We'd like to + verbo base." },
+      choice: { ask: '¿Qué le respondes?', options: ["Yes, please. We'd like open a bank account.", "Yes, please. We'd like to open a bank account.", 'Yes, please. We like to opening a bank account.'], answer: 1, tip: "We'd like to + verbo base." },
     },
     { text: 'Great. Listen carefully, because there are some documents you need.', es: 'Perfecto. Escuchen con atención, porque necesitan algunos documentos.' },
   ],
