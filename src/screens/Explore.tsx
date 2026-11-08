@@ -239,7 +239,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         // Personajes que solo aparecen después de cierto momento de la historia
         if (e.type === 'npc' && NPCS[e.id]?.after && !state.opened.includes(NPCS[e.id].after!) && !state.defeated.includes(NPCS[e.id].after!)) return false
         // Personajes que se van en cierto momento (el mesero del café se convierte en el eco)
-        if (e.type === 'npc' && NPCS[e.id]?.until && state.opened.includes(NPCS[e.id].until!)) return false
+        // `until` también puede ser un enemigo ya vencido (B1-08: la persona especial de la lección se va al vencer a The Champion)
+        if (e.type === 'npc' && NPCS[e.id]?.until && (state.opened.includes(NPCS[e.id].until!) || state.defeated.includes(NPCS[e.id].until!))) return false
         // `after` puede ser una tarea cumplida o un enemigo ya vencido (el desconocido de A2-13 sale tras The Silence)
         if (e.type === 'enemy' && e.after && !state.opened.includes(e.after) && !state.defeated.includes(e.after)) return false
         // La persona especial como amiga (charlas) aparece después de cierto momento
