@@ -66,6 +66,9 @@ import { NPC_TASKS, PARTY_ITEMS, taskOf } from '../data/tasks'
 import { PartyAsk } from '../components/PartyAsk'
 import { AnimalSprite, ANIMALS } from '../components/Animals'
 import { GuessAnimal } from '../components/GuessAnimal'
+import { WhichDog } from '../components/WhichDog'
+import { ShelterDog } from '../components/ShelterDog'
+import { B1_06_DOG_NPCS } from '../data/b1Kennels'
 import { AnimalPens } from '../components/AnimalPens'
 import { Planner } from '../components/Planner'
 import { Attendance } from '../components/Attendance'
@@ -733,7 +736,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_05_ENVELOPE || e.id === B1_06_BOARD || e.id === B1_06_DESK ? <NotebookIcon lit={pending} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_05_ENVELOPE || e.id === B1_06_BOARD || e.id === B1_06_DESK || e.id === 'b1-06-orders' ? <NotebookIcon lit={pending} /> : B1_06_DOG_NPCS[e.id] ? <ShelterDog who={B1_06_DOG_NPCS[e.id]} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -1210,6 +1213,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             const t = NPC_TASKS[task]
             const finish = (done: boolean) => finishTask(task, done)
             if (t.activity === 'guess') return <GuessAnimal onClose={finish} />
+            if (t.activity === 'whichdog' && t.whichdog) return <WhichDog rounds={t.whichdog} onClose={finish} />
             if (t.activity === 'pens') return <AnimalPens onClose={finish} />
             if (t.activity === 'planner') return <Planner onClose={finish} />
             if (t.activity === 'attendance') return <Attendance onClose={finish} />

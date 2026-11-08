@@ -28,6 +28,9 @@ import { B1_05_CLOSE_SCRIPT, B1_05_JOB_ADS, B1_05_LETTER_SCRIPT, B1_05_NOTICE_SC
 import { B1_05_BANK_IDS, B1_05_PRACTICE2_IDS, B1_05_PRACTICE_IDS } from './questions-b1-05'
 import { B1_06_PRACTICE_IDS } from './questions-b1-06'
 import { B1_06_JOB_ADVERT } from './b1Shelter'
+import { B1_06_WHICH_DOG } from './b1Kennels'
+import type { WhichDogRound } from '../components/WhichDog'
+import { B1_06_PRACTICE2_IDS } from './questions-b1-06'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -51,7 +54,9 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog'
+  /** Para activity 'whichdog' (Which Dog?, B1-06): las peticiones de Nayi, en orden */
+  whichdog?: WhichDogRound[]
   /** Para activity 'fineprint' (The Fine Print, B1-04): las cláusulas del contrato que se sellan. Sin errores, escudo */
   fineprint?: FinePrintContent
   /** Para activity 'round' (One More Round!): los objetos y lo que dice el personaje; {item} = el objeto que se movió. Cada error quita una vida */
@@ -4874,7 +4879,7 @@ NPC_TASKS['b1-06-read'] = {
 }
 
 // La mesa: Sequence Master "How to apply". Al terminar, Ms. Haddad habla y se dan 5 monedas.
-// La puerta de las jaulas muestra "Próximamente: Nayi y los perros (bloque 6-B)"
+// Después, la puerta de las jaulas lleva a Nayi y los perros (bloque 6-B, data/b1Kennels.ts)
 NPC_TASKS['b1-06-apply'] = {
   npc: 'b1-06-desk',
   done: 'b1-06-apply',
@@ -4896,7 +4901,43 @@ NPC_TASKS['b1-06-apply'] = {
   reward: {
     text: 'Ms. Haddad: "Perfect! Now come and meet Nayi and the dogs."',
     es: '¡Perfecto! Ahora ven a conocer a Nayi y a los perros.',
-    sub: 'Ganaste 5 monedas. Próximamente: Nayi y los perros (bloque 6-B).',
+    sub: 'Ganaste 5 monedas. La puerta del fondo lleva a las jaulas: Nayi te espera.',
     say: 'Perfect! Now come and meet Nayi and the dogs.',
+  },
+}
+
+// ── B1-06 · First Job, bloque B (las jaulas; escena en data/b1Kennels.ts). NO guarda closeId(6) ──
+// Nayi: lección 'relative-clauses' (ella la guía) + práctica b1-06-d1…d8
+NPC_TASKS['b1-06-nayi'] = {
+  npc: 'b1-06-nayi',
+  done: 'b1-06-nayi',
+  lesson: 'relative-clauses',
+  activity: 'practice',
+  practice: 'relative-clauses',
+  practiceIds: B1_06_PRACTICE2_IDS,
+  steps: [],
+  reward: {
+    text: 'Nayi: "Look at the order board. Can you find the right dogs?"',
+    es: 'Mira el tablero de pedidos. ¿Puedes encontrar los perros correctos?',
+    sub: 'Lección y práctica hechas. Ve al tablero de pedidos.',
+    say: 'Look at the order board. Can you find the right dogs?',
+  },
+}
+
+// El tablero de pedidos: Which Dog? (components/WhichDog.tsx). Al terminar, 5 monedas y Nayi habla.
+// La puerta de la oficina muestra "Próximamente: la oficina de Esteban (bloque 6-C)"
+NPC_TASKS['b1-06-dogs'] = {
+  npc: 'b1-06-orders',
+  done: 'b1-06-dogs',
+  activity: 'whichdog',
+  whichdog: B1_06_WHICH_DOG,
+  requires: { id: 'b1-06-nayi', text: 'The order board.', es: 'El tablero de pedidos.', sub: 'Primero habla con Nayi.' },
+  coins: 5,
+  steps: [],
+  reward: {
+    text: 'Nayi: "Perfect! You know all the dogs now."',
+    es: '¡Perfecto! Ya conoces a todos los perros.',
+    sub: 'Ganaste 5 monedas. Próximamente: la oficina de Esteban (bloque 6-C).',
+    say: 'Perfect! You know all the dogs now.',
   },
 }

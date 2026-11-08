@@ -786,4 +786,14 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'suit = quedar bien, convenir (Red suits you). fit = quedar de talla (These boots fit me). match = combinar, coincidir (Her shirt matches her shoes).' },
     { who: 'board', text: 'Errores típicos: ✗ experience on animal care → ✓ experience in animal care. ✗ responsible of the dogs → ✓ responsible for the dogs.' },
   ],
+  // B1-06 · First Job, bloque B (las jaulas): Nayi presenta a los perros con oraciones de relativo
+  'relative-clauses': [
+    { who: 'nayi', text: "Hi! I'm Nayi. I work here with the dogs. Let me introduce them!", es: '¡Hola! Soy Nayi. Trabajo aquí con los perros. ¡Déjame presentártelos!' },
+    { who: 'nayi', text: 'Laica is the dog that sleeps all day.', es: 'Laica es el perro que duerme todo el día.' },
+    { who: 'nayi', text: 'Kitay is the one whose collar is red.', es: 'Kitay es el que tiene el collar rojo.' },
+    { who: 'board', text: 'Una oración de relativo da más información sobre un sustantivo. who = personas (the girl who works here). that = cosas y animales (the dog that sleeps). whose = posesión (the dog whose collar is red). where = lugares (the shelter where I work).' },
+    { who: 'board', text: 'Sin pronombre: si el pronombre es el objeto, se puede quitar. Fresas is the dog I walked yesterday. No repitas el objeto: ✗ the dog that I walked it.' },
+    { who: 'nayi', text: 'Zirius is the dog that plays with the ball. Lupe is the dog that barks at everything. Fresas is the dog I walked yesterday.', es: 'Zirius es el perro que juega con la pelota. Lupe es el perro que ladra a todo. Fresas es el perro que paseé ayer.' },
+    { who: 'board', text: "Errores típicos: ✗ The girl which works here → ✓ The girl who works here. ✗ The dog who's collar is red → ✓ The dog whose collar is red. (who's = who is)" },
+  ],
 }

@@ -1148,6 +1148,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Vocabulario: apply (postularse), salary (salario), experience (experiencia), unemployed (desempleado), fired (despedido).',
     ],
   },
+  'relative-clauses': {
+    name: 'Oraciones de relativo',
+    level: 'B1',
+    lesson: [
+      'Una oración de relativo da más información sobre un sustantivo. who = personas (the girl who works here). that = cosas y animales (the dog that sleeps). whose = posesión (the dog whose collar is red). where = lugares (the shelter where I work).',
+      'Sin pronombre: si el pronombre es el objeto, se puede quitar. Fresas is the dog I walked yesterday. No repitas el objeto: ✗ the dog that I walked it.',
+      "Errores típicos: ✗ The girl which works here → ✓ The girl who works here. ✗ The dog who's collar is red → ✓ The dog whose collar is red. (who's = who is)",
+    ],
+  },
   'work-english': {
     name: 'Inglés en el trabajo',
     level: 'B1',
