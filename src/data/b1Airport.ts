@@ -54,7 +54,7 @@ export const B1_02_ENEMIES: Record<string, EnemyDef> = {
     before: [{ text: "I already haven't checked in! The plane has just left yesterday!", es: '¡Todavía no me registré! ¡El avión acaba de irse ayer! (already haven\'t y has just left yesterday: mal).' }],
     after: [{ text: "I see. My flight hasn't left. I'm early!", es: 'Ya veo. Mi vuelo no ha salido. ¡Estoy temprano!' }],
     freed: { text: 'Have a good flight, and thank you!', es: '¡Buen vuelo, y gracias!' },
-    bonus: { q: 'Elige la frase correcta:', options: ['She has just arrived.', 'She has just arrive.', 'She just has arrived.'], answer: 0, tip: 'just va entre has y el participio: has just arrived.' },
+    bonus: { q: 'Elige la frase correcta:', options: ['She has just arrive.', 'She has just arrived.', 'She just has arrived.'], answer: 1, tip: 'just va entre has y el participio: has just arrived.' },
   },
   // Esbirro invitado: Jack the Rival (mismo aspecto que en A2-07, data/a2Race.ts). No da atuendo
   [B1_02_JACK]: {
@@ -73,7 +73,7 @@ export const B1_02_ENEMIES: Record<string, EnemyDef> = {
     before: [{ text: "Look who's here! I have arrived yesterday and I have already see the whole city. Have you seen Lumen Bay yet? No? Ha!", es: '¡Mira quién llegó! Llegué ayer y ya vi toda la ciudad. ¿Ya viste Lumen Bay? ¿No? ¡Ja! (have arrived yesterday y have already see: mal).' }],
     after: [{ text: "Fine... you win this time. I haven't seen the harbour yet, to be honest.", es: 'Está bien... ganas esta vez. No he visto el puerto todavía, para ser sincero.' }],
     freed: { text: 'See you around. Maybe we can visit the harbour together... maybe.', es: 'Nos vemos. Quizá podamos visitar el puerto juntos... quizá.' },
-    bonus: { q: 'Before you go! The plane has ___ landed. Look!', options: ['just', 'yet', 'ago'], answer: 0, tip: 'Hace muy poco: has just landed.' },
+    bonus: { q: 'Before you go! The plane has ___ landed. Look!', options: ['yet', 'ago', 'just'], answer: 2, tip: 'Hace muy poco: has just landed.' },
   },
   // Bloque D · jefe (2 fases): Captain Delay, la voz corrompida de los altavoces del aeropuerto. Da la gorra de capitán
   [B1_02_BOSS]: {
@@ -111,6 +111,6 @@ export const B1_02_ENEMIES: Record<string, EnemyDef> = {
     before: [{ text: "Attention, please! Flight 404 hasn't leave yet! Flight 12 has already left tomorrow! All passengers will to wait forever!", es: '¡Atención, por favor! ¡El vuelo 404 todavía no sale! ¡El vuelo 12 ya salió mañana! ¡Todos los pasajeros van a esperar para siempre! (hasn\'t leave, has already left tomorrow y will to wait: mal).' }],
     after: [{ text: 'Departing... arriving... the board is clear. Every flight is on time again.', es: 'Saliendo... llegando... el tablero está limpio. Todos los vuelos salen a tiempo otra vez.' }],
     freed: { text: 'Have a pleasant journey!', es: '¡Buen viaje!' },
-    farewell: { q: "Captain Delay says: 'Have a pleasant journey!' What do you answer?", options: ['Thank you! Goodbye!', 'Thanks you! Goodbyes!', 'Thank! Good bye you!'], answer: 0, tip: 'Para agradecer y despedirte: Thank you! Goodbye!' },
+    farewell: { q: "Captain Delay says: 'Have a pleasant journey!' What do you answer?", options: ['Thanks you! Goodbyes!', 'Thank you! Goodbye!', 'Thank! Good bye you!'], answer: 1, tip: 'Para agradecer y despedirte: Thank you! Goodbye!' },
   },
 }
