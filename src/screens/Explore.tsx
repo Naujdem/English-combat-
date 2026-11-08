@@ -51,7 +51,8 @@ import { NotebookIcon } from '../components/LNotebook'
 import { B1_03_NOTEBOOK, B1_03_PHONE } from '../data/b1Words'
 import { B1_05_BOX, B1_05_BOXES, B1_05_ENVELOPE, B1_05_NOTEBOOK, B1_05_PAPERS } from '../data/b1Flat'
 import { B1_04_CLOSE, B1_04_FRAGMENTS, B1_04_FRIEND, B1_04_MAYA, B1_04_MAYA_BANK, B1_04_MAYA_LOBBY, B1_04_MOSCU, B1_04_RESIDENCE_ID, B1_04_RICARDO } from '../data/b1Residence'
-import { B1_04_MAYA_CHAT } from '../data/friends'
+import { B1_04_MAYA_CHAT, B1_06_LEO_CHAT } from '../data/friends'
+import { B1_06_CLOSE, B1_06_FRAGMENTS, B1_06_FRIEND, B1_06_LEO, B1_06_OFFICE_ID } from '../data/b1EstebanOffice'
 /** B1-04: quién acompaña la práctica guiada (si no, Leo) */
 const PRACTICE_GUIDES = [B1_04_MAYA, B1_04_MAYA_BANK, B1_04_RICARDO]
 import { B1_04_TOOLBOX } from '../data/b1Neighbours'
@@ -150,7 +151,7 @@ type Talk = {
   level?: string
   note?: string
   /** Charla especial de una misión */
-  quest?: 'lostIntro' | 'b1-02-plane' | 'b1-04-maya'
+  quest?: 'lostIntro' | 'b1-02-plane' | 'b1-04-maya' | 'b1-06-leo'
 }
 
 export function Explore({ state, update, onBattle, onWorld }: { state: GameState; update: Update; onBattle: (enemyId: string) => void; onWorld: () => void }) {
@@ -317,6 +318,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           setMsg(null)
           const c = B1_04_MAYA_CHAT
           setTalk({ friendId: 'maya', story: null, lines: [{ who: 'friend', text: c.text, es: c.es, options: c.options }], title: 'Charla casual', level: 'B1', quest: 'b1-04-maya' })
+          return
+        }
+        // B1-06 · First Job: la charla de amistad con Leo en la oficina (una sola vez; se guarda B1_06_FRIEND)
+        if (e.id === B1_06_LEO && !state.opened.includes(B1_06_FRIEND)) {
+          setMsg(null)
+          const c = B1_06_LEO_CHAT
+          setTalk({ friendId: 'leo', story: null, lines: [{ who: 'friend', text: c.text, es: c.es, options: c.options }], title: 'Charla casual', level: 'B1', quest: 'b1-06-leo' })
           return
         }
         const pend = taskOf(e.id, [...state.opened, ...state.defeated])
@@ -905,6 +913,16 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: 'Marisol te espera en el mostrador.', tone: 'good' })
                 return
               }
+              if (t.quest === 'b1-06-leo') {
+                // Charla casual B1 con Leo: la amistad cambia con la regla de las charlas casuales. Después, Esteban cierra la misión
+                update((s) => {
+                  const n = applyCasual(s, 'leo', delta)
+                  return { ...n, opened: n.opened.includes(B1_06_FRIEND) ? n.opened : [...n.opened, B1_06_FRIEND] }
+                })
+                if (delta < 0) setMsg({ text: `${talkFriend.name} no te entendió. La amistad bajó un poco.`, sub: 'Esteban te espera en su escritorio.', tone: 'warn' })
+                else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: 'Esteban te espera en su escritorio.', tone: 'good' })
+                return
+              }
               if (t.story !== null) {
                 const index = t.story
                 update((s) => completeStory(s, t.friendId, index, delta))
@@ -1163,6 +1181,18 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           memoryNumber={5}
           onDone={() => {
             update((s) => (s.opened.includes(B1_04_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B1_04_FRAGMENTS] }))
+            onWorld()
+          }}
+        />
+      )}
+      {/* B1-06 · cierre: al guardar closeId(6), dos fragmentos se juntan (memoryOpenId(7) = closeId(6): el recuerdo 7 queda abierto) */}
+      {scene.id === B1_06_OFFICE_ID && state.opened.includes(B1_06_CLOSE) && !state.opened.includes(B1_06_FRAGMENTS) && !task && !outro && (
+        <FragmentJoin
+          state={state}
+          update={update}
+          memoryNumber={7}
+          onDone={() => {
+            update((s) => (s.opened.includes(B1_06_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B1_06_FRAGMENTS] }))
             onWorld()
           }}
         />

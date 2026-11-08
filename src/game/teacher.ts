@@ -867,7 +867,7 @@ export function b1Mission5(s: GameState, stage: 'letter' | 'notebook' | 'jobs' |
  *  lesson: en el refugio, frente a Ms. Haddad (la lección sale de nuevo) · board: lección hecha (junto al tablón)
  *  apply: tablón hecho (junto a la mesa de postulación) · nayi / dogs: bloque B, en las jaulas (ver abajo)
  */
-export function b1Mission6(s: GameState, stage: 'lesson' | 'board' | 'apply' | 'nayi' | 'dogs' | 'experience' | 'volunteers' | 'interview'): GameState {
+export function b1Mission6(s: GameState, stage: 'lesson' | 'board' | 'apply' | 'nayi' | 'dogs' | 'experience' | 'volunteers' | 'interview' | 'boss' | 'leo' | 'close'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5)])
   const home = { ...b, screen: 'explore' as const, sceneId: B1_06_SHELTER.id, pos: { x: 6, y: 3 }, opened: b.opened.filter((o) => !o.startsWith('b1-06-')), seenLesson: b.seenLesson.filter((t) => t !== 'work-english') }
   if (stage === 'lesson') return home
@@ -886,7 +886,21 @@ export function b1Mission6(s: GameState, stage: 'lesson' | 'board' | 'apply' | '
   if (stage === 'experience') return exp
   const volunteers = { ...exp, pos: { x: 6, y: 4 }, opened: add(exp.opened, ['b1-06-experience']), seenLesson: add(exp.seenLesson, ['experience-b1']) as GameState['seenLesson'] }
   if (stage === 'volunteers') return volunteers
-  return { ...volunteers, sceneId: B1_06_OFFICE.id, pos: { x: 3, y: 3 }, defeated: add(volunteers.defeated, vol) }
+  // La charla de Leo, el cierre y su animación de fragmentos vuelven a salir
+  const interview = {
+    ...volunteers,
+    sceneId: B1_06_OFFICE.id,
+    pos: { x: 3, y: 3 },
+    defeated: add(volunteers.defeated, vol).filter((d) => d !== 'b1-06-boss'),
+    opened: volunteers.opened.filter((o) => o !== 'b1-06-interview' && o !== 'b1-06-friend' && o !== 'b1-06-close' && o !== 'b1-06-fragments'),
+  }
+  if (stage === 'interview') return interview
+  // Bloque D. boss: entrevista hecha (frente a The Interviewer) · leo: jefe vencido (junto a Leo) · close: charla hecha (frente a Esteban)
+  const boss = { ...interview, opened: add(interview.opened, ['b1-06-interview']) }
+  if (stage === 'boss') return boss
+  const leo = { ...boss, pos: { x: 5, y: 3 }, defeated: add(boss.defeated, ['b1-06-boss']) }
+  if (stage === 'leo') return leo
+  return { ...leo, pos: { x: 3, y: 3 }, opened: add(leo.opened, ['b1-06-friend']) }
 }
 
 PRESETS.push(

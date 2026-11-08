@@ -786,6 +786,20 @@ export const B1_04_MAYA_CHAT: CasualChat = {
   ],
 }
 
+/** B1-06 · First Job, bloque D: la charla de amistad con Leo en la oficina (una vez; se guarda B1_06_FRIEND en Explore.tsx) */
+export const B1_06_LEO_CHAT: CasualChat = {
+  requires: null,
+  level: 'B1',
+  text: 'I heard you had a job interview! What job would you like to have one day?',
+  es: '¡Me enteré de que tuviste una entrevista de trabajo! ¿Qué trabajo te gustaría tener algún día?',
+  options: [
+    { text: "I'd like to be a vet. I love animals, and I've learned a lot here.", textEs: 'Me gustaría ser veterinario. Amo a los animales y he aprendido mucho aquí.', reply: 'A vet! That job suits you. I can see it!', es: '¡Veterinario! Ese trabajo te queda bien. ¡Lo veo!', effect: 2 },
+    { text: 'I want to be a teacher, because I like helping people learn.', textEs: 'Quiero ser profesor, porque me gusta ayudar a la gente a aprender.', reply: "A teacher? Cool! You'd be patient and kind.", es: '¿Profesor? ¡Genial! Serías paciente y amable.', effect: 2 },
+    { text: "I don't know yet. I'm still thinking about it.", textEs: 'Todavía no sé. Sigo pensándolo.', reply: "That's OK! You have time to find the right job.", es: '¡Está bien! Tienes tiempo para encontrar el trabajo adecuado.', effect: 1 },
+    { text: 'Job I the want to dog.', textEs: '(No tiene sentido.)', reply: "Sorry, I didn't understand.", es: 'Perdón, no te entendí.', effect: -1 },
+  ],
+}
+
 export const B1_02_PLANE_CHATS: CasualChat[] = [
   {
     requires: null,

@@ -909,6 +909,22 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'Esteban',
     look: { shirt: '#38527a', hair: '#3a3a3a', skin: '#e1b896', gender: 'male' },
     doneLine: { text: 'Thank you. I need to think about it.', es: 'Gracias. Tengo que pensarlo.' },
+    // Tras la entrevista, la luz gris lo convierte en The Interviewer (jefe, data/b1InterviewerBoss.ts)
+    until: 'b1-06-interview',
+  },
+  // B1-06 · bloque D: Leo aparece al vencer a The Interviewer (mismo look que FRIENDS.leo; charla, quest 'b1-06-leo' en Explore.tsx)
+  'b1-06-leo': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    after: 'b1-06-boss',
+    doneLine: { text: 'A vet or a teacher... you have time to find the right job.', es: 'Veterinario o profesor... tienes tiempo para encontrar el trabajo adecuado.' },
+  },
+  // Esteban vuelve a su escritorio tras la charla con Leo: cierra la misión (tarea b1-06-close)
+  'b1-06-esteban-close': {
+    name: 'Esteban',
+    look: { shirt: '#38527a', hair: '#3a3a3a', skin: '#e1b896', gender: 'male' },
+    after: 'b1-06-friend',
+    doneLine: { text: 'Welcome to Lumen Paws. You start on Monday.', es: 'Bienvenido a Lumen Paws. Empieza el lunes.' },
   },
   // Los 5 perros: solo examinables (se dibujan con ShelterDog, Explore.tsx)
   'b1-06-zirius': {

@@ -321,6 +321,8 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   'gorra-de-capitan': { name: 'Gorra de capitán', color: '#1f3c58' },
   // B1-04 · House Rules: regalo de Mr. Fine Print (jefe). Una casita con una llave que cuelga del cinturón (Sprite.tsx, charm)
   'llavero-residencia': { name: 'Llavero de la residencia', color: '#d4a63a' },
+  // B1-06 · First Job: regalo de The Interviewer (jefe). Se dibuja como 'camiseta-dorada': solo el color de la camiseta
+  'camiseta-refugio': { name: 'Camiseta del refugio', color: '#2f7f7a' },
   // Regalos de algunos esbirros de A2 (al liberarlos)
   'chaleco-mesero': { name: 'Chaleco de mesero (A2)', color: '#5a3a2e' },
   'overol-taller': { name: 'Overol del taller de Hale (A2)', color: '#4a5560' },
