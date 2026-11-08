@@ -268,6 +268,12 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       return { title: 'Hábito de antes: used to + verbo base:', parts: [S('Sujeto'), '+', K('used to'), '+', V('verbo'), '+', R('...')] }
     case 'deduction':
       return { title: "Deducción: must (seguro) · might (quizá) · can't (imposible) + verbo base:", parts: [S('Sujeto'), '+', K("must / might / can't"), '+', V('be / verbo base'), '+', R('...')] }
+    case 'football-results':
+      return { title: 'Resultados: win + partido · beat + equipo · lose + partido · It ended in a draw:', parts: [S('Equipo'), '+', V('won / beat / lost'), '+', K('equipo / partido'), '+', R('3–1')] }
+    case 'emphasis-b1':
+      if (/^what\b/i.test(sentence)) return { title: 'What a + (adjetivo) + sustantivo singular:', parts: [K('What a'), '+', V('(adjetivo)'), '+', R('sustantivo!')] }
+      if (/\bsuch\b/i.test(sentence)) return { title: 'such a + (adjetivo) + sustantivo:', parts: [S('Sujeto'), '+', V('is / was'), '+', K('such a'), '+', R('adjetivo + sustantivo')] }
+      return { title: 'so + adjetivo (sin sustantivo):', parts: [S('Sujeto'), '+', V('is / was'), '+', K('so'), '+', R('adjetivo')] }
     case 'superlatives-b1':
       return { title: 'Superlativo: the + adjetivo corto con -est · the most + adjetivo largo (good → the best):', parts: [S('Sujeto'), '+', V('is / are'), '+', K('the -est / the most'), '+', R('... in / of ...')] }
     case 'deduction-past':

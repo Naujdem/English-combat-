@@ -32,7 +32,9 @@ import { B1_06_WHICH_DOG } from './b1Kennels'
 import type { WhichDogRound } from '../components/WhichDog'
 import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
 import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS, B1_07_PRACTICE4_IDS } from './questions-b1-07'
-import { B1_08_PRACTICE_IDS, B1_08_TEAM_IDS } from './questions-b1-08'
+import { B1_08_EMPHASIS_IDS, B1_08_PRACTICE_IDS, B1_08_RESULTS_IDS, B1_08_TEAM_IDS } from './questions-b1-08'
+import type { PredictContent } from '../components/Predict'
+import { B1_08_PREDICT } from './b1Predict'
 import { B1_07_DETECTIVE_CONTENT, B1_07_TAKE_SCRIPT } from './b1Market'
 import { B1_07_ESCAPE_ROOM } from './b1Escape'
 import { B1_07_CLOSE_SCRIPT } from './b1Room'
@@ -136,6 +138,8 @@ export type NpcTask = {
   intro?: MiniStep[]
   /** Para activity 'luggage': otro contenido de Lost Luggage (B1-02). Sin el campo, el de A2-11 */
   luggage?: LuggageContent
+  /** Para activity 'predict': otro contenido de Predict (B1-08, Before the match). Sin el campo, las rondas de A2 con Rosie */
+  predict?: PredictContent
   /** Para activity 'vocab': las palabras y el título del repaso (4 de 5 aciertos) */
   vocab?: { title: string; place: string; words: { en: string; es: string }[] }
 }
@@ -5227,5 +5231,60 @@ NPC_TASKS['b1-08-team'] = {
     es: '(Las puertas están abiertas. El partido está por empezar.)',
     sub: 'Ganaste 5 monedas. La puerta de las gradas: próximamente, el partido (bloque 8-B).',
     say: 'The gates are open. The match is about to begin.',
+  },
+}
+
+// ── B1-08 · Game Day, bloque B (las gradas; escena en data/b1Stands.ts). NO guarda closeId(8) ──
+// La pizarra de predicciones: Predict "Before the match" (will y going to; contenido en data/b1Predict.tsx). 5 monedas
+NPC_TASKS['b1-08-predict'] = {
+  npc: 'b1-08-predict-board',
+  done: 'b1-08-predict',
+  activity: 'predict',
+  predict: B1_08_PREDICT,
+  coins: 5,
+  steps: [],
+  reward: {
+    text: 'The final begins!',
+    es: '¡Comienza la final!',
+    sub: 'Ganaste 5 monedas. Habla con Jose Kike en su cabina.',
+    say: 'The final begins!',
+  },
+}
+
+// Jose Kike: lección 'football-results' + práctica b1-08-r1…r8 (se desbloquea al terminar Predict)
+NPC_TASKS['b1-08-results'] = {
+  npc: 'b1-08-josekike',
+  done: 'b1-08-results',
+  lesson: 'football-results',
+  activity: 'practice',
+  practice: 'football-results',
+  practiceIds: B1_08_RESULTS_IDS,
+  requires: { id: 'b1-08-predict', text: 'Jose Kike.', es: 'Jose Kike.', sub: 'Primero completa la pizarra de predicciones.' },
+  steps: [],
+  reward: {
+    text: "Jose Kike: And Lumen Bay is one goal down: it's 0–1!",
+    es: 'Jose Kike: ¡Y Lumen Bay va perdiendo por un gol: 0 a 1!',
+    sub: 'Lección y práctica hechas. Habla otra vez con Jose Kike.',
+    say: "And Lumen Bay is one goal down: it's 0–1!",
+  },
+}
+
+// Jose Kike (segunda tarea del mismo personaje): lección 'emphasis-b1' + práctica b1-08-e1…e8. 5 monedas.
+// Al terminar, el portón muestra "Próximamente: el medio tiempo (bloque 8-C)". Sin closeId
+NPC_TASKS['b1-08-emphasis'] = {
+  npc: 'b1-08-josekike',
+  done: 'b1-08-emphasis',
+  lesson: 'emphasis-b1',
+  activity: 'practice',
+  practice: 'emphasis-b1',
+  practiceIds: B1_08_EMPHASIS_IDS,
+  coins: 5,
+  requires: { id: 'b1-08-results', text: 'Jose Kike.', es: 'Jose Kike.', sub: 'Primero termina los resultados con Jose Kike.' },
+  steps: [],
+  reward: {
+    text: '(The first half is over. The fans stand up and sing.)',
+    es: '(Termina el primer tiempo. Los hinchas se levantan y cantan.)',
+    sub: 'Ganaste 5 monedas. El portón: próximamente, el medio tiempo (bloque 8-C).',
+    say: 'The first half is over. The fans stand up and sing.',
   },
 }

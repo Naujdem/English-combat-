@@ -19,7 +19,7 @@ difficult=difícil;dinner=cena;do=hacer;does=hace (do, con he/she/it);dog=perro;
 easy=fácil;eat=comer;egg=huevo;eight=ocho;email=correo electrónico;english=inglés;every=cada, todos los;everyone=todos;excuse=disculpar (excuse me = disculpe);expensive=caro;eye=ojo;eyes=ojos;
 family=familia;far=lejos;farm=granja;fast=rápido;father=padre;favorite=favorito;fifteen=quince;fifty=cincuenta;find=encontrar;fine=bien;first=primero;fish=pez, pescado;five=cinco;floor=piso;
 food=comida;football=fútbol;for=para, por;fountain=fuente;four=cuatro;friday=viernes;friend=amigo;from=de, desde;front=frente (in front of = delante de);fun=divertido;funny=gracioso;game=juego;
-girl=niña, chica;give=dar;go=ir;goal=portería, meta;good=bueno;goodbye=adiós;great=genial;green=verde;guide=guía;hair=pelo;hand=mano;happy=feliz;has=tiene (have, con he/she/it);have=tener;
+girl=niña, chica;give=dar;go=ir;goal=portería, meta; gol;good=bueno;goodbye=adiós;great=genial;green=verde;guide=guía;hair=pelo;hand=mano;happy=feliz;has=tiene (have, con he/she/it);have=tener;
 he=él;head=cabeza;hello=hola;help=ayudar;her=su (de ella), la;here=aquí;hi=hola;his=su (de él);history=historia;home=casa, hogar;homework=tarea;hospital=hospital;hot=caliente;house=casa;
 how=cómo;hungry=con hambre;i=yo;ice=hielo (ice cream = helado);in=en, dentro de;is=es, está (to be);isn't=no es, no está;it=eso, lo;its=su (de una cosa);jacket=chaqueta;jeans=jeans;juice=jugo;
 jump=saltar;key=llave;kind=amable;know=saber, conocer;late=tarde (llegar tarde);learn=aprender;left=izquierda;leg=pierna;library=biblioteca;like=gustar;listen=escuchar;little=pequeño;look=mirar;
@@ -44,7 +44,7 @@ ride=montar (ride a bike = montar en bici);fly=volar;grandpa=abuelo;grandma=abue
 doctor=médico;invitation=invitación;gift=regalo;may=mayo (también: poder);january=enero;february=febrero;march=marzo;april=abril;june=junio;july=julio;august=agosto;september=septiembre;
 october=octubre;november=noviembre;december=diciembre;fifth=quinto;second=segundo;third=tercero;fourth=cuarto;hoodie=sudadera;sofa=sofá;fridge=nevera;kitchen=cocina;bedroom=cuarto, dormitorio;
 living=vivir (living room = sala);sun=sol;shine=brillar;rain=llover, lluvia;weather=clima;umbrella=paraguas;report=reportaje, informe;news=noticias;noise=ruido;hobby=pasatiempo;energy=energía;
-breaking=de última hora (breaking news);sing=cantar;song=canción;dance=bailar;draw=dibujar;watch=mirar, ver;tv=televisión;bike=bicicleta;everybody=todo el mundo;nobody=nadie;remember=recordar;
+breaking=de última hora (breaking news);sing=cantar;song=canción;dance=bailar;draw=dibujar; empate (en un partido);watch=mirar, ver;tv=televisión;bike=bicicleta;everybody=todo el mundo;nobody=nadie;remember=recordar;
 brave=valiente;hate=odiar;hurt=doler;minutes=minutos;wonderful=maravilloso;young=joven;photo=foto;photos=fotos;smile=sonreír;letter=letra, carta;strange=extraño;mean=significar;
 fifteen=quince;enjoy=disfrutar;peruvian=peruano;everything=todo;alone=solo;floor=suelo, piso;nothing=nada;mine=mío;teach=enseñar;high=alto;walk=caminar;wait=esperar;waiting=esperando;
 farmer=granjero;barn=granero;pen=corral;field=campo;pond=estanque;fence=cerca;hay=heno;wool=lana;wing=ala;wings=alas;grass=pasto;vet=veterinario;goose=ganso;geese=gansos;
@@ -131,6 +131,7 @@ device=aparato, dispositivo;devices=aparatos;scientist=científico;scientists=ci
 thief=ladrón;broken=roto (break);hidden=escondido (hide);rare=raro, poco común;stolen=robado (steal)
 informant=informante;guard=guardia;crack=rendija, grieta;mark=marca;footprints=huellas (de pies);tech=tecnología (old tech = tecnología vieja);ceiling=techo (por dentro);vendor=vendedor;broker=intermediario, comerciante;mud=barro, lodo;symbols=símbolos;symbol=símbolo
 final=final (el último partido);goalkeeper=portero, portera;stadium=estadio;atmosphere=ambiente;crowd=multitud, público;strongest=el más fuerte (strong);tallest=el más alto (tall);exciting=emocionante;loudest=el más ruidoso (loud)
+score=marcador, anotar (un gol);beat=ganarle a (un equipo);win=ganar (un partido o una copa);fans=hinchas, aficionados;fan=hincha, aficionado;referee=árbitro;penalty=penalti;thrilling=emocionantísimo, apasionante;disappointing=decepcionante;commentator=comentarista;nil=cero (en un marcador);winning=ganando (win)
 `
 
 const BASE: Record<string, string> = Object.fromEntries(

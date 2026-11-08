@@ -227,6 +227,9 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
             <div className="mt-1 grid gap-2">
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission8(s, 'invite'))}>B1-8: la invitación (superlativos)</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission8(s, 'team'))}>B1-8: Julian e Ilva</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission8(s, 'predict'))}>B1-8: Predict</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission8(s, 'results'))}>B1-8: Jose Kike (resultados)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission8(s, 'emphasis'))}>B1-8: Jose Kike (what a / such / so)</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>

@@ -6,7 +6,7 @@ import type { GameState, SceneDef, Zone } from '../game/types'
  *
  * Una plaza con banderines, un puesto de bufandas (solo decoración), la puerta de las gradas al fondo y un tablero con el torneo.
  * Orden: la persona especial: lección 'superlatives-b1' + práctica (b1-08-invite) → Julian (con la entrenadora Ilva a su lado):
- *   la charla y la práctica de escucha (b1-08-team, 5 monedas) → la puerta de las gradas: "Próximamente: el partido (bloque 8-B)".
+ *   la charla y la práctica de escucha (b1-08-team, 5 monedas) → la puerta de las gradas lleva a las gradas (bloque 8-B, data/b1Stands.ts).
  * Ningún bloque A guarda closeId(8) (se guarda en 8-D). La bufanda del equipo se entrega en 8-D.
  */
 export const B1_08_STADIUM_ID = 'b1-08-stadium'
@@ -59,22 +59,20 @@ export const B1_08_STADIUM: SceneDef = {
     '3,2': { text: 'Team scarves.', sub: 'Bufandas del equipo.', say: 'Team scarves.' },
     '10,2': { text: 'The tournament.', sub: 'El tablero del torneo.', say: 'The tournament.' },
   },
-  // La puerta de las gradas: cerrada hasta la charla de Julian y la entrenadora Ilva; después, el partido llega en el bloque 8-B.
+  // La puerta de las gradas: cerrada hasta la charla de Julian y la entrenadora Ilva; después lleva a las gradas (bloque 8-B, data/b1Stands.ts).
   // La salida: con el botón Mapa
   locked: (x, y, s) => {
     if (x === 6 && y === 0) {
       if (!s.opened.includes(B1_08_TEAM)) return NOT_YET('Primero habla con Julian y la entrenadora Ilva.')
-      return { text: 'Próximamente: el partido (bloque 8-B)', sub: 'Próximamente: el partido (bloque 8-B).' }
     }
     if (x === 6 && y === 6) return { text: 'The way out.', sub: 'Para volver al mapa, toca el botón Mapa.' }
     return null
   },
-  links: {},
+  links: { '6,0': { sceneId: 'b1-08-stands', pos: { x: 6, y: 5 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'La persona especial', done: s.opened.includes(B1_08_INVITE) },
     { label: 'Julian y la entrenadora Ilva', done: s.opened.includes(B1_08_TEAM) },
-    { label: 'Próximamente: el partido (bloque 8-B)', done: false },
   ],
   intro: {
     first: 'Game day! — ¡Día de partido!',

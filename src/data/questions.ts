@@ -1161,6 +1161,26 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       "Para deducir NO usamos mustn't: ✗ It mustn't be free → ✓ It can't be free.",
     ],
   },
+  'football-results': {
+    name: 'Resultados deportivos',
+    level: 'B1',
+    lesson: [
+      "Resultados: They won 3–1 (ganaron 3 a 1). They lost 2–0. It ended in a draw (terminó empatado). The score is 2–2. They're two goals down (van perdiendo por dos). They're one goal up (van ganando por uno).",
+      'win / beat / lose: win + partido o copa (win the final); beat + equipo (beat the Red Lions); lose + partido (lose the match).',
+      'Los marcadores se leen así: 3–1 = three–one; 0 = nil o zero.',
+      'Errores típicos: ✗ They won the Red Lions → ✓ They beat the Red Lions. ✗ It ended on a draw → ✓ It ended in a draw.',
+    ],
+  },
+  'emphasis-b1': {
+    name: 'What a / such / so',
+    level: 'B1',
+    lesson: [
+      'what a + (adjetivo) + sustantivo singular: What a goal! What a great goal! Con plural o incontable no lleva a: What beautiful goals! What bad luck!',
+      'such a + (adjetivo) + sustantivo: such a good game. so + adjetivo o adverbio (sin sustantivo): so exciting, so fast.',
+      'It was such a good game. = The game was so good.',
+      'Errores típicos: ✗ Such good game! → ✓ Such a good game! ✗ What goal! → ✓ What a goal!',
+    ],
+  },
   'superlatives-b1': {
     name: 'Superlativos',
     level: 'B1',

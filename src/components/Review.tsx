@@ -20,7 +20,7 @@ export const A1_ORDER: TopicId[] = ['greetings', 'to-be', 'possessives', 'prepos
 export const A2_ORDER: TopicId[] = ['should-must', 'invitations', 'requests', 'instructions', 'past-simple', 'past-simple-comparatives', 'superlatives-comparatives-race', 'past-simple-continuous', 'recipes-some-any', 'present-perfect', 'places-directions', 'future-plans', 'health-emergency', 'wishes-conditional', 'clothes-shopping', 'food-dinner', 'people-relationships', 'housework', 'holidays']
 
 /** Temas de B1 en el orden en que aparecen en la historia */
-export const B1_ORDER: TopicId[] = ['cause-effect', 'emergencies', 'pp-yet-already', 'travel-phones', 'futures-b1', 'informal-messages', 'present-perfect-cont', 'obligation-b1', 'bank-phrasal', 'used-to', 'jobs-b1', 'get-used-to', 'work-english', 'relative-clauses', 'experience-b1', 'passive-news', 'deduction', 'deduction-past', 'superlatives-b1']
+export const B1_ORDER: TopicId[] = ['cause-effect', 'emergencies', 'pp-yet-already', 'travel-phones', 'futures-b1', 'informal-messages', 'present-perfect-cont', 'obligation-b1', 'bank-phrasal', 'used-to', 'jobs-b1', 'get-used-to', 'work-english', 'relative-clauses', 'experience-b1', 'passive-news', 'deduction', 'deduction-past', 'superlatives-b1', 'football-results', 'emphasis-b1']
 
 const LEVELS: { level: string; order: TopicId[] }[] = [
   { level: 'A1', order: A1_ORDER },
