@@ -1181,6 +1181,17 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Errores típicos: ✗ Such good game! → ✓ Such a good game! ✗ What goal! → ✓ What a goal!',
     ],
   },
+  'question-tags': {
+    name: 'Question tags',
+    level: 'B1',
+    lesson: [
+      "Question tag = pregunta corta al final para confirmar. Frase positiva → tag negativo: It's a great match, isn't it? Frase negativa → tag positivo: It isn't easy, is it?",
+      "El tag usa el mismo auxiliar: is → isn't it; are → aren't they; was → wasn't it; can → can't she; will → won't he. Sin auxiliar usa do / does / did: You like football, don't you? He scored, didn't he?",
+      "Casos especiales: I am → aren't I? (I'm right, aren't I?). There is → isn't there?",
+      'Entonación: si la voz baja, confirmas (ya lo sabes); si sube, preguntas de verdad.',
+      "Errores típicos: ✗ They're playing well, don't they? → ✓ They're playing well, aren't they? ✗ Great match, isn't? → ✓ Great match, isn't it?",
+    ],
+  },
   'superlatives-b1': {
     name: 'Superlativos',
     level: 'B1',
