@@ -426,7 +426,8 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'Leo',
     look: { shirt: '#d4743a', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male', accessory: 'glasses' },
     after: 'b1-02-futures',
-    doneLine: { text: "We're home! Well... almost. Did you hear that? The airport speakers are making a strange noise.", es: '¡Ya estamos! Bueno... casi. ¿Oíste eso? Los altavoces del aeropuerto hacen un ruido raro.' },
+    // Cuando ya no le quedan tareas (después del cierre de la misión 2)
+    doneLine: { text: 'The announcements are normal again. What a day!', es: 'Los anuncios están normales otra vez. ¡Qué día!' },
   },
   'b1-02-leo': {
     name: 'Leo',
