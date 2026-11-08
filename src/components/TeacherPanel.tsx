@@ -220,6 +220,7 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission7(s, 'boss'))}>B1-7: jefe The Broker</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission7(s, 'take'))}>B1-7: Detrás del estante</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission7(s, 'escape'))}>B1-7: Escape Room</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission7(s, 'close'))}>B1-7: cierre</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>
