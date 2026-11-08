@@ -70,6 +70,7 @@ import { GuessAnimal } from '../components/GuessAnimal'
 import { WhichDog } from '../components/WhichDog'
 import { ShelterDog } from '../components/ShelterDog'
 import { B1_06_DOG_NPCS } from '../data/b1Kennels'
+import { B1_07_NEWS, B1_07_NOTEBOOK, B1_07_TV } from '../data/b1Room'
 import { AnimalPens } from '../components/AnimalPens'
 import { Planner } from '../components/Planner'
 import { Attendance } from '../components/Attendance'
@@ -325,6 +326,12 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           setMsg(null)
           const c = B1_06_LEO_CHAT
           setTalk({ friendId: 'leo', story: null, lines: [{ who: 'friend', text: c.text, es: c.es, options: c.options }], title: 'Charla casual', level: 'B1', quest: 'b1-06-leo' })
+          return
+        }
+        // B1-07 · The Underworld: el cuaderno del escritorio se desbloquea al terminar la tele; su lección llega en el bloque 7-B
+        if (e.id === B1_07_NOTEBOOK) {
+          if (!state.opened.includes(B1_07_NEWS)) setMsg({ text: 'Todavía no.', sub: 'Primero mira la televisión.', tone: 'warn' })
+          else setMsg({ text: 'El cuaderno de L', sub: 'Próximamente: el Cuaderno de L (bloque 7-B)' })
           return
         }
         const pend = taskOf(e.id, [...state.opened, ...state.defeated])
@@ -744,7 +751,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_05_ENVELOPE || e.id === B1_06_BOARD || e.id === B1_06_DESK || e.id === 'b1-06-orders' ? <NotebookIcon lit={pending} /> : B1_06_DOG_NPCS[e.id] ? <ShelterDog who={B1_06_DOG_NPCS[e.id]} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS || e.id === B1_07_TV ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_07_NOTEBOOK || e.id === B1_05_ENVELOPE || e.id === B1_06_BOARD || e.id === B1_06_DESK || e.id === 'b1-06-orders' ? <NotebookIcon lit={pending} /> : B1_06_DOG_NPCS[e.id] ? <ShelterDog who={B1_06_DOG_NPCS[e.id]} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />

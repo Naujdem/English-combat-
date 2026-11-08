@@ -44,6 +44,7 @@ import { B1_03_QUESTIONS } from './questions-b1-03'
 import { B1_04_QUESTIONS } from './questions-b1-04'
 import { B1_05_QUESTIONS } from './questions-b1-05'
 import { B1_06_QUESTIONS } from './questions-b1-06'
+import { B1_07_QUESTIONS } from './questions-b1-07'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -407,6 +408,7 @@ export const QUESTIONS: Question[] = [
   ...B1_04_QUESTIONS,
   ...B1_05_QUESTIONS,
   ...B1_06_QUESTIONS,
+  ...B1_07_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -1146,6 +1148,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Un anuncio de empleo (job advert) tiene partes: Job (el puesto), Requirements (requisitos), Pay (el sueldo) y How to apply (cómo postularse).',
       'Send your CV by Friday = manda tu hoja de vida a más tardar el viernes (by + día = fecha límite, deadline).',
       'Vocabulario: apply (postularse), salary (salario), experience (experiencia), unemployed (desempleado), fired (despedido).',
+    ],
+  },
+  'passive-news': {
+    name: 'La pasiva en las noticias',
+    level: 'B1',
+    lesson: [
+      'Pasiva = be + participio. Se usa cuando importa más lo que pasó que quién lo hizo. Presente perfecto pasivo: has been developed. Pasado pasivo: was designed. \'by scientists\' es opcional.',
+      'Pasiva: The device was made in 2060. Activa: Scientists made the device.',
+      'Errores típicos: ✗ The device was develop by scientists → ✓ The device was developed by scientists. ✗ A device has developed by scientists → ✓ A device has been developed by scientists.',
     ],
   },
   'experience-b1': {

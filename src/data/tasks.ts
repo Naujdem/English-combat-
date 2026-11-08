@@ -31,6 +31,7 @@ import { B1_06_JOB_ADVERT } from './b1Shelter'
 import { B1_06_WHICH_DOG } from './b1Kennels'
 import type { WhichDogRound } from '../components/WhichDog'
 import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
+import { B1_07_PRACTICE_IDS } from './questions-b1-07'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -5047,5 +5048,25 @@ NPC_TASKS['b1-06-close'] = {
     es: 'Misión 6: Primer trabajo',
     sub: 'Ganaste la camiseta del refugio. Dos fragmentos se juntaron: se abrió el recuerdo 7.',
     say: 'My first job.',
+  },
+}
+
+// ── B1-07 · The Underworld, bloque A (recuerdo 7; escena en data/b1Room.ts). Sin monedas. Este bloque NO guarda closeId(7) ──
+// La tele: lección 'passive-news' (las noticias y la página 14 del Cuaderno de L) + práctica b1-07-n1…n8.
+// Al terminar llega el mensaje de la amiga y se desbloquea el cuaderno del escritorio (Próximamente: bloque 7-B)
+NPC_TASKS['b1-07-news'] = {
+  npc: 'b1-07-tv',
+  done: 'b1-07-news',
+  lesson: 'passive-news',
+  notebookPage: 14,
+  activity: 'practice',
+  practice: 'passive-news',
+  practiceIds: B1_07_PRACTICE_IDS,
+  steps: [],
+  reward: {
+    text: "(Your phone shines. A message from your friend: 'Don't do anything stupid, L.')",
+    es: "(Tu teléfono brilla. Un mensaje de tu amiga: 'No hagas ninguna tontería, L.')",
+    sub: "(You don't answer. You look at your notebook.) — (No contestas. Miras tu cuaderno.)",
+    say: "Your phone shines. A message from your friend: 'Don't do anything stupid, L.'",
   },
 }

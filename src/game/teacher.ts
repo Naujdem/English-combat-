@@ -33,6 +33,7 @@ import { B1_HOME } from '../data/b1Home'
 import { B1_OPENING, closeId } from '../data/b1World'
 import { B1_02_LANDED, B1_02_LUMEN, B1_02_PRACTICE } from '../data/b1NewCity'
 import { B1_06_ADVERT, B1_06_READ, B1_06_SHELTER } from '../data/b1Shelter'
+import { B1_07_ROOM } from '../data/b1Room'
 import { B1_06_KENNELS, B1_06_VOLUNTEER1, B1_06_VOLUNTEER2 } from '../data/b1Kennels'
 import { B1_06_OFFICE } from '../data/b1EstebanOffice'
 import { B1_04_BOSS, B1_04_FINEPRINT, B1_04_FRIEND, B1_04_PHRASAL, B1_04_RESIDENCE, B1_04_RULES, B1_04_WELCOME } from '../data/b1Residence'
@@ -919,4 +920,15 @@ PRESETS.push(
 /** Marca todas las lecciones como vistas (para no repetirlas al revisar) */
 export function skipLessons(s: GameState): GameState {
   return { ...s, seenLesson: add(s.seenLesson, Object.keys(LESSONS)) as GameState['seenLesson'] }
+}
+
+/**
+ * Atajos de la misión B1-7 (The Underworld, recuerdo) para el panel del profe. Parten de "B1: abrir el nodo 7".
+ *  news: entra al recuerdo (el cuarto alquilado de L, frente a la tele; la lección sale de nuevo)
+ */
+export function b1Mission7(s: GameState, stage: 'news'): GameState {
+  const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6)])
+  const present = { ...b, sceneId: B1_06_SHELTER.id, pos: { ...B1_06_SHELTER.start }, recovered: b.recovered.filter((t) => t !== 'passive-news'), seenLesson: b.seenLesson.filter((t) => t !== 'passive-news'), opened: b.opened.filter((o) => !o.startsWith('b1-07-')) }
+  const pos = { news: { x: 7, y: 2 } }[stage]
+  return enterMemory(present, 7, B1_07_ROOM.id, pos)
 }
