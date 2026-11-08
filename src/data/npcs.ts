@@ -844,6 +844,19 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
     doneLine: { text: '(It must be behind the shelf. But the guard is at the door.)', es: '(Debe de estar detrás del estante. Pero el guardia está en la puerta.)' },
   },
+  // B1-07 · bloque D: el aparato detrás del estante (al vencer a The Broker; ToolboxIcon) y la salida de emergencia (al tomarlo)
+  'b1-07-device': {
+    name: 'Detrás del estante',
+    look: { shirt: '#b08a5a', hair: '#8a6a40', skin: '#c9a06a' },
+    after: 'b1-07-boss',
+    doneLine: { text: '(Inside there is the device. It shines with ancient writings.)', es: '(Adentro está el aparato. Brilla con escritos antiguos.)' },
+  },
+  'b1-07-escape': {
+    name: 'La salida de emergencia',
+    look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
+    after: 'b1-07-take',
+    doneLine: { text: 'You escaped from the Underworld.', es: 'Escapaste del bajo mundo.' },
+  },
   // ── B1-04 · House Rules, bloque A (residencia de Lumen Bay, data/b1Residence.ts) ──
   'b1-04-marisol': {
     name: 'Marisol',

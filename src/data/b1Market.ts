@@ -1,5 +1,6 @@
 import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import type { ReconstructItem } from '../components/Reconstruct'
+import type { ScriptLine } from './b1Accident'
 
 /**
  * B1-07 — The Underworld, bloque C: el bajo mundo (escena b1-07-market; es recuerdo por el prefijo "b1-07-").
@@ -8,7 +9,9 @@ import type { ReconstructItem } from '../components/Reconstruct'
  *   El informante (tarea 'b1-07-informant': página 17 del Cuaderno de L, relativos + práctica b1-07-r1…r8)
  *   → la rendija de la trastienda (tarea 'b1-07-detective': Detective = components/Reconstruct.tsx)
  *   → el guardia (esbirro b1-07-guard, delante de la puerta roja)
- *   → la puerta roja: "Próximamente: The Broker (bloque 7-D)". Ningún bloque C guarda closeId(7) (se guarda en 7-E).
+ *   → (bloque D) el jefe The Broker (Mr. Vega, 2 fases, sin atuendo) → la puerta roja se abre: "Detrás del estante"
+ *   (tarea 'b1-07-take') → "La salida de emergencia" (tarea 'b1-07-escape': Escape Room, The Moving Stone escrito,
+ *   sala en data/b1Escape.ts) → L vuelve al cuarto. Ningún bloque C ni D guarda closeId(7) (se guarda en 7-E).
  */
 export const B1_07_MARKET_ID = 'b1-07-market'
 export const B1_07_INFORMANT = 'b1-07-informant'
@@ -16,6 +19,12 @@ export const B1_07_INFORMANT = 'b1-07-informant'
 export const B1_07_CRACK = 'b1-07-crack'
 export const B1_07_DETECTIVE = 'b1-07-detective'
 export const B1_07_GUARD = 'b1-07-guard'
+/** Bloque D: el jefe The Broker, el aparato detrás del estante y la salida de emergencia */
+export const B1_07_BOSS = 'b1-07-boss'
+export const B1_07_DEVICE = 'b1-07-device'
+export const B1_07_TAKE = 'b1-07-take'
+export const B1_07_ESCAPE_NPC = 'b1-07-escape'
+export const B1_07_ESCAPE = 'b1-07-escape'
 
 /**
  * Un pasillo de puestos (leyenda de components/Tiles.tsx: m puesto de mercado · d puerta).
@@ -49,14 +58,20 @@ export const B1_07_MARKET: SceneDef = {
     { type: 'npc', id: B1_07_CRACK, x: 9, y: 4 },
     // El guardia aparece al terminar el Detective, delante de la puerta roja
     { type: 'enemy', id: B1_07_GUARD, x: 12, y: 3, after: B1_07_DETECTIVE },
+    // Bloque D: el jefe, delante de la puerta roja (tras el guardia); al vencerlo, el estante (npcs.ts, after) y la salida
+    { type: 'enemy', id: B1_07_BOSS, x: 11, y: 2, after: B1_07_GUARD },
+    { type: 'npc', id: B1_07_DEVICE, x: 11, y: 4 },
+    { type: 'npc', id: B1_07_ESCAPE_NPC, x: 12, y: 1 },
   ],
   labels: [{ text: 'Bajo mundo', x: 7, y: 5 }],
   zoneAt: () => zoneAt(),
   // La puerta roja: cerrada hasta vencer al guardia; después, el bloque 7-D
+  // La puerta roja: cerrada hasta vencer al guardia y a The Broker; después se abre
   locked: (x, y, s) => {
     if (x !== 13 || y !== 3) return null
     if (!s.defeated.includes(B1_07_GUARD)) return { text: 'Todavía no.', sub: s.opened.includes(B1_07_DETECTIVE) ? 'Primero vence al guardia.' : 'Primero habla con el informante y mira por la rendija.' }
-    return { text: 'Todavía no.', sub: 'Próximamente: The Broker (bloque 7-D).' }
+    if (!s.defeated.includes(B1_07_BOSS)) return { text: 'Todavía no.', sub: 'Primero vence a The Broker.' }
+    return null
   },
   links: { '0,3': { sceneId: 'b1-07-room', pos: { x: 10, y: 3 } } },
   requirements: [],
@@ -64,7 +79,9 @@ export const B1_07_MARKET: SceneDef = {
     { label: 'El informante', done: s.opened.includes(B1_07_INFORMANT) },
     { label: 'La rendija de la trastienda (Detective)', done: s.opened.includes(B1_07_DETECTIVE) },
     { label: 'El guardia', done: s.defeated.includes(B1_07_GUARD) },
-    { label: 'Próximamente: The Broker (bloque 7-D)', done: false },
+    { label: 'The Broker', done: s.defeated.includes(B1_07_BOSS) },
+    { label: 'Detrás del estante', done: s.opened.includes(B1_07_TAKE) },
+    { label: 'La salida de emergencia', done: s.opened.includes(B1_07_ESCAPE) },
   ],
   intro: {
     first: 'The Underworld. — El bajo mundo.',
@@ -145,3 +162,49 @@ export const B1_07_ENEMIES: Record<string, EnemyDef> = {
     freed: { text: 'You must be very brave. Be careful.', es: 'Debes de ser muy valiente. Ten cuidado.' },
   },
 }
+
+// ── Bloque D · jefe The Broker (Mr. Vega, 2 fases; modelo The Collector de 5-D). Sin reward: en los recuerdos no se ganan atuendos ──
+export const B1_07_BOSS_ENEMIES: Record<string, EnemyDef> = {
+  [B1_07_BOSS]: {
+    id: B1_07_BOSS,
+    name: 'The Broker',
+    person: 'Mr. Vega',
+    kind: 'boss',
+    hp: 8,
+    topics: ['deduction', 'deduction-past', 'passive-news'],
+    kinds: ['fix', 'fill', 'order', 'listen'],
+    tags: ['b1-07-boss'],
+    phases: [
+      {
+        hp: 4,
+        title: 'Deducción',
+        topics: ['deduction', 'deduction-past'],
+        kinds: ['fix', 'fill', 'order', 'listen'],
+        tags: ['b1-07-boss-d'],
+        line: { text: "The vendor must be hide it! She mustn't be a thief!", es: "must be hide y mustn't be: mal." },
+      },
+      {
+        hp: 4,
+        title: 'Pasiva',
+        topics: ['passive-news'],
+        kinds: ['fix', 'fill', 'order', 'listen'],
+        tags: ['b1-07-boss-p'],
+        line: { text: 'The device was sell here! Many devices have been steal!', es: 'was sell y have been steal: mal.' },
+      },
+    ],
+    onlyTags: true,
+    zone: 'casa',
+    look: { shirt: '#3b2a52', hair: '#2a2a2a', skin: '#d0a77f' },
+    before: [{ text: "The device must be stole! You can't has known where it was!", es: "must be stole y can't has known: mal." }],
+    after: [{ text: 'My back room... my business... all gone.', es: 'Mi cuarto del fondo... mi negocio... todo perdido.' }],
+    freed: { text: 'Take it. It only brings trouble.', es: 'Llévalo. Solo trae problemas.' },
+    farewell: { q: "The Broker says: 'Somebody must have told you!' What do you answer?", options: ['No, nobody told me. I worked it out.', 'No, nobody telled me. I worked it out.', 'No, nobody told me. I work it out.'], answer: 0, tip: 'tell → told (irregular); worked out, en pasado.' },
+  },
+}
+
+/** "Detrás del estante" (secuencia fija, MemoryScript): L narra */
+export const B1_07_TAKE_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(Mr. Vega falls. Behind the shelf you find a small metal box.)', es: '(Mr. Vega cae. Detrás del estante encuentras una caja metálica pequeña.)' },
+  { who: 'narrator', text: '(Inside there is the device. It shines with ancient writings.)', es: '(Adentro está el aparato. Brilla con escritos antiguos.)' },
+  { who: 'narrator', text: '(An alarm rings. Red lights everywhere. Run!)', es: '(Suena una alarma. Luces rojas por todas partes. ¡Corre!)' },
+]

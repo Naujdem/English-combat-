@@ -17,6 +17,9 @@ const RC = 'relative-clauses' as const
 const PRACTICE4 = ['b1-07-practice4']
 const GUARD = ['b1-07-guard']
 const PN2 = 'passive-news' as const
+/** Bloque D: The Broker, fase 1 (deducción) y fase 2 (pasiva) */
+const BOSS_D = ['b1-07-boss', 'b1-07-boss-d']
+const BOSS_P = ['b1-07-boss', 'b1-07-boss-p']
 
 /** Práctica del informante, en orden */
 export const B1_07_PRACTICE4_IDS = ['b1-07-r1', 'b1-07-r2', 'b1-07-r3', 'b1-07-r4', 'b1-07-r5', 'b1-07-r6', 'b1-07-r7', 'b1-07-r8']
@@ -128,5 +131,43 @@ export const B1_07_QUESTIONS: Question[] = [
     answer: 0,
     tip: 'It might have been the assistant.',
     tags: GUARD,
+  },
+  // Bloque D · The Broker, fase 1: deducción
+  { id: 'b1-07-bd1', topic: DP, kind: 'fix', prompt: 'The vendor must be hide it here.', options: ['The vendor must have hidden it here.', 'The vendor must have hide it here.', 'The vendor must hid it here.'], answer: 0, tip: 'must have + participio.', tags: BOSS_D },
+  { id: 'b1-07-bd2', topic: DE, kind: 'fix', prompt: "She mustn't be a thief. She is a teacher.", options: ["She can't be a thief. She is a teacher.", "She doesn't must be a thief. She is a teacher.", 'She no can be a thief. She is a teacher.'], answer: 0, tip: "Imposible: can't be.", tags: BOSS_D },
+  { id: 'b1-07-bd3', topic: DE, prompt: 'His shoes are covered in mud. He ___ be outside.', options: ['must', "can't", "mustn't"], answer: 0, tip: 'Prueba clara: must be.', tags: BOSS_D },
+  { id: 'b1-07-bd4', topic: DP, prompt: 'The window is closed and locked from inside. He ___ have come in through it.', options: ["can't", 'must', 'might'], answer: 0, tip: "Imposible en el pasado: can't have.", tags: BOSS_D },
+  { id: 'b1-07-bd5', topic: DE, prompt: "I don't know where it is. It ___ be anywhere.", options: ['could', 'must', "can't"], answer: 0, tip: 'No sé: could / might be.', tags: BOSS_D },
+  { id: 'b1-07-bd6', topic: DE, kind: 'order', prompt: 'Debe de estar detrás del estante.', options: ['It', 'must', 'be', 'behind', 'the', 'shelf.'], answer: 0, tip: 'must be.', tags: BOSS_D },
+  {
+    id: 'b1-07-bd7',
+    topic: DE,
+    kind: 'listen',
+    audio: "Mr. Vega's key is not on the table. He must have taken it with him. He can't be far, because his coat is here. He might be in the front room.",
+    voice: 'male',
+    prompt: '¿Dónde podría estar?',
+    options: ['En el cuarto de adelante.', 'En otra ciudad.', 'En la calle.'],
+    answer: 0,
+    tip: 'He might be in the front room.',
+    tags: BOSS_D,
+  },
+  // Bloque D · The Broker, fase 2: pasiva
+  { id: 'b1-07-bp1', topic: PN2, kind: 'fix', prompt: 'The device was sell in the black market.', options: ['The device was sold in the black market.', 'The device was selled in the black market.', 'The device sold in the black market.'], answer: 0, tip: 'Pasiva: was + participio (sell → sold).', tags: BOSS_P },
+  { id: 'b1-07-bp2', topic: PN2, kind: 'fix', prompt: 'Many devices have been steal this year.', options: ['Many devices have been stolen this year.', 'Many devices have stolen this year.', 'Many devices has been stolen this year.'], answer: 0, tip: 'have been + participio.', tags: BOSS_P },
+  { id: 'b1-07-bp3', topic: PN2, prompt: 'The market ___ closed by the police last night.', options: ['was', 'has been', 'is'], answer: 0, tip: 'Anoche: pasado, was closed.', tags: BOSS_P },
+  { id: 'b1-07-bp4', topic: PN2, prompt: 'These tools ___ used by scientists every day.', options: ['are', 'is', 'was'], answer: 0, tip: 'Plural en presente: are used.', tags: BOSS_P },
+  { id: 'b1-07-bp5', topic: PN2, prompt: 'My letters ___ never answered.', options: ['were', 'was', 'have'], answer: 0, tip: 'Plural en pasado: were answered.', tags: BOSS_P },
+  { id: 'b1-07-bp6', topic: PN2, kind: 'order', prompt: 'El aparato fue robado anoche.', options: ['The', 'device', 'was', 'stolen', 'last', 'night.'], answer: 0, tip: 'was + participio.', tags: BOSS_P },
+  {
+    id: 'b1-07-bp7',
+    topic: PN2,
+    kind: 'listen',
+    audio: 'The black market has been closed twice this year. The first time, it was closed by the police. The second time, it was closed by the weather.',
+    voice: 'female',
+    prompt: '¿Por qué lo cerraron la segunda vez?',
+    options: ['Por el clima.', 'Por la policía.', 'Por un incendio.'],
+    answer: 0,
+    tip: 'It was closed by the weather.',
+    tags: BOSS_P,
   },
 ]
