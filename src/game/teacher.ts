@@ -37,6 +37,7 @@ import { B1_07_ROOM } from '../data/b1Room'
 import { B1_06_KENNELS, B1_06_VOLUNTEER1, B1_06_VOLUNTEER2 } from '../data/b1Kennels'
 import { B1_06_OFFICE } from '../data/b1EstebanOffice'
 import { B1_08_STADIUM } from '../data/b1Stadium'
+import { B1_08_STANDS } from '../data/b1Stands'
 import { B1_04_BOSS, B1_04_FINEPRINT, B1_04_FRIEND, B1_04_PHRASAL, B1_04_RESIDENCE, B1_04_RULES, B1_04_WELCOME } from '../data/b1Residence'
 import { B1_05_BANK, B1_05_CHEST, B1_05_FLAT, B1_05_GET_USED_TO, B1_05_JOBS, B1_05_LETTER, B1_05_NOTICE1, B1_05_NOTICE2, B1_05_NOTICE_LETTER, B1_05_USED_TO, B1_05_BOSS } from '../data/b1Flat'
 import { B1_05_BANK_SCENE } from '../data/b1Bank'
@@ -951,9 +952,17 @@ export function b1Mission7(s: GameState, stage: 'news' | 'now' | 'past' | 'infor
  *  invite: en el estadio, frente a la persona especial (la lección 'superlatives-b1' sale de nuevo)
  *  team: invitación hecha (frente a Julian y la entrenadora Ilva)
  */
-export function b1Mission8(s: GameState, stage: 'invite' | 'team'): GameState {
+export function b1Mission8(s: GameState, stage: 'invite' | 'team' | 'predict' | 'results' | 'emphasis'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7)])
   const home = { ...b, screen: 'explore' as const, sceneId: B1_08_STADIUM.id, pos: { x: 4, y: 5 }, opened: b.opened.filter((o) => !o.startsWith('b1-08-')), seenLesson: b.seenLesson.filter((t) => t !== 'superlatives-b1') }
   if (stage === 'invite') return home
-  return { ...home, pos: { x: 8, y: 4 }, opened: add(home.opened, ['b1-08-invite']), seenLesson: add(home.seenLesson, ['superlatives-b1']) as GameState['seenLesson'] }
+  const team = { ...home, pos: { x: 8, y: 4 }, opened: add(home.opened, ['b1-08-invite']), seenLesson: add(home.seenLesson, ['superlatives-b1']) as GameState['seenLesson'] }
+  if (stage === 'team') return team
+  // Bloque B: en las gradas. predict: junto a la pizarra · results: Predict hecho (frente a Jose Kike; la lección sale de nuevo)
+  // emphasis: resultados hechos (frente a Jose Kike; la lección de what a / such / so sale de nuevo)
+  const stands = { ...team, sceneId: B1_08_STANDS.id, pos: { x: 3, y: 3 }, opened: add(team.opened, ['b1-08-team']), seenLesson: team.seenLesson.filter((t) => t !== 'football-results' && t !== 'emphasis-b1') }
+  if (stage === 'predict') return stands
+  const results = { ...stands, pos: { x: 8, y: 3 }, opened: add(stands.opened, ['b1-08-predict']) }
+  if (stage === 'results') return results
+  return { ...results, opened: add(results.opened, ['b1-08-results']), seenLesson: add(results.seenLesson, ['football-results']) as GameState['seenLesson'] }
 }

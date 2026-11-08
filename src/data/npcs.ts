@@ -1014,6 +1014,19 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#c0392b', hair: '#8a5a32', skin: '#e6b894', gender: 'female' },
     doneLine: { text: 'Ilva is the coach of Lumen Bay.', es: 'Ilva es la entrenadora de Lumen Bay.' },
   },
+  // ── B1-08 · bloque B (las gradas, data/b1Stands.ts) ──
+  // La pizarra de predicciones: se dibuja con NotebookIcon (Explore.tsx)
+  'b1-08-predict-board': {
+    name: 'La pizarra de predicciones',
+    look: { shirt: '#efe6d2', hair: '#1f5fa8', skin: '#efe6d2' },
+    doneLine: { text: 'The final begins!', es: '¡Comienza la final!' },
+  },
+  // Jose Kike, el comentarista, en su cabina (tareas b1-08-results y b1-08-emphasis)
+  'b1-08-josekike': {
+    name: 'Jose Kike',
+    look: { shirt: '#6b3fa0', hair: '#222222', skin: '#c68e6a', gender: 'male' },
+    doneLine: { text: 'This final is so exciting!', es: '¡Esta final es tan emocionante!' },
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */

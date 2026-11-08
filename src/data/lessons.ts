@@ -832,6 +832,23 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'Posición: the second best team, the third biggest stadium. Con grupos: one of the best players in the league.', topic: 'superlatives-b1' },
     { who: 'board', text: 'Errores típicos: ✗ The most fast player → ✓ The fastest player. ✗ He is the most good → ✓ He is the best.', topic: 'superlatives-b1' },
   ],
+  // B1-08 · Game Day, bloque B (las gradas, data/b1Stands.ts): Jose Kike, el comentarista, narra la final. 'board' = la pizarra
+  'football-results': [
+    { who: 'narrator', text: 'Jose Kike: Good afternoon, everybody! Welcome to the final! Lumen Bay against the Red Lions!', es: 'Jose Kike: ¡Buenas tardes a todos! ¡Bienvenidos a la final! ¡Lumen Bay contra los Leones Rojos!' },
+    { who: 'narrator', text: "Jose Kike: And Lumen Bay is one goal down: it's 0–1!", es: 'Jose Kike: ¡Y Lumen Bay va perdiendo por un gol: 0 a 1!' },
+    { who: 'board', text: "Resultados: They won 3–1 (ganaron 3 a 1). They lost 2–0. It ended in a draw (terminó empatado). The score is 2–2. They're two goals down (van perdiendo por dos). They're one goal up (van ganando por uno).", topic: 'football-results' },
+    { who: 'board', text: 'win / beat / lose: win + partido o copa (win the final); beat + equipo (beat the Red Lions); lose + partido (lose the match).', topic: 'football-results' },
+    { who: 'board', text: 'Los marcadores se leen así: 3–1 = three–one; 0 = nil o zero.', topic: 'football-results' },
+    { who: 'board', text: 'Errores típicos: ✗ They won the Red Lions → ✓ They beat the Red Lions. ✗ It ended on a draw → ✓ It ended in a draw.', topic: 'football-results' },
+  ],
+  'emphasis-b1': [
+    { who: 'narrator', text: 'Jose Kike: GOAL! What a goal! It was such a beautiful shot!', es: 'Jose Kike: ¡GOL! ¡Qué gol! ¡Fue un tiro tan hermoso!' },
+    { who: 'narrator', text: 'Jose Kike: This final is so exciting!', es: 'Jose Kike: ¡Esta final es tan emocionante!' },
+    { who: 'board', text: 'what a + (adjetivo) + sustantivo singular: What a goal! What a great goal! Con plural o incontable no lleva a: What beautiful goals! What bad luck!', topic: 'emphasis-b1' },
+    { who: 'board', text: 'such a + (adjetivo) + sustantivo: such a good game. so + adjetivo o adverbio (sin sustantivo): so exciting, so fast.', topic: 'emphasis-b1' },
+    { who: 'board', text: 'It was such a good game. = The game was so good.', topic: 'emphasis-b1' },
+    { who: 'board', text: 'Errores típicos: ✗ Such good game! → ✓ Such a good game! ✗ What goal! → ✓ What a goal!', topic: 'emphasis-b1' },
+  ],
   // B1-06 · First Job, bloque C (las jaulas): Nayi repasa cómo contar tu experiencia antes de la entrevista
   'experience-b1': [
     { who: 'nayi', text: "Before the interview, let's practise how to talk about your experience.", es: 'Antes de la entrevista, practiquemos cómo contar tu experiencia.' },

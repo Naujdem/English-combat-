@@ -9,7 +9,9 @@ import { AnimalSprite } from './Animals'
  * ¿Qué va a pasar? (granja, 2056), con Rosie adulta. Se mira un dibujo y se dice lo que va a pasar
  * con going to: cuando hay señales, se predice (Look at the clouds! It's going to rain).
  */
-type Round = { es: string; scene: ReactNode; options: string[]; answer: number; tip: string }
+export type Round = { es: string; scene: ReactNode; options: string[]; answer: number; tip: string }
+/** Otro contenido (B1-08, Before the match). Sin la prop, las rondas de A2 con Rosie */
+export type PredictContent = { title: string; intro: { en: string; es: string }; rounds: Round[] }
 
 const sky = (dark = false) => <rect width="200" height="110" fill={dark ? '#7a8794' : '#cfe9f5'} />
 const grass = <rect y="110" width="200" height="40" fill="#9cc46e" />
@@ -112,20 +114,21 @@ const ROUNDS: Round[] = [
   },
 ]
 
-export function Predict({ onClose }: { onClose: (done: boolean) => void }) {
+export function Predict({ onClose, content }: { onClose: (done: boolean) => void; content?: PredictContent }) {
   const [i, setI] = useState(0)
   const [ok, setOk] = useState(false)
   const [tip, setTip] = useState<string | null>(null)
-  const r = ROUNDS[i]
-  const last = i === ROUNDS.length - 1
+  const rounds = content?.rounds ?? ROUNDS
+  const r = rounds[i]
+  const last = i === rounds.length - 1
 
   return (
     <Panel>
       <div className="flex items-center justify-between">
-        <p className="font-display text-lg text-gold">¿Qué va a pasar? · {i + 1} de {ROUNDS.length}</p>
+        <p className="font-display text-lg text-gold">{content?.title ?? '¿Qué va a pasar?'} · {i + 1} de {rounds.length}</p>
         <button className={btnGhost} onClick={() => onClose(false)}>Salir</button>
       </div>
-      <p className="mt-1 text-sm text-paper/70">Rosie: "Look! What is going to happen?" Mira el dibujo y di lo que va a pasar.</p>
+      <p className="mt-1 text-sm text-paper/70">{content ? `${content.intro.en} ${content.intro.es}` : 'Rosie: "Look! What is going to happen?" Mira el dibujo y di lo que va a pasar.'}</p>
       <svg key={i} viewBox="0 0 200 150" className="anim-fade-in mt-2 w-full rounded-xl border-2 border-line" role="img" aria-label={r.es}>
         {r.scene}
       </svg>
