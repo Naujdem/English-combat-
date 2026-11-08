@@ -32,7 +32,7 @@ import { B1_06_WHICH_DOG } from './b1Kennels'
 import type { WhichDogRound } from '../components/WhichDog'
 import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
 import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS, B1_07_PRACTICE4_IDS } from './questions-b1-07'
-import { B1_08_EMPHASIS_IDS, B1_08_PRACTICE_IDS, B1_08_RESULTS_IDS, B1_08_TEAM_IDS } from './questions-b1-08'
+import { B1_08_EMPHASIS_IDS, B1_08_PRACTICE_IDS, B1_08_RESULTS_IDS, B1_08_TAGS_IDS, B1_08_TEAM_IDS } from './questions-b1-08'
 import type { PredictContent } from '../components/Predict'
 import { B1_08_PREDICT } from './b1Predict'
 import { B1_07_DETECTIVE_CONTENT, B1_07_TAKE_SCRIPT } from './b1Market'
@@ -5286,5 +5286,23 @@ NPC_TASKS['b1-08-emphasis'] = {
     es: '(Termina el primer tiempo. Los hinchas se levantan y cantan.)',
     sub: 'Ganaste 5 monedas. El portón: próximamente, el medio tiempo (bloque 8-C).',
     say: 'The first half is over. The fans stand up and sing.',
+  },
+}
+
+// ── B1-08 · Game Day, bloque C (el pasillo del medio tiempo; escena en data/b1Concourse.ts). NO guarda closeId(8) ──
+// La persona especial: lección 'question-tags' (ella la guía, who 'special') + práctica b1-08-q1…q8. Después aparecen los hinchas corrompidos
+NPC_TASKS['b1-08-tags'] = {
+  npc: 'b1-08-special-half',
+  done: 'b1-08-tags',
+  lesson: 'question-tags',
+  activity: 'practice',
+  practice: 'question-tags',
+  practiceIds: B1_08_TAGS_IDS,
+  steps: [],
+  reward: {
+    text: 'Listen to the fans.',
+    es: 'Escucha a los hinchas.',
+    sub: 'Lección y práctica hechas. ¡Cuidado: los hinchas están corrompidos!',
+    say: 'Listen to the fans.',
   },
 }

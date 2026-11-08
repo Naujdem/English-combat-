@@ -274,6 +274,8 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (/^what\b/i.test(sentence)) return { title: 'What a + (adjetivo) + sustantivo singular:', parts: [K('What a'), '+', V('(adjetivo)'), '+', R('sustantivo!')] }
       if (/\bsuch\b/i.test(sentence)) return { title: 'such a + (adjetivo) + sustantivo:', parts: [S('Sujeto'), '+', V('is / was'), '+', K('such a'), '+', R('adjetivo + sustantivo')] }
       return { title: 'so + adjetivo (sin sustantivo):', parts: [S('Sujeto'), '+', V('is / was'), '+', K('so'), '+', R('adjetivo')] }
+    case 'question-tags':
+      return { title: 'Question tag: frase positiva → tag negativo; frase negativa → tag positivo (mismo auxiliar):', parts: [S('Frase'), '+', K('auxiliar (+ not)'), '+', R('pronombre?')] }
     case 'superlatives-b1':
       return { title: 'Superlativo: the + adjetivo corto con -est · the most + adjetivo largo (good → the best):', parts: [S('Sujeto'), '+', V('is / are'), '+', K('the -est / the most'), '+', R('... in / of ...')] }
     case 'deduction-past':

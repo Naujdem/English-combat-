@@ -841,6 +841,17 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'Los marcadores se leen así: 3–1 = three–one; 0 = nil o zero.', topic: 'football-results' },
     { who: 'board', text: 'Errores típicos: ✗ They won the Red Lions → ✓ They beat the Red Lions. ✗ It ended on a draw → ✓ It ended in a draw.', topic: 'football-results' },
   ],
+  // B1-08 · Game Day, bloque C (el pasillo del medio tiempo, data/b1Concourse.ts): la persona especial y los hinchas
+  'question-tags': [
+    { who: 'special', text: "It's half time! Listen to the fans. They ask each other questions, but they already know the answer.", es: '¡Es el medio tiempo! Escucha a los hinchas. Se hacen preguntas, pero ya saben la respuesta.' },
+    { who: 'narrator', text: "Fan: Great match, wasn't it?", es: 'Hincha: Gran partido, ¿no?' },
+    { who: 'narrator', text: "Fan: They're playing well, aren't they?", es: 'Hincha: Están jugando bien, ¿no?' },
+    { who: 'board', text: "Question tag = pregunta corta al final para confirmar. Frase positiva → tag negativo: It's a great match, isn't it? Frase negativa → tag positivo: It isn't easy, is it?", topic: 'question-tags' },
+    { who: 'board', text: "El tag usa el mismo auxiliar: is → isn't it; are → aren't they; was → wasn't it; can → can't she; will → won't he. Sin auxiliar usa do / does / did: You like football, don't you? He scored, didn't he?", topic: 'question-tags' },
+    { who: 'board', text: "Casos especiales: I am → aren't I? (I'm right, aren't I?). There is → isn't there?", topic: 'question-tags' },
+    { who: 'board', text: 'Entonación: si la voz baja, confirmas (ya lo sabes); si sube, preguntas de verdad.', topic: 'question-tags' },
+    { who: 'board', text: "Errores típicos: ✗ They're playing well, don't they? → ✓ They're playing well, aren't they? ✗ Great match, isn't? → ✓ Great match, isn't it?", topic: 'question-tags' },
+  ],
   'emphasis-b1': [
     { who: 'narrator', text: 'Jose Kike: GOAL! What a goal! It was such a beautiful shot!', es: 'Jose Kike: ¡GOL! ¡Qué gol! ¡Fue un tiro tan hermoso!' },
     { who: 'narrator', text: 'Jose Kike: This final is so exciting!', es: 'Jose Kike: ¡Esta final es tan emocionante!' },

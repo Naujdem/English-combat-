@@ -7,7 +7,7 @@ import type { GameState, SceneDef, Zone } from '../game/types'
  * La cancha al fondo (césped y dos arcos; no se pisa), los asientos de los hinchas (decoración), la cabina de Jose Kike
  * (el comentarista) y un portón al costado. Orden: la pizarra de predicciones: Predict "Before the match" (b1-08-predict,
  * 5 monedas) → Jose Kike: lección 'football-results' + práctica (b1-08-results) → Jose Kike otra vez: lección 'emphasis-b1'
- * + práctica (b1-08-emphasis, 5 monedas) → el portón: "Próximamente: el medio tiempo (bloque 8-C)".
+ * + práctica (b1-08-emphasis, 5 monedas) → el portón lleva al pasillo del medio tiempo (bloque 8-C, data/b1Concourse.ts).
  * Ningún bloque B guarda closeId(8) (se guarda en 8-D).
  */
 export const B1_08_STANDS_ID = 'b1-08-stands'
@@ -59,22 +59,20 @@ export const B1_08_STANDS: SceneDef = {
     '10,4': { text: 'The fans.', sub: 'Los hinchas.', say: 'The fans.' },
     '11,4': { text: 'The fans.', sub: 'Los hinchas.', say: 'The fans.' },
   },
-  // La cancha no se pisa. El portón: cerrado (bloque 8-C). La puerta de abajo vuelve a la plaza
+  // La cancha no se pisa. El portón: cerrado hasta terminar con Jose Kike; después lleva al pasillo (bloque 8-C, data/b1Concourse.ts). La puerta de abajo vuelve a la plaza
   locked: (x, y, s) => {
     if (y === 1 || y === 2) return { text: 'The field.', sub: 'La cancha. Mira el partido desde las gradas.' }
     if (x === 12 && y === 4) {
       if (!s.opened.includes(B1_08_EMPHASIS)) return NOT_YET('Primero habla con Jose Kike.')
-      return { text: 'Próximamente: el medio tiempo (bloque 8-C)', sub: 'Próximamente: el medio tiempo (bloque 8-C).' }
     }
     return null
   },
-  links: { '6,6': { sceneId: 'b1-08-stadium', pos: { x: 6, y: 1 } } },
+  links: { '6,6': { sceneId: 'b1-08-stadium', pos: { x: 6, y: 1 } }, '12,4': { sceneId: 'b1-08-concourse', pos: { x: 1, y: 3 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'La pizarra de predicciones', done: s.opened.includes(B1_08_PREDICT) },
     { label: 'Jose Kike: resultados', done: s.opened.includes(B1_08_RESULTS) },
     { label: 'Jose Kike: what a / such / so', done: s.opened.includes(B1_08_EMPHASIS) },
-    { label: 'Próximamente: el medio tiempo (bloque 8-C)', done: false },
   ],
   intro: {
     first: 'The final begins! — ¡Comienza la final!',

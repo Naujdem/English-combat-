@@ -1021,6 +1021,14 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#efe6d2', hair: '#1f5fa8', skin: '#efe6d2' },
     doneLine: { text: 'The final begins!', es: '¡Comienza la final!' },
   },
+  // ── B1-08 · bloque C (el pasillo del medio tiempo, data/b1Concourse.ts) ──
+  // La persona especial (nombre y aspecto del jugador): lección 'question-tags' (tarea b1-08-tags)
+  'b1-08-special-half': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: "It's half time!", es: '¡Es el medio tiempo!' },
+  },
   // Jose Kike, el comentarista, en su cabina (tareas b1-08-results y b1-08-emphasis)
   'b1-08-josekike': {
     name: 'Jose Kike',
