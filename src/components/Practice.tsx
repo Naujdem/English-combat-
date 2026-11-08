@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import type { GameState, Question, TopicId } from '../game/types'
 import type { Update } from '../game/store'
 import { pickQuestion, questionById, TOPICS } from '../data/questions'
@@ -8,6 +8,7 @@ import { QuestionCard, correctSentence } from './QuestionCard'
 import { GrammarPattern, RoleSentence } from './Grammar'
 import { SpriteBody, type SpriteLook } from './Sprite'
 import { SpeakButton } from './SpeakButton'
+import type { Voice } from '../game/speech'
 import { btnGhost, btnPrimary, Panel } from './ui'
 
 const SIZE = 6
@@ -16,6 +17,12 @@ const SIZE = 6
  * Práctica con Leo después de perder un combate: repasa lo que se falló,
  * con la estructura de la frase a la vista y las palabras coloreadas. No quita vida.
  */
+/**
+ * Guía de la práctica. icon: retrato propio (cara borrosa en los recuerdos, el cuaderno de L).
+ * quiet: no habla (el Cuaderno de L): sin "Let's practice together" ni "Great job" con su nombre.
+ */
+export type PracticeGuide = { name: string; look: SpriteLook; voice?: Voice; icon?: ReactNode; quiet?: boolean }
+
 export function Practice({
   state,
   update,
@@ -40,10 +47,10 @@ export function Practice({
   onClose: () => void
   /** Al terminar todas las preguntas (si no se indica, se usa onClose). perfect: todas correctas */
   onDone?: (perfect: boolean) => void
-  /** Quién acompaña la práctica guiada (si no se indica, Leo). B1-04: Maya */
-  guide?: { name: string; look: SpriteLook }
+  /** Quién acompaña la práctica guiada (si no se indica, Leo). B1: el personaje de la tarea (Explore, practiceGuide) */
+  guide?: PracticeGuide
 }) {
-  const who = guide ?? { name: 'Leo', look: FRIENDS.leo.look }
+  const who: PracticeGuide = guide ?? { name: 'Leo', look: FRIENDS.leo.look, voice: 'male' }
   const [queue] = useState<Question[]>(() => {
     if (ids?.length) return ids.map((id) => questionById(id)).filter((q): q is Question => !!q)
     if (review) {
@@ -104,15 +111,17 @@ export function Practice({
         {i < 0 && (
           <Panel>
             <div className="flex items-center gap-3">
-              <svg width="56" height="56" viewBox="0 0 32 32" aria-hidden="true">
-                <SpriteBody look={who.look} />
-              </svg>
+              {who.icon ?? (
+                <svg width="56" height="56" viewBox="0 0 32 32" aria-hidden="true">
+                  <SpriteBody look={who.look} />
+                </svg>
+              )}
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <p className="font-display text-lg text-gold">{who.name}</p>
-                  <SpeakButton text="Don't worry! Let's practice together." size="sm" />
+                  {!who.quiet && <SpeakButton text="Don't worry! Let's practice together." size="sm" voice={who.voice} />}
                 </div>
-                <p className="text-[16px]">"Don't worry! Let's practice together."</p>
+                <p className="text-[16px]">{who.quiet ? '(Repasas lo que dice la página).' : `"Don't worry! Let's practice together."`}</p>
               </div>
             </div>
             <p className="mt-3 text-[15px] text-paper/85">
@@ -165,7 +174,11 @@ export function Practice({
             <p className="mt-1 text-[16px]">
               {guided
                 ? ready
-                  ? `${who.name}: "Great job! You're ready." Ya sabes dar consejos y entender las reglas.`
+                  ? who.quiet
+                    ? 'Muy bien. Ya dominas este tema.'
+                    : `${who.name}: "Great job! You're ready." Ya dominas este tema.`
+                  : who.quiet
+                  ? 'Buen intento. Puedes repasar este tema cuando quieras.'
                   : `${who.name}: "Good try! You can review it later in your notebook." Puedes repasar este tema cuando quieras.`
                 : review
                 ? ready

@@ -15,6 +15,10 @@ import { B1_LUGGAGE } from './b1Luggage'
 import type { RouteContent } from '../components/RouteChallenge'
 import { B1_ROUTE } from './b1Route'
 import { canRecognize } from '../game/mic'
+import { NPCS } from './npcs'
+
+/** JoJo cuando habla dentro de una charla de Leo (cierres de A2-07 y A2-08) */
+const JOJO = { name: 'JoJo', look: NPCS['a2-07-jojo'].look }
 import type { ScriptLine } from './b1Accident'
 import { B1_03_DOCTOR_SCRIPT } from './b1Words'
 import { B1_03_PRACTICE1_IDS, B1_03_PRACTICE2_IDS } from './questions-b1-03'
@@ -2059,7 +2063,7 @@ NPC_TASKS['a2-07-close'] = {
   },
   steps: [
     { text: 'You rode well and you spoke well. The fragment is yours.', es: 'Montaste bien y hablaste bien. El fragmento es tuyo.' },
-    { text: 'JoJo: "The cart crossed the track and the word disappeared. Now you have it back."', es: 'JoJo: "El carro cruzó la pista y la palabra desapareció. Ahora la recuperaste."' },
+    { speaker: JOJO, text: 'The cart crossed the track and the word disappeared. Now you have it back.', es: 'El carro cruzó la pista y la palabra desapareció. Ahora la recuperaste.' },
     { text: 'Yes. And now we have one more fragment for the clock. The core is still empty… but we are getting closer.', es: 'Sí. Y ahora tenemos un fragmento más para el reloj. El núcleo todavía está vacío… pero nos estamos acercando.' },
   ],
   reward: {
@@ -2296,7 +2300,7 @@ NPC_TASKS['a2-08-close'] = {
     { text: 'Good. The car stopped, but we understood what happened.', es: 'Bien. El carro se detuvo, pero entendimos qué pasó.' },
     { text: 'You used the Past Simple for finished actions, and the Past Continuous for what was happening.', es: 'Usaste el pasado simple para las acciones terminadas y el pasado continuo para lo que estaba pasando.' },
     { text: 'You have the fragment. The clock is still incomplete… but one more piece of your voice is back.', es: 'Tienes el fragmento. El reloj sigue incompleto… pero un pedazo más de tu voz volvió.' },
-    { text: 'JoJo: "It was the same light from the race. I am sure."', es: 'JoJo: "Era la misma luz de la carrera. Estoy seguro."' },
+    { speaker: JOJO, text: 'It was the same light from the race. I am sure.', es: 'Era la misma luz de la carrera. Estoy seguro.' },
   ],
   reward: {
     text: 'Leo: "We should keep going."',
