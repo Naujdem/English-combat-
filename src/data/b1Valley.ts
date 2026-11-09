@@ -64,6 +64,6 @@ export const B1_09_VALLEY: SceneDef = {
   ],
   intro: {
     first: 'Years later, in a faraway valley. — Años después, en un valle lejano.',
-    later: () => 'Years later, in a faraway valley. — Años después, en un valle lejano.',
+    later: (s) => (s.opened.includes('b1-09-close') ? 'Temples of Stones and Time. La misión 9 terminó: la misión 10 te espera en el mapa.' : 'Years later, in a faraway valley. — Años después, en un valle lejano.'),
   },
 }

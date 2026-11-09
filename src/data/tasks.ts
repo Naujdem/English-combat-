@@ -37,7 +37,7 @@ import type { WhichDogRound } from '../components/WhichDog'
 import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
 import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS, B1_07_PRACTICE4_IDS } from './questions-b1-07'
 import { B1_09_CULTURE_IDS, B1_09_JOURNEY_IDS, B1_09_TIME_IDS } from './questions-b1-09'
-import { B1_09_CLOCK_ROOM } from './b1TempleTime'
+import { B1_09_CLOCK_ROOM, B1_09_CLOSE_SCRIPT } from './b1TempleTime'
 import { B1_09_STONE_ROOM, B1_09_WALL_ROOM } from './b1TempleStones'
 import { B1_08_EMPHASIS_IDS, B1_08_PRACTICE_IDS, B1_08_RESULTS_IDS, B1_08_TAGS_IDS, B1_08_TEAM_IDS } from './questions-b1-08'
 import type { PredictContent } from '../components/Predict'
@@ -5454,7 +5454,7 @@ NPC_TASKS['b1-09-stones-move'] = {
 
 // ── B1-09 · Temples of Stones and Time, bloque C (el Temple of Time, data/b1TempleTime.ts). NO guarda closeId(9) ──
 // Las inscripciones del reloj: Inscriptions (5 tablillas, la pasiva con modales) y, en la misma tarea, la práctica
-// b1-09-m1…m8. Al terminar, el tema 'passive-modals' queda aprendido y la vitrina muestra "Próximamente: el Keeper of Hours"
+// b1-09-m1…m8. Al terminar, el tema 'passive-modals' queda aprendido y aparece el jefe Keeper of Hours (bloque 9-D)
 NPC_TASKS['b1-09-time-ins'] = {
   npc: 'b1-09-time-wall',
   done: 'b1-09-time-ins',
@@ -5468,6 +5468,21 @@ NPC_TASKS['b1-09-time-ins'] = {
   reward: {
     text: '(In the center, the glass case shines with a red light. Something is awake.)',
     es: '(En el centro, la vitrina brilla con una luz roja. Algo está despierto.)',
-    sub: 'Ganaste 5 monedas. Próximamente: el Keeper of Hours (bloque 9-D).',
+    sub: 'Ganaste 5 monedas. ¡El Keeper of Hours aparece delante de la vitrina!',
   },
+}
+
+// ── B1-09 · bloque D: cierre (el reloj en la vitrina, al vencer al Keeper of Hours).
+// done = closeId(9) = 'b1-09-close': se sale del recuerdo, se vuelve al mapa y se abre el nodo 10 (sin FragmentJoin, como el 7 → 8) ──
+NPC_TASKS['b1-09-close'] = {
+  npc: 'b1-09-clock',
+  done: 'b1-09-close',
+  activity: 'script',
+  script: B1_09_CLOSE_SCRIPT,
+  recover: ['travel-b1', 'culture-talk', 'passive-all', 'passive-modals'],
+  coins: 20,
+  exitMemory: 9,
+  closeMemory: true,
+  steps: [],
+  reward: { text: 'Memory 9: Temples of Stones and Time', es: 'Recuerdo 9: Templos de piedra y tiempo', sub: 'Recuperaste los temas de la misión. Se abrió la misión 10.', say: 'I can go back.' },
 }

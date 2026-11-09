@@ -75,7 +75,7 @@ export const B1_09_STONES: SceneDef = {
   ],
   intro: {
     first: 'The stones remember. — Las piedras recuerdan.',
-    later: () => 'The stones remember. — Las piedras recuerdan.',
+    later: (s) => (s.opened.includes('b1-09-close') ? 'Temples of Stones and Time. La misión 9 terminó: la misión 10 te espera en el mapa.' : 'The stones remember. — Las piedras recuerdan.'),
   },
 }
 

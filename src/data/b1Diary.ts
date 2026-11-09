@@ -398,4 +398,54 @@ export const B1_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B1-09 · Temples of Stones and Time (recuerdo 9). Se abre al cerrar la misión (closeId(9)). Con página del Diario de L
+  {
+    id: 'b1-mission-9',
+    title: 'Misión 9: Temples of Stones and Time',
+    unlock: closeId(9),
+    words: [
+      { title: 'Viajes', words: [['journey', 'viaje (recorrido)'], ['trip', 'viaje (con ida y vuelta)'], ['breathtaking', 'impresionante'], ['overcrowded', 'abarrotado'], ['exhausting', 'agotador'], ['unforgettable', 'inolvidable']] },
+      { title: 'Naturaleza', words: [['valley', 'valle'], ['waterfall', 'cascada'], ['jungle', 'selva'], ['cliff', 'acantilado'], ['cave', 'cueva']] },
+      { title: 'Historia', words: [['ancient', 'antiguo'], ['carved', 'tallado'], ['ruins', 'ruinas'], ['inscription', 'inscripción'], ['sacred', 'sagrado']] },
+    ],
+    versions: [
+      {
+        id: 'b1-mission-9-l',
+        kind: 'L',
+        tense: 'p',
+        tab: 'Diario de L',
+        title: 'The temple speaks',
+        unlock: closeId(9),
+        frame: 'Una página de L, escrita en el valle, con el reloj junto al aparato.',
+        lines: [
+          { en: 'The temple [was built]p a thousand years ago.', es: 'El templo fue construido hace mil años.' },
+          { en: 'And now it [speaks]n to me.', es: 'Y ahora me habla.' },
+          { en: 'The clock [was kept]p in the dark for centuries.', es: 'El reloj fue guardado en la oscuridad durante siglos.' },
+          { en: 'With the clock and the device, I [can go]n back.', es: 'Con el reloj y el aparato, puedo volver.' },
+        ],
+        questions: [
+          { q: 'When was the temple built?', options: ['Last year.', 'Ten years ago.', 'A thousand years ago.'], answer: 2, tip: 'La página dice: "The temple was built a thousand years ago".' },
+          { q: 'Where was the clock kept?', options: ['In the dark.', 'In a shop.', 'In the valley.'], answer: 0, tip: 'La página dice: "The clock was kept in the dark for centuries".' },
+        ],
+      },
+      {
+        id: 'b1-mission-9-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'The journey and the temples',
+        unlock: closeId(9),
+        frame: 'El viaje y los templos, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'The journey [was]p exhausting, but the valley [is]n breathtaking.', es: 'El viaje fue agotador, pero el valle es impresionante.' },
+          { en: 'The temple [was built]p by the ancient people, and the clock [must be kept]n in the dark.', es: 'El templo fue construido por el pueblo antiguo y el reloj debe mantenerse en la oscuridad.' },
+          { en: 'Tomorrow L [will leave]f the valley.', es: 'Mañana L dejará el valle.' },
+        ],
+        questions: [
+          { q: 'How was the journey?', options: ['Breathtaking.', 'Exhausting.', 'Overcrowded.'], answer: 1, tip: 'El diario dice: "The journey was exhausting".' },
+          { q: 'Who built the temple?', options: ['The scientists.', 'The guide.', 'The ancient people.'], answer: 2, tip: 'El diario dice: "The temple was built by the ancient people".' },
+          { q: 'What will L do tomorrow?', options: ['Leave the valley.', 'Visit the guide.', 'Go to school.'], answer: 0, tip: 'El diario dice: "Tomorrow L will leave the valley".' },
+        ],
+      },
+    ],
+  },
 ]

@@ -852,6 +852,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#8a8f96', hair: '#55606e', skin: '#a8adb4' },
     doneLine: { text: 'The clock must be kept in the dark.', es: 'El reloj debe mantenerse en la oscuridad.' },
   },
+  // B1-09 · bloque D: el reloj en la vitrina (al vencer al Keeper of Hours; ToolboxIcon). Su tarea es el cierre closeId(9)
+  'b1-09-clock': {
+    name: 'El reloj',
+    look: { shirt: '#b08a5a', hair: '#8a6a40', skin: '#c9a06a' },
+    after: 'b1-09-boss',
+    doneLine: { text: 'With this... I can go back.', es: 'Con esto... puedo volver.' },
+  },
   'b1-07-tv': {
     name: 'La televisión',
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
