@@ -46,6 +46,7 @@ import { B1_05_QUESTIONS } from './questions-b1-05'
 import { B1_06_QUESTIONS } from './questions-b1-06'
 import { B1_07_QUESTIONS } from './questions-b1-07'
 import { B1_08_QUESTIONS } from './questions-b1-08'
+import { B1_09_QUESTIONS } from './questions-b1-09'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -411,6 +412,7 @@ export const QUESTIONS: Question[] = [
   ...B1_06_QUESTIONS,
   ...B1_07_QUESTIONS,
   ...B1_08_QUESTIONS,
+  ...B1_09_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -1179,6 +1181,24 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'such a + (adjetivo) + sustantivo: such a good game. so + adjetivo o adverbio (sin sustantivo): so exciting, so fast.',
       'It was such a good game. = The game was so good.',
       'Errores típicos: ✗ Such good game! → ✓ Such a good game! ✗ What goal! → ✓ What a goal!',
+    ],
+  },
+  'travel-b1': {
+    name: 'Viajes: journey / trip',
+    level: 'B1',
+    lesson: [
+      'journey = el recorrido de un lugar a otro, normalmente largo (The journey was long). trip = un viaje con ida y vuelta o con un propósito (a trip to the mountains). travel = viajar en general, no se cuenta (Travel is exciting).',
+      "Pasado simple: regulares con -ed (walked, arrived); irregulares (took, went, saw, slept). Negativa: didn't + verbo base (I didn't sleep). Pregunta: Did you…? (Did you see the waterfall?)",
+      'Adjetivos de viaje: bueno → breathtaking (impresionante), unforgettable (inolvidable); malo → exhausting (agotador), overcrowded (abarrotado). -ing = lo que causa; -ed = cómo te sientes (I was exhausted).',
+      "Errores típicos: ✗ I didn't slept much → ✓ I didn't sleep much. ✗ We goed to the valley → ✓ We went to the valley. ✗ I made a long travel → ✓ I made a long journey.",
+    ],
+  },
+  'culture-talk': {
+    name: 'Hablar de otras culturas',
+    level: 'B1',
+    lesson: [
+      "Para hablar con respeto de otra cultura: muestra interés (That's fascinating! Could you tell me more?), pregunta con educación (Is it OK if I take a photo? Could you explain this tradition?) y compara sin juzgar (In my country we do it differently, but I'd like to learn).",
+      "Evita juzgar: ✗ That's weird. → ✓ That's different from what I know. Para preguntar un motivo: ✗ Why do you do that? → ✓ Could you tell me why you do that?",
     ],
   },
   'question-tags': {

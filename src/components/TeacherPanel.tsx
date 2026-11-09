@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
-import { PRESETS, b1Mission1, b1Mission2, b1Mission3, b1Mission4, b1Mission5, b1Mission6, b1Mission7, b1Mission8, setTeacher, skipLessons, useTeacher } from '../game/teacher'
+import { PRESETS, b1Mission1, b1Mission2, b1Mission3, b1Mission4, b1Mission5, b1Mission6, b1Mission7, b1Mission8, b1Mission9, setTeacher, skipLessons, useTeacher } from '../game/teacher'
 import { SCENES } from '../game/helpers'
 import { walkable } from './Tiles'
 import { ENEMIES } from '../data/enemies'
@@ -235,6 +235,9 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission8(s, 'boss'))}>B1-8: jefe The Champion</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission8(s, 'special'))}>B1-8: charla con la persona especial</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission8(s, 'close'))}>B1-8: cierre</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'journey'))}>B1-9: Cuaderno p.31 (el viaje)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'culture'))}>B1-9: la guía (cultura)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'talk'))}>B1-9: la conversación con la guía</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>
