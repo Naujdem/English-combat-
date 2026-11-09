@@ -37,6 +37,7 @@ import type { WhichDogRound } from '../components/WhichDog'
 import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
 import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS, B1_07_PRACTICE4_IDS } from './questions-b1-07'
 import { B1_09_CULTURE_IDS, B1_09_JOURNEY_IDS } from './questions-b1-09'
+import { B1_09_STONE_ROOM, B1_09_WALL_ROOM } from './b1TempleStones'
 import { B1_08_EMPHASIS_IDS, B1_08_PRACTICE_IDS, B1_08_RESULTS_IDS, B1_08_TAGS_IDS, B1_08_TEAM_IDS } from './questions-b1-08'
 import type { PredictContent } from '../components/Predict'
 import { B1_08_PREDICT } from './b1Predict'
@@ -113,6 +114,8 @@ export type NpcTask = {
   }
   /** Para activity 'practice': escudo de palabras si todas las respuestas son correctas */
   practiceShield?: boolean
+  /** B1-09: temas que quedan aprendidos al completar la tarea (sin lección; p. ej. Inscriptions) */
+  learn?: TopicId[]
   /** B1: temas que se recuperan al completar la tarea (misiones sin jefe: se recuperan al cerrar la misión) */
   recover?: TopicId[]
   /** B1: la lección de Leo se ve por mensajes en el teléfono (no en el salón). mine = tu mensaje, a la derecha */
@@ -5372,7 +5375,7 @@ NPC_TASKS['b1-09-culture'] = {
 }
 
 // La conversación con la guía (DebateTalk, 3 turnos y 3 desenlaces): las opciones son lo que L escribe en su cuaderno.
-// Siempre termina; da 5 monedas. El camino de piedra sigue con "Próximamente: el Temple of Stones (bloque 9-B)"
+// Siempre termina; da 5 monedas. Después, el camino de piedra lleva al Temple of Stones (bloque 9-B)
 NPC_TASKS['b1-09-guide-talk'] = {
   npc: 'b1-09-guide',
   done: 'b1-09-guide-talk',
@@ -5419,5 +5422,30 @@ NPC_TASKS['b1-09-guide-talk'] = {
   },
   coins: 5,
   steps: [],
-  reward: { text: 'Próximamente: el Temple of Stones (bloque 9-B)', sub: 'Ganaste 5 monedas. El camino de piedra al templo: próximamente.' },
+  reward: { text: 'Good. Follow me.', es: 'Bien. Sígame.', sub: 'Ganaste 5 monedas. El camino de piedra lleva al Temple of Stones.' },
+}
+
+// ── B1-09 · Temples of Stones and Time, bloque B (el Temple of Stones, data/b1TempleStones.ts). NO guarda closeId(9) ──
+// El muro de inscripciones: Inscriptions (5 tablillas, la pasiva). Al terminar, el tema 'passive-all' queda aprendido
+NPC_TASKS['b1-09-stones-ins'] = {
+  npc: 'b1-09-wall',
+  done: 'b1-09-stones-ins',
+  activity: 'inscriptions',
+  inscriptions: B1_09_WALL_ROOM,
+  learn: ['passive-all'],
+  coins: 5,
+  steps: [],
+  reward: { text: 'The wall is awake. A stone moves in the hall.', es: 'El muro despertó. Una piedra se mueve en el salón.', sub: 'Ganaste 5 monedas. Ahora, la piedra del salón.' },
+}
+
+// La piedra del salón: The Moving Stone escrito. Al terminar aparece el Stone Guardian delante de la puerta del fondo
+NPC_TASKS['b1-09-stones-move'] = {
+  npc: 'b1-09-stone',
+  done: 'b1-09-stones-move',
+  activity: 'command',
+  command: B1_09_STONE_ROOM,
+  requires: { id: 'b1-09-stones-ins', text: 'A big stone.', es: 'Una piedra grande.', sub: 'Primero despierta el muro de inscripciones.' },
+  coins: 5,
+  steps: [],
+  reward: { text: 'The first door is open.', es: 'La primera puerta está abierta.', sub: 'Ganaste 5 monedas. ¡Una estatua de piedra se levanta delante de la puerta!' },
 }

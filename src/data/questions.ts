@@ -1193,6 +1193,17 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       "Errores típicos: ✗ I didn't slept much → ✓ I didn't sleep much. ✗ We goed to the valley → ✓ We went to the valley. ✗ I made a long travel → ✓ I made a long journey.",
     ],
   },
+  'passive-all': {
+    name: 'La pasiva: todas las formas',
+    level: 'B1',
+    lesson: [
+      'La pasiva en pasado: sujeto + was / were + participio. Quién lo hizo va al final, con by (The temple was built by the ancient people).',
+      'Para decir con qué se hizo algo, usa with; para decir quién lo hizo, usa by (The device was made with these words).',
+      'La pasiva en presente: sujeto + is / are + participio (The temple is guarded by a stone statue).',
+      'La pasiva en presente perfecto: sujeto + has / have been + participio; for = cuánto tiempo (The door has been closed for a thousand years).',
+      'La pasiva en futuro: sujeto + will be + participio (The door will be opened by the right words).',
+    ],
+  },
   'culture-talk': {
     name: 'Hablar de otras culturas',
     level: 'B1',

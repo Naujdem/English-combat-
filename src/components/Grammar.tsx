@@ -277,6 +277,8 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
     case 'travel-b1':
       if (/^did\b/i.test(sentence)) return { title: 'Pregunta en pasado: Did + sujeto + verbo base?', parts: [K('Did'), '+', S('sujeto'), '+', V('verbo base'), '+', R('...?')] }
       return { title: "Pasado simple: verbo con -ed o irregular · negativa: didn't + verbo base:", parts: [S('Sujeto'), '+', V("-ed / irregular / didn't + base"), '+', R('...')] }
+    case 'passive-all':
+      return { title: 'Pasiva: sujeto + was / is / has been / will be + participio (by quién · with qué):', parts: [S('Sujeto'), '+', V('was / is / has been / will be'), '+', K('participio'), '+', R('by ... / with ...')] }
     case 'culture-talk':
       return { title: 'Preguntar con educación: Could you + verbo base? · Is it OK if + frase?', parts: [K('Could you / Is it OK if'), '+', V('verbo base / frase'), '+', R('...?')] }
     case 'question-tags':

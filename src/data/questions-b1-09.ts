@@ -8,6 +8,8 @@ import type { Question } from '../game/types'
  */
 const TR = 'travel-b1' as const
 const CU = 'culture-talk' as const
+const PA = 'passive-all' as const
+const GUARDIAN = ['b1-09-guardian']
 const JOURNEY = ['b1-09-journey']
 const CULTURE = ['b1-09-culture']
 
@@ -40,4 +42,26 @@ export const B1_09_QUESTIONS: Question[] = [
   { id: 'b1-09-c2', topic: CU, prompt: 'Is it OK ___ I take a photo?', options: ['that', 'what', 'if'], answer: 2, tip: 'Is it OK if…?', tags: CULTURE },
   { id: 'b1-09-c3', topic: CU, kind: 'fix', prompt: 'Could you to explain this custom?', options: ['Could you explain this custom?', 'Could you explaining this custom?', 'Could you explains this custom?'], answer: 0, tip: 'Could you + verbo base.', tags: CULTURE },
   { id: 'b1-09-c4', topic: CU, kind: 'fix', prompt: 'Could you tell me why do you do that?', options: ['Could you tell me why does you do that?', 'Could you tell me why you do that?', 'Could you tell me why you doing that?'], answer: 1, tip: 'En una pregunta indirecta el orden es normal: why you do that.', tags: CULTURE },
+  // Bloque B · el minijefe Stone Guardian (data/b1TempleStones.ts): la pasiva en todas sus formas
+  { id: 'b1-09-g1', topic: PA, kind: 'fix', prompt: 'The temple was build a long time ago.', options: ['The temple was builded a long time ago.', 'The temple was built a long time ago.', 'The temple built was a long time ago.'], answer: 1, tip: 'build → built.', tags: GUARDIAN },
+  { id: 'b1-09-g2', topic: PA, kind: 'fix', prompt: 'The stones is carved by hand.', options: ['The stones are carved by hand.', 'The stones be carved by hand.', 'The stones carved by hand are.'], answer: 0, tip: 'Plural: are + participio.', tags: GUARDIAN },
+  { id: 'b1-09-g3', topic: PA, kind: 'fix', prompt: 'The door has opened by the guardian.', options: ['The door have been opened by the guardian.', 'The door has be opened by the guardian.', 'The door has been opened by the guardian.'], answer: 2, tip: 'Presente perfecto pasivo: has been + participio.', tags: GUARDIAN },
+  { id: 'b1-09-g4', topic: PA, prompt: 'The words ___ written on the wall a thousand years ago.', options: ['was', 'were', 'are'], answer: 1, tip: 'Plural en pasado: were written.', tags: GUARDIAN },
+  { id: 'b1-09-g5', topic: PA, prompt: 'Today, the temple ___ guarded by a stone statue.', options: ['has', 'are', 'is'], answer: 2, tip: 'Presente: is guarded.', tags: GUARDIAN },
+  { id: 'b1-09-g6', topic: PA, prompt: 'The key ___ found yesterday.', options: ['is', 'was', 'has been'], answer: 1, tip: 'Yesterday: pasado, was found.', tags: GUARDIAN },
+  { id: 'b1-09-g7', topic: PA, prompt: 'The door ___ opened by the right words soon.', options: ['will be', 'will', 'is'], answer: 0, tip: 'Futuro pasivo: will be + participio.', tags: GUARDIAN },
+  { id: 'b1-09-g8', topic: PA, kind: 'order', prompt: 'El aparato fue hecho con estas palabras.', options: ['The', 'device', 'was', 'made', 'with', 'these', 'words.'], answer: 0, tip: 'was + participio + with.', tags: GUARDIAN },
+  { id: 'b1-09-g9', topic: PA, kind: 'fix', prompt: 'The device will built by scientists.', options: ['The device will being built by scientists.', 'The device will be built by scientists.', 'The device will been built by scientists.'], answer: 1, tip: 'will be + participio.', tags: GUARDIAN },
+  {
+    id: 'b1-09-g10',
+    topic: PA,
+    kind: 'listen',
+    audio: 'The temple was built a thousand years ago. It is guarded by a stone statue. The door has been closed for centuries, but it will be opened by the right words.',
+    voice: 'female',
+    prompt: '¿Qué abrirá la puerta?',
+    options: ['Una llave de oro.', 'La fuerza.', 'Las palabras correctas.'],
+    answer: 2,
+    tip: 'It will be opened by the right words.',
+    tags: GUARDIAN,
+  },
 ]
