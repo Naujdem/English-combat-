@@ -36,6 +36,7 @@ import { B1_06_ADVERT, B1_06_READ, B1_06_SHELTER } from '../data/b1Shelter'
 import { B1_07_ROOM } from '../data/b1Room'
 import { B1_09_VALLEY } from '../data/b1Valley'
 import { B1_09_STONES } from '../data/b1TempleStones'
+import { B1_09_TIME } from '../data/b1TempleTime'
 import { B1_06_KENNELS, B1_06_VOLUNTEER1, B1_06_VOLUNTEER2 } from '../data/b1Kennels'
 import { B1_06_OFFICE } from '../data/b1EstebanOffice'
 import { B1_08_STADIUM } from '../data/b1Stadium'
@@ -992,17 +993,18 @@ export function b1Mission8(s: GameState, stage: 'invite' | 'team' | 'predict' | 
  * Atajos de la misión B1-9 (Temples of Stones and Time, recuerdo) para el panel del profe. Parten de "B1: abrir el nodo 9".
  *  journey: entra al recuerdo (el valle, junto al cuaderno; la página 31 sale de nuevo)
  *  culture: cuaderno hecho (frente a la guía; la lección sale de nuevo) · talk: lección de la guía hecha (frente a la guía; la conversación sale)
+ *  time: Stone Guardian vencido (en el Temple of Time, junto a las inscripciones del reloj; la práctica sale después de las tablillas)
  *  ins: conversación hecha (en el Temple of Stones, frente al muro) · move: muro hecho (junto a la piedra) · guardian: piedra hecha (frente al Stone Guardian)
  */
-export function b1Mission9(s: GameState, stage: 'journey' | 'culture' | 'talk' | 'ins' | 'move' | 'guardian'): GameState {
+export function b1Mission9(s: GameState, stage: 'journey' | 'culture' | 'talk' | 'ins' | 'move' | 'guardian' | 'time'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8)])
-  const mine = ['travel-b1', 'culture-talk', 'passive-all']
+  const mine = ['travel-b1', 'culture-talk', 'passive-all', 'passive-modals']
   const present = { ...b, sceneId: B1_08_STADIUM.id, pos: { ...B1_08_STADIUM.start }, recovered: b.recovered.filter((t) => !mine.includes(t)), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)), opened: b.opened.filter((o) => !o.startsWith('b1-09-')), defeated: b.defeated.filter((d) => !d.startsWith('b1-09-')) }
-  const pos = { journey: { x: 3, y: 4 }, culture: { x: 9, y: 4 }, talk: { x: 9, y: 4 }, ins: { x: 4, y: 2 }, move: { x: 6, y: 3 }, guardian: { x: 9, y: 3 } }[stage]
+  const pos = { journey: { x: 3, y: 4 }, culture: { x: 9, y: 4 }, talk: { x: 9, y: 4 }, ins: { x: 4, y: 2 }, move: { x: 6, y: 3 }, guardian: { x: 9, y: 3 }, time: { x: 2, y: 3 } }[stage]
   const temple = stage === 'ins' || stage === 'move' || stage === 'guardian'
-  const m = enterMemory(present, 9, temple ? B1_09_STONES.id : B1_09_VALLEY.id, pos)
+  const m = enterMemory(present, 9, stage === 'time' ? B1_09_TIME.id : temple ? B1_09_STONES.id : B1_09_VALLEY.id, pos)
   const valley = ['b1-09-journey', 'b1-09-culture', 'b1-09-guide-talk']
-  const flags = { journey: [], culture: ['b1-09-journey'], talk: ['b1-09-journey', 'b1-09-culture'], ins: valley, move: [...valley, 'b1-09-stones-ins'], guardian: [...valley, 'b1-09-stones-ins', 'b1-09-stones-move'] }[stage]
-  const lessons = stage === 'journey' ? [] : stage === 'culture' ? ['travel-b1'] : stage === 'talk' || stage === 'ins' ? ['travel-b1', 'culture-talk'] : mine
-  return { ...m, opened: add(m.opened, flags), seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
+  const flags = { journey: [], culture: ['b1-09-journey'], talk: ['b1-09-journey', 'b1-09-culture'], ins: valley, move: [...valley, 'b1-09-stones-ins'], guardian: [...valley, 'b1-09-stones-ins', 'b1-09-stones-move'], time: [...valley, 'b1-09-stones-ins', 'b1-09-stones-move'] }[stage]
+  const lessons = stage === 'journey' ? [] : stage === 'culture' ? ['travel-b1'] : stage === 'talk' || stage === 'ins' ? ['travel-b1', 'culture-talk'] : ['travel-b1', 'culture-talk', 'passive-all']
+  return { ...m, opened: add(m.opened, flags), defeated: stage === 'time' ? add(m.defeated, ['b1-09-guardian']) : m.defeated, seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
 }

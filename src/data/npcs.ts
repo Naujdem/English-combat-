@@ -846,6 +846,12 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#8a8f96', hair: '#55606e', skin: '#a8adb4' },
     doneLine: { text: 'The stone moves to the right. Something clicks.', es: 'La piedra se mueve a la derecha. Algo hace clic.' },
   },
+  // B1-09 · bloque C (el Temple of Time, data/b1TempleTime.ts): las inscripciones del reloj (TabletIcon)
+  'b1-09-time-wall': {
+    name: 'Las inscripciones del reloj',
+    look: { shirt: '#8a8f96', hair: '#55606e', skin: '#a8adb4' },
+    doneLine: { text: 'The clock must be kept in the dark.', es: 'El reloj debe mantenerse en la oscuridad.' },
+  },
   'b1-07-tv': {
     name: 'La televisión',
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },

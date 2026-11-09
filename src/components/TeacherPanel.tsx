@@ -241,6 +241,7 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'ins'))}>B1-9: Inscriptions (Temple of Stones)</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'move'))}>B1-9: Moving Stone (Temple of Stones)</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'guardian'))}>B1-9: Stone Guardian</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'time'))}>B1-9: Inscriptions (Temple of Time)</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>
