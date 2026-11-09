@@ -36,6 +36,7 @@ import { B1_06_WHICH_DOG } from './b1Kennels'
 import type { WhichDogRound } from '../components/WhichDog'
 import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
 import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS, B1_07_PRACTICE4_IDS } from './questions-b1-07'
+import { B1_09_CULTURE_IDS, B1_09_JOURNEY_IDS } from './questions-b1-09'
 import { B1_08_EMPHASIS_IDS, B1_08_PRACTICE_IDS, B1_08_RESULTS_IDS, B1_08_TAGS_IDS, B1_08_TEAM_IDS } from './questions-b1-08'
 import type { PredictContent } from '../components/Predict'
 import { B1_08_PREDICT } from './b1Predict'
@@ -101,6 +102,8 @@ export type NpcTask = {
   /** Para activity 'debate' (Dialogue Under Pressure, versión de debate): turnos con respuesta buena / neutral / mala y tres desenlaces */
   debate?: {
     title: string
+    /** Nombre que se muestra en la charla (si no, el del personaje de la tarea) */
+    name?: string
     turns: DebateTurn[]
     endings?: DebateEndings
     /** Texto de la indicación antes de las opciones (por defecto: "Defiende la tradición.") */
@@ -5339,4 +5342,82 @@ NPC_TASKS['b1-08-close'] = {
     sub: 'Ganaste la bufanda del equipo. Dos fragmentos se juntaron: se abrió el recuerdo 9.',
     say: 'What a final!',
   },
+}
+
+// ── B1-09 · Temples of Stones and Time, bloque A (recuerdo 9; escena en data/b1Valley.ts). NO guarda closeId(9) (se guarda en 9-D) ──
+// El cuaderno de L sobre la roca: página 31 (lección 'travel-b1') + práctica b1-09-j1…j8. Al terminar se desbloquea la guía
+NPC_TASKS['b1-09-journey'] = {
+  npc: 'b1-09-notebook',
+  done: 'b1-09-journey',
+  lesson: 'travel-b1',
+  notebookPage: 31,
+  activity: 'practice',
+  practice: 'travel-b1',
+  practiceIds: B1_09_JOURNEY_IDS,
+  steps: [],
+  reward: { text: 'But the valley is breathtaking.', es: 'Pero el valle es impresionante.', sub: 'Página 31 del cuaderno terminada. La guía local te espera en el portón de la aldea.', say: 'But the valley is breathtaking.' },
+}
+
+// La guía local: lección 'culture-talk' + práctica b1-09-c1…c4. Al terminar, la conversación
+NPC_TASKS['b1-09-culture'] = {
+  npc: 'b1-09-guide',
+  done: 'b1-09-culture',
+  lesson: 'culture-talk',
+  activity: 'practice',
+  practice: 'culture-talk',
+  practiceIds: B1_09_CULTURE_IDS,
+  requires: { id: 'b1-09-journey', text: 'The village gate.', es: 'El portón de la aldea.', sub: 'Primero lee tu cuaderno (página 31).' },
+  steps: [],
+  reward: { text: 'Our temple is very old.', es: 'Nuestro templo es muy antiguo.', sub: 'Lección hecha. Ahora, la conversación con la guía.', say: 'Our temple is very old.' },
+}
+
+// La conversación con la guía (DebateTalk, 3 turnos y 3 desenlaces): las opciones son lo que L escribe en su cuaderno.
+// Siempre termina; da 5 monedas. El camino de piedra sigue con "Próximamente: el Temple of Stones (bloque 9-B)"
+NPC_TASKS['b1-09-guide-talk'] = {
+  npc: 'b1-09-guide',
+  done: 'b1-09-guide-talk',
+  activity: 'debate',
+  requires: { id: 'b1-09-culture', text: 'The village gate.', es: 'El portón de la aldea.', sub: 'Primero termina la lección de la guía.' },
+  debate: {
+    title: 'At the village gate',
+    name: 'Local guide',
+    ask: 'Escribe tu respuesta en el cuaderno.',
+    turns: [
+      {
+        text: 'In our valley, we greet the temple before we enter. Do you know this tradition?',
+        es: 'En nuestro valle saludamos al templo antes de entrar. ¿Conoce esta tradición?',
+        options: [
+          { en: "No, I don't. That's fascinating! Could you tell me more?", es: 'No. ¡Es fascinante! ¿Podría contarme más?', value: 'good', reply: { text: 'Of course! We bow three times. It means respect.', es: '¡Claro! Nos inclinamos tres veces. Significa respeto.' } },
+          { en: 'No.', es: 'No.', value: 'neutral', reply: { text: "It's OK. Please watch and learn.", es: 'Está bien. Mire y aprenda.' } },
+          { en: "That's weird. Why do you do that?", es: 'Eso es raro. ¿Por qué hacen eso?', value: 'bad', reply: { text: 'Weird? It is our way. Please be careful with your words.', es: '¿Raro? Es nuestra costumbre. Cuide sus palabras, por favor.' } },
+        ],
+      },
+      {
+        text: 'People bring flowers to the first door. It is a custom.',
+        es: 'La gente trae flores a la primera puerta. Es una costumbre.',
+        options: [
+          { en: 'Is it OK if I leave some flowers, too?', es: '¿Está bien si yo también dejo unas flores?', value: 'good', reply: { text: 'Yes, please. That is kind of you.', es: 'Sí, por favor. Es muy amable de su parte.' } },
+          { en: 'OK.', es: 'Bien.', value: 'neutral', reply: { text: 'Good.', es: 'Bien.' } },
+          { en: "Flowers? That's silly.", es: '¿Flores? Eso es tonto.', value: 'bad', reply: { text: "Silly? Please, don't say that at the temple.", es: '¿Tonto? Por favor, no diga eso en el templo.' } },
+        ],
+      },
+      {
+        text: "You can enter the temple, but you can't take photos inside.",
+        es: 'Puede entrar al templo, pero no puede tomar fotos adentro.',
+        options: [
+          { en: "Thank you for telling me. In my country we take photos everywhere, but I'll respect your rules.", es: 'Gracias por decírmelo. En mi país tomamos fotos en todas partes, pero respetaré sus reglas.', value: 'good', reply: { text: 'Thank you. You are welcome here.', es: 'Gracias. Es bienvenido aquí.' } },
+          { en: 'Fine.', es: 'Bien.', value: 'neutral', reply: { text: 'Good. Follow me.', es: 'Bien. Sígame.' } },
+          { en: 'Why not? I want a photo.', es: '¿Por qué no? Quiero una foto.', value: 'bad', reply: { text: 'Then you cannot enter.', es: 'Entonces no puede entrar.' } },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: 'You listen with respect. The temple will open for you.', es: 'Escucha con respeto. El templo se abrirá para usted.' },
+      mid: { text: 'You may enter. Please be careful.', es: 'Puede entrar. Tenga cuidado.' },
+      low: { text: 'You may enter, but the guide watches you closely.', es: 'Puede entrar, pero la guía lo vigila de cerca.' },
+    },
+  },
+  coins: 5,
+  steps: [],
+  reward: { text: 'Próximamente: el Temple of Stones (bloque 9-B)', sub: 'Ganaste 5 monedas. El camino de piedra al templo: próximamente.' },
 }

@@ -842,6 +842,25 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'Errores típicos: ✗ They won the Red Lions → ✓ They beat the Red Lions. ✗ It ended on a draw → ✓ It ended in a draw.', topic: 'football-results' },
   ],
   // B1-08 · Game Day, bloque C (el pasillo del medio tiempo, data/b1Concourse.ts): la persona especial y los hinchas
+  // B1-09 · Temples of Stones and Time, bloque A (el valle, data/b1Valley.ts): Cuaderno de L, página 31. 'board' = la pizarra
+  'travel-b1': [
+    { who: 'narrator', text: '(Years after the fire, L walks into a green valley. He is older now. His backpack is heavy.)', es: '(Años después del incendio, L entra a un valle verde. Ya es mayor. Su mochila pesa.)' },
+    { who: 'notebook', text: 'Page 31. The journey here was exhausting. It took nine days.', es: 'Página 31. El viaje hasta aquí fue agotador. Duró nueve días.' },
+    { who: 'notebook', text: "I took three buses and two boats. I didn't sleep much.", es: 'Tomé tres buses y dos botes. No dormí mucho.' },
+    { who: 'notebook', text: 'But the valley is breathtaking.', es: 'Pero el valle es impresionante.' },
+    { who: 'board', text: 'journey = el recorrido de un lugar a otro, normalmente largo (The journey was long). trip = un viaje con ida y vuelta o con un propósito (a trip to the mountains). travel = viajar en general, no se cuenta (Travel is exciting).', topic: 'travel-b1' },
+    { who: 'board', text: "Pasado simple: regulares con -ed (walked, arrived); irregulares (took, went, saw, slept). Negativa: didn't + verbo base (I didn't sleep). Pregunta: Did you…? (Did you see the waterfall?)", topic: 'travel-b1' },
+    { who: 'board', text: 'Adjetivos de viaje: bueno → breathtaking (impresionante), unforgettable (inolvidable); malo → exhausting (agotador), overcrowded (abarrotado). -ing = lo que causa; -ed = cómo te sientes (I was exhausted).', topic: 'travel-b1' },
+    { who: 'board', text: "Errores típicos: ✗ I didn't slept much → ✓ I didn't sleep much. ✗ We goed to the valley → ✓ We went to the valley. ✗ I made a long travel → ✓ I made a long journey.", topic: 'travel-b1' },
+  ],
+  // B1-09 · bloque A: la guía local (hablar con respeto de otra cultura). L no habla: escribe en su cuaderno
+  'culture-talk': [
+    { who: 'narrator', text: "(L can't speak, so he writes his answers in the notebook.)", es: '(L no puede hablar, así que escribe sus respuestas en el cuaderno.)' },
+    { who: 'narrator', text: 'Guide: Welcome to our valley. Our temple is very old.', es: 'Guía: Bienvenido a nuestro valle. Nuestro templo es muy antiguo.' },
+    { who: 'narrator', text: "Guide: Before the temple, we leave our shoes at the door and we don't speak loudly.", es: 'Guía: Antes del templo, dejamos los zapatos en la puerta y no hablamos fuerte.' },
+    { who: 'board', text: "Para hablar con respeto de otra cultura: muestra interés (That's fascinating! Could you tell me more?), pregunta con educación (Is it OK if I take a photo? Could you explain this tradition?) y compara sin juzgar (In my country we do it differently, but I'd like to learn).", topic: 'culture-talk' },
+    { who: 'board', text: "Evita juzgar: ✗ That's weird. → ✓ That's different from what I know. Para preguntar un motivo: ✗ Why do you do that? → ✓ Could you tell me why you do that?", topic: 'culture-talk' },
+  ],
   'question-tags': [
     { who: 'special', text: "It's half time! Listen to the fans. They ask each other questions, but they already know the answer.", es: '¡Es el medio tiempo! Escucha a los hinchas. Se hacen preguntas, pero ya saben la respuesta.' },
     { who: 'narrator', text: "Fan: Great match, wasn't it?", es: 'Hincha: Gran partido, ¿no?' },

@@ -824,6 +824,17 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     doneLine: { text: "(You read it three times. You don't answer.)", es: '(Lo lees tres veces. No contestas.)' },
   },
   // ── B1-07 · The Underworld (recuerdo 7, data/b1Room.ts): la tele vieja (TabletIcon) y el cuaderno del escritorio (NotebookIcon) ──
+  // ── B1-09 · Temples of Stones and Time (recuerdo 9, data/b1Valley.ts): el cuaderno de L (NotebookIcon) y la guía local (cara borrosa) ──
+  'b1-09-notebook': {
+    name: 'El cuaderno de L',
+    look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
+    doneLine: { text: 'But the valley is breathtaking.', es: 'Pero el valle es impresionante.' },
+  },
+  'b1-09-guide': {
+    name: 'La guía local',
+    look: { shirt: '#a3452c', hair: '#1b1b24', skin: '#b98c5a' },
+    doneLine: { text: 'Our temple is very old.', es: 'Nuestro templo es muy antiguo.' },
+  },
   'b1-07-tv': {
     name: 'La televisión',
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },

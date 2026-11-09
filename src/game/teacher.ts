@@ -34,6 +34,7 @@ import { B1_OPENING, closeId } from '../data/b1World'
 import { B1_02_LANDED, B1_02_LUMEN, B1_02_PRACTICE } from '../data/b1NewCity'
 import { B1_06_ADVERT, B1_06_READ, B1_06_SHELTER } from '../data/b1Shelter'
 import { B1_07_ROOM } from '../data/b1Room'
+import { B1_09_VALLEY } from '../data/b1Valley'
 import { B1_06_KENNELS, B1_06_VOLUNTEER1, B1_06_VOLUNTEER2 } from '../data/b1Kennels'
 import { B1_06_OFFICE } from '../data/b1EstebanOffice'
 import { B1_08_STADIUM } from '../data/b1Stadium'
@@ -984,4 +985,20 @@ export function b1Mission8(s: GameState, stage: 'invite' | 'team' | 'predict' | 
   const special = { ...boss, pos: { x: 3, y: 3 }, defeated: add(boss.defeated, [B1_08_BOSS]) }
   if (stage === 'special') return special
   return { ...special, pos: { x: 1, y: 3 }, opened: add(special.opened, ['b1-08-friend']) }
+}
+
+/**
+ * Atajos de la misión B1-9 (Temples of Stones and Time, recuerdo) para el panel del profe. Parten de "B1: abrir el nodo 9".
+ *  journey: entra al recuerdo (el valle, junto al cuaderno; la página 31 sale de nuevo)
+ *  culture: cuaderno hecho (frente a la guía; la lección sale de nuevo) · talk: lección de la guía hecha (frente a la guía; la conversación sale)
+ */
+export function b1Mission9(s: GameState, stage: 'journey' | 'culture' | 'talk'): GameState {
+  const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8)])
+  const mine = ['travel-b1', 'culture-talk']
+  const present = { ...b, sceneId: B1_08_STADIUM.id, pos: { ...B1_08_STADIUM.start }, recovered: b.recovered.filter((t) => !mine.includes(t)), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)), opened: b.opened.filter((o) => !o.startsWith('b1-09-')) }
+  const pos = { journey: { x: 3, y: 4 }, culture: { x: 9, y: 4 }, talk: { x: 9, y: 4 } }[stage]
+  const m = enterMemory(present, 9, B1_09_VALLEY.id, pos)
+  const flags = { journey: [], culture: ['b1-09-journey'], talk: ['b1-09-journey', 'b1-09-culture'] }[stage]
+  const lessons = stage === 'journey' ? [] : stage === 'culture' ? ['travel-b1'] : mine
+  return { ...m, opened: add(m.opened, flags), seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
 }
