@@ -10,10 +10,13 @@ const TR = 'travel-b1' as const
 const CU = 'culture-talk' as const
 const PA = 'passive-all' as const
 const GUARDIAN = ['b1-09-guardian']
+const PM = 'passive-modals' as const
+const TIME = ['b1-09-time']
 const JOURNEY = ['b1-09-journey']
 const CULTURE = ['b1-09-culture']
 
 export const B1_09_JOURNEY_IDS = ['b1-09-j1', 'b1-09-j2', 'b1-09-j3', 'b1-09-j4', 'b1-09-j5', 'b1-09-j6', 'b1-09-j7', 'b1-09-j8']
+export const B1_09_TIME_IDS = ['b1-09-m1', 'b1-09-m2', 'b1-09-m3', 'b1-09-m4', 'b1-09-m5', 'b1-09-m6', 'b1-09-m7', 'b1-09-m8']
 export const B1_09_CULTURE_IDS = ['b1-09-c1', 'b1-09-c2', 'b1-09-c3', 'b1-09-c4']
 
 export const B1_09_QUESTIONS: Question[] = [
@@ -63,5 +66,25 @@ export const B1_09_QUESTIONS: Question[] = [
     answer: 2,
     tip: 'It will be opened by the right words.',
     tags: GUARDIAN,
+  },
+  // Bloque C · las inscripciones del reloj (data/b1TempleTime.ts): la pasiva con modales
+  { id: 'b1-09-m1', topic: PM, kind: 'fix', prompt: 'The clock must keep in the dark.', options: ['The clock must is kept in the dark.', 'The clock must be kept in the dark.', 'The clock must been kept in the dark.'], answer: 1, tip: 'must be + participio.', tags: TIME },
+  { id: 'b1-09-m2', topic: PM, kind: 'fix', prompt: "The door can't opened by force.", options: ["The door can't be open by force.", "The door can't being opened by force.", "The door can't be opened by force."], answer: 2, tip: "can't be + participio.", tags: TIME },
+  { id: 'b1-09-m3', topic: PM, kind: 'fix', prompt: 'The key should kept in a safe place.', options: ['The key should be kept in a safe place.', 'The key should been kept in a safe place.', 'The key should is kept in a safe place.'], answer: 0, tip: 'should be + participio.', tags: TIME },
+  { id: 'b1-09-m4', topic: PM, prompt: "The rules ___ be followed. It's obligatory.", options: ['can', 'must', 'might'], answer: 1, tip: 'Obligatorio: must be.', tags: TIME },
+  { id: 'b1-09-m5', topic: PM, prompt: "The ruins ___ be visited at night. It's forbidden.", options: ['can', 'should', "mustn't"], answer: 2, tip: "Prohibido: mustn't be.", tags: TIME },
+  { id: 'b1-09-m6', topic: PM, kind: 'order', prompt: 'La puerta no puede ser abierta con fuerza.', options: ['The', 'door', "can't", 'be', 'opened', 'by', 'force.'], answer: 0, tip: "can't be + participio.", tags: TIME },
+  { id: 'b1-09-m7', topic: PM, prompt: 'The clock ___ been made by the ancient people. Look at the glyphs.', options: ['must have', 'must', 'can'], answer: 0, tip: 'Deducción en el pasado: must have been.', tags: TIME },
+  {
+    id: 'b1-09-m8',
+    topic: PM,
+    kind: 'listen',
+    audio: "The clock must be kept in the dark. It can't be opened by force. The hands should be turned slowly, and the lid mustn't be touched.",
+    voice: 'male',
+    prompt: '¿Qué no debe tocarse?',
+    options: ['Las agujas.', 'La tapa.', 'Los glifos.'],
+    answer: 1,
+    tip: "The lid mustn't be touched.",
+    tags: TIME,
   },
 ]

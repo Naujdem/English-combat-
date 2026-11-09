@@ -36,7 +36,8 @@ import { B1_06_WHICH_DOG } from './b1Kennels'
 import type { WhichDogRound } from '../components/WhichDog'
 import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
 import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS, B1_07_PRACTICE4_IDS } from './questions-b1-07'
-import { B1_09_CULTURE_IDS, B1_09_JOURNEY_IDS } from './questions-b1-09'
+import { B1_09_CULTURE_IDS, B1_09_JOURNEY_IDS, B1_09_TIME_IDS } from './questions-b1-09'
+import { B1_09_CLOCK_ROOM } from './b1TempleTime'
 import { B1_09_STONE_ROOM, B1_09_WALL_ROOM } from './b1TempleStones'
 import { B1_08_EMPHASIS_IDS, B1_08_PRACTICE_IDS, B1_08_RESULTS_IDS, B1_08_TAGS_IDS, B1_08_TEAM_IDS } from './questions-b1-08'
 import type { PredictContent } from '../components/Predict'
@@ -76,6 +77,7 @@ export type NpcTask = {
   round?: { items: RoundItem[]; lines: RoundLines; visual?: 'room' | 'none' }
   /** Para activity 'practice': práctica guiada con Leo (8 frases) del tema indicado */
   practice?: TopicId
+  /** Para activity 'inscriptions' con practice: al terminar las tablillas sigue la práctica en la misma tarea (B1-09-C) */
   /** Para activity 'practice': preguntas fijas en orden (si no, se eligen al azar del tema) */
   practiceIds?: string[]
   /** Para activity 'sequence' (Sequence Master): los pasos en el orden correcto (salen desordenados) */
@@ -5448,4 +5450,24 @@ NPC_TASKS['b1-09-stones-move'] = {
   coins: 5,
   steps: [],
   reward: { text: 'The first door is open.', es: 'La primera puerta está abierta.', sub: 'Ganaste 5 monedas. ¡Una estatua de piedra se levanta delante de la puerta!' },
+}
+
+// ── B1-09 · Temples of Stones and Time, bloque C (el Temple of Time, data/b1TempleTime.ts). NO guarda closeId(9) ──
+// Las inscripciones del reloj: Inscriptions (5 tablillas, la pasiva con modales) y, en la misma tarea, la práctica
+// b1-09-m1…m8. Al terminar, el tema 'passive-modals' queda aprendido y la vitrina muestra "Próximamente: el Keeper of Hours"
+NPC_TASKS['b1-09-time-ins'] = {
+  npc: 'b1-09-time-wall',
+  done: 'b1-09-time-ins',
+  activity: 'inscriptions',
+  inscriptions: B1_09_CLOCK_ROOM,
+  practice: 'passive-modals',
+  practiceIds: B1_09_TIME_IDS,
+  learn: ['passive-modals'],
+  coins: 5,
+  steps: [],
+  reward: {
+    text: '(In the center, the glass case shines with a red light. Something is awake.)',
+    es: '(En el centro, la vitrina brilla con una luz roja. Algo está despierto.)',
+    sub: 'Ganaste 5 monedas. Próximamente: el Keeper of Hours (bloque 9-D).',
+  },
 }

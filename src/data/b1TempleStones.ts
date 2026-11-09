@@ -8,7 +8,7 @@ import type { TextCommandRoom } from '../components/TextCommand'
  * Se llega por el camino de piedra del valle (data/b1Valley.ts, links) y se vuelve por la misma puerta.
  *   El muro de inscripciones (tarea 'b1-09-stones-ins': Inscriptions, tema 'passive-all') → la piedra del salón
  *   (tarea 'b1-09-stones-move': The Moving Stone escrito) → el minijefe Stone Guardian (una fase) → la puerta del fondo:
- *   próximamente el Temple of Time (bloque 9-C). Ningún bloque B guarda closeId(9).
+ *   el Temple of Time (bloque 9-C, data/b1TempleTime.ts). Ningún bloque B guarda closeId(9).
  */
 export const B1_09_STONES_ID = 'b1-09-stones'
 export const B1_09_WALL = 'b1-09-wall'
@@ -16,7 +16,6 @@ export const B1_09_STONES_INS = 'b1-09-stones-ins'
 export const B1_09_STONE = 'b1-09-stone'
 export const B1_09_STONES_MOVE = 'b1-09-stones-move'
 export const B1_09_GUARDIAN = 'b1-09-guardian'
-export const B1_09_TIME_SOON = 'Próximamente: el Temple of Time (bloque 9-C)'
 
 /**
  * Leyenda de components/Tiles.tsx: # muro con glifos · d puerta · Z la sombra de una estatua · K el pedestal con la caja de piedra.
@@ -57,22 +56,22 @@ export const B1_09_STONES: SceneDef = {
     '1,5': { text: 'The shadow of a statue.', sub: 'La sombra de una estatua.', say: 'The shadow of a statue.' },
     '8,5': { text: 'A stone box on a pedestal.', sub: 'Una caja de piedra sobre un pedestal.', say: 'A stone box on a pedestal.' },
   },
-  // La puerta del fondo: cerrada hasta vencer al Stone Guardian; después, el bloque 9-C
+  // La puerta del fondo: cerrada hasta vencer al Stone Guardian; después lleva al Temple of Time (bloque 9-C)
   locked: (x, y, s) => {
     if (x !== 11 || y !== 3) return null
     if (!s.defeated.includes(B1_09_GUARDIAN)) {
       const sub = !s.opened.includes(B1_09_STONES_INS) ? 'Primero despierta el muro de inscripciones.' : !s.opened.includes(B1_09_STONES_MOVE) ? 'Primero mueve la piedra del salón.' : 'Primero vence al Stone Guardian.'
       return { text: 'Todavía no.', sub }
     }
-    return { text: B1_09_TIME_SOON, sub: '(La puerta se abre. Más allá, una luz roja brilla en la oscuridad.)' }
+    return null
   },
-  links: { '0,3': { sceneId: 'b1-09-valley', pos: { x: 10, y: 4 } } },
+  // Bloque C: la puerta del fondo lleva al Temple of Time (data/b1TempleTime.ts)
+  links: { '0,3': { sceneId: 'b1-09-valley', pos: { x: 10, y: 4 } }, '11,3': { sceneId: 'b1-09-time', pos: { x: 1, y: 3 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'El muro de inscripciones', done: s.opened.includes(B1_09_STONES_INS) },
     { label: 'La piedra del salón (Moving Stone)', done: s.opened.includes(B1_09_STONES_MOVE) },
     { label: 'Stone Guardian', done: s.defeated.includes(B1_09_GUARDIAN) },
-    { label: B1_09_TIME_SOON, done: false },
   ],
   intro: {
     first: 'The stones remember. — Las piedras recuerdan.',

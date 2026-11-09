@@ -1193,6 +1193,17 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       "Errores típicos: ✗ I didn't slept much → ✓ I didn't sleep much. ✗ We goed to the valley → ✓ We went to the valley. ✗ I made a long travel → ✓ I made a long journey.",
     ],
   },
+  'passive-modals': {
+    name: 'La pasiva con modales',
+    level: 'B1',
+    lesson: [
+      'Modal + be + participio: must be kept, can be opened. Después del modal, be no cambia.',
+      "can't be + participio = es imposible; mustn't be + participio = está prohibido.",
+      'should be + participio = se recomienda; must be + participio = es obligatorio.',
+      'could be / might be + participio = quizá pasa.',
+      "must have been + participio = seguro que fue hecho. También: can't have been + participio = es imposible que haya sido.",
+    ],
+  },
   'passive-all': {
     name: 'La pasiva: todas las formas',
     level: 'B1',

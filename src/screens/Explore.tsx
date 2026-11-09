@@ -197,6 +197,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const [task, setTask] = useState<string | null>(null)
   // Práctica con charla previa (NpcTask.intro, B1-02 tienda): id de la tarea cuya charla ya se vio en esta visita
   const [introSeen, setIntroSeen] = useState<string | null>(null)
+  /** B1-09-C: tarea de Inscriptions con práctica; al terminar las tablillas sigue la práctica (id de la tarea) */
+  const [insDone, setInsDone] = useState<string | null>(null)
   /** B1-04: lo que se dice al terminar una tarea (outro), antes de su mensaje de recompensa */
   const [outro, setOutro] = useState<string | null>(null)
   // Al cerrar un escenario sin final de capítulo (A2), su página del diario se abre sola aquí, como en A1
@@ -286,6 +288,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   function finishTask(id: string, done: boolean, extra: string[] = [], bonusShield = false) {
     const t = NPC_TASKS[id]
     setTask(null)
+    setInsDone(null)
     if (!done || !t) return
     update((s) => ({
       ...s,
@@ -779,7 +782,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS || e.id === B1_07_TV || e.id === 'b1-09-wall' || e.id === B1_07_CRACK || e.id === B1_07_ESCAPE_NPC ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_07_NOTEBOOK || e.id === 'b1-09-notebook' || e.id === B1_05_ENVELOPE || e.id === B1_06_BOARD || e.id === B1_06_DESK || e.id === 'b1-06-orders' || e.id === 'b1-08-predict-board' || e.id === 'b1-08-return' ? <NotebookIcon lit={pending} /> : B1_06_DOG_NPCS[e.id] ? <ShelterDog who={B1_06_DOG_NPCS[e.id]} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX || e.id === B1_07_DEVICE || e.id === B1_07_DEVICE_ROOM || e.id === 'b1-09-stone' ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS || e.id === B1_07_TV || e.id === 'b1-09-wall' || e.id === 'b1-09-time-wall' || e.id === B1_07_CRACK || e.id === B1_07_ESCAPE_NPC ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_07_NOTEBOOK || e.id === 'b1-09-notebook' || e.id === B1_05_ENVELOPE || e.id === B1_06_BOARD || e.id === B1_06_DESK || e.id === 'b1-06-orders' || e.id === 'b1-08-predict-board' || e.id === 'b1-08-return' ? <NotebookIcon lit={pending} /> : B1_06_DOG_NPCS[e.id] ? <ShelterDog who={B1_06_DOG_NPCS[e.id]} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX || e.id === B1_07_DEVICE || e.id === B1_07_DEVICE_ROOM || e.id === 'b1-09-stone' ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -1279,7 +1282,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           })()}
         </Overlay>
       )}
-      {task && NPC_TASKS[task]?.activity === 'practice' && NPC_TASKS[task].practice && (!NPC_TASKS[task].intro?.length || introSeen === task) && (
+      {task && ((NPC_TASKS[task]?.activity === 'practice' && (!NPC_TASKS[task].intro?.length || introSeen === task)) || insDone === task) && NPC_TASKS[task].practice && (
         // Práctica guiada con Leo (pantalla completa): al terminarla se marca la tarea
         <Practice state={state} update={update} review={NPC_TASKS[task].practice} ids={NPC_TASKS[task].practiceIds} guided guide={taskGuide(task)} onClose={() => finishTask(task, false)} onDone={(perfect) => finishTask(task, true, [], perfect && !!NPC_TASKS[task].practiceShield)} />
       )}
@@ -1294,7 +1297,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         <TheAccident state={state} update={update} friend={npcOf(B1_01_FRIEND).look} onDone={() => finishTask(task, true)} />
       )}
 
-      {task && NPC_TASKS[task] && NPC_TASKS[task].activity !== 'practice' && NPC_TASKS[task].activity !== 'callforhelp' && NPC_TASKS[task].activity !== 'script' && (NPC_TASKS[task].activity !== 'command' || !NPC_TASKS[task].intro?.length || introSeen === task) && (
+      {task && NPC_TASKS[task] && insDone !== task && NPC_TASKS[task].activity !== 'practice' && NPC_TASKS[task].activity !== 'callforhelp' && NPC_TASKS[task].activity !== 'script' && (NPC_TASKS[task].activity !== 'command' || !NPC_TASKS[task].intro?.length || introSeen === task) && (
         <Overlay>
           {(() => {
             const t = NPC_TASKS[task]
@@ -1345,7 +1348,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             }
             if (t.activity === 'inscriptions' && t.inscriptions) {
               const r = t.inscriptions
-              return <Inscriptions title={r.title} intro={r.intro} scene={r.scene} plates={r.plates} finish={r.finish} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
+              return <Inscriptions title={r.title} intro={r.intro} scene={r.scene} plates={r.plates} finish={r.finish} onClose={(done, perfect) => (done && t.practice ? setInsDone(task) : finishTask(task, done, [], perfect))} />
             }
             if (t.activity === 'memory' && t.memory) {
               const who = npcOf(t.npc ?? task)
