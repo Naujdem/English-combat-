@@ -835,6 +835,17 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#a3452c', hair: '#1b1b24', skin: '#b98c5a' },
     doneLine: { text: 'Our temple is very old.', es: 'Nuestro templo es muy antiguo.' },
   },
+  // B1-09 · bloque B (el Temple of Stones, data/b1TempleStones.ts): el muro de inscripciones (TabletIcon) y la piedra (ToolboxIcon)
+  'b1-09-wall': {
+    name: 'El muro de inscripciones',
+    look: { shirt: '#8a8f96', hair: '#55606e', skin: '#a8adb4' },
+    doneLine: { text: 'The temple was built by the ancient people.', es: 'El templo fue construido por el pueblo antiguo.' },
+  },
+  'b1-09-stone': {
+    name: 'La piedra del salón',
+    look: { shirt: '#8a8f96', hair: '#55606e', skin: '#a8adb4' },
+    doneLine: { text: 'The stone moves to the right. Something clicks.', es: 'La piedra se mueve a la derecha. Algo hace clic.' },
+  },
   'b1-07-tv': {
     name: 'La televisión',
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },

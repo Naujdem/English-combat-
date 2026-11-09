@@ -238,6 +238,9 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'journey'))}>B1-9: Cuaderno p.31 (el viaje)</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'culture'))}>B1-9: la guía (cultura)</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'talk'))}>B1-9: la conversación con la guía</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'ins'))}>B1-9: Inscriptions (Temple of Stones)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'move'))}>B1-9: Moving Stone (Temple of Stones)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'guardian'))}>B1-9: Stone Guardian</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>
