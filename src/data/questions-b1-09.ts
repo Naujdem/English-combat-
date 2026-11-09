@@ -12,6 +12,9 @@ const PA = 'passive-all' as const
 const GUARDIAN = ['b1-09-guardian']
 const PM = 'passive-modals' as const
 const TIME = ['b1-09-time']
+/** Bloque D: el jefe Keeper of Hours (data/b1TempleTime.ts). Fase 1 la pasiva en todas sus formas · fase 2 con modales */
+const BOSS_A = ['b1-09-boss', 'b1-09-boss-a']
+const BOSS_M = ['b1-09-boss', 'b1-09-boss-m']
 const JOURNEY = ['b1-09-journey']
 const CULTURE = ['b1-09-culture']
 
@@ -86,5 +89,43 @@ export const B1_09_QUESTIONS: Question[] = [
     answer: 1,
     tip: "The lid mustn't be touched.",
     tags: TIME,
+  },
+  // Bloque D · jefe Keeper of Hours, fase 1: la pasiva en todas sus formas
+  { id: 'b1-09-bf1', topic: PA, kind: 'fix', prompt: 'The clock was keep here for years.', options: ['The clock was keeped here for years.', 'The clock was kept here for years.', 'The clock kept was here for years.'], answer: 1, tip: 'keep → kept.', tags: BOSS_A },
+  { id: 'b1-09-bf2', topic: PA, kind: 'fix', prompt: 'The glyphs are wrote by hand.', options: ['The glyphs is written by hand.', 'The glyphs written are by hand.', 'The glyphs are written by hand.'], answer: 2, tip: 'write → written; plural: are.', tags: BOSS_A },
+  { id: 'b1-09-bf3', topic: PA, kind: 'fix', prompt: 'The gears have turned by the water for years.', options: ['The gears have been turned by the water for years.', 'The gears have be turned by the water for years.', 'The gears has been turned by the water for years.'], answer: 0, tip: 'have been + participio.', tags: BOSS_A },
+  { id: 'b1-09-bf4', topic: PA, prompt: 'The temple ___ visited by many people last year.', options: ['is', 'was', 'has been'], answer: 1, tip: 'Last year: pasado, was visited.', tags: BOSS_A },
+  { id: 'b1-09-bf5', topic: PA, prompt: 'At this moment, the clock ___ guarded by the Keeper.', options: ['was', 'will be', 'is'], answer: 2, tip: 'Ahora: is guarded.', tags: BOSS_A },
+  { id: 'b1-09-bf6', topic: PA, kind: 'order', prompt: 'El reloj será abierto por las palabras correctas.', options: ['The', 'clock', 'will', 'be', 'opened', 'by', 'the', 'right', 'words.'], answer: 0, tip: 'will be + participio.', tags: BOSS_A },
+  {
+    id: 'b1-09-bf7',
+    topic: PA,
+    kind: 'listen',
+    audio: 'The temple was built by the ancient people. The clock was made with special stones. It has been kept in the dark for centuries, and it will be found by the right person.',
+    voice: 'female',
+    prompt: '¿Con qué fue hecho el reloj?',
+    options: ['Con piedras especiales.', 'Con oro.', 'Con madera.'],
+    answer: 0,
+    tip: 'The clock was made with special stones.',
+    tags: BOSS_A,
+  },
+  // Bloque D · jefe Keeper of Hours, fase 2: la pasiva con modales
+  { id: 'b1-09-bm1', topic: PM, kind: 'fix', prompt: 'The clock must kept in the dark.', options: ['The clock must is kept in the dark.', 'The clock must been kept in the dark.', 'The clock must be kept in the dark.'], answer: 2, tip: 'must be + participio.', tags: BOSS_M },
+  { id: 'b1-09-bm2', topic: PM, kind: 'fix', prompt: "It can't opened by anybody.", options: ["It can't be opened by anybody.", "It can't being opened by anybody.", "It can't been opened by anybody."], answer: 0, tip: "can't be + participio.", tags: BOSS_M },
+  { id: 'b1-09-bm3', topic: PM, kind: 'fix', prompt: 'The hands should turned slowly.', options: ['The hands should been turned slowly.', 'The hands should be turned slowly.', 'The hands should is turned slowly.'], answer: 1, tip: 'should be + participio.', tags: BOSS_M },
+  { id: 'b1-09-bm4', topic: PM, prompt: "The glass ___ be touched. It's forbidden.", options: ['must', 'can', "mustn't"], answer: 2, tip: "Prohibido: mustn't be.", tags: BOSS_M },
+  { id: 'b1-09-bm5', topic: PM, prompt: 'The clock ___ be broken by water. Be careful.', options: ['must', 'could', 'should'], answer: 1, tip: 'Posibilidad: could be + participio.', tags: BOSS_M },
+  { id: 'b1-09-bm6', topic: PM, kind: 'order', prompt: 'No puede ser abierto con fuerza.', options: ['It', "can't", 'be', 'opened', 'by', 'force.'], answer: 0, tip: "can't be + participio.", tags: BOSS_M },
+  {
+    id: 'b1-09-bm7',
+    topic: PM,
+    kind: 'listen',
+    audio: "The Keeper says: the clock must be used carefully. It can't be given to strangers. And it should be kept close to you.",
+    voice: 'male',
+    prompt: '¿Dónde debe guardarse?',
+    options: ['En el templo.', 'En el agua.', 'Cerca de ti.'],
+    answer: 2,
+    tip: 'It should be kept close to you.',
+    tags: BOSS_M,
   },
 ]

@@ -993,18 +993,20 @@ export function b1Mission8(s: GameState, stage: 'invite' | 'team' | 'predict' | 
  * Atajos de la misión B1-9 (Temples of Stones and Time, recuerdo) para el panel del profe. Parten de "B1: abrir el nodo 9".
  *  journey: entra al recuerdo (el valle, junto al cuaderno; la página 31 sale de nuevo)
  *  culture: cuaderno hecho (frente a la guía; la lección sale de nuevo) · talk: lección de la guía hecha (frente a la guía; la conversación sale)
+ *  boss: inscripciones del reloj hechas (frente al Keeper of Hours) · close: jefe vencido (junto al reloj, listo para el cierre)
  *  time: Stone Guardian vencido (en el Temple of Time, junto a las inscripciones del reloj; la práctica sale después de las tablillas)
  *  ins: conversación hecha (en el Temple of Stones, frente al muro) · move: muro hecho (junto a la piedra) · guardian: piedra hecha (frente al Stone Guardian)
  */
-export function b1Mission9(s: GameState, stage: 'journey' | 'culture' | 'talk' | 'ins' | 'move' | 'guardian' | 'time'): GameState {
+export function b1Mission9(s: GameState, stage: 'journey' | 'culture' | 'talk' | 'ins' | 'move' | 'guardian' | 'time' | 'boss' | 'close'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8)])
   const mine = ['travel-b1', 'culture-talk', 'passive-all', 'passive-modals']
   const present = { ...b, sceneId: B1_08_STADIUM.id, pos: { ...B1_08_STADIUM.start }, recovered: b.recovered.filter((t) => !mine.includes(t)), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)), opened: b.opened.filter((o) => !o.startsWith('b1-09-')), defeated: b.defeated.filter((d) => !d.startsWith('b1-09-')) }
-  const pos = { journey: { x: 3, y: 4 }, culture: { x: 9, y: 4 }, talk: { x: 9, y: 4 }, ins: { x: 4, y: 2 }, move: { x: 6, y: 3 }, guardian: { x: 9, y: 3 }, time: { x: 2, y: 3 } }[stage]
+  const pos = { journey: { x: 3, y: 4 }, culture: { x: 9, y: 4 }, talk: { x: 9, y: 4 }, ins: { x: 4, y: 2 }, move: { x: 6, y: 3 }, guardian: { x: 9, y: 3 }, time: { x: 2, y: 3 }, boss: { x: 3, y: 3 }, close: { x: 4, y: 2 } }[stage]
   const temple = stage === 'ins' || stage === 'move' || stage === 'guardian'
-  const m = enterMemory(present, 9, stage === 'time' ? B1_09_TIME.id : temple ? B1_09_STONES.id : B1_09_VALLEY.id, pos)
+  const inTime = stage === 'time' || stage === 'boss' || stage === 'close'
+  const m = enterMemory(present, 9, inTime ? B1_09_TIME.id : temple ? B1_09_STONES.id : B1_09_VALLEY.id, pos)
   const valley = ['b1-09-journey', 'b1-09-culture', 'b1-09-guide-talk']
-  const flags = { journey: [], culture: ['b1-09-journey'], talk: ['b1-09-journey', 'b1-09-culture'], ins: valley, move: [...valley, 'b1-09-stones-ins'], guardian: [...valley, 'b1-09-stones-ins', 'b1-09-stones-move'], time: [...valley, 'b1-09-stones-ins', 'b1-09-stones-move'] }[stage]
-  const lessons = stage === 'journey' ? [] : stage === 'culture' ? ['travel-b1'] : stage === 'talk' || stage === 'ins' ? ['travel-b1', 'culture-talk'] : ['travel-b1', 'culture-talk', 'passive-all']
-  return { ...m, opened: add(m.opened, flags), defeated: stage === 'time' ? add(m.defeated, ['b1-09-guardian']) : m.defeated, seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
+  const flags = { journey: [], culture: ['b1-09-journey'], talk: ['b1-09-journey', 'b1-09-culture'], ins: valley, move: [...valley, 'b1-09-stones-ins'], guardian: [...valley, 'b1-09-stones-ins', 'b1-09-stones-move'], time: [...valley, 'b1-09-stones-ins', 'b1-09-stones-move'], boss: [...valley, 'b1-09-stones-ins', 'b1-09-stones-move', 'b1-09-time-ins'], close: [...valley, 'b1-09-stones-ins', 'b1-09-stones-move', 'b1-09-time-ins'] }[stage]
+  const lessons = stage === 'journey' ? [] : stage === 'culture' ? ['travel-b1'] : stage === 'talk' || stage === 'ins' ? ['travel-b1', 'culture-talk'] : stage === 'boss' || stage === 'close' ? mine : ['travel-b1', 'culture-talk', 'passive-all']
+  return { ...m, opened: add(m.opened, flags), defeated: inTime ? add(m.defeated, stage === 'close' ? ['b1-09-guardian', 'b1-09-boss'] : ['b1-09-guardian']) : m.defeated, seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
 }

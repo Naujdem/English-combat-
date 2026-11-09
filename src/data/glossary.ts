@@ -133,7 +133,7 @@ informant=informante;guard=guardia;crack=rendija, grieta;mark=marca;footprints=h
 final=final (el último partido);goalkeeper=portero, portera;stadium=estadio;atmosphere=ambiente;crowd=multitud, público;strongest=el más fuerte (strong);tallest=el más alto (tall);exciting=emocionante;loudest=el más ruidoso (loud)
 score=marcador, anotar (un gol);beat=ganarle a (un equipo);win=ganar (un partido o una copa);fans=hinchas, aficionados;fan=hincha, aficionado;referee=árbitro;penalty=penalti;thrilling=emocionantísimo, apasionante;disappointing=decepcionante;commentator=comentarista;nil=cero (en un marcador);winning=ganando (win);tunnel=túnel;cheer=animar, aclamar;tournament=torneo;worse=peor (bad);
 journey=viaje, recorrido (de un lugar a otro);travel=viajar, los viajes (no se cuenta);breathtaking=impresionante;overcrowded=abarrotado, lleno de gente;exhausting=agotador;unforgettable=inolvidable;valley=valle;waterfall=cascada;jungle=selva;cliff=acantilado;cave=cueva;tradition=tradición;custom=costumbre;respect=respeto, respetar;bow=inclinarse (en señal de respeto);
-ruins=ruinas;inscription=inscripción;inscriptions=inscripciones;sacred=sagrado;glyph=glifo;glyphs=glifos;guardian=guardián;pedestal=pedestal;thousand=mil;centuries=siglos;century=siglo;gears=engranajes;gear=engranaje;obligatory=obligatorio;
+ruins=ruinas;inscription=inscripción;inscriptions=inscripciones;sacred=sagrado;glyph=glifo;glyphs=glifos;guardian=guardián;pedestal=pedestal;thousand=mil;centuries=siglos;century=siglo;gears=engranajes;gear=engranaje;obligatory=obligatorio;hum=zumbar;forgiven=perdonado (forgive);
 `
 
 const BASE: Record<string, string> = Object.fromEntries(
