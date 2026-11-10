@@ -116,7 +116,10 @@ export function Lesson({
   // Guía de la lección: Leo, o Maya si la lección tiene pasos 'maya' (B1-04). Mismo tratamiento: retrato, nombre y voz
   // B1-06: Ms. Haddad guía la lección si tiene pasos 'haddad'
   // B1-08: la persona especial guía la lección si tiene pasos 'special' (nombre, aspecto y voz que eligió el jugador)
-  const guide = steps.some((x) => x.who === 'special')
+  // B1-12: el abuelo Einer guía la lección si tiene pasos 'einer'
+  const guide = steps.some((x) => x.who === 'einer')
+    ? { name: 'Einer', look: { shirt: '#6b4a2f', hair: '#d8d8d8', skin: '#c98f68', gender: 'male' as const }, voice: 'male' as const }
+    : steps.some((x) => x.who === 'special')
     ? { name: state.interest.name, look: interestFriend(state.interest).look, voice: state.interest.gender === 'female' ? ('female' as const) : ('male' as const) }
     : steps.some((x) => x.who === 'nayi')
     ? { name: 'Nayi', look: B1_06_NAYI_LOOK, voice: 'female' as const }
@@ -127,7 +130,7 @@ export function Lesson({
     : steps.some((x) => x.who === 'leo') || !defaultGuide
     ? { name: 'Leo', look: FRIENDS.leo.look, voice: 'male' as const }
     : defaultGuide
-  const talks = s.who === 'leo' || s.who === 'maya' || s.who === 'haddad' || s.who === 'nayi' || s.who === 'special'
+  const talks = s.who === 'leo' || s.who === 'maya' || s.who === 'haddad' || s.who === 'nayi' || s.who === 'special' || s.who === 'einer'
   const last = i === steps.length - 1
   const waiting = !!s.choice && !solved
   // La pizarra conserva lo último escrito si el paso actual no trae nada nuevo

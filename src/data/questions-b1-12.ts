@@ -7,6 +7,9 @@ import type { Question } from '../game/types'
  *  - Leo: remember / forget / remind (tarea b1-12-leo-lesson, tema memory-verbs-b1): b1-12-mv1…mv8.
  *  - Maya: relaciones y personalidad (tarea b1-12-maya-lesson, tema relationships-b1): b1-12-rl1…rl8.
  *  - La persona especial: empatía (tarea b1-12-special-lesson, tema empathy-b1): b1-12-em1…em6.
+ * Bloque C (la ciudad, data/b1HostCity.ts):
+ *  - Einer: future continuous (tarea b1-12-fc, tema future-continuous-b1): b1-12-fc1…fc8.
+ *  - Einer en el mirador: sustantivos compuestos (tarea b1-12-cn, tema compound-nouns-b1): b1-12-cn1…cn8.
  * La posición de la respuesta correcta varía a propósito.
  */
 const SV = 'state-verbs-b1' as const
@@ -17,12 +20,18 @@ const RL = 'relationships-b1' as const
 const MAYA = ['b1-12-maya']
 const EM = 'empathy-b1' as const
 const SPECIAL = ['b1-12-special']
+const FC = 'future-continuous-b1' as const
+const FCT = ['b1-12-fc']
+const CN = 'compound-nouns-b1' as const
+const CNT = ['b1-12-cn']
 
 export const B1_12_VERBS_IDS = ['b1-12-sv1', 'b1-12-sv2', 'b1-12-sv3', 'b1-12-sv4', 'b1-12-sv5', 'b1-12-sv6', 'b1-12-sv7', 'b1-12-sv8']
 
 export const B1_12_MEMORY_IDS = ['b1-12-mv1', 'b1-12-mv2', 'b1-12-mv3', 'b1-12-mv4', 'b1-12-mv5', 'b1-12-mv6', 'b1-12-mv7', 'b1-12-mv8']
 export const B1_12_RELATIONSHIPS_IDS = ['b1-12-rl1', 'b1-12-rl2', 'b1-12-rl3', 'b1-12-rl4', 'b1-12-rl5', 'b1-12-rl6', 'b1-12-rl7', 'b1-12-rl8']
 export const B1_12_EMPATHY_IDS = ['b1-12-em1', 'b1-12-em2', 'b1-12-em3', 'b1-12-em4', 'b1-12-em5', 'b1-12-em6']
+export const B1_12_FC_IDS = ['b1-12-fc1', 'b1-12-fc2', 'b1-12-fc3', 'b1-12-fc4', 'b1-12-fc5', 'b1-12-fc6', 'b1-12-fc7', 'b1-12-fc8']
+export const B1_12_CN_IDS = ['b1-12-cn1', 'b1-12-cn2', 'b1-12-cn3', 'b1-12-cn4', 'b1-12-cn5', 'b1-12-cn6', 'b1-12-cn7', 'b1-12-cn8']
 
 export const B1_12_QUESTIONS: Question[] = [
   // Bloque A · Maya (verbos de estado y de acción)
@@ -103,4 +112,44 @@ export const B1_12_QUESTIONS: Question[] = [
     tip: 'It means a lot to me.',
     tags: SPECIAL,
   },
+  // Bloque C · Einer (future continuous)
+  { id: 'b1-12-fc1', topic: FC, kind: 'fix', prompt: 'This time next year, I will living in London.', options: ['This time next year, I will be living in London.', 'This time next year, I will be live in London.', 'This time next year, I am will living in London.'], answer: 0, tip: 'will be + -ing.', tags: FCT },
+  { id: 'b1-12-fc2', topic: FC, kind: 'fix', prompt: "At 8 o'clock tonight, we will be have dinner.", options: ["At 8 o'clock tonight, we will have being dinner.", "At 8 o'clock tonight, we be will having dinner.", "At 8 o'clock tonight, we will be having dinner."], answer: 2, tip: 'will be + having.', tags: FCT },
+  { id: 'b1-12-fc3', topic: FC, prompt: "Don't call me at 9. I ___ a movie.", options: ['watching', 'will be watching', 'will be watch'], answer: 1, tip: 'En progreso a las 9: will be watching.', tags: FCT },
+  { id: 'b1-12-fc4', topic: FC, prompt: 'This time tomorrow, she ___ in the sea.', options: ['will swimming', 'will be swimming', 'is swim'], answer: 1, tip: 'will be + -ing.', tags: FCT },
+  { id: 'b1-12-fc5', topic: FC, prompt: "I ___ tomorrow, so I can't help you.", options: ["won't be working", "won't working", "don't be working"], answer: 0, tip: "Negativa: won't be + -ing.", tags: FCT },
+  { id: 'b1-12-fc6', topic: FC, kind: 'order', prompt: '¿Estarás usando el coche esta noche?', options: ['Will', 'you', 'be', 'using', 'the', 'car', 'tonight?'], answer: 0, tip: 'Will + sujeto + be + -ing.', tags: FCT },
+  {
+    id: 'b1-12-fc7',
+    topic: FC,
+    kind: 'listen',
+    audio: "This time next year, I'll be living in a small town by the sea. In the mornings, I'll be walking on the beach, and in the afternoons I'll be writing.",
+    voice: 'male',
+    prompt: '¿Qué estará haciendo por las mañanas?',
+    options: ['Escribiendo.', 'Caminando en la playa.', 'Trabajando en la ciudad.'],
+    answer: 1,
+    tip: "In the mornings, I'll be walking on the beach.",
+    tags: FCT,
+  },
+  { id: 'b1-12-fc8', topic: FC, kind: 'fix', prompt: 'Will you being at home at 6?', options: ['Will you be at home at 6?', 'Will you be being at home at 6?', 'Do you will be at home at 6?'], answer: 0, tip: 'Will + sujeto + be.', tags: FCT },
+  // Bloque C · Einer en el mirador (sustantivos compuestos)
+  { id: 'b1-12-cn1', topic: CN, kind: 'fix', prompt: 'I work in a shoes shop in the city centre.', options: ['I work in a shoe shop in the city centre.', "I work in a shoes' shop in the city centre.", 'I work in a shop shoe in the city centre.'], answer: 0, tip: 'El primer sustantivo va en singular: shoe shop.', tags: CNT },
+  { id: 'b1-12-cn2', topic: CN, kind: 'fix', prompt: 'We waited at the stop bus for an hour.', options: ['We waited at the buses stop for an hour.', 'We waited at the bus stop for an hour.', 'We waited at the stop of bus for an hour.'], answer: 1, tip: 'bus stop.', tags: CNT },
+  { id: 'b1-12-cn3', topic: CN, prompt: 'A very tall building with many floors is a ___.', options: ['landmark', 'neighbourhood', 'skyscraper'], answer: 2, tip: 'skyscraper = rascacielos.', tags: CNT },
+  { id: 'b1-12-cn4', topic: CN, prompt: 'The ___ is where you leave your car.', options: ['car park', 'train station', 'shopping bag'], answer: 0, tip: 'car park = estacionamiento.', tags: CNT },
+  { id: 'b1-12-cn5', topic: CN, prompt: "It's very ___ here. There are people everywhere.", options: ['empty', 'crowded', 'quiet'], answer: 1, tip: 'crowded = lleno de gente.', tags: CNT },
+  { id: 'b1-12-cn6', topic: CN, kind: 'order', prompt: 'Mi vecindario está cerca del centro de la ciudad.', options: ['My', 'neighbourhood', 'is', 'near', 'the', 'city', 'centre.'], answer: 0, tip: 'city centre = centro de la ciudad.', tags: CNT },
+  {
+    id: 'b1-12-cn7',
+    topic: CN,
+    kind: 'listen',
+    audio: "The Lumen Tower is a famous landmark in the city centre. It's a tall skyscraper, and from the top you can see the whole neighbourhood.",
+    voice: 'female',
+    prompt: '¿Qué se ve desde arriba?',
+    options: ['El mar.', 'Todo el vecindario.', 'El aeropuerto.'],
+    answer: 1,
+    tip: 'You can see the whole neighbourhood.',
+    tags: CNT,
+  },
+  { id: 'b1-12-cn8', topic: CN, prompt: 'A ___ is a famous building or place that everyone knows.', options: ['bus stop', 'car park', 'landmark'], answer: 2, tip: 'landmark = lugar emblemático.', tags: CNT },
 ]

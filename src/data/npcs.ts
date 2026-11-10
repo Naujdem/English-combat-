@@ -1239,6 +1239,19 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     interest: true,
     doneLine: { text: "I'm here for you.", es: 'Aquí estoy para ti.' },
   },
+  // ── B1-12 · Old Friends, bloque C (el paseo por la ciudad, data/b1HostCity.ts) ──
+  // Einer, cerca de la entrada (tarea b1-12-fc)
+  'b1-12-city-einer': {
+    name: 'Einer',
+    look: { shirt: '#6b4a2f', hair: '#d8d8d8', skin: '#c98f68', gender: 'male' },
+    doneLine: { text: "This time next year, I'll be here.", es: 'El año que viene a esta hora, estaré aquí.' },
+  },
+  // Einer en el mirador (tareas b1-12-cn y b1-12-einer-talk)
+  'b1-12-lookout-einer': {
+    name: 'Einer',
+    look: { shirt: '#6b4a2f', hair: '#d8d8d8', skin: '#c98f68', gender: 'male' },
+    doneLine: { text: 'Old friends are a treasure.', es: 'Los viejos amigos son un tesoro.' },
+  },
   // La puerta a las gradas: aparece tras la charla; cierra la misión (tarea b1-08-close). Se dibuja con NotebookIcon (Explore.tsx)
   'b1-08-return': {
     name: 'La puerta a las gradas',

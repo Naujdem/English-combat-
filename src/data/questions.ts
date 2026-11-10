@@ -1255,6 +1255,24 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'If only es más fuerte: ¡si tan solo me hubiera quedado!',
     ],
   },
+  'future-continuous-b1': {
+    name: 'Future continuous',
+    level: 'B1',
+    lesson: [
+      "will be + -ing: una acción en progreso en un momento del futuro. This time next year, I'll be living in a new city.",
+      "Negativa y pregunta: I won't be working tomorrow. Will you be using the car?",
+      "Compara: I'll call you at 8 (una decisión) · I'll be waiting at 8 (en progreso a las 8).",
+    ],
+  },
+  'compound-nouns-b1': {
+    name: 'Sustantivos compuestos',
+    level: 'B1',
+    lesson: [
+      'Dos sustantivos juntos: skyscraper (una palabra), city centre, bus stop (dos palabras), a part-time job (con guion).',
+      'El primer sustantivo dice de qué tipo es y suele ir en singular: a bus stop, a car park, a shoe shop (no a shoes shop).',
+      'Palabras de ciudad: landmark (lugar emblemático), neighbourhood (vecindario), crowded (lleno de gente).',
+    ],
+  },
   'memory-verbs-b1': {
     name: 'Remember / forget / remind',
     level: 'B1',
