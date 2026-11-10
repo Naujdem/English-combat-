@@ -21,7 +21,7 @@ export const B1_10_DEBATE = 'b1-10-debate'
 /**
  * Leyenda (Tiles.tsx, sin dibujos nuevos): # pared · h letrero (carteles de juegos) · v pantalla (consolas y el puesto de streaming)
  * s asientos (sillones) · d puerta.
- * Puerta al escenario principal arriba (6,0, cerrada: bloque 10-C); puerta de vuelta al recinto abajo (6,6).
+ * Puerta al escenario principal arriba (6,0, lleva a data/b1Stage.ts); puerta de vuelta al recinto abajo (6,6).
  */
 const MAP = [
   '##h#h#d#h#h##',
@@ -36,7 +36,6 @@ const MAP = [
 const zoneAt = (): Zone => 'recepcion'
 
 const NOT_YET = (sub: string) => ({ text: 'Todavía no.', sub })
-const SOON = 'Próximamente: el escenario del festival (bloque 10-C)'
 
 export const B1_10_TENT: SceneDef = {
   id: B1_10_TENT_ID,
@@ -67,22 +66,20 @@ export const B1_10_TENT: SceneDef = {
     '8,0': { text: 'Game posters.', sub: 'Carteles de juegos.', say: 'Game posters.' },
     '10,0': { text: 'Game posters.', sub: 'Carteles de juegos.', say: 'Game posters.' },
   },
-  // La puerta al escenario principal: cerrada hasta el debate con Jorge; después, próximamente (bloque 10-C)
+  // La puerta al escenario principal: cerrada hasta el debate con Jorge; después lleva al escenario (bloque 10-C, data/b1Stage.ts)
   locked: (x, y, s) => {
     if (x === 6 && y === 0) {
       if (!s.opened.includes(B1_10_DEBATE)) return NOT_YET('Primero habla con Jorge.')
-      return { text: SOON + '.', sub: 'El concierto está por empezar.' }
     }
     return null
   },
-  links: { '6,6': { sceneId: 'b1-10-festival', pos: { x: 6, y: 1 } } },
+  links: { '6,6': { sceneId: 'b1-10-festival', pos: { x: 6, y: 1 } }, '6,0': { sceneId: 'b1-10-stage', pos: { x: 6, y: 5 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'La persona especial', done: s.opened.includes(B1_10_PREFER) },
     { label: 'Jorge: la transmisión', done: s.opened.includes(B1_10_STREAM) },
     { label: 'Jorge: opiniones', done: s.opened.includes(B1_10_OPINIONS) },
     { label: 'Jorge: el debate', done: s.opened.includes(B1_10_DEBATE) },
-    { label: SOON, done: false },
   ],
   intro: {
     first: 'Press start. — Presiona start.',

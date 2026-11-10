@@ -69,6 +69,7 @@ import { PartyAsk } from '../components/PartyAsk'
 import { AnimalSprite, ANIMALS } from '../components/Animals'
 import { GuessAnimal } from '../components/GuessAnimal'
 import { WhichDog } from '../components/WhichDog'
+import { MusicChallenge } from '../components/MusicChallenge'
 import { ShelterDog } from '../components/ShelterDog'
 import { B1_06_DOG_NPCS } from '../data/b1Kennels'
 import { B1_07_DEVICE_ROOM, B1_07_NOTEBOOK, B1_07_TV } from '../data/b1Room'
@@ -1304,6 +1305,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             const finish = (done: boolean) => finishTask(task, done)
             if (t.activity === 'guess') return <GuessAnimal onClose={finish} />
             if (t.activity === 'whichdog' && t.whichdog) return <WhichDog rounds={t.whichdog} onClose={finish} />
+            if (t.activity === 'music' && t.music) return <MusicChallenge {...t.music} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'pens') return <AnimalPens onClose={finish} />
             if (t.activity === 'planner') return <Planner onClose={finish} />
             if (t.activity === 'attendance') return <Attendance onClose={finish} />
