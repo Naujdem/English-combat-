@@ -1,4 +1,5 @@
 import type { GameState, SceneDef, Zone } from '../game/types'
+import { B1_12_CLOSE, B1_12_DONE_TEXT } from './b1HostPlaza'
 
 /**
  * B1-12 · Old Friends (presente). Bloque C: el paseo por Lumen Bay con el abuelo Einer, al anochecer (escena b1-12-city).
@@ -58,15 +59,12 @@ export const B1_12_CITY: SceneDef = {
     '7,0': { text: 'The city centre is very crowded today.', sub: 'El centro de la ciudad está muy lleno hoy.', say: 'The city centre is crowded.' },
     '9,0': { text: 'This old clock tower is a famous landmark.', sub: 'Esta vieja torre del reloj es un lugar emblemático.', say: 'A famous landmark.' },
   },
-  // La puerta de la plaza (bloque 12-D): Próximamente solo tras la charla con Einer. La de la izquierda vuelve al jardín
+  // La puerta de la plaza (12,3) lleva a la plaza (bloque 12-D, data/b1HostPlaza.ts) tras la charla con Einer. La de la izquierda vuelve al jardín
   locked: (x, y, s) => {
-    if (x === 12 && y === 3) {
-      if (!s.opened.includes(B1_12_EINER_TALK)) return { text: 'Todavía no.', sub: 'Primero termina el recorrido con Einer.' }
-      return { text: 'Próximamente: la plaza y The Rumor (bloque 12-D)', sub: 'Esta parte llega en el siguiente bloque.' }
-    }
+    if (x === 12 && y === 3 && !s.opened.includes(B1_12_EINER_TALK)) return { text: 'Todavía no.', sub: 'Primero termina el recorrido con Einer.' }
     return null
   },
-  links: { '0,3': { sceneId: 'b1-12-garden', pos: { x: 10, y: 3 } } },
+  links: { '0,3': { sceneId: 'b1-12-garden', pos: { x: 10, y: 3 } }, '12,3': { sceneId: 'b1-12-plaza', pos: { x: 1, y: 3 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'Einer: el futuro en progreso', done: s.opened.includes(B1_12_FC) },
@@ -75,6 +73,6 @@ export const B1_12_CITY: SceneDef = {
   ],
   intro: {
     first: 'A walk through Lumen Bay. — Un paseo por Lumen Bay.',
-    later: () => 'A walk through Lumen Bay. — Un paseo por Lumen Bay.',
+    later: (s: GameState) => (s.opened.includes(B1_12_CLOSE) ? B1_12_DONE_TEXT : 'A walk through Lumen Bay. — Un paseo por Lumen Bay.'),
   },
 }

@@ -31,6 +31,7 @@ import { B1_REPAIR } from './b1Repair'
 import { B1_12_PHOTOS_MEMORY, B1_12_WELCOME_SCRIPT } from './b1HostHouse'
 import { B1_12_CN_IDS, B1_12_EMPATHY_IDS, B1_12_FC_IDS, B1_12_MEMORY_IDS, B1_12_RELATIONSHIPS_IDS, B1_12_VERBS_IDS } from './questions-b1-12'
 import { B1_12_GIFT_SCRIPT } from './b1HostGarden'
+import { B1_12_CLOSE_SCRIPT, B1_12_PLAZA_SCRIPT } from './b1HostPlaza'
 import { B1_05_CLOSE_SCRIPT, B1_05_JOB_ADS, B1_05_LETTER_SCRIPT, B1_05_NOTICE_SCRIPT, B1_05_PACKING } from './b1Flat'
 import { B1_05_BANK_IDS, B1_05_PRACTICE2_IDS, B1_05_PRACTICE_IDS } from './questions-b1-05'
 import { B1_06_PRACTICE_IDS } from './questions-b1-06'
@@ -6044,4 +6045,34 @@ NPC_TASKS['b1-12-einer-talk'] = {
   coins: 5,
   steps: [],
   reward: { text: 'Old friends are a treasure.', es: 'Los viejos amigos son un tesoro.', sub: 'Terminaste el paseo. La plaza te espera: próximamente.', say: 'Old friends are a treasure.' },
+}
+
+// ── B1-12 · Old Friends, bloque D (la plaza, data/b1HostPlaza.ts) ──
+// Leo: el guion inicial (los amigos están lejos unos de otros). Al terminarlo aparece The Rumor junto a la fuente
+NPC_TASKS['b1-12-plaza-intro'] = {
+  npc: 'b1-12-plaza-leo',
+  done: 'b1-12-plaza-intro',
+  activity: 'script',
+  script: B1_12_PLAZA_SCRIPT,
+  coins: 0,
+  steps: [],
+  reward: { text: 'The Rumor.', es: 'The Rumor.', sub: 'Un susurro gris apareció junto a la fuente. Vence a The Rumor.' },
+}
+
+// Jhoana (aparece al vencer a The Rumor) cierra la misión (closeId(12) = 'b1-12-close')
+// Al guardarlo, dos fragmentos se juntan (FragmentJoin en Explore.tsx, memoryNumber 13): se abre el recuerdo 13
+NPC_TASKS['b1-12-close'] = {
+  npc: 'b1-12-plaza-jhoana',
+  done: 'b1-12-close',
+  activity: 'script',
+  script: B1_12_CLOSE_SCRIPT,
+  recover: ['state-verbs-b1', 'memory-verbs-b1', 'relationships-b1', 'empathy-b1', 'future-continuous-b1', 'compound-nouns-b1'],
+  coins: 20,
+  steps: [],
+  reward: {
+    text: 'Mission 12: Old Friends',
+    es: 'Misión 12: Viejos amigos',
+    sub: 'Ganaste el delantal de la abuela Jhoana. Dos fragmentos se juntaron con tu llavero: se abrió el recuerdo 13.',
+    say: 'Old friends!',
+  },
 }

@@ -48,6 +48,7 @@ import { B1_10_FESTIVAL } from '../data/b1Festival'
 import { B1_12_HOUSE } from '../data/b1HostHouse'
 import { B1_12_GARDEN } from '../data/b1HostGarden'
 import { B1_12_CITY } from '../data/b1HostCity'
+import { B1_12_PLAZA } from '../data/b1HostPlaza'
 import { B1_10_TENT } from '../data/b1GamingTent'
 import { B1_10_STAGE } from '../data/b1Stage'
 import { B1_10_BOSS_DEF } from '../data/b1HeadlinerBoss'
@@ -1075,19 +1076,20 @@ export function b1Mission11(s: GameState, stage: 'room' | 'wall' | 'clock' | 'fi
  *  album: lección hecha (frente al álbum de fotos)
  *  garden: 12-A hecho (en el jardín) · leochat / mayachat: lección de ese amigo hecha (frente a él; sale su charla)
  *  city: 12-B hecho (en la ciudad, frente a Einer) · lookout: future continuous hecho (frente a Einer en el mirador)
+ *  plaza: 12-C hecho (en la plaza, frente a Leo) · boss: guion inicial hecho (frente a The Rumor) · close: jefe derrotado (frente a Jhoana)
  *  einertalk: sustantivos compuestos hechos (sale la charla con Einer)
  *  specialchat: charlas de Leo y Maya y lección de la persona especial hechas (sale su charla) · keychain: todo hecho menos el regalo
  */
-export function b1Mission12(s: GameState, stage: 'house' | 'verbs' | 'album' | 'garden' | 'leochat' | 'mayachat' | 'specialchat' | 'keychain' | 'city' | 'lookout' | 'einertalk'): GameState {
+export function b1Mission12(s: GameState, stage: 'house' | 'verbs' | 'album' | 'garden' | 'leochat' | 'mayachat' | 'specialchat' | 'keychain' | 'city' | 'lookout' | 'einertalk' | 'plaza' | 'boss' | 'close'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8), closeId(9), closeId(10), closeId(11)])
   const mine = ['state-verbs-b1', 'memory-verbs-b1', 'relationships-b1', 'empathy-b1', 'future-continuous-b1', 'compound-nouns-b1']
   const bAll = ['state-verbs-b1', 'memory-verbs-b1', 'relationships-b1', 'empathy-b1']
   const a = ['b1-12-welcome', 'b1-12-verbs', 'b1-12-photos']
   const lm = ['b1-12-leo-lesson', 'b1-12-leo-friend', 'b1-12-maya-lesson', 'b1-12-maya-friend']
-  const pos = { house: { x: 3, y: 2 }, verbs: { x: 8, y: 3 }, album: { x: 6, y: 2 }, garden: { x: 9, y: 1 }, leochat: { x: 6, y: 4 }, mayachat: { x: 8, y: 5 }, specialchat: { x: 3, y: 3 }, keychain: { x: 3, y: 3 }, city: { x: 2, y: 3 }, lookout: { x: 9, y: 4 }, einertalk: { x: 9, y: 4 } }[stage]
-  const flags = { house: [], verbs: ['b1-12-welcome'], album: ['b1-12-welcome', 'b1-12-verbs'], garden: a, leochat: [...a, 'b1-12-leo-lesson'], mayachat: [...a, 'b1-12-maya-lesson'], specialchat: [...a, ...lm, 'b1-12-special-lesson'], keychain: [...a, ...lm, 'b1-12-special-lesson', 'b1-12-special-friend'], city: [...a, ...lm, 'b1-12-special-lesson', 'b1-12-special-friend', 'b1-12-keychain'], lookout: [...a, ...lm, 'b1-12-special-lesson', 'b1-12-special-friend', 'b1-12-keychain', 'b1-12-fc'], einertalk: [...a, ...lm, 'b1-12-special-lesson', 'b1-12-special-friend', 'b1-12-keychain', 'b1-12-fc', 'b1-12-cn'] }[stage]
-  const lessons = { house: [], verbs: [], album: ['state-verbs-b1'], garden: ['state-verbs-b1'], leochat: ['state-verbs-b1', 'memory-verbs-b1'], mayachat: ['state-verbs-b1', 'relationships-b1'], specialchat: bAll, keychain: bAll, city: bAll, lookout: [...bAll, 'future-continuous-b1'], einertalk: mine }[stage]
+  const pos = { house: { x: 3, y: 2 }, verbs: { x: 8, y: 3 }, album: { x: 6, y: 2 }, garden: { x: 9, y: 1 }, leochat: { x: 6, y: 4 }, mayachat: { x: 8, y: 5 }, specialchat: { x: 3, y: 3 }, keychain: { x: 3, y: 3 }, city: { x: 2, y: 3 }, lookout: { x: 9, y: 4 }, einertalk: { x: 9, y: 4 }, plaza: { x: 2, y: 3 }, boss: { x: 6, y: 3 }, close: { x: 4, y: 4 } }[stage]
+  const flags = { house: [], verbs: ['b1-12-welcome'], album: ['b1-12-welcome', 'b1-12-verbs'], garden: a, leochat: [...a, 'b1-12-leo-lesson'], mayachat: [...a, 'b1-12-maya-lesson'], specialchat: [...a, ...lm, 'b1-12-special-lesson'], keychain: [...a, ...lm, 'b1-12-special-lesson', 'b1-12-special-friend'], city: [...a, ...lm, 'b1-12-special-lesson', 'b1-12-special-friend', 'b1-12-keychain'], lookout: [...a, ...lm, 'b1-12-special-lesson', 'b1-12-special-friend', 'b1-12-keychain', 'b1-12-fc'], einertalk: [...a, ...lm, 'b1-12-special-lesson', 'b1-12-special-friend', 'b1-12-keychain', 'b1-12-fc', 'b1-12-cn'], plaza: [...a, ...lm, 'b1-12-special-lesson', 'b1-12-special-friend', 'b1-12-keychain', 'b1-12-fc', 'b1-12-cn', 'b1-12-einer-talk'], boss: [...a, ...lm, 'b1-12-special-lesson', 'b1-12-special-friend', 'b1-12-keychain', 'b1-12-fc', 'b1-12-cn', 'b1-12-einer-talk', 'b1-12-plaza-intro'], close: [...a, ...lm, 'b1-12-special-lesson', 'b1-12-special-friend', 'b1-12-keychain', 'b1-12-fc', 'b1-12-cn', 'b1-12-einer-talk', 'b1-12-plaza-intro'] }[stage]
+  const lessons = { house: [], verbs: [], album: ['state-verbs-b1'], garden: ['state-verbs-b1'], leochat: ['state-verbs-b1', 'memory-verbs-b1'], mayachat: ['state-verbs-b1', 'relationships-b1'], specialchat: bAll, keychain: bAll, city: bAll, lookout: [...bAll, 'future-continuous-b1'], einertalk: mine, plaza: mine, boss: mine, close: mine }[stage]
   const inHouse = stage === 'house' || stage === 'verbs' || stage === 'album'
-  const base = { ...b, screen: 'explore' as const, sceneId: inHouse ? B1_12_HOUSE.id : stage === 'city' || stage === 'lookout' || stage === 'einertalk' ? B1_12_CITY.id : B1_12_GARDEN.id, pos, defeated: b.defeated.filter((d) => !d.startsWith('b1-12-')), opened: b.opened.filter((o) => !o.startsWith('b1-12-')), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
-  return { ...base, opened: add(base.opened, flags), seenLesson: add(base.seenLesson, lessons) as GameState['seenLesson'] }
+  const base = { ...b, screen: 'explore' as const, sceneId: inHouse ? B1_12_HOUSE.id : stage === 'plaza' || stage === 'boss' || stage === 'close' ? B1_12_PLAZA.id : stage === 'city' || stage === 'lookout' || stage === 'einertalk' ? B1_12_CITY.id : B1_12_GARDEN.id, pos, defeated: b.defeated.filter((d) => !d.startsWith('b1-12-')), opened: b.opened.filter((o) => !o.startsWith('b1-12-')), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
+  return { ...base, opened: add(base.opened, flags), defeated: stage === 'close' ? add(base.defeated, ['b1-12-boss']) : base.defeated, seenLesson: add(base.seenLesson, lessons) as GameState['seenLesson'] }
 }

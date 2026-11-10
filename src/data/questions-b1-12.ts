@@ -10,6 +10,8 @@ import type { Question } from '../game/types'
  * Bloque C (la ciudad, data/b1HostCity.ts):
  *  - Einer: future continuous (tarea b1-12-fc, tema future-continuous-b1): b1-12-fc1…fc8.
  *  - Einer en el mirador: sustantivos compuestos (tarea b1-12-cn, tema compound-nouns-b1): b1-12-cn1…cn8.
+ * Bloque D (la plaza, data/b1HostPlaza.ts): el jefe The Rumor (data/b1RumorBoss.ts):
+ *  - Fase 1, verbos de estado: b1-12-bs1…bs6 (tag b1-12-boss-s) · Fase 2, future continuous: b1-12-bf1…bf6 (tag b1-12-boss-f).
  * La posición de la respuesta correcta varía a propósito.
  */
 const SV = 'state-verbs-b1' as const
@@ -24,6 +26,8 @@ const FC = 'future-continuous-b1' as const
 const FCT = ['b1-12-fc']
 const CN = 'compound-nouns-b1' as const
 const CNT = ['b1-12-cn']
+const BS = ['b1-12-boss', 'b1-12-boss-s']
+const BF = ['b1-12-boss', 'b1-12-boss-f']
 
 export const B1_12_VERBS_IDS = ['b1-12-sv1', 'b1-12-sv2', 'b1-12-sv3', 'b1-12-sv4', 'b1-12-sv5', 'b1-12-sv6', 'b1-12-sv7', 'b1-12-sv8']
 
@@ -152,4 +156,40 @@ export const B1_12_QUESTIONS: Question[] = [
     tags: CNT,
   },
   { id: 'b1-12-cn8', topic: CN, prompt: 'A ___ is a famous building or place that everyone knows.', options: ['bus stop', 'car park', 'landmark'], answer: 2, tip: 'landmark = lugar emblemático.', tags: CNT },
+  // Bloque D · The Rumor, fase 1 (verbos de estado)
+  { id: 'b1-12-bs1', topic: SV, kind: 'fix', prompt: 'I am hating this rumor.', options: ['I hate this rumor.', 'I hating this rumor.', 'I am hate this rumor.'], answer: 0, tip: 'hate es verbo de estado: sin -ing.', tags: BS },
+  { id: 'b1-12-bs2', topic: SV, kind: 'fix', prompt: 'She is knowing the truth.', options: ['She is know the truth.', 'She knows the truth.', 'She knowing the truth.'], answer: 1, tip: 'know es verbo de estado.', tags: BS },
+  { id: 'b1-12-bs3', topic: SV, prompt: 'We ___ each other very well.', options: ['are knowing', 'are know', 'know'], answer: 2, tip: 'know: sin -ing.', tags: BS },
+  { id: 'b1-12-bs4', topic: SV, prompt: 'Be quiet! I ___ a message right now.', options: ['read', 'am reading', 'reads'], answer: 1, tip: 'Acción en este momento: am reading.', tags: BS },
+  { id: 'b1-12-bs5', topic: SV, kind: 'order', prompt: 'Ella tiene dos gatos.', options: ['She', 'has', 'two', 'cats.'], answer: 0, tip: 'have como posesión: sin -ing.', tags: BS },
+  {
+    id: 'b1-12-bs6',
+    topic: SV,
+    kind: 'listen',
+    audio: 'I know my friends very well. Maya likes music, and Leo loves football. They are laughing in the plaza right now.',
+    voice: 'female',
+    prompt: '¿Qué está pasando ahora?',
+    options: ['Se están riendo.', 'Están corriendo.', 'Están durmiendo.'],
+    answer: 0,
+    tip: 'They are laughing in the plaza right now.',
+    tags: BS,
+  },
+  // Bloque D · The Rumor, fase 2 (future continuous)
+  { id: 'b1-12-bf1', topic: FC, kind: 'fix', prompt: 'At 8 I will waiting here.', options: ['At 8 I will be waiting here.', 'At 8 I will be wait here.', 'At 8 I am will waiting here.'], answer: 0, tip: 'will be + -ing.', tags: BF },
+  { id: 'b1-12-bf2', topic: FC, kind: 'fix', prompt: 'Tomorrow they will leaving early.', options: ['Tomorrow they will be leave early.', 'Tomorrow they will be leaving early.', 'Tomorrow they be will leaving early.'], answer: 1, tip: 'will be + -ing.', tags: BF },
+  { id: 'b1-12-bf3', topic: FC, prompt: 'This time tomorrow, we ___ in the plaza.', options: ['are meet', 'will meeting', 'will be meeting'], answer: 2, tip: 'will be + -ing.', tags: BF },
+  { id: 'b1-12-bf4', topic: FC, prompt: "Don't call me at 6. I ___ dinner.", options: ['will be having', 'will having', 'am will have'], answer: 0, tip: 'En progreso a las 6: will be having.', tags: BF },
+  { id: 'b1-12-bf5', topic: FC, kind: 'order', prompt: '¿Estarás esperando a las ocho?', options: ['Will', 'you', 'be', 'waiting', 'at', 'eight?'], answer: 0, tip: 'Will + sujeto + be + -ing.', tags: BF },
+  {
+    id: 'b1-12-bf6',
+    topic: FC,
+    kind: 'listen',
+    audio: "This time next week, I'll be flying to my grandmother's house. I'll be sitting by the window, and I'll be thinking about you all.",
+    voice: 'male',
+    prompt: '¿Dónde estará sentado?',
+    options: ['En el tren.', 'En la plaza.', 'Junto a la ventana.'],
+    answer: 2,
+    tip: "I'll be sitting by the window.",
+    tags: BF,
+  },
 ]

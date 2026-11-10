@@ -1,5 +1,6 @@
 import type { GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
+import { B1_12_CLOSE, B1_12_DONE_TEXT } from './b1HostPlaza'
 
 /**
  * B1-12 · Old Friends (presente). Bloque B: el jardín trasero de la casa de los abuelos, al anochecer (escena b1-12-garden).
@@ -73,7 +74,7 @@ export const B1_12_GARDEN: SceneDef = {
   ],
   intro: {
     first: 'The garden at night. — El jardín de noche.',
-    later: () => 'The garden at night. — El jardín de noche.',
+    later: (s: GameState) => (s.opened.includes(B1_12_CLOSE) ? B1_12_DONE_TEXT : 'The garden at night. — El jardín de noche.'),
   },
 }
 

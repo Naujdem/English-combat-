@@ -1,6 +1,7 @@
 import type { GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
 import type { MemoryPair } from '../components/MemoryChest'
+import { B1_12_CLOSE, B1_12_DONE_TEXT } from './b1HostPlaza'
 
 /**
  * B1-12 · Old Friends (presente). Bloque A: la sala-comedor de la casa de la familia anfitriona en Lumen Bay, al atardecer (escena b1-12-house).
@@ -75,7 +76,7 @@ export const B1_12_HOUSE: SceneDef = {
   ],
   intro: {
     first: "Dinner at the grandparents'. — La cena en casa de los abuelos.",
-    later: () => "Dinner at the grandparents'. — La cena en casa de los abuelos.",
+    later: (s: GameState) => (s.opened.includes(B1_12_CLOSE) ? B1_12_DONE_TEXT : "Dinner at the grandparents'. — La cena en casa de los abuelos."),
   },
 }
 
