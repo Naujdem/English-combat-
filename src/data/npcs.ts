@@ -898,6 +898,17 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b1-11-echo2',
     doneLine: { text: 'It always starts.', es: 'Siempre empieza.' },
   },
+  // ── B1-11 · bloque C (el Temple of Roads, data/b1TempleRoads.ts): la página 44 (NotebookIcon) y el muro del puente (TabletIcon) ──
+  'b1-11-page44': {
+    name: 'El cuaderno de L',
+    look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
+    doneLine: { text: 'I wish I had known.', es: 'Ojalá lo hubiera sabido.' },
+  },
+  'b1-11-roads-wall': {
+    name: 'El muro del puente',
+    look: { shirt: '#8a8f96', hair: '#55606e', skin: '#a8adb4' },
+    doneLine: { text: 'Some roads always meet.', es: 'Algunos caminos siempre se encuentran.' },
+  },
   'b1-07-tv': {
     name: 'La televisión',
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },

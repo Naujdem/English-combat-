@@ -23,7 +23,6 @@ export const B1_11_CLOCK_SCRIPT: ScriptLine[] = [
 ]
 
 const NOT_YET = (sub: string) => ({ text: 'Todavía no.', sub })
-const SOON = { text: 'Próximamente: el Temple of Roads (bloque 11-C)', sub: 'Esta parte llega en el siguiente bloque.' }
 /** Bloque B: al volver de la noche del incendio (data/b1FireNight.ts) */
 const FIRE_OUT = 'b1-11-fire-out'
 
@@ -72,10 +71,10 @@ export const B1_11_ROOM: SceneDef = {
   locked: (x, y, s) => {
     if (x !== 11 || y !== 3) return null
     if (!s.opened.includes(B1_11_CLOCK)) return NOT_YET('Primero usa el reloj.')
-    // Después del reloj lleva a la noche del incendio (links); al volver de ella, "Próximamente" (bloque 11-C)
-    return s.opened.includes(FIRE_OUT) ? SOON : null
+    return null
   },
-  links: { '11,3': { sceneId: 'b1-11-fire', pos: { x: 1, y: 2 } } },
+  // Después del reloj lleva a la noche del incendio (bloque 11-B); al volver de ella, al Temple of Roads (bloque 11-C)
+  linkAt: (x, y, s) => (x === 11 && y === 3 ? (s.opened.includes(FIRE_OUT) ? { sceneId: 'b1-11-roads', pos: { x: 1, y: 3 } } : { sceneId: 'b1-11-fire', pos: { x: 1, y: 2 } }) : null),
   requirements: [],
   chips: (s: GameState) => [
     { label: 'El cuaderno de L: página 42', done: s.opened.includes(B1_11_NOTEBOOK) },

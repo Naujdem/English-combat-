@@ -1243,6 +1243,26 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Palabras de historia: suddenly, eventually, meanwhile, by the time.',
     ],
   },
+  'wish-b1': {
+    name: 'wish e If only',
+    level: 'B1',
+    lesson: [
+      'wish + pasado simple: un deseo sobre el presente. Ojalá supiera el camino. (No lo sé.)',
+      'wish + past perfect: un arrepentimiento sobre el pasado. Ojalá hubiera escuchado. (No escuché.)',
+      'wish + would: algo que te molesta o un cambio que quieres. Ojalá escucharas.',
+      'If only es más fuerte: ¡si tan solo me hubiera quedado!',
+    ],
+  },
+  'roads-b1': {
+    name: 'El puente: past perfect, wish y los hechos fijos',
+    level: 'B1',
+    lesson: [
+      'had + participio cuenta el primer hecho. Before y after ordenan los dos hechos.',
+      'By the time + pasado simple, + past perfect: el segundo hecho ya había ocurrido.',
+      'Un arrepentimiento del pasado: wish + had + participio. If only es un wish más fuerte.',
+      "Algunos momentos del pasado no se pueden cambiar, hagas lo que hagas: son hechos fijos. Se dice: A fixed point can't be changed.",
+    ],
+  },
   'pastperfect-b1': {
     name: 'Past perfect',
     level: 'B1',

@@ -14,11 +14,19 @@ const WALL = ['b1-11-wall']
 const PP = 'pastperfect-b1' as const
 const PAGE43 = ['b1-11-page43']
 const ECHO = ['b1-11-echo']
+/** Bloque C (el Temple of Roads, data/b1TempleRoads.ts): página 44 y el muro del puente */
+const WI = 'wish-b1' as const
+const RO = 'roads-b1' as const
+const PAGE44 = ['b1-11-page44']
+const ROADS = ['b1-11-roads-ins']
 
 export const B1_11_NOTEBOOK_IDS = ['b1-11-n1', 'b1-11-n2', 'b1-11-n3', 'b1-11-n4', 'b1-11-n5', 'b1-11-n6', 'b1-11-n7', 'b1-11-n8']
 export const B1_11_WALL_IDS = ['b1-11-t1', 'b1-11-t2', 'b1-11-t3', 'b1-11-t4', 'b1-11-t5', 'b1-11-t6', 'b1-11-t7', 'b1-11-t8']
 
 export const B1_11_PAGE43_IDS = ['b1-11-pp1', 'b1-11-pp2', 'b1-11-pp3', 'b1-11-pp4', 'b1-11-pp5', 'b1-11-pp6', 'b1-11-pp7', 'b1-11-pp8']
+
+export const B1_11_PAGE44_IDS = ['b1-11-w1', 'b1-11-w2', 'b1-11-w3', 'b1-11-w4', 'b1-11-w5', 'b1-11-w6', 'b1-11-w7', 'b1-11-w8']
+export const B1_11_ROADS_IDS = ['b1-11-r1', 'b1-11-r2', 'b1-11-r3', 'b1-11-r4', 'b1-11-r5', 'b1-11-r6', 'b1-11-r7', 'b1-11-r8']
 
 export const B1_11_QUESTIONS: Question[] = [
   // Bloque A · página 42: tiempos narrativos
@@ -103,4 +111,44 @@ export const B1_11_QUESTIONS: Question[] = [
   },
   { id: 'b1-11-x9', topic: PP, prompt: 'She was angry because he ___ told her the truth.', options: ["hadn't", "didn't had", "hasn't"], answer: 0, tip: "hadn't + participio.", tags: ECHO },
   { id: 'b1-11-x10', topic: PP, kind: 'fix', prompt: 'I had went home before the storm.', options: ['I had go home before the storm.', 'I had going home before the storm.', 'I had gone home before the storm.'], answer: 2, tip: 'Participio de go: gone.', tags: ECHO },
+  // Bloque C · página 44: wish
+  { id: 'b1-11-w1', topic: WI, kind: 'fix', prompt: 'I wish I know the answer.', options: ['I wish I knew the answer.', 'I wish I would know the answer.', 'I wish I am knowing the answer.'], answer: 0, tip: 'wish + pasado simple (deseo sobre el presente).', tags: PAGE44 },
+  { id: 'b1-11-w2', topic: WI, kind: 'fix', prompt: 'I wish I would have listened to him yesterday.', options: ['I wish I listening to him yesterday.', 'I wish I had listened to him yesterday.', 'I wish I have listened to him yesterday.'], answer: 1, tip: 'wish + past perfect (arrepentimiento del pasado).', tags: PAGE44 },
+  { id: 'b1-11-w3', topic: WI, prompt: "I'm lost. I wish I ___ the way.", options: ['know', 'would know', 'knew'], answer: 2, tip: 'wish + pasado simple.', tags: PAGE44 },
+  { id: 'b1-11-w4', topic: WI, prompt: 'She wishes she ___ more time last year.', options: ['had had', 'has had', 'would have'], answer: 0, tip: 'wish + past perfect (had had).', tags: PAGE44 },
+  { id: 'b1-11-w5', topic: WI, prompt: 'If only I ___ him the truth yesterday!', options: ['told', 'had told', 'tell'], answer: 1, tip: 'If only + past perfect.', tags: PAGE44 },
+  { id: 'b1-11-w6', topic: WI, kind: 'order', prompt: 'Ojalá hubiera sabido la verdad.', options: ['I', 'wish', 'I', 'had', 'known', 'the', 'truth.'], answer: 0, tip: 'wish + had + participio.', tags: PAGE44 },
+  {
+    id: 'b1-11-w7',
+    topic: WI,
+    kind: 'listen',
+    audio: "I wish I had more time. If only I had listened to my friend, I wouldn't have lost him. I wish I could go back to that night.",
+    voice: 'male',
+    prompt: '¿Qué desea al final?',
+    options: ['Viajar lejos.', 'Volver a esa noche.', 'Tener más dinero.'],
+    answer: 1,
+    tip: 'I wish I could go back to that night.',
+    tags: PAGE44,
+  },
+  { id: 'b1-11-w8', topic: WI, prompt: "'Regret' significa ___.", options: ['arrepentimiento', 'esperanza', 'destino'], answer: 0, tip: 'regret = arrepentimiento.', tags: PAGE44 },
+  // Bloque C · el muro del puente (past perfect + wish + los hechos fijos)
+  { id: 'b1-11-r1', topic: RO, kind: 'fix', prompt: 'The bridge had fall before we arrived.', options: ['The bridge had fell before we arrived.', 'The bridge had fallen before we arrived.', 'The bridge has fallen before we arrived.'], answer: 1, tip: 'Participio de fall: fallen.', tags: ROADS },
+  { id: 'b1-11-r2', topic: RO, kind: 'fix', prompt: 'I wish I know the way yesterday.', options: ['I wish I had known the way yesterday.', 'I wish I knew the way yesterday.', 'I wish I know the way yesterday.'], answer: 0, tip: 'Ayer = pasado: wish + had + participio.', tags: ROADS },
+  { id: 'b1-11-r3', topic: RO, prompt: 'By the time we reached the temple, the sun ___ already set.', options: ['has', 'is', 'had'], answer: 2, tip: 'had already set.', tags: ROADS },
+  { id: 'b1-11-r4', topic: RO, prompt: 'A fixed point ___ be changed.', options: ["can't", "hadn't", "wasn't"], answer: 0, tip: "can't be + participio.", tags: ROADS },
+  { id: 'b1-11-r5', topic: RO, prompt: "I wish I ___ to the stones. Now it's too late.", options: ['will listen', 'had listened', 'am listening'], answer: 1, tip: 'wish + past perfect.', tags: ROADS },
+  { id: 'b1-11-r6', topic: RO, kind: 'order', prompt: 'Algunos caminos siempre se encuentran.', options: ['Some', 'roads', 'always', 'meet.'], answer: 0, tip: 'Some roads always meet.', tags: ROADS },
+  {
+    id: 'b1-11-r7',
+    topic: RO,
+    kind: 'listen',
+    audio: "I had tried everything before I reached the old bridge. The road had disappeared, and the stones said that a fixed point can't be changed.",
+    voice: 'female',
+    prompt: '¿Qué dijeron las piedras?',
+    options: ['Que el puente era nuevo.', 'Que un hecho fijo no puede cambiarse.', 'Que el camino estaba abierto.'],
+    answer: 1,
+    tip: "A fixed point can't be changed.",
+    tags: ROADS,
+  },
+  { id: 'b1-11-r8', topic: RO, kind: 'fix', prompt: 'If only I would have stayed!', options: ['If only I had stayed!', 'If only I stay!', 'If only I have stayed!'], answer: 0, tip: 'If only + had + participio.', tags: ROADS },
 ]

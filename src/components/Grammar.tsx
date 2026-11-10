@@ -284,6 +284,13 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (/\bhad\b/i.test(sentence)) return { title: 'Lo que pasó antes: had + participio (past perfect):', parts: [S('Sujeto'), '+', K('had'), '+', V('participio'), '+', R('...')] }
       if (/\b(was|were) \w+ing\b/i.test(sentence)) return { title: 'La escena: was / were + -ing (pasado continuo):', parts: [S('Sujeto'), '+', K('was / were'), '+', V('verbo + -ing'), '+', R('...')] }
       return { title: 'Hecho principal: pasado simple (-ed o irregular):', parts: [S('Sujeto'), '+', V('-ed / irregular'), '+', R('...')] }
+    case 'wish-b1':
+      if (/\bwish(es)? \w+ had\b|\bif only\b/i.test(sentence)) return { title: 'Arrepentimiento del pasado: wish / If only + had + participio:', parts: [S('Sujeto'), '+', K('wish / If only'), '+', V('had + participio'), '+', R('...')] }
+      return { title: 'Deseo sobre el presente: wish + pasado simple:', parts: [S('Sujeto'), '+', K('wish'), '+', V('pasado simple'), '+', R('...')] }
+    case 'roads-b1':
+      if (/\bcan't be\b/i.test(sentence)) return { title: "Los hechos fijos: can't be + participio:", parts: [S('A fixed point'), '+', K("can't be"), '+', V('participio')] }
+      if (/\bwish\b|\bif only\b/i.test(sentence)) return { title: 'wish / If only + had + participio (arrepentimiento):', parts: [S('Sujeto'), '+', K('wish / If only'), '+', V('had + participio'), '+', R('...')] }
+      return { title: 'Past perfect: had + participio (lo que pasó antes):', parts: [S('Sujeto'), '+', K('had'), '+', V('participio'), '+', R('...')] }
     case 'pastperfect-b1':
       if (/^had\b/i.test(sentence)) return { title: 'Pregunta en past perfect: Had + sujeto + participio?', parts: [K('Had'), '+', S('sujeto'), '+', V('participio'), '+', R('...?')] }
       return { title: "Past perfect: had (hadn't) + participio (lo que pasó antes):", parts: [S('Sujeto'), '+', K("had / hadn't"), '+', V('participio'), '+', R('...')] }
