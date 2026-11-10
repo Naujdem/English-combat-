@@ -247,6 +247,10 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'liceth'))}>B1-10: Liceth</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'conditional'))}>B1-10: segundo condicional</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'queue'))}>B1-10: la fila (verbo + -ing / to)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'prefer'))}>B1-10: prefer / would rather</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'stream'))}>B1-10: Jorge (transmisión)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'opinions'))}>B1-10: Jorge (opiniones)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'debate'))}>B1-10: Jorge (debate)</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>

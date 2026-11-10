@@ -36,7 +36,7 @@ import { B1_06_WHICH_DOG } from './b1Kennels'
 import type { WhichDogRound } from '../components/WhichDog'
 import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
 import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS, B1_07_PRACTICE4_IDS } from './questions-b1-07'
-import { B1_10_COND_IDS, B1_10_QUEUE_IDS } from './questions-b1-10'
+import { B1_10_COND_IDS, B1_10_OPINIONS_IDS, B1_10_PREFER_IDS, B1_10_QUEUE_IDS, B1_10_STREAM_IDS } from './questions-b1-10'
 import { B1_09_CULTURE_IDS, B1_09_JOURNEY_IDS, B1_09_TIME_IDS } from './questions-b1-09'
 import { B1_09_CLOCK_ROOM, B1_09_CLOSE_SCRIPT } from './b1TempleTime'
 import { B1_09_STONE_ROOM, B1_09_WALL_ROOM } from './b1TempleStones'
@@ -5540,5 +5540,124 @@ NPC_TASKS['b1-10-queue'] = {
     es: '(La fila avanza. Las puertas de la carpa de videojuegos se están abriendo.)',
     sub: 'Ganaste 5 monedas. Próximamente: la carpa de videojuegos (bloque 10-B).',
     say: 'The queue moves. The doors of the gaming tent are opening.',
+  },
+}
+
+// ── B1-10 · Festival Night, bloque B (la carpa de videojuegos; escena en data/b1GamingTent.ts). NO guarda closeId(10) ──
+// La persona especial: lección 'prefer-b1' (ella la guía, who 'special') + práctica b1-10-p1…p8
+NPC_TASKS['b1-10-prefer'] = {
+  npc: 'b1-10-special-tent',
+  done: 'b1-10-prefer',
+  lesson: 'prefer-b1',
+  activity: 'practice',
+  practice: 'prefer-b1',
+  practiceIds: B1_10_PREFER_IDS,
+  steps: [],
+  reward: {
+    text: "I'd rather watch the band than play.",
+    es: 'Preferiría ver a la banda que jugar.',
+    sub: 'Lección y práctica hechas. Habla con Jorge, el streamer.',
+    say: "I'd rather watch the band than play.",
+  },
+}
+
+// Jorge, el streamer: tres tareas seguidas del mismo NPC (taskOf toma la primera sin hacer).
+// 1) La transmisión: lección 'gaming-b1' (narrador) + escucha b1-10-j1…j4
+NPC_TASKS['b1-10-stream'] = {
+  npc: 'b1-10-jorge',
+  done: 'b1-10-stream',
+  lesson: 'gaming-b1',
+  activity: 'practice',
+  practice: 'gaming-b1',
+  practiceIds: B1_10_STREAM_IDS,
+  requires: { id: 'b1-10-prefer', text: 'Jorge.', es: 'Jorge.', sub: 'Primero habla con la persona especial.' },
+  steps: [],
+  reward: {
+    text: 'The main problem is the price!',
+    es: '¡El principal problema es el precio!',
+    sub: 'Transmisión vista. Habla otra vez con Jorge: opiniones.',
+    say: 'The main problem is the price!',
+  },
+}
+
+// 2) Opiniones: lección 'opinions-b1' (Jorge y la pizarra) + práctica b1-10-o1…o8
+NPC_TASKS['b1-10-opinions'] = {
+  npc: 'b1-10-jorge',
+  done: 'b1-10-opinions',
+  lesson: 'opinions-b1',
+  activity: 'practice',
+  practice: 'opinions-b1',
+  practiceIds: B1_10_OPINIONS_IDS,
+  requires: { id: 'b1-10-stream', text: 'Jorge.', es: 'Jorge.', sub: 'Primero mira la transmisión de Jorge.' },
+  steps: [],
+  reward: {
+    text: 'The best thing about it is the music.',
+    es: 'Lo mejor es la música.',
+    sub: 'Lección y práctica hechas. Habla otra vez con Jorge: el debate.',
+    say: 'The best thing about it is the music.',
+  },
+}
+
+// 3) El debate (DebateTalk): todas las opciones se pueden elegir. 5 monedas sin importar el desenlace.
+// Al terminar, la puerta al escenario principal muestra "Próximamente: el escenario del festival (bloque 10-C)". Sin closeId
+NPC_TASKS['b1-10-debate'] = {
+  npc: 'b1-10-jorge',
+  done: 'b1-10-debate',
+  activity: 'debate',
+  requires: { id: 'b1-10-opinions', text: 'Jorge.', es: 'Jorge.', sub: 'Primero termina las opiniones con Jorge.' },
+  debate: {
+    title: 'Do video games teach us something?',
+    name: 'Jorge',
+    ask: 'Responde a Jorge.',
+    turns: [
+      {
+        text: 'Some people say video games are a waste of time. What do you think?',
+        es: 'Algunas personas dicen que los videojuegos son una pérdida de tiempo. ¿Qué piensas?',
+        options: [
+          { en: 'I disagree. The best thing about games is that you learn by trying.', es: 'No estoy de acuerdo. Lo mejor de los juegos es que aprendes intentando.', value: 'good', reply: { text: 'Good point! Many players learn English from games.', es: '¡Buen punto! Muchos jugadores aprenden inglés con los juegos.' } },
+          { en: "I don't know. Some games are fun.", es: 'No sé. Algunos juegos son divertidos.', value: 'neutral', reply: { text: 'Fair enough. But can you give me a reason?', es: 'Es cierto. ¿Pero me das una razón?' } },
+          { en: 'Games are bad. Period.', es: 'Los juegos son malos. Punto.', value: 'bad', reply: { text: "Hmm, that's a strong opinion. Why?", es: 'Mmm, esa es una opinión fuerte. ¿Por qué?' } },
+        ],
+      },
+      {
+        text: 'What is the main advantage of playing games?',
+        es: '¿Cuál es la principal ventaja de jugar?',
+        options: [
+          { en: 'The main advantage is that you practise teamwork, especially in multiplayer games.', es: 'La principal ventaja es que practicas el trabajo en equipo, sobre todo en los juegos multijugador.', value: 'good', reply: { text: 'Exactly! Teamwork is a real skill.', es: '¡Exacto! El trabajo en equipo es una habilidad real.' } },
+          { en: 'You have fun.', es: 'Te diviertes.', value: 'neutral', reply: { text: 'Sure. Anything else?', es: 'Claro. ¿Algo más?' } },
+          { en: "You don't need to study.", es: 'No necesitas estudiar.', value: 'bad', reply: { text: "Ha ha! I'm not sure the teachers agree.", es: '¡Ja, ja! No creo que los profesores estén de acuerdo.' } },
+        ],
+      },
+      {
+        text: 'And what is the main problem?',
+        es: '¿Y cuál es el principal problema?',
+        options: [
+          { en: 'The main problem is that some people play for too many hours and forget to sleep.', es: 'El principal problema es que algunas personas juegan demasiadas horas y se olvidan de dormir.', value: 'good', reply: { text: 'True. Balance is important.', es: 'Cierto. El equilibrio es importante.' } },
+          { en: 'Time.', es: 'El tiempo.', value: 'neutral', reply: { text: 'Time? Yes, it can be a problem.', es: '¿El tiempo? Sí, puede ser un problema.' } },
+          { en: 'There is no problem. Never.', es: 'No hay ningún problema. Nunca.', value: 'bad', reply: { text: "Never? Hmm, I'm not so sure.", es: '¿Nunca? Mmm, no estoy tan seguro.' } },
+        ],
+      },
+      {
+        text: 'So, would you rather play a game or learn with a book?',
+        es: 'Entonces, ¿preferirías jugar o aprender con un libro?',
+        options: [
+          { en: "I'd rather do both: a book first, and then a game as a reward.", es: 'Preferiría hacer ambas: primero un libro y luego un juego de premio.', value: 'good', reply: { text: "That's a smart plan!", es: '¡Es un plan inteligente!' } },
+          { en: 'I prefer games.', es: 'Prefiero los juegos.', value: 'neutral', reply: { text: 'Of course you do! Ha ha.', es: '¡Claro que sí! Ja, ja.' } },
+          { en: "I'd rather to sleep.", es: '(Preferiría dormir: mal.)', value: 'bad', reply: { text: 'Sleep? OK... but the festival is just starting!', es: '¿Dormir? Bueno... ¡pero el festival apenas empieza!' } },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: 'Great debate! You see both sides.', es: '¡Gran debate! Ves los dos lados.' },
+      mid: { text: 'Good debate. Think a little more about both sides.', es: 'Buen debate. Piensa un poco más en los dos lados.' },
+      low: { text: 'Interesting! But try to give reasons next time.', es: '¡Interesante! Pero la próxima vez intenta dar razones.' },
+    },
+  },
+  coins: 5,
+  steps: [],
+  reward: {
+    text: 'Great debate!',
+    es: '¡Gran debate!',
+    sub: 'Ganaste 5 monedas. Próximamente: el escenario del festival (bloque 10-C).',
   },
 }

@@ -7,7 +7,7 @@ import type { GameState, SceneDef, Zone } from '../game/types'
  * Luces de colores, un escenario grande al fondo con pantalla (decoración), puestos de comida, una fila de gente frente a la puerta
  * de la carpa de videojuegos y un cartel con el cartel de bandas.
  * Orden: Liceth (b1-10-welcome, diálogo corto) → la persona especial: lección 'conditional-2' + práctica (b1-10-conditional) →
- *   la fila de la entrada: lección 'verb-patterns' + práctica (b1-10-queue, 5 monedas) → la puerta de la carpa: próximamente (bloque 10-B).
+ *   la fila de la entrada: lección 'verb-patterns' + práctica (b1-10-queue, 5 monedas) → la puerta lleva a la carpa (bloque 10-B, data/b1GamingTent.ts).
  * Ningún bloque A guarda closeId(10) (se guarda en 10-D). La pulsera del festival se entrega en 10-D.
  */
 export const B1_10_FESTIVAL_ID = 'b1-10-festival'
@@ -38,7 +38,6 @@ const MAP = [
 const zoneAt = (): Zone => 'recepcion'
 
 const NOT_YET = (sub: string) => ({ text: 'Todavía no.', sub })
-const SOON = 'Próximamente: la carpa de videojuegos (bloque 10-B)'
 
 export const B1_10_FESTIVAL: SceneDef = {
   id: B1_10_FESTIVAL_ID,
@@ -69,22 +68,21 @@ export const B1_10_FESTIVAL: SceneDef = {
     '8,0': { text: 'Colourful lights.', sub: 'Luces de colores.', say: 'Colourful lights.' },
     '10,0': { text: 'Colourful lights.', sub: 'Luces de colores.', say: 'Colourful lights.' },
   },
-  // La puerta de la carpa de videojuegos: cerrada hasta terminar la fila; después, próximamente (bloque 10-B).
+  // La puerta de la carpa de videojuegos: cerrada hasta terminar la fila; después lleva a la carpa (bloque 10-B, data/b1GamingTent.ts).
   // La salida: con el botón Mapa
   locked: (x, y, s) => {
     if (x === 6 && y === 0) {
       if (!s.opened.includes(B1_10_QUEUE)) return NOT_YET('Primero pasa por la fila de la entrada.')
-      return { text: SOON + '.', sub: 'Las puertas se están abriendo.' }
     }
     if (x === 6 && y === 6) return { text: 'The way out.', sub: 'Para volver al mapa, toca el botón Mapa.' }
     return null
   },
+  links: { '6,0': { sceneId: 'b1-10-tent', pos: { x: 6, y: 5 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'Liceth', done: s.opened.includes(B1_10_WELCOME) },
     { label: 'La persona especial', done: s.opened.includes(B1_10_CONDITIONAL) },
     { label: 'La fila de la entrada', done: s.opened.includes(B1_10_QUEUE) },
-    { label: SOON, done: false },
   ],
   intro: {
     first: 'Festival night! — ¡Noche de festival!',

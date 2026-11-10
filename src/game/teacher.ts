@@ -41,6 +41,7 @@ import { B1_06_KENNELS, B1_06_VOLUNTEER1, B1_06_VOLUNTEER2 } from '../data/b1Ken
 import { B1_06_OFFICE } from '../data/b1EstebanOffice'
 import { B1_08_STADIUM } from '../data/b1Stadium'
 import { B1_10_FESTIVAL } from '../data/b1Festival'
+import { B1_10_TENT } from '../data/b1GamingTent'
 import { B1_08_STANDS } from '../data/b1Stands'
 import { B1_08_BOSS, B1_08_CONCOURSE, B1_08_FAN1, B1_08_FAN2 } from '../data/b1Concourse'
 import { B1_04_BOSS, B1_04_FINEPRINT, B1_04_FRIEND, B1_04_PHRASAL, B1_04_RESIDENCE, B1_04_RULES, B1_04_WELCOME } from '../data/b1Residence'
@@ -1016,13 +1017,16 @@ export function b1Mission9(s: GameState, stage: 'journey' | 'culture' | 'talk' |
  * Atajos de la misión B1-10 (Festival Night, presente) para el panel del profe. Parten de "B1: abrir el nodo 10".
  *  liceth: en el festival, frente a Liceth · conditional: Liceth hecha (frente a la persona especial; la lección sale de nuevo)
  *  queue: lección del condicional hecha (frente a la fila; la lección 'verb-patterns' sale de nuevo)
+ *  prefer: fila hecha, en la carpa frente a la persona especial · stream / opinions / debate: frente a Jorge, en esa tarea
  */
-export function b1Mission10(s: GameState, stage: 'liceth' | 'conditional' | 'queue'): GameState {
+export function b1Mission10(s: GameState, stage: 'liceth' | 'conditional' | 'queue' | 'prefer' | 'stream' | 'opinions' | 'debate'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8), closeId(9)])
-  const mine = ['conditional-2', 'verb-patterns']
-  const pos = { liceth: { x: 5, y: 4 }, conditional: { x: 4, y: 4 }, queue: { x: 5, y: 2 } }[stage]
-  const flags = { liceth: [], conditional: ['b1-10-welcome'], queue: ['b1-10-welcome', 'b1-10-conditional'] }[stage]
-  const lessons = stage === 'queue' ? ['conditional-2'] : []
-  const base = { ...b, screen: 'explore' as const, sceneId: B1_10_FESTIVAL.id, pos, opened: b.opened.filter((o) => !o.startsWith('b1-10-')), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
+  const mine = ['conditional-2', 'verb-patterns', 'prefer-b1', 'gaming-b1', 'opinions-b1']
+  const pos = { liceth: { x: 5, y: 4 }, conditional: { x: 4, y: 4 }, queue: { x: 5, y: 2 }, prefer: { x: 4, y: 5 }, stream: { x: 9, y: 3 }, opinions: { x: 9, y: 3 }, debate: { x: 9, y: 3 } }[stage]
+  const a = ['b1-10-welcome', 'b1-10-conditional', 'b1-10-queue']
+  const flags = { liceth: [], conditional: ['b1-10-welcome'], queue: ['b1-10-welcome', 'b1-10-conditional'], prefer: a, stream: [...a, 'b1-10-prefer'], opinions: [...a, 'b1-10-prefer', 'b1-10-stream'], debate: [...a, 'b1-10-prefer', 'b1-10-stream', 'b1-10-opinions'] }[stage]
+  const lessons = { liceth: [], conditional: [], queue: ['conditional-2'], prefer: ['conditional-2', 'verb-patterns'], stream: ['conditional-2', 'verb-patterns', 'prefer-b1'], opinions: ['conditional-2', 'verb-patterns', 'prefer-b1', 'gaming-b1'], debate: mine }[stage]
+  const tent = stage === 'prefer' || stage === 'stream' || stage === 'opinions' || stage === 'debate'
+  const base = { ...b, screen: 'explore' as const, sceneId: tent ? B1_10_TENT.id : B1_10_FESTIVAL.id, pos, opened: b.opened.filter((o) => !o.startsWith('b1-10-')), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
   return { ...base, opened: add(base.opened, flags), seenLesson: add(base.seenLesson, lessons) as GameState['seenLesson'] }
 }
