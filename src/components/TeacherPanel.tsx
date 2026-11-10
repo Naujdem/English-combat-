@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { MusicChallenge } from './MusicChallenge'
+import { WhatIf } from './WhatIf'
+import { B1_11_WHATIF } from '../data/b1FireNight'
 import { B1_10_SONG } from '../data/b1Stage'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
@@ -26,7 +28,7 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
   const t = useTeacher()
   const [open, setOpen] = useState(false)
   // B1: vistas de prueba de la estética de los recuerdos (no cambian la partida)
-  const [demo, setDemo] = useState<'frag-first' | 'frag-next' | 'static' | 'ins-door' | 'ins-bridge' | 'stone-temple' | 'stone-room' | 'stone-tunnel' | 'music' | null>(null)
+  const [demo, setDemo] = useState<'frag-first' | 'frag-next' | 'static' | 'ins-door' | 'ins-bridge' | 'stone-temple' | 'stone-room' | 'stone-tunnel' | 'music' | 'whatif' | null>(null)
   if (!t.on) return null
 
   const scene = SCENES[state.sceneId]
@@ -66,6 +68,13 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               const r = INS_DEMOS[demo === 'ins-door' ? 'door' : 'bridge']
               return <Inscriptions title={r.title} intro={r.intro} scene={r.scene} plates={r.plates} finish={r.finish} onClose={() => setDemo(null)} />
             })()}
+          </div>
+        </div>
+      )}
+      {demo === 'whatif' && (
+        <div className="fixed inset-0 z-[80] overflow-y-auto bg-ink/95 p-3">
+          <div className="mx-auto max-w-md">
+            <WhatIf {...B1_11_WHATIF} onClose={() => setDemo(null)} />
           </div>
         </div>
       )}
@@ -268,6 +277,10 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission11(s, 'room'))}>B1-11: cuarto de L</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission11(s, 'wall'))}>B1-11: muro de recortes</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission11(s, 'clock'))}>B1-11: reloj</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission11(s, 'fire'))}>B1-11: noche del incendio</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission11(s, 'whatif'))}>B1-11: What If</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission11(s, 'echo'))}>B1-11: Ash Echo</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission11(s, 'exit'))}>B1-11: salida</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>
@@ -278,6 +291,7 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               </div>
               <button className={`${btn} text-left text-sm`} onClick={() => { setOpen(false); setDemo('static') }}>Probar estática de nombre</button>
               <button className={`${btn} text-left text-sm`} onClick={() => { setOpen(false); setDemo('music') }}>Probar Music Challenge</button>
+              <button className={`${btn} text-left text-sm`} onClick={() => { setOpen(false); setDemo('whatif') }}>Probar What If</button>
               <div className="grid grid-cols-2 gap-2">
                 <button className={`${btn} text-sm`} onClick={() => { setOpen(false); setDemo('ins-door') }}>Probar Inscriptions (puerta)</button>
                 <button className={`${btn} text-sm`} onClick={() => { setOpen(false); setDemo('ins-bridge') }}>Probar Inscriptions (puente)</button>

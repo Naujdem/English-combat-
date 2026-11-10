@@ -875,6 +875,29 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#b08a5a', hair: '#8a6a40', skin: '#c9a06a' },
     doneLine: { text: 'The room fades to white.', es: 'El cuarto se desvanece en blanco.' },
   },
+  // ── B1-11 · bloque B (la noche del incendio, data/b1FireNight.ts): la página 43 (NotebookIcon), el amigo (cara borrosa, mismo
+  // look que 'b1-01-friend' + la mochila con el llavero), la alarma (el tile 9 de la pared) y la escalera (aparece al vencer los Ash Echo)
+  'b1-11-page43': {
+    name: 'El cuaderno de L',
+    look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
+    doneLine: { text: 'I had come too late.', es: 'Había llegado demasiado tarde.' },
+  },
+  'b1-11-friend': {
+    name: 'Amigo',
+    look: { shirt: '#5a6a7e', hair: '#2b2b33', skin: '#c9a888', charm: 'clock-keychain' },
+    doneLine: { text: '...', es: '(No te ve).' },
+  },
+  'b1-11-alarm': {
+    name: 'La alarma de incendio',
+    look: { shirt: '#c0392b', hair: '#8a2a20', skin: '#d9d9d9' },
+    doneLine: { text: 'Every try ends the same.', es: 'Cada intento termina igual.' },
+  },
+  'b1-11-exit': {
+    name: 'La escalera',
+    look: { shirt: '#5a5a62', hair: '#3a3a42', skin: '#8c8c92' },
+    after: 'b1-11-echo2',
+    doneLine: { text: 'It always starts.', es: 'Siempre empieza.' },
+  },
   'b1-07-tv': {
     name: 'La televisión',
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },

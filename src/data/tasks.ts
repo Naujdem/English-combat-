@@ -37,11 +37,13 @@ import type { WhichDogRound } from '../components/WhichDog'
 import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
 import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS, B1_07_PRACTICE4_IDS } from './questions-b1-07'
 import type { MusicContent } from '../components/MusicChallenge'
+import type { WhatIfContent } from '../components/WhatIf'
 import { B1_10_SONG } from './b1Stage'
 import { B1_10_COND_IDS, B1_10_OPINIONS_IDS, B1_10_PREFER_IDS, B1_10_QUEUE_IDS, B1_10_STREAM_IDS } from './questions-b1-10'
 import { B1_09_CULTURE_IDS, B1_09_JOURNEY_IDS, B1_09_TIME_IDS } from './questions-b1-09'
 import { B1_09_CLOCK_ROOM, B1_09_CLOSE_SCRIPT } from './b1TempleTime'
-import { B1_11_NOTEBOOK_IDS, B1_11_WALL_IDS } from './questions-b1-11'
+import { B1_11_NOTEBOOK_IDS, B1_11_PAGE43_IDS, B1_11_WALL_IDS } from './questions-b1-11'
+import { B1_11_FIRE_OUT_SCRIPT, B1_11_FRIEND_SCRIPT, B1_11_WHATIF } from './b1FireNight'
 import { B1_11_CLOCK_SCRIPT } from './b1ClockRoom'
 import { B1_09_STONE_ROOM, B1_09_WALL_ROOM } from './b1TempleStones'
 import { B1_08_EMPHASIS_IDS, B1_08_PRACTICE_IDS, B1_08_RESULTS_IDS, B1_08_TAGS_IDS, B1_08_TEAM_IDS } from './questions-b1-08'
@@ -73,9 +75,11 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music' | 'whatif'
   /** Para activity 'music' (Music Challenge, B1-10): la canción con huecos (components/MusicChallenge.tsx) */
   music?: MusicContent
+  /** Para activity 'whatif' (What If…, B1-11): los intentos de cambiar la noche del incendio (components/WhatIf.tsx) */
+  whatif?: WhatIfContent
   /** Para activity 'whichdog' (Which Dog?, B1-06): las peticiones de Nayi, en orden */
   whichdog?: WhichDogRound[]
   /** Para activity 'fineprint' (The Fine Print, B1-04): las cláusulas del contrato que se sellan. Sin errores, escudo */
@@ -5756,4 +5760,52 @@ NPC_TASKS['b1-11-clock'] = {
   requires: { id: 'b1-11-wall', text: 'The clock.', es: 'El reloj.', sub: 'Primero lee el muro de recortes.' },
   steps: [],
   reward: { text: '(You turn the crown. The room fades to white.)', es: '(Giras la corona. El cuarto se desvanece en blanco.)', sub: 'La puerta de la derecha ya se puede abrir.' },
+}
+
+// ── B1-11 · bloque B: la noche del incendio, otra vez (escena en data/b1FireNight.ts). NO guarda closeId(11) ──
+// La página 43 en el suelo (lección 'pastperfect-b1') + práctica b1-11-pp1…pp8. Al terminar, la alarma
+NPC_TASKS['b1-11-page43'] = {
+  npc: 'b1-11-page43',
+  done: 'b1-11-page43',
+  lesson: 'pastperfect-b1',
+  notebookPage: 43,
+  activity: 'practice',
+  practice: 'pastperfect-b1',
+  practiceIds: B1_11_PAGE43_IDS,
+  steps: [],
+  reward: { text: 'I had come too late.', es: 'Había llegado demasiado tarde.', sub: 'Página 43 terminada. La alarma de la pared te espera.', say: 'I had come too late.' },
+}
+
+// El amigo, junto a la puerta del aula: script corto (no te ve). Sin práctica ni monedas
+NPC_TASKS['b1-11-friend-seen'] = {
+  npc: 'b1-11-friend',
+  done: 'b1-11-friend-seen',
+  activity: 'script',
+  script: B1_11_FRIEND_SCRIPT,
+  steps: [],
+  reward: { text: '(He is waiting for someone.)', es: '(Espera a alguien.)', sub: 'No te ve: esta noche es solo un recuerdo.' },
+}
+
+// La alarma de la pared: minijuego What If (4 intentos). Al terminar aparecen los 2 Ash Echo en el pasillo
+NPC_TASKS['b1-11-whatif'] = {
+  npc: 'b1-11-alarm',
+  done: 'b1-11-whatif',
+  activity: 'whatif',
+  whatif: B1_11_WHATIF,
+  requires: { id: 'b1-11-page43', text: 'The fire alarm.', es: 'La alarma de incendio.', sub: 'Primero lee tu cuaderno (página 43).' },
+  coins: 10,
+  steps: [],
+  reward: { text: 'Every try ends the same.', es: 'Cada intento termina igual.', sub: 'Los Ash Echo despertaron en el pasillo.', say: 'Every try ends the same.' },
+}
+
+// La escalera (aparece al vencer los Ash Echo): script, 5 monedas, y se vuelve al cuarto de L junto a la puerta
+NPC_TASKS['b1-11-fire-out'] = {
+  npc: 'b1-11-exit',
+  done: 'b1-11-fire-out',
+  activity: 'script',
+  script: B1_11_FIRE_OUT_SCRIPT,
+  coins: 5,
+  goto: { sceneId: 'b1-11-room', pos: { x: 10, y: 3 } },
+  steps: [],
+  reward: { text: '(In your notebook, one word: Roads.)', es: '(En tu cuaderno, una sola palabra: Roads.)', sub: 'Volviste a tu cuarto. Próximamente: el Temple of Roads (bloque 11-C).' },
 }

@@ -23,7 +23,9 @@ export const B1_11_CLOCK_SCRIPT: ScriptLine[] = [
 ]
 
 const NOT_YET = (sub: string) => ({ text: 'Todavía no.', sub })
-const SOON = { text: 'Próximamente: la noche del incendio (bloque 11-B)', sub: 'Esta parte llega en el siguiente bloque.' }
+const SOON = { text: 'Próximamente: el Temple of Roads (bloque 11-C)', sub: 'Esta parte llega en el siguiente bloque.' }
+/** Bloque B: al volver de la noche del incendio (data/b1FireNight.ts) */
+const FIRE_OUT = 'b1-11-fire-out'
 
 /**
  * Un solo cuarto sin ventana (leyenda de data/b1Words.ts y components/Tiles.tsx: 5 cama · K escritorio · B pizarra/tablón
@@ -66,17 +68,20 @@ export const B1_11_ROOM: SceneDef = {
     '1,5': { text: 'An old desk.', sub: 'Un escritorio viejo.', say: 'An old desk.' },
     '2,5': { text: 'An old desk.', sub: 'Un escritorio viejo.', say: 'An old desk.' },
   },
-  // La puerta de la derecha: cerrada hasta usar el reloj; después solo muestra "Próximamente" (sin link: el bloque 11-B no existe)
+  // La puerta de la derecha: cerrada hasta usar el reloj; después lleva a la noche del incendio (bloque 11-B)
   locked: (x, y, s) => {
     if (x !== 11 || y !== 3) return null
     if (!s.opened.includes(B1_11_CLOCK)) return NOT_YET('Primero usa el reloj.')
-    return SOON
+    // Después del reloj lleva a la noche del incendio (links); al volver de ella, "Próximamente" (bloque 11-C)
+    return s.opened.includes(FIRE_OUT) ? SOON : null
   },
+  links: { '11,3': { sceneId: 'b1-11-fire', pos: { x: 1, y: 2 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'El cuaderno de L: página 42', done: s.opened.includes(B1_11_NOTEBOOK) },
     { label: 'Los recortes del muro', done: s.opened.includes(B1_11_WALL) },
     { label: 'El reloj', done: s.opened.includes(B1_11_CLOCK) },
+    { label: 'La noche del incendio', done: s.opened.includes(FIRE_OUT) },
   ],
   intro: {
     first: 'Years later, in a small dark room. — Años después, en un cuarto pequeño y oscuro.',

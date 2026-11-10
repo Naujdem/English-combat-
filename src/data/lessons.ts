@@ -945,4 +945,12 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'notebook', text: 'Question: What would you have done? Short answer: I would have called someone.', es: 'Pregunta: ¿Qué habrías hecho? Respuesta corta: habría llamado a alguien.' },
     { who: 'notebook', text: 'Words of regret: regret, if only, change, fate, unavoidable. If only I had known!', es: 'Palabras de arrepentimiento: regret, if only, change, fate, unavoidable. ¡Si tan solo lo hubiera sabido!' },
   ],
+  // B1-11 · bloque B (la noche del incendio, data/b1FireNight.ts): Cuaderno de L, página 43
+  'pastperfect-b1': [
+    { who: 'notebook', text: 'Page 43. I arrived at the school. The fire had already started.', es: 'Página 43. Llegué a la escuela. El fuego ya había empezado.' },
+    { who: 'notebook', text: 'Form: had + past participle. I had left. She had seen. They had run.', es: 'Forma: had + participio. Yo había salido. Ella había visto. Ellos habían corrido.' },
+    { who: 'notebook', text: 'We use it for the first of two past events: When I arrived, the class had finished.', es: 'Lo usamos para el primero de dos hechos del pasado: cuando llegué, la clase ya había terminado.' },
+    { who: 'notebook', text: "Negative and question: I hadn't known. Had you seen it? Yes, I had.", es: 'Negativa y pregunta: yo no había sabido. ¿Lo habías visto? Sí, lo había visto.' },
+    { who: 'notebook', text: 'Be careful: By the time I arrived, the fire had started. Not: the fire started.', es: 'Ojo: para cuando llegué, el fuego ya había empezado. No: el fuego empezó.' },
+  ],
 }

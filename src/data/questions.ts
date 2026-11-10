@@ -1243,6 +1243,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Palabras de historia: suddenly, eventually, meanwhile, by the time.',
     ],
   },
+  'pastperfect-b1': {
+    name: 'Past perfect',
+    level: 'B1',
+    lesson: [
+      'Forma: had + participio. Yo había salido. Ella había visto. Ellos habían corrido.',
+      'Lo usamos para el primero de dos hechos del pasado: cuando llegué, la clase ya había terminado.',
+      'Negativa y pregunta: yo no había sabido. ¿Lo habías visto? Sí, lo había visto.',
+      'Ojo: para cuando llegué, el fuego ya había empezado. No: el fuego empezó.',
+    ],
+  },
   'conditional-3': {
     name: 'Tercer condicional',
     level: 'B1',

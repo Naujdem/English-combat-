@@ -284,6 +284,9 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       if (/\bhad\b/i.test(sentence)) return { title: 'Lo que pasó antes: had + participio (past perfect):', parts: [S('Sujeto'), '+', K('had'), '+', V('participio'), '+', R('...')] }
       if (/\b(was|were) \w+ing\b/i.test(sentence)) return { title: 'La escena: was / were + -ing (pasado continuo):', parts: [S('Sujeto'), '+', K('was / were'), '+', V('verbo + -ing'), '+', R('...')] }
       return { title: 'Hecho principal: pasado simple (-ed o irregular):', parts: [S('Sujeto'), '+', V('-ed / irregular'), '+', R('...')] }
+    case 'pastperfect-b1':
+      if (/^had\b/i.test(sentence)) return { title: 'Pregunta en past perfect: Had + sujeto + participio?', parts: [K('Had'), '+', S('sujeto'), '+', V('participio'), '+', R('...?')] }
+      return { title: "Past perfect: had (hadn't) + participio (lo que pasó antes):", parts: [S('Sujeto'), '+', K("had / hadn't"), '+', V('participio'), '+', R('...')] }
     case 'conditional-3':
       return { title: 'Tercer condicional: If + past perfect, would have + participio:', parts: [K('If'), '+', S('sujeto + had + participio'), '+', V('would have'), '+', R('participio')] }
     case 'opinions-b1':
