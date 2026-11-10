@@ -953,4 +953,12 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'notebook', text: "Negative and question: I hadn't known. Had you seen it? Yes, I had.", es: 'Negativa y pregunta: yo no había sabido. ¿Lo habías visto? Sí, lo había visto.' },
     { who: 'notebook', text: 'Be careful: By the time I arrived, the fire had started. Not: the fire started.', es: 'Ojo: para cuando llegué, el fuego ya había empezado. No: el fuego empezó.' },
   ],
+  // B1-11 · bloque C (el Temple of Roads, data/b1TempleRoads.ts): Cuaderno de L, página 44
+  'wish-b1': [
+    { who: 'notebook', text: 'Page 44. I wish I had known. I wish I could go back.', es: 'Página 44. Ojalá lo hubiera sabido. Ojalá pudiera volver.' },
+    { who: 'notebook', text: "wish + past simple: a wish about the present. I wish I knew the way. (I don't know it.)", es: 'wish + pasado simple: un deseo sobre el presente. Ojalá supiera el camino. (No lo sé.)' },
+    { who: 'notebook', text: "wish + past perfect: a regret about the past. I wish I had listened. (I didn't listen.)", es: 'wish + past perfect: un arrepentimiento sobre el pasado. Ojalá hubiera escuchado. (No escuché.)' },
+    { who: 'notebook', text: 'wish + would: something that bothers you, or a change you want. I wish you would listen.', es: 'wish + would: algo que te molesta o un cambio que quieres. Ojalá escucharas.' },
+    { who: 'notebook', text: 'If only is stronger: If only I had stayed!', es: 'If only es más fuerte: ¡si tan solo me hubiera quedado!' },
+  ],
 }

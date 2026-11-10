@@ -42,7 +42,8 @@ import { B1_10_SONG } from './b1Stage'
 import { B1_10_COND_IDS, B1_10_OPINIONS_IDS, B1_10_PREFER_IDS, B1_10_QUEUE_IDS, B1_10_STREAM_IDS } from './questions-b1-10'
 import { B1_09_CULTURE_IDS, B1_09_JOURNEY_IDS, B1_09_TIME_IDS } from './questions-b1-09'
 import { B1_09_CLOCK_ROOM, B1_09_CLOSE_SCRIPT } from './b1TempleTime'
-import { B1_11_NOTEBOOK_IDS, B1_11_PAGE43_IDS, B1_11_WALL_IDS } from './questions-b1-11'
+import { B1_11_NOTEBOOK_IDS, B1_11_PAGE43_IDS, B1_11_PAGE44_IDS, B1_11_ROADS_IDS, B1_11_WALL_IDS } from './questions-b1-11'
+import { B1_11_BRIDGE_ROOM } from './b1TempleRoads'
 import { B1_11_FIRE_OUT_SCRIPT, B1_11_FRIEND_SCRIPT, B1_11_WHATIF } from './b1FireNight'
 import { B1_11_CLOCK_SCRIPT } from './b1ClockRoom'
 import { B1_09_STONE_ROOM, B1_09_WALL_ROOM } from './b1TempleStones'
@@ -5808,4 +5809,34 @@ NPC_TASKS['b1-11-fire-out'] = {
   goto: { sceneId: 'b1-11-room', pos: { x: 10, y: 3 } },
   steps: [],
   reward: { text: '(In your notebook, one word: Roads.)', es: '(En tu cuaderno, una sola palabra: Roads.)', sub: 'Volviste a tu cuarto. Próximamente: el Temple of Roads (bloque 11-C).' },
+}
+
+// ── B1-11 · bloque C: el Temple of Roads (escena en data/b1TempleRoads.ts). NO guarda closeId(11) ──
+// La página 44 sobre una piedra (lección 'wish-b1') + práctica b1-11-w1…w8. Al terminar, el muro de inscripciones
+NPC_TASKS['b1-11-page44'] = {
+  npc: 'b1-11-page44',
+  done: 'b1-11-page44',
+  lesson: 'wish-b1',
+  notebookPage: 44,
+  activity: 'practice',
+  practice: 'wish-b1',
+  practiceIds: B1_11_PAGE44_IDS,
+  coins: 5,
+  steps: [],
+  reward: { text: 'I wish I had known.', es: 'Ojalá lo hubiera sabido.', sub: 'Página 44 terminada. Las inscripciones del puente te esperan.', say: 'I wish I had known.' },
+}
+
+// El muro de inscripciones: The Ancient Bridge (6 piedras, scene 'bridge') + práctica b1-11-r1…r8. Al terminar, el puente se cruza
+NPC_TASKS['b1-11-roads-ins'] = {
+  npc: 'b1-11-roads-wall',
+  done: 'b1-11-roads-ins',
+  activity: 'inscriptions',
+  inscriptions: B1_11_BRIDGE_ROOM,
+  practice: 'roads-b1',
+  practiceIds: B1_11_ROADS_IDS,
+  learn: ['roads-b1'],
+  requires: { id: 'b1-11-page44', text: 'The wall of the bridge.', es: 'El muro del puente.', sub: 'Primero lee tu cuaderno (página 44).' },
+  coins: 15,
+  steps: [],
+  reward: { text: 'Some roads always meet.', es: 'Algunos caminos siempre se encuentran.', sub: 'El puente se completó. La puerta pesada del fondo muestra algo grabado: próximamente.', say: 'Some roads always meet.' },
 }
