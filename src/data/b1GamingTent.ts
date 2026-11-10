@@ -1,4 +1,5 @@
 import type { GameState, SceneDef, Zone } from '../game/types'
+import { closeId } from './b1World'
 
 /**
  * B1-10 · Festival Night (presente). Bloque B: la carpa de videojuegos del festival de Lumen Bay (escena b1-10-tent).
@@ -83,6 +84,6 @@ export const B1_10_TENT: SceneDef = {
   ],
   intro: {
     first: 'Press start. — Presiona start.',
-    later: () => 'Press start. — Presiona start.',
+    later: (s) => (s.opened.includes(closeId(10)) ? 'La misión 10 terminó. El recuerdo 11 se abrió en el mapa.' : 'Press start. — Presiona start.'),
   },
 }

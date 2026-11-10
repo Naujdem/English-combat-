@@ -51,7 +51,8 @@ import { NotebookIcon } from '../components/LNotebook'
 import { B1_03_NOTEBOOK, B1_03_PHONE } from '../data/b1Words'
 import { B1_05_BOX, B1_05_BOXES, B1_05_ENVELOPE, B1_05_NOTEBOOK, B1_05_PAPERS } from '../data/b1Flat'
 import { B1_04_CLOSE, B1_04_FRAGMENTS, B1_04_FRIEND, B1_04_MAYA, B1_04_MAYA_BANK, B1_04_MAYA_LOBBY, B1_04_MOSCU, B1_04_RESIDENCE_ID, B1_04_RICARDO } from '../data/b1Residence'
-import { B1_04_MAYA_CHAT, B1_06_LEO_CHAT, B1_08_SPECIAL_CHAT } from '../data/friends'
+import { B1_04_MAYA_CHAT, B1_06_LEO_CHAT, B1_08_SPECIAL_CHAT, B1_10_LEO_CHAT } from '../data/friends'
+import { B1_10_CLOSE, B1_10_FRAGMENTS, B1_10_FRIEND, B1_10_LEO, B1_10_STAGE_ID } from '../data/b1Stage'
 import { B1_08_CLOSE, B1_08_CONCOURSE_ID, B1_08_FRAGMENTS, B1_08_FRIEND, B1_08_SPECIAL_CHAT as B1_08_SPECIAL_CHAT_NPC } from '../data/b1Concourse'
 import { B1_06_CLOSE, B1_06_FRAGMENTS, B1_06_FRIEND, B1_06_LEO, B1_06_OFFICE_ID } from '../data/b1EstebanOffice'
 /** B1-04: quién acompaña la práctica guiada (si no, Leo) */
@@ -155,7 +156,7 @@ type Talk = {
   level?: string
   note?: string
   /** Charla especial de una misión */
-  quest?: 'lostIntro' | 'b1-02-plane' | 'b1-04-maya' | 'b1-06-leo' | 'b1-08-special'
+  quest?: 'lostIntro' | 'b1-02-plane' | 'b1-04-maya' | 'b1-06-leo' | 'b1-08-special' | 'b1-10-leo'
 }
 
 export function Explore({ state, update, onBattle, onWorld }: { state: GameState; update: Update; onBattle: (enemyId: string) => void; onWorld: () => void }) {
@@ -356,6 +357,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           setMsg(null)
           const c = B1_06_LEO_CHAT
           setTalk({ friendId: 'leo', story: null, lines: [{ who: 'friend', text: c.text, es: c.es, options: c.options }], title: 'Charla casual', level: 'B1', quest: 'b1-06-leo' })
+          return
+        }
+        // B1-10 · Festival Night: la charla de amistad con Leo en el escenario (una sola vez; se guarda B1_10_FRIEND)
+        if (e.id === B1_10_LEO && !state.opened.includes(B1_10_FRIEND)) {
+          setMsg(null)
+          const c = B1_10_LEO_CHAT
+          setTalk({ friendId: 'leo', story: null, lines: [{ who: 'friend', text: c.text, es: c.es, options: c.options }], title: 'Charla casual', level: 'B1', quest: 'b1-10-leo' })
           return
         }
         // B1-08 · Game Day: la charla de amistad con la persona especial en el pasillo (una sola vez; se guarda B1_08_FRIEND)
@@ -962,6 +970,16 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: 'La puerta a las gradas te espera.', tone: 'good' })
                 return
               }
+              if (t.quest === 'b1-10-leo') {
+                // Charla casual B1 con Leo en el escenario: la amistad cambia con la regla de las charlas casuales. Después, Rutneri cierra la misión
+                update((s) => {
+                  const n = applyCasual(s, 'leo', delta)
+                  return { ...n, opened: n.opened.includes(B1_10_FRIEND) ? n.opened : [...n.opened, B1_10_FRIEND] }
+                })
+                if (delta < 0) setMsg({ text: `${talkFriend.name} no te entendió. La amistad bajó un poco.`, sub: 'Rutneri te espera en la cabina del DJ.', tone: 'warn' })
+                else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: 'Rutneri te espera en la cabina del DJ.', tone: 'good' })
+                return
+              }
               if (t.quest === 'b1-06-leo') {
                 // Charla casual B1 con Leo: la amistad cambia con la regla de las charlas casuales. Después, Esteban cierra la misión
                 update((s) => {
@@ -1254,6 +1272,18 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           memoryNumber={9}
           onDone={() => {
             update((s) => (s.opened.includes(B1_08_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B1_08_FRAGMENTS] }))
+            onWorld()
+          }}
+        />
+      )}
+      {/* B1-10 · cierre: al guardar closeId(10), dos fragmentos se juntan (memoryOpenId(11) = closeId(10): el recuerdo 11 queda abierto) */}
+      {scene.id === B1_10_STAGE_ID && state.opened.includes(B1_10_CLOSE) && !state.opened.includes(B1_10_FRAGMENTS) && !task && !outro && (
+        <FragmentJoin
+          state={state}
+          update={update}
+          memoryNumber={11}
+          onDone={() => {
+            update((s) => (s.opened.includes(B1_10_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B1_10_FRAGMENTS] }))
             onWorld()
           }}
         />

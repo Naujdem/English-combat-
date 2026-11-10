@@ -5687,3 +5687,32 @@ NPC_TASKS['b1-10-music'] = {
     say: 'The crowd sings with you. Then, some spectators start to shout.',
   },
 }
+
+// ── B1-10 · Festival Night, bloque D (el escenario, data/b1Stage.ts): Rutneri en la cabina del DJ cierra la misión (closeId(10) = 'b1-10-close') ──
+// Al guardarlo, dos fragmentos se juntan (FragmentJoin en Explore.tsx, memoryNumber 11): se abre el recuerdo 11
+NPC_TASKS['b1-10-close'] = {
+  npc: 'b1-10-rutneri',
+  done: 'b1-10-close',
+  activity: 'script',
+  script: [
+    { who: 'narrator', text: "Rutneri: Thank you. I don't know what happened to me. I felt like a machine.", es: 'Rutneri: Gracias. No sé qué me pasó. Me sentía como una máquina.' },
+    { who: 'narrator', text: 'Rutneri: The best thing about tonight was the crowd. Take this wristband.', es: 'Rutneri: Lo mejor de esta noche fue el público. Toma esta pulsera.' },
+    { who: 'narrator', text: "(Rutneri's headphones drop two fragments. They float toward each other.)", es: '(Los audífonos de Rutneri sueltan dos fragmentos. Flotan el uno hacia el otro.)' },
+    { who: 'narrator', text: '(The clock in your pocket is shining.)', es: '(El reloj en tu bolsillo brilla.)' },
+  ],
+  recover: ['conditional-2', 'verb-patterns', 'prefer-b1', 'opinions-b1', 'gaming-b1'],
+  coins: 20,
+  requires: {
+    id: 'b1-10-friend',
+    text: 'Rutneri.',
+    es: 'Rutneri.',
+    sub: 'Antes, vence a The Headliner y habla con Leo.',
+  },
+  steps: [],
+  reward: {
+    text: 'Mission 10: Festival Night',
+    es: 'Misión 10: Noche de festival',
+    sub: 'Ganaste la pulsera del festival. Dos fragmentos se juntaron: se abrió el recuerdo 11.',
+    say: 'Festival night!',
+  },
+}

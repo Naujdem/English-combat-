@@ -325,6 +325,8 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   'camiseta-refugio': { name: 'Camiseta del refugio', color: '#2f7f7a' },
   // B1-08 · Game Day: regalo de The Champion (jefe). Una bufanda azul con franja dorada al cuello (Sprite.tsx, charm 'scarf'); no cambia la camiseta
   'bufanda-lumen': { name: 'Bufanda del equipo de Lumen Bay', color: '#1f5fa8' },
+  // B1-10 · Festival Night: regalo de The Headliner (jefe). Una pulsera rosada con una estrella dorada en la muñeca (Sprite.tsx, charm 'wristband'); no cambia la camiseta
+  'pulsera-festival': { name: 'Pulsera del festival', color: '#d4488a' },
   // Regalos de algunos esbirros de A2 (al liberarlos)
   'chaleco-mesero': { name: 'Chaleco de mesero (A2)', color: '#5a3a2e' },
   'overol-taller': { name: 'Overol del taller de Hale (A2)', color: '#4a5560' },

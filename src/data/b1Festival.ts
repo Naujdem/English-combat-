@@ -1,4 +1,5 @@
 import type { GameState, SceneDef, Zone } from '../game/types'
+import { closeId } from './b1World'
 
 /**
  * B1-10 · Festival Night (presente). Bloque A: el recinto del festival de arte y música de Lumen Bay al anochecer (escena b1-10-festival).
@@ -86,6 +87,6 @@ export const B1_10_FESTIVAL: SceneDef = {
   ],
   intro: {
     first: 'Festival night! — ¡Noche de festival!',
-    later: () => 'Festival night! — ¡Noche de festival!',
+    later: (s) => (s.opened.includes(closeId(10)) ? 'La misión 10 terminó. El recuerdo 11 se abrió en el mapa.' : 'Festival night! — ¡Noche de festival!'),
   },
 }

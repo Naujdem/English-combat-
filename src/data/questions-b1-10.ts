@@ -9,6 +9,7 @@ import type { Question } from '../game/types'
  *  - Escucha de la transmisión de Jorge (tarea b1-10-stream, tema gaming-b1): b1-10-j1…j4.
  *  - Práctica de opiniones de Jorge (tarea b1-10-opinions, tema opinions-b1): b1-10-o1…o8.
  * Bloque C (el escenario, data/b1Stage.ts): banco compartido de los 2 espectadores corrompidos (tag b1-10-spectator): b1-10-x1…x10.
+ * Bloque D: el jefe The Headliner (data/b1HeadlinerBoss.ts). Fase 1 segundo condicional (b1-10-bc1…bc7) · fase 2 prefer y opiniones (b1-10-bp1…bp7).
  * La posición de la respuesta correcta varía a propósito.
  */
 const C2 = 'conditional-2' as const
@@ -22,6 +23,8 @@ const STREAM = ['b1-10-stream']
 const OP = 'opinions-b1' as const
 const OPINIONS = ['b1-10-opinions']
 const SPECTATOR = ['b1-10-spectator']
+const BOSS_C = ['b1-10-boss', 'b1-10-boss-c']
+const BOSS_P = ['b1-10-boss', 'b1-10-boss-p']
 
 /** Práctica del segundo condicional, en orden */
 export const B1_10_COND_IDS = ['b1-10-c1', 'b1-10-c2', 'b1-10-c3', 'b1-10-c4', 'b1-10-c5', 'b1-10-c6', 'b1-10-c7', 'b1-10-c8']
@@ -175,5 +178,43 @@ export const B1_10_QUESTIONS: Question[] = [
     answer: 1,
     tip: 'The best thing about the festival is the crowd.',
     tags: SPECTATOR,
+  },
+  // Bloque D · The Headliner, fase 1 (segundo condicional)
+  { id: 'b1-10-bc1', topic: C2, kind: 'fix', prompt: 'If I would be a DJ, I would play all night.', options: ['If I were a DJ, I would play all night.', 'If I would were a DJ, I would play all night.', 'If I am a DJ, I would play all night.'], answer: 0, tip: 'If + were.', tags: BOSS_C },
+  { id: 'b1-10-bc2', topic: C2, kind: 'fix', prompt: 'If we would have more time, we would stay.', options: ['If we would had more time, we would stay.', 'If we have more time, we would stay.', 'If we had more time, we would stay.'], answer: 2, tip: 'If + pasado simple.', tags: BOSS_C },
+  { id: 'b1-10-bc3', topic: C2, prompt: 'If you ___ the headliner, what would you play?', options: ['are', 'were', 'will be'], answer: 1, tip: 'If + were.', tags: BOSS_C },
+  { id: 'b1-10-bc4', topic: C2, prompt: 'She would sing here if she ___ a ticket.', options: ['had', 'would have', 'has'], answer: 0, tip: 'If + pasado simple (had).', tags: BOSS_C },
+  { id: 'b1-10-bc5', topic: C2, prompt: "I wouldn't go if I ___ tired.", options: ['am', 'would be', 'were'], answer: 2, tip: 'If + were.', tags: BOSS_C },
+  { id: 'b1-10-bc6', topic: C2, kind: 'order', prompt: '¿Qué harías si ganaras?', options: ['What', 'would', 'you', 'do', 'if', 'you', 'won?'], answer: 0, tip: 'What would you do if you won?', tags: BOSS_C },
+  {
+    id: 'b1-10-bc7',
+    topic: C2,
+    kind: 'listen',
+    audio: 'If I were famous, I would help my town. I would build a big park, and I would invite everyone to the opening. If I had a lot of money, I would also buy new instruments for the school.',
+    voice: 'female',
+    prompt: '¿Qué construiría?',
+    options: ['Un teatro.', 'Un parque grande.', 'Una escuela.'],
+    answer: 1,
+    tip: 'I would build a big park.',
+    tags: BOSS_C,
+  },
+  // Bloque D · The Headliner, fase 2 (prefer / would rather y opiniones)
+  { id: 'b1-10-bp1', topic: PR, kind: 'fix', prompt: 'I prefer play alone.', options: ['I prefer played alone.', 'I prefer playing alone to.', 'I prefer to play alone.'], answer: 2, tip: 'prefer + to + verbo base.', tags: BOSS_P },
+  { id: 'b1-10-bp2', topic: PR, kind: 'fix', prompt: "I'd rather to go home.", options: ["I'd rather go home.", "I'd rather going home.", "I'd rather went home."], answer: 0, tip: 'would rather + verbo base.', tags: BOSS_P },
+  { id: 'b1-10-bp3', topic: OP, kind: 'fix', prompt: 'The main problem it is the noise.', options: ['The main problem it the noise.', 'The main problem is the noise.', 'The main problem are the noise.'], answer: 1, tip: 'The main problem is…', tags: BOSS_P },
+  { id: 'b1-10-bp4', topic: PR, prompt: 'I prefer reading ___ watching TV.', options: ['that', 'of', 'to'], answer: 2, tip: 'prefer + -ing to + -ing.', tags: BOSS_P },
+  { id: 'b1-10-bp5', topic: PR, prompt: "I'd rather ___ the band than wait here.", options: ['see', 'to see', 'seeing'], answer: 0, tip: 'would rather + verbo base.', tags: BOSS_P },
+  { id: 'b1-10-bp6', topic: OP, kind: 'order', prompt: 'Lo mejor de la noche es la música.', options: ['The', 'best', 'thing', 'about', 'tonight', 'is', 'the', 'music.'], answer: 0, tip: 'The best thing about… is…', tags: BOSS_P },
+  {
+    id: 'b1-10-bp7',
+    topic: OP,
+    kind: 'listen',
+    audio: "I'd rather play for my friends than for a huge crowd. The best thing about small shows is the atmosphere. The main problem with big festivals is the price of the tickets.",
+    voice: 'male',
+    prompt: '¿Cuál es el problema de los festivales grandes?',
+    options: ['El ruido.', 'El precio de las entradas.', 'La comida.'],
+    answer: 1,
+    tip: 'The main problem is the price of the tickets.',
+    tags: BOSS_P,
   },
 ]

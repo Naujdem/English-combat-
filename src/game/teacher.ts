@@ -43,6 +43,7 @@ import { B1_08_STADIUM } from '../data/b1Stadium'
 import { B1_10_FESTIVAL } from '../data/b1Festival'
 import { B1_10_TENT } from '../data/b1GamingTent'
 import { B1_10_STAGE } from '../data/b1Stage'
+import { B1_10_BOSS_DEF } from '../data/b1HeadlinerBoss'
 import { B1_08_STANDS } from '../data/b1Stands'
 import { B1_08_BOSS, B1_08_CONCOURSE, B1_08_FAN1, B1_08_FAN2 } from '../data/b1Concourse'
 import { B1_04_BOSS, B1_04_FINEPRINT, B1_04_FRIEND, B1_04_PHRASAL, B1_04_RESIDENCE, B1_04_RULES, B1_04_WELCOME } from '../data/b1Residence'
@@ -1020,15 +1021,17 @@ export function b1Mission9(s: GameState, stage: 'journey' | 'culture' | 'talk' |
  *  queue: lección del condicional hecha (frente a la fila; la lección 'verb-patterns' sale de nuevo)
  *  prefer: fila hecha, en la carpa frente a la persona especial · stream / opinions / debate: frente a Jorge, en esa tarea
  *  music: debate hecho, en el escenario frente a Liceth · spectators: canción hecha (los 2 espectadores aparecen de nuevo)
+ *  boss: espectadores vencidos (frente a The Headliner) · leo: jefe vencido (frente a Leo) · close: charla hecha (frente a Rutneri)
  */
-export function b1Mission10(s: GameState, stage: 'liceth' | 'conditional' | 'queue' | 'prefer' | 'stream' | 'opinions' | 'debate' | 'music' | 'spectators'): GameState {
+export function b1Mission10(s: GameState, stage: 'liceth' | 'conditional' | 'queue' | 'prefer' | 'stream' | 'opinions' | 'debate' | 'music' | 'spectators' | 'boss' | 'leo' | 'close'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8), closeId(9)])
   const mine = ['conditional-2', 'verb-patterns', 'prefer-b1', 'gaming-b1', 'opinions-b1']
-  const pos = { liceth: { x: 5, y: 4 }, conditional: { x: 4, y: 4 }, queue: { x: 5, y: 2 }, prefer: { x: 4, y: 5 }, stream: { x: 9, y: 3 }, opinions: { x: 9, y: 3 }, debate: { x: 9, y: 3 }, music: { x: 6, y: 4 }, spectators: { x: 5, y: 3 } }[stage]
+  const pos = { liceth: { x: 5, y: 4 }, conditional: { x: 4, y: 4 }, queue: { x: 5, y: 2 }, prefer: { x: 4, y: 5 }, stream: { x: 9, y: 3 }, opinions: { x: 9, y: 3 }, debate: { x: 9, y: 3 }, music: { x: 6, y: 4 }, spectators: { x: 5, y: 3 }, boss: { x: 6, y: 2 }, leo: { x: 3, y: 4 }, close: { x: 5, y: 2 } }[stage]
   const a = ['b1-10-welcome', 'b1-10-conditional', 'b1-10-queue']
-  const flags = { liceth: [], conditional: ['b1-10-welcome'], queue: ['b1-10-welcome', 'b1-10-conditional'], prefer: a, stream: [...a, 'b1-10-prefer'], opinions: [...a, 'b1-10-prefer', 'b1-10-stream'], debate: [...a, 'b1-10-prefer', 'b1-10-stream', 'b1-10-opinions'], music: [...a, 'b1-10-prefer', 'b1-10-stream', 'b1-10-opinions', 'b1-10-debate'], spectators: [...a, 'b1-10-prefer', 'b1-10-stream', 'b1-10-opinions', 'b1-10-debate', 'b1-10-music'] }[stage]
-  const lessons = { liceth: [], conditional: [], queue: ['conditional-2'], prefer: ['conditional-2', 'verb-patterns'], stream: ['conditional-2', 'verb-patterns', 'prefer-b1'], opinions: ['conditional-2', 'verb-patterns', 'prefer-b1', 'gaming-b1'], debate: mine, music: mine, spectators: mine }[stage]
+  const flags = { liceth: [], conditional: ['b1-10-welcome'], queue: ['b1-10-welcome', 'b1-10-conditional'], prefer: a, stream: [...a, 'b1-10-prefer'], opinions: [...a, 'b1-10-prefer', 'b1-10-stream'], debate: [...a, 'b1-10-prefer', 'b1-10-stream', 'b1-10-opinions'], music: [...a, 'b1-10-prefer', 'b1-10-stream', 'b1-10-opinions', 'b1-10-debate'], spectators: [...a, 'b1-10-prefer', 'b1-10-stream', 'b1-10-opinions', 'b1-10-debate', 'b1-10-music'], boss: [...a, 'b1-10-prefer', 'b1-10-stream', 'b1-10-opinions', 'b1-10-debate', 'b1-10-music'], leo: [...a, 'b1-10-prefer', 'b1-10-stream', 'b1-10-opinions', 'b1-10-debate', 'b1-10-music'], close: [...a, 'b1-10-prefer', 'b1-10-stream', 'b1-10-opinions', 'b1-10-debate', 'b1-10-music', 'b1-10-friend'] }[stage]
+  const lessons = { liceth: [], conditional: [], queue: ['conditional-2'], prefer: ['conditional-2', 'verb-patterns'], stream: ['conditional-2', 'verb-patterns', 'prefer-b1'], opinions: ['conditional-2', 'verb-patterns', 'prefer-b1', 'gaming-b1'], debate: mine, music: mine, spectators: mine, boss: mine, leo: mine, close: mine }[stage]
   const tent = stage === 'prefer' || stage === 'stream' || stage === 'opinions' || stage === 'debate'
-  const base = { ...b, screen: 'explore' as const, sceneId: stage === 'music' || stage === 'spectators' ? B1_10_STAGE.id : tent ? B1_10_TENT.id : B1_10_FESTIVAL.id, pos, defeated: b.defeated.filter((d) => !d.startsWith('b1-10-')), opened: b.opened.filter((o) => !o.startsWith('b1-10-')), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
-  return { ...base, opened: add(base.opened, flags), seenLesson: add(base.seenLesson, lessons) as GameState['seenLesson'] }
+  const base = { ...b, screen: 'explore' as const, sceneId: stage === 'music' || stage === 'spectators' || stage === 'boss' || stage === 'leo' || stage === 'close' ? B1_10_STAGE.id : tent ? B1_10_TENT.id : B1_10_FESTIVAL.id, pos, defeated: b.defeated.filter((d) => !d.startsWith('b1-10-')), opened: b.opened.filter((o) => !o.startsWith('b1-10-')), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
+  const beaten = stage === 'boss' ? ['b1-10-spectator1', 'b1-10-spectator2'] : stage === 'leo' || stage === 'close' ? ['b1-10-spectator1', 'b1-10-spectator2', B1_10_BOSS_DEF.id] : []
+  return { ...base, opened: add(base.opened, flags), defeated: add(base.defeated, beaten), seenLesson: add(base.seenLesson, lessons) as GameState['seenLesson'] }
 }

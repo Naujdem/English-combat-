@@ -9,7 +9,7 @@ export type SpriteLook = {
   cape?: string
   book?: boolean
   /** B1-04: llavero de la residencia (una casita con una llave) que cuelga del cinturón */
-  charm?: 'house-key' | 'scarf'
+  charm?: 'house-key' | 'scarf' | 'wristband'
 }
 
 /**
@@ -80,6 +80,13 @@ export function SpriteBody({ look, mood = 'normal', blur = false }: { look: Spri
           <rect x="17.4" y="17.2" width="2.4" height="5.4" rx="0.5" fill="#1f5fa8" />
           <rect x="17.4" y="20" width="2.4" height="0.7" fill="#e0b84a" />
           <path d="M17.8 22.6 v0.9 M18.6 22.6 v0.9 M19.4 22.6 v0.9" stroke="#e0b84a" strokeWidth="0.35" />
+        </g>
+      )}
+      {look.charm === 'wristband' && (
+        // B1-10: la pulsera del festival: rosada, en la muñeca derecha, con una pequeña estrella dorada
+        <g aria-hidden="true">
+          <rect x="20.6" y="21.6" width="2.6" height="1.5" rx="0.6" fill="#d4488a" />
+          <path d="M21.9 21.75 l0.25 0.5 l0.55 0.08 l-0.4 0.38 l0.1 0.55 l-0.5 -0.26 l-0.5 0.26 l0.1 -0.55 l-0.4 -0.38 l0.55 -0.08 Z" fill="#e0b84a" />
         </g>
       )}
       {look.book && (

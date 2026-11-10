@@ -1090,6 +1090,21 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#d4488a', hair: '#2a1c14', skin: '#d9a37a', gender: 'female' },
     doneLine: { text: '(The crowd sings with you. Then, some spectators start to shout...)', es: '(El público canta contigo. Luego, algunos espectadores empiezan a gritar...)' },
   },
+  // ── B1-10 · bloque D (el escenario principal, data/b1Stage.ts) ──
+  // Leo: aparece al vencer a The Headliner (charla de amistad, quest 'b1-10-leo' en Explore.tsx)
+  'b1-10-leo': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    after: 'b1-10-boss',
+    doneLine: { text: 'Cool! If I were you, I\'d bring a camera.', es: '¡Genial! Si yo fuera tú, llevaría una cámara.' },
+  },
+  // Rutneri en la cabina del DJ: aparece tras la charla con Leo; cierra la misión (tarea b1-10-close)
+  'b1-10-rutneri': {
+    name: 'Rutneri',
+    look: { shirt: '#2b1f4a', hair: '#c73e8a', skin: '#d0a77f' },
+    after: 'b1-10-friend',
+    doneLine: { text: "I'd rather play for friends than for fame. Thank you!", es: 'Prefiero tocar para amigos que para la fama. ¡Gracias!' },
+  },
   // Jorge, el streamer (tareas b1-10-stream → b1-10-opinions → b1-10-debate)
   'b1-10-jorge': {
     name: 'Jorge',

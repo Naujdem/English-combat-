@@ -262,6 +262,9 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'debate'))}>B1-10: Jorge (debate)</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'music'))}>B1-10: Music Challenge</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'spectators'))}>B1-10: espectadores corrompidos (2)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'boss'))}>B1-10: jefe The Headliner</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'leo'))}>B1-10: charla con Leo</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'close'))}>B1-10: cierre</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>
