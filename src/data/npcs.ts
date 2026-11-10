@@ -1290,6 +1290,17 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#8a8f96', hair: '#55606e', skin: '#a8adb4' },
     doneLine: { text: 'It takes one.', es: 'Toma una.' },
   },
+  // ── B1-13 · bloque B (la sala de los ecos, data/b1EchoHall.ts): el Keeper of Echoes (sin combate, rostro liso) y la página 62 (NotebookIcon) ──
+  'b1-13-keeper': {
+    name: 'Keeper of Echoes',
+    look: { shirt: '#5b5f6b', hair: '#9aa0ad', skin: '#aab0bc' },
+    doneLine: { text: 'You must choose.', es: 'Tú debes elegir.' },
+  },
+  'b1-13-notebook2': {
+    name: 'El cuaderno de L',
+    look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
+    doneLine: { text: "Tomorrow, I'm going to leave.", es: 'Mañana voy a irme.' },
+  },
   // La puerta a las gradas: aparece tras la charla; cierra la misión (tarea b1-08-close). Se dibuja con NotebookIcon (Explore.tsx)
   'b1-08-return': {
     name: 'La puerta a las gradas',

@@ -969,6 +969,14 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'notebook', text: 'Be careful: I succeeded in finding it. I managed to find it. I failed to find it.', es: 'Ojo: tuve éxito encontrándolo. Logré encontrarlo. No logré encontrarlo.' },
     { who: 'notebook', text: 'Words: cost, price, blame, revenge, unfair, regret.', es: 'Palabras: cost (costo), price (precio), blame (culpa), revenge (venganza), unfair (injusto), regret (arrepentimiento).' },
   ],
+  // B1-13 · bloque B (la sala de los ecos, data/b1EchoHall.ts): Cuaderno de L, página 62
+  'future-plans-b1': [
+    { who: 'notebook', text: "Page 62. Tomorrow I'm going to leave this temple. This time tomorrow, I'll be traveling.", es: 'Página 62. Mañana voy a dejar este templo. Mañana a esta hora estaré viajando.' },
+    { who: 'notebook', text: "going to: a plan you already decided. I'm going to wait at the station.", es: 'going to: un plan ya decidido. Voy a esperar en la estación.' },
+    { who: 'notebook', text: "Present continuous: an arrangement with a time or place. I'm meeting her at eight.", es: 'Presente continuo: un arreglo con hora o lugar. Me reúno con ella a las ocho.' },
+    { who: 'notebook', text: "will: a decision now, or a prediction. It's cold. I'll take my coat. I think it will rain.", es: 'will: una decisión en el momento, o una predicción. Hace frío. Tomaré mi abrigo. Creo que lloverá.' },
+    { who: 'notebook', text: "Future continuous: an action in progress at a future moment. At eight I'll be waiting.", es: 'Future continuous: una acción en progreso en un momento futuro. A las ocho estaré esperando.' },
+  ],
   // B1-12 · bloque A (la casa de los abuelos, data/b1HostHouse.ts): Maya, verbos de estado y de acción
   'state-verbs-b1': [
     { who: 'maya', text: 'Some verbs describe a state, not an action: know, like, love, want, need, believe, understand.', es: 'Algunos verbos describen un estado, no una acción: know, like, love, want, need, believe, understand.' },

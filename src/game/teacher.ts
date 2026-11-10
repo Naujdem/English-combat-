@@ -50,6 +50,7 @@ import { B1_12_GARDEN } from '../data/b1HostGarden'
 import { B1_12_CITY } from '../data/b1HostCity'
 import { B1_12_PLAZA } from '../data/b1HostPlaza'
 import { B1_13_ECHOES } from '../data/b1TempleEchoes'
+import { B1_13_HALL } from '../data/b1EchoHall'
 import { B1_10_TENT } from '../data/b1GamingTent'
 import { B1_10_STAGE } from '../data/b1Stage'
 import { B1_10_BOSS_DEF } from '../data/b1HeadlinerBoss'
@@ -1098,14 +1099,18 @@ export function b1Mission12(s: GameState, stage: 'house' | 'verbs' | 'album' | '
 /**
  * Atajos de la misión B1-13 (The Price, recuerdo) para el panel del profe. Parten de la misión 12 cerrada (nodo 13 abierto).
  *  start: en el Temple of Echoes, junto a la página 61 · wall: página 61 hecha (frente al muro de los ecos)
+ *  hall: muro hecho (en la sala del Keeper) · riddlef: acertijo 1 y página 62 hechos (frente al Keeper)
+ *  keeperout: todo hecho menos la revelación del precio (frente al Keeper)
  */
-export function b1Mission13(s: GameState, stage: 'start' | 'wall'): GameState {
+export function b1Mission13(s: GameState, stage: 'start' | 'wall' | 'hall' | 'riddlef' | 'keeperout'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8), closeId(9), closeId(10), closeId(11), closeId(12), 'b1-12-fragments'])
-  const mine = ['achievement-b1', 'price-b1']
+  const mine = ['achievement-b1', 'price-b1', 'future-plans-b1']
   const present = { ...b, sceneId: B1_12_PLAZA.id, pos: { ...B1_12_PLAZA.start }, recovered: b.recovered.filter((t) => !mine.includes(t)), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)), opened: b.opened.filter((o) => !o.startsWith('b1-13-')), defeated: b.defeated.filter((d) => !d.startsWith('b1-13-')) }
-  const pos = { start: { x: 2, y: 3 }, wall: { x: 4, y: 2 } }[stage]
-  const m = enterMemory(present, 13, B1_13_ECHOES.id, pos)
-  const flags = { start: [], wall: ['b1-13-notebook'] }[stage]
-  const lessons = { start: [], wall: ['achievement-b1'] }[stage]
+  const pos = { start: { x: 2, y: 3 }, wall: { x: 4, y: 2 }, hall: { x: 1, y: 3 }, riddlef: { x: 4, y: 3 }, keeperout: { x: 4, y: 3 } }[stage]
+  const inHall = stage === 'hall' || stage === 'riddlef' || stage === 'keeperout'
+  const m = enterMemory(present, 13, inHall ? B1_13_HALL.id : B1_13_ECHOES.id, pos)
+  const a = ['b1-13-notebook', 'b1-13-wall-ins']
+  const flags = { start: [], wall: ['b1-13-notebook'], hall: a, riddlef: [...a, 'b1-13-keeper-intro', 'b1-13-keeper-a', 'b1-13-notebook2'], keeperout: [...a, 'b1-13-keeper-intro', 'b1-13-keeper-a', 'b1-13-notebook2', 'b1-13-keeper-f'] }[stage]
+  const lessons = { start: [], wall: ['achievement-b1'], hall: ['achievement-b1', 'price-b1'], riddlef: mine, keeperout: mine }[stage]
   return { ...m, opened: add(m.opened, flags), seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
 }
