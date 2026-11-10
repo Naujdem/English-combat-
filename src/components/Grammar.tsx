@@ -280,6 +280,12 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
     case 'prefer-b1':
       if (/\brather\b/i.test(sentence)) return { title: "would rather + verbo base (sin to) + than:", parts: [S('Sujeto'), '+', K("would rather ('d rather)"), '+', V('verbo base'), '+', R('than ...')] }
       return { title: 'prefer + -ing to + -ing · prefer to + verbo base:', parts: [S('Sujeto'), '+', K('prefer'), '+', V('-ing / to + verbo base'), '+', R('to ...')] }
+    case 'narrative-b1':
+      if (/\bhad\b/i.test(sentence)) return { title: 'Lo que pasó antes: had + participio (past perfect):', parts: [S('Sujeto'), '+', K('had'), '+', V('participio'), '+', R('...')] }
+      if (/\b(was|were) \w+ing\b/i.test(sentence)) return { title: 'La escena: was / were + -ing (pasado continuo):', parts: [S('Sujeto'), '+', K('was / were'), '+', V('verbo + -ing'), '+', R('...')] }
+      return { title: 'Hecho principal: pasado simple (-ed o irregular):', parts: [S('Sujeto'), '+', V('-ed / irregular'), '+', R('...')] }
+    case 'conditional-3':
+      return { title: 'Tercer condicional: If + past perfect, would have + participio:', parts: [K('If'), '+', S('sujeto + had + participio'), '+', V('would have'), '+', R('participio')] }
     case 'opinions-b1':
       return { title: 'Opinión con frase nominal: The best thing / The main problem + is + sustantivo, -ing o that + frase:', parts: [S('The best thing / The main problem'), '+', V('is'), '+', R('sustantivo / -ing / that ...')] }
     case 'conditional-2':

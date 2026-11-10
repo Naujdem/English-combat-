@@ -929,4 +929,20 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'Énfasis: really, incredibly + adjetivo: really good, incredibly short.', topic: 'opinions-b1' },
     { who: 'board', text: 'Errores típicos: ✗ The best thing about is the music → ✓ The best thing about it is the music. ✗ The main problem it is the price → ✓ The main problem is the price.', topic: 'opinions-b1' },
   ],
+  // B1-11 · The First Journey, bloque A (el cuarto de L, data/b1ClockRoom.ts): Cuaderno de L, página 42
+  'narrative-b1': [
+    { who: 'notebook', text: 'Page 42. Suddenly, the clock began to glow.', es: 'Página 42. De repente, el reloj empezó a brillar.' },
+    { who: 'notebook', text: 'In a story, the past simple tells the main events: I opened the box. I took the clock.', es: 'En una historia, el pasado simple cuenta los hechos principales: abrí la caja. Tomé el reloj.' },
+    { who: 'notebook', text: 'The past continuous sets the scene: It was raining while I was walking home.', es: 'El pasado continuo pone la escena: llovía mientras yo caminaba a casa.' },
+    { who: 'notebook', text: 'The past perfect shows what happened before: By the time I arrived, the train had left.', es: 'El past perfect muestra lo que pasó antes: para cuando llegué, el tren ya se había ido.' },
+    { who: 'notebook', text: 'Story words: suddenly (de repente), eventually (finalmente), meanwhile (mientras tanto), by the time (para cuando).', es: 'Palabras de historia: suddenly, eventually, meanwhile, by the time.' },
+  ],
+  // B1-11 · bloque A: el muro de recortes (tercer condicional)
+  'conditional-3': [
+    { who: 'notebook', text: 'If I had pulled the alarm earlier, they would have escaped.', es: 'Si hubiera activado la alarma antes, habrían escapado.' },
+    { who: 'notebook', text: "Form: If + past perfect, would have + past participle. It talks about the past, and the past can't change.", es: 'Forma: If + past perfect, would have + participio. Habla del pasado, y el pasado no se puede cambiar.' },
+    { who: 'notebook', text: "If I had closed the door, the smoke wouldn't have spread.", es: 'Si hubiera cerrado la puerta, el humo no se habría esparcido.' },
+    { who: 'notebook', text: 'Question: What would you have done? Short answer: I would have called someone.', es: 'Pregunta: ¿Qué habrías hecho? Respuesta corta: habría llamado a alguien.' },
+    { who: 'notebook', text: 'Words of regret: regret, if only, change, fate, unavoidable. If only I had known!', es: 'Palabras de arrepentimiento: regret, if only, change, fate, unavoidable. ¡Si tan solo lo hubiera sabido!' },
+  ],
 }

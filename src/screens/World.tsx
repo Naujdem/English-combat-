@@ -32,6 +32,7 @@ import { B1_10_FESTIVAL_ID } from '../data/b1Festival'
 import { B1_05_FLAT } from '../data/b1Flat'
 import { B1_07_ROOM } from '../data/b1Room'
 import { B1_09_VALLEY } from '../data/b1Valley'
+import { B1_11_ROOM } from '../data/b1ClockRoom'
 import { LooseFragment } from '../components/FragmentJoin'
 import { B1_HOME_ID, B1_NODES, B1_OPENING, B1_PART_NAMES, B1_ERA_COLOR, b1LockedText, b1Message, b1NodeDone, b1NodeOpen, isB1Unlocked, type B1Node, type B1Part } from '../data/b1World'
 import { heroLook, SCENES } from '../game/helpers'
@@ -201,6 +202,9 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     if (n.num === 9) return update((s) => enterMemory(s, 9, B1_09_VALLEY.id, B1_09_VALLEY.start))
     // Nodo 10 (presente): Festival Night, la entrada del festival de Lumen Bay (data/b1Festival.ts)
     if (n.num === 10) return onEnter(B1_10_FESTIVAL_ID)
+    // Nodo 11 (recuerdo): The First Journey (data/b1ClockRoom.ts). L, ya mayor, en su cuarto alquilado; al salir del recuerdo
+    // se vuelve al último lugar del presente (exitMemory). Sin FragmentJoin extra: ya se animó al abrir el nodo
+    if (n.num === 11) return update((s) => enterMemory(s, 11, B1_11_ROOM.id, B1_11_ROOM.start))
     setMsg(`${n.name}: este lugar se construirá pronto.`)
   }
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]

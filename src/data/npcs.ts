@@ -859,6 +859,22 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b1-09-boss',
     doneLine: { text: 'With this... I can go back.', es: 'Con esto... puedo volver.' },
   },
+  // ── B1-11 · The First Journey (recuerdo 11, data/b1ClockRoom.ts): el cuaderno (NotebookIcon), el muro de recortes (TabletIcon) y el reloj (ToolboxIcon) ──
+  'b1-11-notebook': {
+    name: 'El cuaderno de L',
+    look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
+    doneLine: { text: 'But the clock was warm.', es: 'Pero el reloj estaba tibio.' },
+  },
+  'b1-11-wall': {
+    name: 'El muro de recortes',
+    look: { shirt: '#d8d2c2', hair: '#55606e', skin: '#e8e2d2' },
+    doneLine: { text: 'If only I had known.', es: 'Si tan solo lo hubiera sabido.' },
+  },
+  'b1-11-clock': {
+    name: 'El reloj',
+    look: { shirt: '#b08a5a', hair: '#8a6a40', skin: '#c9a06a' },
+    doneLine: { text: 'The room fades to white.', es: 'El cuarto se desvanece en blanco.' },
+  },
   'b1-07-tv': {
     name: 'La televisión',
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
