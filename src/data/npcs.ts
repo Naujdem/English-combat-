@@ -1318,6 +1318,23 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#4a6a6a', hair: '#d0d0d4', skin: '#c49a78', gender: 'female' },
     doneLine: { text: '...', es: '...' },
   },
+  // ── B1-13 · bloque D: la ventana del aula (se dibuja solo el tile W), la banca con la hoja (NotebookIcon)
+  // y el estudiante nuevo (se dibuja con el aspecto del jugador: screens/Explore.tsx; sin nombre propio) ──
+  'b1-13-window': {
+    name: 'La ventana del aula',
+    look: { shirt: '#f2d98a', hair: '#55606e', skin: '#f2d98a' },
+    doneLine: { text: 'Be brave. Use your voice.', es: 'Sean valientes. Usen su voz.' },
+  },
+  'b1-13-bench': {
+    name: 'La banca',
+    look: { shirt: '#efe6d2', hair: '#8a5a32', skin: '#efe6d2' },
+    doneLine: { text: 'The wind takes the paper.', es: 'El viento se lleva la hoja.' },
+  },
+  'b1-13-student': {
+    name: 'Un estudiante nuevo',
+    look: { shirt: '#4a6fa8', hair: '#3a2a1a', skin: '#c68e6a' },
+    doneLine: { text: '...', es: '...' },
+  },
   'b1-13-camp-clock': {
     name: 'El reloj',
     look: { shirt: '#8a8f96', hair: '#55606e', skin: '#a8adb4' },

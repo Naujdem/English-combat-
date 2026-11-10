@@ -1,5 +1,7 @@
 import type { GameState, SceneDef, Zone } from '../game/types'
 import type { InscriptionRoom } from '../game/inscriptions'
+import { closeId } from './b1World'
+import { B1_13_DONE_TEXT } from './b1SchoolMorning'
 
 /**
  * B1-13 — The Price. Bloque A: el Temple of Echoes (escena b1-13-echoes; es recuerdo por el prefijo "b1-13-").
@@ -129,6 +131,6 @@ export const B1_13_ECHOES: SceneDef = {
   ],
   intro: {
     first: 'Many years later. L is very old. — Muchos años después. L es muy viejo.',
-    later: () => 'Many years later. L is very old. — Muchos años después. L es muy viejo.',
+    later: (s) => (s.opened.includes(closeId(13)) ? B1_13_DONE_TEXT : 'Many years later. L is very old. — Muchos años después. L es muy viejo.'),
   },
 }

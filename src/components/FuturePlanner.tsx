@@ -14,8 +14,13 @@ import { mixed } from '../game/mix'
  * Más vocabulario de reservas (single / return, platform, delayed). Un error no quita vida.
  * onClose(true, perfect): perfect = 0 o 1 errores en total (escudo).
  */
-type Status = 'BOOKED' | 'PLAN' | 'CANCELLED' | 'DELAYED'
-type Row = { who: string; to: string; time: string; status: Status }
+type Row = { who: string; to: string; time: string; status: string }
+
+/**
+ * Contenido opcional (B1-13: el plan de L). Sin `content`, el Future Planner es exactamente el de A2.
+ * colors: color por texto de estado · finish: frase final en lugar de "Todos los viajeros tienen un plan."
+ */
+export type FuturePlannerContent = { title: string; intro: string; headers: [string, string, string, string]; rows: Row[]; rounds: Round[]; colors?: Record<string, string>; finish?: string }
 
 const START: Row[] = [
   { who: 'Mrs. Kim', to: 'Lake Town', time: '10:15', status: 'BOOKED' },
@@ -24,7 +29,7 @@ const START: Row[] = [
   { who: 'Nadia', to: 'Old Harbor', time: '14:00', status: 'DELAYED' },
 ]
 
-type Round = {
+export type Round = {
   who: string
   /** Fila del tablero que hay que mirar */
   row: number
@@ -37,7 +42,7 @@ type Round = {
   set?: Partial<Row>
 }
 
-const ROUNDS: Round[] = [
+const A2_ROUNDS: Round[] = [
   { who: 'Mrs. Kim', row: 0, q: 'I have my ticket. I ___ for Lake Town at 10:15.', es: 'Tengo mi boleto. Salgo para Lake Town a las 10:15.', options: ['am leaving', 'leave going', 'will leaving'], answer: 0, tip: 'El tablero dice BOOKED: ya tiene boleto. Plan acordado → presente continuo (am leaving).' },
   { who: 'Mr. Okafor', row: 1, q: "We ___ visit Green Valley, but we haven't bought the tickets yet.", es: 'Vamos a visitar Green Valley, pero todavía no hemos comprado los boletos.', options: ['are going to', 'are visiting to', 'will to'], answer: 0, tip: 'El tablero dice PLAN: es una intención, sin boleto. Intención → going to.' },
   { who: 'The clerk', row: 1, q: 'Single or return?', es: '¿Ida o ida y vuelta?', options: ['A return ticket, please. We are coming back on Sunday.', 'A single ticket, please. We are coming back on Sunday.', 'A cancel ticket, please. We are coming back on Sunday.'], answer: 0, tip: 'Si vuelven, el boleto es de ida y vuelta: return.', set: { time: '12:40', status: 'BOOKED' } },
@@ -48,11 +53,13 @@ const ROUNDS: Round[] = [
   { who: 'Mrs. Kim', row: 0, q: 'Excuse me, which platform ___ my train leave from?', es: 'Disculpe, ¿de qué andén sale mi tren?', options: ['does', 'is', 'will to'], answer: 0, tip: 'Horario fijo del tren: presente simple → which platform does it leave from?' },
 ]
 
-const COLOR: Record<Status, string> = { BOOKED: '#7ee08a', PLAN: '#f2c230', CANCELLED: '#ff8a8a', DELAYED: '#ffb36b' }
+const COLOR: Record<string, string> = { BOOKED: '#7ee08a', PLAN: '#f2c230', CANCELLED: '#ff8a8a', DELAYED: '#ffb36b' }
 
-export function FuturePlanner({ name, onClose }: { name: string; onClose: (done: boolean, perfect: boolean) => void }) {
+export function FuturePlanner({ name, onClose, content }: { name: string; onClose: (done: boolean, perfect: boolean) => void; content?: FuturePlannerContent }) {
+  const ROUNDS = content?.rounds ?? A2_ROUNDS
+  const colors = content?.colors ?? COLOR
   const [i, setI] = useState(0)
-  const [rows, setRows] = useState<Row[]>(START)
+  const [rows, setRows] = useState<Row[]>(content?.rows ?? START)
   const [ok, setOk] = useState(false)
   const [tip, setTip] = useState<string | null>(null)
   const [es, setEs] = useState(false)
@@ -76,16 +83,20 @@ export function FuturePlanner({ name, onClose }: { name: string; onClose: (done:
   return (
     <Panel>
       <div className="flex items-center justify-between">
-        <p className="font-display text-lg text-gold">Future Planner · {i + 1} de {ROUNDS.length}</p>
+        <p className="font-display text-lg text-gold">{content?.title ?? 'Future Planner'} · {i + 1} de {ROUNDS.length}</p>
         <button className={btnGhost} onClick={() => onClose(false, false)}>Salir</button>
       </div>
+      {content ? (
+        <p className="mt-1 text-sm text-paper/70">{content.intro}</p>
+      ) : (
       <p className="mt-1 text-sm text-paper/70">
         {name}: ayudemos a los viajeros. Mira el tablero: <span className="font-semibold text-[#7ee08a]">BOOKED</span> = ya tiene boleto · <span className="font-semibold text-gold">PLAN</span> = solo intención · <span className="font-semibold text-[#ff8a8a]">CANCELLED</span> = hay que decidir ahora.
       </p>
+      )}
 
       <div className="mt-2 overflow-hidden rounded-xl border-2 border-[#2f7fbf] bg-[#12263a] text-[#d9f3ff]">
         <div className="grid grid-cols-[1.3fr_1.3fr_0.8fr_1.1fr] text-[12px] font-semibold">
-          {['Traveler', 'To', 'Time', 'Status'].map((h) => (
+          {(content?.headers ?? ['Traveler', 'To', 'Time', 'Status']).map((h) => (
             <div key={h} className="border-b border-[#2f7fbf]/60 px-2 py-1 text-[#7fe0ff]">{h}</div>
           ))}
           {rows.map((row, n) => {
@@ -95,7 +106,7 @@ export function FuturePlanner({ name, onClose }: { name: string; onClose: (done:
                 <div className={`border-b border-[#2f7fbf]/30 px-2 py-1 font-display text-[14px] ${hl}`}>{row.who}</div>
                 <div className={`border-b border-[#2f7fbf]/30 px-2 py-1 ${hl}`}>{row.to}</div>
                 <div className={`border-b border-[#2f7fbf]/30 px-2 py-1 ${hl}`}>{row.time}</div>
-                <div className={`border-b border-[#2f7fbf]/30 px-2 py-1 font-bold ${hl}`} style={{ color: COLOR[row.status] }}>{row.status}</div>
+                <div className={`border-b border-[#2f7fbf]/30 px-2 py-1 font-bold ${hl}`} style={{ color: colors[row.status] }}>{row.status}</div>
               </div>
             )
           })}
@@ -127,7 +138,7 @@ export function FuturePlanner({ name, onClose }: { name: string; onClose: (done:
             <p className="flex-1 text-sm text-hp">¡Bien! "{r.q.includes('___') ? r.q.replace('___', r.options[r.answer]) : r.options[r.answer]}"</p>
             <SpeakButton text={r.q.includes('___') ? r.q.replace('___', r.options[r.answer]) : r.options[r.answer]} size="sm" />
           </div>
-          {last && <p className="anim-fade-in mt-2 text-sm text-paper/80">Todos los viajeros tienen un plan.{errors <= 1 ? ' Casi sin errores: ganas un escudo.' : ''}</p>}
+          {last && <p className="anim-fade-in mt-2 text-sm text-paper/80">{content?.finish ?? 'Todos los viajeros tienen un plan.'}{errors <= 1 ? ' Casi sin errores: ganas un escudo.' : ''}</p>}
           <button
             className={`${btnPrimary} mt-3 w-full`}
             autoFocus

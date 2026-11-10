@@ -109,7 +109,7 @@ export const B1_01_SCHOOL: SceneDef = {
 
 /** Una línea de la secuencia fija del recuerdo. who 'L' = L (narrador o hablando) · fx 'alarm' = suena la alarma */
 /** 'board' (B1-05): una nota de pizarra dentro de la secuencia (vocabulario), sin voz */
-export type ScriptLine = { who: 'L' | 'friend' | 'narrator' | 'board'; text: string; es: string; fx?: 'alarm' }
+export type ScriptLine = { who: 'L' | 'friend' | 'narrator' | 'board'; text: string; es: string; fx?: 'alarm' | 'stranger' }
 
 /** 1–4: antes de la alarma (L habla con su voz normal) */
 export const ACCIDENT_TALK: ScriptLine[] = [

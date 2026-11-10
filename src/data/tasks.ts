@@ -32,6 +32,9 @@ import { B1_12_PHOTOS_MEMORY, B1_12_WELCOME_SCRIPT } from './b1HostHouse'
 import { B1_12_CN_IDS, B1_12_EMPATHY_IDS, B1_12_FC_IDS, B1_12_MEMORY_IDS, B1_12_RELATIONSHIPS_IDS, B1_12_VERBS_IDS } from './questions-b1-12'
 import { B1_13_KEEPER_A_IDS, B1_13_KEEPER_F_IDS, B1_13_NOTEBOOK2_IDS, B1_13_NOTEBOOK_IDS, B1_13_PAGE63_IDS, B1_13_WALL_IDS } from './questions-b1-13'
 import { B1_13_DECISION_SCRIPT, B1_13_JOURNAL_SCRIPT } from './b1TempleCamp'
+import { B1_13_PLANNER_CONTENT, B1_13_WINDOW_SCRIPT } from './b1Window2056'
+import { B1_13_CLOSE_SCRIPT } from './b1SchoolMorning'
+import type { FuturePlannerContent } from '../components/FuturePlanner'
 import { B1_13_KEEPER_INTRO_SCRIPT, B1_13_KEEPER_PRICE, B1_13_RIDDLE_A, B1_13_RIDDLE_F } from './b1EchoHall'
 import { B1_13_PRICE_ROOM } from './b1TempleEchoes'
 import { B1_12_GIFT_SCRIPT } from './b1HostGarden'
@@ -121,6 +124,8 @@ export type NpcTask = {
     | TextCommandRoom
   /** Para activity 'inscriptions' (B1, templos): una sala de tablillas (game/inscriptions.ts). Sin reiniciar ninguna tablilla, escudo */
   inscriptions?: InscriptionRoom
+  /** activity 'futureplan': contenido propio del Future Planner (sin él, el de A2) */
+  planner?: FuturePlannerContent
   /** Para activity 'reconstruct' (Reconstruct the Story): contrastar pistas con una nota corrompida y elegir la frase verdadera */
   reconstruct?: { title: string; intro: { en: string; es: string }; items: ReconstructItem[] }
   /** Para activity 'debate' (Dialogue Under Pressure, versión de debate): turnos con respuesta buena / neutral / mala y tres desenlaces */
@@ -6267,4 +6272,44 @@ NPC_TASKS['b1-13-decision'] = {
   coins: 10,
   steps: [],
   reward: { text: 'Light, and then a window.', es: 'Luz, y luego una ventana.', sub: 'L tomó su decisión. Lo que sigue llega en el próximo bloque.', say: 'Light, and then a window.' },
+}
+
+// ── B1-13 · bloque D: la ventana de 2056 (data/b1Window2056.ts) y Greenfield School a la mañana siguiente (data/b1SchoolMorning.ts) ──
+// La ventana iluminada del aula (secuencia fija, MemoryScript)
+NPC_TASKS['b1-13-window-view'] = {
+  npc: 'b1-13-window',
+  done: 'b1-13-window-view',
+  activity: 'script',
+  script: B1_13_WINDOW_SCRIPT,
+  coins: 0,
+  steps: [],
+  reward: { text: 'A moment of silence.', es: 'Un momento de silencio.', sub: 'Miraste el aula. La banca del patio tiene una hoja de papel.', say: 'Be brave.' },
+}
+
+// La banca con la hoja: el Future Planner con el plan de L (contenido propio, 8 rondas)
+NPC_TASKS['b1-13-planner'] = {
+  npc: 'b1-13-bench',
+  done: 'b1-13-planner',
+  activity: 'futureplan',
+  planner: B1_13_PLANNER_CONTENT,
+  requires: { id: 'b1-13-window-view', text: 'A paper on the bench.', es: 'Una hoja de papel en la banca.', sub: 'Primero mira por la ventana del aula.' },
+  coins: 10,
+  steps: [],
+  reward: { text: 'The wind takes the paper.', es: 'El viento se lleva la hoja.', sub: 'Escribiste tu plan. La puerta de la derecha lleva a la escuela.', say: 'This time, I am going to win.' },
+}
+
+// ── B1-13 · cierre: el estudiante nuevo (aspecto del jugador). done = closeId(13) = 'b1-13-close': se sale del recuerdo
+// con fundido a negro, se vuelve al mapa y se abre el nodo 14 (sin FragmentJoin, como el 11 → 12) ──
+NPC_TASKS['b1-13-close'] = {
+  npc: 'b1-13-student',
+  done: 'b1-13-close',
+  activity: 'script',
+  script: B1_13_CLOSE_SCRIPT,
+  requires: { id: 'b1-13-planner', text: 'A new student.', es: 'Un estudiante nuevo.', sub: 'Primero escribe tu plan.' },
+  recover: ['achievement-b1', 'price-b1', 'future-plans-b1', 'although-unless-b1'],
+  coins: 20,
+  exitMemory: 13,
+  closeMemory: true,
+  steps: [],
+  reward: { text: 'Memory 13: The Price', es: 'Recuerdo 13: El precio', sub: 'Recuperaste los temas de la misión. Se abrió la misión 14.', say: 'What a nice voice you have.' },
 }

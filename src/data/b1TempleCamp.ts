@@ -1,5 +1,7 @@
 import type { ScriptLine } from './b1Accident'
 import type { GameState, SceneDef, Zone } from '../game/types'
+import { closeId } from './b1World'
+import { B1_13_DONE_TEXT } from './b1SchoolMorning'
 
 /**
  * B1-13 — The Price. Bloque C: fuera del templo (escena b1-13-camp; es recuerdo por el prefijo "b1-13-").
@@ -7,7 +9,7 @@ import type { GameState, SceneDef, Zone } from '../game/types'
  * (data/b1EchoHall.ts) después de la revelación del precio ('b1-13-keeper-done').
  *   La página 63 (b1-13-page63: tema 'although-unless-b1' + b1-13-u1…u8) → el diario de L (b1-13-journal, script)
  *   → la mujer junto al fuego (b1-13-woman-talk, debate de 3 turnos) → el reloj (b1-13-decision, script)
- *   → la puerta derecha: "Próximamente" (bloque 13-D). Ningún bloque C guarda closeId(13).
+ *   → la puerta derecha: la ventana de 2056 (bloque 13-D, data/b1Window2056.ts). Ningún bloque C guarda closeId(13).
  * La mujer no tiene nombre ("A woman") y se ve con la cara borrosa (filtro de recuerdo).
  */
 export const B1_13_CAMP_ID = 'b1-13-camp'
@@ -38,7 +40,6 @@ export const B1_13_DECISION_SCRIPT: ScriptLine[] = [
 ]
 
 const NOT_YET = { text: 'Todavía no.', sub: 'Todavía no has tomado tu decisión.' }
-const SOON = { text: 'Próximamente: la ventana de 2056 (bloque 13-D)', sub: 'Esta parte llega en el siguiente bloque.' }
 const FIRE = { text: 'A small fire.', sub: 'Una fogata pequeña.', say: 'A small fire.' }
 
 /**
@@ -81,10 +82,10 @@ export const B1_13_CAMP: SceneDef = {
   labels: [{ text: 'Outside the temple', x: 6, y: 5 }],
   zoneAt: () => zoneAt(),
   examine: { '5,2': FIRE },
-  // La puerta derecha: cerrada hasta la decisión; después, "Próximamente" (bloque 13-D)
-  locked: (x, y, s) => (x === 11 && y === 3 ? (s.opened.includes(B1_13_DECISION) ? SOON : NOT_YET) : null),
+  // La puerta derecha: cerrada hasta la decisión; después lleva a la ventana de 2056 (bloque 13-D, data/b1Window2056.ts)
+  locked: (x, y, s) => (x === 11 && y === 3 && !s.opened.includes(B1_13_DECISION) ? NOT_YET : null),
   // La puerta de la izquierda vuelve a la sala del Keeper
-  links: { '0,3': { sceneId: 'b1-13-hall', pos: { x: 10, y: 3 } } },
+  links: { '0,3': { sceneId: 'b1-13-hall', pos: { x: 10, y: 3 } }, '11,3': { sceneId: 'b1-13-window', pos: { x: 1, y: 3 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'El cuaderno de L: página 63', done: s.opened.includes(B1_13_PAGE63) },
@@ -94,6 +95,6 @@ export const B1_13_CAMP: SceneDef = {
   ],
   intro: {
     first: 'Outside the temple, the night is cold. — Fuera del templo, la noche es fría.',
-    later: () => 'Outside the temple, the night is cold. — Fuera del templo, la noche es fría.',
+    later: (s) => (s.opened.includes(closeId(13)) ? B1_13_DONE_TEXT : 'Outside the temple, the night is cold. — Fuera del templo, la noche es fría.'),
   },
 }

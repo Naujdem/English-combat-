@@ -590,4 +590,54 @@ export const B1_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B1-13 · The Price (recuerdo 13). Se abre al cerrar la misión (closeId(13)). Con página del Diario de L
+  {
+    id: 'b1-mission-13',
+    title: 'Misión 13: The Price',
+    unlock: closeId(13),
+    words: [
+      { title: 'Precio y culpa', words: [['cost', 'costo'], ['price', 'precio'], ['blame', 'culpa'], ['revenge', 'venganza'], ['unfair', 'injusto']] },
+      { title: 'Logros', words: [['achieve', 'lograr'], ['succeed', 'tener éxito'], ['fail', 'fracasar'], ['give up', 'rendirse'], ['make it', 'lograrlo']] },
+      { title: 'Conectores', words: [['although', 'aunque'], ['unless', 'a menos que'], ['in case', 'por si acaso']] },
+    ],
+    versions: [
+      {
+        id: 'b1-mission-13-l',
+        kind: 'L',
+        tense: 'f',
+        tab: 'Diario de L',
+        title: 'This time tomorrow',
+        unlock: closeId(13),
+        frame: 'Una página de L, escrita junto a una ventana de 2056.',
+        lines: [
+          { en: 'The device [does not create]n a voice. It [takes]n one.', es: 'El aparato no crea una voz. Toma una.' },
+          { en: 'Unless I [take]n his voice, I [will never speak]f again.', es: 'A menos que le quite la voz, nunca volveré a hablar.' },
+          { en: 'I [will take]f the clock in case something goes wrong.', es: 'Llevaré el reloj por si algo sale mal.' },
+          { en: 'This time tomorrow, I [will be taking]f back what I lost.', es: 'Mañana a esta hora estaré recuperando lo que perdí.' },
+        ],
+        questions: [
+          { q: 'What does the device take?', options: ['A voice.', 'A clock.', 'A door.'], answer: 0, tip: 'La página dice: "It takes one" (una voz).' },
+          { q: 'Why will L take the clock?', options: ['Because he likes it.', 'In case something goes wrong.', 'To sell it.'], answer: 1, tip: 'La página dice: "in case something goes wrong".' },
+        ],
+      },
+      {
+        id: 'b1-mission-13-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'The price',
+        unlock: closeId(13),
+        frame: 'El recuerdo entero, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'The Keeper of Echoes [said]p that the device [takes]n a voice.', es: 'El Keeper of Echoes dijo que el aparato toma una voz.' },
+          { en: 'Although L [was]p very tired, he [kept]p going.', es: 'Aunque L estaba muy cansado, siguió adelante.' },
+          { en: 'Tomorrow, L [is going to wait]f at the school.', es: 'Mañana, L va a esperar en la escuela.' },
+        ],
+        questions: [
+          { q: 'Who said that the device takes a voice?', options: ['The Keeper of Echoes.', 'The woman.', 'The teacher.'], answer: 0, tip: 'El diario dice: "The Keeper of Echoes said...".' },
+          { q: 'How was L?', options: ['Very happy.', 'Not tired at all.', 'Very tired, but he kept going.'], answer: 2, tip: 'El diario dice: "Although L was very tired, he kept going".' },
+          { q: 'Where is L going to wait?', options: ['At the temple.', 'At the school.', 'At the market.'], answer: 1, tip: 'El diario dice: "L is going to wait at the school".' },
+        ],
+      },
+    ],
+  },
 ]
