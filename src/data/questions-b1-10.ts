@@ -8,6 +8,7 @@ import type { Question } from '../game/types'
  *  - Práctica de prefer / would rather con la persona especial (tarea b1-10-prefer, tema prefer-b1): b1-10-p1…p8.
  *  - Escucha de la transmisión de Jorge (tarea b1-10-stream, tema gaming-b1): b1-10-j1…j4.
  *  - Práctica de opiniones de Jorge (tarea b1-10-opinions, tema opinions-b1): b1-10-o1…o8.
+ * Bloque C (el escenario, data/b1Stage.ts): banco compartido de los 2 espectadores corrompidos (tag b1-10-spectator): b1-10-x1…x10.
  * La posición de la respuesta correcta varía a propósito.
  */
 const C2 = 'conditional-2' as const
@@ -20,6 +21,7 @@ const GA = 'gaming-b1' as const
 const STREAM = ['b1-10-stream']
 const OP = 'opinions-b1' as const
 const OPINIONS = ['b1-10-opinions']
+const SPECTATOR = ['b1-10-spectator']
 
 /** Práctica del segundo condicional, en orden */
 export const B1_10_COND_IDS = ['b1-10-c1', 'b1-10-c2', 'b1-10-c3', 'b1-10-c4', 'b1-10-c5', 'b1-10-c6', 'b1-10-c7', 'b1-10-c8']
@@ -151,5 +153,27 @@ export const B1_10_QUESTIONS: Question[] = [
     answer: 1,
     tip: 'The main problem is the price of the food.',
     tags: OPINIONS,
+  },
+  // Bloque C · los espectadores corrompidos (banco compartido)
+  { id: 'b1-10-x1', topic: C2, kind: 'fix', prompt: 'If I would have a ticket, I would go.', options: ['If I would had a ticket, I would go.', 'If I had a ticket, I would go.', 'If I have a ticket, I would go.'], answer: 1, tip: 'If + pasado simple, would + verbo base.', tags: SPECTATOR },
+  { id: 'b1-10-x2', topic: VP, kind: 'fix', prompt: 'She enjoys to sing in the shower.', options: ['She enjoys sing in the shower.', 'She enjoys to singing in the shower.', 'She enjoys singing in the shower.'], answer: 2, tip: 'enjoy + -ing.', tags: SPECTATOR },
+  { id: 'b1-10-x3', topic: PR, kind: 'fix', prompt: 'I prefer stay home on Fridays.', options: ['I prefer to stay home on Fridays.', 'I prefer stayed home on Fridays.', 'I prefer staying home to on Fridays.'], answer: 0, tip: 'prefer + to + verbo base.', tags: SPECTATOR },
+  { id: 'b1-10-x4', topic: C2, prompt: 'If it ___ my festival, I would invite every band.', options: ['is', 'were', 'will be'], answer: 1, tip: 'If + were.', tags: SPECTATOR },
+  { id: 'b1-10-x5', topic: VP, prompt: 'We decided ___ early to get a good place.', options: ['arriving', 'arrive', 'to arrive'], answer: 2, tip: 'decide + to + verbo base.', tags: SPECTATOR },
+  { id: 'b1-10-x6', topic: OP, kind: 'order', prompt: 'El principal problema es el precio.', options: ['The', 'main', 'problem', 'is', 'the', 'price.'], answer: 0, tip: 'The main problem is…', tags: SPECTATOR },
+  { id: 'b1-10-x7', topic: PR, prompt: "I'd rather ___ than wait in line.", options: ['to dance', 'dance', 'dancing'], answer: 1, tip: 'would rather + verbo base.', tags: SPECTATOR },
+  { id: 'b1-10-x8', topic: OP, kind: 'fix', prompt: 'The worst part it is the noise.', options: ['The worst part is the noise.', 'The worst part it the noise.', 'The worst part are the noise.'], answer: 0, tip: 'The worst part is…', tags: SPECTATOR },
+  { id: 'b1-10-x9', topic: C2, prompt: 'What ___ you do if you met the DJ?', options: ['will', 'did', 'would'], answer: 2, tip: 'Pregunta: What would you do if…?', tags: SPECTATOR },
+  {
+    id: 'b1-10-x10',
+    topic: OP,
+    kind: 'listen',
+    audio: "If I were the organizer, I would add more stages. I'd rather listen to live music than watch videos. The best thing about the festival is the crowd.",
+    voice: 'male',
+    prompt: '¿Qué es lo mejor del festival?',
+    options: ['Las pantallas.', 'La multitud.', 'La comida.'],
+    answer: 1,
+    tip: 'The best thing about the festival is the crowd.',
+    tags: SPECTATOR,
   },
 ]

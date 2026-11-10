@@ -36,6 +36,8 @@ import { B1_06_WHICH_DOG } from './b1Kennels'
 import type { WhichDogRound } from '../components/WhichDog'
 import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
 import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS, B1_07_PRACTICE4_IDS } from './questions-b1-07'
+import type { MusicContent } from '../components/MusicChallenge'
+import { B1_10_SONG } from './b1Stage'
 import { B1_10_COND_IDS, B1_10_OPINIONS_IDS, B1_10_PREFER_IDS, B1_10_QUEUE_IDS, B1_10_STREAM_IDS } from './questions-b1-10'
 import { B1_09_CULTURE_IDS, B1_09_JOURNEY_IDS, B1_09_TIME_IDS } from './questions-b1-09'
 import { B1_09_CLOCK_ROOM, B1_09_CLOSE_SCRIPT } from './b1TempleTime'
@@ -69,7 +71,9 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog'
+  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music'
+  /** Para activity 'music' (Music Challenge, B1-10): la canción con huecos (components/MusicChallenge.tsx) */
+  music?: MusicContent
   /** Para activity 'whichdog' (Which Dog?, B1-06): las peticiones de Nayi, en orden */
   whichdog?: WhichDogRound[]
   /** Para activity 'fineprint' (The Fine Print, B1-04): las cláusulas del contrato que se sellan. Sin errores, escudo */
@@ -5659,5 +5663,27 @@ NPC_TASKS['b1-10-debate'] = {
     text: 'Great debate!',
     es: '¡Gran debate!',
     sub: 'Ganaste 5 monedas. Próximamente: el escenario del festival (bloque 10-C).',
+  },
+}
+
+// ── B1-10 · Festival Night, bloque C (el escenario principal; escena en data/b1Stage.ts). NO guarda closeId(10) ──
+// Liceth junto al micrófono: lo que dice el narrador (lessonSteps) y luego el Music Challenge "Lights Over Lumen Bay".
+// 'conditional-2' ya está aprendido: solo práctica. 5 monedas. Al terminar aparecen los 2 espectadores corrompidos
+NPC_TASKS['b1-10-music'] = {
+  npc: 'b1-10-liceth-stage',
+  done: 'b1-10-music',
+  lessonSteps: [
+    { who: 'narrator', text: 'Liceth: The festival song has lost its words! The crowd is waiting.', es: 'Liceth: ¡La canción del festival perdió su letra! El público espera.' },
+    { who: 'narrator', text: 'Liceth: Listen to the beat and choose the right words. You can do it!', es: 'Liceth: Escucha el ritmo y elige las palabras correctas. ¡Tú puedes!' },
+  ],
+  activity: 'music',
+  music: B1_10_SONG,
+  coins: 5,
+  steps: [],
+  reward: {
+    text: '(The crowd sings with you. Then, some spectators start to shout...)',
+    es: '(El público canta contigo. Luego, algunos espectadores empiezan a gritar...)',
+    sub: 'Ganaste 5 monedas. Ayuda a los espectadores corrompidos.',
+    say: 'The crowd sings with you. Then, some spectators start to shout.',
   },
 }

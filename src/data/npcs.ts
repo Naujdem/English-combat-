@@ -1083,6 +1083,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     interest: true,
     doneLine: { text: 'Do you prefer watching the band or playing games?', es: '¿Prefieres ver a la banda o jugar?' },
   },
+  // ── B1-10 · bloque C (el escenario principal, data/b1Stage.ts) ──
+  // Liceth junto al micrófono (mismo aspecto de 10-A): Music Challenge (tarea b1-10-music)
+  'b1-10-liceth-stage': {
+    name: 'Liceth',
+    look: { shirt: '#d4488a', hair: '#2a1c14', skin: '#d9a37a', gender: 'female' },
+    doneLine: { text: '(The crowd sings with you. Then, some spectators start to shout...)', es: '(El público canta contigo. Luego, algunos espectadores empiezan a gritar...)' },
+  },
   // Jorge, el streamer (tareas b1-10-stream → b1-10-opinions → b1-10-debate)
   'b1-10-jorge': {
     name: 'Jorge',
