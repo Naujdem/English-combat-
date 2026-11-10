@@ -30,7 +30,8 @@ import { B1_04_BANK_IDS, B1_04_PRACTICE1_IDS, B1_04_PRACTICE2_IDS } from './ques
 import { B1_REPAIR } from './b1Repair'
 import { B1_12_PHOTOS_MEMORY, B1_12_WELCOME_SCRIPT } from './b1HostHouse'
 import { B1_12_CN_IDS, B1_12_EMPATHY_IDS, B1_12_FC_IDS, B1_12_MEMORY_IDS, B1_12_RELATIONSHIPS_IDS, B1_12_VERBS_IDS } from './questions-b1-12'
-import { B1_13_KEEPER_A_IDS, B1_13_KEEPER_F_IDS, B1_13_NOTEBOOK2_IDS, B1_13_NOTEBOOK_IDS, B1_13_WALL_IDS } from './questions-b1-13'
+import { B1_13_KEEPER_A_IDS, B1_13_KEEPER_F_IDS, B1_13_NOTEBOOK2_IDS, B1_13_NOTEBOOK_IDS, B1_13_PAGE63_IDS, B1_13_WALL_IDS } from './questions-b1-13'
+import { B1_13_DECISION_SCRIPT, B1_13_JOURNAL_SCRIPT } from './b1TempleCamp'
 import { B1_13_KEEPER_INTRO_SCRIPT, B1_13_KEEPER_PRICE, B1_13_RIDDLE_A, B1_13_RIDDLE_F } from './b1EchoHall'
 import { B1_13_PRICE_ROOM } from './b1TempleEchoes'
 import { B1_12_GIFT_SCRIPT } from './b1HostGarden'
@@ -6176,4 +6177,94 @@ NPC_TASKS['b1-13-keeper-done'] = {
   coins: 15,
   steps: [],
   reward: { text: 'You must choose.', es: 'Tú debes elegir.', sub: 'El Keeper te deja pasar. La puerta del fondo muestra algo grabado: próximamente.', say: 'You must choose.' },
+}
+
+// ── B1-13 · bloque C: fuera del templo (escena en data/b1TempleCamp.ts). NO guarda closeId(13) ──
+// La página 63 sobre una roca (lección 'although-unless-b1') + práctica b1-13-u1…u8. Al terminar, el diario junto al fuego
+NPC_TASKS['b1-13-page63'] = {
+  npc: 'b1-13-page63',
+  done: 'b1-13-page63',
+  lesson: 'although-unless-b1',
+  notebookPage: 63,
+  activity: 'practice',
+  practice: 'although-unless-b1',
+  practiceIds: B1_13_PAGE63_IDS,
+  coins: 5,
+  steps: [],
+  reward: { text: 'Unless I do something...', es: 'A menos que haga algo...', sub: 'Página 63 terminada. Un diario viejo te espera junto al fuego.', say: 'Unless I do something.' },
+}
+
+// El diario viejo de L (secuencia fija, MemoryScript)
+NPC_TASKS['b1-13-journal'] = {
+  npc: 'b1-13-journal',
+  done: 'b1-13-journal',
+  activity: 'script',
+  script: B1_13_JOURNAL_SCRIPT,
+  requires: { id: 'b1-13-page63', text: 'An old journal.', es: 'Un diario viejo.', sub: 'Primero lee tu cuaderno (página 63).' },
+  coins: 0,
+  steps: [],
+  reward: { text: "I'll take the clock in case something goes wrong.", es: 'Llevaré el reloj por si algo sale mal.', sub: 'Leíste el diario de L. Una mujer te espera junto al fuego.', say: "I'll take the clock in case something goes wrong." },
+}
+
+// La mujer junto al fuego (sin nombre: "A woman"). Debate de 3 turnos, siempre termina, sin penalización;
+// las opciones son lo que L escribe en el cuaderno. Todos los desenlaces llevan a lo mismo. 5 monedas
+NPC_TASKS['b1-13-woman-talk'] = {
+  npc: 'b1-13-woman',
+  done: 'b1-13-woman-talk',
+  activity: 'debate',
+  requires: { id: 'b1-13-journal', text: 'A woman by the fire.', es: 'Una mujer junto al fuego.', sub: 'Primero lee el diario de L.' },
+  debate: {
+    title: 'By the fire',
+    name: 'A woman',
+    ask: 'Escribe tu respuesta en el cuaderno.',
+    turns: [
+      {
+        text: "L... please. Don't go back there. He was your friend.",
+        es: 'L... por favor. No vuelvas allí. Era tu amigo.',
+        options: [
+          { en: "Although he was my friend, he didn't help me.", es: 'Aunque era mi amigo, no me ayudó.', value: 'good', reply: { text: 'I know you are in pain. But this is not the way.', es: 'Sé que sientes dolor. Pero este no es el camino.' } },
+          { en: "Unless I do this, I'll never speak again.", es: 'Si no hago esto, nunca volveré a hablar.', value: 'good', reply: { text: 'There are other ways to live without a voice. I was there with you.', es: 'Hay otras formas de vivir sin voz. Yo estuve contigo.' } },
+          { en: "I don't want to talk about it.", es: 'No quiero hablar de eso.', value: 'neutral', reply: { text: "You never do. That's the problem.", es: 'Nunca quieres. Ese es el problema.' } },
+        ],
+      },
+      {
+        text: 'The clock could break. You heard the Keeper.',
+        es: 'El reloj podría romperse. Oíste al Keeper.',
+        options: [
+          { en: "I'll take the clock in case something goes wrong.", es: 'Llevaré el reloj por si algo sale mal.', value: 'good', reply: { text: 'And if it breaks? What will be left of you?', es: '¿Y si se rompe? ¿Qué quedará de ti?' } },
+          { en: 'Although it may break, I have to try.', es: 'Aunque pueda romperse, tengo que intentarlo.', value: 'good', reply: { text: 'You always say that. You never stop.', es: 'Siempre dices eso. Nunca te detienes.' } },
+          { en: "Please, don't stop me.", es: 'Por favor, no me detengas.', value: 'neutral', reply: { text: "I'm not stopping you. I'm asking you.", es: 'No te estoy deteniendo. Te lo pido.' } },
+        ],
+      },
+      {
+        text: 'If you do this, you will lose more than a voice.',
+        es: 'Si haces esto, perderás más que una voz.',
+        options: [
+          { en: 'Unless someone gives me my voice back, I have nothing to lose.', es: 'A menos que alguien me devuelva la voz, no tengo nada que perder.', value: 'good', reply: { text: 'You have me. You have always had me.', es: 'Me tienes a mí. Siempre me has tenido.' } },
+          { en: "I'll write to you in case I need help.", es: 'Te escribiré por si necesito ayuda.', value: 'good', reply: { text: "Write to me. Please. Even if you don't need help.", es: 'Escríbeme. Por favor. Aunque no necesites ayuda.' } },
+          { en: '(You close the notebook without answering.)', es: '(Cierras el cuaderno sin responder.)', value: 'neutral', reply: { text: '...', es: '...' } },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: 'A woman looks at you for a long time. Then she steps aside.', es: 'Una mujer te mira mucho tiempo. Luego se aparta.' },
+      mid: { text: 'A woman looks at you for a long time. Then she steps aside.', es: 'Una mujer te mira mucho tiempo. Luego se aparta.' },
+      low: { text: 'A woman looks at you for a long time. Then she steps aside.', es: 'Una mujer te mira mucho tiempo. Luego se aparta.' },
+    },
+  },
+  coins: 5,
+  steps: [],
+  reward: { text: 'She steps aside.', es: 'Se aparta.', sub: 'La mujer no pudo detenerte. El reloj te espera junto a la salida.', say: 'She steps aside.' },
+}
+
+// El reloj de L sobre una manta: la decisión (secuencia fija, MemoryScript). La puerta derecha muestra "Próximamente" (13-D)
+NPC_TASKS['b1-13-decision'] = {
+  npc: 'b1-13-camp-clock',
+  done: 'b1-13-decision',
+  activity: 'script',
+  script: B1_13_DECISION_SCRIPT,
+  requires: { id: 'b1-13-woman-talk', text: 'The clock.', es: 'El reloj.', sub: 'Primero habla con la mujer junto al fuego.' },
+  coins: 10,
+  steps: [],
+  reward: { text: 'Light, and then a window.', es: 'Luz, y luego una ventana.', sub: 'L tomó su decisión. Lo que sigue llega en el próximo bloque.', say: 'Light, and then a window.' },
 }

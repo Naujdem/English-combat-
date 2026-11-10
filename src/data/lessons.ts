@@ -969,6 +969,14 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'notebook', text: 'Be careful: I succeeded in finding it. I managed to find it. I failed to find it.', es: 'Ojo: tuve éxito encontrándolo. Logré encontrarlo. No logré encontrarlo.' },
     { who: 'notebook', text: 'Words: cost, price, blame, revenge, unfair, regret.', es: 'Palabras: cost (costo), price (precio), blame (culpa), revenge (venganza), unfair (injusto), regret (arrepentimiento).' },
   ],
+  // B1-13 · bloque C (fuera del templo, data/b1TempleCamp.ts): Cuaderno de L, página 63
+  'although-unless-b1': [
+    { who: 'notebook', text: "Page 63. Although he was my friend, he didn't help me.", es: 'Página 63. Aunque era mi amigo, no me ayudó.' },
+    { who: 'notebook', text: 'although + clause: two ideas that contrast. Although it was late, I kept walking.', es: 'although + oración: dos ideas que contrastan. Aunque era tarde, seguí caminando.' },
+    { who: 'notebook', text: "unless = if not. Unless I take it, I'll never speak again. (= If I don't take it, ...)", es: 'unless = si no. A menos que lo tome, nunca volveré a hablar. (= Si no lo tomo, ...)' },
+    { who: 'notebook', text: "in case = because it might happen. I'll take the clock in case something goes wrong.", es: 'in case = por si acaso. Llevaré el reloj por si algo sale mal.' },
+    { who: 'notebook', text: "Careful: after unless and in case we use the present, not will. Unless you hurry, you'll miss it.", es: 'Ojo: después de unless e in case usamos el presente, no will. A menos que te apures, lo perderás.' },
+  ],
   // B1-13 · bloque B (la sala de los ecos, data/b1EchoHall.ts): Cuaderno de L, página 62
   'future-plans-b1': [
     { who: 'notebook', text: "Page 62. Tomorrow I'm going to leave this temple. This time tomorrow, I'll be traveling.", es: 'Página 62. Mañana voy a dejar este templo. Mañana a esta hora estaré viajando.' },

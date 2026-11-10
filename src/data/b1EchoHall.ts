@@ -9,7 +9,7 @@ import { B1_13_KEEPER_DONE } from './b1TempleEchoes'
  * al terminar el muro de los ecos ('b1-13-wall-ins'). El Keeper of Echoes NO pelea: es un NPC con tareas encadenadas.
  *   presentación (b1-13-keeper-intro, script) → primer acertijo (b1-13-keeper-a: B1_13_RIDDLE_A + b1-13-k1…k6)
  *   → página 62 (b1-13-notebook2: tema 'future-plans-b1' + b1-13-f1…f8) → segundo acertijo (b1-13-keeper-f: B1_13_RIDDLE_F + b1-13-k7…k12)
- *   → el precio (b1-13-keeper-done, script) → la puerta del fondo: "Próximamente" (bloque 13-C). Ningún bloque B guarda closeId(13).
+ *   → el precio (b1-13-keeper-done, script) → la puerta del fondo: fuera del templo (bloque 13-C, data/b1TempleCamp.ts). Ningún bloque B guarda closeId(13).
  */
 export const B1_13_HALL_ID = 'b1-13-hall'
 export const B1_13_KEEPER = 'b1-13-keeper'
@@ -149,7 +149,6 @@ export const B1_13_RIDDLE_F: InscriptionRoom = {
 }
 
 const NOT_YET = { text: 'Todavía no.', sub: 'El Keeper todavía no te deja pasar.' }
-const SOON = { text: 'Próximamente: la rabia de L (bloque 13-C)', sub: 'Esta parte llega en el siguiente bloque.' }
 
 /**
  * Leyenda de components/Tiles.tsx (como el Temple of Echoes): # muro con glifos · d puerta · Z sombra de estatua.
@@ -187,10 +186,10 @@ export const B1_13_HALL: SceneDef = {
   examine: {
     '1,5': { text: 'The statue repeats your steps.', sub: 'La estatua repite tus pasos.', say: 'It repeats your steps.' },
   },
-  // La puerta del fondo: cerrada hasta la revelación del precio; después, "Próximamente" (bloque 13-C)
-  locked: (x, y, s) => (x === 11 && y === 3 ? (s.opened.includes(B1_13_KEEPER_DONE) ? SOON : NOT_YET) : null),
+  // La puerta del fondo: cerrada hasta la revelación del precio; después sale al exterior del templo (bloque 13-C, data/b1TempleCamp.ts)
+  locked: (x, y, s) => (x === 11 && y === 3 && !s.opened.includes(B1_13_KEEPER_DONE) ? NOT_YET : null),
   // La puerta de la izquierda vuelve al Temple of Echoes
-  links: { '0,3': { sceneId: 'b1-13-echoes', pos: { x: 10, y: 3 } } },
+  links: { '0,3': { sceneId: 'b1-13-echoes', pos: { x: 10, y: 3 } }, '11,3': { sceneId: 'b1-13-camp', pos: { x: 1, y: 3 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'El Keeper: presentación', done: s.opened.includes(B1_13_KEEPER_INTRO) },
