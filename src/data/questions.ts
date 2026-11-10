@@ -49,6 +49,7 @@ import { B1_08_QUESTIONS } from './questions-b1-08'
 import { B1_09_QUESTIONS } from './questions-b1-09'
 import { B1_11_QUESTIONS } from './questions-b1-11'
 import { B1_10_QUESTIONS } from './questions-b1-10'
+import { B1_12_QUESTIONS } from './questions-b1-12'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -415,6 +416,7 @@ export const QUESTIONS: Question[] = [
   ...B1_07_QUESTIONS,
   ...B1_08_QUESTIONS,
   ...B1_09_QUESTIONS,
+  ...B1_12_QUESTIONS,
   ...B1_11_QUESTIONS,
   ...B1_10_QUESTIONS,
   // ── Escucha real (comprensión)
@@ -1251,6 +1253,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'wish + past perfect: un arrepentimiento sobre el pasado. Ojalá hubiera escuchado. (No escuché.)',
       'wish + would: algo que te molesta o un cambio que quieres. Ojalá escucharas.',
       'If only es más fuerte: ¡si tan solo me hubiera quedado!',
+    ],
+  },
+  'state-verbs-b1': {
+    name: 'Verbos de estado y de acción',
+    level: 'B1',
+    lesson: [
+      'Verbos de estado (sin -ing): know, like, love, want, need, believe, understand. I know her. (No: I am knowing her.)',
+      "Verbos de acción (con -ing): I'm cooking. She's talking to Einer.",
+      "Algunos cambian de sentido: I think it's great (opinión) · I'm thinking about it (lo considero). I have a cat (posesión) · I'm having dinner (acción).",
+      "taste, smell, feel: This soup tastes great (estado) · I'm tasting the soup (acción).",
     ],
   },
   'roads-b1': {

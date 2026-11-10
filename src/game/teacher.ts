@@ -45,6 +45,7 @@ import { B1_06_KENNELS, B1_06_VOLUNTEER1, B1_06_VOLUNTEER2 } from '../data/b1Ken
 import { B1_06_OFFICE } from '../data/b1EstebanOffice'
 import { B1_08_STADIUM } from '../data/b1Stadium'
 import { B1_10_FESTIVAL } from '../data/b1Festival'
+import { B1_12_HOUSE } from '../data/b1HostHouse'
 import { B1_10_TENT } from '../data/b1GamingTent'
 import { B1_10_STAGE } from '../data/b1Stage'
 import { B1_10_BOSS_DEF } from '../data/b1HeadlinerBoss'
@@ -1064,4 +1065,19 @@ export function b1Mission11(s: GameState, stage: 'room' | 'wall' | 'clock' | 'fi
   const flags = { room: [], wall: ['b1-11-notebook'], clock: ['b1-11-notebook', 'b1-11-wall'], fire: a, whatif: [...a, 'b1-11-page43'], echo: [...a, 'b1-11-page43', 'b1-11-whatif'], exit: [...a, 'b1-11-page43', 'b1-11-whatif'], roads: bb, ins: [...bb, 'b1-11-page44'], bridge: [...bb, 'b1-11-page44', 'b1-11-roads-ins'], boss: [...bb, 'b1-11-page44', 'b1-11-roads-ins'], close: [...bb, 'b1-11-page44', 'b1-11-roads-ins'] }[stage]
   const lessons = { room: [], wall: ['narrative-b1'], clock: ['narrative-b1', 'conditional-3'], fire: ['narrative-b1', 'conditional-3'], whatif: b11, echo: b11, exit: b11, roads: b11, ins: [...b11, 'wish-b1'], bridge: mine, boss: mine, close: mine }[stage]
   return { ...m, opened: add(m.opened, flags), defeated: stage === 'exit' || temple || point ? add(m.defeated, stage === 'close' ? ['b1-11-echo1', 'b1-11-echo2', 'b1-11-boss'] : ['b1-11-echo1', 'b1-11-echo2']) : m.defeated, seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
+}
+
+/**
+ * Atajos de la misión B1-12 (Old Friends, presente) para el panel del profe. Parten de "B1: abrir el nodo 12".
+ *  house: en la casa de los abuelos, frente a Jhoana · verbs: saludo hecho (frente a Maya; la lección sale de nuevo)
+ *  album: lección hecha (frente al álbum de fotos)
+ */
+export function b1Mission12(s: GameState, stage: 'house' | 'verbs' | 'album'): GameState {
+  const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8), closeId(9), closeId(10), closeId(11)])
+  const mine = ['state-verbs-b1']
+  const pos = { house: { x: 3, y: 2 }, verbs: { x: 8, y: 3 }, album: { x: 6, y: 2 } }[stage]
+  const flags = { house: [], verbs: ['b1-12-welcome'], album: ['b1-12-welcome', 'b1-12-verbs'] }[stage]
+  const lessons = { house: [], verbs: [], album: mine }[stage]
+  const base = { ...b, screen: 'explore' as const, sceneId: B1_12_HOUSE.id, pos, defeated: b.defeated.filter((d) => !d.startsWith('b1-12-')), opened: b.opened.filter((o) => !o.startsWith('b1-12-')), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
+  return { ...base, opened: add(base.opened, flags), seenLesson: add(base.seenLesson, lessons) as GameState['seenLesson'] }
 }

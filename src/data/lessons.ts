@@ -961,4 +961,13 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'notebook', text: 'wish + would: something that bothers you, or a change you want. I wish you would listen.', es: 'wish + would: algo que te molesta o un cambio que quieres. Ojalá escucharas.' },
     { who: 'notebook', text: 'If only is stronger: If only I had stayed!', es: 'If only es más fuerte: ¡si tan solo me hubiera quedado!' },
   ],
+  // B1-12 · bloque A (la casa de los abuelos, data/b1HostHouse.ts): Maya, verbos de estado y de acción
+  'state-verbs-b1': [
+    { who: 'maya', text: 'Some verbs describe a state, not an action: know, like, love, want, need, believe, understand.', es: 'Algunos verbos describen un estado, no una acción: know, like, love, want, need, believe, understand.' },
+    { who: 'maya', text: "We don't usually use state verbs in the -ing form. I know her. (Not: I am knowing her.)", es: 'Normalmente no usamos verbos de estado en -ing. Yo la conozco. (No: I am knowing her.)' },
+    { who: 'maya', text: "Action verbs can use -ing: I'm cooking. She's talking to Einer.", es: 'Los verbos de acción pueden usar -ing: estoy cocinando. Ella está hablando con Einer.' },
+    { who: 'maya', text: "Some verbs can be both, with a different meaning. I think it's great (my opinion). I'm thinking about it (I'm considering it).", es: 'Algunos verbos pueden ser ambos, con significado distinto. Pienso que es genial (mi opinión). Estoy pensando en eso (lo estoy considerando).' },
+    { who: 'maya', text: "have: I have a cat (possession). I'm having dinner (action).", es: 'have: tengo un gato (posesión). Estoy cenando (acción).' },
+    { who: 'maya', text: "taste, smell, feel work the same way. This soup tastes great. I'm tasting the soup.", es: 'taste, smell, feel funcionan igual. Esta sopa sabe genial. Estoy probando la sopa.' },
+  ],
 }

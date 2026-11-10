@@ -1194,6 +1194,31 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b1-08-boss',
     doneLine: { text: "In my country, football is the most popular sport.", es: 'En mi país, el fútbol es el deporte más popular.' },
   },
+  // ── B1-12 · Old Friends, bloque A (la casa de los abuelos, data/b1HostHouse.ts) ──
+  // La abuela Jhoana, junto al mostrador de la cocina (tarea b1-12-welcome)
+  'b1-12-jhoana': {
+    name: 'Jhoana',
+    look: { shirt: '#b0463a', hair: '#cfcfcf', skin: '#b9805c', gender: 'female' },
+    doneLine: { text: 'Jhoana: Sit down, please. Minus is asleep, but he doesn\'t mind.', es: 'Jhoana: Siéntense, por favor. Minus está dormido, pero no le importa.' },
+  },
+  // El abuelo Einer, junto a la mesa (sin tarea: repite una línea corta)
+  'b1-12-einer': {
+    name: 'Einer',
+    look: { shirt: '#6b4a2f', hair: '#d8d8d8', skin: '#c98f68', gender: 'male' },
+    doneLine: { text: 'Please, sit and eat!', es: '¡Por favor, siéntense y coman!' },
+  },
+  // Maya (mismo aspecto que b1-04-maya), de pie junto a la mesa (tarea b1-12-verbs)
+  'b1-12-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    doneLine: { text: "I think it's great.", es: 'Pienso que es genial.' },
+  },
+  // El álbum de fotos sobre la repisa (tarea b1-12-photos; se dibuja con NotebookIcon, Explore.tsx)
+  'b1-12-album': {
+    name: 'El álbum de fotos',
+    look: { shirt: '#b08a5a', hair: '#8a6a40', skin: '#c9a06a' },
+    doneLine: { text: 'So many good memories.', es: 'Tantos buenos recuerdos.' },
+  },
   // La puerta a las gradas: aparece tras la charla; cierra la misión (tarea b1-08-close). Se dibuja con NotebookIcon (Explore.tsx)
   'b1-08-return': {
     name: 'La puerta a las gradas',

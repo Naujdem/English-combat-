@@ -28,6 +28,8 @@ import type { FinePrintContent } from '../components/FinePrint'
 import { B1_04_FINE_PRINT } from './b1FinePrint'
 import { B1_04_BANK_IDS, B1_04_PRACTICE1_IDS, B1_04_PRACTICE2_IDS } from './questions-b1-04'
 import { B1_REPAIR } from './b1Repair'
+import { B1_12_PHOTOS_MEMORY, B1_12_WELCOME_SCRIPT } from './b1HostHouse'
+import { B1_12_VERBS_IDS } from './questions-b1-12'
 import { B1_05_CLOSE_SCRIPT, B1_05_JOB_ADS, B1_05_LETTER_SCRIPT, B1_05_NOTICE_SCRIPT, B1_05_PACKING } from './b1Flat'
 import { B1_05_BANK_IDS, B1_05_PRACTICE2_IDS, B1_05_PRACTICE_IDS } from './questions-b1-05'
 import { B1_06_PRACTICE_IDS } from './questions-b1-06'
@@ -5855,4 +5857,55 @@ NPC_TASKS['b1-11-close'] = {
   closeMemory: true,
   steps: [],
   reward: { text: 'Memory 11: The First Journey', es: 'Recuerdo 11: El primer viaje', sub: 'Recuperaste los temas de la misión. Se abrió la misión 12.', say: 'Some roads always meet.' },
+}
+
+// ── B1-12 · Old Friends, bloque A (la casa de los abuelos; escena en data/b1HostHouse.ts). NO guarda closeId(12) (se guarda en 12-D) ──
+// Jhoana: la bienvenida de los abuelos (secuencia fija). 5 monedas
+NPC_TASKS['b1-12-welcome'] = {
+  npc: 'b1-12-jhoana',
+  done: 'b1-12-welcome',
+  activity: 'script',
+  script: B1_12_WELCOME_SCRIPT,
+  coins: 5,
+  steps: [],
+  reward: {
+    text: "After dinner, I'll show you my city.",
+    es: 'Después de la cena, les mostraré mi ciudad.',
+    sub: 'Ganaste 5 monedas. Habla con Maya junto a la mesa.',
+  },
+}
+
+// Maya: lección 'state-verbs-b1' (ella la guía, who 'maya') + práctica b1-12-sv1…sv8
+NPC_TASKS['b1-12-verbs'] = {
+  npc: 'b1-12-maya',
+  done: 'b1-12-verbs',
+  lesson: 'state-verbs-b1',
+  activity: 'practice',
+  practice: 'state-verbs-b1',
+  practiceIds: B1_12_VERBS_IDS,
+  requires: { id: 'b1-12-welcome', text: 'The table.', es: 'La mesa.', sub: 'Primero saluda a Jhoana y a Einer.' },
+  steps: [],
+  reward: {
+    text: "I think it's great.",
+    es: 'Pienso que es genial.',
+    sub: 'Lección hecha. El álbum de fotos te espera en la repisa.',
+    say: "I think it's great.",
+  },
+}
+
+// El álbum de fotos: Memory Chest (cada lugar con su recuerdo). 10 monedas. La puerta al jardín sigue en "Próximamente" (bloque 12-B)
+NPC_TASKS['b1-12-photos'] = {
+  npc: 'b1-12-album',
+  done: 'b1-12-photos',
+  activity: 'memory',
+  memory: B1_12_PHOTOS_MEMORY,
+  coins: 10,
+  requires: { id: 'b1-12-verbs', text: 'The photo album.', es: 'El álbum de fotos.', sub: 'Primero termina la lección de Maya.' },
+  steps: [],
+  reward: {
+    text: 'So many good memories.',
+    es: 'Tantos buenos recuerdos.',
+    sub: 'El álbum está completo. El jardín te espera: próximamente.',
+    say: 'So many good memories.',
+  },
 }
