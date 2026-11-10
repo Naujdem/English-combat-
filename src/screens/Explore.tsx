@@ -1459,7 +1459,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           <Lesson
             state={state}
             steps={lesson.steps ?? lesson.topics.flatMap((t) => (LESSONS[t] ?? []).map((st) => ({ ...st, topic: t })))}
-            title={lesson.enemyId ? 'Leo te alcanza antes del combate' : lesson.task && NPC_TASKS[lesson.task]?.npc?.startsWith('b1-08-') ? 'Día de partido' : lesson.task && NPC_TASKS[lesson.task]?.notebookPage ? 'Cuaderno de L' : lesson.task && NPC_TASKS[lesson.task]?.phoneLesson ? 'Leo te escribe' : lesson.task && taskGuide(lesson.task) ? undefined : 'Leo te ayuda'}
+            title={lesson.enemyId ? 'Leo te alcanza antes del combate' : lesson.task && NPC_TASKS[lesson.task]?.npc?.startsWith('b1-08-') ? 'Día de partido' : lesson.task && NPC_TASKS[lesson.task]?.npc?.startsWith('b1-10-') ? 'Noche de festival' : lesson.task && NPC_TASKS[lesson.task]?.notebookPage ? 'Cuaderno de L' : lesson.task && NPC_TASKS[lesson.task]?.phoneLesson ? 'Leo te escribe' : lesson.task && taskGuide(lesson.task) ? undefined : 'Leo te ayuda'}
             defaultGuide={lesson.task ? taskGuide(lesson.task) : undefined}
             phone={lesson.task ? NPC_TASKS[lesson.task]?.phoneLesson : undefined}
             notebook={lesson.task ? NPC_TASKS[lesson.task]?.notebookPage : undefined}

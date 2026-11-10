@@ -1050,6 +1050,31 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#c0392b', hair: '#8a5a32', skin: '#e6b894', gender: 'female' },
     doneLine: { text: 'Ilva is the coach of Lumen Bay.', es: 'Ilva es la entrenadora de Lumen Bay.' },
   },
+  // ── B1-10 · Festival Night, bloque A (la entrada del festival, data/b1Festival.ts) ──
+  // Liceth, la organizadora del festival (tarea b1-10-welcome)
+  'b1-10-liceth': {
+    name: 'Liceth',
+    look: { shirt: '#d4488a', hair: '#2a1c14', skin: '#d9a37a', gender: 'female' },
+    doneLine: { text: 'Liceth: But you are on the list. Go in and enjoy the night!', es: 'Liceth: Pero tú estás en la lista. ¡Entra y disfruta la noche!' },
+  },
+  // La persona especial (el mismo NPC/aspecto de 8-A): segundo condicional (tarea b1-10-conditional)
+  'b1-10-special': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: 'Look at this festival! If I had a ticket for every show, I would see them all.', es: '¡Mira este festival! Si tuviera una entrada para cada show, los vería todos.' },
+  },
+  // La fila de la entrada: dos hinchas del festival conversando (la tarea b1-10-queue la tiene el primero)
+  'b1-10-queue': {
+    name: 'La fila de la entrada',
+    look: { shirt: '#3b9d5d', hair: '#3a2a1a', skin: '#e0ac69' },
+    doneLine: { text: '(The queue moves. The doors of the gaming tent are opening.)', es: '(La fila avanza. Las puertas de la carpa de videojuegos se están abriendo.)' },
+  },
+  'b1-10-queue-2': {
+    name: 'La fila de la entrada',
+    look: { shirt: '#8a5ac8', hair: '#aa6a3a', skin: '#d9a37a' },
+    doneLine: { text: 'Fan 2: We decided to stay until the end.', es: 'Hincha 2: Decidimos quedarnos hasta el final.' },
+  },
   // ── B1-08 · bloque B (las gradas, data/b1Stands.ts) ──
   // La pizarra de predicciones: se dibuja con NotebookIcon (Explore.tsx)
   'b1-08-predict-board': {

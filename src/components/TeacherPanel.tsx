@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
-import { PRESETS, b1Mission1, b1Mission2, b1Mission3, b1Mission4, b1Mission5, b1Mission6, b1Mission7, b1Mission8, b1Mission9, setTeacher, skipLessons, useTeacher } from '../game/teacher'
+import { PRESETS, b1Mission1, b1Mission2, b1Mission3, b1Mission4, b1Mission5, b1Mission6, b1Mission7, b1Mission8, b1Mission9, b1Mission10, setTeacher, skipLessons, useTeacher } from '../game/teacher'
 import { SCENES } from '../game/helpers'
 import { walkable } from './Tiles'
 import { ENEMIES } from '../data/enemies'
@@ -244,6 +244,9 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'time'))}>B1-9: Inscriptions (Temple of Time)</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'boss'))}>B1-9: jefe Keeper of Hours</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission9(s, 'close'))}>B1-9: cierre</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'liceth'))}>B1-10: Liceth</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'conditional'))}>B1-10: segundo condicional</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission10(s, 'queue'))}>B1-10: la fila (verbo + -ing / to)</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>

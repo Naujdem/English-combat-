@@ -134,6 +134,7 @@ final=final (el último partido);goalkeeper=portero, portera;stadium=estadio;atm
 score=marcador, anotar (un gol);beat=ganarle a (un equipo);win=ganar (un partido o una copa);fans=hinchas, aficionados;fan=hincha, aficionado;referee=árbitro;penalty=penalti;thrilling=emocionantísimo, apasionante;disappointing=decepcionante;commentator=comentarista;nil=cero (en un marcador);winning=ganando (win);tunnel=túnel;cheer=animar, aclamar;tournament=torneo;worse=peor (bad);
 journey=viaje, recorrido (de un lugar a otro);travel=viajar, los viajes (no se cuenta);breathtaking=impresionante;overcrowded=abarrotado, lleno de gente;exhausting=agotador;unforgettable=inolvidable;valley=valle;waterfall=cascada;jungle=selva;cliff=acantilado;cave=cueva;tradition=tradición;custom=costumbre;respect=respeto, respetar;bow=inclinarse (en señal de respeto);
 ruins=ruinas;inscription=inscripción;inscriptions=inscripciones;sacred=sagrado;glyph=glifo;glyphs=glifos;guardian=guardián;pedestal=pedestal;thousand=mil;centuries=siglos;century=siglo;gears=engranajes;gear=engranaje;obligatory=obligatorio;hum=zumbar;forgiven=perdonado (forgive);
+festival=festival;stage=escenario;concert=concierto;thirsty=sediento, con sed;line-up=cartel (de bandas);headliner=artista principal (de un festival);organizer=organizador, organizadora;avoid=evitar;
 `
 
 const BASE: Record<string, string> = Object.fromEntries(
@@ -241,6 +242,7 @@ export const PHRASAL: Record<string, string> = {
   'take apart': 'desarmar',
   'hand in': 'entregar (un trabajo)',
   'look forward to': 'tener ganas de, esperar con ilusión',
+  'sold out': 'agotado (entradas)',
 }
 
 const IRREGULAR: Record<string, string[]> = {

@@ -28,6 +28,7 @@ import { B1_02_LUMEN_ID } from '../data/b1NewCity'
 import { B1_04_RESIDENCE_ID } from '../data/b1Residence'
 import { B1_06_SHELTER_ID } from '../data/b1Shelter'
 import { B1_08_STADIUM_ID } from '../data/b1Stadium'
+import { B1_10_FESTIVAL_ID } from '../data/b1Festival'
 import { B1_05_FLAT } from '../data/b1Flat'
 import { B1_07_ROOM } from '../data/b1Room'
 import { B1_09_VALLEY } from '../data/b1Valley'
@@ -198,6 +199,8 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     // Nodo 9 (recuerdo): Temples of Stones and Time (data/b1Valley.ts). L, ya mayor, entra a un valle; al salir del recuerdo
     // se vuelve al último lugar del presente (exitMemory). Sin FragmentJoin extra: ya se animó al abrir el nodo
     if (n.num === 9) return update((s) => enterMemory(s, 9, B1_09_VALLEY.id, B1_09_VALLEY.start))
+    // Nodo 10 (presente): Festival Night, la entrada del festival de Lumen Bay (data/b1Festival.ts)
+    if (n.num === 10) return onEnter(B1_10_FESTIVAL_ID)
     setMsg(`${n.name}: este lugar se construirá pronto.`)
   }
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]

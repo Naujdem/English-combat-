@@ -277,6 +277,10 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
     case 'travel-b1':
       if (/^did\b/i.test(sentence)) return { title: 'Pregunta en pasado: Did + sujeto + verbo base?', parts: [K('Did'), '+', S('sujeto'), '+', V('verbo base'), '+', R('...?')] }
       return { title: "Pasado simple: verbo con -ed o irregular · negativa: didn't + verbo base:", parts: [S('Sujeto'), '+', V("-ed / irregular / didn't + base"), '+', R('...')] }
+    case 'conditional-2':
+      return { title: 'Segundo condicional: If + pasado simple, would + verbo base (con be: were):', parts: [K('If'), '+', S('sujeto + pasado'), '+', V('would'), '+', R('verbo base')] }
+    case 'verb-patterns':
+      return { title: 'Verbo + -ing (enjoy, finish, avoid) · verbo + to + verbo base (decide, want, hope):', parts: [S('Sujeto'), '+', V('verbo'), '+', K('-ing / to + verbo base'), '+', R('...')] }
     case 'passive-modals':
       if (/\bhave been\b/i.test(sentence)) return { title: "Deducción en el pasado: must / can't + have been + participio:", parts: [S('Sujeto'), '+', K("must / can't have been"), '+', V('participio'), '+', R('...')] }
       return { title: "Pasiva con modales: must / can't / should / could + be + participio:", parts: [S('Sujeto'), '+', K("must / can't / should / could"), '+', V('be + participio'), '+', R('...')] }

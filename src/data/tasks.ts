@@ -36,6 +36,7 @@ import { B1_06_WHICH_DOG } from './b1Kennels'
 import type { WhichDogRound } from '../components/WhichDog'
 import { B1_06_PRACTICE2_IDS, B1_06_PRACTICE3_IDS } from './questions-b1-06'
 import { B1_07_PRACTICE_IDS, B1_07_PRACTICE2_IDS, B1_07_PRACTICE3_IDS, B1_07_PRACTICE4_IDS } from './questions-b1-07'
+import { B1_10_COND_IDS, B1_10_QUEUE_IDS } from './questions-b1-10'
 import { B1_09_CULTURE_IDS, B1_09_JOURNEY_IDS, B1_09_TIME_IDS } from './questions-b1-09'
 import { B1_09_CLOCK_ROOM, B1_09_CLOSE_SCRIPT } from './b1TempleTime'
 import { B1_09_STONE_ROOM, B1_09_WALL_ROOM } from './b1TempleStones'
@@ -5485,4 +5486,59 @@ NPC_TASKS['b1-09-close'] = {
   closeMemory: true,
   steps: [],
   reward: { text: 'Memory 9: Temples of Stones and Time', es: 'Recuerdo 9: Templos de piedra y tiempo', sub: 'Recuperaste los temas de la misión. Se abrió la misión 10.', say: 'I can go back.' },
+}
+
+// ── B1-10 · Festival Night, bloque A (la entrada del festival; escena en data/b1Festival.ts). NO guarda closeId(10) ──
+// Liceth, la organizadora: diálogo corto (sin lección, sin práctica, sin monedas)
+NPC_TASKS['b1-10-welcome'] = {
+  npc: 'b1-10-liceth',
+  done: 'b1-10-welcome',
+  steps: [
+    { text: "Liceth: Welcome to the Lumen Bay Festival! I'm Liceth, the organizer.", es: 'Liceth: ¡Bienvenido al Festival de Lumen Bay! Soy Liceth, la organizadora.' },
+    { text: 'Liceth: The line-up is amazing: three stages, ten bands and a gaming tent. The tickets are sold out!', es: 'Liceth: ¡El cartel es increíble: tres escenarios, diez bandas y una carpa de videojuegos. ¡Las entradas están agotadas!' },
+    { text: 'Liceth: But you are on the list. Go in and enjoy the night!', es: 'Liceth: Pero tú estás en la lista. ¡Entra y disfruta la noche!' },
+  ],
+  reward: {
+    text: 'Go in and enjoy the night!',
+    es: '¡Entra y disfruta la noche!',
+    sub: 'Habla con la persona especial.',
+  },
+}
+
+// La persona especial: lección 'conditional-2' (ella la guía, who 'special') + práctica b1-10-c1…c8
+NPC_TASKS['b1-10-conditional'] = {
+  npc: 'b1-10-special',
+  done: 'b1-10-conditional',
+  lesson: 'conditional-2',
+  activity: 'practice',
+  practice: 'conditional-2',
+  practiceIds: B1_10_COND_IDS,
+  requires: { id: 'b1-10-welcome', text: 'Not yet.', es: 'Todavía no.', sub: 'Primero habla con Liceth en la entrada.' },
+  steps: [],
+  reward: {
+    text: 'If I had a ticket for every show, I would see them all.',
+    es: 'Si tuviera una entrada para cada show, los vería todos.',
+    sub: 'Lección y práctica hechas. Ve a la fila de la entrada.',
+    say: 'If I had a ticket for every show, I would see them all.',
+  },
+}
+
+// La fila de la entrada: lección 'verb-patterns' (dos hinchas conversando + pizarra) + práctica b1-10-v1…v8. 5 monedas.
+// Al terminar, la puerta de la carpa muestra "Próximamente: la carpa de videojuegos (bloque 10-B)". Sin closeId
+NPC_TASKS['b1-10-queue'] = {
+  npc: 'b1-10-queue',
+  done: 'b1-10-queue',
+  lesson: 'verb-patterns',
+  activity: 'practice',
+  practice: 'verb-patterns',
+  practiceIds: B1_10_QUEUE_IDS,
+  coins: 5,
+  requires: { id: 'b1-10-conditional', text: 'Not yet.', es: 'Todavía no.', sub: 'Primero habla con la persona especial.' },
+  steps: [],
+  reward: {
+    text: '(The queue moves. The doors of the gaming tent are opening.)',
+    es: '(La fila avanza. Las puertas de la carpa de videojuegos se están abriendo.)',
+    sub: 'Ganaste 5 monedas. Próximamente: la carpa de videojuegos (bloque 10-B).',
+    say: 'The queue moves. The doors of the gaming tent are opening.',
+  },
 }
