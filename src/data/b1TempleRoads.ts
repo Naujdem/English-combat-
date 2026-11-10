@@ -1,3 +1,5 @@
+import { B1_11_DONE_TEXT } from './b1FixedPoint'
+import { closeId } from './b1World'
 import type { GameState, SceneDef, Zone } from '../game/types'
 import type { InscriptionRoom } from '../game/inscriptions'
 
@@ -83,7 +85,6 @@ export const B1_11_BRIDGE_ROOM: InscriptionRoom = {
   finish: { en: 'Some roads always meet. I wish I had known.', es: 'Algunos caminos siempre se encuentran. Ojalá lo hubiera sabido.', banner: 'El puente está completo' },
 }
 
-const SOON = { text: 'Próximamente: The Fixed Point (bloque 11-D)', sub: 'Esta parte llega en el siguiente bloque.' }
 const BROKEN = { text: 'The bridge is broken.', sub: 'Reconstruye el puente con las inscripciones.' }
 const GAP = { text: 'A deep gap.', sub: 'Un abismo profundo.', say: 'A deep gap.' }
 
@@ -128,15 +129,15 @@ export const B1_11_ROADS: SceneDef = {
     '6,4': GAP,
     '7,4': GAP,
   },
-  // El puente: cerrado hasta terminar las inscripciones. La puerta pesada del fondo: "Próximamente" (bloque 11-D, sin link)
+  // El puente: cerrado hasta terminar las inscripciones (la puerta del fondo solo se alcanza cruzándolo)
   locked: (x, y, s) => {
     if (y !== 3) return null
     if (x >= 5 && x <= 7 && !s.opened.includes(B1_11_ROADS_INS)) return BROKEN
-    if (x === 11) return SOON
     return null
   },
   // La puerta de la izquierda vuelve al cuarto de L
-  links: { '0,3': { sceneId: 'b1-11-room', pos: { x: 10, y: 3 } } },
+  // La puerta pesada del fondo (11,3) lleva a la cámara de The Fixed Point (bloque 11-D, data/b1FixedPoint.ts)
+  links: { '0,3': { sceneId: 'b1-11-room', pos: { x: 10, y: 3 } }, '11,3': { sceneId: 'b1-11-point', pos: { x: 1, y: 3 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'El cuaderno de L: página 44', done: s.opened.includes(B1_11_PAGE44) },
@@ -145,6 +146,6 @@ export const B1_11_ROADS: SceneDef = {
   ],
   intro: {
     first: 'The Temple of Roads. Every road ends here. — El Templo de los Caminos. Todos los caminos terminan aquí.',
-    later: () => 'The Temple of Roads. Every road ends here. — El Templo de los Caminos. Todos los caminos terminan aquí.',
+    later: (s) => (s.opened.includes(closeId(11)) ? B1_11_DONE_TEXT : 'The Temple of Roads. Every road ends here. — El Templo de los Caminos. Todos los caminos terminan aquí.'),
   },
 }

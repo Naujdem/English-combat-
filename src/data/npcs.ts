@@ -909,6 +909,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#8a8f96', hair: '#55606e', skin: '#a8adb4' },
     doneLine: { text: 'Some roads always meet.', es: 'Algunos caminos siempre se encuentran.' },
   },
+  // B1-11 · bloque D: la piedra de la cámara (al vencer a The Fixed Point; ToolboxIcon). Su tarea es el cierre closeId(11)
+  'b1-11-stone': {
+    name: 'La piedra',
+    look: { shirt: '#8a8f96', hair: '#55606e', skin: '#a8adb4' },
+    after: 'b1-11-boss',
+    doneLine: { text: 'Some roads always meet.', es: 'Algunos caminos siempre se encuentran.' },
+  },
   'b1-07-tv': {
     name: 'La televisión',
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },

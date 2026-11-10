@@ -44,6 +44,7 @@ import { B1_09_CULTURE_IDS, B1_09_JOURNEY_IDS, B1_09_TIME_IDS } from './question
 import { B1_09_CLOCK_ROOM, B1_09_CLOSE_SCRIPT } from './b1TempleTime'
 import { B1_11_NOTEBOOK_IDS, B1_11_PAGE43_IDS, B1_11_PAGE44_IDS, B1_11_ROADS_IDS, B1_11_WALL_IDS } from './questions-b1-11'
 import { B1_11_BRIDGE_ROOM } from './b1TempleRoads'
+import { B1_11_CLOSE_SCRIPT } from './b1FixedPoint'
 import { B1_11_FIRE_OUT_SCRIPT, B1_11_FRIEND_SCRIPT, B1_11_WHATIF } from './b1FireNight'
 import { B1_11_CLOCK_SCRIPT } from './b1ClockRoom'
 import { B1_09_STONE_ROOM, B1_09_WALL_ROOM } from './b1TempleStones'
@@ -5839,4 +5840,19 @@ NPC_TASKS['b1-11-roads-ins'] = {
   coins: 15,
   steps: [],
   reward: { text: 'Some roads always meet.', es: 'Algunos caminos siempre se encuentran.', sub: 'El puente se completó. La puerta pesada del fondo muestra algo grabado: próximamente.', say: 'Some roads always meet.' },
+}
+
+// ── B1-11 · bloque D: cierre (la piedra de la cámara, al vencer a The Fixed Point; escena en data/b1FixedPoint.ts).
+// done = closeId(11) = 'b1-11-close': se sale del recuerdo, se vuelve al mapa y se abre el nodo 12 (sin FragmentJoin, como el 9 → 10) ──
+NPC_TASKS['b1-11-close'] = {
+  npc: 'b1-11-stone',
+  done: 'b1-11-close',
+  activity: 'script',
+  script: B1_11_CLOSE_SCRIPT,
+  recover: ['narrative-b1', 'conditional-3', 'pastperfect-b1', 'wish-b1', 'roads-b1'],
+  coins: 20,
+  exitMemory: 11,
+  closeMemory: true,
+  steps: [],
+  reward: { text: 'Memory 11: The First Journey', es: 'Recuerdo 11: El primer viaje', sub: 'Recuperaste los temas de la misión. Se abrió la misión 12.', say: 'Some roads always meet.' },
 }

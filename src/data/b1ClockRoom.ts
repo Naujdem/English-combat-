@@ -1,3 +1,5 @@
+import { B1_11_DONE_TEXT } from './b1FixedPoint'
+import { closeId } from './b1World'
 import type { GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
 
@@ -84,6 +86,6 @@ export const B1_11_ROOM: SceneDef = {
   ],
   intro: {
     first: 'Years later, in a small dark room. — Años después, en un cuarto pequeño y oscuro.',
-    later: () => 'Years later, in a small dark room. — Años después, en un cuarto pequeño y oscuro.',
+    later: (s) => (s.opened.includes(closeId(11)) ? B1_11_DONE_TEXT : 'Years later, in a small dark room. — Años después, en un cuarto pequeño y oscuro.'),
   },
 }
