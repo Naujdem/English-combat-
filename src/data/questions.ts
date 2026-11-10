@@ -49,6 +49,7 @@ import { B1_08_QUESTIONS } from './questions-b1-08'
 import { B1_09_QUESTIONS } from './questions-b1-09'
 import { B1_11_QUESTIONS } from './questions-b1-11'
 import { B1_10_QUESTIONS } from './questions-b1-10'
+import { B1_12_QUESTIONS } from './questions-b1-12'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -415,6 +416,7 @@ export const QUESTIONS: Question[] = [
   ...B1_07_QUESTIONS,
   ...B1_08_QUESTIONS,
   ...B1_09_QUESTIONS,
+  ...B1_12_QUESTIONS,
   ...B1_11_QUESTIONS,
   ...B1_10_QUESTIONS,
   // ── Escucha real (comprensión)
@@ -1251,6 +1253,62 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'wish + past perfect: un arrepentimiento sobre el pasado. Ojalá hubiera escuchado. (No escuché.)',
       'wish + would: algo que te molesta o un cambio que quieres. Ojalá escucharas.',
       'If only es más fuerte: ¡si tan solo me hubiera quedado!',
+    ],
+  },
+  'future-continuous-b1': {
+    name: 'Future continuous',
+    level: 'B1',
+    lesson: [
+      "will be + -ing: una acción en progreso en un momento del futuro. This time next year, I'll be living in a new city.",
+      "Negativa y pregunta: I won't be working tomorrow. Will you be using the car?",
+      "Compara: I'll call you at 8 (una decisión) · I'll be waiting at 8 (en progreso a las 8).",
+    ],
+  },
+  'compound-nouns-b1': {
+    name: 'Sustantivos compuestos',
+    level: 'B1',
+    lesson: [
+      'Dos sustantivos juntos: skyscraper (una palabra), city centre, bus stop (dos palabras), a part-time job (con guion).',
+      'El primer sustantivo dice de qué tipo es y suele ir en singular: a bus stop, a car park, a shoe shop (no a shoes shop).',
+      'Palabras de ciudad: landmark (lugar emblemático), neighbourhood (vecindario), crowded (lleno de gente).',
+    ],
+  },
+  'memory-verbs-b1': {
+    name: 'Remember / forget / remind',
+    level: 'B1',
+    lesson: [
+      'remember + -ing: un recuerdo del pasado. I remember meeting you at the airport.',
+      'remember + to + verbo: no olvidar algo que debes hacer. Remember to lock the door.',
+      "forget funciona igual: I forgot to call her (no llamé). I'll never forget meeting her (tengo el recuerdo).",
+      'remind someone to do something / remind someone of something. Remind me to buy milk. This song reminds me of home.',
+    ],
+  },
+  'relationships-b1': {
+    name: 'Relaciones y personalidad',
+    level: 'B1',
+    lesson: [
+      'Personalidad: loyal (fiel), caring (cariñoso), reliable (confiable), selfish (egoísta), stubborn (terco).',
+      'Amigos: a close friend (un amigo cercano), an old friend (un viejo amigo).',
+      'get on (well) with someone: llevarse bien. fall out: pelearse. make up: hacer las paces.',
+    ],
+  },
+  'empathy-b1': {
+    name: 'Mostrar empatía',
+    level: 'B1',
+    lesson: [
+      "Mostrar que te importa: That must be hard. I'm so sorry to hear that.",
+      "Ofrecer apoyo: I'm here for you. Do you want to talk about it? Let me know if you need anything.",
+      'Preguntar y responder: How are you feeling? What happened? — Thank you for listening. It means a lot to me.',
+    ],
+  },
+  'state-verbs-b1': {
+    name: 'Verbos de estado y de acción',
+    level: 'B1',
+    lesson: [
+      'Verbos de estado (sin -ing): know, like, love, want, need, believe, understand. I know her. (No: I am knowing her.)',
+      "Verbos de acción (con -ing): I'm cooking. She's talking to Einer.",
+      "Algunos cambian de sentido: I think it's great (opinión) · I'm thinking about it (lo considero). I have a cat (posesión) · I'm having dinner (acción).",
+      "taste, smell, feel: This soup tastes great (estado) · I'm tasting the soup (acción).",
     ],
   },
   'roads-b1': {

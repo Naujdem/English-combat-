@@ -51,7 +51,9 @@ import { NotebookIcon } from '../components/LNotebook'
 import { B1_03_NOTEBOOK, B1_03_PHONE } from '../data/b1Words'
 import { B1_05_BOX, B1_05_BOXES, B1_05_ENVELOPE, B1_05_NOTEBOOK, B1_05_PAPERS } from '../data/b1Flat'
 import { B1_04_CLOSE, B1_04_FRAGMENTS, B1_04_FRIEND, B1_04_MAYA, B1_04_MAYA_BANK, B1_04_MAYA_LOBBY, B1_04_MOSCU, B1_04_RESIDENCE_ID, B1_04_RICARDO } from '../data/b1Residence'
-import { B1_04_MAYA_CHAT, B1_06_LEO_CHAT, B1_08_SPECIAL_CHAT, B1_10_LEO_CHAT } from '../data/friends'
+import { B1_04_MAYA_CHAT, B1_06_LEO_CHAT, B1_08_SPECIAL_CHAT, B1_10_LEO_CHAT, B1_12_LEO_CHAT, B1_12_MAYA_CHAT, B1_12_SPECIAL_CHAT } from '../data/friends'
+import { B1_12_GARDEN_MAYA, B1_12_LEO, B1_12_LEO_FRIEND, B1_12_LEO_LESSON, B1_12_MAYA_FRIEND, B1_12_MAYA_LESSON, B1_12_SPECIAL, B1_12_SPECIAL_FRIEND, B1_12_SPECIAL_LESSON } from '../data/b1HostGarden'
+import { B1_12_CLOSE, B1_12_FRAGMENTS, B1_12_PLAZA_ID } from '../data/b1HostPlaza'
 import { B1_10_CLOSE, B1_10_FRAGMENTS, B1_10_FRIEND, B1_10_LEO, B1_10_STAGE_ID } from '../data/b1Stage'
 import { B1_08_CLOSE, B1_08_CONCOURSE_ID, B1_08_FRAGMENTS, B1_08_FRIEND, B1_08_SPECIAL_CHAT as B1_08_SPECIAL_CHAT_NPC } from '../data/b1Concourse'
 import { B1_06_CLOSE, B1_06_FRAGMENTS, B1_06_FRIEND, B1_06_LEO, B1_06_OFFICE_ID } from '../data/b1EstebanOffice'
@@ -157,7 +159,7 @@ type Talk = {
   level?: string
   note?: string
   /** Charla especial de una misión */
-  quest?: 'lostIntro' | 'b1-02-plane' | 'b1-04-maya' | 'b1-06-leo' | 'b1-08-special' | 'b1-10-leo'
+  quest?: 'lostIntro' | 'b1-02-plane' | 'b1-04-maya' | 'b1-06-leo' | 'b1-08-special' | 'b1-10-leo' | 'b1-12-leo' | 'b1-12-maya' | 'b1-12-special'
 }
 
 export function Explore({ state, update, onBattle, onWorld }: { state: GameState; update: Update; onBattle: (enemyId: string) => void; onWorld: () => void }) {
@@ -373,6 +375,21 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           const c = B1_08_SPECIAL_CHAT
           setTalk({ friendId: 'interest', story: null, lines: [{ who: 'friend', text: c.text, es: c.es, options: c.options }], title: 'Charla casual', level: 'B1', quest: 'b1-08-special' })
           return
+        }
+        // B1-12 · Old Friends (jardín): la persona especial solo cuando las charlas de Leo y de Maya están hechas
+        if (e.id === B1_12_SPECIAL && !(state.opened.includes(B1_12_LEO_FRIEND) && state.opened.includes(B1_12_MAYA_FRIEND))) {
+          setMsg({ text: 'Talk to your friends first.', sub: 'Primero habla con tus amigos.', tone: 'warn' })
+          return
+        }
+        // B1-12: la charla de amistad de cada amigo, una sola vez, después de su lección (se guarda b1-12-X-friend)
+        {
+          const b12 = e.id === B1_12_LEO ? { lesson: B1_12_LEO_LESSON, friend: B1_12_LEO_FRIEND, chat: B1_12_LEO_CHAT, friendId: 'leo', quest: 'b1-12-leo' as const } : e.id === B1_12_GARDEN_MAYA ? { lesson: B1_12_MAYA_LESSON, friend: B1_12_MAYA_FRIEND, chat: B1_12_MAYA_CHAT, friendId: 'maya', quest: 'b1-12-maya' as const } : e.id === B1_12_SPECIAL ? { lesson: B1_12_SPECIAL_LESSON, friend: B1_12_SPECIAL_FRIEND, chat: B1_12_SPECIAL_CHAT, friendId: 'interest', quest: 'b1-12-special' as const } : null
+          if (b12 && state.opened.includes(b12.lesson) && !state.opened.includes(b12.friend)) {
+            setMsg(null)
+            const c = b12.chat
+            setTalk({ friendId: b12.friendId, story: null, lines: [{ who: 'friend', text: c.text, es: c.es, options: c.options }], title: 'Charla casual', level: 'B1', quest: b12.quest })
+            return
+          }
         }
         const pend = taskOf(e.id, [...state.opened, ...state.defeated])
         if (pend && !pend.blocked) {
@@ -792,7 +809,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === 'b1-11-alarm' || e.id === 'b1-11-exit' ? <g /> : e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS || e.id === B1_07_TV || e.id === 'b1-09-wall' || e.id === 'b1-09-time-wall' || e.id === 'b1-11-wall' || e.id === 'b1-11-roads-wall' || e.id === B1_07_CRACK || e.id === B1_07_ESCAPE_NPC ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_07_NOTEBOOK || e.id === 'b1-09-notebook' || e.id === 'b1-11-notebook' || e.id === 'b1-11-page43' || e.id === 'b1-11-page44' || e.id === B1_05_ENVELOPE || e.id === B1_06_BOARD || e.id === B1_06_DESK || e.id === 'b1-06-orders' || e.id === 'b1-08-predict-board' || e.id === 'b1-08-return' ? <NotebookIcon lit={pending} /> : B1_06_DOG_NPCS[e.id] ? <ShelterDog who={B1_06_DOG_NPCS[e.id]} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX || e.id === B1_07_DEVICE || e.id === B1_07_DEVICE_ROOM || e.id === 'b1-09-stone' || e.id === 'b1-09-clock' || e.id === 'b1-11-clock' || e.id === 'b1-11-stone' ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === 'b1-11-alarm' || e.id === 'b1-11-exit' ? <g /> : e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS || e.id === B1_07_TV || e.id === 'b1-09-wall' || e.id === 'b1-09-time-wall' || e.id === 'b1-11-wall' || e.id === 'b1-11-roads-wall' || e.id === B1_07_CRACK || e.id === B1_07_ESCAPE_NPC ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_07_NOTEBOOK || e.id === 'b1-09-notebook' || e.id === 'b1-11-notebook' || e.id === 'b1-11-page43' || e.id === 'b1-11-page44' || e.id === B1_05_ENVELOPE || e.id === B1_06_BOARD || e.id === B1_06_DESK || e.id === 'b1-06-orders' || e.id === 'b1-08-predict-board' || e.id === 'b1-08-return' || e.id === 'b1-12-album' ? <NotebookIcon lit={pending} /> : B1_06_DOG_NPCS[e.id] ? <ShelterDog who={B1_06_DOG_NPCS[e.id]} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX || e.id === B1_07_DEVICE || e.id === B1_07_DEVICE_ROOM || e.id === 'b1-09-stone' || e.id === 'b1-09-clock' || e.id === 'b1-11-clock' || e.id === 'b1-11-stone' ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -969,6 +986,19 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 })
                 if (delta < 0) setMsg({ text: `${talkFriend.name} no te entendió. La amistad bajó un poco.`, sub: 'La puerta a las gradas te espera.', tone: 'warn' })
                 else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: 'La puerta a las gradas te espera.', tone: 'good' })
+                return
+              }
+              if (t.quest === 'b1-12-leo' || t.quest === 'b1-12-maya' || t.quest === 'b1-12-special') {
+                // Charlas casuales B1 del jardín (sin respuestas malas): la amistad cambia con la regla de las charlas casuales
+                const fid = t.quest === 'b1-12-leo' ? 'leo' : t.quest === 'b1-12-maya' ? 'maya' : 'interest'
+                const flag = t.quest === 'b1-12-leo' ? B1_12_LEO_FRIEND : t.quest === 'b1-12-maya' ? B1_12_MAYA_FRIEND : B1_12_SPECIAL_FRIEND
+                update((s) => {
+                  const n = applyCasual(s, fid, delta)
+                  return { ...n, opened: n.opened.includes(flag) ? n.opened : [...n.opened, flag] }
+                })
+                const next = t.quest === 'b1-12-special' ? 'Vuelve a hablarle: hay algo más.' : 'Habla con tus amigos en el jardín.'
+                if (delta < 0) setMsg({ text: `${talkFriend.name} no te entendió. La amistad bajó un poco.`, sub: next, tone: 'warn' })
+                else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: next, tone: 'good' })
                 return
               }
               if (t.quest === 'b1-10-leo') {
@@ -1285,6 +1315,18 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           memoryNumber={11}
           onDone={() => {
             update((s) => (s.opened.includes(B1_10_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B1_10_FRAGMENTS] }))
+            onWorld()
+          }}
+        />
+      )}
+      {/* B1-12 · cierre: al guardar closeId(12), dos fragmentos se juntan con el llavero (memoryOpenId(13) = closeId(12): el recuerdo 13 queda abierto) */}
+      {scene.id === B1_12_PLAZA_ID && state.opened.includes(B1_12_CLOSE) && !state.opened.includes(B1_12_FRAGMENTS) && !task && !outro && (
+        <FragmentJoin
+          state={state}
+          update={update}
+          memoryNumber={13}
+          onDone={() => {
+            update((s) => (s.opened.includes(B1_12_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B1_12_FRAGMENTS] }))
             onWorld()
           }}
         />

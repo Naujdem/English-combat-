@@ -1194,6 +1194,91 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b1-08-boss',
     doneLine: { text: "In my country, football is the most popular sport.", es: 'En mi país, el fútbol es el deporte más popular.' },
   },
+  // ── B1-12 · Old Friends, bloque A (la casa de los abuelos, data/b1HostHouse.ts) ──
+  // La abuela Jhoana, junto al mostrador de la cocina (tarea b1-12-welcome)
+  'b1-12-jhoana': {
+    name: 'Jhoana',
+    look: { shirt: '#b0463a', hair: '#cfcfcf', skin: '#b9805c', gender: 'female' },
+    doneLine: { text: 'Jhoana: Sit down, please. Minus is asleep, but he doesn\'t mind.', es: 'Jhoana: Siéntense, por favor. Minus está dormido, pero no le importa.' },
+  },
+  // El abuelo Einer, junto a la mesa (sin tarea: repite una línea corta)
+  'b1-12-einer': {
+    name: 'Einer',
+    look: { shirt: '#6b4a2f', hair: '#d8d8d8', skin: '#c98f68', gender: 'male' },
+    doneLine: { text: 'Please, sit and eat!', es: '¡Por favor, siéntense y coman!' },
+  },
+  // Maya (mismo aspecto que b1-04-maya), de pie junto a la mesa (tarea b1-12-verbs)
+  'b1-12-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    doneLine: { text: "I think it's great.", es: 'Pienso que es genial.' },
+  },
+  // El álbum de fotos sobre la repisa (tarea b1-12-photos; se dibuja con NotebookIcon, Explore.tsx)
+  'b1-12-album': {
+    name: 'El álbum de fotos',
+    look: { shirt: '#b08a5a', hair: '#8a6a40', skin: '#c9a06a' },
+    doneLine: { text: 'So many good memories.', es: 'Tantos buenos recuerdos.' },
+  },
+  // ── B1-12 · Old Friends, bloque B (el jardín, data/b1HostGarden.ts) ──
+  // Leo, junto a la banca (tarea b1-12-leo-lesson; después su charla, quest 'b1-12-leo')
+  'b1-12-leo': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    doneLine: { text: 'Remind me to say thanks.', es: 'Recuérdame dar las gracias.' },
+  },
+  // Maya, junto a la mesita (tarea b1-12-maya-lesson; después su charla, quest 'b1-12-maya')
+  'b1-12-garden-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    doneLine: { text: 'We made up.', es: 'Hicimos las paces.' },
+  },
+  // La persona especial, bajo el árbol (tareas b1-12-special-lesson y b1-12-gift; su charla, quest 'b1-12-special')
+  'b1-12-special': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: "I'm here for you.", es: 'Aquí estoy para ti.' },
+  },
+  // ── B1-12 · Old Friends, bloque C (el paseo por la ciudad, data/b1HostCity.ts) ──
+  // Einer, cerca de la entrada (tarea b1-12-fc)
+  'b1-12-city-einer': {
+    name: 'Einer',
+    look: { shirt: '#6b4a2f', hair: '#d8d8d8', skin: '#c98f68', gender: 'male' },
+    doneLine: { text: "This time next year, I'll be here.", es: 'El año que viene a esta hora, estaré aquí.' },
+  },
+  // Einer en el mirador (tareas b1-12-cn y b1-12-einer-talk)
+  'b1-12-lookout-einer': {
+    name: 'Einer',
+    look: { shirt: '#6b4a2f', hair: '#d8d8d8', skin: '#c98f68', gender: 'male' },
+    doneLine: { text: 'Old friends are a treasure.', es: 'Los viejos amigos son un tesoro.' },
+  },
+  // ── B1-12 · Old Friends, bloque D (la plaza, data/b1HostPlaza.ts) ──
+  // Leo, lejos de los demás (tarea b1-12-plaza-intro)
+  'b1-12-plaza-leo': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    doneLine: { text: "What a night! I'm so glad we're friends.", es: '¡Qué noche! Me alegra tanto que seamos amigos.' },
+  },
+  // Maya, preocupada (sin tarea: su línea corta)
+  'b1-12-plaza-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    doneLine: { text: 'Maya looks worried.', es: 'Maya se ve preocupada.' },
+  },
+  // La persona especial, triste (sin tarea: su línea corta)
+  'b1-12-plaza-special': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: 'The special person looks sad.', es: 'La persona especial se ve triste.' },
+  },
+  // Jhoana: aparece al vencer a The Rumor y cierra la misión (tarea b1-12-close)
+  'b1-12-plaza-jhoana': {
+    name: 'Jhoana',
+    look: { shirt: '#b0463a', hair: '#cfcfcf', skin: '#b9805c', gender: 'female' },
+    after: 'b1-12-boss',
+    doneLine: { text: 'You were so brave tonight.', es: 'Fuiste muy valiente esta noche.' },
+  },
   // La puerta a las gradas: aparece tras la charla; cierra la misión (tarea b1-08-close). Se dibuja con NotebookIcon (Explore.tsx)
   'b1-08-return': {
     name: 'La puerta a las gradas',

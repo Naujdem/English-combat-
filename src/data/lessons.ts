@@ -961,4 +961,50 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'notebook', text: 'wish + would: something that bothers you, or a change you want. I wish you would listen.', es: 'wish + would: algo que te molesta o un cambio que quieres. Ojalá escucharas.' },
     { who: 'notebook', text: 'If only is stronger: If only I had stayed!', es: 'If only es más fuerte: ¡si tan solo me hubiera quedado!' },
   ],
+  // B1-12 · bloque A (la casa de los abuelos, data/b1HostHouse.ts): Maya, verbos de estado y de acción
+  'state-verbs-b1': [
+    { who: 'maya', text: 'Some verbs describe a state, not an action: know, like, love, want, need, believe, understand.', es: 'Algunos verbos describen un estado, no una acción: know, like, love, want, need, believe, understand.' },
+    { who: 'maya', text: "We don't usually use state verbs in the -ing form. I know her. (Not: I am knowing her.)", es: 'Normalmente no usamos verbos de estado en -ing. Yo la conozco. (No: I am knowing her.)' },
+    { who: 'maya', text: "Action verbs can use -ing: I'm cooking. She's talking to Einer.", es: 'Los verbos de acción pueden usar -ing: estoy cocinando. Ella está hablando con Einer.' },
+    { who: 'maya', text: "Some verbs can be both, with a different meaning. I think it's great (my opinion). I'm thinking about it (I'm considering it).", es: 'Algunos verbos pueden ser ambos, con significado distinto. Pienso que es genial (mi opinión). Estoy pensando en eso (lo estoy considerando).' },
+    { who: 'maya', text: "have: I have a cat (possession). I'm having dinner (action).", es: 'have: tengo un gato (posesión). Estoy cenando (acción).' },
+    { who: 'maya', text: "taste, smell, feel work the same way. This soup tastes great. I'm tasting the soup.", es: 'taste, smell, feel funcionan igual. Esta sopa sabe genial. Estoy probando la sopa.' },
+  ],
+  // B1-12 · bloque B (el jardín, data/b1HostGarden.ts): Leo, remember / forget / remind
+  'memory-verbs-b1': [
+    { who: 'leo', text: 'Remember + -ing: a memory of the past. I remember meeting you at the airport.', es: 'remember + -ing: un recuerdo del pasado. Recuerdo haberte conocido en el aeropuerto.' },
+    { who: 'leo', text: 'Remember + to + verb: not forgetting a duty. Remember to lock the door.', es: 'remember + to + verbo: no olvidar algo que debes hacer. Recuerda cerrar la puerta con llave.' },
+    { who: 'leo', text: "Forget works the same way: I forgot to call her (I didn't call). I'll never forget meeting her (I have the memory).", es: 'forget funciona igual: olvidé llamarla (no llamé). Nunca olvidaré haberla conocido (tengo el recuerdo).' },
+    { who: 'leo', text: 'Remind: remind someone to do something, or remind someone of something. Remind me to buy milk. This song reminds me of home.', es: 'remind: recordarle a alguien que haga algo, o recordarle algo. Recuérdame comprar leche. Esta canción me recuerda a casa.' },
+  ],
+  // B1-12 · bloque B: Maya, relaciones y personalidad
+  'relationships-b1': [
+    { who: 'maya', text: 'Personality: loyal (fiel), caring (cariñoso, atento), reliable (confiable), selfish (egoísta), stubborn (terco).', es: 'Personalidad: loyal (fiel), caring (cariñoso, atento), reliable (confiable), selfish (egoísta), stubborn (terco).' },
+    { who: 'maya', text: 'Friends: a close friend (un amigo cercano), an old friend (un viejo amigo).', es: 'Amigos: a close friend (un amigo cercano), an old friend (un viejo amigo).' },
+    { who: 'maya', text: 'get on with someone: have a good relationship. I get on well with my grandmother.', es: 'get on with alguien: llevarse bien. Me llevo bien con mi abuela.' },
+    { who: 'maya', text: 'fall out (with someone): have an argument and stop being friends. We fell out last year.', es: 'fall out (con alguien): pelearse y dejar de ser amigos. Nos peleamos el año pasado.' },
+    { who: 'maya', text: 'make up: become friends again. We said sorry and made up.', es: 'make up: volver a ser amigos. Pedimos perdón y hicimos las paces.' },
+  ],
+  // B1-12 · bloque B: la persona especial, empatía
+  'empathy-b1': [
+    { who: 'special', text: "When a friend has a problem, we show that we care. That must be hard. I'm so sorry to hear that.", es: 'Cuando un amigo tiene un problema, mostramos que nos importa. Eso debe ser difícil. Lamento mucho oírlo.' },
+    { who: 'special', text: "Offer support: I'm here for you. Do you want to talk about it? Let me know if you need anything.", es: 'Ofrece apoyo: aquí estoy para ti. ¿Quieres hablar de eso? Avísame si necesitas algo.' },
+    { who: 'special', text: "Ask, don't assume: How are you feeling? What happened?", es: 'Pregunta, no supongas: ¿cómo te sientes? ¿Qué pasó?' },
+    { who: 'special', text: 'Respond: Thank you for listening. It means a lot to me.', es: 'Responde: gracias por escuchar. Significa mucho para mí.' },
+  ],
+  // B1-12 · bloque C (la ciudad, data/b1HostCity.ts): Einer, future continuous
+  'future-continuous-b1': [
+    { who: 'einer', text: "This time next year, I'll be living in a new city. This is the future continuous: will be + -ing.", es: 'El año que viene a esta hora, estaré viviendo en una ciudad nueva. Este es el future continuous: will be + -ing.' },
+    { who: 'einer', text: "It describes an action in progress at a point in the future. At 8 o'clock tonight, I'll be having dinner.", es: 'Describe una acción en progreso en un momento del futuro. Esta noche a las 8, estaré cenando.' },
+    { who: 'einer', text: "Negative and question: I won't be working tomorrow. Will you be using the car?", es: 'Negativa y pregunta: mañana no estaré trabajando. ¿Estarás usando el coche?' },
+    { who: 'einer', text: "Compare: I'll call you at 8 (a decision). I'll be waiting at 8 (in progress at 8).", es: 'Compara: te llamaré a las 8 (una decisión). Estaré esperando a las 8 (en progreso a las 8).' },
+  ],
+  // B1-12 · bloque C: Einer en el mirador, sustantivos compuestos
+  'compound-nouns-b1': [
+    { who: 'einer', text: 'A compound noun is two nouns together: sky + scraper = skyscraper.', es: 'Un sustantivo compuesto son dos sustantivos juntos: sky + scraper = skyscraper (rascacielos).' },
+    { who: 'einer', text: 'Some are one word (skyscraper), some are two words (city centre, bus stop), and some use a hyphen (a part-time job).', es: 'Algunos son una palabra (skyscraper), otros dos (city centre, bus stop) y otros llevan guion (a part-time job).' },
+    { who: 'einer', text: 'The first noun tells us what kind: a bus stop is a stop for buses; a car park is a park for cars.', es: 'El primer sustantivo dice de qué tipo es: un bus stop es una parada de autobuses; un car park es un estacionamiento de coches.' },
+    { who: 'einer', text: 'The first noun is usually singular: a shoe shop, not a shoes shop.', es: 'El primer sustantivo suele ir en singular: a shoe shop, no a shoes shop.' },
+    { who: 'einer', text: 'More city words: landmark (a famous building or place), neighbourhood (a part of a city where people live), crowded (with many people).', es: 'Más palabras de ciudad: landmark (un edificio o lugar famoso), neighbourhood (una zona de la ciudad donde vive la gente), crowded (con mucha gente).' },
+  ],
 }

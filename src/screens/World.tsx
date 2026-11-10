@@ -29,6 +29,7 @@ import { B1_04_RESIDENCE_ID } from '../data/b1Residence'
 import { B1_06_SHELTER_ID } from '../data/b1Shelter'
 import { B1_08_STADIUM_ID } from '../data/b1Stadium'
 import { B1_10_FESTIVAL_ID } from '../data/b1Festival'
+import { B1_12_HOUSE_ID } from '../data/b1HostHouse'
 import { B1_05_FLAT } from '../data/b1Flat'
 import { B1_07_ROOM } from '../data/b1Room'
 import { B1_09_VALLEY } from '../data/b1Valley'
@@ -205,6 +206,8 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     // Nodo 11 (recuerdo): The First Journey (data/b1ClockRoom.ts). L, ya mayor, en su cuarto alquilado; al salir del recuerdo
     // se vuelve al último lugar del presente (exitMemory). Sin FragmentJoin extra: ya se animó al abrir el nodo
     if (n.num === 11) return update((s) => enterMemory(s, 11, B1_11_ROOM.id, B1_11_ROOM.start))
+    // Nodo 12 (presente): Old Friends, la casa de los abuelos (data/b1HostHouse.ts)
+    if (n.num === 12) return onEnter(B1_12_HOUSE_ID)
     setMsg(`${n.name}: este lugar se construirá pronto.`)
   }
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]

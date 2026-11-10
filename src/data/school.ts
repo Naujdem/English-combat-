@@ -327,6 +327,8 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   'bufanda-lumen': { name: 'Bufanda del equipo de Lumen Bay', color: '#1f5fa8' },
   // B1-10 · Festival Night: regalo de The Headliner (jefe). Una pulsera rosada con una estrella dorada en la muñeca (Sprite.tsx, charm 'wristband'); no cambia la camiseta
   'pulsera-festival': { name: 'Pulsera del festival', color: '#d4488a' },
+  // B1-12 · Old Friends: regalo de The Rumor (jefe). Un delantal crema sobre el torso, con bolsillo y cordones (Sprite.tsx, charm 'apron'); no cambia la camiseta
+  'delantal-jhoana': { name: 'Delantal de la abuela Jhoana', color: '#c9a56a' },
   // Regalos de algunos esbirros de A2 (al liberarlos)
   'chaleco-mesero': { name: 'Chaleco de mesero (A2)', color: '#5a3a2e' },
   'overol-taller': { name: 'Overol del taller de Hale (A2)', color: '#4a5560' },

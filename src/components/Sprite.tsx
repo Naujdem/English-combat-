@@ -9,7 +9,9 @@ export type SpriteLook = {
   cape?: string
   book?: boolean
   /** B1-04: llavero de la residencia (una casita con una llave) que cuelga del cinturón */
-  charm?: 'house-key' | 'scarf' | 'wristband' | 'clock-keychain'
+  charm?: 'house-key' | 'scarf' | 'wristband' | 'clock-keychain' | 'apron'
+  /** B1-12: el llavero con forma de reloj (objeto de historia), colgando del cinturón a la izquierda; independiente del atuendo y del charm */
+  keychain?: boolean
 }
 
 /**
@@ -82,6 +84,15 @@ export function SpriteBody({ look, mood = 'normal', blur = false }: { look: Spri
           <path d="M17.8 22.6 v0.9 M18.6 22.6 v0.9 M19.4 22.6 v0.9" stroke="#e0b84a" strokeWidth="0.35" />
         </g>
       )}
+      {look.charm === 'apron' && (
+        // B1-12: el delantal de la abuela Jhoana: crema sobre el torso, con un bolsillo y los cordones (la camiseta no cambia)
+        <g aria-hidden="true">
+          <path d="M12.6 15.4 L11.2 19.6 M19.4 15.4 L20.8 19.6" stroke="#c9a56a" strokeWidth="0.45" />
+          <path d="M13 16.2 h6 v3.2 h1.2 v6.2 h-8.4 v-6.2 h1.2 Z" fill="#efe2c4" stroke="#c9a56a" strokeWidth="0.35" />
+          <path d="M10.6 19.6 h1.4 M20 19.6 h1.4" stroke="#c9a56a" strokeWidth="0.45" strokeLinecap="round" />
+          <rect x="14.2" y="21.4" width="3.6" height="2.4" rx="0.4" fill="none" stroke="#c9a56a" strokeWidth="0.35" />
+        </g>
+      )}
       {look.charm === 'wristband' && (
         // B1-10: la pulsera del festival: rosada, en la muñeca derecha, con una pequeña estrella dorada
         <g aria-hidden="true">
@@ -98,6 +109,14 @@ export function SpriteBody({ look, mood = 'normal', blur = false }: { look: Spri
           <path d="M22.9 23 v0.9" stroke="#8a6210" strokeWidth="0.35" />
           <circle cx="22.9" cy="25.1" r="1.2" fill="#e0b84a" stroke="#8a6210" strokeWidth="0.3" />
           <path d="M22.9 25.1 v-0.8 M22.9 25.1 h0.6" stroke="#2a1c14" strokeWidth="0.3" strokeLinecap="round" />
+        </g>
+      )}
+      {look.keychain && (
+        // B1-12: el llavero con forma de reloj (el mismo dibujo del charm 'clock-keychain'): dorado, con dos manecillas, al lado izquierdo del cinturón
+        <g aria-hidden="true">
+          <path d="M11.8 24.4 v1.2" stroke="#8a6210" strokeWidth="0.35" />
+          <circle cx="11.8" cy="26.8" r="1.2" fill="#e0b84a" stroke="#8a6210" strokeWidth="0.3" />
+          <path d="M11.8 26.8 v-0.8 M11.8 26.8 h0.6" stroke="#2a1c14" strokeWidth="0.3" strokeLinecap="round" />
         </g>
       )}
       {look.book && (

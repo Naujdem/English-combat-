@@ -5,7 +5,7 @@ import { B1_11_WHATIF } from '../data/b1FireNight'
 import { B1_10_SONG } from '../data/b1Stage'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
-import { PRESETS, b1Mission1, b1Mission2, b1Mission3, b1Mission4, b1Mission5, b1Mission6, b1Mission7, b1Mission8, b1Mission9, b1Mission10, b1Mission11, setTeacher, skipLessons, useTeacher } from '../game/teacher'
+import { PRESETS, b1Mission1, b1Mission2, b1Mission3, b1Mission4, b1Mission5, b1Mission6, b1Mission7, b1Mission8, b1Mission9, b1Mission10, b1Mission11, b1Mission12, setTeacher, skipLessons, useTeacher } from '../game/teacher'
 import { SCENES } from '../game/helpers'
 import { walkable } from './Tiles'
 import { ENEMIES } from '../data/enemies'
@@ -286,6 +286,20 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission11(s, 'bridge'))}>B1-11: puente listo</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission11(s, 'boss'))}>B1-11: jefe The Fixed Point</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission11(s, 'close'))}>B1-11: cierre</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'house'))}>B1-12: casa de la familia</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'verbs'))}>B1-12: lección de Maya</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'album'))}>B1-12: álbum</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'garden'))}>B1-12: jardín</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'leochat'))}>B1-12: charla con Leo</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'mayachat'))}>B1-12: charla con Maya</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'specialchat'))}>B1-12: charla con la persona especial</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'keychain'))}>B1-12: llavero</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'city'))}>B1-12: ciudad</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'lookout'))}>B1-12: mirador</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'einertalk'))}>B1-12: charla con Einer</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'plaza'))}>B1-12: plaza</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'boss'))}>B1-12: jefe The Rumor</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'close'))}>B1-12: cierre</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>
