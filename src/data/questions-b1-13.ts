@@ -15,6 +15,9 @@ const FP = 'future-plans-b1' as const
 const KEEPER_A = ['b1-13-keeper-a']
 const NOTEBOOK2 = ['b1-13-notebook2']
 const KEEPER_F = ['b1-13-keeper-f']
+/** Bloque C (fuera del templo, data/b1TempleCamp.ts): página 63 (u1…u8) */
+const AU = 'although-unless-b1' as const
+const PAGE63 = ['b1-13-page63']
 
 export const B1_13_NOTEBOOK_IDS = ['b1-13-a1', 'b1-13-a2', 'b1-13-a3', 'b1-13-a4', 'b1-13-a5', 'b1-13-a6', 'b1-13-a7', 'b1-13-a8']
 export const B1_13_WALL_IDS = ['b1-13-p1', 'b1-13-p2', 'b1-13-p3', 'b1-13-p4', 'b1-13-p5', 'b1-13-p6', 'b1-13-p7', 'b1-13-p8']
@@ -22,6 +25,7 @@ export const B1_13_WALL_IDS = ['b1-13-p1', 'b1-13-p2', 'b1-13-p3', 'b1-13-p4', '
 export const B1_13_KEEPER_A_IDS = ['b1-13-k1', 'b1-13-k2', 'b1-13-k3', 'b1-13-k4', 'b1-13-k5', 'b1-13-k6']
 export const B1_13_NOTEBOOK2_IDS = ['b1-13-f1', 'b1-13-f2', 'b1-13-f3', 'b1-13-f4', 'b1-13-f5', 'b1-13-f6', 'b1-13-f7', 'b1-13-f8']
 export const B1_13_KEEPER_F_IDS = ['b1-13-k7', 'b1-13-k8', 'b1-13-k9', 'b1-13-k10', 'b1-13-k11', 'b1-13-k12']
+export const B1_13_PAGE63_IDS = ['b1-13-u1', 'b1-13-u2', 'b1-13-u3', 'b1-13-u4', 'b1-13-u5', 'b1-13-u6', 'b1-13-u7', 'b1-13-u8']
 
 export const B1_13_QUESTIONS: Question[] = [
   // Bloque A · página 61: logro y fracaso
@@ -120,4 +124,24 @@ export const B1_13_QUESTIONS: Question[] = [
     tip: "By noon, we'll be eating at the top.",
     tags: KEEPER_F,
   },
+  // Bloque C · página 63: although, unless, in case
+  { id: 'b1-13-u1', topic: AU, kind: 'fix', prompt: 'Although it was raining, but we went out.', options: ['Although it was raining, we went out.', 'Although it raining, we went out.', 'Although was raining, we went out.'], answer: 0, tip: 'although ya contrasta: no lleva but.', tags: PAGE63 },
+  { id: 'b1-13-u2', topic: AU, kind: 'fix', prompt: "Unless you will hurry, you'll miss the train.", options: ["Unless you hurried, you'll miss the train.", "Unless you hurry, you'll miss the train.", "Unless you will to hurry, you'll miss the train."], answer: 1, tip: 'Después de unless: presente.', tags: PAGE63 },
+  { id: 'b1-13-u3', topic: AU, prompt: '___ he was tired, he kept working.', options: ['So', 'Unless', 'Although'], answer: 2, tip: 'although = aunque.', tags: PAGE63 },
+  { id: 'b1-13-u4', topic: AU, prompt: "I'll take an umbrella ___ it rains.", options: ['in case', 'in order', 'in rains'], answer: 0, tip: 'in case = por si acaso.', tags: PAGE63 },
+  { id: 'b1-13-u5', topic: AU, prompt: "You can't go in ___ you have a ticket.", options: ['although', 'unless', 'in case'], answer: 1, tip: 'unless = si no.', tags: PAGE63 },
+  { id: 'b1-13-u6', topic: AU, kind: 'order', prompt: 'A menos que lo tome, nunca volveré a hablar.', options: ['Unless', 'I', 'take', 'it,', "I'll", 'never', 'speak', 'again.'], answer: 0, tip: 'Unless + presente, will + verbo.', tags: PAGE63 },
+  {
+    id: 'b1-13-u7',
+    topic: AU,
+    kind: 'listen',
+    audio: "Although the road was dangerous, he kept walking. He took a lamp in case it got dark, and he told himself: unless I arrive tonight, I'll lose my chance.",
+    voice: 'male',
+    prompt: '¿Por qué llevó una lámpara?',
+    options: ['Por si oscurecía.', 'Porque tenía frío.', 'Porque estaba perdido.'],
+    answer: 0,
+    tip: 'He took a lamp in case it got dark.',
+    tags: PAGE63,
+  },
+  { id: 'b1-13-u8', topic: AU, kind: 'fix', prompt: "I'll take my coat in case it will be cold.", options: ["I'll take my coat in case it being cold.", "I'll take my coat in case it be cold.", "I'll take my coat in case it is cold."], answer: 2, tip: 'Después de in case: presente.', tags: PAGE63 },
 ]

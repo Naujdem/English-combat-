@@ -1276,6 +1276,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Palabras: cost (costo), price (precio), blame (culpa), revenge (venganza), unfair (injusto), regret (arrepentimiento).',
     ],
   },
+  'although-unless-b1': {
+    name: 'Although, unless, in case',
+    level: 'B1',
+    lesson: [
+      'although + oración: dos ideas que contrastan. Aunque era tarde, seguí caminando.',
+      'unless = si no. A menos que lo tome, nunca volveré a hablar.',
+      'in case = por si acaso. Llevaré el reloj por si algo sale mal.',
+      'Ojo: después de unless e in case usamos el presente, no will.',
+    ],
+  },
   'future-plans-b1': {
     name: 'Futuros para planes',
     level: 'B1',

@@ -1301,6 +1301,28 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
     doneLine: { text: "Tomorrow, I'm going to leave.", es: 'Mañana voy a irme.' },
   },
+  // ── B1-13 · bloque C (fuera del templo, data/b1TempleCamp.ts): la página 63 y el diario (NotebookIcon),
+  // la mujer junto al fuego (sin nombre, cara borrosa) y el reloj de L (ToolboxIcon, como 'b1-09-clock') ──
+  'b1-13-page63': {
+    name: 'El cuaderno de L',
+    look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
+    doneLine: { text: 'Unless I do something...', es: 'A menos que haga algo...' },
+  },
+  'b1-13-journal': {
+    name: 'Un diario viejo',
+    look: { shirt: '#8a7a5e', hair: '#4a3f30', skin: '#c8b896' },
+    doneLine: { text: "Although he was my friend, he didn't help me.", es: 'Aunque era mi amigo, no me ayudó.' },
+  },
+  'b1-13-woman': {
+    name: 'A woman',
+    look: { shirt: '#4a6a6a', hair: '#d0d0d4', skin: '#c49a78', gender: 'female' },
+    doneLine: { text: '...', es: '...' },
+  },
+  'b1-13-camp-clock': {
+    name: 'El reloj',
+    look: { shirt: '#8a8f96', hair: '#55606e', skin: '#a8adb4' },
+    doneLine: { text: 'Light, and then a window.', es: 'Luz, y luego una ventana.' },
+  },
   // La puerta a las gradas: aparece tras la charla; cierra la misión (tarea b1-08-close). Se dibuja con NotebookIcon (Explore.tsx)
   'b1-08-return': {
     name: 'La puerta a las gradas',
