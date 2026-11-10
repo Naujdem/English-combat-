@@ -1214,6 +1214,32 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'stop cambia de sentido: He stopped smoking (dejó de fumar). He stopped to buy water (paró para comprar agua).',
     ],
   },
+  'prefer-b1': {
+    name: 'Prefer / would rather',
+    level: 'B1',
+    lesson: [
+      'prefer + -ing to + -ing: I prefer watching to playing. prefer to + verbo base: I prefer to watch the band.',
+      "would rather + verbo base (sin to): I'd rather watch the band than play.",
+      "Negativa: I'd rather not go.",
+    ],
+  },
+  'gaming-b1': {
+    name: 'Videojuegos',
+    level: 'B1',
+    lesson: [
+      'graphics = gráficos · gameplay = jugabilidad · multiplayer = multijugador · level = nivel · console = consola.',
+      'The graphics are incredible, the gameplay is really smooth, and the multiplayer is so much fun.',
+    ],
+  },
+  'opinions-b1': {
+    name: 'Dar tu opinión',
+    level: 'B1',
+    lesson: [
+      'Frase nominal + is: The best thing about it is the music. The main problem is the price. The worst part is waiting.',
+      "Después de is puede ir un sustantivo, un -ing o that + frase: The best thing is playing with friends. The main problem is that it's expensive.",
+      'Énfasis: really, incredibly + adjetivo: really good, incredibly short.',
+    ],
+  },
   'passive-modals': {
     name: 'La pasiva con modales',
     level: 'B1',

@@ -135,6 +135,7 @@ score=marcador, anotar (un gol);beat=ganarle a (un equipo);win=ganar (un partido
 journey=viaje, recorrido (de un lugar a otro);travel=viajar, los viajes (no se cuenta);breathtaking=impresionante;overcrowded=abarrotado, lleno de gente;exhausting=agotador;unforgettable=inolvidable;valley=valle;waterfall=cascada;jungle=selva;cliff=acantilado;cave=cueva;tradition=tradición;custom=costumbre;respect=respeto, respetar;bow=inclinarse (en señal de respeto);
 ruins=ruinas;inscription=inscripción;inscriptions=inscripciones;sacred=sagrado;glyph=glifo;glyphs=glifos;guardian=guardián;pedestal=pedestal;thousand=mil;centuries=siglos;century=siglo;gears=engranajes;gear=engranaje;obligatory=obligatorio;hum=zumbar;forgiven=perdonado (forgive);
 festival=festival;stage=escenario;concert=concierto;thirsty=sediento, con sed;line-up=cartel (de bandas);headliner=artista principal (de un festival);organizer=organizador, organizadora;avoid=evitar;
+rather=más bien (would rather = preferiría);band=banda (de música);incredible=increíble;smooth=fluido, suave;viewer=espectador, espectadora;animations=animaciones;gameplay=jugabilidad;graphics=gráficos;level=nivel;levels=niveles;console=consola;multiplayer=multijugador;streamer=streamer (quien transmite en vivo);advantage=ventaja;disadvantage=desventaja;teamwork=trabajo en equipo;
 `
 
 const BASE: Record<string, string> = Object.fromEntries(
@@ -243,6 +244,7 @@ export const PHRASAL: Record<string, string> = {
   'hand in': 'entregar (un trabajo)',
   'look forward to': 'tener ganas de, esperar con ilusión',
   'sold out': 'agotado (entradas)',
+  'would rather': 'preferiría',
 }
 
 const IRREGULAR: Record<string, string[]> = {

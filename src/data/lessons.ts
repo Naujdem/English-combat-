@@ -906,4 +906,27 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'stop cambia de sentido: He stopped smoking (dejó de fumar). He stopped to buy water (paró para comprar agua).', topic: 'verb-patterns' },
     { who: 'board', text: 'Errores típicos: ✗ I enjoy to dance → ✓ I enjoy dancing. ✗ We decided staying → ✓ We decided to stay.', topic: 'verb-patterns' },
   ],
+  // B1-10 · bloque B (la carpa de videojuegos, data/b1GamingTent.ts): la persona especial y prefer / would rather. 'board' = la pizarra
+  'prefer-b1': [
+    { who: 'special', text: 'Do you prefer watching the band or playing games?', es: '¿Prefieres ver a la banda o jugar?' },
+    { who: 'board', text: 'prefer + -ing to + -ing: I prefer watching to playing. prefer to + verbo base: I prefer to watch the band.', topic: 'prefer-b1' },
+    { who: 'board', text: "would rather + verbo base (sin to): I'd rather watch the band than play.", topic: 'prefer-b1' },
+    { who: 'board', text: "Negativa: I'd rather not go.", topic: 'prefer-b1' },
+    { who: 'board', text: "Errores típicos: ✗ I'd rather to watch the band → ✓ I'd rather watch the band. ✗ I prefer stay home → ✓ I prefer to stay home / I prefer staying home.", topic: 'prefer-b1' },
+  ],
+  // B1-10 · bloque B: Jorge transmite en vivo (videojuegos)
+  'gaming-b1': [
+    { who: 'narrator', text: '(Jorge is streaming live. The chat moves fast.)', es: '(Jorge está transmitiendo en vivo. El chat se mueve rápido.)' },
+    { who: 'narrator', text: "Jorge: Hi everybody! Today I'm playing a new adventure game at the festival.", es: 'Jorge: ¡Hola a todos! Hoy estoy jugando un juego de aventura nuevo en el festival.' },
+    { who: 'narrator', text: 'Jorge: The graphics are incredible, the gameplay is really smooth, and the multiplayer is so much fun.', es: 'Jorge: Los gráficos son increíbles, la jugabilidad es muy fluida y el multijugador es muy divertido.' },
+    { who: 'narrator', text: 'Jorge: But the levels are incredibly short. The main problem is the price!', es: 'Jorge: Pero los niveles son increíblemente cortos. ¡El principal problema es el precio!' },
+  ],
+  // B1-10 · bloque B: Jorge enseña a opinar con frases nominales
+  'opinions-b1': [
+    { who: 'narrator', text: 'Jorge: Opinions are easy with noun phrases. Listen: The best thing about it is the music.', es: 'Jorge: Opinar es fácil con frases nominales. Escucha: Lo mejor es la música.' },
+    { who: 'board', text: 'Frase nominal + is: The best thing about it is the music. The main problem is the price. The worst part is waiting.', topic: 'opinions-b1' },
+    { who: 'board', text: "Después de is puede ir un sustantivo, un -ing o that + frase: The best thing is playing with friends. The main problem is that it's expensive.", topic: 'opinions-b1' },
+    { who: 'board', text: 'Énfasis: really, incredibly + adjetivo: really good, incredibly short.', topic: 'opinions-b1' },
+    { who: 'board', text: 'Errores típicos: ✗ The best thing about is the music → ✓ The best thing about it is the music. ✗ The main problem it is the price → ✓ The main problem is the price.', topic: 'opinions-b1' },
+  ],
 }

@@ -1075,6 +1075,20 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#8a5ac8', hair: '#aa6a3a', skin: '#d9a37a' },
     doneLine: { text: 'Fan 2: We decided to stay until the end.', es: 'Hincha 2: Decidimos quedarnos hasta el final.' },
   },
+  // ── B1-10 · bloque B (la carpa de videojuegos, data/b1GamingTent.ts) ──
+  // La persona especial (mismo NPC/aspecto): prefer / would rather (tarea b1-10-prefer)
+  'b1-10-special-tent': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: 'Do you prefer watching the band or playing games?', es: '¿Prefieres ver a la banda o jugar?' },
+  },
+  // Jorge, el streamer (tareas b1-10-stream → b1-10-opinions → b1-10-debate)
+  'b1-10-jorge': {
+    name: 'Jorge',
+    look: { shirt: '#2d3a8c', hair: '#1b1b24', skin: '#d0a77f', gender: 'male' },
+    doneLine: { text: 'Do video games teach us something?', es: '¿Los videojuegos nos enseñan algo?' },
+  },
   // ── B1-08 · bloque B (las gradas, data/b1Stands.ts) ──
   // La pizarra de predicciones: se dibuja con NotebookIcon (Explore.tsx)
   'b1-08-predict-board': {

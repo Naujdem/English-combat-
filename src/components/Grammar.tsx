@@ -277,6 +277,11 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
     case 'travel-b1':
       if (/^did\b/i.test(sentence)) return { title: 'Pregunta en pasado: Did + sujeto + verbo base?', parts: [K('Did'), '+', S('sujeto'), '+', V('verbo base'), '+', R('...?')] }
       return { title: "Pasado simple: verbo con -ed o irregular · negativa: didn't + verbo base:", parts: [S('Sujeto'), '+', V("-ed / irregular / didn't + base"), '+', R('...')] }
+    case 'prefer-b1':
+      if (/\brather\b/i.test(sentence)) return { title: "would rather + verbo base (sin to) + than:", parts: [S('Sujeto'), '+', K("would rather ('d rather)"), '+', V('verbo base'), '+', R('than ...')] }
+      return { title: 'prefer + -ing to + -ing · prefer to + verbo base:', parts: [S('Sujeto'), '+', K('prefer'), '+', V('-ing / to + verbo base'), '+', R('to ...')] }
+    case 'opinions-b1':
+      return { title: 'Opinión con frase nominal: The best thing / The main problem + is + sustantivo, -ing o that + frase:', parts: [S('The best thing / The main problem'), '+', V('is'), '+', R('sustantivo / -ing / that ...')] }
     case 'conditional-2':
       return { title: 'Segundo condicional: If + pasado simple, would + verbo base (con be: were):', parts: [K('If'), '+', S('sujeto + pasado'), '+', V('would'), '+', R('verbo base')] }
     case 'verb-patterns':
