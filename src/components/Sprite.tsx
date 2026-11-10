@@ -9,7 +9,7 @@ export type SpriteLook = {
   cape?: string
   book?: boolean
   /** B1-04: llavero de la residencia (una casita con una llave) que cuelga del cinturón */
-  charm?: 'house-key' | 'scarf' | 'wristband' | 'clock-keychain'
+  charm?: 'house-key' | 'scarf' | 'wristband' | 'clock-keychain' | 'apron'
   /** B1-12: el llavero con forma de reloj (objeto de historia), colgando del cinturón a la izquierda; independiente del atuendo y del charm */
   keychain?: boolean
 }
@@ -82,6 +82,15 @@ export function SpriteBody({ look, mood = 'normal', blur = false }: { look: Spri
           <rect x="17.4" y="17.2" width="2.4" height="5.4" rx="0.5" fill="#1f5fa8" />
           <rect x="17.4" y="20" width="2.4" height="0.7" fill="#e0b84a" />
           <path d="M17.8 22.6 v0.9 M18.6 22.6 v0.9 M19.4 22.6 v0.9" stroke="#e0b84a" strokeWidth="0.35" />
+        </g>
+      )}
+      {look.charm === 'apron' && (
+        // B1-12: el delantal de la abuela Jhoana: crema sobre el torso, con un bolsillo y los cordones (la camiseta no cambia)
+        <g aria-hidden="true">
+          <path d="M12.6 15.4 L11.2 19.6 M19.4 15.4 L20.8 19.6" stroke="#c9a56a" strokeWidth="0.45" />
+          <path d="M13 16.2 h6 v3.2 h1.2 v6.2 h-8.4 v-6.2 h1.2 Z" fill="#efe2c4" stroke="#c9a56a" strokeWidth="0.35" />
+          <path d="M10.6 19.6 h1.4 M20 19.6 h1.4" stroke="#c9a56a" strokeWidth="0.45" strokeLinecap="round" />
+          <rect x="14.2" y="21.4" width="3.6" height="2.4" rx="0.4" fill="none" stroke="#c9a56a" strokeWidth="0.35" />
         </g>
       )}
       {look.charm === 'wristband' && (

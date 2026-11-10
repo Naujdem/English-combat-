@@ -287,6 +287,8 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
     case 'wish-b1':
       if (/\bwish(es)? \w+ had\b|\bif only\b/i.test(sentence)) return { title: 'Arrepentimiento del pasado: wish / If only + had + participio:', parts: [S('Sujeto'), '+', K('wish / If only'), '+', V('had + participio'), '+', R('...')] }
       return { title: 'Deseo sobre el presente: wish + pasado simple:', parts: [S('Sujeto'), '+', K('wish'), '+', V('pasado simple'), '+', R('...')] }
+    case 'future-continuous-b1':
+      return { title: 'Future continuous: will be + verbo-ing (en progreso en el futuro):', parts: [S('Sujeto'), '+', K("will be / won't be"), '+', V('verbo-ing'), '+', R('...')] }
     case 'state-verbs-b1':
       if (/\b(am|is|are)\b.*\w+ing\b|'(m|s|re) \w+ing\b/i.test(sentence)) return { title: 'Verbo de acción: be + verbo-ing (lo que pasa ahora):', parts: [S('Sujeto'), '+', K('am / is / are'), '+', V('verbo-ing'), '+', R('...')] }
       return { title: 'Verbo de estado (know, like, want, think…): sin -ing:', parts: [S('Sujeto'), '+', V('verbo (presente simple)'), '+', R('...')] }

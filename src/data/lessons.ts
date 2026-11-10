@@ -992,4 +992,19 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'special', text: "Ask, don't assume: How are you feeling? What happened?", es: 'Pregunta, no supongas: ¿cómo te sientes? ¿Qué pasó?' },
     { who: 'special', text: 'Respond: Thank you for listening. It means a lot to me.', es: 'Responde: gracias por escuchar. Significa mucho para mí.' },
   ],
+  // B1-12 · bloque C (la ciudad, data/b1HostCity.ts): Einer, future continuous
+  'future-continuous-b1': [
+    { who: 'einer', text: "This time next year, I'll be living in a new city. This is the future continuous: will be + -ing.", es: 'El año que viene a esta hora, estaré viviendo en una ciudad nueva. Este es el future continuous: will be + -ing.' },
+    { who: 'einer', text: "It describes an action in progress at a point in the future. At 8 o'clock tonight, I'll be having dinner.", es: 'Describe una acción en progreso en un momento del futuro. Esta noche a las 8, estaré cenando.' },
+    { who: 'einer', text: "Negative and question: I won't be working tomorrow. Will you be using the car?", es: 'Negativa y pregunta: mañana no estaré trabajando. ¿Estarás usando el coche?' },
+    { who: 'einer', text: "Compare: I'll call you at 8 (a decision). I'll be waiting at 8 (in progress at 8).", es: 'Compara: te llamaré a las 8 (una decisión). Estaré esperando a las 8 (en progreso a las 8).' },
+  ],
+  // B1-12 · bloque C: Einer en el mirador, sustantivos compuestos
+  'compound-nouns-b1': [
+    { who: 'einer', text: 'A compound noun is two nouns together: sky + scraper = skyscraper.', es: 'Un sustantivo compuesto son dos sustantivos juntos: sky + scraper = skyscraper (rascacielos).' },
+    { who: 'einer', text: 'Some are one word (skyscraper), some are two words (city centre, bus stop), and some use a hyphen (a part-time job).', es: 'Algunos son una palabra (skyscraper), otros dos (city centre, bus stop) y otros llevan guion (a part-time job).' },
+    { who: 'einer', text: 'The first noun tells us what kind: a bus stop is a stop for buses; a car park is a park for cars.', es: 'El primer sustantivo dice de qué tipo es: un bus stop es una parada de autobuses; un car park es un estacionamiento de coches.' },
+    { who: 'einer', text: 'The first noun is usually singular: a shoe shop, not a shoes shop.', es: 'El primer sustantivo suele ir en singular: a shoe shop, no a shoes shop.' },
+    { who: 'einer', text: 'More city words: landmark (a famous building or place), neighbourhood (a part of a city where people live), crowded (with many people).', es: 'Más palabras de ciudad: landmark (un edificio o lugar famoso), neighbourhood (una zona de la ciudad donde vive la gente), crowded (con mucha gente).' },
+  ],
 }

@@ -544,4 +544,50 @@ export const B1_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B1-12 · Old Friends (presente). Se abre al cerrar la misión (closeId(12)). Sin página del Diario de L
+  {
+    id: 'b1-mission-12',
+    title: 'Misión 12: Old Friends',
+    unlock: closeId(12),
+    words: [
+      { title: 'Personalidad', words: [['loyal', 'fiel'], ['caring', 'cariñoso, atento'], ['reliable', 'confiable'], ['selfish', 'egoísta'], ['stubborn', 'terco']] },
+      { title: 'Relaciones', words: [['get on with', 'llevarse bien con'], ['fall out', 'pelearse'], ['make up', 'hacer las paces'], ['close friend', 'amigo cercano']] },
+      { title: 'Ciudad', words: [['skyscraper', 'rascacielos'], ['landmark', 'lugar emblemático'], ['crowded', 'lleno de gente'], ['neighbourhood', 'vecindario'], ['city centre', 'centro de la ciudad']] },
+    ],
+    versions: [
+      {
+        id: 'b1-mission-12-mine',
+        tense: 'n',
+        tab: 'Mi diario',
+        title: 'Dinner with the grandparents',
+        unlock: closeId(12),
+        frame: 'Lo escribes de noche, con el llavero nuevo colgando del cinturón.',
+        lines: [
+          { en: 'Tonight I [am having]n dinner with Jhoana and Einer.', es: 'Esta noche estoy cenando con Jhoana y Einer.' },
+          { en: 'I [know]n them well now, and I [think]n they are very caring.', es: 'Ahora los conozco bien y pienso que son muy cariñosos.' },
+          { en: 'Leo, Maya and I [get on]n really well.', es: 'Leo, Maya y yo nos llevamos muy bien.' },
+          { en: 'This time next year, I [will be living]f in a new city.', es: 'El año que viene a esta hora, estaré viviendo en una ciudad nueva.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b1-mission-12-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'Old friends',
+        unlock: closeId(12),
+        frame: 'La noche entera, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'Einer [showed]p us the city, and Maya [explained]p the verbs.', es: 'Einer nos mostró la ciudad y Maya explicó los verbos.' },
+          { en: 'The Rumor [said]p that my friends [were]p angry, but it [was]p not true.', es: 'The Rumor dijo que mis amigos estaban enojados, pero no era verdad.' },
+          { en: "Next week, we [will be eating]f at the grandparents' again.", es: 'La próxima semana estaremos cenando otra vez con los abuelos.' },
+        ],
+        questions: [
+          { q: 'Who showed them the city?', options: ['Maya.', 'Einer.', 'Leo.'], answer: 1, tip: 'El diario dice: "Einer showed us the city".' },
+          { q: 'Was the rumor true?', options: ['Yes, it was.', 'No, it was not.', 'Nobody knows.'], answer: 1, tip: 'El diario dice: "it was not true".' },
+          { q: 'What will they be doing next week?', options: ["Eating at the grandparents'.", 'Flying home.', 'Playing football.'], answer: 0, tip: 'El diario dice: "we will be eating at the grandparents\' again".' },
+        ],
+      },
+    ],
+  },
 ]

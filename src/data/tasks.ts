@@ -29,8 +29,9 @@ import { B1_04_FINE_PRINT } from './b1FinePrint'
 import { B1_04_BANK_IDS, B1_04_PRACTICE1_IDS, B1_04_PRACTICE2_IDS } from './questions-b1-04'
 import { B1_REPAIR } from './b1Repair'
 import { B1_12_PHOTOS_MEMORY, B1_12_WELCOME_SCRIPT } from './b1HostHouse'
-import { B1_12_EMPATHY_IDS, B1_12_MEMORY_IDS, B1_12_RELATIONSHIPS_IDS, B1_12_VERBS_IDS } from './questions-b1-12'
+import { B1_12_CN_IDS, B1_12_EMPATHY_IDS, B1_12_FC_IDS, B1_12_MEMORY_IDS, B1_12_RELATIONSHIPS_IDS, B1_12_VERBS_IDS } from './questions-b1-12'
 import { B1_12_GIFT_SCRIPT } from './b1HostGarden'
+import { B1_12_CLOSE_SCRIPT, B1_12_PLAZA_SCRIPT } from './b1HostPlaza'
 import { B1_05_CLOSE_SCRIPT, B1_05_JOB_ADS, B1_05_LETTER_SCRIPT, B1_05_NOTICE_SCRIPT, B1_05_PACKING } from './b1Flat'
 import { B1_05_BANK_IDS, B1_05_PRACTICE2_IDS, B1_05_PRACTICE_IDS } from './questions-b1-05'
 import { B1_06_PRACTICE_IDS } from './questions-b1-06'
@@ -5966,4 +5967,112 @@ NPC_TASKS['b1-12-gift'] = {
   requires: { id: 'b1-12-special-friend', text: 'Not yet.', es: 'Todavía no.', sub: 'Primero habla con la persona especial.' },
   steps: [],
   reward: { text: 'A little clock for my keys.', es: 'Un relojito para mis llaves.', sub: 'Ganaste el llavero con forma de reloj. Es un objeto de historia: no se vende.', say: 'Thank you!' },
+}
+
+// ── B1-12 · Old Friends, bloque C (el paseo con Einer; escena en data/b1HostCity.ts). NO guarda closeId(12) (se guarda en 12-D) ──
+// Einer al empezar el paseo: lección 'future-continuous-b1' (él la guía, who 'einer') + práctica b1-12-fc1…fc8. 5 monedas
+NPC_TASKS['b1-12-fc'] = {
+  npc: 'b1-12-city-einer',
+  done: 'b1-12-fc',
+  lesson: 'future-continuous-b1',
+  activity: 'practice',
+  practice: 'future-continuous-b1',
+  practiceIds: B1_12_FC_IDS,
+  coins: 5,
+  steps: [],
+  reward: { text: 'This time next year...', es: 'El año que viene a esta hora...', sub: 'Lección hecha. Einer te espera en el mirador.', say: "This time next year, I'll be here." },
+}
+
+// Einer en el mirador: lección 'compound-nouns-b1' (who 'einer') + práctica b1-12-cn1…cn8. 5 monedas
+NPC_TASKS['b1-12-cn'] = {
+  npc: 'b1-12-lookout-einer',
+  done: 'b1-12-cn',
+  lesson: 'compound-nouns-b1',
+  activity: 'practice',
+  practice: 'compound-nouns-b1',
+  practiceIds: B1_12_CN_IDS,
+  coins: 5,
+  requires: { id: 'b1-12-fc', text: 'Einer, at the lookout.', es: 'Einer, en el mirador.', sub: 'Primero habla con Einer al empezar el paseo.' },
+  steps: [],
+  reward: { text: 'A famous landmark.', es: 'Un lugar emblemático.', sub: 'Lección hecha. Einer quiere charlar contigo.', say: 'A famous landmark.' },
+}
+
+// La charla con Einer en el mirador (debate de 3 turnos, siempre termina, sin penalización; el jugador habla). 5 monedas
+NPC_TASKS['b1-12-einer-talk'] = {
+  npc: 'b1-12-lookout-einer',
+  done: 'b1-12-einer-talk',
+  activity: 'debate',
+  requires: { id: 'b1-12-cn', text: 'Einer, at the lookout.', es: 'Einer, en el mirador.', sub: 'Primero termina la lección de Einer.' },
+  debate: {
+    title: 'A walk with Einer',
+    name: 'Einer',
+    ask: 'Elige lo que respondes.',
+    turns: [
+      {
+        text: 'I was born in this neighbourhood. Which part of Lumen Bay do you like the most so far?',
+        es: 'Nací en este vecindario. ¿Qué parte de Lumen Bay te gusta más hasta ahora?',
+        options: [
+          { en: "I love the city centre. It's crowded, but it's full of life!", es: '¡Me encanta el centro! Está lleno de gente, pero lleno de vida.', value: 'good', reply: { text: 'Ha! You sound like Jhoana. She loves it too.', es: '¡Ja! Hablas como Jhoana. A ella también le encanta.' } },
+          { en: "The harbour is my favourite. It's quiet and beautiful at night.", es: 'El puerto es mi favorito. Es tranquilo y hermoso de noche.', value: 'good', reply: { text: 'A lovely choice. The sunsets there are famous.', es: 'Una linda elección. Los atardeceres allí son famosos.' } },
+          { en: "I'm not sure yet. I'm still exploring.", es: 'Todavía no estoy seguro. Sigo explorando.', value: 'neutral', reply: { text: 'Take your time. This city is full of surprises.', es: 'Tómate tu tiempo. Esta ciudad está llena de sorpresas.' } },
+        ],
+      },
+      {
+        text: 'Tell me, where will you be living this time next year?',
+        es: 'Dime, ¿dónde estarás viviendo el año que viene a esta hora?',
+        options: [
+          { en: "I'll be living in Lumen Bay, I hope. I'll be studying English every day.", es: 'Estaré viviendo en Lumen Bay, espero. Estaré estudiando inglés todos los días.', value: 'good', reply: { text: "Wonderful! Then you'll be eating Jhoana's soup often.", es: '¡Maravilloso! Entonces estarás tomando la sopa de Jhoana seguido.' } },
+          { en: "I'll be living back home, but I'll be thinking about this city.", es: 'Estaré viviendo en casa, pero estaré pensando en esta ciudad.', value: 'good', reply: { text: "That's beautiful. A city stays in your heart.", es: 'Qué bonito. Una ciudad se queda en el corazón.' } },
+          { en: "I don't know. Maybe I'll be travelling.", es: 'No sé. Quizás esté viajando.', value: 'neutral', reply: { text: 'A traveller! I was one too, once.', es: '¡Un viajero! Yo también lo fui una vez.' } },
+        ],
+      },
+      {
+        text: 'This city has many old friends in its streets. Do you have an old friend, too?',
+        es: 'Esta ciudad tiene muchos viejos amigos en sus calles. ¿Tú también tienes un viejo amigo?',
+        options: [
+          { en: 'Yes, I do. We met a long time ago, and we get on really well.', es: 'Sí. Nos conocimos hace mucho y nos llevamos muy bien.', value: 'good', reply: { text: 'Old friends are a treasure. Keep them close.', es: 'Los viejos amigos son un tesoro. Mantenlos cerca.' } },
+          { en: "I have some close friends, and I'm making new ones here.", es: 'Tengo algunos amigos cercanos y estoy haciendo nuevos aquí.', value: 'good', reply: { text: "That's the best way. New friends become old friends.", es: 'Es la mejor forma. Los nuevos amigos se vuelven viejos amigos.' } },
+          { en: 'Not really. I prefer new friends.', es: 'No mucho. Prefiero los amigos nuevos.', value: 'neutral', reply: { text: "That's fine. Every old friend was new once.", es: 'Está bien. Todo viejo amigo fue nuevo alguna vez.' } },
+        ],
+      },
+    ],
+    endings: {
+      high: { text: 'Thank you for the walk. I feel young again!', es: 'Gracias por el paseo. ¡Me siento joven otra vez!' },
+      mid: { text: 'A good walk. Lumen Bay is happy to have you.', es: 'Un buen paseo. Lumen Bay está feliz de tenerte.' },
+      low: { text: "Let's go on. There's more to see.", es: 'Sigamos. Hay más por ver.' },
+    },
+  },
+  coins: 5,
+  steps: [],
+  reward: { text: 'Old friends are a treasure.', es: 'Los viejos amigos son un tesoro.', sub: 'Terminaste el paseo. La plaza te espera: próximamente.', say: 'Old friends are a treasure.' },
+}
+
+// ── B1-12 · Old Friends, bloque D (la plaza, data/b1HostPlaza.ts) ──
+// Leo: el guion inicial (los amigos están lejos unos de otros). Al terminarlo aparece The Rumor junto a la fuente
+NPC_TASKS['b1-12-plaza-intro'] = {
+  npc: 'b1-12-plaza-leo',
+  done: 'b1-12-plaza-intro',
+  activity: 'script',
+  script: B1_12_PLAZA_SCRIPT,
+  coins: 0,
+  steps: [],
+  reward: { text: 'The Rumor.', es: 'The Rumor.', sub: 'Un susurro gris apareció junto a la fuente. Vence a The Rumor.' },
+}
+
+// Jhoana (aparece al vencer a The Rumor) cierra la misión (closeId(12) = 'b1-12-close')
+// Al guardarlo, dos fragmentos se juntan (FragmentJoin en Explore.tsx, memoryNumber 13): se abre el recuerdo 13
+NPC_TASKS['b1-12-close'] = {
+  npc: 'b1-12-plaza-jhoana',
+  done: 'b1-12-close',
+  activity: 'script',
+  script: B1_12_CLOSE_SCRIPT,
+  recover: ['state-verbs-b1', 'memory-verbs-b1', 'relationships-b1', 'empathy-b1', 'future-continuous-b1', 'compound-nouns-b1'],
+  coins: 20,
+  steps: [],
+  reward: {
+    text: 'Mission 12: Old Friends',
+    es: 'Misión 12: Viejos amigos',
+    sub: 'Ganaste el delantal de la abuela Jhoana. Dos fragmentos se juntaron con tu llavero: se abrió el recuerdo 13.',
+    say: 'Old friends!',
+  },
 }

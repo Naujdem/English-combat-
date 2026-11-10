@@ -1239,6 +1239,46 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     interest: true,
     doneLine: { text: "I'm here for you.", es: 'Aquí estoy para ti.' },
   },
+  // ── B1-12 · Old Friends, bloque C (el paseo por la ciudad, data/b1HostCity.ts) ──
+  // Einer, cerca de la entrada (tarea b1-12-fc)
+  'b1-12-city-einer': {
+    name: 'Einer',
+    look: { shirt: '#6b4a2f', hair: '#d8d8d8', skin: '#c98f68', gender: 'male' },
+    doneLine: { text: "This time next year, I'll be here.", es: 'El año que viene a esta hora, estaré aquí.' },
+  },
+  // Einer en el mirador (tareas b1-12-cn y b1-12-einer-talk)
+  'b1-12-lookout-einer': {
+    name: 'Einer',
+    look: { shirt: '#6b4a2f', hair: '#d8d8d8', skin: '#c98f68', gender: 'male' },
+    doneLine: { text: 'Old friends are a treasure.', es: 'Los viejos amigos son un tesoro.' },
+  },
+  // ── B1-12 · Old Friends, bloque D (la plaza, data/b1HostPlaza.ts) ──
+  // Leo, lejos de los demás (tarea b1-12-plaza-intro)
+  'b1-12-plaza-leo': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    doneLine: { text: "What a night! I'm so glad we're friends.", es: '¡Qué noche! Me alegra tanto que seamos amigos.' },
+  },
+  // Maya, preocupada (sin tarea: su línea corta)
+  'b1-12-plaza-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    doneLine: { text: 'Maya looks worried.', es: 'Maya se ve preocupada.' },
+  },
+  // La persona especial, triste (sin tarea: su línea corta)
+  'b1-12-plaza-special': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: 'The special person looks sad.', es: 'La persona especial se ve triste.' },
+  },
+  // Jhoana: aparece al vencer a The Rumor y cierra la misión (tarea b1-12-close)
+  'b1-12-plaza-jhoana': {
+    name: 'Jhoana',
+    look: { shirt: '#b0463a', hair: '#cfcfcf', skin: '#b9805c', gender: 'female' },
+    after: 'b1-12-boss',
+    doneLine: { text: 'You were so brave tonight.', es: 'Fuiste muy valiente esta noche.' },
+  },
   // La puerta a las gradas: aparece tras la charla; cierra la misión (tarea b1-08-close). Se dibuja con NotebookIcon (Explore.tsx)
   'b1-08-return': {
     name: 'La puerta a las gradas',

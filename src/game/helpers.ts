@@ -49,6 +49,8 @@ import { B1_11_ROADS } from '../data/b1TempleRoads'
 import { B1_11_POINT } from '../data/b1FixedPoint'
 import { B1_12_HOUSE } from '../data/b1HostHouse'
 import { B1_12_GARDEN } from '../data/b1HostGarden'
+import { B1_12_CITY } from '../data/b1HostCity'
+import { B1_12_PLAZA } from '../data/b1HostPlaza'
 import { B1_09_STONES } from '../data/b1TempleStones'
 import { B1_09_TIME } from '../data/b1TempleTime'
 import { B1_07_MARKET } from '../data/b1Market'
@@ -61,7 +63,7 @@ import { B1_08_CONCOURSE } from '../data/b1Concourse'
 import { FRIENDS, interestFriend } from '../data/friends'
 import { newCard } from './cards'
 
-export const SCENES: Record<string, SceneDef> = { [SCHOOL.id]: SCHOOL, [CITY.id]: CITY, [BARRIO.id]: BARRIO, [FARM.id]: FARM, [OFFICE.id]: OFFICE, [SCHOOL_PAST.id]: SCHOOL_PAST, [CITY_PAST.id]: CITY_PAST, [BARRIO_PAST.id]: BARRIO_PAST, [FARM_PAST.id]: FARM_PAST, [CINEMA_PAST.id]: CINEMA_PAST, [SCHOOL_FUTURE.id]: SCHOOL_FUTURE, [CITY_FUTURE.id]: CITY_FUTURE, [BARRIO_FUTURE.id]: BARRIO_FUTURE, [FARM_FUTURE.id]: FARM_FUTURE, [TOWER_FUTURE.id]: TOWER_FUTURE, [A2_HOSPITAL.id]: A2_HOSPITAL, [A2_CITY.id]: A2_CITY, [A2_WORKSHOP.id]: A2_WORKSHOP, [A2_LIBRARY.id]: A2_LIBRARY, [A2_FARM_PAST.id]: A2_FARM_PAST, [A2_RACE.id]: A2_RACE, [A2_CAR.id]: A2_CAR, [A2_MILL.id]: A2_MILL, [A2_LEO_HOUSE.id]: A2_LEO_HOUSE, [A2_FUTURE.id]: A2_FUTURE, [A2_CONTROL.id]: A2_CONTROL, [A2_RETURN.id]: A2_RETURN, [A2_PARTY.id]: A2_PARTY, [A2_MARKET.id]: A2_MARKET, [A2_DINNER.id]: A2_DINNER, [B1_HOME.id]: B1_HOME, [B1_TABLET_TEST.id]: B1_TABLET_TEST, [B1_01_SCHOOL.id]: B1_01_SCHOOL, [B1_02_LUMEN.id]: B1_02_LUMEN, [B1_03_HOSPITAL.id]: B1_03_HOSPITAL, [B1_04_RESIDENCE.id]: B1_04_RESIDENCE, [B1_05_FLAT.id]: B1_05_FLAT, [B1_05_BANK_SCENE.id]: B1_05_BANK_SCENE, [B1_06_SHELTER.id]: B1_06_SHELTER, [B1_06_KENNELS.id]: B1_06_KENNELS, [B1_06_OFFICE.id]: B1_06_OFFICE, [B1_07_ROOM.id]: B1_07_ROOM, [B1_07_MARKET.id]: B1_07_MARKET, [B1_08_STADIUM.id]: B1_08_STADIUM, [B1_08_STANDS.id]: B1_08_STANDS, [B1_08_CONCOURSE.id]: B1_08_CONCOURSE, [B1_09_VALLEY.id]: B1_09_VALLEY, [B1_09_STONES.id]: B1_09_STONES, [B1_09_TIME.id]: B1_09_TIME, [B1_10_FESTIVAL.id]: B1_10_FESTIVAL, [B1_10_TENT.id]: B1_10_TENT, [B1_10_STAGE.id]: B1_10_STAGE, [B1_11_ROOM.id]: B1_11_ROOM, [B1_11_FIRE.id]: B1_11_FIRE, [B1_11_ROADS.id]: B1_11_ROADS, [B1_11_POINT.id]: B1_11_POINT, [B1_12_HOUSE.id]: B1_12_HOUSE, [B1_12_GARDEN.id]: B1_12_GARDEN }
+export const SCENES: Record<string, SceneDef> = { [SCHOOL.id]: SCHOOL, [CITY.id]: CITY, [BARRIO.id]: BARRIO, [FARM.id]: FARM, [OFFICE.id]: OFFICE, [SCHOOL_PAST.id]: SCHOOL_PAST, [CITY_PAST.id]: CITY_PAST, [BARRIO_PAST.id]: BARRIO_PAST, [FARM_PAST.id]: FARM_PAST, [CINEMA_PAST.id]: CINEMA_PAST, [SCHOOL_FUTURE.id]: SCHOOL_FUTURE, [CITY_FUTURE.id]: CITY_FUTURE, [BARRIO_FUTURE.id]: BARRIO_FUTURE, [FARM_FUTURE.id]: FARM_FUTURE, [TOWER_FUTURE.id]: TOWER_FUTURE, [A2_HOSPITAL.id]: A2_HOSPITAL, [A2_CITY.id]: A2_CITY, [A2_WORKSHOP.id]: A2_WORKSHOP, [A2_LIBRARY.id]: A2_LIBRARY, [A2_FARM_PAST.id]: A2_FARM_PAST, [A2_RACE.id]: A2_RACE, [A2_CAR.id]: A2_CAR, [A2_MILL.id]: A2_MILL, [A2_LEO_HOUSE.id]: A2_LEO_HOUSE, [A2_FUTURE.id]: A2_FUTURE, [A2_CONTROL.id]: A2_CONTROL, [A2_RETURN.id]: A2_RETURN, [A2_PARTY.id]: A2_PARTY, [A2_MARKET.id]: A2_MARKET, [A2_DINNER.id]: A2_DINNER, [B1_HOME.id]: B1_HOME, [B1_TABLET_TEST.id]: B1_TABLET_TEST, [B1_01_SCHOOL.id]: B1_01_SCHOOL, [B1_02_LUMEN.id]: B1_02_LUMEN, [B1_03_HOSPITAL.id]: B1_03_HOSPITAL, [B1_04_RESIDENCE.id]: B1_04_RESIDENCE, [B1_05_FLAT.id]: B1_05_FLAT, [B1_05_BANK_SCENE.id]: B1_05_BANK_SCENE, [B1_06_SHELTER.id]: B1_06_SHELTER, [B1_06_KENNELS.id]: B1_06_KENNELS, [B1_06_OFFICE.id]: B1_06_OFFICE, [B1_07_ROOM.id]: B1_07_ROOM, [B1_07_MARKET.id]: B1_07_MARKET, [B1_08_STADIUM.id]: B1_08_STADIUM, [B1_08_STANDS.id]: B1_08_STANDS, [B1_08_CONCOURSE.id]: B1_08_CONCOURSE, [B1_09_VALLEY.id]: B1_09_VALLEY, [B1_09_STONES.id]: B1_09_STONES, [B1_09_TIME.id]: B1_09_TIME, [B1_10_FESTIVAL.id]: B1_10_FESTIVAL, [B1_10_TENT.id]: B1_10_TENT, [B1_10_STAGE.id]: B1_10_STAGE, [B1_11_ROOM.id]: B1_11_ROOM, [B1_11_FIRE.id]: B1_11_FIRE, [B1_11_ROADS.id]: B1_11_ROADS, [B1_11_POINT.id]: B1_11_POINT, [B1_12_HOUSE.id]: B1_12_HOUSE, [B1_12_GARDEN.id]: B1_12_GARDEN, [B1_12_CITY.id]: B1_12_CITY, [B1_12_PLAZA.id]: B1_12_PLAZA }
 
 export function heroLook(s: GameState, extra: Partial<SpriteLook> = {}): SpriteLook {
   const outfit = OUTFITS[s.outfit] ?? OUTFITS.base
@@ -69,8 +71,8 @@ export function heroLook(s: GameState, extra: Partial<SpriteLook> = {}): SpriteL
     accessory: s.outfit === 'gafas' ? 'glasses' : s.outfit === 'gorra' ? 'cap' : undefined,
     // B1-04: el llavero de la residencia no cambia la camisa; se dibuja como una casita con llave en el cinturón
     // B1-08: la bufanda del equipo tampoco cambia la camisa; se dibuja al cuello
-    shirt: s.outfit === 'capa' || s.outfit === 'llavero-residencia' || s.outfit === 'bufanda-lumen' || s.outfit === 'pulsera-festival' ? OUTFITS.base.color : outfit.color,
-    charm: s.outfit === 'llavero-residencia' ? 'house-key' : s.outfit === 'bufanda-lumen' ? 'scarf' : s.outfit === 'pulsera-festival' ? 'wristband' : undefined,
+    shirt: s.outfit === 'capa' || s.outfit === 'llavero-residencia' || s.outfit === 'bufanda-lumen' || s.outfit === 'pulsera-festival' || s.outfit === 'delantal-jhoana' ? OUTFITS.base.color : outfit.color,
+    charm: s.outfit === 'llavero-residencia' ? 'house-key' : s.outfit === 'bufanda-lumen' ? 'scarf' : s.outfit === 'pulsera-festival' ? 'wristband' : s.outfit === 'delantal-jhoana' ? 'apron' : undefined,
     cape: s.outfit === 'capa' ? outfit.color : '#c0392b',
     hair: s.hero.look.hair,
     skin: s.hero.look.skin,

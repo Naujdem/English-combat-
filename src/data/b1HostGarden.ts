@@ -1,5 +1,6 @@
 import type { GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
+import { B1_12_CLOSE, B1_12_DONE_TEXT } from './b1HostPlaza'
 
 /**
  * B1-12 · Old Friends (presente). Bloque B: el jardín trasero de la casa de los abuelos, al anochecer (escena b1-12-garden).
@@ -58,15 +59,12 @@ export const B1_12_GARDEN: SceneDef = {
   labels: [{ text: 'The garden', x: 6, y: 2 }],
   zoneAt: () => zoneAt(),
   examine: {},
-  // La puerta de la reja (bloque 12-C): Próximamente solo con el llavero. La puerta de arriba vuelve a la casa
+  // La puerta de la reja (11,3) lleva a la ciudad (bloque 12-C, data/b1HostCity.ts) solo con el llavero. La puerta de arriba vuelve a la casa
   locked: (x, y, s) => {
-    if (x === 11 && y === 3) {
-      if (!s.opened.includes(B1_12_KEYCHAIN)) return { text: 'Todavía no.', sub: 'Primero habla con tus amigos.' }
-      return { text: 'Próximamente: el recorrido con Einer (bloque 12-C)', sub: 'Esta parte llega en el siguiente bloque.' }
-    }
+    if (x === 11 && y === 3 && !s.opened.includes(B1_12_KEYCHAIN)) return { text: 'Todavía no.', sub: 'Primero habla con tus amigos.' }
     return null
   },
-  links: { '9,0': { sceneId: 'b1-12-house', pos: { x: 9, y: 1 } } },
+  links: { '9,0': { sceneId: 'b1-12-house', pos: { x: 9, y: 1 } }, '11,3': { sceneId: 'b1-12-city', pos: { x: 1, y: 3 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'Leo: recuerdos', done: s.opened.includes(B1_12_LEO_FRIEND) },
@@ -76,7 +74,7 @@ export const B1_12_GARDEN: SceneDef = {
   ],
   intro: {
     first: 'The garden at night. — El jardín de noche.',
-    later: () => 'The garden at night. — El jardín de noche.',
+    later: (s: GameState) => (s.opened.includes(B1_12_CLOSE) ? B1_12_DONE_TEXT : 'The garden at night. — El jardín de noche.'),
   },
 }
 
