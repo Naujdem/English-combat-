@@ -961,6 +961,14 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'notebook', text: 'wish + would: something that bothers you, or a change you want. I wish you would listen.', es: 'wish + would: algo que te molesta o un cambio que quieres. Ojalá escucharas.' },
     { who: 'notebook', text: 'If only is stronger: If only I had stayed!', es: 'If only es más fuerte: ¡si tan solo me hubiera quedado!' },
   ],
+  // B1-13 · bloque A (el Temple of Echoes, data/b1TempleEchoes.ts): Cuaderno de L, página 61
+  'achievement-b1': [
+    { who: 'notebook', text: 'Page 61. I finally made it... but at what cost?', es: 'Página 61. Por fin lo logré... pero ¿a qué costo?' },
+    { who: 'notebook', text: 'Success: achieve a goal, succeed in + -ing, make it, manage to + verb.', es: 'Éxito: achieve a goal (lograr una meta), succeed in + -ing (tener éxito en), make it (lograrlo), manage to + verbo (conseguir).' },
+    { who: 'notebook', text: "Failure: fail to + verb, give up (stop trying), don't make it.", es: 'Fracaso: fail to + verbo (no lograr), give up (rendirse), don\'t make it (no lograrlo).' },
+    { who: 'notebook', text: 'Be careful: I succeeded in finding it. I managed to find it. I failed to find it.', es: 'Ojo: tuve éxito encontrándolo. Logré encontrarlo. No logré encontrarlo.' },
+    { who: 'notebook', text: 'Words: cost, price, blame, revenge, unfair, regret.', es: 'Palabras: cost (costo), price (precio), blame (culpa), revenge (venganza), unfair (injusto), regret (arrepentimiento).' },
+  ],
   // B1-12 · bloque A (la casa de los abuelos, data/b1HostHouse.ts): Maya, verbos de estado y de acción
   'state-verbs-b1': [
     { who: 'maya', text: 'Some verbs describe a state, not an action: know, like, love, want, need, believe, understand.', es: 'Algunos verbos describen un estado, no una acción: know, like, love, want, need, believe, understand.' },

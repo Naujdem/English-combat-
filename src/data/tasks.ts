@@ -30,6 +30,8 @@ import { B1_04_BANK_IDS, B1_04_PRACTICE1_IDS, B1_04_PRACTICE2_IDS } from './ques
 import { B1_REPAIR } from './b1Repair'
 import { B1_12_PHOTOS_MEMORY, B1_12_WELCOME_SCRIPT } from './b1HostHouse'
 import { B1_12_CN_IDS, B1_12_EMPATHY_IDS, B1_12_FC_IDS, B1_12_MEMORY_IDS, B1_12_RELATIONSHIPS_IDS, B1_12_VERBS_IDS } from './questions-b1-12'
+import { B1_13_NOTEBOOK_IDS, B1_13_WALL_IDS } from './questions-b1-13'
+import { B1_13_PRICE_ROOM } from './b1TempleEchoes'
 import { B1_12_GIFT_SCRIPT } from './b1HostGarden'
 import { B1_12_CLOSE_SCRIPT, B1_12_PLAZA_SCRIPT } from './b1HostPlaza'
 import { B1_05_CLOSE_SCRIPT, B1_05_JOB_ADS, B1_05_LETTER_SCRIPT, B1_05_NOTICE_SCRIPT, B1_05_PACKING } from './b1Flat'
@@ -6075,4 +6077,34 @@ NPC_TASKS['b1-12-close'] = {
     sub: 'Ganaste el delantal de la abuela Jhoana. Dos fragmentos se juntaron con tu llavero: se abrió el recuerdo 13.',
     say: 'Old friends!',
   },
+}
+
+// ── B1-13 · bloque A: el Temple of Echoes (escena en data/b1TempleEchoes.ts). NO guarda closeId(13) ──
+// La página 61 sobre una piedra (lección 'achievement-b1') + práctica b1-13-a1…a8. Al terminar, el muro de los ecos
+NPC_TASKS['b1-13-notebook'] = {
+  npc: 'b1-13-notebook',
+  done: 'b1-13-notebook',
+  lesson: 'achievement-b1',
+  notebookPage: 61,
+  activity: 'practice',
+  practice: 'achievement-b1',
+  practiceIds: B1_13_NOTEBOOK_IDS,
+  coins: 5,
+  steps: [],
+  reward: { text: 'But at what cost?', es: 'Pero, ¿a qué costo?', sub: 'Página 61 terminada. El muro de los ecos te espera.', say: 'But at what cost?' },
+}
+
+// El muro de los ecos: The Wall of Echoes (6 piedras, scene 'wall') + práctica b1-13-p1…p8. La puerta del fondo sigue en "Próximamente" (13-B)
+NPC_TASKS['b1-13-wall-ins'] = {
+  npc: 'b1-13-wall',
+  done: 'b1-13-wall-ins',
+  activity: 'inscriptions',
+  inscriptions: B1_13_PRICE_ROOM,
+  practice: 'price-b1',
+  practiceIds: B1_13_WALL_IDS,
+  learn: ['price-b1'],
+  requires: { id: 'b1-13-notebook', text: 'The wall of echoes.', es: 'El muro de los ecos.', sub: 'Primero lee tu cuaderno (página 61).' },
+  coins: 15,
+  steps: [],
+  reward: { text: 'It takes one.', es: 'Toma una.', sub: 'El muro reveló el precio. La puerta del fondo muestra algo grabado: próximamente.', say: 'It takes one.' },
 }

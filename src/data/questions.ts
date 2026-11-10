@@ -48,6 +48,7 @@ import { B1_07_QUESTIONS } from './questions-b1-07'
 import { B1_08_QUESTIONS } from './questions-b1-08'
 import { B1_09_QUESTIONS } from './questions-b1-09'
 import { B1_11_QUESTIONS } from './questions-b1-11'
+import { B1_13_QUESTIONS } from './questions-b1-13'
 import { B1_10_QUESTIONS } from './questions-b1-10'
 import { B1_12_QUESTIONS } from './questions-b1-12'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
@@ -418,6 +419,7 @@ export const QUESTIONS: Question[] = [
   ...B1_09_QUESTIONS,
   ...B1_12_QUESTIONS,
   ...B1_11_QUESTIONS,
+  ...B1_13_QUESTIONS,
   ...B1_10_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
@@ -1262,6 +1264,26 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       "will be + -ing: una acción en progreso en un momento del futuro. This time next year, I'll be living in a new city.",
       "Negativa y pregunta: I won't be working tomorrow. Will you be using the car?",
       "Compara: I'll call you at 8 (una decisión) · I'll be waiting at 8 (en progreso a las 8).",
+    ],
+  },
+  'achievement-b1': {
+    name: 'Logro y fracaso',
+    level: 'B1',
+    lesson: [
+      'Éxito: achieve a goal (lograr una meta), succeed in + -ing (tener éxito en), make it (lograrlo), manage to + verbo (conseguir).',
+      'Fracaso: fail to + verbo (no lograr), give up (rendirse), don\'t make it (no lograrlo).',
+      'Ojo: I succeeded in finding it. I managed to find it. I failed to find it.',
+      'Palabras: cost (costo), price (precio), blame (culpa), revenge (venganza), unfair (injusto), regret (arrepentimiento).',
+    ],
+  },
+  'price-b1': {
+    name: 'El muro de los ecos: el precio',
+    level: 'B1',
+    lesson: [
+      'succeed in + verbo con -ing: tener éxito haciendo algo. make it = lograrlo, llegar.',
+      'cost = lo que hay que dar o perder; price = lo que se paga. At what cost? = ¿a qué costo?',
+      'Presente simple negativo: does not + verbo base. No se añade -s al verbo.',
+      'one reemplaza un sustantivo ya dicho: It takes one = Toma una voz. Los adverbios de frecuencia (always, never) van antes del verbo principal.',
     ],
   },
   'compound-nouns-b1': {

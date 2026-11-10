@@ -49,6 +49,7 @@ import { B1_12_HOUSE } from '../data/b1HostHouse'
 import { B1_12_GARDEN } from '../data/b1HostGarden'
 import { B1_12_CITY } from '../data/b1HostCity'
 import { B1_12_PLAZA } from '../data/b1HostPlaza'
+import { B1_13_ECHOES } from '../data/b1TempleEchoes'
 import { B1_10_TENT } from '../data/b1GamingTent'
 import { B1_10_STAGE } from '../data/b1Stage'
 import { B1_10_BOSS_DEF } from '../data/b1HeadlinerBoss'
@@ -1092,4 +1093,19 @@ export function b1Mission12(s: GameState, stage: 'house' | 'verbs' | 'album' | '
   const inHouse = stage === 'house' || stage === 'verbs' || stage === 'album'
   const base = { ...b, screen: 'explore' as const, sceneId: inHouse ? B1_12_HOUSE.id : stage === 'plaza' || stage === 'boss' || stage === 'close' ? B1_12_PLAZA.id : stage === 'city' || stage === 'lookout' || stage === 'einertalk' ? B1_12_CITY.id : B1_12_GARDEN.id, pos, defeated: b.defeated.filter((d) => !d.startsWith('b1-12-')), opened: b.opened.filter((o) => !o.startsWith('b1-12-')), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
   return { ...base, opened: add(base.opened, flags), defeated: stage === 'close' ? add(base.defeated, ['b1-12-boss']) : base.defeated, seenLesson: add(base.seenLesson, lessons) as GameState['seenLesson'] }
+}
+
+/**
+ * Atajos de la misión B1-13 (The Price, recuerdo) para el panel del profe. Parten de la misión 12 cerrada (nodo 13 abierto).
+ *  start: en el Temple of Echoes, junto a la página 61 · wall: página 61 hecha (frente al muro de los ecos)
+ */
+export function b1Mission13(s: GameState, stage: 'start' | 'wall'): GameState {
+  const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8), closeId(9), closeId(10), closeId(11), closeId(12), 'b1-12-fragments'])
+  const mine = ['achievement-b1', 'price-b1']
+  const present = { ...b, sceneId: B1_12_PLAZA.id, pos: { ...B1_12_PLAZA.start }, recovered: b.recovered.filter((t) => !mine.includes(t)), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)), opened: b.opened.filter((o) => !o.startsWith('b1-13-')), defeated: b.defeated.filter((d) => !d.startsWith('b1-13-')) }
+  const pos = { start: { x: 2, y: 3 }, wall: { x: 4, y: 2 } }[stage]
+  const m = enterMemory(present, 13, B1_13_ECHOES.id, pos)
+  const flags = { start: [], wall: ['b1-13-notebook'] }[stage]
+  const lessons = { start: [], wall: ['achievement-b1'] }[stage]
+  return { ...m, opened: add(m.opened, flags), seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
 }

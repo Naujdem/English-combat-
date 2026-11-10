@@ -1279,6 +1279,17 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b1-12-boss',
     doneLine: { text: 'You were so brave tonight.', es: 'Fuiste muy valiente esta noche.' },
   },
+  // ── B1-13 · bloque A (el Temple of Echoes, data/b1TempleEchoes.ts): la página 61 (NotebookIcon) y el muro de los ecos (TabletIcon) ──
+  'b1-13-notebook': {
+    name: 'El cuaderno de L',
+    look: { shirt: '#efe6d2', hair: '#3a2f5c', skin: '#efe6d2' },
+    doneLine: { text: 'But at what cost?', es: 'Pero, ¿a qué costo?' },
+  },
+  'b1-13-wall': {
+    name: 'El muro de los ecos',
+    look: { shirt: '#8a8f96', hair: '#55606e', skin: '#a8adb4' },
+    doneLine: { text: 'It takes one.', es: 'Toma una.' },
+  },
   // La puerta a las gradas: aparece tras la charla; cierra la misión (tarea b1-08-close). Se dibuja con NotebookIcon (Explore.tsx)
   'b1-08-return': {
     name: 'La puerta a las gradas',
