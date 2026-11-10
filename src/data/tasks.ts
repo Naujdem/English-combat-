@@ -30,7 +30,8 @@ import { B1_04_BANK_IDS, B1_04_PRACTICE1_IDS, B1_04_PRACTICE2_IDS } from './ques
 import { B1_REPAIR } from './b1Repair'
 import { B1_12_PHOTOS_MEMORY, B1_12_WELCOME_SCRIPT } from './b1HostHouse'
 import { B1_12_CN_IDS, B1_12_EMPATHY_IDS, B1_12_FC_IDS, B1_12_MEMORY_IDS, B1_12_RELATIONSHIPS_IDS, B1_12_VERBS_IDS } from './questions-b1-12'
-import { B1_13_NOTEBOOK_IDS, B1_13_WALL_IDS } from './questions-b1-13'
+import { B1_13_KEEPER_A_IDS, B1_13_KEEPER_F_IDS, B1_13_NOTEBOOK2_IDS, B1_13_NOTEBOOK_IDS, B1_13_WALL_IDS } from './questions-b1-13'
+import { B1_13_KEEPER_INTRO_SCRIPT, B1_13_KEEPER_PRICE, B1_13_RIDDLE_A, B1_13_RIDDLE_F } from './b1EchoHall'
 import { B1_13_PRICE_ROOM } from './b1TempleEchoes'
 import { B1_12_GIFT_SCRIPT } from './b1HostGarden'
 import { B1_12_CLOSE_SCRIPT, B1_12_PLAZA_SCRIPT } from './b1HostPlaza'
@@ -6107,4 +6108,72 @@ NPC_TASKS['b1-13-wall-ins'] = {
   coins: 15,
   steps: [],
   reward: { text: 'It takes one.', es: 'Toma una.', sub: 'El muro reveló el precio. La puerta del fondo muestra algo grabado: próximamente.', say: 'It takes one.' },
+}
+
+// ── B1-13 · bloque B: la sala del Keeper of Echoes (escena en data/b1EchoHall.ts). El Keeper NO pelea: sus tareas se encadenan
+// (taskOf toma la primera sin hacer, en este orden). NO guarda closeId(13) ──
+// La presentación del Keeper (secuencia fija, MemoryScript)
+NPC_TASKS['b1-13-keeper-intro'] = {
+  npc: 'b1-13-keeper',
+  done: 'b1-13-keeper-intro',
+  activity: 'script',
+  script: B1_13_KEEPER_INTRO_SCRIPT,
+  coins: 0,
+  steps: [],
+  reward: { text: 'Say it right.', es: 'Dilo bien.', sub: 'El Keeper te pone su primer acertijo.', say: 'Say it right.' },
+}
+
+// Primer acertijo: The First Riddle (5 piedras, scene 'door') + práctica b1-13-k1…k6
+NPC_TASKS['b1-13-keeper-a'] = {
+  npc: 'b1-13-keeper',
+  done: 'b1-13-keeper-a',
+  activity: 'inscriptions',
+  inscriptions: B1_13_RIDDLE_A,
+  practice: 'achievement-b1',
+  practiceIds: B1_13_KEEPER_A_IDS,
+  requires: { id: 'b1-13-keeper-intro', text: 'The Keeper of Echoes.', es: 'El Keeper of Echoes.', sub: 'Primero habla con el Keeper.' },
+  coins: 10,
+  steps: [],
+  reward: { text: 'The echo is quiet.', es: 'El eco calla.', sub: 'Primer acertijo resuelto. La página 62 de tu cuaderno te espera.', say: 'The echo is quiet.' },
+}
+
+// La página 62 sobre una piedra (lección 'future-plans-b1') + práctica b1-13-f1…f8
+NPC_TASKS['b1-13-notebook2'] = {
+  npc: 'b1-13-notebook2',
+  done: 'b1-13-notebook2',
+  lesson: 'future-plans-b1',
+  notebookPage: 62,
+  activity: 'practice',
+  practice: 'future-plans-b1',
+  practiceIds: B1_13_NOTEBOOK2_IDS,
+  requires: { id: 'b1-13-keeper-a', text: 'A page on a stone.', es: 'Una página sobre una piedra.', sub: 'Primero resuelve el primer acertijo del Keeper.' },
+  coins: 5,
+  steps: [],
+  reward: { text: "Tomorrow, I'm going to leave.", es: 'Mañana voy a irme.', sub: 'Página 62 terminada. El segundo acertijo del Keeper te espera.', say: "Tomorrow, I'm going to leave." },
+}
+
+// Segundo acertijo: The Second Riddle (5 piedras, scene 'door') + práctica b1-13-k7…k12
+NPC_TASKS['b1-13-keeper-f'] = {
+  npc: 'b1-13-keeper',
+  done: 'b1-13-keeper-f',
+  activity: 'inscriptions',
+  inscriptions: B1_13_RIDDLE_F,
+  practice: 'future-plans-b1',
+  practiceIds: B1_13_KEEPER_F_IDS,
+  requires: { id: 'b1-13-notebook2', text: 'The second riddle.', es: 'El segundo acertijo.', sub: 'Primero lee la página 62 de tu cuaderno.' },
+  coins: 10,
+  steps: [],
+  reward: { text: 'Tomorrow has been said.', es: 'El mañana fue dicho.', sub: 'Segundo acertijo resuelto. El Keeper quiere decirte algo.', say: 'Tomorrow has been said.' },
+}
+
+// El precio: el Keeper revela cómo funciona el aparato (secuencia fija). done = B1_13_KEEPER_DONE
+NPC_TASKS['b1-13-keeper-done'] = {
+  npc: 'b1-13-keeper',
+  done: 'b1-13-keeper-done',
+  activity: 'script',
+  script: B1_13_KEEPER_PRICE,
+  requires: { id: 'b1-13-keeper-f', text: 'The Keeper of Echoes.', es: 'El Keeper of Echoes.', sub: 'Primero resuelve el segundo acertijo.' },
+  coins: 15,
+  steps: [],
+  reward: { text: 'You must choose.', es: 'Tú debes elegir.', sub: 'El Keeper te deja pasar. La puerta del fondo muestra algo grabado: próximamente.', say: 'You must choose.' },
 }

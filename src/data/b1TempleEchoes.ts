@@ -7,7 +7,7 @@ import type { InscriptionRoom } from '../game/inscriptions'
  * Se entra desde el nodo 13 del mapa (screens/World.tsx, enterMemory). No hay salida mientras dura el recuerdo.
  *   La página 61 sobre una piedra (tarea 'b1-13-notebook': tema 'achievement-b1' + práctica b1-13-a1…a8)
  *   → el muro de los ecos (tarea 'b1-13-wall-ins': The Wall of Echoes, B1_13_PRICE_ROOM + práctica b1-13-p1…p8)
- *   → la puerta pesada del fondo: "Próximamente" (bloque 13-B, el Keeper of Echoes). Ningún bloque A guarda closeId(13).
+ *   → la puerta pesada del fondo: la sala del Keeper of Echoes (bloque 13-B, data/b1EchoHall.ts). Ningún bloque A guarda closeId(13).
  */
 export const B1_13_ECHOES_ID = 'b1-13-echoes'
 export const B1_13_NOTEBOOK = 'b1-13-notebook'
@@ -79,7 +79,7 @@ export const B1_13_PRICE_ROOM: InscriptionRoom = {
   finish: { en: 'The echo stops. The last words stay in the stone.', es: 'El eco se detiene. Las últimas palabras quedan en la piedra.', banner: 'El precio, revelado' },
 }
 
-const SOON = { text: 'Próximamente: el Keeper of Echoes (bloque 13-B)', sub: 'Esta parte llega en el siguiente bloque.' }
+const NOT_YET = { text: 'Todavía no.', sub: 'Primero despierta el muro de los ecos.' }
 
 /**
  * Leyenda de components/Tiles.tsx (como el Temple of Stones): # muro con glifos · d puerta · Z sombra de estatua · K pedestal.
@@ -118,9 +118,9 @@ export const B1_13_ECHOES: SceneDef = {
   examine: {
     '1,5': { text: 'A statue. Your steps sound twice.', sub: 'Una estatua. Tus pasos suenan dos veces.', say: 'Your steps sound twice.' },
   },
-  // La puerta pesada del fondo: en este bloque, siempre "Próximamente" (bloque 13-B)
-  locked: (x, y) => (x === 11 && y === 3 ? SOON : null),
-  links: {},
+  // La puerta pesada del fondo: cerrada hasta terminar el muro de los ecos; después lleva a la sala del Keeper (bloque 13-B, data/b1EchoHall.ts)
+  locked: (x, y, s) => (x === 11 && y === 3 && !s.opened.includes(B1_13_WALL_INS) ? NOT_YET : null),
+  links: { '11,3': { sceneId: 'b1-13-hall', pos: { x: 1, y: 3 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'El cuaderno de L: página 61', done: s.opened.includes(B1_13_NOTEBOOK) },

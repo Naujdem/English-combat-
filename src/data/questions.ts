@@ -1276,6 +1276,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Palabras: cost (costo), price (precio), blame (culpa), revenge (venganza), unfair (injusto), regret (arrepentimiento).',
     ],
   },
+  'future-plans-b1': {
+    name: 'Futuros para planes',
+    level: 'B1',
+    lesson: [
+      'going to: un plan ya decidido. Voy a esperar en la estación.',
+      'Presente continuo: un arreglo con hora o lugar. Me reúno con ella a las ocho.',
+      'will: una decisión en el momento, o una predicción. Hace frío. Tomaré mi abrigo. Creo que lloverá.',
+      'Future continuous: una acción en progreso en un momento futuro. A las ocho estaré esperando.',
+    ],
+  },
   'price-b1': {
     name: 'El muro de los ecos: el precio',
     level: 'B1',

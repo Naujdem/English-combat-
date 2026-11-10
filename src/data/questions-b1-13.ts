@@ -10,9 +10,18 @@ const AC = 'achievement-b1' as const
 const PR = 'price-b1' as const
 const NOTEBOOK = ['b1-13-notebook']
 const WALL = ['b1-13-wall']
+/** Bloque B (la sala del Keeper, data/b1EchoHall.ts): primer acertijo (k1…k6), página 62 (f1…f8) y segundo acertijo (k7…k12) */
+const FP = 'future-plans-b1' as const
+const KEEPER_A = ['b1-13-keeper-a']
+const NOTEBOOK2 = ['b1-13-notebook2']
+const KEEPER_F = ['b1-13-keeper-f']
 
 export const B1_13_NOTEBOOK_IDS = ['b1-13-a1', 'b1-13-a2', 'b1-13-a3', 'b1-13-a4', 'b1-13-a5', 'b1-13-a6', 'b1-13-a7', 'b1-13-a8']
 export const B1_13_WALL_IDS = ['b1-13-p1', 'b1-13-p2', 'b1-13-p3', 'b1-13-p4', 'b1-13-p5', 'b1-13-p6', 'b1-13-p7', 'b1-13-p8']
+
+export const B1_13_KEEPER_A_IDS = ['b1-13-k1', 'b1-13-k2', 'b1-13-k3', 'b1-13-k4', 'b1-13-k5', 'b1-13-k6']
+export const B1_13_NOTEBOOK2_IDS = ['b1-13-f1', 'b1-13-f2', 'b1-13-f3', 'b1-13-f4', 'b1-13-f5', 'b1-13-f6', 'b1-13-f7', 'b1-13-f8']
+export const B1_13_KEEPER_F_IDS = ['b1-13-k7', 'b1-13-k8', 'b1-13-k9', 'b1-13-k10', 'b1-13-k11', 'b1-13-k12']
 
 export const B1_13_QUESTIONS: Question[] = [
   // Bloque A · página 61: logro y fracaso
@@ -55,4 +64,60 @@ export const B1_13_QUESTIONS: Question[] = [
     tags: WALL,
   },
   { id: 'b1-13-p8', topic: PR, prompt: "'Revenge' significa ___.", options: ['venganza', 'perdón', 'precio'], answer: 0, tip: 'revenge = venganza.', tags: WALL },
+  // Bloque B · primer acertijo del Keeper: logro y fracaso
+  { id: 'b1-13-k1', topic: AC, kind: 'fix', prompt: 'They failed reaching the top.', options: ['They failed to reaching the top.', 'They failed to reach the top.', 'They failed in reach the top.'], answer: 1, tip: 'fail to + verbo base.', tags: KEEPER_A },
+  { id: 'b1-13-k2', topic: AC, kind: 'fix', prompt: 'He gived up after a year.', options: ['He gave up after a year.', 'He gaved up after a year.', 'He given up after a year.'], answer: 0, tip: 'Pasado de give: gave.', tags: KEEPER_A },
+  { id: 'b1-13-k3', topic: AC, prompt: 'We ___ our goal after years of work.', options: ['did', 'won to', 'achieved'], answer: 2, tip: 'achieve a goal.', tags: KEEPER_A },
+  { id: 'b1-13-k4', topic: AC, prompt: 'She tried and tried, and she finally ___ in finding it.', options: ['managed', 'succeeded', 'achieved'], answer: 1, tip: 'succeed in + -ing.', tags: KEEPER_A },
+  { id: 'b1-13-k5', topic: AC, kind: 'order', prompt: 'Se rindió después de tres años.', options: ['She', 'gave', 'up', 'after', 'three', 'years.'], answer: 0, tip: 'give up = rendirse.', tags: KEEPER_A },
+  {
+    id: 'b1-13-k6',
+    topic: AC,
+    kind: 'listen',
+    audio: 'I tried to open the door for hours, but I failed. Then my friend helped me, and we managed to open it together.',
+    voice: 'female',
+    prompt: '¿Cómo logró abrirla?',
+    options: ['Con ayuda de un amigo.', 'Con una llave.', 'Rompiéndola.'],
+    answer: 0,
+    tip: 'My friend helped me, and we managed to open it.',
+    tags: KEEPER_A,
+  },
+  // Bloque B · página 62: futuros para planes
+  { id: 'b1-13-f1', topic: FP, kind: 'fix', prompt: 'Tomorrow I going to wait at the school.', options: ["Tomorrow I'm going to wait at the school.", "Tomorrow I'm go to wait at the school.", 'Tomorrow I going wait at the school.'], answer: 0, tip: 'am going to + verbo.', tags: NOTEBOOK2 },
+  { id: 'b1-13-f2', topic: FP, kind: 'fix', prompt: 'We are meet the director at nine tomorrow.', options: ['We meeting the director at nine tomorrow.', 'We are meeting the director at nine tomorrow.', 'We are met the director at nine tomorrow.'], answer: 1, tip: 'Arreglo con hora: are meeting.', tags: NOTEBOOK2 },
+  { id: 'b1-13-f3', topic: FP, prompt: "It's dark. I ___ turn on the light.", options: ['going to', 'am going', 'will'], answer: 2, tip: 'Decisión en el momento: will.', tags: NOTEBOOK2 },
+  { id: 'b1-13-f4', topic: FP, prompt: 'Look at those clouds! It ___ rain.', options: ['is going to', 'will to', 'is going'], answer: 0, tip: 'Con evidencia: is going to.', tags: NOTEBOOK2 },
+  { id: 'b1-13-f5', topic: FP, prompt: "At eight o'clock tomorrow, I ___ by the window.", options: ['will be standing', 'will standing', 'am will stand'], answer: 0, tip: 'En progreso a las ocho: will be + -ing.', tags: NOTEBOOK2 },
+  { id: 'b1-13-f6', topic: FP, kind: 'order', prompt: 'Mañana voy a esperar en la escuela.', options: ['Tomorrow', "I'm", 'going', 'to', 'wait', 'at', 'the', 'school.'], answer: 0, tip: "I'm going to + verbo.", tags: NOTEBOOK2 },
+  {
+    id: 'b1-13-f7',
+    topic: FP,
+    kind: 'listen',
+    audio: "Tomorrow I'm going to travel back to the city. I'm meeting an old friend at eight, and this time tomorrow I'll be sitting in his kitchen.",
+    voice: 'male',
+    prompt: '¿A qué hora se reúne con su amigo?',
+    options: ['A las seis.', 'A las ocho.', 'A las nueve.'],
+    answer: 1,
+    tip: "I'm meeting an old friend at eight.",
+    tags: NOTEBOOK2,
+  },
+  { id: 'b1-13-f8', topic: FP, prompt: 'I think it ___ be a long night.', options: ['will', 'am going', 'are'], answer: 0, tip: 'Predicción: will.', tags: NOTEBOOK2 },
+  // Bloque B · segundo acertijo del Keeper: futuros
+  { id: 'b1-13-k7', topic: FP, kind: 'fix', prompt: 'She not going to wait for us.', options: ["She isn't going to wait for us.", "She isn't go to wait for us.", "She doesn't going to wait for us."], answer: 0, tip: "isn't going to + verbo.", tags: KEEPER_F },
+  { id: 'b1-13-k8', topic: FP, kind: 'fix', prompt: 'This time tomorrow, I will traveling.', options: ['This time tomorrow, I will be travel.', 'This time tomorrow, I will be traveling.', 'This time tomorrow, I be will traveling.'], answer: 1, tip: 'will be + -ing.', tags: KEEPER_F },
+  { id: 'b1-13-k9', topic: FP, prompt: "We ___ the guide at nine. It's arranged.", options: ['are meeting', 'meeting', 'are meet'], answer: 0, tip: 'Arreglo: are meeting.', tags: KEEPER_F },
+  { id: 'b1-13-k10', topic: FP, prompt: 'Careful! That box ___ fall!', options: ['will to', 'is going to', 'are going to'], answer: 1, tip: 'Con evidencia: is going to.', tags: KEEPER_F },
+  { id: 'b1-13-k11', topic: FP, kind: 'order', prompt: 'Mañana voy a dejar este templo.', options: ['Tomorrow', 'I', 'am', 'going', 'to', 'leave', 'this', 'temple.'], answer: 0, tip: 'am going to + verbo.', tags: KEEPER_F },
+  {
+    id: 'b1-13-k12',
+    topic: FP,
+    kind: 'listen',
+    audio: "The guide told me about tomorrow. We are meeting at nine, and we are going to climb the hill. By noon, we'll be eating at the top.",
+    voice: 'female',
+    prompt: '¿Dónde estarán al mediodía?',
+    options: ['En el pueblo.', 'En la cima.', 'En el templo.'],
+    answer: 1,
+    tip: "By noon, we'll be eating at the top.",
+    tags: KEEPER_F,
+  },
 ]

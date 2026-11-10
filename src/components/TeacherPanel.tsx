@@ -302,6 +302,9 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'close'))}>B1-12: cierre</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission13(s, 'start'))}>B1-13: Temple of Echoes</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission13(s, 'wall'))}>B1-13: muro del precio</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission13(s, 'hall'))}>B1-13: sala del Keeper</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission13(s, 'riddlef'))}>B1-13: acertijo de los futuros</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission13(s, 'keeperout'))}>B1-13: salida del Keeper</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>
