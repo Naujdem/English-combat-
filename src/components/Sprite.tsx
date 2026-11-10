@@ -9,7 +9,7 @@ export type SpriteLook = {
   cape?: string
   book?: boolean
   /** B1-04: llavero de la residencia (una casita con una llave) que cuelga del cinturón */
-  charm?: 'house-key' | 'scarf' | 'wristband'
+  charm?: 'house-key' | 'scarf' | 'wristband' | 'clock-keychain'
 }
 
 /**
@@ -87,6 +87,17 @@ export function SpriteBody({ look, mood = 'normal', blur = false }: { look: Spri
         <g aria-hidden="true">
           <rect x="20.6" y="21.6" width="2.6" height="1.5" rx="0.6" fill="#d4488a" />
           <path d="M21.9 21.75 l0.25 0.5 l0.55 0.08 l-0.4 0.38 l0.1 0.55 l-0.5 -0.26 l-0.5 0.26 l0.1 -0.55 l-0.4 -0.38 l0.55 -0.08 Z" fill="#e0b84a" />
+        </g>
+      )}
+      {look.charm === 'clock-keychain' && (
+        // B1-11: el amigo de la noche del incendio: una mochila pequeña (correas y el bolso asomando a un lado) con un llavero
+        // circular dorado con dos manecillas de reloj, colgando
+        <g aria-hidden="true">
+          <path d="M11.6 15.6 L12.6 23 M20.4 15.6 L19.4 23" stroke="#3a3a44" strokeWidth="0.9" />
+          <rect x="21.2" y="16.6" width="3.4" height="6.4" rx="1" fill="#3a3a44" />
+          <path d="M22.9 23 v0.9" stroke="#8a6210" strokeWidth="0.35" />
+          <circle cx="22.9" cy="25.1" r="1.2" fill="#e0b84a" stroke="#8a6210" strokeWidth="0.3" />
+          <path d="M22.9 25.1 v-0.8 M22.9 25.1 h0.6" stroke="#2a1c14" strokeWidth="0.3" strokeLinecap="round" />
         </g>
       )}
       {look.book && (

@@ -36,6 +36,7 @@ import { B1_06_ADVERT, B1_06_READ, B1_06_SHELTER } from '../data/b1Shelter'
 import { B1_07_ROOM } from '../data/b1Room'
 import { B1_09_VALLEY } from '../data/b1Valley'
 import { B1_11_ROOM } from '../data/b1ClockRoom'
+import { B1_11_FIRE } from '../data/b1FireNight'
 import { B1_09_STONES } from '../data/b1TempleStones'
 import { B1_09_TIME } from '../data/b1TempleTime'
 import { B1_06_KENNELS, B1_06_VOLUNTEER1, B1_06_VOLUNTEER2 } from '../data/b1Kennels'
@@ -1041,14 +1042,18 @@ export function b1Mission10(s: GameState, stage: 'liceth' | 'conditional' | 'que
  * Atajos de la misión B1-11 (The First Journey, recuerdo) para el panel del profe. Parten de "B1: abrir el nodo 11".
  *  room: entra al recuerdo (el cuarto de L, junto al cuaderno; la página 42 sale de nuevo)
  *  wall: cuaderno hecho (frente al muro de recortes; la lección sale de nuevo) · clock: cuaderno y muro hechos (junto al reloj)
+ *  fire: reloj usado (en el pasillo del incendio, junto a la página 43) · whatif: página 43 hecha (frente a la alarma)
+ *  echo: What If hecho (frente a los Ash Echo) · exit: Ash Echo vencidos (junto a la escalera)
  */
-export function b1Mission11(s: GameState, stage: 'room' | 'wall' | 'clock'): GameState {
+export function b1Mission11(s: GameState, stage: 'room' | 'wall' | 'clock' | 'fire' | 'whatif' | 'echo' | 'exit'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8), closeId(9), closeId(10)])
-  const mine = ['narrative-b1', 'conditional-3']
+  const mine = ['narrative-b1', 'conditional-3', 'pastperfect-b1']
   const present = { ...b, sceneId: B1_10_FESTIVAL.id, pos: { ...B1_10_FESTIVAL.start }, recovered: b.recovered.filter((t) => !mine.includes(t)), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)), opened: b.opened.filter((o) => !o.startsWith('b1-11-')), defeated: b.defeated.filter((d) => !d.startsWith('b1-11-')) }
-  const pos = { room: { x: 2, y: 3 }, wall: { x: 6, y: 2 }, clock: { x: 2, y: 3 } }[stage]
-  const m = enterMemory(present, 11, B1_11_ROOM.id, pos)
-  const flags = { room: [], wall: ['b1-11-notebook'], clock: ['b1-11-notebook', 'b1-11-wall'] }[stage]
-  const lessons = { room: [], wall: ['narrative-b1'], clock: mine }[stage]
-  return { ...m, opened: add(m.opened, flags), seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
+  const pos = { room: { x: 2, y: 3 }, wall: { x: 6, y: 2 }, clock: { x: 2, y: 3 }, fire: { x: 1, y: 2 }, whatif: { x: 8, y: 1 }, echo: { x: 10, y: 1 }, exit: { x: 13, y: 1 } }[stage]
+  const fire = stage === 'fire' || stage === 'whatif' || stage === 'echo' || stage === 'exit'
+  const m = enterMemory(present, 11, fire ? B1_11_FIRE.id : B1_11_ROOM.id, pos)
+  const a = ['b1-11-notebook', 'b1-11-wall', 'b1-11-clock']
+  const flags = { room: [], wall: ['b1-11-notebook'], clock: ['b1-11-notebook', 'b1-11-wall'], fire: a, whatif: [...a, 'b1-11-page43'], echo: [...a, 'b1-11-page43', 'b1-11-whatif'], exit: [...a, 'b1-11-page43', 'b1-11-whatif'] }[stage]
+  const lessons = { room: [], wall: ['narrative-b1'], clock: ['narrative-b1', 'conditional-3'], fire: ['narrative-b1', 'conditional-3'], whatif: mine, echo: mine, exit: mine }[stage]
+  return { ...m, opened: add(m.opened, flags), defeated: stage === 'exit' ? add(m.defeated, ['b1-11-echo1', 'b1-11-echo2']) : m.defeated, seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
 }
