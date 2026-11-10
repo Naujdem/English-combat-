@@ -47,6 +47,7 @@ import { B1_06_QUESTIONS } from './questions-b1-06'
 import { B1_07_QUESTIONS } from './questions-b1-07'
 import { B1_08_QUESTIONS } from './questions-b1-08'
 import { B1_09_QUESTIONS } from './questions-b1-09'
+import { B1_10_QUESTIONS } from './questions-b1-10'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -413,6 +414,7 @@ export const QUESTIONS: Question[] = [
   ...B1_07_QUESTIONS,
   ...B1_08_QUESTIONS,
   ...B1_09_QUESTIONS,
+  ...B1_10_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
 ]
@@ -1191,6 +1193,25 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       "Pasado simple: regulares con -ed (walked, arrived); irregulares (took, went, saw, slept). Negativa: didn't + verbo base (I didn't sleep). Pregunta: Did you…? (Did you see the waterfall?)",
       'Adjetivos de viaje: bueno → breathtaking (impresionante), unforgettable (inolvidable); malo → exhausting (agotador), overcrowded (abarrotado). -ing = lo que causa; -ed = cómo te sientes (I was exhausted).',
       "Errores típicos: ✗ I didn't slept much → ✓ I didn't sleep much. ✗ We goed to the valley → ✓ We went to the valley. ✗ I made a long travel → ✓ I made a long journey.",
+    ],
+  },
+  'conditional-2': {
+    name: 'Segundo condicional',
+    level: 'B1',
+    lesson: [
+      'Segundo condicional: situación imaginaria o poco probable. If + pasado simple, would + verbo base. If I had a ticket, I would see every show.',
+      'If + pasado puede ir al principio o al final: I would see every show if I had a ticket. Con coma si if va primero.',
+      'Con be se usa were: If I were rich, I would buy the festival. Para dar un consejo: If I were you, I would go.',
+      "Negativa: If I didn't have homework, I would go. Pregunta: What would you do if you won a ticket?",
+    ],
+  },
+  'verb-patterns': {
+    name: 'Verbo + -ing / to',
+    level: 'B1',
+    lesson: [
+      'Verbo + -ing: enjoy, finish, avoid, keep, mind, suggest. I enjoy dancing. She finished singing.',
+      'Verbo + to + infinitivo: decide, want, hope, plan, need, learn, agree. We decided to stay. I hope to see the band.',
+      'stop cambia de sentido: He stopped smoking (dejó de fumar). He stopped to buy water (paró para comprar agua).',
     ],
   },
   'passive-modals': {

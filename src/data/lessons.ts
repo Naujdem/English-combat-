@@ -888,4 +888,22 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'nayi', text: "Esteban will ask: 'Have you worked with animals before?' You can say: 'Yes, I have. I volunteered at a shelter last year.'", es: "Esteban preguntará: '¿Has trabajado antes con animales?' Puedes decir: 'Sí. Fui voluntario en un refugio el año pasado.'" },
     { who: 'board', text: "Errores típicos: ✗ I worked here since three years → ✓ I've worked here for three years. ✗ I have volunteered last year → ✓ I volunteered last year." },
   ],
+  // B1-10 · Festival Night, bloque A (la entrada del festival, data/b1Festival.ts): la persona especial y el segundo condicional. 'board' = la pizarra
+  'conditional-2': [
+    { who: 'special', text: 'Look at this festival! If I had a ticket for every show, I would see them all.', es: '¡Mira este festival! Si tuviera una entrada para cada show, los vería todos.' },
+    { who: 'board', text: 'Segundo condicional: situación imaginaria o poco probable. If + pasado simple, would + verbo base. If I had a ticket, I would see every show.', topic: 'conditional-2' },
+    { who: 'board', text: 'If + pasado puede ir al principio o al final: I would see every show if I had a ticket. Con coma si if va primero.', topic: 'conditional-2' },
+    { who: 'board', text: 'Con be se usa were: If I were rich, I would buy the festival. Para dar un consejo: If I were you, I would go.', topic: 'conditional-2' },
+    { who: 'board', text: "Negativa: If I didn't have homework, I would go. Pregunta: What would you do if you won a ticket?", topic: 'conditional-2' },
+    { who: 'board', text: 'Errores típicos: ✗ If I would have money, I would buy it → ✓ If I had money, I would buy it. ✗ If I would be rich → ✓ If I were rich.', topic: 'conditional-2' },
+  ],
+  // B1-10 · bloque A: la fila de la entrada (dos hinchas conversando) y verbo + -ing / to
+  'verb-patterns': [
+    { who: 'narrator', text: 'Fan 1: I enjoy dancing. I always dance at festivals.', es: 'Hincha 1: Disfruto bailar. Siempre bailo en los festivales.' },
+    { who: 'narrator', text: 'Fan 2: We decided to stay until the end.', es: 'Hincha 2: Decidimos quedarnos hasta el final.' },
+    { who: 'board', text: 'Verbo + -ing: enjoy, finish, avoid, keep, mind, suggest. I enjoy dancing. She finished singing.', topic: 'verb-patterns' },
+    { who: 'board', text: 'Verbo + to + infinitivo: decide, want, hope, plan, need, learn, agree. We decided to stay. I hope to see the band.', topic: 'verb-patterns' },
+    { who: 'board', text: 'stop cambia de sentido: He stopped smoking (dejó de fumar). He stopped to buy water (paró para comprar agua).', topic: 'verb-patterns' },
+    { who: 'board', text: 'Errores típicos: ✗ I enjoy to dance → ✓ I enjoy dancing. ✗ We decided staying → ✓ We decided to stay.', topic: 'verb-patterns' },
+  ],
 }
