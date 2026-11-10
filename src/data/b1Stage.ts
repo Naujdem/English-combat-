@@ -1,5 +1,6 @@
 import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import type { MusicContent } from '../components/MusicChallenge'
+import { closeId } from './b1World'
 
 /**
  * B1-10 · Festival Night (presente). Bloque C: el frente del escenario principal del festival de Lumen Bay (escena b1-10-stage).
@@ -8,13 +9,22 @@ import type { MusicContent } from '../components/MusicChallenge'
  * Un escenario grande con pantalla y luces, la cabina del DJ al fondo (vacía por ahora), el público (decoración) y un micrófono.
  * Orden: Liceth junto al micrófono: Music Challenge "Lights Over Lumen Bay" (b1-10-music, 5 monedas) → dos espectadores corrompidos
  *   (esbirros encadenados, banco compartido b1-10-x1…x10) → la cabina del DJ: próximamente (bloque 10-D, The Headliner).
- * Ningún bloque C guarda closeId(10) (se guarda en 10-D).
+ * Bloque D: The Headliner (jefe, junto a la cabina del DJ; suelta la pulsera) → la charla con Leo (quest 'b1-10-leo' en Explore.tsx;
+ *   guarda B1_10_FRIEND) → Rutneri en la cabina cierra la misión (b1-10-close = closeId(10); FragmentJoin abre el recuerdo 11).
  */
 export const B1_10_STAGE_ID = 'b1-10-stage'
 export const B1_10_LICETH_STAGE = 'b1-10-liceth-stage'
 export const B1_10_MUSIC = 'b1-10-music'
 export const B1_10_SPECTATOR1 = 'b1-10-spectator1'
 export const B1_10_SPECTATOR2 = 'b1-10-spectator2'
+export const B1_10_BOSS = 'b1-10-boss'
+export const B1_10_LEO = 'b1-10-leo'
+export const B1_10_FRIEND = 'b1-10-friend'
+export const B1_10_RUTNERI = 'b1-10-rutneri'
+export const B1_10_CLOSE = closeId(10)
+export const B1_10_FRAGMENTS = 'b1-10-fragments'
+/** Texto de ayuda de las escenas de la misión 10 cuando ya está cerrada */
+export const B1_10_DONE_TEXT = 'La misión 10 terminó. El recuerdo 11 se abrió en el mapa.'
 
 /** La canción del Music Challenge (tarea b1-10-music y botón "Probar Music Challenge" del profe) */
 export const B1_10_SONG: MusicContent = {
@@ -52,7 +62,6 @@ const MAP = [
 const zoneAt = (): Zone => 'recepcion'
 
 const NOT_YET = (sub: string) => ({ text: 'Todavía no.', sub })
-const SOON = 'Próximamente: The Headliner (bloque 10-D)'
 const bothDown = (s: GameState) => s.defeated.includes(B1_10_SPECTATOR1) && s.defeated.includes(B1_10_SPECTATOR2)
 
 export const B1_10_STAGE: SceneDef = {
@@ -68,6 +77,10 @@ export const B1_10_STAGE: SceneDef = {
     { type: 'npc', id: B1_10_LICETH_STAGE, x: 6, y: 3 },
     { type: 'enemy', id: B1_10_SPECTATOR1, x: 4, y: 2, after: B1_10_MUSIC },
     { type: 'enemy', id: B1_10_SPECTATOR2, x: 8, y: 2, after: B1_10_SPECTATOR1 },
+    // Bloque D: The Headliner junto a la cabina del DJ; después Leo (charla) y Rutneri en la cabina (cierre)
+    { type: 'enemy', id: B1_10_BOSS, x: 6, y: 1, after: B1_10_SPECTATOR2 },
+    { type: 'npc', id: B1_10_LEO, x: 3, y: 3 },
+    { type: 'npc', id: B1_10_RUTNERI, x: 5, y: 1 },
   ],
   labels: [
     { text: 'DJ booth', x: 6, y: 1 },
@@ -88,12 +101,13 @@ export const B1_10_STAGE: SceneDef = {
     '8,0': { text: 'Stage lights.', sub: 'Las luces del escenario.', say: 'Stage lights.' },
     '10,0': { text: 'Stage lights.', sub: 'Las luces del escenario.', say: 'Stage lights.' },
   },
-  // La cabina del DJ: cerrada hasta vencer a los dos espectadores; después, próximamente (bloque 10-D)
+  // La cabina del DJ: cerrada hasta vencer a los espectadores y a The Headliner; el cierre lo hace Rutneri (delante de la cabina)
   locked: (x, y, s) => {
     if (x === 6 && y === 0) {
       if (!s.opened.includes(B1_10_MUSIC)) return NOT_YET('Primero habla con Liceth junto al micrófono.')
       if (!bothDown(s)) return NOT_YET('Primero ayuda a los espectadores corrompidos.')
-      return { text: SOON + '.', sub: B1_10_SPECTATORS_DONE.es }
+      if (!s.defeated.includes(B1_10_BOSS)) return { text: B1_10_SPECTATORS_DONE.text, sub: B1_10_SPECTATORS_DONE.es }
+      return { text: 'The DJ booth.', sub: 'La cabina del DJ. Rutneri está delante.' }
     }
     return null
   },
@@ -102,11 +116,18 @@ export const B1_10_STAGE: SceneDef = {
   chips: (s: GameState) => [
     { label: 'Liceth y el micrófono', done: s.opened.includes(B1_10_MUSIC) },
     { label: 'Espectadores corrompidos (2)', done: bothDown(s) },
-    { label: SOON, done: false },
+    { label: 'The Headliner', done: s.defeated.includes(B1_10_BOSS) },
+    { label: 'Charla con Leo', done: s.opened.includes(B1_10_FRIEND) },
+    { label: 'Cierre', done: s.opened.includes(B1_10_CLOSE) },
   ],
   intro: {
     first: 'Lights up! — ¡Luces arriba!',
-    later: (s) => (bothDown(s) ? `${B1_10_SPECTATORS_DONE.text} — ${B1_10_SPECTATORS_DONE.es}` : 'Lights up! — ¡Luces arriba!'),
+    later: (s) =>
+      s.opened.includes(B1_10_CLOSE)
+        ? B1_10_DONE_TEXT
+        : bothDown(s) && !s.defeated.includes(B1_10_BOSS)
+          ? `${B1_10_SPECTATORS_DONE.text} — ${B1_10_SPECTATORS_DONE.es}`
+          : 'Lights up! — ¡Luces arriba!',
   },
 }
 

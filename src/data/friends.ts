@@ -840,3 +840,17 @@ export const B1_02_PLANE_CHATS: CasualChat[] = [
     ],
   },
 ]
+
+/** B1-10 · Festival Night, bloque D: la charla de amistad con Leo en el escenario (una vez; se guarda B1_10_FRIEND en Explore.tsx) */
+export const B1_10_LEO_CHAT: CasualChat = {
+  requires: null,
+  level: 'B1',
+  text: 'Imagine you were famous for one day. What would you do?',
+  es: 'Imagina que fueras famoso por un día. ¿Qué harías?',
+  options: [
+    { text: 'If I were famous, I would help people. I would give money to schools.', textEs: 'Si fuera famoso, ayudaría a la gente. Daría dinero a las escuelas.', reply: "Wow, that's kind! I'd probably make a game.", es: '¡Qué amable! Yo probablemente haría un videojuego.', effect: 2 },
+    { text: 'I would travel around the world and meet my favourite players.', textEs: 'Viajaría por el mundo y conocería a mis jugadores favoritos.', reply: "Cool! If I were you, I'd bring a camera.", es: '¡Genial! Si yo fuera tú, llevaría una cámara.', effect: 2 },
+    { text: "I don't know. I'd rather stay at home.", textEs: 'No sé. Preferiría quedarme en casa.', reply: "Ha ha! That's fair. Fame is tiring.", es: '¡Ja, ja! Es justo. La fama cansa.', effect: 1 },
+    { text: 'If famous I would the be game.', textEs: '(No tiene sentido.)', reply: "Sorry, I didn't understand.", es: 'Perdón, no te entendí.', effect: -1 },
+  ],
+}

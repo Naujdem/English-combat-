@@ -448,4 +448,50 @@ export const B1_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B1-10 · Festival Night (presente). Se abre al cerrar la misión (closeId(10)). Sin página del Diario de L
+  {
+    id: 'b1-mission-10',
+    title: 'Misión 10: Festival Night',
+    unlock: closeId(10),
+    words: [
+      { title: 'Festival', words: [['stage', 'escenario'], ['line-up', 'cartel de artistas'], ['headliner', 'artista principal'], ['tickets', 'entradas'], ['sold out', 'agotado']] },
+      { title: 'Videojuegos', words: [['gameplay', 'jugabilidad'], ['graphics', 'gráficos'], ['level', 'nivel'], ['console', 'consola'], ['multiplayer', 'multijugador'], ['streamer', 'creador de contenido en vivo']] },
+      { title: 'Énfasis', words: [['really', 'muy'], ['absolutely', 'absolutamente'], ['incredibly', 'increíblemente']] },
+    ],
+    versions: [
+      {
+        id: 'b1-mission-10-mine',
+        tense: 'n',
+        tab: 'Mi diario',
+        title: 'Festival night',
+        unlock: closeId(10),
+        frame: 'Lo escribes tarde, con la pulsera todavía en la muñeca.',
+        lines: [
+          { en: 'Tonight I [am]n at the Lumen Bay Festival!', es: '¡Esta noche estoy en el Festival de Lumen Bay!' },
+          { en: 'I [enjoy]n dancing, and I [prefer]n watching the band to playing games.', es: 'Disfruto bailar y prefiero ver a la banda que jugar.' },
+          { en: 'The best thing about it [is]n the music.', es: 'Lo mejor es la música.' },
+          { en: 'If I [had]p a ticket for every show, I [would see]f them all.', es: 'Si tuviera una entrada para cada show, los vería todos.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b1-mission-10-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'The festival',
+        unlock: closeId(10),
+        frame: 'El festival entero, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'Liceth [welcomed]p us at the gate, and Jorge [streamed]p a new game.', es: 'Liceth nos recibió en la entrada y Jorge transmitió un juego nuevo.' },
+          { en: 'The headliner [stopped]p the music, but we [sang]p the song together.', es: 'El artista principal detuvo la música, pero cantamos la canción juntos.' },
+          { en: 'Next year I [will buy]f my ticket early!', es: '¡El próximo año compraré mi entrada temprano!' },
+        ],
+        questions: [
+          { q: 'Who welcomed them at the gate?', options: ['Jorge.', 'Liceth.', 'Rutneri.'], answer: 1, tip: 'El diario dice: "Liceth welcomed us at the gate".' },
+          { q: 'What did Jorge do?', options: ['He streamed a new game.', 'He sang a song.', 'He sold tickets.'], answer: 0, tip: 'El diario dice: "Jorge streamed a new game".' },
+          { q: 'When will the writer buy the ticket?', options: ['Tomorrow.', 'Tonight.', 'Next year.'], answer: 2, tip: 'El diario dice: "Next year I will buy my ticket early".' },
+        ],
+      },
+    ],
+  },
 ]
