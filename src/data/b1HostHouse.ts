@@ -61,13 +61,12 @@ export const B1_12_HOUSE: SceneDef = {
     '8,5': MINUS,
     '9,5': MINUS,
   },
-  // La puerta al jardín (bloque 12-B): Próximamente. La salida: con el botón Mapa
+  // La puerta al jardín (9,0) lleva al jardín (bloque 12-B, data/b1HostGarden.ts). La salida: con el botón Mapa
   locked: (x, y) => {
-    if (x === 9 && y === 0) return { text: 'Próximamente: el jardín (bloque 12-B)', sub: 'Esta parte llega en el siguiente bloque.' }
     if (x === 5 && y === 6) return { text: 'The way out.', sub: 'Para volver al mapa, toca el botón Mapa.' }
     return null
   },
-  links: {},
+  links: { '9,0': { sceneId: 'b1-12-garden', pos: { x: 9, y: 1 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'Saludar a Jhoana y Einer', done: s.opened.includes(B1_12_WELCOME) },

@@ -854,3 +854,45 @@ export const B1_10_LEO_CHAT: CasualChat = {
     { text: 'If famous I would the be game.', textEs: '(No tiene sentido.)', reply: "Sorry, I didn't understand.", es: 'Perdón, no te entendí.', effect: -1 },
   ],
 }
+
+/** B1-12 · Old Friends, bloque B (el jardín): charla de amistad con Leo, tras su lección (quest 'b1-12-leo'; se guarda b1-12-leo-friend). Sin respuestas malas */
+export const B1_12_LEO_CHAT: CasualChat = {
+  requires: null,
+  level: 'B1',
+  text: 'Do you remember our first day in Lumen Bay? I remember feeling lost, but excited. And I forgot to call my mom!',
+  es: '¿Recuerdas nuestro primer día en Lumen Bay? Recuerdo que me sentía perdido, pero emocionado. ¡Y olvidé llamar a mi mamá!',
+  options: [
+    { text: "Yes, I remember it very well. I remember feeling nervous too, but I'm glad we came together.", textEs: 'Sí, lo recuerdo muy bien. Recuerdo que yo también estaba nervioso, pero me alegra que viniéramos juntos.', reply: 'Me too! Remind me to say thanks to Jhoana for the dinner.', es: '¡Yo también! Recuérdame darle las gracias a Jhoana por la cena.', effect: 2 },
+    { text: "I remember it too. I'll never forget the plane ride and the long walk to the residence.", textEs: 'Yo también lo recuerdo. Nunca olvidaré el vuelo ni la larga caminata hasta la residencia.', reply: 'Ha ha, the long walk! I still remember my heavy bag.', es: '¡Ja, ja, la larga caminata! Todavía recuerdo mi mochila pesada.', effect: 2 },
+    { text: 'Not really. I forgot most of it, but I remember the food.', textEs: 'No mucho. Olvidé casi todo, pero recuerdo la comida.', reply: "Ha ha! That's very you. Food first!", es: '¡Ja, ja! Eso es muy tuyo. ¡La comida primero!', effect: 1 },
+    { text: "Hmm... I'm not sure. Ask me later.", textEs: 'Mmm... no estoy seguro. Pregúntame luego.', reply: "OK! I'll remind you tomorrow.", es: '¡Vale! Te lo recordaré mañana.', effect: 0 },
+  ],
+}
+
+/** B1-12 · bloque B: charla de amistad con Maya, tras su lección (quest 'b1-12-maya'; se guarda b1-12-maya-friend). Sin respuestas malas */
+export const B1_12_MAYA_CHAT: CasualChat = {
+  requires: null,
+  level: 'B1',
+  text: 'My grandparents live far away, but we talk every week. Who is the person in your family you get on best with?',
+  es: 'Mis abuelos viven lejos, pero hablamos cada semana. ¿Con quién de tu familia te llevas mejor?',
+  options: [
+    { text: 'I get on best with my mother. She is very caring, and she always listens to me.', textEs: 'Me llevo mejor con mi madre. Es muy cariñosa y siempre me escucha.', reply: "That's lovely. A caring family is a treasure.", es: 'Qué lindo. Una familia cariñosa es un tesoro.', effect: 2 },
+    { text: 'My cousin and I are close friends. We fell out once, but we made up quickly.', textEs: 'Mi primo y yo somos amigos cercanos. Una vez nos peleamos, pero hicimos las paces rápido.', reply: 'Making up is the hard part. Well done!', es: 'Hacer las paces es lo difícil. ¡Bien hecho!', effect: 2 },
+    { text: "I get on with everyone, but I'm closer to my friends than to my family.", textEs: 'Me llevo bien con todos, pero estoy más cerca de mis amigos que de mi familia.', reply: 'That happens a lot. Friends are family too.', es: 'Pasa mucho. Los amigos también son familia.', effect: 1 },
+    { text: "Hmm, it's complicated. Maybe I'll tell you later.", textEs: 'Mmm, es complicado. Quizás te cuente luego.', reply: "No problem. I'm here when you want to talk.", es: 'No hay problema. Aquí estoy cuando quieras hablar.', effect: 0 },
+  ],
+}
+
+/** B1-12 · bloque B: charla de amistad con la persona especial, tras su lección (quest 'b1-12-special'; se guarda b1-12-special-friend). Sin respuestas malas */
+export const B1_12_SPECIAL_CHAT: CasualChat = {
+  requires: null,
+  level: 'B1',
+  text: "I wasn't sure about coming to Lumen Bay. Sometimes I feel far from home. Have you ever felt like that?",
+  es: 'Dudaba si venir a Lumen Bay. A veces me siento lejos de casa. ¿Alguna vez te has sentido así?',
+  options: [
+    { text: "Yes, sometimes. But I'm glad you're here. I'm here for you too.", textEs: 'Sí, a veces. Pero me alegra que estés aquí. Yo también estoy para ti.', reply: 'Thank you. That means a lot to me.', es: 'Gracias. Significa mucho para mí.', effect: 2 },
+    { text: 'That must be hard. Do you want to talk about it?', textEs: 'Eso debe ser difícil. ¿Quieres hablar de eso?', reply: 'Maybe later. But thank you for asking.', es: 'Quizás luego. Pero gracias por preguntar.', effect: 2 },
+    { text: 'I feel far from home sometimes too, but this city is lovely.', textEs: 'A veces yo también me siento lejos de casa, pero esta ciudad es encantadora.', reply: 'It is. It feels better with friends.', es: 'Lo es. Se siente mejor con amigos.', effect: 1 },
+    { text: "Hmm. I don't know what to say.", textEs: 'Mmm. No sé qué decir.', reply: "That's OK. You don't have to say anything.", es: 'Está bien. No tienes que decir nada.', effect: 0 },
+  ],
+}

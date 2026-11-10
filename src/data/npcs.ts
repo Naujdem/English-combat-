@@ -1219,6 +1219,26 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#b08a5a', hair: '#8a6a40', skin: '#c9a06a' },
     doneLine: { text: 'So many good memories.', es: 'Tantos buenos recuerdos.' },
   },
+  // ── B1-12 · Old Friends, bloque B (el jardín, data/b1HostGarden.ts) ──
+  // Leo, junto a la banca (tarea b1-12-leo-lesson; después su charla, quest 'b1-12-leo')
+  'b1-12-leo': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    doneLine: { text: 'Remind me to say thanks.', es: 'Recuérdame dar las gracias.' },
+  },
+  // Maya, junto a la mesita (tarea b1-12-maya-lesson; después su charla, quest 'b1-12-maya')
+  'b1-12-garden-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    doneLine: { text: 'We made up.', es: 'Hicimos las paces.' },
+  },
+  // La persona especial, bajo el árbol (tareas b1-12-special-lesson y b1-12-gift; su charla, quest 'b1-12-special')
+  'b1-12-special': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: "I'm here for you.", es: 'Aquí estoy para ti.' },
+  },
   // La puerta a las gradas: aparece tras la charla; cierra la misión (tarea b1-08-close). Se dibuja con NotebookIcon (Explore.tsx)
   'b1-08-return': {
     name: 'La puerta a las gradas',

@@ -970,4 +970,26 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'maya', text: "have: I have a cat (possession). I'm having dinner (action).", es: 'have: tengo un gato (posesión). Estoy cenando (acción).' },
     { who: 'maya', text: "taste, smell, feel work the same way. This soup tastes great. I'm tasting the soup.", es: 'taste, smell, feel funcionan igual. Esta sopa sabe genial. Estoy probando la sopa.' },
   ],
+  // B1-12 · bloque B (el jardín, data/b1HostGarden.ts): Leo, remember / forget / remind
+  'memory-verbs-b1': [
+    { who: 'leo', text: 'Remember + -ing: a memory of the past. I remember meeting you at the airport.', es: 'remember + -ing: un recuerdo del pasado. Recuerdo haberte conocido en el aeropuerto.' },
+    { who: 'leo', text: 'Remember + to + verb: not forgetting a duty. Remember to lock the door.', es: 'remember + to + verbo: no olvidar algo que debes hacer. Recuerda cerrar la puerta con llave.' },
+    { who: 'leo', text: "Forget works the same way: I forgot to call her (I didn't call). I'll never forget meeting her (I have the memory).", es: 'forget funciona igual: olvidé llamarla (no llamé). Nunca olvidaré haberla conocido (tengo el recuerdo).' },
+    { who: 'leo', text: 'Remind: remind someone to do something, or remind someone of something. Remind me to buy milk. This song reminds me of home.', es: 'remind: recordarle a alguien que haga algo, o recordarle algo. Recuérdame comprar leche. Esta canción me recuerda a casa.' },
+  ],
+  // B1-12 · bloque B: Maya, relaciones y personalidad
+  'relationships-b1': [
+    { who: 'maya', text: 'Personality: loyal (fiel), caring (cariñoso, atento), reliable (confiable), selfish (egoísta), stubborn (terco).', es: 'Personalidad: loyal (fiel), caring (cariñoso, atento), reliable (confiable), selfish (egoísta), stubborn (terco).' },
+    { who: 'maya', text: 'Friends: a close friend (un amigo cercano), an old friend (un viejo amigo).', es: 'Amigos: a close friend (un amigo cercano), an old friend (un viejo amigo).' },
+    { who: 'maya', text: 'get on with someone: have a good relationship. I get on well with my grandmother.', es: 'get on with alguien: llevarse bien. Me llevo bien con mi abuela.' },
+    { who: 'maya', text: 'fall out (with someone): have an argument and stop being friends. We fell out last year.', es: 'fall out (con alguien): pelearse y dejar de ser amigos. Nos peleamos el año pasado.' },
+    { who: 'maya', text: 'make up: become friends again. We said sorry and made up.', es: 'make up: volver a ser amigos. Pedimos perdón y hicimos las paces.' },
+  ],
+  // B1-12 · bloque B: la persona especial, empatía
+  'empathy-b1': [
+    { who: 'special', text: "When a friend has a problem, we show that we care. That must be hard. I'm so sorry to hear that.", es: 'Cuando un amigo tiene un problema, mostramos que nos importa. Eso debe ser difícil. Lamento mucho oírlo.' },
+    { who: 'special', text: "Offer support: I'm here for you. Do you want to talk about it? Let me know if you need anything.", es: 'Ofrece apoyo: aquí estoy para ti. ¿Quieres hablar de eso? Avísame si necesitas algo.' },
+    { who: 'special', text: "Ask, don't assume: How are you feeling? What happened?", es: 'Pregunta, no supongas: ¿cómo te sientes? ¿Qué pasó?' },
+    { who: 'special', text: 'Respond: Thank you for listening. It means a lot to me.', es: 'Responde: gracias por escuchar. Significa mucho para mí.' },
+  ],
 }

@@ -10,6 +10,8 @@ export type SpriteLook = {
   book?: boolean
   /** B1-04: llavero de la residencia (una casita con una llave) que cuelga del cinturón */
   charm?: 'house-key' | 'scarf' | 'wristband' | 'clock-keychain'
+  /** B1-12: el llavero con forma de reloj (objeto de historia), colgando del cinturón a la izquierda; independiente del atuendo y del charm */
+  keychain?: boolean
 }
 
 /**
@@ -98,6 +100,14 @@ export function SpriteBody({ look, mood = 'normal', blur = false }: { look: Spri
           <path d="M22.9 23 v0.9" stroke="#8a6210" strokeWidth="0.35" />
           <circle cx="22.9" cy="25.1" r="1.2" fill="#e0b84a" stroke="#8a6210" strokeWidth="0.3" />
           <path d="M22.9 25.1 v-0.8 M22.9 25.1 h0.6" stroke="#2a1c14" strokeWidth="0.3" strokeLinecap="round" />
+        </g>
+      )}
+      {look.keychain && (
+        // B1-12: el llavero con forma de reloj (el mismo dibujo del charm 'clock-keychain'): dorado, con dos manecillas, al lado izquierdo del cinturón
+        <g aria-hidden="true">
+          <path d="M11.8 24.4 v1.2" stroke="#8a6210" strokeWidth="0.35" />
+          <circle cx="11.8" cy="26.8" r="1.2" fill="#e0b84a" stroke="#8a6210" strokeWidth="0.3" />
+          <path d="M11.8 26.8 v-0.8 M11.8 26.8 h0.6" stroke="#2a1c14" strokeWidth="0.3" strokeLinecap="round" />
         </g>
       )}
       {look.book && (

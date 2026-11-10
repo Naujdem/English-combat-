@@ -289,6 +289,11 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'house'))}>B1-12: casa de la familia</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'verbs'))}>B1-12: lección de Maya</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'album'))}>B1-12: álbum</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'garden'))}>B1-12: jardín</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'leochat'))}>B1-12: charla con Leo</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'mayachat'))}>B1-12: charla con Maya</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'specialchat'))}>B1-12: charla con la persona especial</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission12(s, 'keychain'))}>B1-12: llavero</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>

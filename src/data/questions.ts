@@ -1255,6 +1255,34 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'If only es más fuerte: ¡si tan solo me hubiera quedado!',
     ],
   },
+  'memory-verbs-b1': {
+    name: 'Remember / forget / remind',
+    level: 'B1',
+    lesson: [
+      'remember + -ing: un recuerdo del pasado. I remember meeting you at the airport.',
+      'remember + to + verbo: no olvidar algo que debes hacer. Remember to lock the door.',
+      "forget funciona igual: I forgot to call her (no llamé). I'll never forget meeting her (tengo el recuerdo).",
+      'remind someone to do something / remind someone of something. Remind me to buy milk. This song reminds me of home.',
+    ],
+  },
+  'relationships-b1': {
+    name: 'Relaciones y personalidad',
+    level: 'B1',
+    lesson: [
+      'Personalidad: loyal (fiel), caring (cariñoso), reliable (confiable), selfish (egoísta), stubborn (terco).',
+      'Amigos: a close friend (un amigo cercano), an old friend (un viejo amigo).',
+      'get on (well) with someone: llevarse bien. fall out: pelearse. make up: hacer las paces.',
+    ],
+  },
+  'empathy-b1': {
+    name: 'Mostrar empatía',
+    level: 'B1',
+    lesson: [
+      "Mostrar que te importa: That must be hard. I'm so sorry to hear that.",
+      "Ofrecer apoyo: I'm here for you. Do you want to talk about it? Let me know if you need anything.",
+      'Preguntar y responder: How are you feeling? What happened? — Thank you for listening. It means a lot to me.',
+    ],
+  },
   'state-verbs-b1': {
     name: 'Verbos de estado y de acción',
     level: 'B1',

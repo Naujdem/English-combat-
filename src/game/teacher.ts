@@ -46,6 +46,7 @@ import { B1_06_OFFICE } from '../data/b1EstebanOffice'
 import { B1_08_STADIUM } from '../data/b1Stadium'
 import { B1_10_FESTIVAL } from '../data/b1Festival'
 import { B1_12_HOUSE } from '../data/b1HostHouse'
+import { B1_12_GARDEN } from '../data/b1HostGarden'
 import { B1_10_TENT } from '../data/b1GamingTent'
 import { B1_10_STAGE } from '../data/b1Stage'
 import { B1_10_BOSS_DEF } from '../data/b1HeadlinerBoss'
@@ -1071,13 +1072,18 @@ export function b1Mission11(s: GameState, stage: 'room' | 'wall' | 'clock' | 'fi
  * Atajos de la misión B1-12 (Old Friends, presente) para el panel del profe. Parten de "B1: abrir el nodo 12".
  *  house: en la casa de los abuelos, frente a Jhoana · verbs: saludo hecho (frente a Maya; la lección sale de nuevo)
  *  album: lección hecha (frente al álbum de fotos)
+ *  garden: 12-A hecho (en el jardín) · leochat / mayachat: lección de ese amigo hecha (frente a él; sale su charla)
+ *  specialchat: charlas de Leo y Maya y lección de la persona especial hechas (sale su charla) · keychain: todo hecho menos el regalo
  */
-export function b1Mission12(s: GameState, stage: 'house' | 'verbs' | 'album'): GameState {
+export function b1Mission12(s: GameState, stage: 'house' | 'verbs' | 'album' | 'garden' | 'leochat' | 'mayachat' | 'specialchat' | 'keychain'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8), closeId(9), closeId(10), closeId(11)])
-  const mine = ['state-verbs-b1']
-  const pos = { house: { x: 3, y: 2 }, verbs: { x: 8, y: 3 }, album: { x: 6, y: 2 } }[stage]
-  const flags = { house: [], verbs: ['b1-12-welcome'], album: ['b1-12-welcome', 'b1-12-verbs'] }[stage]
-  const lessons = { house: [], verbs: [], album: mine }[stage]
-  const base = { ...b, screen: 'explore' as const, sceneId: B1_12_HOUSE.id, pos, defeated: b.defeated.filter((d) => !d.startsWith('b1-12-')), opened: b.opened.filter((o) => !o.startsWith('b1-12-')), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
+  const mine = ['state-verbs-b1', 'memory-verbs-b1', 'relationships-b1', 'empathy-b1']
+  const a = ['b1-12-welcome', 'b1-12-verbs', 'b1-12-photos']
+  const lm = ['b1-12-leo-lesson', 'b1-12-leo-friend', 'b1-12-maya-lesson', 'b1-12-maya-friend']
+  const pos = { house: { x: 3, y: 2 }, verbs: { x: 8, y: 3 }, album: { x: 6, y: 2 }, garden: { x: 9, y: 1 }, leochat: { x: 6, y: 4 }, mayachat: { x: 8, y: 5 }, specialchat: { x: 3, y: 3 }, keychain: { x: 3, y: 3 } }[stage]
+  const flags = { house: [], verbs: ['b1-12-welcome'], album: ['b1-12-welcome', 'b1-12-verbs'], garden: a, leochat: [...a, 'b1-12-leo-lesson'], mayachat: [...a, 'b1-12-maya-lesson'], specialchat: [...a, ...lm, 'b1-12-special-lesson'], keychain: [...a, ...lm, 'b1-12-special-lesson', 'b1-12-special-friend'] }[stage]
+  const lessons = { house: [], verbs: [], album: ['state-verbs-b1'], garden: ['state-verbs-b1'], leochat: ['state-verbs-b1', 'memory-verbs-b1'], mayachat: ['state-verbs-b1', 'relationships-b1'], specialchat: mine, keychain: mine }[stage]
+  const inHouse = stage === 'house' || stage === 'verbs' || stage === 'album'
+  const base = { ...b, screen: 'explore' as const, sceneId: inHouse ? B1_12_HOUSE.id : B1_12_GARDEN.id, pos, defeated: b.defeated.filter((d) => !d.startsWith('b1-12-')), opened: b.opened.filter((o) => !o.startsWith('b1-12-')), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
   return { ...base, opened: add(base.opened, flags), seenLesson: add(base.seenLesson, lessons) as GameState['seenLesson'] }
 }

@@ -137,7 +137,7 @@ ruins=ruinas;inscription=inscripción;inscriptions=inscripciones;sacred=sagrado;
 festival=festival;stage=escenario;concert=concierto;thirsty=sediento, con sed;line-up=cartel (de bandas);headliner=artista principal (de un festival);organizer=organizador, organizadora;avoid=evitar;
 lyrics=letra (de una canción);booth=cabina, puesto;instruments=instrumentos;instrument=instrumento;headphones=audífonos;wristband=pulsera;fame=fama;chorus=coro;verse=verso, estrofa;spectator=espectador, espectadora;spectators=espectadores;rhythm=ritmo;rather=más bien (would rather = preferiría);band=banda (de música);incredible=increíble;smooth=fluido, suave;viewer=espectador, espectadora;animations=animaciones;gameplay=jugabilidad;graphics=gráficos;level=nivel;levels=niveles;console=consola;multiplayer=multijugador;streamer=streamer (quien transmite en vivo);advantage=ventaja;disadvantage=desventaja;teamwork=trabajo en equipo;
 eventually=finalmente, al final;meanwhile=mientras tanto;regret=arrepentirse, arrepentimiento;fate=destino;unavoidable=inevitable;glow=brillar (con luz suave);clippings=recortes (de periódico);spread=esparcirse, extenderse (spread);backpack=mochila;basement=sótano;crown=corona (del reloj);storm=tormenta;thins=se disipa (thin);crossroads=cruce de caminos;abyss=abismo;wish=desear, ojalá (wish + pasado);travellers=viajeros;disappeared=desaparecido, desapareció (disappear);roads=caminos;reached=llegó a, alcanzó (reach);rebuild=reconstruir;stone=piedra;carve=tallar;carving=tallando (carve);earlier=antes, más temprano;
-grandfather=abuelo;album=álbum;souvenir=recuerdo (objeto de un viaje o lugar)
+grandfather=abuelo;album=álbum;remind=recordarle (a alguien);caring=cariñoso, atento;selfish=egoísta;stubborn=terco;keychain=llavero;exam=examen;failed=reprobó, falló (fail);glad=contento, alegre;complicated=complicado;souvenir=recuerdo (objeto de un viaje o lugar)
 `
 
 const BASE: Record<string, string> = Object.fromEntries(
@@ -247,6 +247,7 @@ export const PHRASAL: Record<string, string> = {
   'look forward to': 'tener ganas de, esperar con ilusión',
   'sold out': 'agotado (entradas)',
   'host family': 'familia anfitriona',
+  'close friend': 'amigo cercano',
   'would rather': 'preferiría',
 }
 

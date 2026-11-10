@@ -29,7 +29,8 @@ import { B1_04_FINE_PRINT } from './b1FinePrint'
 import { B1_04_BANK_IDS, B1_04_PRACTICE1_IDS, B1_04_PRACTICE2_IDS } from './questions-b1-04'
 import { B1_REPAIR } from './b1Repair'
 import { B1_12_PHOTOS_MEMORY, B1_12_WELCOME_SCRIPT } from './b1HostHouse'
-import { B1_12_VERBS_IDS } from './questions-b1-12'
+import { B1_12_EMPATHY_IDS, B1_12_MEMORY_IDS, B1_12_RELATIONSHIPS_IDS, B1_12_VERBS_IDS } from './questions-b1-12'
+import { B1_12_GIFT_SCRIPT } from './b1HostGarden'
 import { B1_05_CLOSE_SCRIPT, B1_05_JOB_ADS, B1_05_LETTER_SCRIPT, B1_05_NOTICE_SCRIPT, B1_05_PACKING } from './b1Flat'
 import { B1_05_BANK_IDS, B1_05_PRACTICE2_IDS, B1_05_PRACTICE_IDS } from './questions-b1-05'
 import { B1_06_PRACTICE_IDS } from './questions-b1-06'
@@ -5908,4 +5909,61 @@ NPC_TASKS['b1-12-photos'] = {
     sub: 'El álbum está completo. El jardín te espera: próximamente.',
     say: 'So many good memories.',
   },
+}
+
+// ── B1-12 · Old Friends, bloque B (el jardín; escena en data/b1HostGarden.ts). NO guarda closeId(12) (se guarda en 12-D) ──
+// Cada amigo: lección + práctica; al volver a hablarle, su charla de una sola vez (Explore.tsx, quests b1-12-leo / b1-12-maya / b1-12-special)
+// Leo: lección 'memory-verbs-b1' (él la guía, who 'leo') + práctica b1-12-mv1…mv8. 5 monedas
+NPC_TASKS['b1-12-leo-lesson'] = {
+  npc: 'b1-12-leo',
+  done: 'b1-12-leo-lesson',
+  lesson: 'memory-verbs-b1',
+  activity: 'practice',
+  practice: 'memory-verbs-b1',
+  practiceIds: B1_12_MEMORY_IDS,
+  coins: 5,
+  requires: { id: 'b1-12-photos', text: 'Leo, in the garden.', es: 'Leo, en el jardín.', sub: 'Primero termina el álbum de fotos.' },
+  steps: [],
+  reward: { text: 'Remind me to say thanks.', es: 'Recuérdame dar las gracias.', sub: 'Lección hecha. Leo quiere hablar contigo.', say: 'Remind me to say thanks.' },
+}
+
+// Maya: lección 'relationships-b1' (who 'maya') + práctica b1-12-rl1…rl8. 5 monedas
+NPC_TASKS['b1-12-maya-lesson'] = {
+  npc: 'b1-12-garden-maya',
+  done: 'b1-12-maya-lesson',
+  lesson: 'relationships-b1',
+  activity: 'practice',
+  practice: 'relationships-b1',
+  practiceIds: B1_12_RELATIONSHIPS_IDS,
+  coins: 5,
+  requires: { id: 'b1-12-photos', text: 'Maya, in the garden.', es: 'Maya, en el jardín.', sub: 'Primero termina el álbum de fotos.' },
+  steps: [],
+  reward: { text: 'We made up.', es: 'Hicimos las paces.', sub: 'Lección hecha. Maya quiere hablar contigo.', say: 'We made up.' },
+}
+
+// La persona especial: lección 'empathy-b1' (who 'special') + práctica b1-12-em1…em6. 5 monedas.
+// Pide las charlas de Leo y de Maya (la de Leo se comprueba en Explore.tsx: "Talk to your friends first.")
+NPC_TASKS['b1-12-special-lesson'] = {
+  npc: 'b1-12-special',
+  done: 'b1-12-special-lesson',
+  lesson: 'empathy-b1',
+  activity: 'practice',
+  practice: 'empathy-b1',
+  practiceIds: B1_12_EMPATHY_IDS,
+  coins: 5,
+  requires: { id: 'b1-12-maya-friend', text: 'Talk to your friends first.', es: 'Primero habla con tus amigos.', sub: 'Primero habla con tus amigos.' },
+  steps: [],
+  reward: { text: "I'm here for you.", es: 'Aquí estoy para ti.', sub: 'Lección hecha. Hay algo que quiere decirte.', say: "I'm here for you." },
+}
+
+// El regalo: el llavero con forma de reloj (objeto de historia: bandera b1-12-keychain en opened; se dibuja en el cinturón, heroLook)
+NPC_TASKS['b1-12-gift'] = {
+  npc: 'b1-12-special',
+  done: 'b1-12-keychain',
+  activity: 'script',
+  script: B1_12_GIFT_SCRIPT,
+  coins: 0,
+  requires: { id: 'b1-12-special-friend', text: 'Not yet.', es: 'Todavía no.', sub: 'Primero habla con la persona especial.' },
+  steps: [],
+  reward: { text: 'A little clock for my keys.', es: 'Un relojito para mis llaves.', sub: 'Ganaste el llavero con forma de reloj. Es un objeto de historia: no se vende.', say: 'Thank you!' },
 }
