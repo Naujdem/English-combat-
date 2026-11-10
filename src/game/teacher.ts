@@ -35,6 +35,7 @@ import { B1_02_LANDED, B1_02_LUMEN, B1_02_PRACTICE } from '../data/b1NewCity'
 import { B1_06_ADVERT, B1_06_READ, B1_06_SHELTER } from '../data/b1Shelter'
 import { B1_07_ROOM } from '../data/b1Room'
 import { B1_09_VALLEY } from '../data/b1Valley'
+import { B1_11_ROOM } from '../data/b1ClockRoom'
 import { B1_09_STONES } from '../data/b1TempleStones'
 import { B1_09_TIME } from '../data/b1TempleTime'
 import { B1_06_KENNELS, B1_06_VOLUNTEER1, B1_06_VOLUNTEER2 } from '../data/b1Kennels'
@@ -1034,4 +1035,20 @@ export function b1Mission10(s: GameState, stage: 'liceth' | 'conditional' | 'que
   const base = { ...b, screen: 'explore' as const, sceneId: stage === 'music' || stage === 'spectators' || stage === 'boss' || stage === 'leo' || stage === 'close' ? B1_10_STAGE.id : tent ? B1_10_TENT.id : B1_10_FESTIVAL.id, pos, defeated: b.defeated.filter((d) => !d.startsWith('b1-10-')), opened: b.opened.filter((o) => !o.startsWith('b1-10-')), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
   const beaten = stage === 'boss' ? ['b1-10-spectator1', 'b1-10-spectator2'] : stage === 'leo' || stage === 'close' ? ['b1-10-spectator1', 'b1-10-spectator2', B1_10_BOSS_DEF.id] : []
   return { ...base, opened: add(base.opened, flags), defeated: add(base.defeated, beaten), seenLesson: add(base.seenLesson, lessons) as GameState['seenLesson'] }
+}
+
+/**
+ * Atajos de la misión B1-11 (The First Journey, recuerdo) para el panel del profe. Parten de "B1: abrir el nodo 11".
+ *  room: entra al recuerdo (el cuarto de L, junto al cuaderno; la página 42 sale de nuevo)
+ *  wall: cuaderno hecho (frente al muro de recortes; la lección sale de nuevo) · clock: cuaderno y muro hechos (junto al reloj)
+ */
+export function b1Mission11(s: GameState, stage: 'room' | 'wall' | 'clock'): GameState {
+  const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8), closeId(9), closeId(10)])
+  const mine = ['narrative-b1', 'conditional-3']
+  const present = { ...b, sceneId: B1_10_FESTIVAL.id, pos: { ...B1_10_FESTIVAL.start }, recovered: b.recovered.filter((t) => !mine.includes(t)), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)), opened: b.opened.filter((o) => !o.startsWith('b1-11-')), defeated: b.defeated.filter((d) => !d.startsWith('b1-11-')) }
+  const pos = { room: { x: 2, y: 3 }, wall: { x: 6, y: 2 }, clock: { x: 2, y: 3 } }[stage]
+  const m = enterMemory(present, 11, B1_11_ROOM.id, pos)
+  const flags = { room: [], wall: ['b1-11-notebook'], clock: ['b1-11-notebook', 'b1-11-wall'] }[stage]
+  const lessons = { room: [], wall: ['narrative-b1'], clock: mine }[stage]
+  return { ...m, opened: add(m.opened, flags), seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
 }

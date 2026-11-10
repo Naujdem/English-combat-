@@ -41,6 +41,8 @@ import { B1_10_SONG } from './b1Stage'
 import { B1_10_COND_IDS, B1_10_OPINIONS_IDS, B1_10_PREFER_IDS, B1_10_QUEUE_IDS, B1_10_STREAM_IDS } from './questions-b1-10'
 import { B1_09_CULTURE_IDS, B1_09_JOURNEY_IDS, B1_09_TIME_IDS } from './questions-b1-09'
 import { B1_09_CLOCK_ROOM, B1_09_CLOSE_SCRIPT } from './b1TempleTime'
+import { B1_11_NOTEBOOK_IDS, B1_11_WALL_IDS } from './questions-b1-11'
+import { B1_11_CLOCK_SCRIPT } from './b1ClockRoom'
 import { B1_09_STONE_ROOM, B1_09_WALL_ROOM } from './b1TempleStones'
 import { B1_08_EMPHASIS_IDS, B1_08_PRACTICE_IDS, B1_08_RESULTS_IDS, B1_08_TAGS_IDS, B1_08_TEAM_IDS } from './questions-b1-08'
 import type { PredictContent } from '../components/Predict'
@@ -5715,4 +5717,43 @@ NPC_TASKS['b1-10-close'] = {
     sub: 'Ganaste la pulsera del festival. Dos fragmentos se juntaron: se abrió el recuerdo 11.',
     say: 'Festival night!',
   },
+}
+
+// ── B1-11 · The First Journey, bloque A (recuerdo 11; escena en data/b1ClockRoom.ts). NO guarda closeId(11) (se guarda en 11-D) ──
+// El cuaderno de L sobre el escritorio: página 42 (lección 'narrative-b1') + práctica b1-11-n1…n8. Al terminar, el muro
+NPC_TASKS['b1-11-notebook'] = {
+  npc: 'b1-11-notebook',
+  done: 'b1-11-notebook',
+  lesson: 'narrative-b1',
+  notebookPage: 42,
+  activity: 'practice',
+  practice: 'narrative-b1',
+  practiceIds: B1_11_NOTEBOOK_IDS,
+  steps: [],
+  reward: { text: 'But the clock was warm.', es: 'Pero el reloj estaba tibio.', sub: 'Página 42 terminada. El muro de recortes te espera.', say: 'The clock was warm.' },
+}
+
+// El muro de recortes y fotos: lección 'conditional-3' + práctica b1-11-t1…t8. Al terminar, el reloj
+NPC_TASKS['b1-11-wall'] = {
+  npc: 'b1-11-wall',
+  done: 'b1-11-wall',
+  lesson: 'conditional-3',
+  activity: 'practice',
+  practice: 'conditional-3',
+  practiceIds: B1_11_WALL_IDS,
+  requires: { id: 'b1-11-notebook', text: 'The wall of clippings.', es: 'El muro de recortes.', sub: 'Primero lee tu cuaderno (página 42).' },
+  steps: [],
+  reward: { text: 'If only I had known.', es: 'Si tan solo lo hubiera sabido.', sub: 'Lección hecha. El reloj brilla sobre la mesa.', say: 'If only I had known.' },
+}
+
+// El reloj: secuencia fija (sin práctica), 5 monedas. Al terminar, la puerta muestra "Próximamente" (bloque 11-B). NO guarda closeId(11)
+NPC_TASKS['b1-11-clock'] = {
+  npc: 'b1-11-clock',
+  done: 'b1-11-clock',
+  activity: 'script',
+  script: B1_11_CLOCK_SCRIPT,
+  coins: 5,
+  requires: { id: 'b1-11-wall', text: 'The clock.', es: 'El reloj.', sub: 'Primero lee el muro de recortes.' },
+  steps: [],
+  reward: { text: '(You turn the crown. The room fades to white.)', es: '(Giras la corona. El cuarto se desvanece en blanco.)', sub: 'La puerta de la derecha ya se puede abrir.' },
 }

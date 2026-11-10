@@ -47,6 +47,7 @@ import { B1_06_QUESTIONS } from './questions-b1-06'
 import { B1_07_QUESTIONS } from './questions-b1-07'
 import { B1_08_QUESTIONS } from './questions-b1-08'
 import { B1_09_QUESTIONS } from './questions-b1-09'
+import { B1_11_QUESTIONS } from './questions-b1-11'
 import { B1_10_QUESTIONS } from './questions-b1-10'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
@@ -414,6 +415,7 @@ export const QUESTIONS: Question[] = [
   ...B1_07_QUESTIONS,
   ...B1_08_QUESTIONS,
   ...B1_09_QUESTIONS,
+  ...B1_11_QUESTIONS,
   ...B1_10_QUESTIONS,
   // ── Escucha real (comprensión)
   ...LISTEN_QUESTIONS,
@@ -1229,6 +1231,26 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
     lesson: [
       'graphics = gráficos · gameplay = jugabilidad · multiplayer = multijugador · level = nivel · console = consola.',
       'The graphics are incredible, the gameplay is really smooth, and the multiplayer is so much fun.',
+    ],
+  },
+  'narrative-b1': {
+    name: 'Contar una historia: tiempos narrativos',
+    level: 'B1',
+    lesson: [
+      'En una historia, el pasado simple cuenta los hechos principales: abrí la caja. Tomé el reloj.',
+      'El pasado continuo pone la escena: llovía mientras yo caminaba a casa.',
+      'El past perfect muestra lo que pasó antes: para cuando llegué, el tren ya se había ido.',
+      'Palabras de historia: suddenly, eventually, meanwhile, by the time.',
+    ],
+  },
+  'conditional-3': {
+    name: 'Tercer condicional',
+    level: 'B1',
+    lesson: [
+      'Forma: If + past perfect, would have + participio. Habla del pasado, y el pasado no se puede cambiar.',
+      'Si hubiera cerrado la puerta, el humo no se habría esparcido.',
+      'Pregunta: ¿Qué habrías hecho? Respuesta corta: habría llamado a alguien.',
+      'Palabras de arrepentimiento: regret, if only, change, fate, unavoidable. ¡Si tan solo lo hubiera sabido!',
     ],
   },
   'opinions-b1': {
