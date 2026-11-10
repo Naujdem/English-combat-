@@ -14,9 +14,9 @@ export const B1_MEMORIES: B1Memory[] = [
     summary: 'Un incendio en el edificio donde L daba clases de noche. L gritó para sacar a todos hasta quedarse sin voz. Un amigo, a su lado, no dijo nada.',
   },
   { n: 3, title: 'Words on a Screen', summary: 'L perdió la voz y los médicos dijeron que pasaría mucho tiempo sin hablar. Empezó a escribir mensajes a su amiga, a su director y a sus alumnos, y un cuaderno le ayudó a seguir enseñando sin voz.' },
-  { n: 5, title: 'Nothing Left', summary: '(pendiente)' },
-  { n: 7, title: 'The Underworld', summary: '(pendiente)' },
-  { n: 9, title: 'Temples of Stones and Time', summary: '(pendiente)' },
-  { n: 11, title: 'The First Journey', summary: '(pendiente)' },
+  { n: 5, title: 'Nothing Left', summary: 'L perdió el trabajo y no pudo pagar su apartamento. Entre avisos de desalojo y cuentas del banco, recordó cómo era su vida antes de perder la voz. Al final, un mensaje de su amiga le pidió que no se rindiera, y L se quedó sin casa y sin dinero.' },
+  { n: 7, title: 'The Underworld', summary: 'Sin trabajo ni dinero, L leyó en las noticias sobre unos científicos y su aparato. Entró al mercado negro del bajo mundo, siguió las pistas y, tras vencer a The Broker, robó el aparato.' },
+  { n: 9, title: 'Temples of Stones and Time', summary: 'L viajó por valles y templos buscando respuestas. En el Temple of Stones y el Temple of Time despertó inscripciones antiguas y venció al Keeper of Hours. Con el reloj y el aparato, supo que podía volver al pasado.' },
+  { n: 11, title: 'The First Journey', summary: 'L usó el reloj por primera vez para volver a la noche del incendio. Lo intentó todo —la alarma, la puerta, los bomberos—, pero el fuego empezó siempre. En el Temple of Roads, las piedras le dijeron que un hecho fijo no puede cambiarse, y que una voz sí puede quitarse.' },
   { n: 13, title: 'The Price', summary: '(pendiente)' },
 ]

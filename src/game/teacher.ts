@@ -38,6 +38,7 @@ import { B1_09_VALLEY } from '../data/b1Valley'
 import { B1_11_ROOM } from '../data/b1ClockRoom'
 import { B1_11_FIRE } from '../data/b1FireNight'
 import { B1_11_ROADS } from '../data/b1TempleRoads'
+import { B1_11_POINT } from '../data/b1FixedPoint'
 import { B1_09_STONES } from '../data/b1TempleStones'
 import { B1_09_TIME } from '../data/b1TempleTime'
 import { B1_06_KENNELS, B1_06_VOLUNTEER1, B1_06_VOLUNTEER2 } from '../data/b1Kennels'
@@ -1045,20 +1046,22 @@ export function b1Mission10(s: GameState, stage: 'liceth' | 'conditional' | 'que
  *  wall: cuaderno hecho (frente al muro de recortes; la lección sale de nuevo) · clock: cuaderno y muro hechos (junto al reloj)
  *  fire: reloj usado (en el pasillo del incendio, junto a la página 43) · whatif: página 43 hecha (frente a la alarma)
  *  echo: What If hecho (frente a los Ash Echo) · exit: Ash Echo vencidos (junto a la escalera)
+ *  boss: inscripciones del puente hechas (en la cámara, frente a The Fixed Point) · close: jefe vencido (junto a la piedra)
  *  roads: noche del incendio hecha (en el Temple of Roads, junto a la página 44) · ins: página 44 hecha (frente al muro) · bridge: inscripciones hechas (frente al puente)
  */
-export function b1Mission11(s: GameState, stage: 'room' | 'wall' | 'clock' | 'fire' | 'whatif' | 'echo' | 'exit' | 'roads' | 'ins' | 'bridge'): GameState {
+export function b1Mission11(s: GameState, stage: 'room' | 'wall' | 'clock' | 'fire' | 'whatif' | 'echo' | 'exit' | 'roads' | 'ins' | 'bridge' | 'boss' | 'close'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8), closeId(9), closeId(10)])
   const mine = ['narrative-b1', 'conditional-3', 'pastperfect-b1', 'wish-b1', 'roads-b1']
   const b11 = ['narrative-b1', 'conditional-3', 'pastperfect-b1']
   const present = { ...b, sceneId: B1_10_FESTIVAL.id, pos: { ...B1_10_FESTIVAL.start }, recovered: b.recovered.filter((t) => !mine.includes(t)), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)), opened: b.opened.filter((o) => !o.startsWith('b1-11-')), defeated: b.defeated.filter((d) => !d.startsWith('b1-11-')) }
-  const pos = { room: { x: 2, y: 3 }, wall: { x: 6, y: 2 }, clock: { x: 2, y: 3 }, fire: { x: 1, y: 2 }, whatif: { x: 8, y: 1 }, echo: { x: 10, y: 1 }, exit: { x: 13, y: 1 }, roads: { x: 1, y: 3 }, ins: { x: 3, y: 2 }, bridge: { x: 4, y: 3 } }[stage]
+  const pos = { room: { x: 2, y: 3 }, wall: { x: 6, y: 2 }, clock: { x: 2, y: 3 }, fire: { x: 1, y: 2 }, whatif: { x: 8, y: 1 }, echo: { x: 10, y: 1 }, exit: { x: 13, y: 1 }, roads: { x: 1, y: 3 }, ins: { x: 3, y: 2 }, bridge: { x: 4, y: 3 }, boss: { x: 4, y: 3 }, close: { x: 7, y: 2 } }[stage]
   const fire = stage === 'fire' || stage === 'whatif' || stage === 'echo' || stage === 'exit'
   const temple = stage === 'roads' || stage === 'ins' || stage === 'bridge'
-  const m = enterMemory(present, 11, temple ? B1_11_ROADS.id : fire ? B1_11_FIRE.id : B1_11_ROOM.id, pos)
+  const point = stage === 'boss' || stage === 'close'
+  const m = enterMemory(present, 11, point ? B1_11_POINT.id : temple ? B1_11_ROADS.id : fire ? B1_11_FIRE.id : B1_11_ROOM.id, pos)
   const a = ['b1-11-notebook', 'b1-11-wall', 'b1-11-clock']
   const bb = [...a, 'b1-11-page43', 'b1-11-whatif', 'b1-11-fire-out']
-  const flags = { room: [], wall: ['b1-11-notebook'], clock: ['b1-11-notebook', 'b1-11-wall'], fire: a, whatif: [...a, 'b1-11-page43'], echo: [...a, 'b1-11-page43', 'b1-11-whatif'], exit: [...a, 'b1-11-page43', 'b1-11-whatif'], roads: bb, ins: [...bb, 'b1-11-page44'], bridge: [...bb, 'b1-11-page44', 'b1-11-roads-ins'] }[stage]
-  const lessons = { room: [], wall: ['narrative-b1'], clock: ['narrative-b1', 'conditional-3'], fire: ['narrative-b1', 'conditional-3'], whatif: b11, echo: b11, exit: b11, roads: b11, ins: [...b11, 'wish-b1'], bridge: mine }[stage]
-  return { ...m, opened: add(m.opened, flags), defeated: stage === 'exit' || temple ? add(m.defeated, ['b1-11-echo1', 'b1-11-echo2']) : m.defeated, seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
+  const flags = { room: [], wall: ['b1-11-notebook'], clock: ['b1-11-notebook', 'b1-11-wall'], fire: a, whatif: [...a, 'b1-11-page43'], echo: [...a, 'b1-11-page43', 'b1-11-whatif'], exit: [...a, 'b1-11-page43', 'b1-11-whatif'], roads: bb, ins: [...bb, 'b1-11-page44'], bridge: [...bb, 'b1-11-page44', 'b1-11-roads-ins'], boss: [...bb, 'b1-11-page44', 'b1-11-roads-ins'], close: [...bb, 'b1-11-page44', 'b1-11-roads-ins'] }[stage]
+  const lessons = { room: [], wall: ['narrative-b1'], clock: ['narrative-b1', 'conditional-3'], fire: ['narrative-b1', 'conditional-3'], whatif: b11, echo: b11, exit: b11, roads: b11, ins: [...b11, 'wish-b1'], bridge: mine, boss: mine, close: mine }[stage]
+  return { ...m, opened: add(m.opened, flags), defeated: stage === 'exit' || temple || point ? add(m.defeated, stage === 'close' ? ['b1-11-echo1', 'b1-11-echo2', 'b1-11-boss'] : ['b1-11-echo1', 'b1-11-echo2']) : m.defeated, seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
 }

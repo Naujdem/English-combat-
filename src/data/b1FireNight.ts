@@ -1,3 +1,5 @@
+import { B1_11_DONE_TEXT } from './b1FixedPoint'
+import { closeId } from './b1World'
 import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
 import type { WhatIfContent } from '../components/WhatIf'
@@ -136,7 +138,7 @@ export const B1_11_FIRE: SceneDef = {
   ],
   intro: {
     first: 'The night of the fire, again. — La noche del incendio, otra vez.',
-    later: () => 'The night of the fire, again. — La noche del incendio, otra vez.',
+    later: (s) => (s.opened.includes(closeId(11)) ? B1_11_DONE_TEXT : 'The night of the fire, again. — La noche del incendio, otra vez.'),
   },
 }
 

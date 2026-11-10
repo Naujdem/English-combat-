@@ -19,6 +19,9 @@ const WI = 'wish-b1' as const
 const RO = 'roads-b1' as const
 const PAGE44 = ['b1-11-page44']
 const ROADS = ['b1-11-roads-ins']
+/** Bloque D: el jefe The Fixed Point (data/b1FixedPoint.ts). Fase 1 tercer condicional · fase 2 wish y past perfect */
+const BOSS_C = ['b1-11-boss', 'b1-11-boss-c']
+const BOSS_W = ['b1-11-boss', 'b1-11-boss-w']
 
 export const B1_11_NOTEBOOK_IDS = ['b1-11-n1', 'b1-11-n2', 'b1-11-n3', 'b1-11-n4', 'b1-11-n5', 'b1-11-n6', 'b1-11-n7', 'b1-11-n8']
 export const B1_11_WALL_IDS = ['b1-11-t1', 'b1-11-t2', 'b1-11-t3', 'b1-11-t4', 'b1-11-t5', 'b1-11-t6', 'b1-11-t7', 'b1-11-t8']
@@ -151,4 +154,42 @@ export const B1_11_QUESTIONS: Question[] = [
     tags: ROADS,
   },
   { id: 'b1-11-r8', topic: RO, kind: 'fix', prompt: 'If only I would have stayed!', options: ['If only I had stayed!', 'If only I stay!', 'If only I have stayed!'], answer: 0, tip: 'If only + had + participio.', tags: ROADS },
+  // Bloque D · jefe The Fixed Point, fase 1: tercer condicional
+  { id: 'b1-11-bc1', topic: C3, kind: 'fix', prompt: 'If I would have run faster, I would have caught it.', options: ['If I run faster, I would have caught it.', 'If I would run faster, I would have caught it.', 'If I had run faster, I would have caught it.'], answer: 2, tip: 'If + past perfect.', tags: BOSS_C },
+  { id: 'b1-11-bc2', topic: C3, kind: 'fix', prompt: 'If she had knew, she would have stayed.', options: ['If she had known, she would have stayed.', 'If she had knowed, she would have stayed.', 'If she has known, she would have stayed.'], answer: 0, tip: 'Participio de know: known.', tags: BOSS_C },
+  { id: 'b1-11-bc3', topic: C3, prompt: 'If they ___ the alarm, everyone would have escaped.', options: ['had heard', 'would hear', 'hear'], answer: 0, tip: 'If + past perfect.', tags: BOSS_C },
+  { id: 'b1-11-bc4', topic: C3, prompt: 'He ___ been safe if he had left earlier.', options: ['will have', 'would have', 'had'], answer: 1, tip: 'would have + participio.', tags: BOSS_C },
+  { id: 'b1-11-bc5', topic: C3, prompt: 'If you ___ me, I would have helped you.', options: ['ask', 'would ask', 'had asked'], answer: 2, tip: 'If + past perfect.', tags: BOSS_C },
+  { id: 'b1-11-bc6', topic: C3, kind: 'order', prompt: 'Si hubiéramos corrido, habríamos llegado a tiempo.', options: ['If', 'we', 'had', 'run,', 'we', 'would', 'have', 'arrived', 'on', 'time.'], answer: 0, tip: 'If + had + participio, would have + participio.', tags: BOSS_C },
+  {
+    id: 'b1-11-bc7',
+    topic: C3,
+    kind: 'listen',
+    audio: "If I had pulled the alarm earlier, they would have escaped. If I had closed the door, the smoke wouldn't have spread. But the fire started again, every time.",
+    voice: 'female',
+    prompt: '¿Qué pasaba cada vez?',
+    options: ['Nadie llegaba.', 'El fuego empezaba otra vez.', 'La puerta se rompía.'],
+    answer: 1,
+    tip: 'The fire started again, every time.',
+    tags: BOSS_C,
+  },
+  // Bloque D · jefe, fase 2: wish y past perfect
+  { id: 'b1-11-bw1', topic: WI, kind: 'fix', prompt: 'I wish I would have known the truth.', options: ['I wish I know the truth.', 'I wish I had known the truth.', 'I wish I have known the truth.'], answer: 1, tip: 'wish + past perfect.', tags: BOSS_W },
+  { id: 'b1-11-bw2', topic: WI, kind: 'fix', prompt: 'I wish you know the answer.', options: ['I wish you knew the answer.', 'I wish you will know the answer.', 'I wish you are knowing the answer.'], answer: 0, tip: 'wish + pasado simple.', tags: BOSS_W },
+  { id: 'b1-11-bw3', topic: PP, kind: 'fix', prompt: 'She had already went home.', options: ['She had already go home.', 'She had already goes home.', 'She had already gone home.'], answer: 2, tip: 'Participio de go: gone.', tags: BOSS_W },
+  { id: 'b1-11-bw4', topic: WI, prompt: 'I wish I ___ him last night. Now he is gone.', options: ['see', 'am seeing', 'had seen'], answer: 2, tip: 'wish + past perfect.', tags: BOSS_W },
+  { id: 'b1-11-bw5', topic: PP, prompt: 'By the time I arrived, the fire ___ already started.', options: ['had', 'has', 'was'], answer: 0, tip: 'had already started.', tags: BOSS_W },
+  { id: 'b1-11-bw6', topic: WI, kind: 'order', prompt: 'Ojalá hubiera escuchado.', options: ['I', 'wish', 'I', 'had', 'listened.'], answer: 0, tip: 'wish + had + participio.', tags: BOSS_W },
+  {
+    id: 'b1-11-bw7',
+    topic: PP,
+    kind: 'listen',
+    audio: 'I wish I had known it was a fixed point. I had tried everything before I understood it. If only I had listened to the stones!',
+    voice: 'male',
+    prompt: '¿Qué había hecho antes de entenderlo?',
+    options: ['Había intentado todo.', 'Había dormido.', 'Había viajado a casa.'],
+    answer: 0,
+    tip: 'I had tried everything.',
+    tags: BOSS_W,
+  },
 ]

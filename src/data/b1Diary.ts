@@ -494,4 +494,54 @@ export const B1_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B1-11 · The First Journey (recuerdo 11). Se abre al cerrar la misión (closeId(11)). Con página del Diario de L
+  {
+    id: 'b1-mission-11',
+    title: 'Misión 11: The First Journey',
+    unlock: closeId(11),
+    words: [
+      { title: 'Arrepentimiento', words: [['regret', 'arrepentimiento'], ['if only', 'si tan solo'], ['change', 'cambiar'], ['fate', 'destino'], ['unavoidable', 'inevitable']] },
+      { title: 'Narración', words: [['suddenly', 'de repente'], ['eventually', 'finalmente'], ['meanwhile', 'mientras tanto'], ['by the time', 'para cuando']] },
+      { title: 'El templo', words: [['bridge', 'puente'], ['road', 'camino'], ['crossroads', 'cruce de caminos'], ['fixed point', 'hecho fijo']] },
+    ],
+    versions: [
+      {
+        id: 'b1-mission-11-l',
+        kind: 'L',
+        tense: 'p',
+        tab: 'Diario de L',
+        title: 'I tried everything',
+        unlock: closeId(11),
+        frame: 'Una página de L, escrita en el Temple of Roads, con la tinta todavía húmeda.',
+        lines: [
+          { en: 'I tried everything. The fire [started]p again every time.', es: 'Lo intenté todo. El fuego empezó otra vez cada vez.' },
+          { en: "If I [had known]p it was a fixed point, I [wouldn't have tried]p.", es: 'Si hubiera sabido que era un hecho fijo, no lo habría intentado.' },
+          { en: 'I wish I [had listened]p to the stones sooner.', es: 'Ojalá hubiera escuchado antes a las piedras.' },
+          { en: 'Some roads always [meet]n.', es: 'Algunos caminos siempre se encuentran.' },
+        ],
+        questions: [
+          { q: 'What happened every time L tried?', options: ['The fire started again.', 'The fire stopped.', 'The friend left.'], answer: 0, tip: 'La página dice: "The fire started again every time".' },
+          { q: 'What does L wish?', options: ['To have more money.', 'To have listened to the stones sooner.', 'To go home.'], answer: 1, tip: 'La página dice: "I wish I had listened to the stones sooner".' },
+        ],
+      },
+      {
+        id: 'b1-mission-11-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'The first journey',
+        unlock: closeId(11),
+        frame: 'El viaje completo, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'By the time L [arrived]p, the fire [had started]p.', es: 'Para cuando L llegó, el fuego ya había empezado.' },
+          { en: 'If L [had closed]p the door, nothing [would have changed]p.', es: 'Si L hubiera cerrado la puerta, nada habría cambiado.' },
+          { en: "At the temple, the stones [said]p that a fixed point [can't be changed]n.", es: 'En el templo, las piedras dijeron que un hecho fijo no puede cambiarse.' },
+        ],
+        questions: [
+          { q: 'What had started when L arrived?', options: ['The fire.', 'The class.', 'The rain.'], answer: 0, tip: 'El diario dice: "the fire had started".' },
+          { q: "What can't be changed?", options: ['A broken door.', 'A voice.', 'A fixed point.'], answer: 2, tip: 'El diario dice: "a fixed point can\'t be changed".' },
+          { q: 'Where did the stones speak?', options: ['At the school.', 'At the temple.', 'At the market.'], answer: 1, tip: 'El diario dice: "At the temple, the stones said…".' },
+        ],
+      },
+    ],
+  },
 ]
