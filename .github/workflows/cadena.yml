@@ -1,0 +1,18 @@
+# Cadena: corre solo en cada push y en cada pull request. No usa internet ni LanguageTool.
+# Revisa por datos que cada escenario se pueda terminar (puertas, tareas encadenadas, cierres) y la estructura del banco.
+# Si encuentra algo, la ejecución sale en rojo y la lista queda en el resumen.
+name: Cadena
+on:
+  push:
+  pull_request:
+jobs:
+  cadena:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run validate -- --strict
