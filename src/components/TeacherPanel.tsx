@@ -315,6 +315,10 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission14(s, 'lounge'))}>B1-14: sala de la residencia</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission14(s, 'reported'))}>B1-14: lección de Leo (reported speech)</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission14(s, 'saytell'))}>B1-14: lección de Leo (say / tell)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission14(s, 'verbs'))}>B1-14: lección de Leo (explain / admit / promise)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission14(s, 'reporter'))}>B1-14: Reporter</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission14(s, 'news'))}>B1-14: noticias</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission14(s, 'indirect'))}>B1-14: preguntas indirectas</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>

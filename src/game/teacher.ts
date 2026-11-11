@@ -1131,13 +1131,17 @@ export function b1Mission13(s: GameState, stage: 'start' | 'wall' | 'hall' | 'ri
  * Atajos de la misión B1-14 (Voices, presente) para el panel del profe. Parten de las misiones 1 a 13 cerradas.
  *  lounge: en la sala de la residencia, frente a la persona especial · reported: reunión hecha (frente a Leo; la lección sale de nuevo)
  *  saytell: primera lección hecha (frente a Leo; la segunda lección sale de nuevo)
+ *  verbs: say / tell hecho (frente a Leo) · reporter: verbos hechos (frente a Maya) · news: Reporter hecho (frente a la tele)
+ *  indirect: noticias vistas (frente a Leo)
  */
-export function b1Mission14(s: GameState, stage: 'lounge' | 'reported' | 'saytell'): GameState {
+export function b1Mission14(s: GameState, stage: 'lounge' | 'reported' | 'saytell' | 'verbs' | 'reporter' | 'news' | 'indirect'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8), closeId(9), closeId(10), closeId(11), closeId(12), 'b1-12-fragments', closeId(13)])
-  const mine = ['reported-speech-b1', 'say-tell-b1']
-  const pos = { lounge: { x: 3, y: 4 }, reported: { x: 6, y: 3 }, saytell: { x: 6, y: 3 } }[stage]
-  const flags = { lounge: [], reported: ['b1-14-gather'], saytell: ['b1-14-gather', 'b1-14-reported'] }[stage]
-  const lessons = { lounge: [], reported: [], saytell: ['reported-speech-b1'] }[stage]
+  const mine = ['reported-speech-b1', 'say-tell-b1', 'reporting-verbs-b1', 'indirect-questions-b1']
+  const leo = { x: 6, y: 3 }
+  const pos = { lounge: { x: 3, y: 4 }, reported: leo, saytell: leo, verbs: leo, reporter: { x: 8, y: 5 }, news: { x: 9, y: 3 }, indirect: leo }[stage]
+  const order = ['b1-14-gather', 'b1-14-reported', 'b1-14-saytell', 'b1-14-verbs', 'b1-14-reporter', 'b1-14-news']
+  const flags = order.slice(0, ['lounge', 'reported', 'saytell', 'verbs', 'reporter', 'news', 'indirect'].indexOf(stage))
+  const lessons = mine.slice(0, { lounge: 0, reported: 0, saytell: 1, verbs: 2, reporter: 3, news: 3, indirect: 3 }[stage])
   const base = { ...b, screen: 'explore' as const, sceneId: B1_14_LOUNGE.id, pos, defeated: b.defeated.filter((d) => !d.startsWith('b1-14-')), opened: b.opened.filter((o) => !o.startsWith('b1-14-')), recovered: b.recovered.filter((t) => !mine.includes(t)), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
   return { ...base, opened: add(base.opened, flags), seenLesson: add(base.seenLesson, lessons) as GameState['seenLesson'] }
 }

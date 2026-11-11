@@ -34,8 +34,9 @@ import { B1_13_KEEPER_A_IDS, B1_13_KEEPER_F_IDS, B1_13_NOTEBOOK2_IDS, B1_13_NOTE
 import { B1_13_DECISION_SCRIPT, B1_13_JOURNAL_SCRIPT } from './b1TempleCamp'
 import { B1_13_PLANNER_CONTENT, B1_13_WINDOW_SCRIPT } from './b1Window2056'
 import { B1_13_CLOSE_SCRIPT } from './b1SchoolMorning'
-import { B1_14_GATHER_SCRIPT } from './b1Lounge'
-import { B1_14_REPORTED_IDS, B1_14_SAYTELL_IDS } from './questions-b1-14'
+import { B1_14_GATHER_SCRIPT, B1_14_NEWS_SCRIPT, B1_14_REPORTER_GAME } from './b1Lounge'
+import { B1_14_INDIRECT_IDS, B1_14_REPORTED_IDS, B1_14_SAYTELL_IDS, B1_14_VERBS_IDS } from './questions-b1-14'
+import type { ReporterContent } from '../components/Reporter'
 import type { FuturePlannerContent } from '../components/FuturePlanner'
 import { B1_13_KEEPER_INTRO_SCRIPT, B1_13_KEEPER_PRICE, B1_13_RIDDLE_A, B1_13_RIDDLE_F } from './b1EchoHall'
 import { B1_13_PRICE_ROOM } from './b1TempleEchoes'
@@ -90,9 +91,11 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music' | 'whatif'
+  activity?: 'reporter' | 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music' | 'whatif'
   /** Para activity 'music' (Music Challenge, B1-10): la canción con huecos (components/MusicChallenge.tsx) */
   music?: MusicContent
+  /** Para activity 'reporter' (Reporter, B1-14): las frases de los recuerdos que se pasan a estilo indirecto (components/Reporter.tsx) */
+  reporter?: ReporterContent
   /** Para activity 'whatif' (What If…, B1-11): los intentos de cambiar la noche del incendio (components/WhatIf.tsx) */
   whatif?: WhatIfContent
   /** Para activity 'whichdog' (Which Dog?, B1-06): las peticiones de Nayi, en orden */
@@ -6350,7 +6353,7 @@ NPC_TASKS['b1-14-reported'] = {
   },
 }
 
-// Leo otra vez: lección 'say-tell-b1' + práctica b1-14-st1…st8. 5 monedas. La puerta sigue en "Próximamente" (bloque 14-B)
+// Leo otra vez: lección 'say-tell-b1' + práctica b1-14-st1…st8. 5 monedas
 NPC_TASKS['b1-14-saytell'] = {
   npc: 'b1-14-leo',
   done: 'b1-14-saytell',
@@ -6364,7 +6367,79 @@ NPC_TASKS['b1-14-saytell'] = {
   reward: {
     text: 'Now tell us what he said.',
     es: 'Ahora cuéntanos qué dijo.',
-    sub: 'Lección hecha. Lo que sigue llega en el siguiente bloque.',
+    sub: 'Lección hecha. Vuelve a hablar con Leo: quedan tres verbos útiles.',
     say: 'Now tell us what he said.',
+  },
+}
+
+// ── B1-14 · Voices, bloque B (la misma sala). NO guarda closeId(14) ──
+// Leo, tercera vez: lección 'reporting-verbs-b1' + práctica b1-14-rv1…rv6. 5 monedas
+NPC_TASKS['b1-14-verbs'] = {
+  npc: 'b1-14-leo',
+  done: 'b1-14-verbs',
+  lesson: 'reporting-verbs-b1',
+  activity: 'practice',
+  practice: 'reporting-verbs-b1',
+  practiceIds: B1_14_VERBS_IDS,
+  coins: 5,
+  requires: { id: 'b1-14-saytell', text: 'Leo, in the common room.', es: 'Leo, en la sala común.', sub: 'Primero termina la lección de say, tell y speak.' },
+  steps: [],
+  reward: {
+    text: 'He admitted it. He promised it. Now tell them.',
+    es: 'Lo admitió. Lo prometió. Ahora cuéntaselo.',
+    sub: 'Lección hecha. Habla con Maya: tus amigos quieren oír lo que viste.',
+    say: 'Now tell them.',
+  },
+}
+
+// Maya: el minijuego Reporter (contar los recuerdos en estilo indirecto). 10 monedas; con 0-1 errores, escudo
+NPC_TASKS['b1-14-reporter'] = {
+  npc: 'b1-14-maya',
+  done: 'b1-14-reporter',
+  activity: 'reporter',
+  reporter: B1_14_REPORTER_GAME,
+  coins: 10,
+  requires: { id: 'b1-14-verbs', text: "Breathe. We're listening.", es: 'Respira. Te escuchamos.', sub: 'Primero termina las lecciones de Leo.' },
+  steps: [],
+  reward: {
+    text: 'Now they know what you know.',
+    es: 'Ahora ellos saben lo que tú sabes.',
+    sub: 'Maya enciende la tele: mira las noticias.',
+    say: 'Now they know what you know.',
+  },
+}
+
+// La tele: el boletín de Manuel desde el puerto (secuencia fija; la pasiva de las noticias). 5 monedas
+NPC_TASKS['b1-14-news'] = {
+  npc: 'b1-14-tv',
+  done: 'b1-14-news',
+  activity: 'script',
+  script: B1_14_NEWS_SCRIPT,
+  coins: 5,
+  requires: { id: 'b1-14-reporter', text: 'The TV is off.', es: 'La tele está apagada.', sub: 'Primero cuéntales los recuerdos a tus amigos (habla con Maya).' },
+  steps: [],
+  reward: {
+    text: 'We have to ask the right questions. Politely.',
+    es: 'Tenemos que hacer las preguntas correctas. Con amabilidad.',
+    sub: 'Habla con Leo antes de salir.',
+  },
+}
+
+// Leo, cuarta vez: lección 'indirect-questions-b1' + práctica b1-14-iq1…iq8. 5 monedas. La puerta sigue en "Próximamente" (bloque 14-C)
+NPC_TASKS['b1-14-indirect'] = {
+  npc: 'b1-14-leo',
+  done: 'b1-14-indirect',
+  lesson: 'indirect-questions-b1',
+  activity: 'practice',
+  practice: 'indirect-questions-b1',
+  practiceIds: B1_14_INDIRECT_IDS,
+  coins: 5,
+  requires: { id: 'b1-14-news', text: 'Leo, in the common room.', es: 'Leo, en la sala común.', sub: 'Primero mira las noticias en la tele.' },
+  steps: [],
+  reward: {
+    text: 'Do you know where it started?',
+    es: '¿Sabe dónde empezó?',
+    sub: 'Lección hecha. El puerto te espera: próximamente.',
+    say: 'Do you know where it started?',
   },
 }

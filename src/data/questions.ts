@@ -1288,6 +1288,26 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'that es opcional: He said he was sorry.',
     ],
   },
+  'reporting-verbs-b1': {
+    name: 'Verbos para reportar: explain, admit, promise',
+    level: 'B1',
+    lesson: [
+      'Funcionan como said: verbo + that + un paso atrás. He explained that he had tried everything.',
+      'explain something to someone: He explained the plan to me. (No: He explained me the plan.)',
+      'admit: decir que algo malo es verdad. He admitted that he had stolen the device.',
+      'promise + that + would, o promise + to + verbo: He promised to come back.',
+    ],
+  },
+  'indirect-questions-b1': {
+    name: 'Preguntas indirectas',
+    level: 'B1',
+    lesson: [
+      'Más amables: Do you know… / Can you tell me… / Could you tell me… / I wonder…',
+      'Orden normal (sujeto + verbo): Do you know where the harbour is?',
+      'Sin do / does / did: Do you know where it started?',
+      'Preguntas de sí o no: if. Do you know if it is dangerous?',
+    ],
+  },
   'say-tell-b1': {
     name: 'Say, tell y speak',
     level: 'B1',
