@@ -52,6 +52,7 @@ import { B1_13_QUESTIONS } from './questions-b1-13'
 import { B1_10_QUESTIONS } from './questions-b1-10'
 import { B1_12_QUESTIONS } from './questions-b1-12'
 import { B1_14_QUESTIONS } from './questions-b1-14'
+import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -420,6 +421,7 @@ export const QUESTIONS: Question[] = [
   ...B1_09_QUESTIONS,
   ...B1_12_QUESTIONS,
   ...B1_14_QUESTIONS,
+  ...B1_EXTRA_QUESTIONS,
   ...B1_11_QUESTIONS,
   ...B1_13_QUESTIONS,
   ...B1_10_QUESTIONS,
@@ -1306,6 +1308,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Orden normal (sujeto + verbo): Do you know where the harbour is?',
       'Sin do / does / did: Do you know where it started?',
       'Preguntas de sí o no: if. Do you know if it is dangerous?',
+    ],
+  },
+  'charity-b1': {
+    name: 'Logros y la carrera (Charity Run)',
+    level: 'B1',
+    lesson: [
+      'Logros: achieve a goal · beat a record · raise money · win a medal · take part in a race.',
+      'Past continuous + past simple: I was running when I fell.',
+      'La acción larga: was / were + verbo con -ing. La corta que la interrumpe: pasado simple.',
     ],
   },
   'say-tell-b1': {

@@ -1220,6 +1220,25 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
     doneLine: { text: 'Nobody knows where it started.', es: 'Nadie sabe dónde empezó.' },
   },
+  // ── B1 · Extras, Charity Run (data/b1CharityRun.ts) ──
+  // La entrenadora Ilva (mismo aspecto que b1-08-ilva): tareas b1-s1-coach y b1-s1-close
+  'b1-s1-ilva': {
+    name: 'La entrenadora Ilva',
+    look: { shirt: '#c0392b', hair: '#8a5a32', skin: '#e6b894', gender: 'female' },
+    doneLine: { text: 'You achieved your goal. Well done!', es: 'Lograste tu meta. ¡Bien hecho!' },
+  },
+  // Lupe, la perra del refugio (se dibuja con ShelterDog: B1_06_DOG_NPCS, data/b1Kennels.ts). Sin tarea
+  'b1-s1-lupe': {
+    name: 'Lupe',
+    look: { shirt: '#9a9aa2', hair: '#9a9aa2', skin: '#9a9aa2' },
+    doneLine: { text: 'Woof! (Lupe is ready to run.)', es: '¡Guau! (Lupe está lista para correr.)' },
+  },
+  // Julian (mismo aspecto que b1-08-julian), en la línea de salida: la carrera (tarea b1-s1-run)
+  'b1-s1-julian': {
+    name: 'Julian',
+    look: { shirt: '#1f5fa8', hair: '#3a2a1a', skin: '#d9a37a', gender: 'male' },
+    doneLine: { text: 'What a race!', es: '¡Qué carrera!' },
+  },
   // ── B1-14 · Voices, bloque C (el puerto, data/b1Harbour.ts) ──
   // Manuel, el periodista de Lumen Bay News (tarea b1-14-manuel-talk)
   'b1-14-manuel': {

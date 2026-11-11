@@ -1422,7 +1422,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'timeline') return <Timeline onClose={finish} />
             if (t.activity === 'sequence' && t.sequence) {
               const r = t.sequence.race
-              const race = r && { runners: r.runners, legs: r.legs, start: r.startBy?.find((b) => state.opened.includes(b.flag))?.position ?? r.start }
+              const race = r && { runners: r.runners, legs: r.legs, rival: r.rival, start: r.startBy?.find((b) => state.opened.includes(b.flag))?.position ?? r.start }
               return <SequenceMaster title={t.sequence.title} intro={t.sequence.intro} steps={t.sequence.steps} hint={t.sequence.hint} race={race} onClose={finish} />
             }
             if (t.activity === 'fixradio' && t.fixradio) {

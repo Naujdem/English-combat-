@@ -1065,4 +1065,14 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'leo', text: 'For yes / no questions, use if: Is it dangerous? → Do you know if it is dangerous?', es: 'Para preguntas de sí o no, usa if: ¿Es peligroso? → ¿Sabe si es peligroso?' },
     { who: 'leo', text: 'I wonder… is not really a question, so there is no question mark: I wonder who did this.', es: 'I wonder… no es realmente una pregunta, así que no lleva signo de interrogación: Me pregunto quién hizo esto.' },
   ],
+  // B1 · Extras, Charity Run (data/b1CharityRun.ts): la entrenadora Ilva ('narrator' con su nombre), logros y la carrera
+  'charity-b1': [
+    { who: 'narrator', text: 'Ilva: Welcome to the Charity Run! Five kilometres for Lumen Paws, the animal shelter.', es: 'Ilva: ¡Bienvenidos a la carrera benéfica! Cinco kilómetros por Lumen Paws, el refugio de animales.' },
+    { who: 'board', text: 'Logros (verbo + sustantivo): achieve a goal (lograr una meta), beat a record (superar una marca), raise money (recaudar dinero), win a medal (ganar una medalla), take part in a race (participar en una carrera).', topic: 'charity-b1' },
+    { who: 'board', text: 'Last year we ___ a lot of money for the shelter.', choice: { options: ['raised', 'rose', 'beat'], answer: 0, tip: 'Recaudar dinero: raise money.' } },
+    { who: 'narrator', text: 'Ilva: Last year I was running when I fell. I got up and finished the race!', es: 'Ilva: El año pasado iba corriendo cuando me caí. ¡Me levanté y terminé la carrera!' },
+    { who: 'board', text: 'Past continuous + past simple: una acción larga (was / were + verbo con -ing) y otra corta que la interrumpe (pasado simple). I was running when I fell.', topic: 'charity-b1' },
+    { who: 'board', text: 'I was running when I ___.', choice: { options: ['was falling', 'fall', 'fell'], answer: 2, tip: 'La acción corta va en pasado simple: fell.' } },
+    { who: 'narrator', text: "Ilva: Lupe is running with us today. Don't worry: she is faster than all of us.", es: 'Ilva: Lupe corre hoy con nosotros. No te preocupes: es más rápida que todos.' },
+  ],
 }

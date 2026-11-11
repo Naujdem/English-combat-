@@ -36,6 +36,8 @@ import { B1_13_PLANNER_CONTENT, B1_13_WINDOW_SCRIPT } from './b1Window2056'
 import { B1_13_CLOSE_SCRIPT } from './b1SchoolMorning'
 import { B1_14_GATHER_SCRIPT, B1_14_NEWS_SCRIPT, B1_14_REPORTER_GAME } from './b1Lounge'
 import { B1_14_CLOSE_SCRIPT, B1_14_KEYCHAIN_SCRIPT } from './b1Harbour'
+import { B1_S1_CLOSE_SCRIPT, B1_S1_LEGS } from './b1CharityRun'
+import { B1_S1_COACH_IDS } from './questions-b1-extras'
 import { B1_14_INDIRECT_IDS, B1_14_REPORTED_IDS, B1_14_SAYTELL_IDS, B1_14_VERBS_IDS } from './questions-b1-14'
 import type { ReporterContent } from '../components/Reporter'
 import type { FuturePlannerContent } from '../components/FuturePlanner'
@@ -117,7 +119,7 @@ export type NpcTask = {
     steps: SequenceStep[]
     hint?: string
     /** Modo carrera (A2-07): tramos seguidos con posición. start = puesto inicial; startBy cambia el puesto si hay una marca en opened */
-    race?: { runners: number; start: number; startBy?: { flag: string; position: number }[]; legs: RaceLeg[] }
+    race?: { runners: number; start: number; startBy?: { flag: string; position: number }[]; legs: RaceLeg[]; rival?: { word: string; icon: string } }
   }
   /** Para activity 'fixradio' (Fix the Radio): instrucciones paso a paso; el jugador toca la pieza de cada paso */
   fixradio?: { title: string; intro: { en: string; es: string }; steps: FixStep[] }
@@ -6528,4 +6530,50 @@ NPC_TASKS['b1-14-close'] = {
     sub: '¡B1 completado! Ganaste la insignia "B1 completado". El núcleo del reloj brilla, pero sigue vacío. Las respuestas, en B2.',
     say: "Who didn't I help? And when?",
   },
+}
+
+// ── B1 · Extras: Charity Run (escena en data/b1CharityRun.ts; se abre al cerrar la misión 8). Sin combates ──
+// Ilva: lección 'charity-b1' ('narrator' con su nombre) + práctica b1-s1-c1…c8. 5 monedas
+NPC_TASKS['b1-s1-coach'] = {
+  npc: 'b1-s1-ilva',
+  done: 'b1-s1-coach',
+  lesson: 'charity-b1',
+  activity: 'practice',
+  practice: 'charity-b1',
+  practiceIds: B1_S1_COACH_IDS,
+  coins: 5,
+  steps: [],
+  reward: { text: "Let's raise some money!", es: '¡Vamos a recaudar dinero!', sub: 'Lección hecha. Julian te espera en la línea de salida.', say: "Let's raise some money!" },
+}
+
+// Julian, en la línea de salida: la carrera (Sequence Master en modo carrera, 4 tramos). 10 monedas
+NPC_TASKS['b1-s1-run'] = {
+  npc: 'b1-s1-julian',
+  done: 'b1-s1-run',
+  activity: 'sequence',
+  requires: { id: 'b1-s1-coach', text: 'Julian: "Talk to the coach first."', es: 'Habla primero con la entrenadora.', sub: 'Primero habla con Ilva.' },
+  sequence: {
+    title: 'Charity Run',
+    intro: { en: 'Five kilometres for the shelter. Put each part of the race in order.', es: 'Cinco kilómetros por el refugio. Ordena cada parte de la carrera.' },
+    hint: 'Piensa qué pasa primero en este tramo.',
+    steps: [],
+    race: { runners: 6, start: 4, legs: B1_S1_LEGS, rival: { word: 'corredor', icon: '🏃' } },
+  },
+  coins: 10,
+  steps: [],
+  reward: { text: 'You crossed the finish line!', es: '¡Cruzaste la meta!', sub: 'Ganaste 10 monedas. Habla con Ilva.', say: 'You crossed the finish line!' },
+}
+
+// Ilva: el cierre (medalla y camiseta de corredor). Recupera el tema
+NPC_TASKS['b1-s1-close'] = {
+  npc: 'b1-s1-ilva',
+  done: 'b1-s1-close',
+  activity: 'script',
+  script: B1_S1_CLOSE_SCRIPT,
+  requires: { id: 'b1-s1-run', text: 'The race first!', es: '¡Primero la carrera!', sub: 'Primero corre la carrera: habla con Julian.' },
+  recover: ['charity-b1'],
+  outfit: 'camiseta-corredor',
+  coins: 20,
+  steps: [],
+  reward: { text: 'Extra: Charity Run', es: 'Extra: Carrera benéfica', sub: 'Extra completado. Ganaste la medalla y la camiseta de corredor.', say: 'We achieved our goal!' },
 }

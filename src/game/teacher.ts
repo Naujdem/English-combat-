@@ -1151,3 +1151,12 @@ export function b1Mission14(s: GameState, stage: 'lounge' | 'reported' | 'saytel
   const base = { ...b, screen: 'explore' as const, sceneId: inHarbour ? B1_14_HARBOUR.id : B1_14_LOUNGE.id, pos, defeated: [...b.defeated.filter((d) => !d.startsWith('b1-14-')), ...beaten], opened: b.opened.filter((o) => !o.startsWith('b1-14-')), recovered: b.recovered.filter((t) => !mine.includes(t)), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
   return { ...base, opened: add(base.opened, flags), seenLesson: add(base.seenLesson, lessons) as GameState['seenLesson'] }
 }
+
+/**
+ * Atajo de los Extras de B1 para el panel del profe: entra a la escena de una misión secundaria con todo B1 cerrado
+ * y sin nada hecho en esa secundaria (prefix = 'b1-s1-', 'b1-s2-'…; topics = sus temas, para que la lección salga de nuevo).
+ */
+export function b1Extra(s: GameState, sceneId: string, pos: { x: number; y: number }, prefix: string, topics: string[]): GameState {
+  const b = b1Start(s, [B1_OPENING, ...Array.from({ length: 14 }, (_, k) => closeId(k + 1)), 'b1-12-fragments'])
+  return { ...b, screen: 'explore' as const, sceneId, pos, opened: b.opened.filter((o) => !o.startsWith(prefix)), defeated: b.defeated.filter((d) => !d.startsWith(prefix)), recovered: b.recovered.filter((t) => !topics.includes(t)), seenLesson: b.seenLesson.filter((t) => !topics.includes(t)) }
+}
