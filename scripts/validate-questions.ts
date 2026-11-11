@@ -4,7 +4,10 @@
  *   npm run validate         → revisiones de estructura (sin internet)
  *   npm run validate -- --lt → además pasa el inglés por LanguageTool (necesita internet)
  *
+ *   npm run validate -- --strict → termina con error si hay problemas de Estructura o de Cadena (para GitHub Actions)
+ *
  * Escribe el informe en reports/validacion.md. Qué revisa:
+ *  0. Cadena (scripts/validate-chain.ts): que cada escenario se pueda terminar "en papel" (puertas, tareas encadenadas, cierres).
  *  1. Estructura: IDs repetidos, respuesta fuera de rango, opciones repetidas, "___" que falta,
  *     pistas vacías, prácticas de Leo con IDs inexistentes y enemigos con pocas preguntas propias.
  *  2. Diccionario: palabras en inglés de los textos del juego que no tienen traducción al tocarlas.
@@ -14,7 +17,9 @@
  *        B es normal cuando la opción es incorrecta por el contenido (p. ej. "He sold the horses"),
  *        así que es solo una lista para mirar con calma.
  */
-import { writeFileSync, mkdirSync, readFileSync, readdirSync } from 'node:fs'
+import { writeFileSync, mkdirSync, readFileSync, readdirSync, statSync } from 'node:fs'
+import { join } from 'node:path'
+import { chainIssues } from './validate-chain'
 import { translate } from '../src/data/glossary'
 import { QUESTIONS } from '../src/data/questions'
 import { ENEMIES } from '../src/data/enemies'
@@ -261,7 +266,22 @@ function section(title: string, note: string, list: Issue[]) {
   return `## ${title} (${list.length})\n\n${note}\n\n${body}\n`
 }
 
+/** Bot Cadena: lee todo src/ y revisa el encadenamiento de escenas, tareas y cierres (scripts/validate-chain.ts) */
+function runChain(): Issue[] {
+  const files: { path: string; text: string }[] = []
+  const walk = (dir: string) => {
+    for (const f of readdirSync(dir)) {
+      const p = join(dir, f)
+      if (statSync(p).isDirectory()) walk(p)
+      else if (/\.tsx?$/.test(f)) files.push({ path: p, text: readFileSync(p, 'utf8') })
+    }
+  }
+  walk('src')
+  return chainIssues(files)
+}
+
 async function main() {
+  const chain = runChain()
   if (useLT) {
     try {
       await runLT()
@@ -272,6 +292,7 @@ async function main() {
   }
   const parts = [
     `# Validación del banco de preguntas\n\n${bank.length} preguntas · ${Object.keys(ENEMIES).length} enemigos · ${new Date().toISOString().slice(0, 10)}\n`,
+    section('Cadena', 'Bloqueos "en papel": una puerta que no lleva a ningún lado, una tarea que nunca se puede completar, un cierre que no se alcanza. Se revisa por datos, sin jugar: no cubre los minijuegos por dentro ni el micrófono.', chain),
     section('Estructura', 'Errores del archivo de datos. Se corrigen sin saber inglés.', structure),
     section('Diccionario', 'Palabras en inglés de los textos del juego que no tienen traducción al tocarlas. Se agregan en src/data/glossary.ts. Puede salir alguna palabra en español o un nombre propio: esas se ignoran.', dictionary),
   ]
@@ -287,7 +308,8 @@ async function main() {
   mkdirSync('reports', { recursive: true })
   writeFileSync('reports/validacion.md', report)
   if (process.env.GITHUB_STEP_SUMMARY) writeFileSync(process.env.GITHUB_STEP_SUMMARY, report)
-  console.log(`Estructura: ${structure.length} · Diccionario: ${dictionary.length}${useLT ? ` · A: ${ltCorrect.length} · B: ${ltWrong.length}` : ''} → reports/validacion.md`)
+  if (process.argv.includes('--strict') && (chain.length || structure.length)) process.exitCode = 1
+  console.log(`Cadena: ${chain.length} · Estructura: ${structure.length} · Diccionario: ${dictionary.length}${useLT ? ` · A: ${ltCorrect.length} · B: ${ltWrong.length}` : ''} → reports/validacion.md`)
 }
 
 main()
