@@ -2,6 +2,8 @@ import type { ScriptLine } from './b1Accident'
 import type { GameState, SceneDef, Zone } from '../game/types'
 import type { InscriptionRoom } from '../game/inscriptions'
 import { B1_13_KEEPER_DONE } from './b1TempleEchoes'
+import { closeId } from './b1World'
+import { B1_13_DONE_TEXT } from './b1SchoolMorning'
 
 /**
  * B1-13 — The Price. Bloque B: la sala de los ecos (escena b1-13-hall; es recuerdo por el prefijo "b1-13-").
@@ -200,6 +202,6 @@ export const B1_13_HALL: SceneDef = {
   ],
   intro: {
     first: 'The hall of echoes. Everything is said twice. — La sala de los ecos. Todo se dice dos veces.',
-    later: () => 'The hall of echoes. Everything is said twice. — La sala de los ecos. Todo se dice dos veces.',
+    later: (s) => (s.opened.includes(closeId(13)) ? B1_13_DONE_TEXT : 'The hall of echoes. Everything is said twice. — La sala de los ecos. Todo se dice dos veces.'),
   },
 }

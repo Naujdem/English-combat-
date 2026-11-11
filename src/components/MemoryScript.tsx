@@ -44,7 +44,7 @@ export function MemoryScript({ lines, friend, onDone, friendName = 'Amigo' }: { 
         <div className="flex items-center gap-3">
           {portrait}
           <p className="flex-1 font-display text-lg text-[#c9b8e8]">{name}</p>
-          {!board && /[a-z]/i.test(line.text) && <SpeakButton text={line.text} size="sm" auto voice={line.who === 'friend' ? voiceOf(friend) : 'male'} />}
+          {!board && /[a-z]/i.test(line.text) && <SpeakButton text={line.text} size="sm" auto voice={line.who === 'friend' ? voiceOf(friend) : line.fx === 'stranger' ? 'villain' : 'male'} />}
         </div>
         <p key={i} className={`anim-fade-in mt-2 text-[17px] leading-relaxed ${line.who === 'narrator' ? 'italic text-paper/90' : ''} ${board ? 'rounded-lg border-2 border-[#8a6a40] bg-[#24402f] px-3 py-2 text-paper' : ''}`}>
           {withStatic(line.text, (p, k) => <Tappable key={k} text={p} />)}

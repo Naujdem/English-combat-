@@ -18,5 +18,5 @@ export const B1_MEMORIES: B1Memory[] = [
   { n: 7, title: 'The Underworld', summary: 'Sin trabajo ni dinero, L leyó en las noticias sobre unos científicos y su aparato. Entró al mercado negro del bajo mundo, siguió las pistas y, tras vencer a The Broker, robó el aparato.' },
   { n: 9, title: 'Temples of Stones and Time', summary: 'L viajó por valles y templos buscando respuestas. En el Temple of Stones y el Temple of Time despertó inscripciones antiguas y venció al Keeper of Hours. Con el reloj y el aparato, supo que podía volver al pasado.' },
   { n: 11, title: 'The First Journey', summary: 'L usó el reloj por primera vez para volver a la noche del incendio. Lo intentó todo —la alarma, la puerta, los bomberos—, pero el fuego empezó siempre. En el Temple of Roads, las piedras le dijeron que un hecho fijo no puede cambiarse, y que una voz sí puede quitarse.' },
-  { n: 13, title: 'The Price', summary: '(pendiente)' },
+  { n: 13, title: 'The Price', summary: 'En el Temple of Echoes, L descubrió el precio del aparato: no crea una voz, la toma de alguien. La rabia lo consumió y decidió culpar a su amigo. Viajó a 2056, miró por la ventana la clase de un profesor y escribió su plan; a la mañana siguiente se acercó a un estudiante nuevo en su primer día de escuela.' },
 ]
