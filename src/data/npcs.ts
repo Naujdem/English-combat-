@@ -1220,6 +1220,31 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
     doneLine: { text: 'Nobody knows where it started.', es: 'Nadie sabe dónde empezó.' },
   },
+  // ── B1-14 · Voices, bloque C (el puerto, data/b1Harbour.ts) ──
+  // Manuel, el periodista de Lumen Bay News (tarea b1-14-manuel-talk)
+  'b1-14-manuel': {
+    name: 'Manuel',
+    look: { shirt: '#7a2f3a', hair: '#2a1a12', skin: '#b9805c', gender: 'male' },
+    doneLine: { text: 'Be careful near the water.', es: 'Ten cuidado cerca del agua.' },
+  },
+  // La persona especial en el puerto (tarea b1-14-keychain)
+  'b1-14-harbour-special': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: "Whatever happens, I'm with you.", es: 'Pase lo que pase, estoy contigo.' },
+  },
+  // Leo y Maya en el puerto, sin tarea en este bloque: repiten una línea corta
+  'b1-14-harbour-leo': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    doneLine: { text: 'My throat feels strange here.', es: 'Aquí siento rara la garganta.' },
+  },
+  'b1-14-harbour-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    doneLine: { text: 'Stay close to us.', es: 'Quédate cerca de nosotros.' },
+  },
   // ── B1-12 · Old Friends, bloque A (la casa de los abuelos, data/b1HostHouse.ts) ──
   // La abuela Jhoana, junto al mostrador de la cocina (tarea b1-12-welcome)
   'b1-12-jhoana': {

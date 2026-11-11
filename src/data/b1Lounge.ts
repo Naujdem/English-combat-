@@ -11,7 +11,7 @@ import type { ReporterContent } from '../components/Reporter'
  *   Leo: lección 'reported-speech-b1' + práctica (b1-14-reported) → Leo: lección 'say-tell-b1' + práctica (b1-14-saytell) →
  *   Bloque B: Leo: lección 'reporting-verbs-b1' + práctica (b1-14-verbs) → Maya: el minijuego Reporter (b1-14-reporter) →
  *   la tele: el boletín de Manuel (b1-14-news, script) → Leo: lección 'indirect-questions-b1' + práctica (b1-14-indirect) →
- *   la puerta a la calle: "Próximamente" (bloque 14-C, el puerto).
+ *   la puerta a la calle: el puerto (bloque 14-C, data/b1Harbour.ts).
  * Ningún bloque A guarda closeId(14) (se guarda en el último bloque).
  */
 export const B1_14_LOUNGE_ID = 'b1-14-lounge'
@@ -68,12 +68,12 @@ export const B1_14_LOUNGE: SceneDef = {
     '2,0': WINDOW,
     '9,0': WINDOW,
   },
-  // La puerta a la calle (bloque 14-C, el puerto): Próximamente. Para salir: el botón Mapa
-  locked: (x, y) => {
-    if (x === 5 && y === 6) return { text: 'Próximamente: el siguiente bloque de la misión 14', sub: 'Para volver al mapa, toca el botón Mapa.' }
+  // La puerta a la calle (5,6) lleva al puerto (bloque 14-C, data/b1Harbour.ts) solo con las preguntas indirectas hechas
+  locked: (x, y, s) => {
+    if (x === 5 && y === 6 && !s.opened.includes(B1_14_INDIRECT)) return { text: 'Todavía no.', sub: 'Primero termina todo en la sala: Leo, Maya y las noticias.' }
     return null
   },
-  links: {},
+  links: { '5,6': { sceneId: 'b1-14-harbour', pos: { x: 1, y: 3 } } },
   requirements: [],
   chips: (s: GameState) => [
     { label: 'Reunir a tus amigos', done: s.opened.includes(B1_14_GATHER) },

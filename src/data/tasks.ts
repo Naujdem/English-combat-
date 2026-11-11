@@ -35,6 +35,7 @@ import { B1_13_DECISION_SCRIPT, B1_13_JOURNAL_SCRIPT } from './b1TempleCamp'
 import { B1_13_PLANNER_CONTENT, B1_13_WINDOW_SCRIPT } from './b1Window2056'
 import { B1_13_CLOSE_SCRIPT } from './b1SchoolMorning'
 import { B1_14_GATHER_SCRIPT, B1_14_NEWS_SCRIPT, B1_14_REPORTER_GAME } from './b1Lounge'
+import { B1_14_KEYCHAIN_SCRIPT } from './b1Harbour'
 import { B1_14_INDIRECT_IDS, B1_14_REPORTED_IDS, B1_14_SAYTELL_IDS, B1_14_VERBS_IDS } from './questions-b1-14'
 import type { ReporterContent } from '../components/Reporter'
 import type { FuturePlannerContent } from '../components/FuturePlanner'
@@ -6425,7 +6426,7 @@ NPC_TASKS['b1-14-news'] = {
   },
 }
 
-// Leo, cuarta vez: lección 'indirect-questions-b1' + práctica b1-14-iq1…iq8. 5 monedas. La puerta sigue en "Próximamente" (bloque 14-C)
+// Leo, cuarta vez: lección 'indirect-questions-b1' + práctica b1-14-iq1…iq8. 5 monedas. Abre la puerta al puerto
 NPC_TASKS['b1-14-indirect'] = {
   npc: 'b1-14-leo',
   done: 'b1-14-indirect',
@@ -6439,7 +6440,57 @@ NPC_TASKS['b1-14-indirect'] = {
   reward: {
     text: 'Do you know where it started?',
     es: '¿Sabe dónde empezó?',
-    sub: 'Lección hecha. El puerto te espera: próximamente.',
+    sub: 'Lección hecha. Sal por la puerta de abajo: el puerto te espera.',
     say: 'Do you know where it started?',
+  },
+}
+
+// ── B1-14 · Voices, bloque C (el puerto; escena, ecos y jefe en data/b1Harbour.ts). NO guarda closeId(14) ──
+// Manuel, el periodista: el testimonio. El jugador elige la pregunta indirecta correcta; Manuel responde en estilo indirecto. 5 monedas
+NPC_TASKS['b1-14-manuel-talk'] = {
+  npc: 'b1-14-manuel',
+  done: 'b1-14-manuel-talk',
+  coins: 5,
+  steps: [
+    {
+      text: "Hello. I'm Manuel, from Lumen Bay News. The harbour is closed. Can I help you?",
+      es: 'Hola. Soy Manuel, de Lumen Bay News. El puerto está cerrado. ¿Puedo ayudarte?',
+      choice: { ask: '¿Qué le preguntas?', options: ['Do you know where it started?', 'Do you know where did it start?', 'Do you know where started it?'], answer: 0, tip: 'Pregunta indirecta: orden normal, sin did. Where it started.' },
+    },
+    {
+      text: 'A witness told me that it had started near the old docks. She said that the air had gone cold.',
+      es: 'Una testigo me dijo que había empezado cerca de los muelles viejos. Dijo que el aire se había puesto frío.',
+      choice: { ask: '¿Qué le preguntas?', options: ['Could you tell me what did she hear?', 'Could you tell me what she heard?', 'Could you tell me what heard she?'], answer: 1, tip: 'Sin did: what she heard.' },
+    },
+    {
+      text: 'She said that she had heard an angry voice. But nobody was there.',
+      es: 'Dijo que había oído una voz furiosa. Pero no había nadie.',
+      choice: { ask: '¿Qué le preguntas?', options: ['Do you know if is it dangerous?', 'Do you know it is dangerous if?', 'Do you know if it is dangerous?'], answer: 2, tip: 'if + sujeto + verbo: if it is dangerous.' },
+    },
+    {
+      text: 'I think so. The police said that nobody should go near the water. Be careful.',
+      es: 'Creo que sí. La policía dijo que nadie debía acercarse al agua. Ten cuidado.',
+    },
+  ],
+  reward: {
+    text: 'She said that she had heard an angry voice.',
+    es: 'Dijo que había oído una voz furiosa.',
+    sub: 'Ganaste 5 monedas. La persona especial te está mirando: habla con ella.',
+    say: 'She said that she had heard an angry voice.',
+  },
+}
+
+// La persona especial: el llavero (secuencia fija). Al terminar salen los ecos del agua
+NPC_TASKS['b1-14-keychain'] = {
+  npc: 'b1-14-harbour-special',
+  done: 'b1-14-keychain',
+  activity: 'script',
+  script: B1_14_KEYCHAIN_SCRIPT,
+  requires: { id: 'b1-14-manuel-talk', text: 'Ask the reporter first.', es: 'Pregúntale primero al periodista.', sub: 'Primero habla con Manuel.' },
+  steps: [],
+  reward: {
+    text: 'The silent friend… was me. The stranger blames me.',
+    es: 'El amigo callado… era yo. El desconocido me culpa a mí.',
+    sub: 'Tres ecos salieron del agua. Véncelos, uno por uno.',
   },
 }
