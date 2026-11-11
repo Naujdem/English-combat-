@@ -55,6 +55,7 @@ import { B1_13_CAMP } from '../data/b1TempleCamp'
 import { B1_13_WINDOW } from '../data/b1Window2056'
 import { B1_13_SCHOOL } from '../data/b1SchoolMorning'
 import { B1_14_LOUNGE } from '../data/b1Lounge'
+import { B1_14_HARBOUR } from '../data/b1Harbour'
 import { B1_10_TENT } from '../data/b1GamingTent'
 import { B1_10_STAGE } from '../data/b1Stage'
 import { B1_10_BOSS_DEF } from '../data/b1HeadlinerBoss'
@@ -1131,13 +1132,22 @@ export function b1Mission13(s: GameState, stage: 'start' | 'wall' | 'hall' | 'ri
  * Atajos de la misión B1-14 (Voices, presente) para el panel del profe. Parten de las misiones 1 a 13 cerradas.
  *  lounge: en la sala de la residencia, frente a la persona especial · reported: reunión hecha (frente a Leo; la lección sale de nuevo)
  *  saytell: primera lección hecha (frente a Leo; la segunda lección sale de nuevo)
+ *  verbs: say / tell hecho (frente a Leo) · reporter: verbos hechos (frente a Maya) · news: Reporter hecho (frente a la tele)
+ *  indirect: noticias vistas (frente a Leo)
+ *  harbour: todo lo de la sala hecho (en el puerto, frente a Manuel) · echoes: Manuel y el llavero hechos (frente al primer eco)
+ *  boss: los tres ecos vencidos (frente a The Grudge) · exam: The Grudge vencido (frente a Leo, en el puerto)
+ *  close: examen hecho (frente a Leo)
  */
-export function b1Mission14(s: GameState, stage: 'lounge' | 'reported' | 'saytell'): GameState {
+export function b1Mission14(s: GameState, stage: 'lounge' | 'reported' | 'saytell' | 'verbs' | 'reporter' | 'news' | 'indirect' | 'harbour' | 'echoes' | 'boss' | 'exam' | 'close'): GameState {
   const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8), closeId(9), closeId(10), closeId(11), closeId(12), 'b1-12-fragments', closeId(13)])
-  const mine = ['reported-speech-b1', 'say-tell-b1']
-  const pos = { lounge: { x: 3, y: 4 }, reported: { x: 6, y: 3 }, saytell: { x: 6, y: 3 } }[stage]
-  const flags = { lounge: [], reported: ['b1-14-gather'], saytell: ['b1-14-gather', 'b1-14-reported'] }[stage]
-  const lessons = { lounge: [], reported: [], saytell: ['reported-speech-b1'] }[stage]
-  const base = { ...b, screen: 'explore' as const, sceneId: B1_14_LOUNGE.id, pos, defeated: b.defeated.filter((d) => !d.startsWith('b1-14-')), opened: b.opened.filter((o) => !o.startsWith('b1-14-')), recovered: b.recovered.filter((t) => !mine.includes(t)), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
+  const mine = ['reported-speech-b1', 'say-tell-b1', 'reporting-verbs-b1', 'indirect-questions-b1']
+  const leo = { x: 6, y: 3 }
+  const pos = { lounge: { x: 3, y: 4 }, reported: leo, saytell: leo, verbs: leo, reporter: { x: 8, y: 5 }, news: { x: 9, y: 3 }, indirect: leo, harbour: { x: 2, y: 2 }, echoes: { x: 6, y: 2 }, boss: { x: 8, y: 2 }, exam: { x: 2, y: 3 }, close: { x: 2, y: 3 } }[stage]
+  const order = ['b1-14-gather', 'b1-14-reported', 'b1-14-saytell', 'b1-14-verbs', 'b1-14-reporter', 'b1-14-news', 'b1-14-indirect', 'b1-14-manuel-talk', 'b1-14-keychain', 'b1-14-exam']
+  const inHarbour = stage === 'harbour' || stage === 'echoes' || stage === 'boss' || stage === 'exam' || stage === 'close'
+  const beaten = stage === 'boss' ? ['b1-14-echo1', 'b1-14-echo2', 'b1-14-echo3'] : stage === 'exam' || stage === 'close' ? ['b1-14-echo1', 'b1-14-echo2', 'b1-14-echo3', 'b1-14-boss'] : []
+  const flags = order.slice(0, { lounge: 0, reported: 1, saytell: 2, verbs: 3, reporter: 4, news: 5, indirect: 6, harbour: 7, echoes: 9, boss: 9, exam: 9, close: 10 }[stage])
+  const lessons = mine.slice(0, { lounge: 0, reported: 0, saytell: 1, verbs: 2, reporter: 3, news: 3, indirect: 3, harbour: 4, echoes: 4, boss: 4, exam: 4, close: 4 }[stage])
+  const base = { ...b, screen: 'explore' as const, sceneId: inHarbour ? B1_14_HARBOUR.id : B1_14_LOUNGE.id, pos, defeated: [...b.defeated.filter((d) => !d.startsWith('b1-14-')), ...beaten], opened: b.opened.filter((o) => !o.startsWith('b1-14-')), recovered: b.recovered.filter((t) => !mine.includes(t)), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
   return { ...base, opened: add(base.opened, flags), seenLesson: add(base.seenLesson, lessons) as GameState['seenLesson'] }
 }

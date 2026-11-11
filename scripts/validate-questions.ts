@@ -71,7 +71,10 @@ for (const e of Object.values(ENEMIES)) {
   if (n === 0) structure.push({ where: `enemigo ${e.id}`, msg: 'no tiene preguntas propias: mezclará preguntas de cualquier lugar' })
   else if (n < 4) structure.push({ where: `enemigo ${e.id}`, msg: `solo ${n} preguntas propias (se repetirán mucho)` })
   e.phases?.forEach((p, i) => {
-    const m = poolSize(p.topics, p.kinds, p.tags ?? e.tags)
+    // Fase de hablar o escribir (variantes generadas): cuentan las preguntas base de ordenar y completar
+    const kinds = p.kinds.some((k) => k === 'speak' || k === 'write') ? [...p.kinds, 'order', 'fill'] : p.kinds
+    // Fase sin etiquetas (repaso mezclado, como en el juego: p.tags ?? []): cuenta todo el banco de sus temas
+    const m = p.tags ? poolSize(p.topics, kinds, p.tags) : bank.filter((q) => p.topics.includes(q.topic) && kinds.includes(kindOf(q))).length
     if (m < 3) structure.push({ where: `enemigo ${e.id} · fase ${i + 1}`, msg: `solo ${m} preguntas propias` })
   })
 }

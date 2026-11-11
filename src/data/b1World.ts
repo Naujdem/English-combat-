@@ -82,6 +82,7 @@ export function b1Message(s: GameState): string {
   if (!s.opened.includes(closeId(1)))
     // 'b1-01-memory' = memoryFlag(1) (game/memory.ts importa este archivo: se escribe aquí para no hacer un ciclo)
     return s.opened.includes('b1-01-memory') ? 'Despertaste en tu cuarto con dolor de garganta. Leo te está escribiendo: entra a 1. The Accident.' : 'Dos fragmentos del reloj se juntaron. Toca el recuerdo 1.'
+  if (s.opened.includes(closeId(14))) return 'B1 completado. La historia sigue en B2.'
   const next = B1_NODES.find((n) => n.num && b1NodeOpen(n, s) && !b1NodeDone(n, s))
   return next ? `Siguiente lugar abierto: ${next.num}. ${next.name}.` : 'Toca un lugar del mapa de B1.'
 }

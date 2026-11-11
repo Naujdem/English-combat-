@@ -390,6 +390,11 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       return { title: 'Plurales: -s normal, pero sheep → sheep, goose → geese, mouse → mice, child → children:', parts: [K('two / three...'), '+', R('cosas en plural')] }
     case 'reported-speech-b1':
       return { title: 'Estilo indirecto: said (that) + el verbo un tiempo atrás:', parts: [S('Sujeto'), '+', K('said (that)'), '+', S('sujeto'), '+', V('verbo un tiempo atrás'), '+', R('...')] }
+    case 'reporting-verbs-b1':
+      if (/\bpromised? to\b/i.test(sentence)) return { title: 'promise + to + verbo:', parts: [S('Sujeto'), '+', K('promised'), '+', V('to + verbo'), '+', R('...')] }
+      return { title: 'explained / admitted / promised + that + el verbo un tiempo atrás:', parts: [S('Sujeto'), '+', K('explained / admitted / promised'), '+', K('that'), '+', S('sujeto'), '+', V('verbo un tiempo atrás')] }
+    case 'indirect-questions-b1':
+      return { title: 'Pregunta indirecta: orden normal (sujeto + verbo), sin do / does / did:', parts: [K('Do you know / Can you tell me'), '+', K('where / what / if'), '+', S('sujeto'), '+', V('verbo'), '+', R('...')] }
     case 'say-tell-b1':
       if (/\b(tell|tells|told)\b/i.test(sentence)) return { title: 'tell + persona:', parts: [S('Sujeto'), '+', K('tell / told'), '+', R('persona'), '+', R('...')] }
       if (/\b(speak|speaks|spoke)\b/i.test(sentence)) return { title: 'speak + idioma, o speak to + persona:', parts: [S('Sujeto'), '+', K('speak / spoke'), '+', R('idioma / to + persona')] }

@@ -195,6 +195,8 @@ export type Achievement = {
 }
 
 export const ACHIEVEMENTS: Achievement[] = [
+  // B1: las 14 misiones cerradas (b1-01-close … b1-14-close; el id se escribe aquí para no importar data/b1World.ts)
+  { id: 'b1-completo', name: 'B1 completado', desc: 'Termina las 14 misiones de B1.', progress: (s) => [Array.from({ length: 14 }, (_, k) => `b1-${String(k + 1).padStart(2, '0')}-close`).filter((c) => s.opened.includes(c)).length, 14] },
   { id: 'voz-presente', name: 'Mi voz en presente', desc: 'Recupera las cinco piezas del reloj.', progress: (s) => [Math.min(s.relics, 5), 5] },
   { id: 'voz-pasado', name: 'Recuerdos de 1996', desc: 'Recupera los cinco fragmentos de voz del pasado.', progress: (s) => [['school', 'city', 'barrio', 'farm', 'office'].filter((p) => s.defeated.includes(`${p}-past-boss`)).length, 5] },
   { id: 'voz-futuro', name: 'Mi voz completa', desc: 'Recupera los cinco fragmentos de voz del futuro y termina A1.', progress: (s) => [['school', 'city', 'barrio', 'farm', 'office'].filter((p) => s.defeated.includes(`${p}-future-boss`)).length, 5] },

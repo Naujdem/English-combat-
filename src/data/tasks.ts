@@ -34,8 +34,10 @@ import { B1_13_KEEPER_A_IDS, B1_13_KEEPER_F_IDS, B1_13_NOTEBOOK2_IDS, B1_13_NOTE
 import { B1_13_DECISION_SCRIPT, B1_13_JOURNAL_SCRIPT } from './b1TempleCamp'
 import { B1_13_PLANNER_CONTENT, B1_13_WINDOW_SCRIPT } from './b1Window2056'
 import { B1_13_CLOSE_SCRIPT } from './b1SchoolMorning'
-import { B1_14_GATHER_SCRIPT } from './b1Lounge'
-import { B1_14_REPORTED_IDS, B1_14_SAYTELL_IDS } from './questions-b1-14'
+import { B1_14_GATHER_SCRIPT, B1_14_NEWS_SCRIPT, B1_14_REPORTER_GAME } from './b1Lounge'
+import { B1_14_CLOSE_SCRIPT, B1_14_KEYCHAIN_SCRIPT } from './b1Harbour'
+import { B1_14_INDIRECT_IDS, B1_14_REPORTED_IDS, B1_14_SAYTELL_IDS, B1_14_VERBS_IDS } from './questions-b1-14'
+import type { ReporterContent } from '../components/Reporter'
 import type { FuturePlannerContent } from '../components/FuturePlanner'
 import { B1_13_KEEPER_INTRO_SCRIPT, B1_13_KEEPER_PRICE, B1_13_RIDDLE_A, B1_13_RIDDLE_F } from './b1EchoHall'
 import { B1_13_PRICE_ROOM } from './b1TempleEchoes'
@@ -90,9 +92,11 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music' | 'whatif'
+  activity?: 'b1exam' | 'reporter' | 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music' | 'whatif'
   /** Para activity 'music' (Music Challenge, B1-10): la canción con huecos (components/MusicChallenge.tsx) */
   music?: MusicContent
+  /** Para activity 'reporter' (Reporter, B1-14): las frases de los recuerdos que se pasan a estilo indirecto (components/Reporter.tsx) */
+  reporter?: ReporterContent
   /** Para activity 'whatif' (What If…, B1-11): los intentos de cambiar la noche del incendio (components/WhatIf.tsx) */
   whatif?: WhatIfContent
   /** Para activity 'whichdog' (Which Dog?, B1-06): las peticiones de Nayi, en orden */
@@ -6350,7 +6354,7 @@ NPC_TASKS['b1-14-reported'] = {
   },
 }
 
-// Leo otra vez: lección 'say-tell-b1' + práctica b1-14-st1…st8. 5 monedas. La puerta sigue en "Próximamente" (bloque 14-B)
+// Leo otra vez: lección 'say-tell-b1' + práctica b1-14-st1…st8. 5 monedas
 NPC_TASKS['b1-14-saytell'] = {
   npc: 'b1-14-leo',
   done: 'b1-14-saytell',
@@ -6364,7 +6368,164 @@ NPC_TASKS['b1-14-saytell'] = {
   reward: {
     text: 'Now tell us what he said.',
     es: 'Ahora cuéntanos qué dijo.',
-    sub: 'Lección hecha. Lo que sigue llega en el siguiente bloque.',
+    sub: 'Lección hecha. Vuelve a hablar con Leo: quedan tres verbos útiles.',
     say: 'Now tell us what he said.',
+  },
+}
+
+// ── B1-14 · Voices, bloque B (la misma sala). NO guarda closeId(14) ──
+// Leo, tercera vez: lección 'reporting-verbs-b1' + práctica b1-14-rv1…rv6. 5 monedas
+NPC_TASKS['b1-14-verbs'] = {
+  npc: 'b1-14-leo',
+  done: 'b1-14-verbs',
+  lesson: 'reporting-verbs-b1',
+  activity: 'practice',
+  practice: 'reporting-verbs-b1',
+  practiceIds: B1_14_VERBS_IDS,
+  coins: 5,
+  requires: { id: 'b1-14-saytell', text: 'Leo, in the common room.', es: 'Leo, en la sala común.', sub: 'Primero termina la lección de say, tell y speak.' },
+  steps: [],
+  reward: {
+    text: 'He admitted it. He promised it. Now tell them.',
+    es: 'Lo admitió. Lo prometió. Ahora cuéntaselo.',
+    sub: 'Lección hecha. Habla con Maya: tus amigos quieren oír lo que viste.',
+    say: 'Now tell them.',
+  },
+}
+
+// Maya: el minijuego Reporter (contar los recuerdos en estilo indirecto). 10 monedas; con 0-1 errores, escudo
+NPC_TASKS['b1-14-reporter'] = {
+  npc: 'b1-14-maya',
+  done: 'b1-14-reporter',
+  activity: 'reporter',
+  reporter: B1_14_REPORTER_GAME,
+  coins: 10,
+  requires: { id: 'b1-14-verbs', text: "Breathe. We're listening.", es: 'Respira. Te escuchamos.', sub: 'Primero termina las lecciones de Leo.' },
+  steps: [],
+  reward: {
+    text: 'Now they know what you know.',
+    es: 'Ahora ellos saben lo que tú sabes.',
+    sub: 'Maya enciende la tele: mira las noticias.',
+    say: 'Now they know what you know.',
+  },
+}
+
+// La tele: el boletín de Manuel desde el puerto (secuencia fija; la pasiva de las noticias). 5 monedas
+NPC_TASKS['b1-14-news'] = {
+  npc: 'b1-14-tv',
+  done: 'b1-14-news',
+  activity: 'script',
+  script: B1_14_NEWS_SCRIPT,
+  coins: 5,
+  requires: { id: 'b1-14-reporter', text: 'The TV is off.', es: 'La tele está apagada.', sub: 'Primero cuéntales los recuerdos a tus amigos (habla con Maya).' },
+  steps: [],
+  reward: {
+    text: 'We have to ask the right questions. Politely.',
+    es: 'Tenemos que hacer las preguntas correctas. Con amabilidad.',
+    sub: 'Habla con Leo antes de salir.',
+  },
+}
+
+// Leo, cuarta vez: lección 'indirect-questions-b1' + práctica b1-14-iq1…iq8. 5 monedas. Abre la puerta al puerto
+NPC_TASKS['b1-14-indirect'] = {
+  npc: 'b1-14-leo',
+  done: 'b1-14-indirect',
+  lesson: 'indirect-questions-b1',
+  activity: 'practice',
+  practice: 'indirect-questions-b1',
+  practiceIds: B1_14_INDIRECT_IDS,
+  coins: 5,
+  requires: { id: 'b1-14-news', text: 'Leo, in the common room.', es: 'Leo, en la sala común.', sub: 'Primero mira las noticias en la tele.' },
+  steps: [],
+  reward: {
+    text: 'Do you know where it started?',
+    es: '¿Sabe dónde empezó?',
+    sub: 'Lección hecha. Sal por la puerta de abajo: el puerto te espera.',
+    say: 'Do you know where it started?',
+  },
+}
+
+// ── B1-14 · Voices, bloque C (el puerto; escena, ecos y jefe en data/b1Harbour.ts). NO guarda closeId(14) ──
+// Manuel, el periodista: el testimonio. El jugador elige la pregunta indirecta correcta; Manuel responde en estilo indirecto. 5 monedas
+NPC_TASKS['b1-14-manuel-talk'] = {
+  npc: 'b1-14-manuel',
+  done: 'b1-14-manuel-talk',
+  coins: 5,
+  steps: [
+    {
+      text: "Hello. I'm Manuel, from Lumen Bay News. The harbour is closed. Can I help you?",
+      es: 'Hola. Soy Manuel, de Lumen Bay News. El puerto está cerrado. ¿Puedo ayudarte?',
+      choice: { ask: '¿Qué le preguntas?', options: ['Do you know where it started?', 'Do you know where did it start?', 'Do you know where started it?'], answer: 0, tip: 'Pregunta indirecta: orden normal, sin did. Where it started.' },
+    },
+    {
+      text: 'A witness told me that it had started near the old docks. She said that the air had gone cold.',
+      es: 'Una testigo me dijo que había empezado cerca de los muelles viejos. Dijo que el aire se había puesto frío.',
+      choice: { ask: '¿Qué le preguntas?', options: ['Could you tell me what did she hear?', 'Could you tell me what she heard?', 'Could you tell me what heard she?'], answer: 1, tip: 'Sin did: what she heard.' },
+    },
+    {
+      text: 'She said that she had heard an angry voice. But nobody was there.',
+      es: 'Dijo que había oído una voz furiosa. Pero no había nadie.',
+      choice: { ask: '¿Qué le preguntas?', options: ['Do you know if is it dangerous?', 'Do you know it is dangerous if?', 'Do you know if it is dangerous?'], answer: 2, tip: 'if + sujeto + verbo: if it is dangerous.' },
+    },
+    {
+      text: 'I think so. The police said that nobody should go near the water. Be careful.',
+      es: 'Creo que sí. La policía dijo que nadie debía acercarse al agua. Ten cuidado.',
+    },
+  ],
+  reward: {
+    text: 'She said that she had heard an angry voice.',
+    es: 'Dijo que había oído una voz furiosa.',
+    sub: 'Ganaste 5 monedas. La persona especial te está mirando: habla con ella.',
+    say: 'She said that she had heard an angry voice.',
+  },
+}
+
+// La persona especial: el llavero (secuencia fija). Al terminar salen los ecos del agua
+NPC_TASKS['b1-14-keychain'] = {
+  npc: 'b1-14-harbour-special',
+  done: 'b1-14-keychain',
+  activity: 'script',
+  script: B1_14_KEYCHAIN_SCRIPT,
+  requires: { id: 'b1-14-manuel-talk', text: 'Ask the reporter first.', es: 'Pregúntale primero al periodista.', sub: 'Primero habla con Manuel.' },
+  steps: [],
+  reward: {
+    text: 'The silent friend… was me. The stranger blames me.',
+    es: 'El amigo callado… era yo. El desconocido me culpa a mí.',
+    sub: 'Tres ecos salieron del agua. Véncelos, uno por uno.',
+  },
+}
+
+// ── B1-14 · Voices, bloque D (el puerto, tras vencer a The Grudge): el examen de B1 y el cierre de B1 ──
+// Leo: el examen final de B1 (components/B1Exam.tsx, data/b1Exam.ts): reading, listening, writing y speaking. Al guardar se completa la tarea
+NPC_TASKS['b1-14-exam'] = {
+  npc: 'b1-14-harbour-leo',
+  done: 'b1-14-exam',
+  activity: 'b1exam',
+  requires: { id: 'b1-14-boss', text: 'My throat feels strange here.', es: 'Aquí siento rara la garganta.', sub: 'Primero vence a The Grudge.' },
+  coins: 20,
+  steps: [],
+  reward: {
+    text: 'Leo: "You read, you listened, you wrote, you spoke. That is B1."',
+    es: 'Leíste, escuchaste, escribiste y hablaste. Eso es B1.',
+    sub: 'Examen de B1 guardado. Habla otra vez con Leo.',
+    say: 'That is B1.',
+  },
+}
+
+// Leo otra vez: el cierre de B1 (closeId(14)). Recupera los temas de la misión; el núcleo brilla pero sigue vacío (sin FragmentJoin)
+NPC_TASKS['b1-14-close'] = {
+  npc: 'b1-14-harbour-leo',
+  done: 'b1-14-close',
+  activity: 'script',
+  script: B1_14_CLOSE_SCRIPT,
+  requires: { id: 'b1-14-exam', text: 'One more thing first.', es: 'Primero una cosa más.', sub: 'Primero haz el examen de B1.' },
+  recover: ['reported-speech-b1', 'say-tell-b1', 'reporting-verbs-b1', 'indirect-questions-b1'],
+  coins: 30,
+  steps: [],
+  reward: {
+    text: 'Mission 14: Voices',
+    es: 'Misión 14: Voces',
+    sub: '¡B1 completado! Ganaste la insignia "B1 completado". El núcleo del reloj brilla, pero sigue vacío. Las respuestas, en B2.',
+    say: "Who didn't I help? And when?",
   },
 }

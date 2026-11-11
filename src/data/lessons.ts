@@ -1048,4 +1048,21 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'leo', text: 'Tell also goes with some fixed words: tell the truth, tell a story, tell a lie.', es: 'tell también va con algunas palabras fijas: decir la verdad, contar una historia, decir una mentira.' },
     { who: 'leo', text: 'Speak is about using your voice or a language: I can speak English. He spoke to me about the fire.', es: 'speak trata de usar la voz o un idioma: Sé hablar inglés. Él me habló del incendio.' },
   ],
+  // B1-14 · bloque B: Leo, verbos para reportar (explain, admit, promise)
+  'reporting-verbs-b1': [
+    { who: 'leo', text: 'Said is fine, but other verbs tell us more. They work the same way: verb + that + one step back.', es: 'said está bien, pero otros verbos dicen más. Funcionan igual: verbo + that + un paso atrás.' },
+    { who: 'leo', text: 'Explain: give the reason or the details. He explained that he had tried everything.', es: 'explain: dar la razón o los detalles. Él explicó que lo había intentado todo.' },
+    { who: 'leo', text: 'Careful: you explain something to someone. He explained the plan to me. (Not: He explained me the plan.)', es: 'Cuidado: explicas algo a alguien. Él me explicó el plan. (No: He explained me the plan.)' },
+    { who: 'leo', text: 'Admit: say that something bad is true. He admitted that he had stolen the device.', es: 'admit: decir que algo malo es verdad. Él admitió que había robado el aparato.' },
+    { who: 'leo', text: 'Promise: say that you will surely do something. He promised that he would come back. Or shorter: He promised to come back.', es: 'promise: decir que harás algo con seguridad. Él prometió que volvería. O más corto: He promised to come back.' },
+  ],
+  // B1-14 · bloque B: Leo, preguntas indirectas (después del boletín de Manuel)
+  'indirect-questions-b1': [
+    { who: 'leo', text: 'A direct question can sound too strong. An indirect question is more polite: Do you know where it started?', es: 'Una pregunta directa puede sonar muy fuerte. Una pregunta indirecta es más amable: ¿Sabe dónde empezó?' },
+    { who: 'leo', text: 'Start with: Do you know…, Can you tell me…, Could you tell me…, I wonder…', es: 'Empieza con: Do you know…, Can you tell me…, Could you tell me…, I wonder…' },
+    { who: 'leo', text: 'After that, use normal sentence order: subject + verb. Where is the harbour? → Do you know where the harbour is?', es: 'Después usa el orden normal de una oración: sujeto + verbo. ¿Dónde está el puerto? → ¿Sabe dónde está el puerto?' },
+    { who: 'leo', text: 'No do, does or did: Where did it start? → Do you know where it started?', es: 'Sin do, does ni did: ¿Dónde empezó? → ¿Sabe dónde empezó?' },
+    { who: 'leo', text: 'For yes / no questions, use if: Is it dangerous? → Do you know if it is dangerous?', es: 'Para preguntas de sí o no, usa if: ¿Es peligroso? → ¿Sabe si es peligroso?' },
+    { who: 'leo', text: 'I wonder… is not really a question, so there is no question mark: I wonder who did this.', es: 'I wonder… no es realmente una pregunta, así que no lleva signo de interrogación: Me pregunto quién hizo esto.' },
+  ],
 }

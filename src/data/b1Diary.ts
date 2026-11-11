@@ -640,4 +640,51 @@ export const B1_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B1-14 · Voices (presente, final de B1). Se abre al cerrar la misión (closeId(14)). Sin página del Diario de L
+  {
+    id: 'b1-mission-14',
+    title: 'Misión 14: Voices',
+    unlock: closeId(14),
+    words: [
+      { title: 'Comunicación', words: [['say', 'decir'], ['tell', 'decirle a alguien, contar'], ['speak', 'hablar'], ['explain', 'explicar'], ['admit', 'admitir'], ['promise', 'prometer'], ['whisper', 'susurrar'], ['mention', 'mencionar']] },
+      { title: 'Noticias', words: [['reporter', 'periodista'], ['headline', 'titular'], ['witness', 'testigo'], ['according to', 'según']] },
+      { title: 'Reaccionar a una noticia', words: [['No way!', '¡No puede ser!'], ["That's awful.", 'Qué horrible.'], ['Are you serious?', '¿En serio?'], ["I can't believe it.", 'No lo puedo creer.']] },
+    ],
+    versions: [
+      {
+        id: 'b1-mission-14-mine',
+        tense: 'n',
+        tab: 'Mi diario',
+        title: 'Voices',
+        unlock: closeId(14),
+        frame: 'Lo escribes en el puerto, con el llavero en la mano.',
+        lines: [
+          { en: 'This morning I [told]p my friends everything.', es: 'Esta mañana les conté todo a mis amigos.' },
+          { en: 'The man in the memory [said]p that he [had lost]p everything.', es: 'El hombre del recuerdo dijo que lo había perdido todo.' },
+          { en: 'He [said]p that his friend [had not helped]p him. Now I [know]n who that friend [is]n.', es: 'Dijo que su amigo no lo había ayudado. Ahora sé quién es ese amigo.' },
+          { en: 'I [do not know]n what I [did]p wrong. But I [am]n not afraid.', es: 'No sé qué hice mal. Pero no tengo miedo.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b1-mission-14-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: "Who didn't I help?",
+        unlock: closeId(14),
+        frame: 'El final de B1, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'Manuel [reported]p that three people [had lost]p their voices at the harbour.', es: 'Manuel informó que tres personas habían perdido la voz en el puerto.' },
+          { en: 'The Grudge [shouted]p at me, and I [answered]p with my own voice.', es: 'The Grudge me gritó, y yo respondí con mi propia voz.' },
+          { en: 'The centre of the clock [is shining]n, but it [is]n still empty.', es: 'El centro del reloj está brillando, pero sigue vacío.' },
+          { en: 'One day I [will find]f the stranger, and I [will ask]f him what [happened]p.', es: 'Algún día encontraré al desconocido y le preguntaré qué pasó.' },
+        ],
+        questions: [
+          { q: 'What did Manuel report?', options: ['That three people had lost their voices.', 'That the harbour was on fire.', 'That the festival was cancelled.'], answer: 0, tip: 'El diario dice: "three people had lost their voices".' },
+          { q: 'How did the writer answer The Grudge?', options: ['With a letter.', 'With silence.', 'With their own voice.'], answer: 2, tip: 'El diario dice: "I answered with my own voice".' },
+          { q: 'Is the centre of the clock full now?', options: ['Yes, it is.', 'No, it is still empty.', 'Nobody knows.'], answer: 1, tip: 'El diario dice: "it is still empty".' },
+        ],
+      },
+    ],
+  },
 ]
