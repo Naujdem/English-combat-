@@ -27,6 +27,8 @@ export const B1_06_DOG_NPCS: Record<string, ShelterDogId> = {
   'b1-06-kitay': 'kitay',
   'b1-06-fresas': 'fresas',
   'b1-06-lupe': 'lupe',
+  // Extras · Charity Run: Lupe corre al lado (data/b1CharityRun.ts)
+  'b1-s1-lupe': 'lupe',
 }
 
 /** Bloque C: la segunda tarea de Nayi (lección 'experience-b1') y los 2 voluntarios cansados (esbirros encadenados) */

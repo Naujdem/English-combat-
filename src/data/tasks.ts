@@ -36,6 +36,12 @@ import { B1_13_PLANNER_CONTENT, B1_13_WINDOW_SCRIPT } from './b1Window2056'
 import { B1_13_CLOSE_SCRIPT } from './b1SchoolMorning'
 import { B1_14_GATHER_SCRIPT, B1_14_NEWS_SCRIPT, B1_14_REPORTER_GAME } from './b1Lounge'
 import { B1_14_CLOSE_SCRIPT, B1_14_KEYCHAIN_SCRIPT } from './b1Harbour'
+import { B1_S1_CLOSE_SCRIPT, B1_S1_LEGS } from './b1CharityRun'
+import { B1_S1_COACH_IDS, B1_S2_TALK_IDS, B1_S3_HOST_IDS } from './questions-b1-extras'
+import { B1_S3_CLOSE_SCRIPT, B1_S3_PARTY } from './b1HouseParty'
+import type { PartyContent } from '../components/PartyPlan'
+import { B1_S2_CLOSE_SCRIPT, B1_S2_FILM_SCRIPT, B1_S2_REVIEW_GAME } from './b1MovieNight'
+import type { ReviewContent } from '../components/ReviewWriter'
 import { B1_14_INDIRECT_IDS, B1_14_REPORTED_IDS, B1_14_SAYTELL_IDS, B1_14_VERBS_IDS } from './questions-b1-14'
 import type { ReporterContent } from '../components/Reporter'
 import type { FuturePlannerContent } from '../components/FuturePlanner'
@@ -92,9 +98,13 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'b1exam' | 'reporter' | 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music' | 'whatif'
+  activity?: 'review' | 'b1exam' | 'reporter' | 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music' | 'whatif'
   /** Para activity 'music' (Music Challenge, B1-10): la canción con huecos (components/MusicChallenge.tsx) */
   music?: MusicContent
+  /** Para activity 'party60' con contenido propio (B1 · Extras, House Party): sin él, la fiesta de los 60 años */
+  party?: PartyContent
+  /** Para activity 'review' (B1 · Extras, Movie Night): un texto corto con lista de requisitos (components/ReviewWriter.tsx); se guarda en writings[done] */
+  review?: ReviewContent
   /** Para activity 'reporter' (Reporter, B1-14): las frases de los recuerdos que se pasan a estilo indirecto (components/Reporter.tsx) */
   reporter?: ReporterContent
   /** Para activity 'whatif' (What If…, B1-11): los intentos de cambiar la noche del incendio (components/WhatIf.tsx) */
@@ -117,7 +127,7 @@ export type NpcTask = {
     steps: SequenceStep[]
     hint?: string
     /** Modo carrera (A2-07): tramos seguidos con posición. start = puesto inicial; startBy cambia el puesto si hay una marca en opened */
-    race?: { runners: number; start: number; startBy?: { flag: string; position: number }[]; legs: RaceLeg[] }
+    race?: { runners: number; start: number; startBy?: { flag: string; position: number }[]; legs: RaceLeg[]; rival?: { word: string; icon: string } }
   }
   /** Para activity 'fixradio' (Fix the Radio): instrucciones paso a paso; el jugador toca la pieza de cada paso */
   fixradio?: { title: string; intro: { en: string; es: string }; steps: FixStep[] }
@@ -6528,4 +6538,142 @@ NPC_TASKS['b1-14-close'] = {
     sub: '¡B1 completado! Ganaste la insignia "B1 completado". El núcleo del reloj brilla, pero sigue vacío. Las respuestas, en B2.',
     say: "Who didn't I help? And when?",
   },
+}
+
+// ── B1 · Extras: Charity Run (escena en data/b1CharityRun.ts; se abre al cerrar la misión 8). Sin combates ──
+// Ilva: lección 'charity-b1' ('narrator' con su nombre) + práctica b1-s1-c1…c8. 5 monedas
+NPC_TASKS['b1-s1-coach'] = {
+  npc: 'b1-s1-ilva',
+  done: 'b1-s1-coach',
+  lesson: 'charity-b1',
+  activity: 'practice',
+  practice: 'charity-b1',
+  practiceIds: B1_S1_COACH_IDS,
+  coins: 5,
+  steps: [],
+  reward: { text: "Let's raise some money!", es: '¡Vamos a recaudar dinero!', sub: 'Lección hecha. Julian te espera en la línea de salida.', say: "Let's raise some money!" },
+}
+
+// Julian, en la línea de salida: la carrera (Sequence Master en modo carrera, 4 tramos). 10 monedas
+NPC_TASKS['b1-s1-run'] = {
+  npc: 'b1-s1-julian',
+  done: 'b1-s1-run',
+  activity: 'sequence',
+  requires: { id: 'b1-s1-coach', text: 'Julian: "Talk to the coach first."', es: 'Habla primero con la entrenadora.', sub: 'Primero habla con Ilva.' },
+  sequence: {
+    title: 'Charity Run',
+    intro: { en: 'Five kilometres for the shelter. Put each part of the race in order.', es: 'Cinco kilómetros por el refugio. Ordena cada parte de la carrera.' },
+    hint: 'Piensa qué pasa primero en este tramo.',
+    steps: [],
+    race: { runners: 6, start: 4, legs: B1_S1_LEGS, rival: { word: 'corredor', icon: '🏃' } },
+  },
+  coins: 10,
+  steps: [],
+  reward: { text: 'You crossed the finish line!', es: '¡Cruzaste la meta!', sub: 'Ganaste 10 monedas. Habla con Ilva.', say: 'You crossed the finish line!' },
+}
+
+// Ilva: el cierre (medalla y camiseta de corredor). Recupera el tema
+NPC_TASKS['b1-s1-close'] = {
+  npc: 'b1-s1-ilva',
+  done: 'b1-s1-close',
+  activity: 'script',
+  script: B1_S1_CLOSE_SCRIPT,
+  requires: { id: 'b1-s1-run', text: 'The race first!', es: '¡Primero la carrera!', sub: 'Primero corre la carrera: habla con Julian.' },
+  recover: ['charity-b1'],
+  outfit: 'camiseta-corredor',
+  coins: 20,
+  steps: [],
+  reward: { text: 'Extra: Charity Run', es: 'Extra: Carrera benéfica', sub: 'Extra completado. Ganaste la medalla y la camiseta de corredor.', say: 'We achieved our goal!' },
+}
+
+// ── B1 · Extras: Movie Night (escena en data/b1MovieNight.ts; se abre al cerrar la misión 10). Sin combates ──
+// Marisol: lección 'movie-night-b1' ('narrator' con su nombre) + práctica b1-s2-m1…m8. 5 monedas
+NPC_TASKS['b1-s2-talk'] = {
+  npc: 'b1-s2-marisol',
+  done: 'b1-s2-talk',
+  lesson: 'movie-night-b1',
+  activity: 'practice',
+  practice: 'movie-night-b1',
+  practiceIds: B1_S2_TALK_IDS,
+  coins: 5,
+  steps: [],
+  reward: { text: 'Honestly, I love movie nights.', es: 'Sinceramente, me encantan las noches de películas.', sub: 'Lección hecha. Enciende la tele: empieza la película.', say: 'Honestly, I love movie nights.' },
+}
+
+// La tele: la película "The Last Lighthouse" (secuencia fija). 5 monedas
+NPC_TASKS['b1-s2-film'] = {
+  npc: 'b1-s2-tv',
+  done: 'b1-s2-film',
+  activity: 'script',
+  script: B1_S2_FILM_SCRIPT,
+  requires: { id: 'b1-s2-talk', text: 'The TV is off.', es: 'La tele está apagada.', sub: 'Primero habla con Marisol.' },
+  coins: 5,
+  steps: [],
+  reward: { text: 'So? What did you think?', es: '¿Y? ¿Qué te pareció?', sub: 'Escribe tu reseña en el tablero de la residencia (arriba, a la izquierda).' },
+}
+
+// El tablero: la reseña corta (ReviewWriter). Al guardarla se completa la tarea. 10 monedas
+NPC_TASKS['b1-s2-review'] = {
+  npc: 'b1-s2-board',
+  done: 'b1-s2-review',
+  activity: 'review',
+  review: B1_S2_REVIEW_GAME,
+  requires: { id: 'b1-s2-film', text: 'The residence board.', es: 'El tablero de la residencia.', sub: 'Primero mira la película en la tele.' },
+  coins: 10,
+  steps: [],
+  reward: { text: 'Your review is on the board.', es: 'Tu reseña está en el tablero.', sub: 'Reseña guardada. Habla con Marisol.', say: 'Your review is on the board.' },
+}
+
+// Marisol: el cierre (pijama de película). Recupera el tema
+NPC_TASKS['b1-s2-close'] = {
+  npc: 'b1-s2-marisol',
+  done: 'b1-s2-close',
+  activity: 'script',
+  script: B1_S2_CLOSE_SCRIPT,
+  requires: { id: 'b1-s2-review', text: 'Write your review first!', es: '¡Primero escribe tu reseña!', sub: 'Primero escribe la reseña en el tablero.' },
+  recover: ['movie-night-b1'],
+  outfit: 'pijama-pelicula',
+  coins: 20,
+  steps: [],
+  reward: { text: 'Extra: Movie Night', es: 'Extra: Noche de películas', sub: 'Extra completado. Ganaste el pijama de noche de películas.', say: 'Movie night!' },
+}
+
+// ── B1 · Extras: House Party (escena y duelo en data/b1HouseParty.ts; se abre al cerrar la misión 12) ──
+// Jeison: lección 'party-b1' ('narrator' con su nombre) + práctica b1-s3-h1…h8. 5 monedas
+NPC_TASKS['b1-s3-host'] = {
+  npc: 'b1-s3-jeison',
+  done: 'b1-s3-host',
+  lesson: 'party-b1',
+  activity: 'practice',
+  practice: 'party-b1',
+  practiceIds: B1_S3_HOST_IDS,
+  coins: 5,
+  steps: [],
+  reward: { text: "You're ready, aren't you?", es: 'Estás listo, ¿cierto?', sub: 'Lección hecha. Vuelve a hablar con Jeison: hay que confirmar con los invitados.', say: "You're ready, aren't you?" },
+}
+
+// Jeison otra vez: confirmar con los invitados (PartyPlan con question tags). 10 monedas
+NPC_TASKS['b1-s3-plan'] = {
+  npc: 'b1-s3-jeison',
+  done: 'b1-s3-plan',
+  activity: 'party60',
+  party: B1_S3_PARTY,
+  requires: { id: 'b1-s3-host', text: 'One thing first.', es: 'Primero una cosa.', sub: 'Primero termina la lección de Jeison.' },
+  coins: 10,
+  steps: [],
+  reward: { text: 'Everybody is coming!', es: '¡Vienen todos!', sub: 'La lista está completa. Juan, el primo de Jeison, quiere jugar contigo.', say: 'Everybody is coming!' },
+}
+
+// Jeison: el cierre (camisa de fiesta), después del duelo amistoso con Juan. Recupera el tema
+NPC_TASKS['b1-s3-close'] = {
+  npc: 'b1-s3-jeison',
+  done: 'b1-s3-close',
+  activity: 'script',
+  script: B1_S3_CLOSE_SCRIPT,
+  requires: { id: 'b1-s3-duel', text: "My cousin wants to play with you.", es: 'Mi primo quiere jugar contigo.', sub: 'Primero gana el juego de Juan.' },
+  recover: ['party-b1'],
+  outfit: 'camisa-fiesta',
+  coins: 20,
+  steps: [],
+  reward: { text: 'Extra: House Party', es: 'Extra: Fiesta en casa', sub: 'Extra completado. Ganaste la camisa de fiesta.', say: "Great party, isn't it?" },
 }

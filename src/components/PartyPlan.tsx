@@ -11,9 +11,12 @@ import { mixed } from '../game/mix'
  * se escucha su respuesta y se anota en la lista de la fiesta.
  */
 type Choice = { options: string[]; answer: number; tip: string }
-type Round = { who: string; voice: 'male' | 'female'; task: string; ask: Choice; reply: { text: string; es: string }; note: Choice & { q: string } }
+export type PartyRound = { who: string; voice: 'male' | 'female'; task: string; ask: Choice; reply: { text: string; es: string }; note: Choice & { q: string } }
 
-const ROUNDS: Round[] = [
+/** Contenido propio (B1 · Extras, House Party): sin él, la fiesta de los 60 años de Green Street */
+export type PartyContent = { title: string; host: string; hostLine: string; listTitle: string; nextLabel: string; finishLabel: string; rounds: PartyRound[] }
+
+const ROUNDS_60: PartyRound[] = [
   {
     who: 'Kevin',
     voice: 'male',
@@ -56,7 +59,8 @@ const ROUNDS: Round[] = [
   },
 ]
 
-export function PartyPlan({ onClose }: { onClose: (done: boolean) => void }) {
+export function PartyPlan({ content, onClose }: { content?: PartyContent; onClose: (done: boolean) => void }) {
+  const ROUNDS = content?.rounds ?? ROUNDS_60
   const [i, setI] = useState(0)
   const [stage, setStage] = useState<'ask' | 'note' | 'done'>('ask')
   const [tip, setTip] = useState<string | null>(null)
@@ -81,14 +85,14 @@ export function PartyPlan({ onClose }: { onClose: (done: boolean) => void }) {
   return (
     <Panel>
       <div className="flex items-center justify-between">
-        <p className="font-display text-lg text-gold">La fiesta de los 60 años · {i + 1} de {ROUNDS.length}</p>
+        <p className="font-display text-lg text-gold">{content?.title ?? 'La fiesta de los 60 años'} · {i + 1} de {ROUNDS.length}</p>
         <button className={btnGhost} onClick={() => onClose(false)}>Salir</button>
       </div>
-      <p className="mt-1 text-sm text-paper/70">Emma: "Green Street is going to be sixty years old! Can you ask the neighbors?" {r.task}</p>
+      <p className="mt-1 text-sm text-paper/70">{content ? `${content.host}: "${content.hostLine}"` : 'Emma: "Green Street is going to be sixty years old! Can you ask the neighbors?"'} {r.task}</p>
 
       {notes.length > 0 && (
         <ul className="mt-2 rounded-xl border-2 border-[#8b5a2b] bg-[#f4efe4] px-3 py-1.5 text-[14px] text-ink">
-          <li className="font-display text-[13px] text-[#8b5a2b]">PARTY LIST · SATURDAY</li>
+          <li className="font-display text-[13px] text-[#8b5a2b]">{content?.listTitle ?? 'PARTY LIST · SATURDAY'}</li>
           {notes.map((n) => <li key={n}>✓ {n}</li>)}
         </ul>
       )}
@@ -108,7 +112,7 @@ export function PartyPlan({ onClose }: { onClose: (done: boolean) => void }) {
           </button>
         </div>
       )}
-      {stage === 'note' && <p className="anim-fade-in mt-3 font-semibold text-gold">Emma: <span className="text-paper">{r.note.q}</span></p>}
+      {stage === 'note' && <p className="anim-fade-in mt-3 font-semibold text-gold">{content?.host ?? 'Emma'}: <span className="text-paper">{r.note.q}</span></p>}
 
       {stage !== 'done' && (
         <div className="mt-2 grid gap-2">
@@ -133,7 +137,7 @@ export function PartyPlan({ onClose }: { onClose: (done: boolean) => void }) {
               setEs(false)
             }}
           >
-            {last ? 'Darle la lista a Emma' : 'Siguiente vecino'}
+            {last ? (content?.finishLabel ?? 'Darle la lista a Emma') : (content?.nextLabel ?? 'Siguiente vecino')}
           </button>
         </>
       )}

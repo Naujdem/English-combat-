@@ -1065,4 +1065,36 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'leo', text: 'For yes / no questions, use if: Is it dangerous? → Do you know if it is dangerous?', es: 'Para preguntas de sí o no, usa if: ¿Es peligroso? → ¿Sabe si es peligroso?' },
     { who: 'leo', text: 'I wonder… is not really a question, so there is no question mark: I wonder who did this.', es: 'I wonder… no es realmente una pregunta, así que no lleva signo de interrogación: Me pregunto quién hizo esto.' },
   ],
+  // B1 · Extras, Charity Run (data/b1CharityRun.ts): la entrenadora Ilva ('narrator' con su nombre), logros y la carrera
+  'charity-b1': [
+    { who: 'narrator', text: 'Ilva: Welcome to the Charity Run! Five kilometres for Lumen Paws, the animal shelter.', es: 'Ilva: ¡Bienvenidos a la carrera benéfica! Cinco kilómetros por Lumen Paws, el refugio de animales.' },
+    { who: 'board', text: 'Logros (verbo + sustantivo): achieve a goal (lograr una meta), beat a record (superar una marca), raise money (recaudar dinero), win a medal (ganar una medalla), take part in a race (participar en una carrera).', topic: 'charity-b1' },
+    { who: 'board', text: 'Last year we ___ a lot of money for the shelter.', choice: { options: ['raised', 'rose', 'beat'], answer: 0, tip: 'Recaudar dinero: raise money.' } },
+    { who: 'narrator', text: 'Ilva: Last year I was running when I fell. I got up and finished the race!', es: 'Ilva: El año pasado iba corriendo cuando me caí. ¡Me levanté y terminé la carrera!' },
+    { who: 'board', text: 'Past continuous + past simple: una acción larga (was / were + verbo con -ing) y otra corta que la interrumpe (pasado simple). I was running when I fell.', topic: 'charity-b1' },
+    { who: 'board', text: 'I was running when I ___.', choice: { options: ['was falling', 'fall', 'fell'], answer: 2, tip: 'La acción corta va en pasado simple: fell.' } },
+    { who: 'narrator', text: "Ilva: Lupe is running with us today. Don't worry: she is faster than all of us.", es: 'Ilva: Lupe corre hoy con nosotros. No te preocupes: es más rápida que todos.' },
+  ],
+  // B1 · Extras, Movie Night (data/b1MovieNight.ts): Marisol ('narrator' con su nombre), contar la trama y opinar
+  'movie-night-b1': [
+    { who: 'narrator', text: 'Marisol: Movie night! Tonight we are watching "The Last Lighthouse". Moscú has already chosen the best seat.', es: 'Marisol: ¡Noche de películas! Esta noche vemos "El último faro". Moscú ya escogió el mejor puesto.' },
+    { who: 'board', text: 'Para contar la trama: pasado simple para los hechos (A storm destroyed the boat), pasado continuo para la escena (It was raining) y past perfect para lo que pasó antes (The keeper had left).', topic: 'movie-night-b1' },
+    { who: 'board', text: 'It ___ when the film began.', choice: { options: ['was raining', 'were raining', 'is raining'], answer: 0, tip: 'La escena, en pasado continuo: was raining.' } },
+    { who: 'narrator', text: 'Marisol: After a film, I always say what I think. Surprisingly, I loved the ending of this one!', es: 'Marisol: Después de una película, siempre digo lo que pienso. Sorprendentemente, ¡me encantó el final de esta!' },
+    { who: 'board', text: 'Adverbios de opinión (al principio de la frase, con coma): surprisingly (sorprendentemente), unfortunately (por desgracia), luckily (por suerte), obviously (por supuesto), sadly (con pena), honestly (sinceramente).', topic: 'movie-night-b1' },
+    { who: 'board', text: '___, the hero lost the map. It was a terrible moment.', choice: { options: ['Luckily', 'Unfortunately', 'Happily'], answer: 1, tip: 'Algo malo: unfortunately (por desgracia).' } },
+    { who: 'board', text: 'Para opinar se usan verbos de estado, sin -ing: I think, I believe, I love, I prefer. I think it is a great film. (No: I am thinking it is a great film.)', topic: 'movie-night-b1' },
+    { who: 'narrator', text: 'Marisol: Later, you can write a short review for the residence board.', es: 'Marisol: Después puedes escribir una reseña corta para el tablero de la residencia.' },
+  ],
+  // B1 · Extras, House Party (data/b1HouseParty.ts): Jeison ('narrator' con su nombre), question tags con otros auxiliares
+  'party-b1': [
+    { who: 'narrator', text: "Jeison: You're coming to my party tonight, aren't you? Great! I need your help.", es: 'Jeison: Vienes a mi fiesta esta noche, ¿cierto? ¡Genial! Necesito tu ayuda.' },
+    { who: 'board', text: "Ya conoces los question tags con be (It's great, isn't it?). Con otros verbos, el tag repite el auxiliar de la frase: You can dance, can't you? · She will come, won't she? · They have arrived, haven't they?", topic: 'party-b1' },
+    { who: 'board', text: "You can bring some snacks, ___ you?", choice: { options: ["can't", "don't", "aren't"], answer: 0, tip: "Frase con can → tag con can't." } },
+    { who: 'board', text: "Sin auxiliar a la vista, el tag usa do / does / did: You like pizza, don't you? · He lives here, doesn't he? · You came by bus, didn't you?", topic: 'party-b1' },
+    { who: 'board', text: 'Jeison lives on this floor, ___ he?', choice: { options: ["isn't", "doesn't", "don't"], answer: 1, tip: "Presente simple con he → doesn't he?" } },
+    { who: 'narrator', text: "Jeison: And if the sentence is negative, the tag is positive. You haven't forgotten the cake, have you?", es: 'Jeison: Y si la frase es negativa, el tag es positivo. No olvidaste el pastel, ¿verdad?' },
+    { who: 'board', text: "Frase negativa → tag positivo: You don't eat meat, do you? · She didn't call, did she? · We won't be late, will we?", topic: 'party-b1' },
+    { who: 'board', text: "You didn't invite Mr. Fine Print, ___ you?", choice: { options: ["didn't", 'do', 'did'], answer: 2, tip: 'Frase negativa en pasado → tag positivo: did you?' } },
+  ],
 }

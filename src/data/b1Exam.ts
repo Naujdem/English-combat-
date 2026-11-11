@@ -60,7 +60,7 @@ export const B1_EXAM_WRITING = {
     'I learned that a small word can change a day. Now, when I see someone alone, I say hello.',
 }
 
-const PAST = /\b(was|were|had|did|didn't|went|got|felt|learned|learnt|said|told|saw|came|made|took|knew|thought|lost|found|\w{3,}ed)\b/i
+export const B1_EXAM_PAST = /\b(was|were|had|did|didn't|went|got|felt|learned|learnt|said|told|saw|came|made|took|knew|thought|lost|found|\w{3,}ed)\b/i
 const CONDITIONAL = /\bif\b[^.!?]*\b(would|will|won't|could|might|had)\b|\bif\b[^.!?]*('ll|'d)\b|\b(would|could|might)\b[^.!?]*\bif\b/i
 
 export const wordCount = (text: string) => text.trim().split(/\s+/).filter(Boolean).length
@@ -79,7 +79,7 @@ export function writingChecks(text: string): { label: string; ok: boolean }[] {
   return [
     { label: `Entre ${min} y ${max} palabras (llevas ${n})`, ok: n >= min && n <= max },
     { label: `Al menos ${connectors} conectores distintos: because, so, although, but, when, then… (llevas ${found.length}${found.length ? `: ${found.join(', ')}` : ''})`, ok: found.length >= connectors },
-    { label: 'Un tiempo pasado (was, had, learned, went…)', ok: PAST.test(text) },
+    { label: 'Un tiempo pasado (was, had, learned, went…)', ok: B1_EXAM_PAST.test(text) },
     { label: 'Un condicional con if (If I had…, I would… / If I were…)', ok: CONDITIONAL.test(text) },
   ]
 }

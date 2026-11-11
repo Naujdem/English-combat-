@@ -1220,6 +1220,57 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
     doneLine: { text: 'Nobody knows where it started.', es: 'Nadie sabe dónde empezó.' },
   },
+  // ── B1 · Extras, Charity Run (data/b1CharityRun.ts) ──
+  // La entrenadora Ilva (mismo aspecto que b1-08-ilva): tareas b1-s1-coach y b1-s1-close
+  'b1-s1-ilva': {
+    name: 'La entrenadora Ilva',
+    look: { shirt: '#c0392b', hair: '#8a5a32', skin: '#e6b894', gender: 'female' },
+    doneLine: { text: 'You achieved your goal. Well done!', es: 'Lograste tu meta. ¡Bien hecho!' },
+  },
+  // Lupe, la perra del refugio (se dibuja con ShelterDog: B1_06_DOG_NPCS, data/b1Kennels.ts). Sin tarea
+  'b1-s1-lupe': {
+    name: 'Lupe',
+    look: { shirt: '#9a9aa2', hair: '#9a9aa2', skin: '#9a9aa2' },
+    doneLine: { text: 'Woof! (Lupe is ready to run.)', es: '¡Guau! (Lupe está lista para correr.)' },
+  },
+  // Julian (mismo aspecto que b1-08-julian), en la línea de salida: la carrera (tarea b1-s1-run)
+  'b1-s1-julian': {
+    name: 'Julian',
+    look: { shirt: '#1f5fa8', hair: '#3a2a1a', skin: '#d9a37a', gender: 'male' },
+    doneLine: { text: 'What a race!', es: '¡Qué carrera!' },
+  },
+  // ── B1 · Extras, Movie Night (data/b1MovieNight.ts) ──
+  // Marisol, la dueña de la residencia (mismo aspecto que b1-04-marisol): tareas b1-s2-talk y b1-s2-close
+  'b1-s2-marisol': {
+    name: 'Marisol',
+    look: { shirt: '#b5653a', hair: '#5a3a22', skin: '#d7a77a', gender: 'female' },
+    doneLine: { text: 'Honestly, I loved that film.', es: 'Sinceramente, me encantó esa película.' },
+  },
+  // Moscú, la gata (se dibuja con AnimalSprite, Explore.tsx). Sin tarea
+  'b1-s2-moscu': {
+    name: 'Moscú',
+    look: { shirt: '#9a9a9a', hair: '#9a9a9a', skin: '#9a9a9a' },
+    doneLine: { text: 'Meow.', es: 'Miau.' },
+  },
+  // La tele (TabletIcon): la película (tarea b1-s2-film)
+  'b1-s2-tv': {
+    name: 'La televisión',
+    look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
+    doneLine: { text: 'The Last Lighthouse. The end.', es: 'El último faro. Fin.' },
+  },
+  // El tablero de la residencia (NotebookIcon): la reseña (tarea b1-s2-review)
+  'b1-s2-board': {
+    name: 'El tablero de la residencia',
+    look: { shirt: '#b08a5a', hair: '#8a6a40', skin: '#c9a06a' },
+    doneLine: { text: 'Your review is on the board.', es: 'Tu reseña está en el tablero.' },
+  },
+  // ── B1 · Extras, House Party (data/b1HouseParty.ts) ──
+  // Jeison, el vecino (mismo aspecto que b1-04-jeison): tareas b1-s3-host, b1-s3-plan y b1-s3-close
+  'b1-s3-jeison': {
+    name: 'Jeison',
+    look: { shirt: '#3b9d5d', hair: '#2b2b33', skin: '#c68642', gender: 'male' },
+    doneLine: { text: "It's a great party, isn't it?", es: 'Es una gran fiesta, ¿cierto?' },
+  },
   // ── B1-14 · Voices, bloque C (el puerto, data/b1Harbour.ts) ──
   // Manuel, el periodista de Lumen Bay News (tarea b1-14-manuel-talk)
   'b1-14-manuel': {

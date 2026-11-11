@@ -17,12 +17,12 @@ export type RaceLeg = { title: string; steps: SequenceStep[]; challenge?: RaceCh
  * sin errores o un desafío acertado, y baja con el primer error del tramo o un desafío fallado.
  * Siempre se llega a la meta (no bloquea la misión).
  */
-export type RaceSetup = { runners: number; start: number; legs: RaceLeg[] }
+export type RaceSetup = { runners: number; start: number; legs: RaceLeg[]; /** Los otros competidores: palabra e ícono (por defecto, caballos: A2-07) */ rival?: { word: string; icon: string } }
 
 const ord = (n: number) => `${n}.º`
 
 /** Pista de carrera: corredores en fila; el primero va a la derecha (más cerca de la meta) */
-function Track({ position, runners }: { position: number; runners: number }) {
+function Track({ position, runners, icon = '🐎' }: { position: number; runners: number; icon?: string }) {
   return (
     <div className="mt-3 rounded-lg bg-panel-2 px-3 py-2">
       <div className="flex items-center justify-between text-xs text-paper/60">
@@ -33,7 +33,7 @@ function Track({ position, runners }: { position: number; runners: number }) {
       <div className="mt-1.5 flex items-center gap-1.5 border-t border-dashed border-paper/20 pt-1.5">
         {Array.from({ length: runners }, (_, k) => runners - k).map((place) => (
           <div key={place} className={`flex h-7 flex-1 items-center justify-center rounded-md text-xs transition-all duration-300 ${place === position ? 'bg-gold font-semibold text-ink' : 'bg-paper/10 text-paper/40'}`}>
-            {place === position ? 'Tú' : '🐎'}
+            {place === position ? 'Tú' : icon}
           </div>
         ))}
       </div>
@@ -98,7 +98,7 @@ export function SequenceMaster({ title, intro, steps, hint, race, onClose }: { t
     if (k === cur.challenge.answer) {
       sfx('correct')
       const p = move(-1)
-      setNote({ text: `¡Bien dicho! Adelantas a otro caballo: vas en el ${ord(p)} puesto.`, good: true })
+      setNote({ text: `¡Bien dicho! Adelantas a otro ${race?.rival?.word ?? 'caballo'}: vas en el ${ord(p)} puesto.`, good: true })
     } else {
       sfx('wrong')
       const p = move(1)
@@ -130,7 +130,7 @@ export function SequenceMaster({ title, intro, steps, hint, race, onClose }: { t
       <Panel>
         <p className="text-xs font-semibold uppercase tracking-wide text-gold">Sequence Master · Carrera</p>
         <p className="font-display text-lg">{title}</p>
-        <Track position={position} runners={race.runners} />
+        <Track position={position} runners={race.runners} icon={race.rival?.icon} />
         <p className={`anim-fade-in mt-3 rounded-lg px-3 py-2 text-sm ${position <= 3 ? 'bg-hp/15 text-hp' : 'bg-paper/10 text-paper/80'}`}>
           Cruzaste la meta en el {ord(position)} puesto de {race.runners}. {end}
         </p>
@@ -146,7 +146,7 @@ export function SequenceMaster({ title, intro, steps, hint, race, onClose }: { t
       <p className="text-xs font-semibold uppercase tracking-wide text-gold">Sequence Master{race ? ' · Carrera' : ''}</p>
       <p className="font-display text-lg">{title}</p>
       {race && cur && <p className="text-sm text-paper/70">Tramo {leg + 1} de {race.legs.length} · {cur.title}</p>}
-      {race && <Track position={position} runners={race.runners} />}
+      {race && <Track position={position} runners={race.runners} icon={race.rival?.icon} />}
       <div className="mt-2 flex items-start gap-2">
         <p className="flex-1 text-[15px] leading-relaxed"><Tappable text={intro.en} /></p>
         <SpeakButton text={intro.en} size="sm" />

@@ -76,6 +76,7 @@ import { MusicChallenge } from '../components/MusicChallenge'
 import { WhatIf } from '../components/WhatIf'
 import { Reporter } from '../components/Reporter'
 import { B1Exam } from '../components/B1Exam'
+import { ReviewWriter } from '../components/ReviewWriter'
 import { ShelterDog } from '../components/ShelterDog'
 import { B1_06_DOG_NPCS } from '../data/b1Kennels'
 import { B1_07_DEVICE_ROOM, B1_07_NOTEBOOK, B1_07_TV } from '../data/b1Room'
@@ -811,7 +812,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === 'b1-13-student' ? <SpriteBody look={heroLook(state)} /> : e.id === 'b1-11-alarm' || e.id === 'b1-11-exit' || e.id === 'b1-13-window' ? <g /> : e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS || e.id === B1_07_TV || e.id === 'b1-14-tv' || e.id === 'b1-09-wall' || e.id === 'b1-09-time-wall' || e.id === 'b1-11-wall' || e.id === 'b1-11-roads-wall' || e.id === 'b1-13-wall' || e.id === B1_07_CRACK || e.id === B1_07_ESCAPE_NPC ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_07_NOTEBOOK || e.id === 'b1-09-notebook' || e.id === 'b1-11-notebook' || e.id === 'b1-11-page43' || e.id === 'b1-11-page44' || e.id === 'b1-13-notebook' || e.id === 'b1-13-notebook2' || e.id === 'b1-13-page63' || e.id === 'b1-13-journal' || e.id === 'b1-13-bench' || e.id === B1_05_ENVELOPE || e.id === B1_06_BOARD || e.id === B1_06_DESK || e.id === 'b1-06-orders' || e.id === 'b1-08-predict-board' || e.id === 'b1-08-return' || e.id === 'b1-12-album' ? <NotebookIcon lit={pending} /> : B1_06_DOG_NPCS[e.id] ? <ShelterDog who={B1_06_DOG_NPCS[e.id]} /> : e.id === B1_04_MOSCU ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX || e.id === B1_07_DEVICE || e.id === B1_07_DEVICE_ROOM || e.id === 'b1-09-stone' || e.id === 'b1-09-clock' || e.id === 'b1-13-camp-clock' || e.id === 'b1-11-clock' || e.id === 'b1-11-stone' ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === 'b1-13-student' ? <SpriteBody look={heroLook(state)} /> : e.id === 'b1-11-alarm' || e.id === 'b1-11-exit' || e.id === 'b1-13-window' ? <g /> : e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS || e.id === B1_07_TV || e.id === 'b1-14-tv' || e.id === 'b1-s2-tv' || e.id === 'b1-09-wall' || e.id === 'b1-09-time-wall' || e.id === 'b1-11-wall' || e.id === 'b1-11-roads-wall' || e.id === 'b1-13-wall' || e.id === B1_07_CRACK || e.id === B1_07_ESCAPE_NPC ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_07_NOTEBOOK || e.id === 'b1-09-notebook' || e.id === 'b1-11-notebook' || e.id === 'b1-11-page43' || e.id === 'b1-11-page44' || e.id === 'b1-13-notebook' || e.id === 'b1-13-notebook2' || e.id === 'b1-13-page63' || e.id === 'b1-13-journal' || e.id === 'b1-13-bench' || e.id === B1_05_ENVELOPE || e.id === B1_06_BOARD || e.id === B1_06_DESK || e.id === 'b1-06-orders' || e.id === 'b1-08-predict-board' || e.id === 'b1-08-return' || e.id === 'b1-12-album' || e.id === 'b1-s2-board' ? <NotebookIcon lit={pending} /> : B1_06_DOG_NPCS[e.id] ? <ShelterDog who={B1_06_DOG_NPCS[e.id]} /> : e.id === B1_04_MOSCU || e.id === 'b1-s2-moscu' ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX || e.id === B1_07_DEVICE || e.id === B1_07_DEVICE_ROOM || e.id === 'b1-09-stone' || e.id === 'b1-09-clock' || e.id === 'b1-13-camp-clock' || e.id === 'b1-11-clock' || e.id === 'b1-11-stone' ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -1380,6 +1381,17 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             const finish = (done: boolean) => finishTask(task, done)
             if (t.activity === 'guess') return <GuessAnimal onClose={finish} />
             if (t.activity === 'whichdog' && t.whichdog) return <WhichDog rounds={t.whichdog} onClose={finish} />
+            if (t.activity === 'review' && t.review)
+              return (
+                <ReviewWriter
+                  {...t.review}
+                  onClose={() => finishTask(task, false)}
+                  onSave={(text) => {
+                    update((s) => ({ ...s, writings: { ...(s.writings ?? {}), [t.done]: [text] } }))
+                    finishTask(task, true)
+                  }}
+                />
+              )
             if (t.activity === 'b1exam')
               return (
                 <B1Exam
@@ -1416,13 +1428,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 />
               )
             }
-            if (t.activity === 'party60') return <PartyPlan onClose={finish} />
+            if (t.activity === 'party60') return <PartyPlan content={t.party} onClose={finish} />
             if (t.activity === 'tour') return <TourPlan onClose={finish} />
             if (t.activity === 'plan') return <LessonPlan onClose={finish} />
             if (t.activity === 'timeline') return <Timeline onClose={finish} />
             if (t.activity === 'sequence' && t.sequence) {
               const r = t.sequence.race
-              const race = r && { runners: r.runners, legs: r.legs, start: r.startBy?.find((b) => state.opened.includes(b.flag))?.position ?? r.start }
+              const race = r && { runners: r.runners, legs: r.legs, rival: r.rival, start: r.startBy?.find((b) => state.opened.includes(b.flag))?.position ?? r.start }
               return <SequenceMaster title={t.sequence.title} intro={t.sequence.intro} steps={t.sequence.steps} hint={t.sequence.hint} race={race} onClose={finish} />
             }
             if (t.activity === 'fixradio' && t.fixradio) {
