@@ -88,7 +88,7 @@ export function VocabActivity({
           <div className="mt-3 grid gap-2">
             {q.options.map((o, k) => {
               const look =
-                picked === null ? '' : k === q.answer ? 'border-hp bg-hp/20' : picked === k ? 'border-danger bg-danger/20' : 'opacity-40'
+                picked === null ? '' : k === q.answer ? 'border-hp! bg-hp/20!' : picked === k ? 'border-danger! bg-danger/20!' : 'opacity-40!'
               return (
                 <button key={k} className={`${btn} text-left text-base disabled:opacity-100 ${look}`} onClick={() => choose(k)} disabled={picked !== null}>
                   {o}
@@ -235,7 +235,7 @@ export function ReadingActivity({
             {mixed(q.options).map(([o, k]) => (
               <button
                 key={k}
-                className={`${btn} text-left text-base disabled:opacity-100 ${ok && k === q.answer ? 'border-hp bg-hp/20' : ok ? 'opacity-40' : ''}`}
+                className={`${btn} text-left text-base disabled:opacity-100 ${ok && k === q.answer ? 'border-hp! bg-hp/20!' : ok ? 'opacity-40!' : ''}`}
                 onClick={() => choose(k)}
                 disabled={ok}
               >
