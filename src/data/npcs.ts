@@ -1264,6 +1264,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#b08a5a', hair: '#8a6a40', skin: '#c9a06a' },
     doneLine: { text: 'Your review is on the board.', es: 'Tu reseña está en el tablero.' },
   },
+  // ── B1 · Extras, House Party (data/b1HouseParty.ts) ──
+  // Jeison, el vecino (mismo aspecto que b1-04-jeison): tareas b1-s3-host, b1-s3-plan y b1-s3-close
+  'b1-s3-jeison': {
+    name: 'Jeison',
+    look: { shirt: '#3b9d5d', hair: '#2b2b33', skin: '#c68642', gender: 'male' },
+    doneLine: { text: "It's a great party, isn't it?", es: 'Es una gran fiesta, ¿cierto?' },
+  },
   // ── B1-14 · Voices, bloque C (el puerto, data/b1Harbour.ts) ──
   // Manuel, el periodista de Lumen Bay News (tarea b1-14-manuel-talk)
   'b1-14-manuel': {

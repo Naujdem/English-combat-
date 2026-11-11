@@ -1081,9 +1081,20 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'Para contar la trama: pasado simple para los hechos (A storm destroyed the boat), pasado continuo para la escena (It was raining) y past perfect para lo que pasó antes (The keeper had left).', topic: 'movie-night-b1' },
     { who: 'board', text: 'It ___ when the film began.', choice: { options: ['was raining', 'were raining', 'is raining'], answer: 0, tip: 'La escena, en pasado continuo: was raining.' } },
     { who: 'narrator', text: 'Marisol: After a film, I always say what I think. Surprisingly, I loved the ending of this one!', es: 'Marisol: Después de una película, siempre digo lo que pienso. Sorprendentemente, ¡me encantó el final de esta!' },
-    { who: 'board', text: 'Adverbios de opinión (al principio de la frase, con coma): surprisingly (sorprendentemente), unfortunately (por desgracia), luckily (por suerte), obviously (por supuesto), sadly (con tristeza), honestly (sinceramente).', topic: 'movie-night-b1' },
+    { who: 'board', text: 'Adverbios de opinión (al principio de la frase, con coma): surprisingly (sorprendentemente), unfortunately (por desgracia), luckily (por suerte), obviously (por supuesto), sadly (con pena), honestly (sinceramente).', topic: 'movie-night-b1' },
     { who: 'board', text: '___, the hero lost the map. It was a terrible moment.', choice: { options: ['Luckily', 'Unfortunately', 'Happily'], answer: 1, tip: 'Algo malo: unfortunately (por desgracia).' } },
     { who: 'board', text: 'Para opinar se usan verbos de estado, sin -ing: I think, I believe, I love, I prefer. I think it is a great film. (No: I am thinking it is a great film.)', topic: 'movie-night-b1' },
     { who: 'narrator', text: 'Marisol: Later, you can write a short review for the residence board.', es: 'Marisol: Después puedes escribir una reseña corta para el tablero de la residencia.' },
+  ],
+  // B1 · Extras, House Party (data/b1HouseParty.ts): Jeison ('narrator' con su nombre), question tags con otros auxiliares
+  'party-b1': [
+    { who: 'narrator', text: "Jeison: You're coming to my party tonight, aren't you? Great! I need your help.", es: 'Jeison: Vienes a mi fiesta esta noche, ¿cierto? ¡Genial! Necesito tu ayuda.' },
+    { who: 'board', text: "Ya conoces los question tags con be (It's great, isn't it?). Con otros verbos, el tag repite el auxiliar de la frase: You can dance, can't you? · She will come, won't she? · They have arrived, haven't they?", topic: 'party-b1' },
+    { who: 'board', text: "You can bring some snacks, ___ you?", choice: { options: ["can't", "don't", "aren't"], answer: 0, tip: "Frase con can → tag con can't." } },
+    { who: 'board', text: "Sin auxiliar a la vista, el tag usa do / does / did: You like pizza, don't you? · He lives here, doesn't he? · You came by bus, didn't you?", topic: 'party-b1' },
+    { who: 'board', text: 'Jeison lives on this floor, ___ he?', choice: { options: ["isn't", "doesn't", "don't"], answer: 1, tip: "Presente simple con he → doesn't he?" } },
+    { who: 'narrator', text: "Jeison: And if the sentence is negative, the tag is positive. You haven't forgotten the cake, have you?", es: 'Jeison: Y si la frase es negativa, el tag es positivo. No olvidaste el pastel, ¿verdad?' },
+    { who: 'board', text: "Frase negativa → tag positivo: You don't eat meat, do you? · She didn't call, did she? · We won't be late, will we?", topic: 'party-b1' },
+    { who: 'board', text: "You didn't invite Mr. Fine Print, ___ you?", choice: { options: ["didn't", 'do', 'did'], answer: 2, tip: 'Frase negativa en pasado → tag positivo: did you?' } },
   ],
 }

@@ -1428,7 +1428,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 />
               )
             }
-            if (t.activity === 'party60') return <PartyPlan onClose={finish} />
+            if (t.activity === 'party60') return <PartyPlan content={t.party} onClose={finish} />
             if (t.activity === 'tour') return <TourPlan onClose={finish} />
             if (t.activity === 'plan') return <LessonPlan onClose={finish} />
             if (t.activity === 'timeline') return <Timeline onClose={finish} />

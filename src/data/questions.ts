@@ -1328,6 +1328,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Opinar con verbos de estado, sin -ing: I think it is a great film.',
     ],
   },
+  'party-b1': {
+    name: 'Question tags en la fiesta (House Party)',
+    level: 'B1',
+    lesson: [
+      "El tag repite el auxiliar: You can dance, can't you? · She will come, won't she? · They have arrived, haven't they?",
+      "Sin auxiliar: do / does / did. You like pizza, don't you? · He lives here, doesn't he? · You came by bus, didn't you?",
+      "Frase negativa → tag positivo: You haven't forgotten the cake, have you?",
+    ],
+  },
   'say-tell-b1': {
     name: 'Say, tell y speak',
     level: 'B1',

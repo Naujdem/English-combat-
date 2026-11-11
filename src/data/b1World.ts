@@ -59,7 +59,7 @@ export const B1_NODES: B1Node[] = [
   { id: 'b1-12', num: 12, name: 'Old Friends', era: 'Presente', part: 3, x: 268, y: 210 },
   { id: 'b1-13', num: 13, name: 'The Price', era: 'Recuerdo', part: 3, x: 92, y: 265 },
   { id: 'b1-14', num: 14, name: 'Voices', era: 'Presente', part: 3, x: 268, y: 320 },
-  // Parte 4 · Extras (misiones secundarias: Charity Run en data/b1CharityRun.ts, Movie Night en data/b1MovieNight.ts; la tercera, placeholder)
+  // Parte 4 · Extras (misiones secundarias: Charity Run en data/b1CharityRun.ts, Movie Night en data/b1MovieNight.ts y House Party en data/b1HouseParty.ts)
   { id: 'b1-s1', name: 'Charity Run', era: 'Presente', part: 4, x: 268, y: 80, opensWith: closeId(8) },
   { id: 'b1-s2', name: 'Movie Night', era: 'Presente', part: 4, x: 268, y: 190, opensWith: closeId(10) },
   { id: 'b1-s3', name: 'House Party', era: 'Presente', part: 4, x: 268, y: 300, opensWith: closeId(12) },

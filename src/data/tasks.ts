@@ -37,7 +37,9 @@ import { B1_13_CLOSE_SCRIPT } from './b1SchoolMorning'
 import { B1_14_GATHER_SCRIPT, B1_14_NEWS_SCRIPT, B1_14_REPORTER_GAME } from './b1Lounge'
 import { B1_14_CLOSE_SCRIPT, B1_14_KEYCHAIN_SCRIPT } from './b1Harbour'
 import { B1_S1_CLOSE_SCRIPT, B1_S1_LEGS } from './b1CharityRun'
-import { B1_S1_COACH_IDS, B1_S2_TALK_IDS } from './questions-b1-extras'
+import { B1_S1_COACH_IDS, B1_S2_TALK_IDS, B1_S3_HOST_IDS } from './questions-b1-extras'
+import { B1_S3_CLOSE_SCRIPT, B1_S3_PARTY } from './b1HouseParty'
+import type { PartyContent } from '../components/PartyPlan'
 import { B1_S2_CLOSE_SCRIPT, B1_S2_FILM_SCRIPT, B1_S2_REVIEW_GAME } from './b1MovieNight'
 import type { ReviewContent } from '../components/ReviewWriter'
 import { B1_14_INDIRECT_IDS, B1_14_REPORTED_IDS, B1_14_SAYTELL_IDS, B1_14_VERBS_IDS } from './questions-b1-14'
@@ -99,6 +101,8 @@ export type NpcTask = {
   activity?: 'review' | 'b1exam' | 'reporter' | 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music' | 'whatif'
   /** Para activity 'music' (Music Challenge, B1-10): la canción con huecos (components/MusicChallenge.tsx) */
   music?: MusicContent
+  /** Para activity 'party60' con contenido propio (B1 · Extras, House Party): sin él, la fiesta de los 60 años */
+  party?: PartyContent
   /** Para activity 'review' (B1 · Extras, Movie Night): un texto corto con lista de requisitos (components/ReviewWriter.tsx); se guarda en writings[done] */
   review?: ReviewContent
   /** Para activity 'reporter' (Reporter, B1-14): las frases de los recuerdos que se pasan a estilo indirecto (components/Reporter.tsx) */
@@ -6632,4 +6636,44 @@ NPC_TASKS['b1-s2-close'] = {
   coins: 20,
   steps: [],
   reward: { text: 'Extra: Movie Night', es: 'Extra: Noche de películas', sub: 'Extra completado. Ganaste el pijama de noche de películas.', say: 'Movie night!' },
+}
+
+// ── B1 · Extras: House Party (escena y duelo en data/b1HouseParty.ts; se abre al cerrar la misión 12) ──
+// Jeison: lección 'party-b1' ('narrator' con su nombre) + práctica b1-s3-h1…h8. 5 monedas
+NPC_TASKS['b1-s3-host'] = {
+  npc: 'b1-s3-jeison',
+  done: 'b1-s3-host',
+  lesson: 'party-b1',
+  activity: 'practice',
+  practice: 'party-b1',
+  practiceIds: B1_S3_HOST_IDS,
+  coins: 5,
+  steps: [],
+  reward: { text: "You're ready, aren't you?", es: 'Estás listo, ¿cierto?', sub: 'Lección hecha. Vuelve a hablar con Jeison: hay que confirmar con los invitados.', say: "You're ready, aren't you?" },
+}
+
+// Jeison otra vez: confirmar con los invitados (PartyPlan con question tags). 10 monedas
+NPC_TASKS['b1-s3-plan'] = {
+  npc: 'b1-s3-jeison',
+  done: 'b1-s3-plan',
+  activity: 'party60',
+  party: B1_S3_PARTY,
+  requires: { id: 'b1-s3-host', text: 'One thing first.', es: 'Primero una cosa.', sub: 'Primero termina la lección de Jeison.' },
+  coins: 10,
+  steps: [],
+  reward: { text: 'Everybody is coming!', es: '¡Vienen todos!', sub: 'La lista está completa. Juan, el primo de Jeison, quiere jugar contigo.', say: 'Everybody is coming!' },
+}
+
+// Jeison: el cierre (camisa de fiesta), después del duelo amistoso con Juan. Recupera el tema
+NPC_TASKS['b1-s3-close'] = {
+  npc: 'b1-s3-jeison',
+  done: 'b1-s3-close',
+  activity: 'script',
+  script: B1_S3_CLOSE_SCRIPT,
+  requires: { id: 'b1-s3-duel', text: "My cousin wants to play with you.", es: 'Mi primo quiere jugar contigo.', sub: 'Primero gana el juego de Juan.' },
+  recover: ['party-b1'],
+  outfit: 'camisa-fiesta',
+  coins: 20,
+  steps: [],
+  reward: { text: 'Extra: House Party', es: 'Extra: Fiesta en casa', sub: 'Extra completado. Ganaste la camisa de fiesta.', say: "Great party, isn't it?" },
 }
