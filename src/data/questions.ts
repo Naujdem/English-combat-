@@ -1319,6 +1319,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'La acción larga: was / were + verbo con -ing. La corta que la interrumpe: pasado simple.',
     ],
   },
+  'movie-night-b1': {
+    name: 'Contar una película y opinar (Movie Night)',
+    level: 'B1',
+    lesson: [
+      'La trama: pasado simple (hechos), pasado continuo (la escena) y past perfect (lo de antes).',
+      'Adverbios de opinión, al principio y con coma: Surprisingly, … · Unfortunately, … · Luckily, … · Honestly, …',
+      'Opinar con verbos de estado, sin -ing: I think it is a great film.',
+    ],
+  },
   'say-tell-b1': {
     name: 'Say, tell y speak',
     level: 'B1',

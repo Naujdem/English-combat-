@@ -32,6 +32,7 @@ import { B1_10_FESTIVAL_ID } from '../data/b1Festival'
 import { B1_12_HOUSE_ID } from '../data/b1HostHouse'
 import { B1_14_LOUNGE_ID } from '../data/b1Lounge'
 import { B1_S1_PARK_ID } from '../data/b1CharityRun'
+import { B1_S2_ROOM_ID } from '../data/b1MovieNight'
 import { B1_05_FLAT } from '../data/b1Flat'
 import { B1_07_ROOM } from '../data/b1Room'
 import { B1_09_VALLEY } from '../data/b1Valley'
@@ -217,6 +218,8 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     if (n.num === 14) return onEnter(B1_14_LOUNGE_ID)
     // Extras (presente): Charity Run, el parque del puerto (data/b1CharityRun.ts)
     if (n.id === 'b1-s1') return onEnter(B1_S1_PARK_ID)
+    // Extras (presente): Movie Night, la sala de la residencia (data/b1MovieNight.ts)
+    if (n.id === 'b1-s2') return onEnter(B1_S2_ROOM_ID)
     setMsg(`${n.name}: este lugar se construirá pronto.`)
   }
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]

@@ -1075,4 +1075,15 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'I was running when I ___.', choice: { options: ['was falling', 'fall', 'fell'], answer: 2, tip: 'La acción corta va en pasado simple: fell.' } },
     { who: 'narrator', text: "Ilva: Lupe is running with us today. Don't worry: she is faster than all of us.", es: 'Ilva: Lupe corre hoy con nosotros. No te preocupes: es más rápida que todos.' },
   ],
+  // B1 · Extras, Movie Night (data/b1MovieNight.ts): Marisol ('narrator' con su nombre), contar la trama y opinar
+  'movie-night-b1': [
+    { who: 'narrator', text: 'Marisol: Movie night! Tonight we are watching "The Last Lighthouse". Moscú has already chosen the best seat.', es: 'Marisol: ¡Noche de películas! Esta noche vemos "El último faro". Moscú ya escogió el mejor puesto.' },
+    { who: 'board', text: 'Para contar la trama: pasado simple para los hechos (A storm destroyed the boat), pasado continuo para la escena (It was raining) y past perfect para lo que pasó antes (The keeper had left).', topic: 'movie-night-b1' },
+    { who: 'board', text: 'It ___ when the film began.', choice: { options: ['was raining', 'were raining', 'is raining'], answer: 0, tip: 'La escena, en pasado continuo: was raining.' } },
+    { who: 'narrator', text: 'Marisol: After a film, I always say what I think. Surprisingly, I loved the ending of this one!', es: 'Marisol: Después de una película, siempre digo lo que pienso. Sorprendentemente, ¡me encantó el final de esta!' },
+    { who: 'board', text: 'Adverbios de opinión (al principio de la frase, con coma): surprisingly (sorprendentemente), unfortunately (por desgracia), luckily (por suerte), obviously (por supuesto), sadly (con tristeza), honestly (sinceramente).', topic: 'movie-night-b1' },
+    { who: 'board', text: '___, the hero lost the map. It was a terrible moment.', choice: { options: ['Luckily', 'Unfortunately', 'Happily'], answer: 1, tip: 'Algo malo: unfortunately (por desgracia).' } },
+    { who: 'board', text: 'Para opinar se usan verbos de estado, sin -ing: I think, I believe, I love, I prefer. I think it is a great film. (No: I am thinking it is a great film.)', topic: 'movie-night-b1' },
+    { who: 'narrator', text: 'Marisol: Later, you can write a short review for the residence board.', es: 'Marisol: Después puedes escribir una reseña corta para el tablero de la residencia.' },
+  ],
 }

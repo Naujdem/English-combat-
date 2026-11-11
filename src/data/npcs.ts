@@ -1239,6 +1239,31 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#1f5fa8', hair: '#3a2a1a', skin: '#d9a37a', gender: 'male' },
     doneLine: { text: 'What a race!', es: '¡Qué carrera!' },
   },
+  // ── B1 · Extras, Movie Night (data/b1MovieNight.ts) ──
+  // Marisol, la dueña de la residencia (mismo aspecto que b1-04-marisol): tareas b1-s2-talk y b1-s2-close
+  'b1-s2-marisol': {
+    name: 'Marisol',
+    look: { shirt: '#b5653a', hair: '#5a3a22', skin: '#d7a77a', gender: 'female' },
+    doneLine: { text: 'Honestly, I loved that film.', es: 'Sinceramente, me encantó esa película.' },
+  },
+  // Moscú, la gata (se dibuja con AnimalSprite, Explore.tsx). Sin tarea
+  'b1-s2-moscu': {
+    name: 'Moscú',
+    look: { shirt: '#9a9a9a', hair: '#9a9a9a', skin: '#9a9a9a' },
+    doneLine: { text: 'Meow.', es: 'Miau.' },
+  },
+  // La tele (TabletIcon): la película (tarea b1-s2-film)
+  'b1-s2-tv': {
+    name: 'La televisión',
+    look: { shirt: '#2d2d3a', hair: '#2d2d3a', skin: '#e8eef3' },
+    doneLine: { text: 'The Last Lighthouse. The end.', es: 'El último faro. Fin.' },
+  },
+  // El tablero de la residencia (NotebookIcon): la reseña (tarea b1-s2-review)
+  'b1-s2-board': {
+    name: 'El tablero de la residencia',
+    look: { shirt: '#b08a5a', hair: '#8a6a40', skin: '#c9a06a' },
+    doneLine: { text: 'Your review is on the board.', es: 'Tu reseña está en el tablero.' },
+  },
   // ── B1-14 · Voices, bloque C (el puerto, data/b1Harbour.ts) ──
   // Manuel, el periodista de Lumen Bay News (tarea b1-14-manuel-talk)
   'b1-14-manuel': {

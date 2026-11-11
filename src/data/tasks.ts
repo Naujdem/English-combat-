@@ -37,7 +37,9 @@ import { B1_13_CLOSE_SCRIPT } from './b1SchoolMorning'
 import { B1_14_GATHER_SCRIPT, B1_14_NEWS_SCRIPT, B1_14_REPORTER_GAME } from './b1Lounge'
 import { B1_14_CLOSE_SCRIPT, B1_14_KEYCHAIN_SCRIPT } from './b1Harbour'
 import { B1_S1_CLOSE_SCRIPT, B1_S1_LEGS } from './b1CharityRun'
-import { B1_S1_COACH_IDS } from './questions-b1-extras'
+import { B1_S1_COACH_IDS, B1_S2_TALK_IDS } from './questions-b1-extras'
+import { B1_S2_CLOSE_SCRIPT, B1_S2_FILM_SCRIPT, B1_S2_REVIEW_GAME } from './b1MovieNight'
+import type { ReviewContent } from '../components/ReviewWriter'
 import { B1_14_INDIRECT_IDS, B1_14_REPORTED_IDS, B1_14_SAYTELL_IDS, B1_14_VERBS_IDS } from './questions-b1-14'
 import type { ReporterContent } from '../components/Reporter'
 import type { FuturePlannerContent } from '../components/FuturePlanner'
@@ -94,9 +96,11 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'b1exam' | 'reporter' | 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music' | 'whatif'
+  activity?: 'review' | 'b1exam' | 'reporter' | 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music' | 'whatif'
   /** Para activity 'music' (Music Challenge, B1-10): la canción con huecos (components/MusicChallenge.tsx) */
   music?: MusicContent
+  /** Para activity 'review' (B1 · Extras, Movie Night): un texto corto con lista de requisitos (components/ReviewWriter.tsx); se guarda en writings[done] */
+  review?: ReviewContent
   /** Para activity 'reporter' (Reporter, B1-14): las frases de los recuerdos que se pasan a estilo indirecto (components/Reporter.tsx) */
   reporter?: ReporterContent
   /** Para activity 'whatif' (What If…, B1-11): los intentos de cambiar la noche del incendio (components/WhatIf.tsx) */
@@ -6576,4 +6580,56 @@ NPC_TASKS['b1-s1-close'] = {
   coins: 20,
   steps: [],
   reward: { text: 'Extra: Charity Run', es: 'Extra: Carrera benéfica', sub: 'Extra completado. Ganaste la medalla y la camiseta de corredor.', say: 'We achieved our goal!' },
+}
+
+// ── B1 · Extras: Movie Night (escena en data/b1MovieNight.ts; se abre al cerrar la misión 10). Sin combates ──
+// Marisol: lección 'movie-night-b1' ('narrator' con su nombre) + práctica b1-s2-m1…m8. 5 monedas
+NPC_TASKS['b1-s2-talk'] = {
+  npc: 'b1-s2-marisol',
+  done: 'b1-s2-talk',
+  lesson: 'movie-night-b1',
+  activity: 'practice',
+  practice: 'movie-night-b1',
+  practiceIds: B1_S2_TALK_IDS,
+  coins: 5,
+  steps: [],
+  reward: { text: 'Honestly, I love movie nights.', es: 'Sinceramente, me encantan las noches de películas.', sub: 'Lección hecha. Enciende la tele: empieza la película.', say: 'Honestly, I love movie nights.' },
+}
+
+// La tele: la película "The Last Lighthouse" (secuencia fija). 5 monedas
+NPC_TASKS['b1-s2-film'] = {
+  npc: 'b1-s2-tv',
+  done: 'b1-s2-film',
+  activity: 'script',
+  script: B1_S2_FILM_SCRIPT,
+  requires: { id: 'b1-s2-talk', text: 'The TV is off.', es: 'La tele está apagada.', sub: 'Primero habla con Marisol.' },
+  coins: 5,
+  steps: [],
+  reward: { text: 'So? What did you think?', es: '¿Y? ¿Qué te pareció?', sub: 'Escribe tu reseña en el tablero de la residencia (arriba, a la izquierda).' },
+}
+
+// El tablero: la reseña corta (ReviewWriter). Al guardarla se completa la tarea. 10 monedas
+NPC_TASKS['b1-s2-review'] = {
+  npc: 'b1-s2-board',
+  done: 'b1-s2-review',
+  activity: 'review',
+  review: B1_S2_REVIEW_GAME,
+  requires: { id: 'b1-s2-film', text: 'The residence board.', es: 'El tablero de la residencia.', sub: 'Primero mira la película en la tele.' },
+  coins: 10,
+  steps: [],
+  reward: { text: 'Your review is on the board.', es: 'Tu reseña está en el tablero.', sub: 'Reseña guardada. Habla con Marisol.', say: 'Your review is on the board.' },
+}
+
+// Marisol: el cierre (pijama de película). Recupera el tema
+NPC_TASKS['b1-s2-close'] = {
+  npc: 'b1-s2-marisol',
+  done: 'b1-s2-close',
+  activity: 'script',
+  script: B1_S2_CLOSE_SCRIPT,
+  requires: { id: 'b1-s2-review', text: 'Write your review first!', es: '¡Primero escribe tu reseña!', sub: 'Primero escribe la reseña en el tablero.' },
+  recover: ['movie-night-b1'],
+  outfit: 'pijama-pelicula',
+  coins: 20,
+  steps: [],
+  reward: { text: 'Extra: Movie Night', es: 'Extra: Noche de películas', sub: 'Extra completado. Ganaste el pijama de noche de películas.', say: 'Movie night!' },
 }
