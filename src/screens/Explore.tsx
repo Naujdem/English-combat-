@@ -75,6 +75,7 @@ import { WhichDog } from '../components/WhichDog'
 import { MusicChallenge } from '../components/MusicChallenge'
 import { WhatIf } from '../components/WhatIf'
 import { Reporter } from '../components/Reporter'
+import { B1Exam } from '../components/B1Exam'
 import { ShelterDog } from '../components/ShelterDog'
 import { B1_06_DOG_NPCS } from '../data/b1Kennels'
 import { B1_07_DEVICE_ROOM, B1_07_NOTEBOOK, B1_07_TV } from '../data/b1Room'
@@ -1379,6 +1380,16 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             const finish = (done: boolean) => finishTask(task, done)
             if (t.activity === 'guess') return <GuessAnimal onClose={finish} />
             if (t.activity === 'whichdog' && t.whichdog) return <WhichDog rounds={t.whichdog} onClose={finish} />
+            if (t.activity === 'b1exam')
+              return (
+                <B1Exam
+                  onClose={() => finishTask(task, false)}
+                  onSave={(r) => {
+                    update((s) => ({ ...s, writings: { ...(s.writings ?? {}), b1: [r.writing, ...r.speaking], 'b1-notas': [`Reading ${r.reading}/5`, `Listening ${r.listening}/5`] } }))
+                    finishTask(task, true)
+                  }}
+                />
+              )
             if (t.activity === 'reporter' && t.reporter) return <Reporter {...t.reporter} names={{ leo: 'Leo', maya: 'Maya', special: npcOf('b1-14-special').name }} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'whatif' && t.whatif) return <WhatIf {...t.whatif} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'music' && t.music) return <MusicChallenge {...t.music} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />

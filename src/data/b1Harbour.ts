@@ -1,6 +1,7 @@
 import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
 import { canRecognize } from '../game/mic'
+import { closeId } from './b1World'
 
 /**
  * B1-14 · Voices (presente, final de B1). Bloque C: el puerto de Lumen Bay al amanecer (escena b1-14-harbour).
@@ -10,7 +11,8 @@ import { canRecognize } from '../game/mic'
  * Orden: Manuel (b1-14-manuel, charla con preguntas indirectas) → la persona especial: el llavero (b1-14-keychain, script;
  *   el protagonista entiende que el amigo callado del recuerdo es él) → tres ecos de esbirros de B1 (repaso) →
  *   el jefe final The Grudge (3 fases: reported speech, repaso de todo B1 y la voz del protagonista) →
- *   "Próximamente": el examen de B1 y el cierre (bloque 14-D). Este bloque NO guarda closeId(14).
+ *   Bloque D: Leo: el examen de B1 (b1-14-exam, components/B1Exam.tsx, data/b1Exam.ts) → Leo: el cierre de B1
+ *   (b1-14-close = closeId(14): recupera los temas; el núcleo brilla pero sigue vacío; sin fragmentos).
  */
 export const B1_14_HARBOUR_ID = 'b1-14-harbour'
 export const B1_14_MANUEL = 'b1-14-manuel'
@@ -23,6 +25,10 @@ export const B1_14_ECHO1 = 'b1-14-echo1'
 export const B1_14_ECHO2 = 'b1-14-echo2'
 export const B1_14_ECHO3 = 'b1-14-echo3'
 export const B1_14_BOSS = 'b1-14-boss'
+export const B1_14_EXAM = 'b1-14-exam'
+export const B1_14_CLOSE = closeId(14)
+/** Texto de ayuda de las escenas de la misión 14 cuando ya está cerrada */
+export const B1_14_DONE_TEXT = 'Voices. La misión 14 terminó: B1 completado. La historia sigue en B2.'
 
 /**
  * Leyenda (Tiles.tsx, sin dibujos nuevos): f cerca · h luces (faroles) · _ piedra · w agua · H banca · p planta · d puerta.
@@ -71,10 +77,12 @@ export const B1_14_HARBOUR: SceneDef = {
     { label: 'El llavero', done: s.opened.includes(B1_14_KEYCHAIN) },
     { label: 'Los ecos (3)', done: s.defeated.includes(B1_14_ECHO3) },
     { label: 'The Grudge', done: s.defeated.includes(B1_14_BOSS) },
+    { label: 'El examen de B1', done: s.opened.includes(B1_14_EXAM) },
+    { label: 'El cierre', done: s.opened.includes(B1_14_CLOSE) },
   ],
   intro: {
     first: 'The harbour at sunrise. It is too quiet. — El puerto al amanecer. Hay demasiado silencio.',
-    later: (s: GameState) => (s.defeated.includes(B1_14_BOSS) ? 'The harbour is calm again. Próximamente: el examen de B1 y el cierre. — El puerto vuelve a estar en calma.' : 'The harbour at sunrise. It is too quiet. — El puerto al amanecer. Hay demasiado silencio.'),
+    later: (s: GameState) => (s.opened.includes(B1_14_CLOSE) ? B1_14_DONE_TEXT : s.defeated.includes(B1_14_BOSS) ? 'The harbour is calm again. Talk to Leo. — El puerto vuelve a estar en calma. Habla con Leo.' : 'The harbour at sunrise. It is too quiet. — El puerto al amanecer. Hay demasiado silencio.'),
   },
 }
 
@@ -89,6 +97,19 @@ export const B1_14_KEYCHAIN_SCRIPT: ScriptLine[] = [
   { who: 'narrator', text: '(The man said that his friend had not helped him. He was talking about you.)', es: '(El hombre dijo que su amigo no lo había ayudado. Hablaba de ti.)' },
   { who: 'narrator', text: '(You whisper:) "The stranger blames me."', es: '(Susurras:) "El desconocido me culpa a mí."' },
   { who: 'narrator', text: '(The air goes cold. The water turns black. Something is rising from it.)', es: '(El aire se enfría. El agua se pone negra. Algo sale de ella.)' },
+]
+
+/** El cierre de B1 (Leo, secuencia fija; closeId(14)). No revela quién es el desconocido ni por qué el protagonista calló */
+export const B1_14_CLOSE_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(The harbour is quiet. People are talking again. Their voices sound like music.)', es: '(El puerto está en calma. La gente vuelve a hablar. Sus voces suenan como música.)' },
+  { who: 'narrator', text: 'Maya: Manuel said that everyone was fine. He told me that nobody understood what had happened.', es: 'Maya: Manuel dijo que todos estaban bien. Me dijo que nadie entendía qué había pasado.' },
+  { who: 'narrator', text: 'Special person: You spoke. I heard you. Loud and clear.', es: 'La persona especial: Hablaste. Te oí. Fuerte y claro.' },
+  { who: 'narrator', text: '(You take the clock out of your pocket. The empty centre is shining, brighter than ever.)', es: '(Sacas el reloj del bolsillo. El centro vacío brilla más que nunca.)' },
+  { who: 'narrator', text: '(But it is still empty.)', es: '(Pero sigue vacío.)' },
+  { who: 'narrator', text: "Leo: It's so bright… (His voice breaks for a second. He coughs.) Sorry. I'm fine.", es: 'Leo: Brilla mucho… (Se le quiebra la voz un segundo. Tose.) Perdón. Estoy bien.' },
+  { who: 'narrator', text: '(You look at the keychain. Then at the water.)', es: '(Miras el llavero. Después, el agua.)' },
+  { who: 'narrator', text: '(You whisper:) "Who didn\'t I help? And when?"', es: '(Susurras:) "¿A quién no ayudé? ¿Y cuándo?"' },
+  { who: 'narrator', text: '(Nobody answers. Not yet.)', es: '(Nadie responde. Todavía no.)' },
 ]
 
 const GREY = { shirt: '#4a4a55', hair: '#2a2a33', skin: '#8f8f9c' }

@@ -35,7 +35,7 @@ import { B1_13_DECISION_SCRIPT, B1_13_JOURNAL_SCRIPT } from './b1TempleCamp'
 import { B1_13_PLANNER_CONTENT, B1_13_WINDOW_SCRIPT } from './b1Window2056'
 import { B1_13_CLOSE_SCRIPT } from './b1SchoolMorning'
 import { B1_14_GATHER_SCRIPT, B1_14_NEWS_SCRIPT, B1_14_REPORTER_GAME } from './b1Lounge'
-import { B1_14_KEYCHAIN_SCRIPT } from './b1Harbour'
+import { B1_14_CLOSE_SCRIPT, B1_14_KEYCHAIN_SCRIPT } from './b1Harbour'
 import { B1_14_INDIRECT_IDS, B1_14_REPORTED_IDS, B1_14_SAYTELL_IDS, B1_14_VERBS_IDS } from './questions-b1-14'
 import type { ReporterContent } from '../components/Reporter'
 import type { FuturePlannerContent } from '../components/FuturePlanner'
@@ -92,7 +92,7 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'reporter' | 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music' | 'whatif'
+  activity?: 'b1exam' | 'reporter' | 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music' | 'whatif'
   /** Para activity 'music' (Music Challenge, B1-10): la canción con huecos (components/MusicChallenge.tsx) */
   music?: MusicContent
   /** Para activity 'reporter' (Reporter, B1-14): las frases de los recuerdos que se pasan a estilo indirecto (components/Reporter.tsx) */
@@ -6492,5 +6492,40 @@ NPC_TASKS['b1-14-keychain'] = {
     text: 'The silent friend… was me. The stranger blames me.',
     es: 'El amigo callado… era yo. El desconocido me culpa a mí.',
     sub: 'Tres ecos salieron del agua. Véncelos, uno por uno.',
+  },
+}
+
+// ── B1-14 · Voices, bloque D (el puerto, tras vencer a The Grudge): el examen de B1 y el cierre de B1 ──
+// Leo: el examen final de B1 (components/B1Exam.tsx, data/b1Exam.ts): reading, listening, writing y speaking. Al guardar se completa la tarea
+NPC_TASKS['b1-14-exam'] = {
+  npc: 'b1-14-harbour-leo',
+  done: 'b1-14-exam',
+  activity: 'b1exam',
+  requires: { id: 'b1-14-boss', text: 'My throat feels strange here.', es: 'Aquí siento rara la garganta.', sub: 'Primero vence a The Grudge.' },
+  coins: 20,
+  steps: [],
+  reward: {
+    text: 'Leo: "You read, you listened, you wrote, you spoke. That is B1."',
+    es: 'Leíste, escuchaste, escribiste y hablaste. Eso es B1.',
+    sub: 'Examen de B1 guardado. Habla otra vez con Leo.',
+    say: 'That is B1.',
+  },
+}
+
+// Leo otra vez: el cierre de B1 (closeId(14)). Recupera los temas de la misión; el núcleo brilla pero sigue vacío (sin FragmentJoin)
+NPC_TASKS['b1-14-close'] = {
+  npc: 'b1-14-harbour-leo',
+  done: 'b1-14-close',
+  activity: 'script',
+  script: B1_14_CLOSE_SCRIPT,
+  requires: { id: 'b1-14-exam', text: 'One more thing first.', es: 'Primero una cosa más.', sub: 'Primero haz el examen de B1.' },
+  recover: ['reported-speech-b1', 'say-tell-b1', 'reporting-verbs-b1', 'indirect-questions-b1'],
+  coins: 30,
+  steps: [],
+  reward: {
+    text: 'Mission 14: Voices',
+    es: 'Misión 14: Voces',
+    sub: '¡B1 completado! Ganaste la insignia "B1 completado". El núcleo del reloj brilla, pero sigue vacío. Las respuestas, en B2.',
+    say: "Who didn't I help? And when?",
   },
 }
