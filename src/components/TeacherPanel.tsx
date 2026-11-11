@@ -5,7 +5,7 @@ import { B1_11_WHATIF } from '../data/b1FireNight'
 import { B1_10_SONG } from '../data/b1Stage'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
-import { PRESETS, b1Mission1, b1Mission2, b1Mission3, b1Mission4, b1Mission5, b1Mission6, b1Mission7, b1Mission8, b1Mission9, b1Mission10, b1Mission11, b1Mission12, b1Mission13, setTeacher, skipLessons, useTeacher } from '../game/teacher'
+import { PRESETS, b1Mission1, b1Mission2, b1Mission3, b1Mission4, b1Mission5, b1Mission6, b1Mission7, b1Mission8, b1Mission9, b1Mission10, b1Mission11, b1Mission12, b1Mission14, b1Mission13, setTeacher, skipLessons, useTeacher } from '../game/teacher'
 import { SCENES } from '../game/helpers'
 import { walkable } from './Tiles'
 import { ENEMIES } from '../data/enemies'
@@ -312,6 +312,9 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission13(s, 'window'))}>B1-13: ventana de 2056</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission13(s, 'planner'))}>B1-13: Future Planner</button>
               <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission13(s, 'school'))}>B1-13: escuela</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission14(s, 'lounge'))}>B1-14: sala de la residencia</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission14(s, 'reported'))}>B1-14: lección de Leo (reported speech)</button>
+              <button className={`${btn} px-2 text-sm`} onClick={() => go((s) => b1Mission14(s, 'saytell'))}>B1-14: lección de Leo (say / tell)</button>
             </div>
 
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B1 · Recuerdos</p>
