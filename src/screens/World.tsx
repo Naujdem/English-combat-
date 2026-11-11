@@ -30,6 +30,7 @@ import { B1_06_SHELTER_ID } from '../data/b1Shelter'
 import { B1_08_STADIUM_ID } from '../data/b1Stadium'
 import { B1_10_FESTIVAL_ID } from '../data/b1Festival'
 import { B1_12_HOUSE_ID } from '../data/b1HostHouse'
+import { B1_14_LOUNGE_ID } from '../data/b1Lounge'
 import { B1_05_FLAT } from '../data/b1Flat'
 import { B1_07_ROOM } from '../data/b1Room'
 import { B1_09_VALLEY } from '../data/b1Valley'
@@ -211,6 +212,8 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     if (n.num === 12) return onEnter(B1_12_HOUSE_ID)
     // Nodo 13 (recuerdo): The Price (data/b1TempleEchoes.ts). L, muy viejo, en el Temple of Echoes. El FragmentJoin ya se animó en el cierre del 12
     if (n.num === 13) return update((s) => enterMemory(s, 13, B1_13_ECHOES.id, B1_13_ECHOES.start))
+    // Nodo 14 (presente): Voices, la sala de la residencia (data/b1Lounge.ts)
+    if (n.num === 14) return onEnter(B1_14_LOUNGE_ID)
     setMsg(`${n.name}: este lugar se construirá pronto.`)
   }
   const a2Here = A2_NODES.find((n) => n.sceneId === state.sceneId) ?? [...A2_NODES].reverse().find((n) => n.open(state) && SCENES[n.sceneId]) ?? A2_NODES[0]

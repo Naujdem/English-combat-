@@ -1031,4 +1031,21 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'einer', text: 'The first noun is usually singular: a shoe shop, not a shoes shop.', es: 'El primer sustantivo suele ir en singular: a shoe shop, no a shoes shop.' },
     { who: 'einer', text: 'More city words: landmark (a famous building or place), neighbourhood (a part of a city where people live), crowded (with many people).', es: 'Más palabras de ciudad: landmark (un edificio o lugar famoso), neighbourhood (una zona de la ciudad donde vive la gente), crowded (con mucha gente).' },
   ],
+  // B1-14 · bloque A (la sala de la residencia, data/b1Lounge.ts): Leo, reported speech (el cambio de tiempos)
+  'reported-speech-b1': [
+    { who: 'leo', text: "When you repeat someone's words later, you use reported speech. Direct: \"I lost everything.\" Reported: He said that he had lost everything.", es: 'Cuando repites después las palabras de alguien, usas el estilo indirecto. Directo: "Lo perdí todo." Indirecto: Él dijo que lo había perdido todo.' },
+    { who: 'leo', text: 'The verb usually goes one step back in time. Present → past: "I am tired." → She said she was tired.', es: 'El verbo normalmente va un paso atrás en el tiempo. Presente → pasado: "Estoy cansada." → Ella dijo que estaba cansada.' },
+    { who: 'leo', text: 'Past simple → past perfect: "I lost my job." → He said he had lost his job.', es: 'Pasado simple → past perfect: "Perdí mi trabajo." → Él dijo que había perdido su trabajo.' },
+    { who: 'leo', text: 'will → would, and can → could: "I will wait." → He said he would wait. "I can\'t speak." → He said he couldn\'t speak.', es: 'will → would y can → could: "Esperaré." → Él dijo que esperaría. "No puedo hablar." → Él dijo que no podía hablar.' },
+    { who: 'leo', text: 'Pronouns change too: "My throat hurts." → He said that his throat hurt.', es: 'Los pronombres también cambian: "Me duele la garganta." → Él dijo que le dolía la garganta.' },
+    { who: 'leo', text: 'The word "that" is optional: He said that he was sorry. He said he was sorry.', es: 'La palabra "that" es opcional: Él dijo que lo sentía.' },
+  ],
+  // B1-14 · bloque A: Leo, say / tell / speak
+  'say-tell-b1': [
+    { who: 'leo', text: 'Say: you say something. No person after it. He said that he was sorry.', es: 'say: dices algo. Sin persona después. Él dijo que lo sentía.' },
+    { who: 'leo', text: 'Tell: you tell someone something. Always with a person. He told me that he was sorry.', es: 'tell: le dices algo a alguien. Siempre con una persona. Él me dijo que lo sentía.' },
+    { who: 'leo', text: 'If you want a person after say, use "to": What did he say to you?', es: 'Si quieres una persona después de say, usa "to": ¿Qué te dijo?' },
+    { who: 'leo', text: 'Tell also goes with some fixed words: tell the truth, tell a story, tell a lie.', es: 'tell también va con algunas palabras fijas: decir la verdad, contar una historia, decir una mentira.' },
+    { who: 'leo', text: 'Speak is about using your voice or a language: I can speak English. He spoke to me about the fire.', es: 'speak trata de usar la voz o un idioma: Sé hablar inglés. Él me habló del incendio.' },
+  ],
 }

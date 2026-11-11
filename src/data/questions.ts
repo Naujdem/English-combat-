@@ -51,6 +51,7 @@ import { B1_11_QUESTIONS } from './questions-b1-11'
 import { B1_13_QUESTIONS } from './questions-b1-13'
 import { B1_10_QUESTIONS } from './questions-b1-10'
 import { B1_12_QUESTIONS } from './questions-b1-12'
+import { B1_14_QUESTIONS } from './questions-b1-14'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
 /**
@@ -418,6 +419,7 @@ export const QUESTIONS: Question[] = [
   ...B1_08_QUESTIONS,
   ...B1_09_QUESTIONS,
   ...B1_12_QUESTIONS,
+  ...B1_14_QUESTIONS,
   ...B1_11_QUESTIONS,
   ...B1_13_QUESTIONS,
   ...B1_10_QUESTIONS,
@@ -1274,6 +1276,25 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Fracaso: fail to + verbo (no lograr), give up (rendirse), don\'t make it (no lograrlo).',
       'Ojo: I succeeded in finding it. I managed to find it. I failed to find it.',
       'Palabras: cost (costo), price (precio), blame (culpa), revenge (venganza), unfair (injusto), regret (arrepentimiento).',
+    ],
+  },
+  'reported-speech-b1': {
+    name: 'Reported speech: contar lo que alguien dijo',
+    level: 'B1',
+    lesson: [
+      'El verbo va un paso atrás: am/is → was · lost → had lost · will → would · can → could.',
+      '"I lost everything." → He said (that) he had lost everything.',
+      'Los pronombres cambian: "My throat hurts." → He said that his throat hurt.',
+      'that es opcional: He said he was sorry.',
+    ],
+  },
+  'say-tell-b1': {
+    name: 'Say, tell y speak',
+    level: 'B1',
+    lesson: [
+      'say sin persona: He said that he was sorry. Con persona, say + to: What did he say to you?',
+      'tell + persona: He told me that he was sorry. También: tell the truth, tell a story, tell a lie.',
+      'speak: usar la voz o un idioma. I can speak English. He spoke to me about the fire.',
     ],
   },
   'although-unless-b1': {

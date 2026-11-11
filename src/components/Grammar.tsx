@@ -388,6 +388,12 @@ export function patternFor(topic: TopicId, sentence = ''): { title: string; part
       return { title: 'Para pedir con cortesía:', parts: [V('Could'), '+', S('you / I'), '+', V('verbo'), '+', R('...'), '+', K('please?')] }
     case 'plurals':
       return { title: 'Plurales: -s normal, pero sheep → sheep, goose → geese, mouse → mice, child → children:', parts: [K('two / three...'), '+', R('cosas en plural')] }
+    case 'reported-speech-b1':
+      return { title: 'Estilo indirecto: said (that) + el verbo un tiempo atrás:', parts: [S('Sujeto'), '+', K('said (that)'), '+', S('sujeto'), '+', V('verbo un tiempo atrás'), '+', R('...')] }
+    case 'say-tell-b1':
+      if (/\b(tell|tells|told)\b/i.test(sentence)) return { title: 'tell + persona:', parts: [S('Sujeto'), '+', K('tell / told'), '+', R('persona'), '+', R('...')] }
+      if (/\b(speak|speaks|spoke)\b/i.test(sentence)) return { title: 'speak + idioma, o speak to + persona:', parts: [S('Sujeto'), '+', K('speak / spoke'), '+', R('idioma / to + persona')] }
+      return { title: 'say sin persona (o say + to + persona):', parts: [S('Sujeto'), '+', K('say / said'), '+', R('(that) ...')] }
     default:
       return { title: 'Usa esta estructura:', parts: [S('Sujeto'), '+', V('Verbo'), '+', R('...')] }
   }

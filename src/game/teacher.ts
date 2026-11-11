@@ -54,6 +54,7 @@ import { B1_13_HALL } from '../data/b1EchoHall'
 import { B1_13_CAMP } from '../data/b1TempleCamp'
 import { B1_13_WINDOW } from '../data/b1Window2056'
 import { B1_13_SCHOOL } from '../data/b1SchoolMorning'
+import { B1_14_LOUNGE } from '../data/b1Lounge'
 import { B1_10_TENT } from '../data/b1GamingTent'
 import { B1_10_STAGE } from '../data/b1Stage'
 import { B1_10_BOSS_DEF } from '../data/b1HeadlinerBoss'
@@ -1124,4 +1125,19 @@ export function b1Mission13(s: GameState, stage: 'start' | 'wall' | 'hall' | 'ri
   const flags = { start: [], wall: ['b1-13-notebook'], hall: a, riddlef: [...a, 'b1-13-keeper-intro', 'b1-13-keeper-a', 'b1-13-notebook2'], keeperout: [...a, 'b1-13-keeper-intro', 'b1-13-keeper-a', 'b1-13-notebook2', 'b1-13-keeper-f'], camp: k, journal: [...k, 'b1-13-page63'], woman: [...k, 'b1-13-page63', 'b1-13-journal'], decision: [...k, 'b1-13-page63', 'b1-13-journal', 'b1-13-woman-talk'], window: [...k, 'b1-13-page63', 'b1-13-journal', 'b1-13-woman-talk', 'b1-13-decision'], planner: [...k, 'b1-13-page63', 'b1-13-journal', 'b1-13-woman-talk', 'b1-13-decision', 'b1-13-window-view'], school: [...k, 'b1-13-page63', 'b1-13-journal', 'b1-13-woman-talk', 'b1-13-decision', 'b1-13-window-view', 'b1-13-planner'] }[stage]
   const lessons = { start: [], wall: ['achievement-b1'], hall: ['achievement-b1', 'price-b1'], riddlef: mb, keeperout: mb, camp: mb, journal: mine, woman: mine, decision: mine, window: mine, planner: mine, school: mine }[stage]
   return { ...m, opened: add(m.opened, flags), seenLesson: add(m.seenLesson, lessons) as GameState['seenLesson'] }
+}
+
+/**
+ * Atajos de la misión B1-14 (Voices, presente) para el panel del profe. Parten de las misiones 1 a 13 cerradas.
+ *  lounge: en la sala de la residencia, frente a la persona especial · reported: reunión hecha (frente a Leo; la lección sale de nuevo)
+ *  saytell: primera lección hecha (frente a Leo; la segunda lección sale de nuevo)
+ */
+export function b1Mission14(s: GameState, stage: 'lounge' | 'reported' | 'saytell'): GameState {
+  const b = b1Start(s, [B1_OPENING, closeId(1), closeId(2), closeId(3), closeId(4), closeId(5), closeId(6), closeId(7), closeId(8), closeId(9), closeId(10), closeId(11), closeId(12), 'b1-12-fragments', closeId(13)])
+  const mine = ['reported-speech-b1', 'say-tell-b1']
+  const pos = { lounge: { x: 3, y: 4 }, reported: { x: 6, y: 3 }, saytell: { x: 6, y: 3 } }[stage]
+  const flags = { lounge: [], reported: ['b1-14-gather'], saytell: ['b1-14-gather', 'b1-14-reported'] }[stage]
+  const lessons = { lounge: [], reported: [], saytell: ['reported-speech-b1'] }[stage]
+  const base = { ...b, screen: 'explore' as const, sceneId: B1_14_LOUNGE.id, pos, defeated: b.defeated.filter((d) => !d.startsWith('b1-14-')), opened: b.opened.filter((o) => !o.startsWith('b1-14-')), recovered: b.recovered.filter((t) => !mine.includes(t)), seenLesson: b.seenLesson.filter((t) => !mine.includes(t)) }
+  return { ...base, opened: add(base.opened, flags), seenLesson: add(base.seenLesson, lessons) as GameState['seenLesson'] }
 }

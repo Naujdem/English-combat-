@@ -1194,6 +1194,26 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b1-08-boss',
     doneLine: { text: "In my country, football is the most popular sport.", es: 'En mi país, el fútbol es el deporte más popular.' },
   },
+  // ── B1-14 · Voices, bloque A (la sala de la residencia, data/b1Lounge.ts) ──
+  // La persona especial, junto al sofá (tarea b1-14-gather)
+  'b1-14-special': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: "We're here. Take your time.", es: 'Aquí estamos. Tómate tu tiempo.' },
+  },
+  // Leo (mismo aspecto que b1-12-leo): tareas b1-14-reported y b1-14-saytell
+  'b1-14-leo': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    doneLine: { text: 'Now tell us what he said.', es: 'Ahora cuéntanos qué dijo.' },
+  },
+  // Maya (mismo aspecto que b1-12-maya), sin tarea en este bloque: repite una línea corta
+  'b1-14-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    doneLine: { text: "Breathe. We're listening.", es: 'Respira. Te escuchamos.' },
+  },
   // ── B1-12 · Old Friends, bloque A (la casa de los abuelos, data/b1HostHouse.ts) ──
   // La abuela Jhoana, junto al mostrador de la cocina (tarea b1-12-welcome)
   'b1-12-jhoana': {

@@ -34,6 +34,8 @@ import { B1_13_KEEPER_A_IDS, B1_13_KEEPER_F_IDS, B1_13_NOTEBOOK2_IDS, B1_13_NOTE
 import { B1_13_DECISION_SCRIPT, B1_13_JOURNAL_SCRIPT } from './b1TempleCamp'
 import { B1_13_PLANNER_CONTENT, B1_13_WINDOW_SCRIPT } from './b1Window2056'
 import { B1_13_CLOSE_SCRIPT } from './b1SchoolMorning'
+import { B1_14_GATHER_SCRIPT } from './b1Lounge'
+import { B1_14_REPORTED_IDS, B1_14_SAYTELL_IDS } from './questions-b1-14'
 import type { FuturePlannerContent } from '../components/FuturePlanner'
 import { B1_13_KEEPER_INTRO_SCRIPT, B1_13_KEEPER_PRICE, B1_13_RIDDLE_A, B1_13_RIDDLE_F } from './b1EchoHall'
 import { B1_13_PRICE_ROOM } from './b1TempleEchoes'
@@ -6312,4 +6314,57 @@ NPC_TASKS['b1-13-close'] = {
   closeMemory: true,
   steps: [],
   reward: { text: 'Memory 13: The Price', es: 'Recuerdo 13: El precio', sub: 'Recuperaste los temas de la misión. Se abrió la misión 14.', say: 'What a nice voice you have.' },
+}
+
+// ── B1-14 · Voices, bloque A (la sala de la residencia; escena en data/b1Lounge.ts). NO guarda closeId(14) (se guarda en el último bloque) ──
+// La persona especial: el protagonista reúne a sus amigos (secuencia fija)
+NPC_TASKS['b1-14-gather'] = {
+  npc: 'b1-14-special',
+  done: 'b1-14-gather',
+  activity: 'script',
+  script: B1_14_GATHER_SCRIPT,
+  steps: [],
+  reward: {
+    text: 'I can help with that. Come here.',
+    es: 'Yo te ayudo con eso. Ven.',
+    sub: 'Habla con Leo.',
+  },
+}
+
+// Leo: lección 'reported-speech-b1' (él la guía, who 'leo') + práctica b1-14-rs1…rs8. 5 monedas
+NPC_TASKS['b1-14-reported'] = {
+  npc: 'b1-14-leo',
+  done: 'b1-14-reported',
+  lesson: 'reported-speech-b1',
+  activity: 'practice',
+  practice: 'reported-speech-b1',
+  practiceIds: B1_14_REPORTED_IDS,
+  coins: 5,
+  requires: { id: 'b1-14-gather', text: 'Leo, in the common room.', es: 'Leo, en la sala común.', sub: 'Primero habla con la persona especial.' },
+  steps: [],
+  reward: {
+    text: 'He said that he had lost everything.',
+    es: 'Él dijo que lo había perdido todo.',
+    sub: 'Lección hecha. Vuelve a hablar con Leo: falta una cosa más.',
+    say: 'He said that he had lost everything.',
+  },
+}
+
+// Leo otra vez: lección 'say-tell-b1' + práctica b1-14-st1…st8. 5 monedas. La puerta sigue en "Próximamente" (bloque 14-B)
+NPC_TASKS['b1-14-saytell'] = {
+  npc: 'b1-14-leo',
+  done: 'b1-14-saytell',
+  lesson: 'say-tell-b1',
+  activity: 'practice',
+  practice: 'say-tell-b1',
+  practiceIds: B1_14_SAYTELL_IDS,
+  coins: 5,
+  requires: { id: 'b1-14-reported', text: 'Leo, in the common room.', es: 'Leo, en la sala común.', sub: 'Primero termina la primera lección de Leo.' },
+  steps: [],
+  reward: {
+    text: 'Now tell us what he said.',
+    es: 'Ahora cuéntanos qué dijo.',
+    sub: 'Lección hecha. Lo que sigue llega en el siguiente bloque.',
+    say: 'Now tell us what he said.',
+  },
 }
