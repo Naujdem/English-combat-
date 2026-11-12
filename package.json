@@ -8,7 +8,8 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "validate": "node scripts/validate.mjs",
-    "test:command": "node scripts/test-command.mjs"
+    "test:command": "node scripts/test-command.mjs",
+    "bot:escuela": "node scripts/bot-humo/run.mjs"
   },
   "dependencies": {
     "react": "^19.3.1",
@@ -19,6 +20,7 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
+    "playwright": "^1.65.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "vite": "^8.3.5"

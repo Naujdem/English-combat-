@@ -1,0 +1,19 @@
+# Bot Humo: juega solo la escuela de A1 en un navegador y lista los fallos. No usa IA ni internet.
+# Corre en cada push; si algo se traba, la ejecución sale en rojo.
+name: Bot Humo
+on:
+  push:
+jobs:
+  escuela:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npm run bot:escuela

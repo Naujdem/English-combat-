@@ -1,0 +1,4 @@
+{
+ "english-combat-tutorial-explore": "1",
+ "english-combat-save-v1": "{\"version\":1,\"screen\":\"explore\",\"hero\":{\"name\":\"Juan\",\"gender\":\"male\",\"look\":{\"skin\":\"#f1c27d\",\"hair\":\"#4a2c17\"},\"age\":15,\"country\":\"Colombia\"},\"interest\":{\"name\":\"Sara\",\"gender\":\"female\",\"mode\":\"romance\",\"viaLeo\":false},\"outfit\":\"base\",\"outfits\":[\"base\"],\"hp\":5,\"maxHp\":5,\"recovered\":[],\"relics\":0,\"sceneId\":\"school\",\"pos\":{\"x\":2,\"y\":9},\"facing\":\"left\",\"keys\":{\"school\":1},\"defeated\":[\"school-m1\"],\"opened\":[\"board-1\"],\"friendship\":{\"leo\":3},\"talks\":{\"leo\":1},\"items\":{\"shield\":1},\"mistakes\":[\"W-gr-05\",\"tpo-03\"],\"cards\":[],\"stats\":{\"greetings\":{\"ok\":4,\"fail\":1},\"to-be\":{\"ok\":4,\"fail\":1}},\"lostFound\":{\"started\":false,\"carrying\":null,\"picked\":[],\"returned\":[]},\"seenLesson\":[\"to-be\",\"greetings\",\"school\"],\"battle\":null}"
+}
