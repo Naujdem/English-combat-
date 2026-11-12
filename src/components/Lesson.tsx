@@ -171,7 +171,7 @@ export function Lesson({
         </ClassroomStage>
       )}
 
-      {s.who === 'board' && s.topic && <GrammarPattern topic={s.topic} sentence={text} compact />}
+      {s.who === 'board' && s.topic && <GrammarPattern topic={s.topic} sentence={s.choice ? text.replace('___', s.choice.options[s.choice.answer]) : text} compact />}
 
       {notebook ? (
         // Cuaderno de L: la página (sin retrato). El audio lo lee la voz neutral, con un lápiz
