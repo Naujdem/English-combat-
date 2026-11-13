@@ -37,11 +37,11 @@ export const B1_08_QUESTIONS: Question[] = [
   // Bloque A · la invitación de la persona especial (superlativos)
   { id: 'b1-08-s1', topic: SU, kind: 'fix', prompt: 'The most fast player is Julian.', options: ['The most fastest player is Julian.', 'The fastest player is Julian.', 'The fastiest player is Julian.'], answer: 1, tip: 'Adjetivo corto: the + -est.', tags: PRACTICE },
   { id: 'b1-08-s2', topic: SU, kind: 'fix', prompt: 'He is the most good player in the team.', options: ['He is the goodest player in the team.', 'He is the most best player in the team.', 'He is the best player in the team.'], answer: 2, tip: 'good es irregular: the best.', tags: PRACTICE },
-  { id: 'b1-08-s3', topic: SU, prompt: 'This is the ___ stadium in the country. It has 80,000 seats.', options: ['biggest', 'most big', 'bigest'], answer: 0, tip: 'big → the biggest (se duplica la g).', tags: PRACTICE },
+  { id: 'b1-08-s3', topic: SU, prompt: 'This is the ___ stadium in the country. It has 80,000 seats.', options: ['biggest', 'bigger', 'most big'], answer: 0, tip: 'big → the biggest (se duplica la g).', tags: PRACTICE },
   { id: 'b1-08-s4', topic: SU, prompt: 'That was ___ exciting match of the season.', options: ['the more', 'the most', 'most the'], answer: 1, tip: 'Adjetivo largo: the most + adjetivo.', tags: PRACTICE },
-  { id: 'b1-08-s5', topic: SU, prompt: 'It was a hot day. It was ___ day of the summer.', options: ['the most hot', 'the hotest', 'the hottest'], answer: 2, tip: 'hot → the hottest (se duplica la t).', tags: PRACTICE },
+  { id: 'b1-08-s5', topic: SU, prompt: 'It was a hot day. It was ___ day of the summer.', options: ['the hotter', 'the most hot', 'the hottest'], answer: 2, tip: 'hot → the hottest (se duplica la t).', tags: PRACTICE },
   { id: 'b1-08-s6', topic: SU, kind: 'order', prompt: 'Ellos son el segundo mejor equipo.', options: ['They', 'are', 'the', 'second', 'best', 'team.'], answer: 0, tip: 'the second best team.', tags: PRACTICE },
-  { id: 'b1-08-s7', topic: SU, prompt: 'Ilva is ___ coach in the league.', options: ['the more good', 'the best', 'the goodest'], answer: 1, tip: 'good → the best.', tags: PRACTICE },
+  { id: 'b1-08-s7', topic: SU, prompt: 'Ilva is ___ coach in the league.', options: ['the better', 'the best', 'the worse'], answer: 1, tip: 'good → the best.', tags: PRACTICE },
   {
     id: 'b1-08-s8',
     topic: SU,
@@ -170,7 +170,7 @@ export const B1_08_QUESTIONS: Question[] = [
   { id: 'b1-08-f4', topic: EM, prompt: 'What ___ goal! Everyone is on their feet!', options: ['an', 'a', 'the'], answer: 1, tip: 'What a + sustantivo singular.', tags: FAN },
   { id: 'b1-08-f5', topic: QT, prompt: 'The fans are loud, ___?', options: ["don't they", "isn't they", "aren't they"], answer: 2, tip: "are → aren't they.", tags: FAN },
   { id: 'b1-08-f6', topic: FR, prompt: 'Lumen Bay ___ the final 2–1. They are the champions!', options: ['won', 'beat', 'lost'], answer: 0, tip: 'win + la final.', tags: FAN },
-  { id: 'b1-08-f7', topic: SU, prompt: "This is the ___ stadium I've ever seen.", options: ['beautifulest', 'most beautiful', 'most beautifuler'], answer: 1, tip: 'Adjetivo largo: the most + adjetivo.', tags: FAN },
+  { id: 'b1-08-f7', topic: SU, prompt: "This is the ___ stadium I've ever seen.", options: ['more beautiful', 'most beautiful', 'beautiful'], answer: 1, tip: 'Adjetivo largo: the most + adjetivo.', tags: FAN },
   { id: 'b1-08-f8', topic: QT, prompt: "You don't like the referee, ___?", options: ["don't you", 'are you', 'do you'], answer: 2, tip: 'Frase negativa → tag positivo: do you.', tags: FAN },
   { id: 'b1-08-f9', topic: EM, kind: 'order', prompt: '¡Es un partido tan emocionante!', options: ['It', 'is', 'such', 'an', 'exciting', 'match!'], answer: 0, tip: 'such an + adjetivo + sustantivo.', tags: FAN },
   {

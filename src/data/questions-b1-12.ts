@@ -41,7 +41,7 @@ export const B1_12_QUESTIONS: Question[] = [
   // Bloque A · Maya (verbos de estado y de acción)
   { id: 'b1-12-sv1', topic: SV, kind: 'fix', prompt: 'I am knowing Jhoana very well.', options: ['I know Jhoana very well.', 'I knowing Jhoana very well.', 'I am know Jhoana very well.'], answer: 0, tip: 'know es verbo de estado: sin -ing.', tags: VERBS },
   { id: 'b1-12-sv2', topic: SV, kind: 'fix', prompt: 'She is wanting a glass of water.', options: ['She is want a glass of water.', 'She wants a glass of water.', 'She wanting a glass of water.'], answer: 1, tip: 'want es verbo de estado.', tags: VERBS },
-  { id: 'b1-12-sv3', topic: SV, prompt: 'I ___ you are right. I agree with you.', options: ['am believing', 'am believe', 'believe'], answer: 2, tip: 'believe es verbo de estado.', tags: VERBS },
+  { id: 'b1-12-sv3', topic: SV, prompt: 'I ___ you are right. I agree with you.', options: ['am believing', 'believes', 'believe'], answer: 2, tip: 'believe es verbo de estado.', tags: VERBS },
   { id: 'b1-12-sv4', topic: SV, prompt: 'Be quiet, please. I ___ on the phone.', options: ['am talking', 'talk', 'talks'], answer: 0, tip: 'Acción en este momento: am talking.', tags: VERBS },
   { id: 'b1-12-sv5', topic: SV, prompt: "I ___ it's a great idea. (my opinion)", options: ['think', 'am thinking', 'thinks'], answer: 0, tip: 'Opinión: think (sin -ing).', tags: VERBS },
   { id: 'b1-12-sv6', topic: SV, prompt: "Don't call now. We ___ dinner.", options: ['have', 'are having', 'has'], answer: 1, tip: 'have como acción (cenar): are having.', tags: VERBS },
@@ -119,9 +119,9 @@ export const B1_12_QUESTIONS: Question[] = [
   // Bloque C · Einer (future continuous)
   { id: 'b1-12-fc1', topic: FC, kind: 'fix', prompt: 'This time next year, I will living in London.', options: ['This time next year, I will be living in London.', 'This time next year, I will be live in London.', 'This time next year, I am will living in London.'], answer: 0, tip: 'will be + -ing.', tags: FCT },
   { id: 'b1-12-fc2', topic: FC, kind: 'fix', prompt: "At 8 o'clock tonight, we will be have dinner.", options: ["At 8 o'clock tonight, we will have being dinner.", "At 8 o'clock tonight, we be will having dinner.", "At 8 o'clock tonight, we will be having dinner."], answer: 2, tip: 'will be + having.', tags: FCT },
-  { id: 'b1-12-fc3', topic: FC, prompt: "Don't call me at 9. I ___ a movie.", options: ['watching', 'will be watching', 'will be watch'], answer: 1, tip: 'En progreso a las 9: will be watching.', tags: FCT },
-  { id: 'b1-12-fc4', topic: FC, prompt: 'This time tomorrow, she ___ in the sea.', options: ['will swimming', 'will be swimming', 'is swim'], answer: 1, tip: 'will be + -ing.', tags: FCT },
-  { id: 'b1-12-fc5', topic: FC, prompt: "I ___ tomorrow, so I can help you.", options: ["won't be working", "won't working", "don't be working"], answer: 0, tip: "Negativa: won't be + -ing.", tags: FCT },
+  { id: 'b1-12-fc3', topic: FC, prompt: "Don't call me at 9. I ___ a movie.", options: ['watched', 'will be watching', 'have watched'], answer: 1, tip: 'En progreso a las 9: will be watching.', tags: FCT },
+  { id: 'b1-12-fc4', topic: FC, prompt: 'This time tomorrow, she ___ in the sea.', options: ['swam', 'will be swimming', 'has swum'], answer: 1, tip: 'will be + -ing.', tags: FCT },
+  { id: 'b1-12-fc5', topic: FC, prompt: "I ___ tomorrow, so I can help you.", options: ["won't be working", 'will be working', "wasn't working"], answer: 0, tip: "Puedes ayudar porque no vas a estar trabajando: won't be + -ing.", tags: FCT },
   { id: 'b1-12-fc6', topic: FC, kind: 'order', prompt: '¿Estarás usando el coche esta noche?', options: ['Will', 'you', 'be', 'using', 'the', 'car', 'tonight?'], answer: 0, tip: 'Will + sujeto + be + -ing.', tags: FCT },
   {
     id: 'b1-12-fc7',

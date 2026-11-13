@@ -140,7 +140,7 @@ export const B1_10_QUESTIONS: Question[] = [
   // Bloque B · Jorge y las opiniones (frases nominales)
   { id: 'b1-10-o1', topic: OP, kind: 'fix', prompt: 'The best thing about is the music.', options: ['The best thing about it the music.', 'The best thing about it is the music.', 'The best thing about it are the music.'], answer: 1, tip: 'The best thing about it is…', tags: OPINIONS },
   { id: 'b1-10-o2', topic: OP, kind: 'fix', prompt: 'The main problem it is the price.', options: ['The main problem it the price.', 'The main problem are the price.', 'The main problem is the price.'], answer: 2, tip: 'The main problem is…', tags: OPINIONS },
-  { id: 'b1-10-o3', topic: OP, prompt: 'The worst ___ is waiting in line.', options: ['part', 'parte', 'partly'], answer: 0, tip: 'The worst part is…', tags: OPINIONS },
+  { id: 'b1-10-o3', topic: OP, prompt: 'The worst ___ is waiting in line.', options: ['part', 'piece', 'side'], answer: 0, tip: 'The worst part is…', tags: OPINIONS },
   { id: 'b1-10-o4', topic: OP, prompt: 'The levels are ___ short. I finished the game in one hour!', options: ['a lot', 'much', 'incredibly'], answer: 2, tip: 'incredibly + adjetivo.', tags: OPINIONS },
   { id: 'b1-10-o5', topic: OP, prompt: "The main problem ___ that it's expensive.", options: ['are', 'is', 'it is'], answer: 1, tip: 'The main problem is that…', tags: OPINIONS },
   { id: 'b1-10-o6', topic: OP, kind: 'order', prompt: 'Lo mejor es jugar con amigos.', options: ['The', 'best', 'thing', 'is', 'playing', 'with', 'friends.'], answer: 0, tip: 'The best thing is + -ing.', tags: OPINIONS },
