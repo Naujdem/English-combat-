@@ -486,6 +486,21 @@ function canFixOrder(q: Question) {
   return n >= 4 && n <= 10
 }
 
+/**
+ * Otros órdenes que también valen al armar una frase con fichas:
+ *  - "If/When/While… A, B." también vale como "B A."
+ *  - "Tomorrow/Yesterday/Today/Tonight X." también vale como "X tomorrow."
+ */
+const SUBORDINATE = /^(If|When|While|Although|Unless|Because|Before|After|By the time|As soon as) /
+function orderAlts(sentence: string): string[] {
+  const out: string[] = []
+  const two = sentence.match(/^([^,]+), ([^,]+?)([.!?])$/)
+  if (two && SUBORDINATE.test(two[1])) out.push(`${two[2]} ${two[1]}${two[3]}`)
+  const time = sentence.match(/^(Tomorrow|Yesterday|Today|Tonight) ([^,]+?)([.!?])$/)
+  if (time) out.push(`${time[2]} ${time[1]}${time[3]}`)
+  return out
+}
+
 /** Pregunta de corregir armando la frase correcta con fichas, a partir de una de corregir (sin ver las tres opciones) */
 function toFixOrder(q: Question): Question {
   return {
@@ -496,6 +511,7 @@ function toFixOrder(q: Question): Question {
     prompt: q.prompt,
     options: q.options[q.answer].trim().split(/\s+/),
     answer: 0,
+    alts: orderAlts(q.options[q.answer].trim()),
     tags: q.tags,
     tip: q.tip,
   }
