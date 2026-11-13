@@ -94,7 +94,7 @@ export const SCHOOL: SceneDef = {
 
 /**
  * Historia de la escuela: el desconocido hechizó al profesor Grimm y le dio tus palabras.
- * Grimm partió la llave de la sala de profesores en tres y se la dio a sus "mejores"
+ * Grimm partió la llave de la sala de profesores en cuatro y se la dio a sus "mejores"
  * estudiantes, prometiéndoles las mejores notas. Al vencerlos, el hechizo los suelta.
  */
 export const SCHOOL_ENEMIES: Record<string, EnemyDef> = {
@@ -226,7 +226,7 @@ export const SCHOOL_ENEMIES: Record<string, EnemyDef> = {
     ],
     look: { shirt: '#5a4a7a', hair: '#9a9a9a', skin: '#c68642', accessory: 'mortarboard' },
     before: [
-      { text: 'So... you have the three keys. My students are not loyal.', es: 'Así que... tienes las tres llaves. Mis estudiantes no son leales.' },
+      { text: 'So... you have the four keys. My students are not loyal.', es: 'Así que... tienes las cuatro llaves. Mis estudiantes no son leales.' },
       { text: 'Your words are in my desk. They are MY words now!', es: 'Tus palabras están en mi escritorio. ¡Ahora son MIS palabras!' },
       { text: 'Show me you know TO BE and MY, YOUR, HIS, HER! And obey my orders!', es: '¡Demuéstrame que sabes TO BE y MY, YOUR, HIS, HER! ¡Y obedece mis órdenes!' },
     ],

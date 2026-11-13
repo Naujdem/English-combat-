@@ -60,7 +60,7 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
   prepositions: [
     { who: 'leo', text: "Your things are everywhere! Let's learn how to say WHERE things are.", es: '¡Tus cosas están por todas partes! Aprendamos a decir DÓNDE están las cosas.', board: ['Where is it?', '¿Dónde está?'] },
     { who: 'leo', text: 'IN means inside. The pencil is in the bag.', es: '"In" es dentro de. El lápiz está dentro de la mochila.', board: ['in = dentro', 'The pencil is in the bag.'] },
-    { who: 'board', text: 'The books are ___ the box.', board: ['in = dentro', 'The pencil is in the bag.'], choice: { options: ['in', 'on', 'under'], answer: 0, tip: 'Dentro de la caja: in the box.' } },
+    { who: 'board', text: 'The books are ___ the box. (dentro)', board: ['in = dentro', 'The pencil is in the bag.'], choice: { options: ['in', 'on', 'under'], answer: 0, tip: 'Dentro de la caja: in the box.' } },
     { who: 'leo', text: 'ON means on top. The book is on the desk.', es: '"On" es encima, tocando. El libro está sobre el pupitre.', board: ['on = encima', 'The book is on the desk.'] },
     { who: 'leo', text: 'UNDER means below. The bag is under the chair.', es: '"Under" es debajo. La mochila está debajo de la silla.', board: ['under = debajo', 'The bag is under the chair.'] },
     { who: 'board', text: 'The cat is ___ the table. (debajo)', board: ['on = encima · under = debajo', 'The bag is under the chair.'], choice: { options: ['on', 'under', 'in'], answer: 1, tip: 'Debajo de = under.' } },
