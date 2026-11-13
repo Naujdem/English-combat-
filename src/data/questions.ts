@@ -236,6 +236,10 @@ export const QUESTIONS: Question[] = [
   { id: 'tsb-04', topic: 'to-be', tags: ['sala'], kind: 'fix', prompt: 'The keys is in my desk!', options: ['The keys are in my desk.', 'The key are in my desk.', 'The keys am in my desk.'], answer: 0, tip: '"The keys" termina en -s, son varias: va "are".' },
   { id: 'tspp-01', topic: 'prepositions', tags: ['sala'], prompt: 'The papers are ___ the desk.', hint: 'sobre', options: ['on', 'in', 'under'], answer: 0, tip: 'Encima, tocando la superficie: "on the desk".' },
   { id: 'tspp-02', topic: 'prepositions', tags: ['sala'], prompt: 'The bag is ___ the chair.', hint: 'debajo de', options: ['on', 'under', 'in'], answer: 1, tip: 'Debajo de se dice "under".' },
+  { id: 'tspp-04', topic: 'prepositions', tags: ['sala'], prompt: 'The students are ___ school today.', hint: 'en (un lugar)', options: ['at', 'on', 'under'], answer: 0, tip: 'Para un lugar en general: "at school".' },
+  { id: 'tspp-05', topic: 'prepositions', tags: ['sala'], prompt: 'Stop! Who is ___ the door?', hint: 'en (un punto)', options: ['under', 'at', 'between'], answer: 1, tip: 'Alguien parado en la puerta: "at the door".' },
+  { id: 'tspp-06', topic: 'prepositions', tags: ['aula'], prompt: 'Leo is not here. He is ___ home.', hint: 'en casa', options: ['on', 'under', 'at'], answer: 2, tip: 'En casa se dice "at home", sin "the".' },
+  { id: 'tspp-07', topic: 'prepositions', tags: ['sala'], kind: 'fix', prompt: 'I am on school!', options: ['I am at school.', 'I am under school.', 'I at school.'], answer: 0, tip: 'Para decir que estás en la escuela: "at school". Y no olvides "am".' },
   { id: 'tspp-03', topic: 'prepositions', tags: ['sala'], prompt: 'The key is ___ the box.', hint: 'dentro de', options: ['on', 'under', 'in'], answer: 2, tip: 'Dentro de algo se dice "in".' },
 
   // ── Preguntas de lugar: patio (Max, el competitivo) ─────
@@ -691,6 +695,7 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; 
       'Dicen dónde está algo: Where is my book? → It is on the desk.',
       'in = dentro · on = encima · under = debajo',
       'next to = al lado de · between = entre · in front of = delante de · behind = detrás de',
+      'at = en un lugar en general: at school, at home, at the door',
     ],
   },
   imperatives: {
