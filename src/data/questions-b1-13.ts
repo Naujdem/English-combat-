@@ -71,7 +71,7 @@ export const B1_13_QUESTIONS: Question[] = [
   // Bloque B · primer acertijo del Keeper: logro y fracaso
   { id: 'b1-13-k1', topic: AC, kind: 'fix', prompt: 'They failed reaching the top.', options: ['They failed to reaching the top.', 'They failed to reach the top.', 'They failed in reach the top.'], answer: 1, tip: 'fail to + verbo base.', tags: KEEPER_A },
   { id: 'b1-13-k2', topic: AC, kind: 'fix', prompt: 'He gived up after a year.', options: ['He gave up after a year.', 'He gaved up after a year.', 'He given up after a year.'], answer: 0, tip: 'Pasado de give: gave.', tags: KEEPER_A },
-  { id: 'b1-13-k3', topic: AC, prompt: 'We ___ our goal after years of work.', options: ['did', 'won to', 'achieved'], answer: 2, tip: 'achieve a goal.', tags: KEEPER_A },
+  { id: 'b1-13-k3', topic: AC, prompt: 'We ___ our goal after years of work.', options: ['won', 'beat', 'achieved'], answer: 2, tip: 'achieve a goal.', tags: KEEPER_A },
   { id: 'b1-13-k4', topic: AC, prompt: 'She tried and tried, and she finally ___ in finding it.', options: ['managed', 'succeeded', 'achieved'], answer: 1, tip: 'succeed in + -ing.', tags: KEEPER_A },
   { id: 'b1-13-k5', topic: AC, kind: 'order', alts: ["After three years she gave up."], prompt: 'Se rindió después de tres años.', options: ['She', 'gave', 'up', 'after', 'three', 'years.'], answer: 0, tip: 'give up = rendirse.', tags: KEEPER_A },
   {
@@ -89,9 +89,9 @@ export const B1_13_QUESTIONS: Question[] = [
   // Bloque B · página 62: futuros para planes
   { id: 'b1-13-f1', topic: FP, kind: 'fix', prompt: 'Tomorrow I going to wait at the school.', options: ["Tomorrow I'm going to wait at the school.", "Tomorrow I'm go to wait at the school.", 'Tomorrow I going wait at the school.'], answer: 0, tip: 'am going to + verbo.', tags: NOTEBOOK2 },
   { id: 'b1-13-f2', topic: FP, kind: 'fix', prompt: 'We are meet the director at nine tomorrow.', options: ['We meeting the director at nine tomorrow.', 'We are meeting the director at nine tomorrow.', 'We are met the director at nine tomorrow.'], answer: 1, tip: 'Arreglo con hora: are meeting.', tags: NOTEBOOK2 },
-  { id: 'b1-13-f3', topic: FP, prompt: "It's dark. I ___ turn on the light.", options: ['going to', 'am going', 'will'], answer: 2, tip: 'Decisión en el momento: will.', tags: NOTEBOOK2 },
-  { id: 'b1-13-f4', topic: FP, prompt: 'Look at those clouds! It ___ rain.', options: ['is going to', 'will to', 'is going'], answer: 0, tip: 'Con evidencia: is going to.', tags: NOTEBOOK2 },
-  { id: 'b1-13-f5', topic: FP, prompt: "At eight o'clock tomorrow, I ___ by the window.", options: ['will be standing', 'will standing', 'am will stand'], answer: 0, tip: 'En progreso a las ocho: will be + -ing.', tags: NOTEBOOK2 },
+  { id: 'b1-13-f3', topic: FP, prompt: "It's dark. I ___ turn on the light.", options: ['am', 'used to', 'will'], answer: 2, tip: 'Decisión en el momento: will.', tags: NOTEBOOK2 },
+  { id: 'b1-13-f4', topic: FP, prompt: 'Look at those clouds! It ___ rain.', options: ['is going to', 'used to', 'would'], answer: 0, tip: 'Con evidencia: is going to.', tags: NOTEBOOK2 },
+  { id: 'b1-13-f5', topic: FP, prompt: "At eight o'clock tomorrow, I ___ by the window.", options: ['will be standing', 'stood', 'have stood'], answer: 0, tip: 'En progreso a las ocho: will be + -ing.', tags: NOTEBOOK2 },
   { id: 'b1-13-f6', topic: FP, kind: 'order', alts: ["I'm going to wait at the school tomorrow."], prompt: 'Mañana voy a esperar en la escuela.', options: ['Tomorrow', "I'm", 'going', 'to', 'wait', 'at', 'the', 'school.'], answer: 0, tip: "I'm going to + verbo.", tags: NOTEBOOK2 },
   {
     id: 'b1-13-f7',
@@ -109,8 +109,8 @@ export const B1_13_QUESTIONS: Question[] = [
   // Bloque B · segundo acertijo del Keeper: futuros
   { id: 'b1-13-k7', topic: FP, kind: 'fix', prompt: 'She not going to wait for us.', options: ["She isn't going to wait for us.", "She isn't go to wait for us.", "She doesn't going to wait for us."], answer: 0, tip: "isn't going to + verbo.", tags: KEEPER_F },
   { id: 'b1-13-k8', topic: FP, kind: 'fix', prompt: 'This time tomorrow, I will traveling.', options: ['This time tomorrow, I will be travel.', 'This time tomorrow, I will be traveling.', 'This time tomorrow, I be will traveling.'], answer: 1, tip: 'will be + -ing.', tags: KEEPER_F },
-  { id: 'b1-13-k9', topic: FP, prompt: "We ___ the guide at nine. It's arranged.", options: ['are meeting', 'meeting', 'are meet'], answer: 0, tip: 'Arreglo: are meeting.', tags: KEEPER_F },
-  { id: 'b1-13-k10', topic: FP, prompt: 'Careful! That box ___ fall!', options: ['will to', 'is going to', 'are going to'], answer: 1, tip: 'Con evidencia: is going to.', tags: KEEPER_F },
+  { id: 'b1-13-k9', topic: FP, prompt: "We ___ the guide at nine. It's arranged.", options: ['are meeting', 'have met', 'meets'], answer: 0, tip: 'Arreglo: are meeting.', tags: KEEPER_F },
+  { id: 'b1-13-k10', topic: FP, prompt: 'Careful! That box ___ fall!', options: ['used to', 'is going to', 'are going to'], answer: 1, tip: 'Con evidencia: is going to.', tags: KEEPER_F },
   { id: 'b1-13-k11', topic: FP, kind: 'order', alts: ["I am going to leave this temple tomorrow."], prompt: 'Mañana voy a dejar este templo.', options: ['Tomorrow', 'I', 'am', 'going', 'to', 'leave', 'this', 'temple.'], answer: 0, tip: 'am going to + verbo.', tags: KEEPER_F },
   {
     id: 'b1-13-k12',
@@ -128,7 +128,7 @@ export const B1_13_QUESTIONS: Question[] = [
   { id: 'b1-13-u1', topic: AU, kind: 'fix', prompt: 'Although it was raining, but we went out.', options: ['Although it was raining, we went out.', 'Although it raining, we went out.', 'Although was raining, we went out.'], answer: 0, tip: 'although ya contrasta: no lleva but.', tags: PAGE63 },
   { id: 'b1-13-u2', topic: AU, kind: 'fix', prompt: "Unless you will hurry, you'll miss the train.", options: ["Unless you hurried, you'll miss the train.", "Unless you hurry, you'll miss the train.", "Unless you will to hurry, you'll miss the train."], answer: 1, tip: 'Después de unless: presente.', tags: PAGE63 },
   { id: 'b1-13-u3', topic: AU, prompt: '___ he was tired, he kept working.', options: ['So', 'Unless', 'Although'], answer: 2, tip: 'although = aunque.', tags: PAGE63 },
-  { id: 'b1-13-u4', topic: AU, prompt: "I'll take an umbrella ___ it rains.", options: ['in case', 'in order', 'in rains'], answer: 0, tip: 'in case = por si acaso.', tags: PAGE63 },
+  { id: 'b1-13-u4', topic: AU, prompt: "I'll take an umbrella ___ it rains.", options: ['in case', 'unless', 'although'], answer: 0, tip: 'in case = por si acaso.', tags: PAGE63 },
   { id: 'b1-13-u5', topic: AU, prompt: "You can't go in ___ you have a ticket.", options: ['although', 'unless', 'in case'], answer: 1, tip: 'unless = si no.', tags: PAGE63 },
   { id: 'b1-13-u6', topic: AU, kind: 'order', alts: ["I'll never speak again unless I take it."], prompt: 'A menos que lo tome, nunca volveré a hablar.', options: ['Unless', 'I', 'take', 'it,', "I'll", 'never', 'speak', 'again.'], answer: 0, tip: 'Unless + presente, will + verbo.', tags: PAGE63 },
   {

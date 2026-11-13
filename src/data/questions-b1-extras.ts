@@ -39,8 +39,8 @@ export const B1_EXTRA_QUESTIONS: Question[] = [
   { id: 'b1-s2-m3', topic: MN, prompt: 'Everyone thought the keeper was the thief. ___, it was his sister!', options: ['Luck', 'Obviously', 'Surprisingly'], answer: 2, tip: 'Algo inesperado: surprisingly.', tags: TALK },
   { id: 'b1-s2-m4', topic: MN, kind: 'fix', prompt: 'I am thinking this film is great.', options: ['I think this film is great.', 'I thinking this film is great.', 'I am think this film is great.'], answer: 0, tip: 'think (opinión) es verbo de estado: sin -ing.', tags: TALK },
   { id: 'b1-s2-m5', topic: MN, prompt: 'When the film started, Moscú ___ on the sofa.', options: ['were sleeping', 'was sleeping', 'is sleeping'], answer: 1, tip: 'La escena: was + verbo con -ing.', tags: TALK },
-  { id: 'b1-s2-m6', topic: MN, prompt: 'By the time we arrived, the film ___.', options: ['has start', 'had start', 'had started'], answer: 2, tip: 'Lo que pasó antes: had + participio.', tags: TALK },
-  { id: 'b1-s2-m7', topic: MN, prompt: 'The sailor opened the door and ___ a light in the tower.', options: ['saw', 'seen', 'had see'], answer: 0, tip: 'Hechos seguidos: pasado simple (saw).', tags: TALK },
+  { id: 'b1-s2-m6', topic: MN, prompt: 'By the time we arrived, the film ___.', options: ['starts', 'has started', 'had started'], answer: 2, tip: 'Lo que pasó antes: had + participio.', tags: TALK },
+  { id: 'b1-s2-m7', topic: MN, prompt: 'The sailor opened the door and ___ a light in the tower.', options: ['saw', 'sees', 'seeing'], answer: 0, tip: 'Hechos seguidos: pasado simple (saw).', tags: TALK },
   { id: 'b1-s2-m8', topic: MN, kind: 'order', prompt: 'Sinceramente, me encantó el final.', options: ['Honestly,', 'I', 'loved', 'the', 'ending.'], answer: 0, tip: 'El adverbio de opinión va al principio, con coma.', tags: TALK },
 
   // House Party · Jeison (question tags con otros auxiliares)

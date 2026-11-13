@@ -31,10 +31,10 @@ const BOSS_V = ['b1-14-boss-v']
 
 export const B1_14_QUESTIONS: Question[] = [
   // Bloque A · Leo (reported speech: el cambio de tiempos)
-  { id: 'b1-14-rs1', topic: RS, prompt: '"I lost everything." → He said that he ___ everything.', options: ['had lost', 'has lose', 'had lose'], answer: 0, tip: 'Pasado simple → past perfect: had + participio (lost).', tags: REPORTED },
-  { id: 'b1-14-rs2', topic: RS, prompt: '"I can\'t speak." → He said he ___ speak.', options: ["can't to", "couldn't", "didn't could"], answer: 1, tip: "can't → couldn't.", tags: REPORTED },
+  { id: 'b1-14-rs1', topic: RS, prompt: '"I lost everything." → He said that he ___ everything.', options: ['had lost', 'loses', 'will lose'], answer: 0, tip: 'Pasado simple → past perfect: had + participio (lost).', tags: REPORTED },
+  { id: 'b1-14-rs2', topic: RS, prompt: '"I can\'t speak." → He said he ___ speak.', options: ["wouldn't", "couldn't", "didn't"], answer: 1, tip: "can't → couldn't.", tags: REPORTED },
   { id: 'b1-14-rs3', topic: RS, prompt: '"I am tired." → She said that she ___ tired.', options: ['were', 'be', 'was'], answer: 2, tip: 'am → was.', tags: REPORTED },
-  { id: 'b1-14-rs4', topic: RS, prompt: '"I will take the clock." → He said he ___ take the clock.', options: ['would', 'will to', 'woulds'], answer: 0, tip: 'will → would.', tags: REPORTED },
+  { id: 'b1-14-rs4', topic: RS, prompt: '"I will take the clock." → He said he ___ take the clock.', options: ['would', 'was', 'has'], answer: 0, tip: 'will → would.', tags: REPORTED },
   { id: 'b1-14-rs5', topic: RS, prompt: '"We are waiting." → They said they ___ waiting.', options: ['was', 'were', 'been'], answer: 1, tip: 'are waiting → were waiting.', tags: REPORTED },
   { id: 'b1-14-rs6', topic: RS, kind: 'fix', prompt: 'He said that he has lose his voice.', options: ['He said that he had lose his voice.', 'He said that he losted his voice.', 'He said that he had lost his voice.'], answer: 2, tip: 'had + participio: had lost.', tags: REPORTED },
   { id: 'b1-14-rs7', topic: RS, prompt: '"I don\'t know him." → She said she ___ know him.', options: ["didn't", "wasn't", 'not'], answer: 0, tip: "don't → didn't.", tags: REPORTED },

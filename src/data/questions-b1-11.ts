@@ -37,7 +37,7 @@ export const B1_11_QUESTIONS: Question[] = [
   { id: 'b1-11-n2', topic: NA, kind: 'fix', prompt: 'I was walk home when it started to rain.', options: ['I was walking home when it started to rain.', 'I was walked home when it started to rain.', 'I were walking home when it started to rain.'], answer: 0, tip: 'Pasado continuo: was + -ing.', tags: NOTEBOOK },
   { id: 'b1-11-n3', topic: NA, prompt: 'Mia was cooking. ___, her brother was cleaning the kitchen.', options: ['Although', 'Because', 'Meanwhile'], answer: 2, tip: 'Meanwhile = mientras tanto.', tags: NOTEBOOK },
   { id: 'b1-11-n4', topic: NA, prompt: 'I was reading when the lights ___ out.', options: ['going', 'went', 'goes'], answer: 1, tip: 'Pasado simple: went.', tags: NOTEBOOK },
-  { id: 'b1-11-n5', topic: NA, prompt: "She ___ her keys, so she couldn't open the door.", options: ['had lost', 'was lose', 'has losing'], answer: 0, tip: 'Lo que pasó antes: past perfect (had lost).', tags: NOTEBOOK },
+  { id: 'b1-11-n5', topic: NA, prompt: "She ___ her keys, so she couldn't open the door.", options: ['had lost', 'has lost', 'was losing'], answer: 0, tip: 'Lo que pasó antes: past perfect (had lost).', tags: NOTEBOOK },
   { id: 'b1-11-n6', topic: NA, kind: 'order', alts: ["The train had already left by the time I arrived."], prompt: 'Para cuando llegué, el tren ya se había ido.', options: ['By', 'the', 'time', 'I', 'arrived,', 'the', 'train', 'had', 'already', 'left.'], answer: 0, tip: 'By the time + pasado simple, + past perfect.', tags: NOTEBOOK },
   {
     id: 'b1-11-n7',
@@ -71,12 +71,12 @@ export const B1_11_QUESTIONS: Question[] = [
     tip: 'I would have called the firefighters.',
     tags: WALL,
   },
-  { id: 'b1-11-t8', topic: C3, prompt: 'I ___ not telling him the truth. I should have told him.', options: ['win', 'arrive', 'regret'], answer: 2, tip: 'regret = arrepentirse.', tags: WALL },
+  { id: 'b1-11-t8', topic: C3, prompt: 'I ___ not telling him the truth. I should have told him.', options: ['wish', 'hope', 'regret'], answer: 2, tip: 'regret = arrepentirse.', tags: WALL },
   // Bloque B · página 43: past perfect
   { id: 'b1-11-pp1', topic: PP, kind: 'fix', prompt: 'By the time I arrived, the fire started.', options: ['By the time I arrived, the fire had started.', 'By the time I arrived, the fire has started.', 'By the time I arrived, the fire was start.'], answer: 0, tip: 'Lo que pasó antes: had + participio.', tags: PAGE43 },
   { id: 'b1-11-pp2', topic: PP, kind: 'fix', prompt: 'When we got there, the others already leave.', options: ['When we got there, the others already leaving.', 'When we got there, the others had already left.', 'When we got there, the others already has left.'], answer: 1, tip: 'had already left.', tags: PAGE43 },
   { id: 'b1-11-pp3', topic: PP, prompt: 'I ___ never seen so much smoke before that night.', options: ['have', 'had', 'was'], answer: 1, tip: 'Antes de esa noche: past perfect (had seen).', tags: PAGE43 },
-  { id: 'b1-11-pp4', topic: PP, prompt: 'They ___ the building before the firefighters came.', options: ['had left', 'have left', 'were leave'], answer: 0, tip: 'had left.', tags: PAGE43 },
+  { id: 'b1-11-pp4', topic: PP, prompt: 'They ___ the building before the firefighters came.', options: ['had left', 'have left', 'leave'], answer: 0, tip: 'had left.', tags: PAGE43 },
   { id: 'b1-11-pp5', topic: PP, prompt: "He ___ known about the alarm, so he didn't run.", options: ["hasn't", "wasn't", "hadn't"], answer: 2, tip: "Negativa: hadn't + participio.", tags: PAGE43 },
   { id: 'b1-11-pp6', topic: PP, kind: 'order', alts: ["Everyone had already gone when she arrived."], prompt: 'Cuando llegó, todos ya se habían ido.', options: ['When', 'she', 'arrived,', 'everyone', 'had', 'already', 'gone.'], answer: 0, tip: 'had + already + participio.', tags: PAGE43 },
   {
@@ -112,7 +112,7 @@ export const B1_11_QUESTIONS: Question[] = [
     tip: 'We could have saved the library.',
     tags: ECHO,
   },
-  { id: 'b1-11-x9', topic: PP, prompt: 'She was angry because he ___ told her the truth.', options: ["hadn't", "didn't had", "hasn't"], answer: 0, tip: "hadn't + participio.", tags: ECHO },
+  { id: 'b1-11-x9', topic: PP, prompt: 'She was angry because he ___ told her the truth.', options: ["hadn't", "didn't", "hasn't"], answer: 0, tip: "hadn't + participio.", tags: ECHO },
   { id: 'b1-11-x10', topic: PP, kind: 'fix', prompt: 'I had went home before the storm.', options: ['I had go home before the storm.', 'I had going home before the storm.', 'I had gone home before the storm.'], answer: 2, tip: 'Participio de go: gone.', tags: ECHO },
   // Bloque C · página 44: wish
   { id: 'b1-11-w1', topic: WI, kind: 'fix', prompt: 'I wish I know the answer.', options: ['I wish I knew the answer.', 'I wish I would know the answer.', 'I wish I am knowing the answer.'], answer: 0, tip: 'wish + pasado simple (deseo sobre el presente).', tags: PAGE44 },
