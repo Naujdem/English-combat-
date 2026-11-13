@@ -479,6 +479,28 @@ function toWriteBlank(q: Question): Question {
   }
 }
 
+/** Corregir ordenando: solo frases correctas de 4 a 10 palabras */
+function canFixOrder(q: Question) {
+  if (q.kind !== 'fix') return false
+  const n = q.options[q.answer].trim().split(/\s+/).length
+  return n >= 4 && n <= 10
+}
+
+/** Pregunta de corregir armando la frase correcta con fichas, a partir de una de corregir (sin ver las tres opciones) */
+function toFixOrder(q: Question): Question {
+  return {
+    id: `F-${q.id}`,
+    topic: q.topic,
+    kind: 'order',
+    fixOrder: true,
+    prompt: q.prompt,
+    options: q.options[q.answer].trim().split(/\s+/),
+    answer: 0,
+    tags: q.tags,
+    tip: q.tip,
+  }
+}
+
 /** Pregunta de escribir la oración completa en inglés, a partir de una de ordenar */
 function toWriteSentence(q: Question): Question {
   return {
@@ -535,7 +557,7 @@ function soundsAlike(q: Question) {
   return HOMOPHONES.some((g) => opts.filter((o) => g.includes(o)).length >= 2)
 }
 
-export function questionsFor(topics: TopicId[], kinds: QuestionKind[] = ['fill', 'fix', 'order', 'listen', 'write']): Question[] {
+export function questionsFor(topics: TopicId[], kinds: QuestionKind[] = ['fill', 'fix', 'order', 'listen', 'write'], fixOrder = false): Question[] {
   const list: Question[] = []
   for (const q of QUESTIONS) {
     if (!topics.includes(q.topic)) continue
@@ -544,6 +566,7 @@ export function questionsFor(topics: TopicId[], kinds: QuestionKind[] = ['fill',
     if (kinds.includes('listen') && canSpeak && canListen(q) && !soundsAlike(q)) list.push(toListen(q))
     if (kinds.includes('write') && canWriteBlank(q)) list.push(toWriteBlank(q))
     if (kinds.includes('write') && q.kind === 'order') list.push(toWriteSentence(q))
+    if (fixOrder && kinds.includes('order') && canFixOrder(q)) list.push(toFixOrder(q))
     if (kinds.includes('speak') && canRecognize && (canListen(q) || q.kind === 'order') && !q.hint) list.push(toSpeak(q))
   }
   return list
@@ -554,6 +577,10 @@ export function questionById(id: string): Question | undefined {
     const base = QUESTIONS.find((q) => q.id === id.slice(2))
     if (!base) return undefined
     return id.startsWith('W-') ? toWriteBlank(base) : toWriteSentence(base)
+  }
+  if (id.startsWith('F-')) {
+    const base = QUESTIONS.find((q) => q.id === id.slice(2))
+    return base && canFixOrder(base) ? toFixOrder(base) : undefined
   }
   if (id.startsWith('S-')) {
     const base = QUESTIONS.find((q) => q.id === id.slice(2))
@@ -570,14 +597,15 @@ export function questionById(id: string): Question | undefined {
  * Devuelve una pregunta aleatoria evitando las ya usadas en este combate.
  * Las preguntas del cuaderno de errores salen con más frecuencia hasta que se acierten.
  */
-export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: string[], mistakes: string[] = [], tags: string[] = [], focus?: 'produce' | 'hear', onlyTags = false): Question {
-  let pool = questionsFor(topics, kinds)
+export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: string[], mistakes: string[] = [], tags: string[] = [], focus?: 'produce' | 'hear', onlyTags = false, fixOrder = false): Question {
+  let pool = questionsFor(topics, kinds, fixOrder)
   // Enemigos de una escena cerrada: solo preguntas con sus etiquetas, si las hay
   if (onlyTags && tags.length) {
     const own = pool.filter((q) => q.tags?.some((t) => tags.includes(t)))
     if (own.length) pool = own
   }
-  const fresh = pool.filter((q) => !used.includes(q.id))
+  // Una de corregir y su versión de armar con fichas (F-) no salen las dos en el mismo combate
+  const fresh = pool.filter((q) => !used.includes(q.id) && !used.includes(q.id.startsWith('F-') ? q.id.slice(2) : `F-${q.id}`))
   let list = fresh.length > 0 ? fresh : pool
   // En combate: cada tanto se pide producir (escribir u ordenar) o escuchar de verdad
   if (focus) {

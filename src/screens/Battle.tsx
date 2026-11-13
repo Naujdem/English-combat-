@@ -542,7 +542,8 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
     const focus = n === 1 ? 'hear' : produce ? 'produce' : undefined
     // Los enemigos de B1 no traen 'write' en sus tipos: se suma solo en los turnos de producir (escribir la palabra o la oración)
     const kinds: QuestionKind[] = b1 && focus === 'produce' && !p.kinds.includes('write') && p.kinds.some((k) => k === 'fill' || k === 'order') ? [...p.kinds, 'write'] : p.kinds
-    return pickQuestion(p.topics, kinds, usedIds, state.mistakes, p.tags ?? [], focus, enemy.onlyTags)
+    // En esos turnos de B1 también sale corregir armando la frase con fichas, en vez de elegirla entre tres
+    return pickQuestion(p.topics, kinds, usedIds, state.mistakes, p.tags ?? [], focus, enemy.onlyTags, b1 && focus === 'produce')
   }
   const [interlude, setInterlude] = useState<{ text: string; es?: string } | null>(null)
   const [q, setQ] = useState<Question>(() => pick(battle.enemyHp, []))
