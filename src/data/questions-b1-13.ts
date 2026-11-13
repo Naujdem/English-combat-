@@ -49,8 +49,8 @@ export const B1_13_QUESTIONS: Question[] = [
   },
   { id: 'b1-13-a8', topic: AC, prompt: "'Blame' significa ___.", options: ['culpa', 'precio', 'venganza'], answer: 0, tip: 'blame = culpa.', tags: NOTEBOOK },
   // Bloque A · el muro de los ecos: el precio
-  { id: 'b1-13-p1', topic: PR, kind: 'fix', prompt: "The device don't create a voice.", options: ["The device doesn't create a voice.", "The device doesn't creates a voice.", 'The device not create a voice.'], answer: 0, tip: "doesn't + verbo base.", tags: WALL },
-  { id: 'b1-13-p2', topic: PR, kind: 'fix', prompt: 'It take a voice from someone.', options: ['It taking a voice from someone.', 'It takes a voice from someone.', 'It does takes a voice from someone.'], answer: 1, tip: 'it + takes (3.ª persona).', tags: WALL },
+  { id: 'b1-13-p1', topic: PR, kind: 'fix', prompt: "A voice isn't create by the device.", options: ["A voice isn't created by the device.", "A voice isn't creating by the device.", "A voice doesn't created by the device."], answer: 0, tip: "Pasiva: isn't + participio (created).", tags: WALL },
+  { id: 'b1-13-p2', topic: PR, kind: 'fix', prompt: 'A voice is took from someone.', options: ['A voice is taked from someone.', 'A voice is taken from someone.', 'A voice takes from someone.'], answer: 1, tip: 'Pasiva: is + participio (taken).', tags: WALL },
   { id: 'b1-13-p3', topic: PR, prompt: 'I finally made ___ to the top, but it cost me everything.', options: ['up', 'them', 'it'], answer: 2, tip: 'make it = lograrlo.', tags: WALL },
   { id: 'b1-13-p4', topic: PR, prompt: 'Nobody wins without ___ the price.', options: ['pay', 'paying', 'paid'], answer: 1, tip: 'without + -ing.', tags: WALL },
   { id: 'b1-13-p5', topic: PR, prompt: "It's ___ to take someone's voice. It's cruel.", options: ['unfair', 'generous', 'useful'], answer: 0, tip: 'unfair = injusto.', tags: WALL },

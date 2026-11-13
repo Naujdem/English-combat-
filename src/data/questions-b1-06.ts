@@ -108,7 +108,7 @@ export const B1_06_QUESTIONS: Question[] = [
   { id: 'b1-06-v5', topic: EX, kind: 'fix', prompt: 'She has worked here since two weeks.', options: ['She worked here since two weeks.', 'She has work here for two weeks.', 'She has worked here for two weeks.'], answer: 2, tip: 'Cuánto tiempo: for.', tags: VOL },
   { id: 'b1-06-v6', topic: EX, kind: 'fix', prompt: 'I have walked the dogs yesterday.', options: ['I walked the dogs yesterday.', 'I have walk the dogs yesterday.', 'I walking the dogs yesterday.'], answer: 0, tip: 'Yesterday: past simple.', tags: VOL },
   { id: 'b1-06-v7', topic: EX, prompt: "I've known Nayi ___ 2021.", options: ['for', 'since', 'during'], answer: 1, tip: 'Desde cuándo: since.', tags: VOL },
-  { id: 'b1-06-v8', topic: EX, prompt: 'We have fed the dogs ___ two hours.', options: ['since', 'from', 'for'], answer: 2, tip: 'Cuánto tiempo: for.', tags: VOL },
+  { id: 'b1-06-v8', topic: EX, prompt: 'We have been at the shelter ___ two hours.', options: ['since', 'from', 'for'], answer: 2, tip: 'Cuánto tiempo: for.', tags: VOL },
   { id: 'b1-06-v9', topic: RC, kind: 'order', prompt: 'El perro que paseé ayer es Fresas.', options: ['The', 'dog', 'I', 'walked', 'yesterday', 'is', 'Fresas.'], answer: 0, tip: 'Sin pronombre: the dog I walked.', tags: VOL },
   {
     id: 'b1-06-v10',

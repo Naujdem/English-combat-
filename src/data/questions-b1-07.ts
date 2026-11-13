@@ -135,7 +135,7 @@ export const B1_07_QUESTIONS: Question[] = [
   // Bloque D · The Broker, fase 1: deducción
   { id: 'b1-07-bd1', topic: DP, kind: 'fix', prompt: 'The vendor must be hide it here.', options: ['The vendor must have hide it here.', 'The vendor must hid it here.', 'The vendor must have hidden it here.'], answer: 2, tip: 'must have + participio.', tags: BOSS_D },
   { id: 'b1-07-bd2', topic: DE, kind: 'fix', prompt: "She mustn't be a thief. She is a teacher.", options: ["She can't be a thief. She is a teacher.", "She doesn't must be a thief. She is a teacher.", 'She no can be a thief. She is a teacher.'], answer: 0, tip: "Imposible: can't be.", tags: BOSS_D },
-  { id: 'b1-07-bd3', topic: DE, prompt: 'His shoes are covered in mud. He ___ be outside.', options: ["can't", 'must', "mustn't"], answer: 1, tip: 'Prueba clara: must be.', tags: BOSS_D },
+  { id: 'b1-07-bd3', topic: DE, prompt: 'His coat is not here. He ___ be outside.', options: ["can't", 'must', "mustn't"], answer: 1, tip: 'Prueba clara: must be.', tags: BOSS_D },
   { id: 'b1-07-bd4', topic: DP, prompt: 'The window is closed and locked from inside. He ___ have come in through it.', options: ['must', 'might', "can't"], answer: 2, tip: "Imposible en el pasado: can't have.", tags: BOSS_D },
   { id: 'b1-07-bd5', topic: DE, prompt: "I don't know where it is. It ___ be anywhere.", options: ['must', 'could', "can't"], answer: 1, tip: 'No sé: could / might be.', tags: BOSS_D },
   { id: 'b1-07-bd6', topic: DE, kind: 'order', prompt: 'Debe de estar detrás del estante.', options: ['It', 'must', 'be', 'behind', 'the', 'shelf.'], answer: 0, tip: 'must be.', tags: BOSS_D },
