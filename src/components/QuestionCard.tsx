@@ -120,10 +120,11 @@ export function QuestionCard({
     const res = await hear().promise
     setListening(false)
     if (!res.ok) return setMicError(micErrorText(res.error))
-    const expected = q.options[0]
-    const best = res.heard.reduce((b, t) => (speechScore(t, expected) > speechScore(b, expected) ? t : b), res.heard[0] ?? '')
+    // También vale decir la frase en otro orden correcto (alts)
+    const score = (t: string) => Math.max(...[q.options[0], ...(q.alts ?? [])].map((e) => speechScore(t, e)))
+    const best = res.heard.reduce((b, t) => (score(t) > score(b) ? t : b), res.heard[0] ?? '')
     setHeard(best)
-    if (speechScore(best, expected) >= 0.75) return finish(true)
+    if (score(best) >= 0.75) return finish(true)
     const n = tries + 1
     setTries(n)
     if (n >= 3) finish(false)
@@ -140,7 +141,7 @@ export function QuestionCard({
     if (!typed.trim()) return setWriteError('Escribe tu respuesta primero.')
     // En la palabra que falta también vale la forma negativa (is → is not / isn't)
     const expected = q.options[0]
-    if (q.writeMode !== 'blank') return finish(sameAnswer(typed, expected))
+    if (q.writeMode !== 'blank') return finish([expected, ...(q.alts ?? [])].some((e) => sameAnswer(typed, e)))
     // También vale escribir la frase completa (o un trozo que incluya la palabra que falta)
     const [before, after] = q.prompt.split('___')
     const pre = normalizeAnswer(before).split(' ').filter(Boolean)
@@ -160,7 +161,9 @@ export function QuestionCard({
 
   function checkOrder() {
     if (!ask || placed.length !== q.options.length) return
-    finish(placed.map((i) => q.options[i]).join(' ') === q.options.join(' '))
+    const made = placed.map((i) => q.options[i]).join(' ')
+    // Vale el orden del banco o cualquier otro orden correcto anotado en alts
+    finish(made === q.options.join(' ') || (q.alts ?? []).some((e) => sameAnswer(made, e)))
   }
 
   const label =

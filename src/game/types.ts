@@ -52,6 +52,8 @@ export type Question = {
   prompt: string
   options: string[]
   answer: number
+  /** Solo en ordenar: otras oraciones completas que también valen, con las mismas palabras en otro orden */
+  alts?: string[]
   /** Explicación corta en español que da un amigo cuando fallas */
   tip: string
   /** Etiquetas de lugar o personaje, para que cada enemigo pregunte sobre lo suyo */

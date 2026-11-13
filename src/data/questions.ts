@@ -456,6 +456,7 @@ function toSpeak(q: Question): Question {
     prompt: q.kind === 'order' ? q.prompt : '',
     options: [sentence],
     answer: 0,
+    alts: q.kind === 'order' ? q.alts : undefined,
     tags: q.tags,
     tip: q.tip,
   }
@@ -488,6 +489,7 @@ function toWriteSentence(q: Question): Question {
     prompt: q.prompt,
     options: [q.options.join(' ')],
     answer: 0,
+    alts: q.alts,
     tags: q.tags,
     tip: q.tip,
   }

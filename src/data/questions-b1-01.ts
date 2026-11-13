@@ -49,7 +49,7 @@ export const B1_01_QUESTIONS: Question[] = [
   { id: 'b1-01-p4', topic: CE, prompt: 'He lost his voice ___ the smoke.', options: ['because of', 'because', 'so'], answer: 0, tip: 'Después viene solo un sustantivo (the smoke): because of.', tags: PRACTICE },
   { id: 'b1-01-p5', topic: CE, prompt: 'He lost his voice ___ the smoke was very thick.', options: ['because of', 'because', 'as a result of'], answer: 1, tip: 'Después viene una oración completa (the smoke was…): because.', tags: PRACTICE },
   { id: 'b1-01-p6', topic: CE, prompt: 'The stairs were full of smoke, ___ we used the fire exit.', options: ['because of', 'as a result of', 'so'], answer: 2, tip: 'Es el resultado: so (así que).', tags: PRACTICE },
-  { id: 'b1-01-p7', topic: CE, kind: 'order', prompt: 'Usamos la salida de emergencia por el humo.', options: ['We', 'used', 'the', 'fire', 'exit', 'because', 'of', 'the', 'smoke.'], answer: 0, tip: 'because of + sustantivo (the smoke).', tags: PRACTICE },
+  { id: 'b1-01-p7', topic: CE, kind: 'order', alts: ["Because of the smoke, we used the fire exit."], prompt: 'Usamos la salida de emergencia por el humo.', options: ['We', 'used', 'the', 'fire', 'exit', 'because', 'of', 'the', 'smoke.'], answer: 0, tip: 'because of + sustantivo (the smoke).', tags: PRACTICE },
   { id: 'b1-01-p8', topic: CE, prompt: 'The fire was very hot. ___, nobody could stay inside.', options: ['Because of', 'As a result', 'Because'], answer: 1, tip: 'As a result abre una frase nueva con el resultado (lleva coma).', tags: PRACTICE },
 
   // ── Smoke Echo (esbirro del epílogo) ──
@@ -59,7 +59,7 @@ export const B1_01_QUESTIONS: Question[] = [
   { id: 'b1-01-m4', topic: PSC, prompt: 'We were running when the lights ___.', options: ['goes out', 'went out', 'going out'], answer: 1, tip: 'El hecho corto que interrumpe va en past simple: went out.', tags: MINION },
   { id: 'b1-01-m5', topic: CE, prompt: "She couldn't see anything ___ the thick smoke.", options: ['because', 'so', 'because of'], answer: 2, tip: 'Sustantivo (the thick smoke): because of.', tags: MINION },
   { id: 'b1-01-m6', topic: CE, prompt: 'The door was locked, ___ we broke it.', options: ['because of', 'so', 'as a result of'], answer: 1, tip: 'Es el resultado: so.', tags: MINION },
-  { id: 'b1-01-m7', topic: PSC, kind: 'order', prompt: 'Mientras bajábamos, el humo se hacía más espeso.', options: ['While', 'we', 'were', 'going', 'down,', 'the', 'smoke', 'got', 'thicker.'], answer: 0, tip: 'while + past continuous, coma, past simple.', tags: MINION },
+  { id: 'b1-01-m7', topic: PSC, kind: 'order', alts: ["The smoke got thicker while we were going down."], prompt: 'Mientras bajábamos, el humo se hacía más espeso.', options: ['While', 'we', 'were', 'going', 'down,', 'the', 'smoke', 'got', 'thicker.'], answer: 0, tip: 'while + past continuous, coma, past simple.', tags: MINION },
   {
     id: 'b1-01-m8',
     topic: PSC,

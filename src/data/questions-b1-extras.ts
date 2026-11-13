@@ -31,7 +31,7 @@ export const B1_EXTRA_QUESTIONS: Question[] = [
   { id: 'b1-s1-c5', topic: CR, prompt: 'I ___ when I fell.', options: ['were running', 'was running', 'am running'], answer: 1, tip: 'Con I: was + verbo con -ing.', tags: COACH },
   { id: 'b1-s1-c6', topic: CR, kind: 'fix', prompt: 'I was run when it started to rain.', options: ['I was runned when it started to rain.', 'I were running when it started to rain.', 'I was running when it started to rain.'], answer: 2, tip: 'was + verbo con -ing: was running.', tags: COACH },
   { id: 'b1-s1-c7', topic: CR, prompt: 'We were waiting at the start line when the coach ___.', options: ['arrives', 'arrive', 'arrived'], answer: 2, tip: 'La acción corta va en pasado simple: arrived.', tags: COACH },
-  { id: 'b1-s1-c8', topic: CR, kind: 'order', prompt: 'Estaba corriendo cuando vi a Lupe.', options: ['I', 'was', 'running', 'when', 'I', 'saw', 'Lupe.'], answer: 0, tip: 'was + -ing + when + pasado simple.', tags: COACH },
+  { id: 'b1-s1-c8', topic: CR, kind: 'order', alts: ["When I saw Lupe, I was running."], prompt: 'Estaba corriendo cuando vi a Lupe.', options: ['I', 'was', 'running', 'when', 'I', 'saw', 'Lupe.'], answer: 0, tip: 'was + -ing + when + pasado simple.', tags: COACH },
 
   // Movie Night · Marisol (adverbios de opinión, tiempos narrativos y opinar)
   { id: 'b1-s2-m1', topic: MN, prompt: '___, the cinema was closed, so we watched the film at home.', options: ['Unfortunately', 'Surprising', 'Lucky'], answer: 0, tip: 'Adverbio de opinión: Unfortunately (termina en -ly).', tags: TALK },

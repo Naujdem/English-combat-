@@ -57,6 +57,11 @@ for (const q of bank) {
   if (k !== 'order' && new Set(norm).size !== norm.length) structure.push({ where: q.id, msg: 'hay opciones repetidas' })
   if (k === 'fill' && !q.audio && !q.prompt.includes('___')) structure.push({ where: q.id, msg: 'pregunta de completar sin "___"' })
   if (k === 'order' && q.answer !== 0) structure.push({ where: q.id, msg: 'ordenar: las palabras deben venir en orden y answer = 0' })
+  if (q.alts && k !== 'order') structure.push({ where: q.id, msg: 'alts solo vale en preguntas de ordenar' })
+  if (q.alts && k === 'order') {
+    const bag = (s: string) => s.toLowerCase().replace(/[.,!?¿¡;:"]/g, ' ').split(/\s+/).filter(Boolean).sort().join(' ')
+    for (const a of q.alts) if (bag(a) !== bag(q.options.join(' '))) structure.push({ where: q.id, msg: `alts: "${a}" no usa las mismas palabras` })
+  }
   if (!q.tip?.trim()) structure.push({ where: q.id, msg: 'sin pista (tip)' })
 }
 
@@ -166,6 +171,7 @@ for (const q of bank) {
     q.options.forEach((o, i) => add(o, i === q.answer, q.id))
   } else if (k === 'order') {
     add(q.options.join(' '), true, q.id)
+    for (const a of q.alts ?? []) add(a, true, `${q.id} (alt)`)
   } else if (k === 'listen' && q.audio) {
     add(q.audio, true, `${q.id} (audio)`)
   }

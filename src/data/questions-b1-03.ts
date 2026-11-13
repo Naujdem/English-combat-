@@ -29,7 +29,7 @@ export const B1_03_QUESTIONS: Question[] = [
   { id: 'b1-03-p1', topic: IM, prompt: "Friend: 'Dinner at eight?' You: '___ See you there.'", options: ['Sounds good.', 'Sounds goods.', 'Soundly good.'], answer: 0, tip: 'Sounds good = me parece bien (sin sujeto).', tags: PRACTICE1 },
   { id: 'b1-03-p2', topic: IM, prompt: 'Please ___ me when you arrive at the airport.', options: ['pinging', 'ping', 'to ping'], answer: 1, tip: 'Orden: el verbo base al principio: ping me.', tags: PRACTICE1 },
   { id: 'b1-03-p3', topic: IM, prompt: "I'll ___ you later. My battery is low.", options: ['texts', 'texting', 'text'], answer: 2, tip: "will + verbo base: I'll text you.", tags: PRACTICE1 },
-  { id: 'b1-03-p4', topic: IM, kind: 'order', prompt: 'Mándame un mensaje cuando llegues.', options: ['Drop', 'me', 'a', 'line', 'when', 'you', 'arrive.'], answer: 0, tip: 'Drop me a line = mándame un mensaje.', tags: PRACTICE1 },
+  { id: 'b1-03-p4', topic: IM, kind: 'order', alts: ["When you arrive, drop me a line."], prompt: 'Mándame un mensaje cuando llegues.', options: ['Drop', 'me', 'a', 'line', 'when', 'you', 'arrive.'], answer: 0, tip: 'Drop me a line = mándame un mensaje.', tags: PRACTICE1 },
   { id: 'b1-03-p5', topic: IM, prompt: "Boss: 'Please send the report by Friday.' You write: '___'", options: ['Got it lol.', 'Understood. I will send it by Friday.', 'Ok bye.'], answer: 1, tip: 'Con un jefe: respuesta completa y cortés.', tags: PRACTICE1 },
   { id: 'b1-03-p6', topic: IM, prompt: "Friend: 'Can you come at six?' You: 'Got it. ___ then!'", options: ['See you', 'Seeing you', 'Saw you'], answer: 0, tip: 'Despedida rápida: See you then!', tags: PRACTICE1 },
   // ── Cuaderno · página 2 ──
@@ -70,7 +70,7 @@ export const B1_03_QUESTIONS: Question[] = [
   { id: 'b1-03-bm3', topic: IM, prompt: "Friend: 'Lunch at one?' You: '___'", options: ['Good sounds see you there.', 'I am very agree with your lunch.', 'Sounds good. See you there.'], answer: 2, tip: 'Con una amiga: Sounds good. See you there.', tags: BOSS_MSG },
   { id: 'b1-03-bm4', topic: IM, prompt: "Boss: 'Please confirm the meeting for Monday.' You: '___'", options: ['Confirmed. Thank you.', 'Yep lol.', 'Meeting Monday k.'], answer: 0, tip: 'Con un jefe: cortés y completo.', tags: BOSS_MSG },
   { id: 'b1-03-bm5', topic: IM, prompt: "Please ___ me when you get home. I'm worried.", options: ['pinging', 'ping', 'to ping'], answer: 1, tip: 'Orden: el verbo base al principio.', tags: BOSS_MSG },
-  { id: 'b1-03-bm6', topic: IM, kind: 'order', prompt: 'Escríbeme si necesitas algo.', options: ['Text', 'me', 'if', 'you', 'need', 'anything.'], answer: 0, tip: 'Text me = escríbeme.', tags: BOSS_MSG },
+  { id: 'b1-03-bm6', topic: IM, kind: 'order', alts: ["If you need anything, text me."], prompt: 'Escríbeme si necesitas algo.', options: ['Text', 'me', 'if', 'you', 'need', 'anything.'], answer: 0, tip: 'Text me = escríbeme.', tags: BOSS_MSG },
   { id: 'b1-03-bm7', topic: IM, prompt: "I sent you a message yesterday and you haven't ___ yet.", options: ['reply', 'replying', 'replied'], answer: 2, tip: "haven't + participio: replied.", tags: BOSS_MSG },
   // ── The Static · fase 2: present perfect continuous ──
   { id: 'b1-03-bp1', topic: PPC, kind: 'fix', prompt: 'I am knowing her since years.', options: ['I have been knowing her for years.', 'I have known her for years.', 'I am knowing her for years.'], answer: 1, tip: "know no usa -ing, y 'años' es un período: for.", tags: BOSS_PPC },
