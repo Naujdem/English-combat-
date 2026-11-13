@@ -102,7 +102,7 @@ export const A2_FUTURE_ENEMIES: Record<string, EnemyDef> = {
     zone: 'calle-futuro',
     look: { shirt: '#9aa6b2', hair: '#5a6672', skin: '#c9d6e2', gender: 'male' },
     before: [
-      { text: 'Welcome to 2056! Your route: go under the sky and turn in the river!', es: '¡Bienvenido a 2056! Tu ruta: ve por debajo del cielo y gira en el río! (indicaciones sin sentido).' },
+      { text: 'Welcome to 2056! Your route: go under the sky and turn in the river!', es: '¡{h:Bienvenido|Bienvenida} a 2056! Tu ruta: ve por debajo del cielo y gira en el río! (indicaciones sin sentido).' },
       { text: 'All routes are on me. Nobody walk across without me!', es: 'Todas las rutas dependen de mí. ¡Nadie cruza sin mí! (on me, nobody walk: mal).' },
     ],
     after: [

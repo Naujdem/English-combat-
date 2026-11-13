@@ -206,7 +206,7 @@ export const NPC_TASKS: Record<string, NpcTask> = {
     steps: [
       {
         text: "Hello! You are Leo's new friend! Come in, come in. I'm Mrs. Garcia, Leo's mom.",
-        es: '¡Hola! ¡Eres el nuevo amigo de Leo! Pasa, pasa. Soy la señora García, la mamá de Leo.',
+        es: '¡Hola! ¡Eres {h:el nuevo amigo|la nueva amiga} de Leo! Pasa, pasa. Soy la señora García, la mamá de Leo.',
         choice: { ask: '¿Qué le respondes?', options: ['Nice to meet you, Mrs. Garcia!', 'Good night, Mrs. Garcia!', 'You are welcome!'], answer: 0, tip: 'Cuando conoces a alguien: "Nice to meet you!".' },
       },
       {
@@ -296,7 +296,7 @@ export const NPC_TASKS: Record<string, NpcTask> = {
     steps: [
       {
         text: "Hello, young friend! Welcome to Leo's party! Have you got your invitation?",
-        es: '¡Hola, joven amigo! ¡Bienvenido a la fiesta de Leo! ¿Tienes tu invitación?',
+        es: '¡Hola, joven {h:amigo|amiga}! ¡{h:Bienvenido|Bienvenida} a la fiesta de Leo! ¿Tienes tu invitación?',
         choice: { ask: 'Dale la invitación.', options: ['Yes, you are here.', 'Yes, here you are.', 'No, thank you.'], answer: 1, tip: 'Al entregar algo: Here you are.' },
       },
       {
@@ -379,7 +379,7 @@ NPC_TASKS.rosie = {
   steps: [],
   reward: {
     text: 'Rosie: "You are very good at this game! Now you know all our animals."',
-    es: '¡Eres muy bueno en este juego! Ya conoces a todos nuestros animales.',
+    es: '¡Eres muy {h:bueno|buena} en este juego! Ya conoces a todos nuestros animales.',
     sub: 'Ya conoces a los animales de la granja. El granjero no podrá decir que no.',
     say: 'You are very good at this game! Now you know all our animals.',
   },
@@ -442,7 +442,7 @@ NPC_TASKS.grace = {
     },
     {
       text: 'Perfect note! Thank you. Now Ms. Clark can call him. You are a great assistant!',
-      es: '¡Nota perfecta! Gracias. Ahora la señora Clark puede llamarlo. ¡Eres un gran asistente!',
+      es: '¡Nota perfecta! Gracias. Ahora la señora Clark puede llamarlo. ¡Eres {h:un|una} gran asistente!',
     },
     {
       text: "Oh, and... look out of the window. Do you see that man in a dark coat? Every day he stands there and looks at our phone. He never calls. He never says anything.",
@@ -1096,7 +1096,7 @@ NPC_TASKS['a2-03-leo'] = {
   ],
   reward: {
     text: 'Leo: "Talk to me when you are ready for the lesson."',
-    es: 'Háblame cuando estés listo para la lección.',
+    es: 'Háblame cuando estés {h:listo|lista} para la lección.',
     sub: "Habla otra vez con Leo: te enseña let's, how about, would you like y la frecuencia.",
     say: 'Talk to me when you are ready.',
   },
@@ -1258,7 +1258,7 @@ NPC_TASKS['a2-04-leo'] = {
   ],
   reward: {
     text: 'Leo: "Talk to me when you are ready for the lesson."',
-    es: 'Háblame cuando estés listo para la lección.',
+    es: 'Háblame cuando estés {h:listo|lista} para la lección.',
     sub: 'Habla otra vez con Leo: te enseña peticiones corteses, instrucciones y palabras del taller.',
     say: 'Talk to me when you are ready.',
   },
@@ -1295,7 +1295,7 @@ NPC_TASKS['a2-04-hale'] = {
   steps: [
     {
       text: "Hi! Leo's friend, right? Sorry, I'm in a hurry! Quick, what do you need?",
-      es: '¡Hola! Eres el amigo de Leo, ¿verdad? Perdón, ¡tengo prisa! Rápido, ¿qué necesitas?',
+      es: '¡Hola! Eres {h:el amigo|la amiga} de Leo, ¿verdad? Perdón, ¡tengo prisa! Rápido, ¿qué necesitas?',
       choice: { ask: 'Pídele con cortesía que mire tu reloj.', options: ['Could you look at my clock, please?', 'Could you looking at my clock, please?', 'Could you to look at my clock, please?'], answer: 0, tip: 'Could you + verbo tal cual + please?' },
     },
     {
@@ -1400,7 +1400,7 @@ NPC_TASKS['a2-05-leo'] = {
   ],
   reward: {
     text: 'Leo: "Talk to me when you are ready for the lesson."',
-    es: 'Háblame cuando estés listo para la lección.',
+    es: 'Háblame cuando estés {h:listo|lista} para la lección.',
     sub: 'Habla otra vez con Leo: te enseña el pasado simple, los conectores de tiempo y a comparar.',
     say: 'Talk to me when you are ready.',
   },
@@ -1429,13 +1429,13 @@ NPC_TASKS['a2-05-librarian'] = {
   requires: {
     id: 'a2-05-practice',
     text: 'Mrs. Okafor: "Welcome! Please talk to your friend Leo first. He is by the shelves."',
-    es: '¡Bienvenido! Por favor habla primero con tu amigo Leo. Está junto a las estanterías.',
+    es: '¡{h:Bienvenido|Bienvenida}! Por favor habla primero con tu amigo Leo. Está junto a las estanterías.',
     sub: 'Leo está cerca de las estanterías.',
   },
   steps: [
     {
       text: "Hello! You are Leo's friend. I'm Mrs. Okafor. Thank you for coming. Yesterday was a very strange day here.",
-      es: '¡Hola! Eres el amigo de Leo. Soy la señora Okafor. Gracias por venir. Ayer fue un día muy raro aquí.',
+      es: '¡Hola! Eres {h:el amigo|la amiga} de Leo. Soy la señora Okafor. Gracias por venir. Ayer fue un día muy raro aquí.',
       choice: { ask: 'Pídele que te cuente.', options: ['What did you see?', 'What did you saw?', 'What you saw?'], answer: 0, tip: 'Pregunta en pasado: did + verbo simple (see, no saw).' },
     },
     {
@@ -1611,7 +1611,7 @@ NPC_TASKS['a2-06-grandfather'] = {
   requires: {
     id: 'a2-06-practice',
     text: 'Grandfather: "Hello, young friend. Your friend Leo is waiting for you in the square."',
-    es: 'Hola, joven amigo. Tu amigo Leo te espera en la plaza.',
+    es: 'Hola, joven {h:amigo|amiga}. Tu amigo Leo te espera en la plaza.',
     sub: 'Leo está en la plaza.',
   },
   steps: [
@@ -2222,7 +2222,7 @@ NPC_TASKS['a2-08-debate'] = {
       },
       {
         text: 'We should tell Leo what we saw. Are you ready?',
-        es: 'Deberíamos contarle a Leo lo que vimos. ¿Estás listo?',
+        es: 'Deberíamos contarle a Leo lo que vimos. ¿Estás {h:listo|lista}?',
         options: [
           { en: 'Yes. Let’s reconstruct what happened.', es: 'Sí. Reconstruyamos lo que pasó.', value: 'good' },
           { en: 'OK, let’s go.', es: 'Vale, vamos.', value: 'neutral' },
@@ -2390,7 +2390,7 @@ NPC_TASKS['a2-09-miller-talk'] = {
     sub: 'Habla primero con Leo y vence al aprendiz corrompido.',
   },
   steps: [
-    { text: 'Welcome to the River mill. I am Mr. Bell, the miller.', es: 'Bienvenido al molino de los River. Soy el señor Bell, el molinero.' },
+    { text: 'Welcome to the River mill. I am Mr. Bell, the miller.', es: '{h:Bienvenido|Bienvenida} al molino de los River. Soy el señor Bell, el molinero.' },
     {
       text: 'This mill makes flour for the whole valley. But one night the wheel stopped. Now my sacks are empty.',
       es: 'Este molino hace harina para todo el valle. Pero una noche la rueda se detuvo. Ahora mis sacos están vacíos.',
@@ -2941,7 +2941,7 @@ NPC_TASKS['a2-11-meeting'] = {
   requires: {
     id: 'a2-11-detective',
     text: '"Welcome to the Mobility Office."',
-    es: 'Bienvenido a la oficina de movilidad.',
+    es: '{h:Bienvenido|Bienvenida} a la oficina de movilidad.',
     sub: 'Primero revisa la carreta con Leo en el museo.',
   },
   debate: {
@@ -3810,7 +3810,7 @@ NPC_TASKS['a2-s4-leo'] = {
   steps: [],
   reward: {
     text: 'Leo: "You\'re ready! Your friend is in the clothes shop. Good luck!"',
-    es: '¡Estás listo! Tu acompañante está en la tienda de ropa. ¡Buena suerte!',
+    es: '¡Estás {h:listo|lista}! Tu acompañante está en la tienda de ropa. ¡Buena suerte!',
     sub: 'Entra a la tienda y habla con {iname}, junto a los percheros.',
     say: "You're ready!",
   },
@@ -3846,7 +3846,7 @@ NPC_TASKS['a2-s4-return'] = {
   requires: {
     id: 'a2-s4-fitting',
     text: 'Nadia: "Hello! Welcome to the sale. Your friend is waiting for you by the racks."',
-    es: '¡Hola! Bienvenido a las rebajas. Tu acompañante te espera junto a los percheros.',
+    es: '¡Hola! {h:Bienvenido|Bienvenida} a las rebajas. Tu acompañante te espera junto a los percheros.',
     sub: 'Habla con {iname} en la tienda.',
   },
   debate: {
@@ -3891,7 +3891,7 @@ NPC_TASKS['a2-s4-return'] = {
       },
     ],
     endings: {
-      high: { text: "You're a great customer! Careful, here comes Rita. She loves sales.", es: '¡Eres un gran cliente! Cuidado, ahí viene Rita. Le encantan las rebajas.' },
+      high: { text: "You're a great customer! Careful, here comes Rita. She loves sales.", es: '¡Eres {h:un gran cliente|una gran clienta}! Cuidado, ahí viene Rita. Le encantan las rebajas.' },
       mid: { text: 'OK, all done. Oh... here comes Rita. Good luck!', es: 'Bueno, listo. Ah... ahí viene Rita. ¡Buena suerte!' },
       low: { text: 'Hmm... OK, here is your new shirt. Oh no, here comes Rita.', es: 'Mmm... bueno, aquí está tu camisa nueva. Ay no, ahí viene Rita.' },
     },
@@ -4346,7 +4346,7 @@ NPC_TASKS['b1-02-luggage'] = {
   steps: [],
   reward: {
     text: 'The clerk: "Welcome to Lumen Bay! Have a nice stay."',
-    es: '¡Bienvenido a Lumen Bay! Disfruta tu estadía.',
+    es: '¡{h:Bienvenido|Bienvenida} a Lumen Bay! Disfruta tu estadía.',
     sub: 'Recuperaste tu maleta y la de tu {i:amigo|amiga}. Alguien te espera junto a las puertas de la derecha.',
     say: 'Welcome to Lumen Bay! Have a nice stay.',
   },
@@ -4367,7 +4367,7 @@ NPC_TASKS['b1-02-shop'] = {
   steps: [],
   reward: {
     text: 'The shop assistant: "Here is your SIM card. Welcome to Lumen Bay!"',
-    es: 'Aquí tienes tu tarjeta SIM. ¡Bienvenido a Lumen Bay!',
+    es: 'Aquí tienes tu tarjeta SIM. ¡{h:Bienvenido|Bienvenida} a Lumen Bay!',
     sub: 'La puerta de la oficina del intercambio ya está abierta.',
     say: 'Here is your SIM card. Welcome to Lumen Bay!',
   },
@@ -5057,7 +5057,7 @@ NPC_TASKS['b1-06-interview'] = {
       },
       {
         text: 'Why do you suit this job?',
-        es: '¿Por qué eres adecuado para este trabajo?',
+        es: '¿Por qué eres {h:adecuado|adecuada} para este trabajo?',
         options: [
           { en: "I've learned a lot about dogs, and the job suits my free time.", es: 'He aprendido mucho sobre perros, y el trabajo se adapta a mi tiempo libre.', value: 'good', reply: { text: 'Good answer. The hours are very flexible.', es: 'Buena respuesta. El horario es muy flexible.' } },
           { en: 'I need money.', es: 'Necesito dinero.', value: 'neutral', reply: { text: 'Honest, at least.', es: 'Al menos es honesto.' } },
@@ -5099,12 +5099,12 @@ NPC_TASKS['b1-06-close'] = {
   requires: {
     id: 'b1-06-friend',
     text: 'Esteban: "Welcome to Lumen Paws. You start on Monday."',
-    es: 'Bienvenido a Lumen Paws. Empieza el lunes.',
+    es: '{h:Bienvenido|Bienvenida} a Lumen Paws. Empieza el lunes.',
     sub: 'Antes, vence a The Interviewer y habla con Leo.',
   },
   steps: [
     { text: 'You did very well today. The job is yours, if you want it.', es: 'Hoy lo hizo muy bien. El trabajo es suyo, si lo quiere.' },
-    { text: 'Welcome to Lumen Paws. You start on Monday.', es: 'Bienvenido a Lumen Paws. Empieza el lunes.' },
+    { text: 'Welcome to Lumen Paws. You start on Monday.', es: '{h:Bienvenido|Bienvenida} a Lumen Paws. Empieza el lunes.' },
     { text: "(Esteban's pen drops two fragments. They float toward each other.)", es: '(La pluma de Esteban suelta dos fragmentos. Flotan el uno hacia el otro.)' },
     { text: '(Lupe barks at the light.)', es: '(Lupe ladra a la luz.)' },
     { text: '(The clock in your pocket is shining.)', es: '(El reloj en tu bolsillo brilla.)' },
@@ -5535,7 +5535,7 @@ NPC_TASKS['b1-10-welcome'] = {
   npc: 'b1-10-liceth',
   done: 'b1-10-welcome',
   steps: [
-    { text: "Liceth: Welcome to the Lumen Bay Festival! I'm Liceth, the organizer.", es: 'Liceth: ¡Bienvenido al Festival de Lumen Bay! Soy Liceth, la organizadora.' },
+    { text: "Liceth: Welcome to the Lumen Bay Festival! I'm Liceth, the organizer.", es: 'Liceth: ¡{h:Bienvenido|Bienvenida} al Festival de Lumen Bay! Soy Liceth, la organizadora.' },
     { text: 'Liceth: The line-up is amazing: three stages, ten bands and a gaming tent. The tickets are sold out!', es: 'Liceth: ¡El cartel es increíble: tres escenarios, diez bandas y una carpa de videojuegos. ¡Las entradas están agotadas!' },
     { text: 'Liceth: But you are on the list. Go in and enjoy the night!', es: 'Liceth: Pero tú estás en la lista. ¡Entra y disfruta la noche!' },
   ],
@@ -6649,7 +6649,7 @@ NPC_TASKS['b1-s3-host'] = {
   practiceIds: B1_S3_HOST_IDS,
   coins: 5,
   steps: [],
-  reward: { text: "You're ready, aren't you?", es: 'Estás listo, ¿cierto?', sub: 'Lección hecha. Vuelve a hablar con Jeison: hay que confirmar con los invitados.', say: "You're ready, aren't you?" },
+  reward: { text: "You're ready, aren't you?", es: 'Estás {h:listo|lista}, ¿cierto?', sub: 'Lección hecha. Vuelve a hablar con Jeison: hay que confirmar con los invitados.', say: "You're ready, aren't you?" },
 }
 
 // Jeison otra vez: confirmar con los invitados (PartyPlan con question tags). 10 monedas

@@ -33,7 +33,7 @@ export const FRIENDS: Record<string, FriendDef> = {
             es: '¿No puedes hablar? ¿Estás bien?',
             options: [
               { text: '(Asentir con la cabeza)', reply: "Good! Don't worry. I can help you.", es: '¡Bien! No te preocupes. Puedo ayudarte.', effect: 2 },
-              { text: '(Encoger los hombros)', reply: "Not sure? That's OK. I can help you.", es: '¿No estás seguro? Está bien. Puedo ayudarte.', effect: 1 },
+              { text: '(Encoger los hombros)', reply: "Not sure? That's OK. I can help you.", es: '¿No estás {h:seguro|segura}? Está bien. Puedo ayudarte.', effect: 1 },
               nonsense('(Señalar el techo)', 'The ceiling? Ha ha... I don\'t understand.', '¿El techo? Ja, ja... No entiendo.'),
             ],
           },
@@ -130,7 +130,7 @@ export const FRIENDS: Record<string, FriendDef> = {
               nonsense('You are a Tuesday.', "A Tuesday?! Ha ha, I don't understand.", '¿¡Un martes!? Ja, ja, no entiendo.'),
             ],
           },
-          { who: 'friend', text: "Thanks. You're a really good friend. And honest! I like that.", es: 'Gracias. Eres un muy buen amigo. ¡Y honesto! Me gusta eso.' },
+          { who: 'friend', text: "Thanks. You're a really good friend. And honest! I like that.", es: 'Gracias. Eres {h:un muy buen amigo|una muy buena amiga}. ¡Y {h:honesto|honesta}! Me gusta eso.' },
         ],
       },
     ],
@@ -142,13 +142,13 @@ export const FRIENDS: Record<string, FriendDef> = {
         options: [
           { text: '(Levantar el pulgar)', reply: 'Thanks! It is my favorite.', es: '¡Gracias! Es mi favorito.', effect: 2 },
           { text: '(Sonreír)', reply: 'Ha ha, I know!', es: 'Ja, ja, ¡lo sé!', effect: 1 },
-          nonsense('(Bostezar y mirar la pared)', 'Oh... are you bored?', 'Oh... ¿estás aburrido?'),
+          nonsense('(Bostezar y mirar la pared)', 'Oh... are you bored?', 'Oh... ¿estás {h:aburrido|aburrida}?'),
         ],
       },
       {
         requires: 'to-be',
         text: 'Are you tired today?',
-        es: '¿Estás cansado hoy?',
+        es: '¿Estás {h:cansado|cansada} hoy?',
         options: [
           { text: "No, I'm not. I am happy!", reply: 'Great! Me too.', es: '¡Genial! Yo también.', effect: 2 },
           { text: 'Yes, I am a little tired.', reply: 'Oh! Rest after class.', es: '¡Oh! Descansa después de clase.', effect: 1 },
@@ -267,7 +267,7 @@ export const FRIENDS: Record<string, FriendDef> = {
               nonsense('(Señalar la ventana)', "The window? Sorry, I don't understand...", '¿La ventana? Perdón, no entiendo...'),
             ],
           },
-          { who: 'friend', text: 'My sandwiches are the best. You are my friend now!', es: 'Mis sándwiches son los mejores. ¡Ahora eres mi amigo!' },
+          { who: 'friend', text: 'My sandwiches are the best. You are my friend now!', es: 'Mis sándwiches son los mejores. ¡Ahora eres mi {h:amigo|amiga}!' },
         ],
       },
       {
@@ -819,7 +819,7 @@ export const B1_02_PLANE_CHATS: CasualChat[] = [
     requires: null,
     level: 'B1',
     text: "Are you nervous? I'm a little nervous. What are you going to do first in Lumen Bay?",
-    es: '¿Estás nervioso? Yo estoy un poco nervioso. ¿Qué vas a hacer primero en Lumen Bay?',
+    es: '¿Estás {h:nervioso|nerviosa}? Yo estoy un poco nervioso. ¿Qué vas a hacer primero en Lumen Bay?',
     options: [
       { text: "I'm going to explore the harbour.", textEs: 'Voy a explorar el puerto.', reply: "Nice! I'd love to see the old port too.", es: '¡Qué bien! A mí también me encantaría ver el puerto viejo.', effect: 2 },
       { text: "I'd love to try the local food.", textEs: 'Me encantaría probar la comida local.', reply: "Me too! I'm going to try everything.", es: '¡Yo también! Voy a probarlo todo.', effect: 2 },

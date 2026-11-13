@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { fillDeep } from '../game/gender'
 import { mixed } from '../game/mix'
 import type { GameState } from '../game/types'
 import { SpriteBody } from '../components/Sprite'
@@ -111,7 +112,7 @@ function buildSteps(s: GameState, sceneId: string): Step[] {
     { who: otherId as Who, text: `Nice to meet you too, ${iname}!`, es: `¡Mucho gusto también, ${iname}!`, cast },
     romance
       ? { who: 'interest', text: `${name}, your voice is beautiful. I am happy you can talk now.`, es: `${name}, tu voz es hermosa. Me alegra que ya puedas hablar.`, cast }
-      : { who: 'interest', text: `${name}, you are very brave. I am happy you are my friend.`, es: `${name}, eres muy valiente. Me alegra que seas mi amigo.`, cast },
+      : { who: 'interest', text: `${name}, you are very brave. I am happy you are my friend.`, es: `${name}, eres muy valiente. Me alegra que seas mi {h:amigo|amiga}.`, cast },
     { who: 'narrator', text: 'Leo se agacha a amarrarse los zapatos. Entonces, una voz ronca suena detrás de ti.', cast },
     { who: 'villain', text: 'Ha! So you have your school words back... and a piece of MY clock.', es: '¡Ja! Así que recuperaste tus palabras de la escuela... y una pieza de MI reloj.', villain: true, cast },
     { who: 'villain', text: 'Keep it... for now. There is another piece in the city, and I am going to find it first!', es: 'Quédatela... por ahora. Hay otra pieza en la ciudad, ¡y yo la voy a encontrar primero!', villain: true, cast },
@@ -171,7 +172,7 @@ function citySteps(s: GameState): Step[] {
     },
     { who: 'interest', text: 'Wow! There are two pieces now. And there is a little light inside!', es: '¡Guau! Ahora hay dos piezas. ¡Y hay una lucecita adentro!', cast, clock: true },
     { who: 'narrator', text: 'Leo se acerca a la fuente para contar los peces. Entonces, una voz ronca suena a tu lado.', cast },
-    { who: 'villain', text: 'Two pieces... You are fast. Very fast.', es: 'Dos piezas... Eres rápido. Muy rápido.', villain: true, cast },
+    { who: 'villain', text: 'Two pieces... You are fast. Very fast.', es: 'Dos piezas... Eres {h:rápido|rápida}. Muy {h:rápido|rápida}.', villain: true, cast },
     { who: 'villain', text: 'But the next piece is on Green Street. And this time, I am going to find it first!', es: 'Pero la siguiente pieza está en Green Street. ¡Y esta vez yo la voy a encontrar primero!', villain: true, cast },
     { who: 'narrator', text: 'Cuando Leo se da vuelta, el desconocido ya no está. Solo queda un poco de humo oscuro.', cast },
     { who: 'leo', text: 'Who was that? ... Wait. Green Street? My house is on Green Street!', es: '¿Quién era? ... Espera. ¿Green Street? ¡Mi casa está en Green Street!', cast },
@@ -399,10 +400,10 @@ function farmSteps(s: GameState): Step[] {
       },
     },
     { who: 'narrator', text: 'Rosie se lleva a Leo a ver los conejos. Entonces, detrás de la cerca, una voz ronca te habla muy despacio.', cast: ['interest'] },
-    { who: 'villain', text: 'You always run to help people... Good. But one day, you are going to stop. And you are going to be silent.', es: 'Siempre corres a ayudar a la gente... Bien. Pero un día te vas a detener. Y vas a quedarte callado.', villain: true, cast: ['interest'] },
+    { who: 'villain', text: 'You always run to help people... Good. But one day, you are going to stop. And you are going to be silent.', es: 'Siempre corres a ayudar a la gente... Bien. Pero un día te vas a detener. Y vas a quedarte {h:callado|callada}.', villain: true, cast: ['interest'] },
     { who: 'villain', text: 'The last piece is in an office. Every office has got a phone... and a phone needs a voice.', es: 'La última pieza está en una oficina. Toda oficina tiene un teléfono... y un teléfono necesita una voz.', villain: true, cast: ['interest'] },
     { who: 'narrator', text: `Cuando ${iname} se da vuelta, solo queda la cerca y el viento. Leo vuelve corriendo con un conejo en los brazos.`, cast },
-    { who: 'interest', text: `${name}, who was that? What does he mean: "one day you are going to be silent"?`, es: `${name}, ¿quién era? ¿Qué quiere decir con "un día vas a quedarte callado"?`, cast },
+    { who: 'interest', text: `${name}, who was that? What does he mean: "one day you are going to be silent"?`, es: `${name}, ¿quién era? ¿Qué quiere decir con "un día vas a quedarte {h:callado|callada}"?`, cast },
     {
       who: 'hero',
       text: `¿Qué le respondes a ${iname}?`,
@@ -486,7 +487,7 @@ function officeSteps(s: GameState): Step[] {
         tip: 'Con cortesía: Could you + verbo...? Y después de with: me.',
       },
     },
-    { who: 'leo', text: 'Of course! You are my best friend. I always help you. Always.', es: '¡Claro! Eres mi mejor amigo. Siempre te ayudo. Siempre.', cast, clock: true },
+    { who: 'leo', text: 'Of course! You are my best friend. I always help you. Always.', es: '¡Claro! Eres mi {h:mejor amigo|mejor amiga}. Siempre te ayudo. Siempre.', cast, clock: true },
     { who: 'narrator', text: `Leo, ${iname} y tú ponen la mano sobre el reloj. Una luz blanca lo llena todo. Nadie lo nota, pero detrás de ustedes, la luz también se lleva a alguien más.`, cast, clock: true },
     {
       who: 'narrator',
@@ -1038,7 +1039,8 @@ export function Epilogue({ state, onDone }: { state: GameState; onDone: () => vo
   const barrioFuture = state.sceneId === 'barrio-future'
   const farmFuture = state.sceneId === 'farm-future'
   const towerFuture = state.sceneId === 'office-future'
-  const steps = buildSteps(state, state.sceneId)
+  // Marcas de género del español ({h:…|…}, game/gender.ts)
+  const steps = fillDeep(buildSteps(state, state.sceneId), state)
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
   const [solved, setSolved] = useState(false)
