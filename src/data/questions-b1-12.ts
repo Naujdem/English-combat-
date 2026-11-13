@@ -81,7 +81,7 @@ export const B1_12_QUESTIONS: Question[] = [
   // Bloque B · Maya (relaciones y personalidad)
   { id: 'b1-12-rl1', topic: RL, kind: 'fix', prompt: 'I get on with very well my cousin.', options: ['I get on very well with my cousin.', 'I get very well on my cousin.', 'I get on very well my cousin.'], answer: 0, tip: 'get on (very) well with someone.', tags: MAYA },
   { id: 'b1-12-rl2', topic: RL, kind: 'fix', prompt: 'They fall out last week, but now they are friends again.', options: ['They have fallen out last week, but now they are friends again.', 'They falling out last week, but now they are friends again.', 'They fell out last week, but now they are friends again.'], answer: 2, tip: 'Pasado simple: fell out.', tags: MAYA },
-  { id: 'b1-12-rl3', topic: RL, prompt: 'She never lies. She is very ___.', options: ['selfish', 'loyal', 'stubborn'], answer: 1, tip: 'loyal = fiel.', tags: MAYA },
+  { id: 'b1-12-rl3', topic: RL, prompt: 'She never leaves her friends alone. She is very ___.', options: ['selfish', 'loyal', 'stubborn'], answer: 1, tip: 'loyal = fiel.', tags: MAYA },
   { id: 'b1-12-rl4', topic: RL, prompt: "He doesn't listen to anyone. He is very ___.", options: ['stubborn', 'caring', 'reliable'], answer: 0, tip: 'stubborn = terco.', tags: MAYA },
   { id: 'b1-12-rl5', topic: RL, prompt: 'We had an argument, but we said sorry and ___ up.', options: ['made', 'got', 'fell'], answer: 0, tip: 'make up = hacer las paces.', tags: MAYA },
   { id: 'b1-12-rl6', topic: RL, kind: 'order', prompt: 'Me llevo muy bien con mi abuela.', options: ['I', 'get', 'on', 'well', 'with', 'my', 'grandmother.'], answer: 0, tip: 'get on well with someone.', tags: MAYA },
@@ -121,7 +121,7 @@ export const B1_12_QUESTIONS: Question[] = [
   { id: 'b1-12-fc2', topic: FC, kind: 'fix', prompt: "At 8 o'clock tonight, we will be have dinner.", options: ["At 8 o'clock tonight, we will have being dinner.", "At 8 o'clock tonight, we be will having dinner.", "At 8 o'clock tonight, we will be having dinner."], answer: 2, tip: 'will be + having.', tags: FCT },
   { id: 'b1-12-fc3', topic: FC, prompt: "Don't call me at 9. I ___ a movie.", options: ['watching', 'will be watching', 'will be watch'], answer: 1, tip: 'En progreso a las 9: will be watching.', tags: FCT },
   { id: 'b1-12-fc4', topic: FC, prompt: 'This time tomorrow, she ___ in the sea.', options: ['will swimming', 'will be swimming', 'is swim'], answer: 1, tip: 'will be + -ing.', tags: FCT },
-  { id: 'b1-12-fc5', topic: FC, prompt: "I ___ tomorrow, so I can't help you.", options: ["won't be working", "won't working", "don't be working"], answer: 0, tip: "Negativa: won't be + -ing.", tags: FCT },
+  { id: 'b1-12-fc5', topic: FC, prompt: "I ___ tomorrow, so I can help you.", options: ["won't be working", "won't working", "don't be working"], answer: 0, tip: "Negativa: won't be + -ing.", tags: FCT },
   { id: 'b1-12-fc6', topic: FC, kind: 'order', prompt: '¿Estarás usando el coche esta noche?', options: ['Will', 'you', 'be', 'using', 'the', 'car', 'tonight?'], answer: 0, tip: 'Will + sujeto + be + -ing.', tags: FCT },
   {
     id: 'b1-12-fc7',

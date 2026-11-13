@@ -106,7 +106,7 @@ export const B1_11_QUESTIONS: Question[] = [
     kind: 'listen',
     audio: 'By the time we got to the street, the fire had spread to the second floor. If we had arrived ten minutes earlier, we could have saved the library.',
     voice: 'male',
-    prompt: '¿Qué se pudo salvar?',
+    prompt: '¿Qué se habría podido salvar?',
     options: ['La cocina.', 'La biblioteca.', 'El gimnasio.'],
     answer: 1,
     tip: 'We could have saved the library.',
