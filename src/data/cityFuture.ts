@@ -200,7 +200,7 @@ export const CITY_FUTURE_ENEMIES: Record<string, EnemyDef> = {
     ],
     after: [
       { text: "Oh... I'm not going to close the streets. People are going to walk, and the buses are going to fly. Sorry!", es: 'Oh... No voy a cerrar las calles. La gente va a caminar y los buses van a volar. ¡Perdón!' },
-      { text: "Yesterday a man in a dark coat sat at the old bus stop all day. I asked him: 'Are you going to take the bus?' He said: 'No, I'm not. I'm going to wait for my friend... but my friend isn't going to come.'", es: 'Ayer un hombre con abrigo oscuro estuvo todo el día en la parada vieja. Le pregunté: "¿Va a tomar el bus?". Dijo: "No. Voy a esperar a mi amigo... pero mi amigo no va a venir".' },
+      { text: "Yesterday a man in a dark coat sat at the old bus stop all day. I asked him: 'Are you going to take the bus?' He said: 'No, I'm not. I'm going to wait for my friend... but my friend isn't going to come.'", es: 'Ayer un hombre con abrigo oscuro estuvo todo el día en la parada vieja. Le pregunté: "¿Va a tomar el bus?". Dijo: "No. Voy a esperar a mi {h:amigo|amiga}... pero mi {h:amigo|amiga} no va a venir".' },
       { text: 'This piece of metal is yours. And take these holo-glasses: you are never going to get lost. Not like me! Ha ha.', es: 'Este pedazo de metal es tuyo. Y toma estas gafas holográficas: nunca te vas a perder. ¡No como yo! Ja, ja.' },
     ],
     freed: { text: "Is there a bank near here? Ha ha, just kidding. I'm the mayor... and I'm not going to get lost again!", es: '¿Hay un banco cerca? Ja, ja, es broma. Soy el alcalde... ¡y no me voy a volver a perder!' },

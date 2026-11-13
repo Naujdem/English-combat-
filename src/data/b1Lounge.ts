@@ -94,7 +94,7 @@ export const B1_14_LOUNGE: SceneDef = {
 export const B1_14_GATHER_SCRIPT: ScriptLine[] = [
   { who: 'narrator', text: '(You woke up with a sore throat. Your hands are still shaking.)', es: '(Despertaste con dolor de garganta. Todavía te tiemblan las manos.)' },
   { who: 'narrator', text: '(You texted your friends: "Common room. Now. Please.")', es: '(Les escribiste a tus amigos: "Sala común. Ahora. Por favor.")' },
-  { who: 'narrator', text: 'Special person: You look pale. What happened?', es: 'La persona especial: Estás pálido. ¿Qué pasó?' },
+  { who: 'narrator', text: 'Special person: You look pale. What happened?', es: 'La persona especial: Estás {h:pálido|pálida}. ¿Qué pasó?' },
   { who: 'narrator', text: 'Maya: Another memory? Sit down. Breathe.', es: 'Maya: ¿Otro recuerdo? Siéntate. Respira.' },
   { who: 'narrator', text: '(Leo touches his throat for a second. He says nothing about it.)', es: '(Leo se toca la garganta un segundo. No dice nada sobre eso.)' },
   { who: 'narrator', text: 'Leo: Tell us everything. Slowly.', es: 'Leo: Cuéntanos todo. Despacio.' },

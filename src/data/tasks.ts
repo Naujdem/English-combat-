@@ -2053,7 +2053,7 @@ NPC_TASKS['a2-07-race'] = {
             { en: 'Cross the finish line', es: 'Cruza la meta' },
             { en: 'Celebrate', es: 'Celebra' },
           ],
-          challenge: { q: 'You are ___ rider today!', es: '¡Eres el jinete más rápido hoy!', options: ['the fastest', 'the faster', 'fastest'], answer: 0, tip: 'El más rápido de todos: the fastest.' },
+          challenge: { q: 'You are ___ rider today!', es: '¡Eres {h:el jinete más rápido|la jinete más rápida} hoy!', options: ['the fastest', 'the faster', 'fastest'], answer: 0, tip: 'El más rápido de todos: the fastest.' },
         },
       ],
     },

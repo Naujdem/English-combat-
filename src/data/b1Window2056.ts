@@ -40,7 +40,7 @@ export const B1_13_PLANNER_CONTENT: FuturePlannerContent = {
     { who: 'The trip', to: 'My time', time: '8:30', status: 'PLAN' },
   ],
   rounds: [
-    { who: 'L', row: 0, q: 'Tomorrow a new student ___ arrive at Greenfield School.', es: 'Mañana un estudiante nuevo va a llegar a la escuela Greenfield.', options: ['is going to', 'will to', 'is going'], answer: 0, tip: 'Un plan ya decidido: is going to + verbo.', set: { status: 'PLAN OK' } },
+    { who: 'L', row: 0, q: 'Tomorrow a new student ___ arrive at Greenfield School.', es: 'Mañana {h:un estudiante nuevo|una estudiante nueva} va a llegar a la escuela Greenfield.', options: ['is going to', 'will to', 'is going'], answer: 0, tip: 'Un plan ya decidido: is going to + verbo.', set: { status: 'PLAN OK' } },
     { who: 'L', row: 1, q: "At 8 o'clock I ___ by the window.", es: 'A las 8 estaré parado junto a la ventana.', options: ['will standing', 'will be standing', 'am will stand'], answer: 1, tip: 'En progreso a las 8: will be + -ing.', set: { status: 'PLAN OK' } },
     { who: 'L', row: 2, q: "I ___ take the student's voice.", es: 'Voy a llevarme la voz del estudiante.', options: ['going to', 'will to', 'am going to'], answer: 2, tip: 'Mi plan: am going to + verbo.', set: { status: 'PLAN OK' } },
     { who: 'L', row: 3, q: 'My machine ___ keep the words inside my clock.', es: 'Mi máquina va a guardar las palabras dentro de mi reloj.', options: ['is going to', 'are going to', 'is go to'], answer: 0, tip: 'is going to + verbo.', set: { status: 'PLAN OK' } },
