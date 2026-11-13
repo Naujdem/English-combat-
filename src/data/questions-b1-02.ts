@@ -120,7 +120,7 @@ export const B1_02_QUESTIONS: Question[] = [
   { id: 'b1-02-b1-3', topic: PP, prompt: 'Have all the passengers boarded ___?', options: ['yesterday', 'yet', 'last week'], answer: 1, tip: "Pregunta con present perfect: 'ya' al final (yet).", tags: BOSS_PP },
   { id: 'b1-02-b1-4', topic: PP, kind: 'fix', prompt: "I haven't finish my announcement yet.", options: ["I didn't finished my announcement yet.", "I hasn't finished my announcement yet.", "I haven't finished my announcement yet."], answer: 2, tip: "haven't + participio: finished.", tags: BOSS_PP },
   { id: 'b1-02-b1-5', topic: PP, prompt: 'The captain ___ already checked the engines.', options: ['have', 'has', 'is'], answer: 1, tip: 'The captain = he: has already checked.', tags: BOSS_PP },
-  { id: 'b1-02-b1-6', topic: PP, prompt: "The plane ___ at five yesterday. It's in Madrid now.", options: ['landed', 'has landed', 'has land'], answer: 0, tip: "'yesterday' es momento terminado: past simple (landed).", tags: BOSS_PP },
+  { id: 'b1-02-b1-6', topic: PP, prompt: "The plane ___ at five yesterday. It's in Madrid now.", options: ['landed', 'has landed', 'lands'], answer: 0, tip: "'yesterday' es momento terminado: past simple (landed).", tags: BOSS_PP },
   { id: 'b1-02-b1-7', topic: PP, kind: 'order', prompt: 'Todavía no han anunciado la puerta.', options: ['They', "haven't", 'announced', 'the', 'gate', 'yet.'], answer: 0, tip: "haven't + participio + yet al final.", tags: BOSS_PP },
   {
     id: 'b1-02-b1-8',
@@ -137,9 +137,9 @@ export const B1_02_QUESTIONS: Question[] = [
   // ── Captain Delay · fase 2: los tres futuros ──
   { id: 'b1-02-b2-1', topic: FB, kind: 'fix', prompt: 'The plane will leaving at six.', options: ['The plane will leave at six.', 'The plane will leaves at six.', 'The plane is will leave at six.'], answer: 0, tip: 'will + verbo base: will leave.', tags: BOSS_FUT },
   { id: 'b1-02-b2-2', topic: FB, kind: 'fix', prompt: 'Tomorrow I going to cancel every flight.', options: ['Tomorrow I going cancel every flight.', "Tomorrow I'm going to cancel every flight.", "Tomorrow I'm going cancel every flight."], answer: 1, tip: 'I am going to + verbo base.', tags: BOSS_FUT },
-  { id: 'b1-02-b2-3', topic: FB, prompt: "My family arrives tomorrow. We ___ at the airport at nine. It's all arranged.", options: ['will meeting', 'meet to', 'are meeting'], answer: 2, tip: 'Cita fija con hora: presente continuo.', tags: BOSS_FUT },
-  { id: 'b1-02-b2-4', topic: FB, prompt: 'The screen shows a delay. I ___ a coffee while I wait.', options: ['am going have', 'will have', 'have will'], answer: 1, tip: 'Decisión en el momento: will + verbo base.', tags: BOSS_FUT },
-  { id: 'b1-02-b2-5', topic: FB, prompt: 'Look at those dark clouds! It ___ rain, and the flights will be late.', options: ['is going to', 'will to', 'going to'], answer: 0, tip: 'Con evidencia visible: is going to + verbo base.', tags: BOSS_FUT },
+  { id: 'b1-02-b2-3', topic: FB, prompt: "My family arrives tomorrow. We ___ at the airport at nine. It's all arranged.", options: ['met', 'have met', 'are meeting'], answer: 2, tip: 'Cita fija con hora: presente continuo.', tags: BOSS_FUT },
+  { id: 'b1-02-b2-4', topic: FB, prompt: 'The screen shows a delay. I ___ a coffee while I wait.', options: ['had', 'will have', 'have had'], answer: 1, tip: 'Decisión en el momento: will + verbo base.', tags: BOSS_FUT },
+  { id: 'b1-02-b2-5', topic: FB, prompt: 'Look at those dark clouds! It ___ rain, and the flights will be late.', options: ['is going to', 'used to', 'would'], answer: 0, tip: 'Con evidencia visible: is going to + verbo base.', tags: BOSS_FUT },
   { id: 'b1-02-b2-6', topic: FB, kind: 'fix', prompt: 'I will to wait at gate nine.', options: ['I will waiting at gate nine.', 'I wills wait at gate nine.', 'I will wait at gate nine.'], answer: 2, tip: 'will + verbo base, sin to.', tags: BOSS_FUT },
   { id: 'b1-02-b2-7', topic: FB, kind: 'order', alts: ["I'm going to call my family this afternoon."], prompt: 'Esta tarde voy a llamar a mi familia.', options: ['This', 'afternoon', "I'm", 'going', 'to', 'call', 'my', 'family.'], answer: 0, tip: "Plan decidido: I'm going to + verbo base.", tags: BOSS_FUT },
   {
