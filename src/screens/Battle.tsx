@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { mixed } from '../game/mix'
 import { voiceOf } from '../game/speech'
-import type { GameState, Question, TopicId, Zone } from '../game/types'
+import type { GameState, Question, QuestionKind, TopicId, Zone } from '../game/types'
 import type { Update } from '../game/store'
+import { B1_PREFIX } from '../game/store'
 import { OUTFITS } from '../data/school'
 import { ENEMIES } from '../data/enemies'
 import { pickQuestion, questionById, TOPICS } from '../data/questions'
@@ -533,10 +534,15 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
   }
   function pick(hpLeft: number, usedIds: string[]) {
     const p = poolAt(hpLeft)
-    // La segunda pregunta busca una escucha real; una de cada tres pide escribir u ordenar
+    // La segunda pregunta busca una escucha real; una de cada tres pide escribir u ordenar.
+    // En B1 es una de cada dos, y los dos últimos golpes de un jefe siempre piden producir
     const n = usedIds.length
-    const focus = n === 1 ? 'hear' : n % 3 === 2 ? 'produce' : undefined
-    return pickQuestion(p.topics, p.kinds, usedIds, state.mistakes, p.tags ?? [], focus, enemy.onlyTags)
+    const b1 = enemy.id.startsWith(B1_PREFIX)
+    const produce = b1 ? (n >= 2 && n % 2 === 0) || (enemy.kind === 'boss' && hpLeft <= 2) : n % 3 === 2
+    const focus = n === 1 ? 'hear' : produce ? 'produce' : undefined
+    // Los enemigos de B1 no traen 'write' en sus tipos: se suma solo en los turnos de producir (escribir la palabra o la oración)
+    const kinds: QuestionKind[] = b1 && focus === 'produce' && !p.kinds.includes('write') && p.kinds.some((k) => k === 'fill' || k === 'order') ? [...p.kinds, 'write'] : p.kinds
+    return pickQuestion(p.topics, kinds, usedIds, state.mistakes, p.tags ?? [], focus, enemy.onlyTags)
   }
   const [interlude, setInterlude] = useState<{ text: string; es?: string } | null>(null)
   const [q, setQ] = useState<Question>(() => pick(battle.enemyHp, []))
