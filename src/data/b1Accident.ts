@@ -129,7 +129,7 @@ export const ACCIDENT_ALARM: ScriptLine[] = [
 /** El rescate (después de Call for Help). Luego: fundido a negro y exitMemory(s, 1, { close: false }) */
 export const ACCIDENT_RESCUE: ScriptLine[] = [
   { who: 'narrator', text: 'The firefighters arrived. Everyone got out because I shouted. But the smoke took my voice.', es: 'Llegaron los bomberos. Todos salieron porque yo grité. Pero el humo me quitó la voz.' },
-  { who: 'narrator', text: "And my friend... didn't say a word.", es: 'Y mi amigo... no dijo ni una palabra.' },
+  { who: 'narrator', text: "And my friend... didn't say a word.", es: 'Y mi {h:amigo|amiga}... no dijo ni una palabra.' },
 ]
 
 /**

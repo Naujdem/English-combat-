@@ -1,4 +1,6 @@
 import { B1_DIARY } from './b1Diary'
+import { fillGender } from '../game/gender'
+import type { Gender } from '../game/types'
 /**
  * Diario del capítulo: la misma historia contada en pasado, presente y futuro,
  * y una cuarta versión que mezcla los tres tiempos.
@@ -112,7 +114,7 @@ export const DIARY: DiaryChapter[] = [
         title: "The stranger's plan",
         frame: 'Una hoja que se le cayó al desconocido en 2056, junto a la ventana del aula del profesor Garcia. La escribió la noche antes de quitarte la voz: es su plan, por eso está en futuro.',
         lines: [
-          { en: 'Tomorrow a new student [is going to arrive]f at Greenfield School.', es: 'Mañana un estudiante nuevo va a llegar a la escuela Greenfield.' },
+          { en: 'Tomorrow a new student [is going to arrive]f at Greenfield School.', es: 'Mañana {h:un estudiante nuevo|una estudiante nueva} va a llegar a la escuela Greenfield.' },
           { en: "I [am going to take]f the student's voice. Ha ha!", es: 'Voy a llevarme la voz del estudiante. ¡Ja, ja!' },
           { en: 'My machine [is going to keep]f the words inside my clock.', es: 'Mi máquina va a guardar las palabras dentro de mi reloj.' },
           { en: 'Then I [am going to travel]f back to my time.', es: 'Luego voy a viajar de vuelta a mi tiempo.' },
@@ -257,7 +259,7 @@ export const DIARY: DiaryChapter[] = [
           { en: 'Danny always [asks]n: "Is there a bank here?" In 2056, he [is]n the mayor... and he [isn\'t going to get]f lost again.', es: 'Danny siempre pregunta: "¿Hay un banco aquí?". En 2056 es el alcalde... y no se va a volver a perder.' },
           { en: 'The stranger [was]p in this city in every time. In 1996, he [picked up]p the phone, but there [was]p no voice.', es: 'El desconocido estuvo en esta ciudad en todas las épocas. En 1996 levantó el teléfono, pero no había voz.' },
           { en: 'In 2056, he [waited]p at the old bus stop all day for a friend. Nobody [came]p.', es: 'En 2056 esperó a un amigo todo el día en la parada vieja. Nadie vino.' },
-          { en: 'Who [is]n his friend? [Is]f he [going to come]f one day?', es: '¿Quién es su amigo? ¿Va a venir algún día?' },
+          { en: 'Who [is]n his friend? [Is]f {h:he|she} [going to come]f one day?', es: '¿Quién es su {h:amigo|amiga}? ¿Va a venir algún día?' },
         ],
         questions: [
           { q: 'What was there in 1996, before the fountain?', options: ['A statue.', 'A well.', 'A bus stop.'], answer: 1, tip: 'El texto dice: "In 1996, there was no fountain. There was a well".' },
@@ -1226,8 +1228,8 @@ export const LOCKED_HINT: Record<Tense | 'mix', string> = {
   mix: 'al terminar este lugar en 2056',
 }
 
-export function fillNames(text: string, name: string, iname: string) {
-  return text.replaceAll('{name}', name).replaceAll('{iname}', iname)
+export function fillNames(text: string, name: string, iname: string, hero: Gender = 'male', interest: Gender = 'male') {
+  return fillGender(text, hero, interest).replaceAll('{name}', name).replaceAll('{iname}', iname)
 }
 
 /** Normaliza una palabra para buscarla en el diccionario */

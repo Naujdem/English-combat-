@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { fillText } from '../game/gender'
 import type { GameState } from '../game/types'
 import { B1_MEMORIES, type B1Memory } from '../data/b1Memories'
 import { isB1NodeOpen } from '../data/b1World'
@@ -22,7 +23,7 @@ export function MemoriesTab({ state }: { state: GameState }) {
           <div className="px-3 py-3">
             <p className="text-xs font-semibold uppercase tracking-wide text-[#b48be8]">Recuerdo {picked.n} · 20??</p>
             <p className="font-display text-lg">{picked.title}</p>
-            <p className="mt-1 text-[15px] leading-relaxed text-paper/85">{picked.summary}</p>
+            <p className="mt-1 text-[15px] leading-relaxed text-paper/85">{fillText(picked.summary, state)}</p>
           </div>
         </div>
       </div>

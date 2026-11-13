@@ -157,11 +157,11 @@ export const B1_14_REPORTER_GAME: ReporterContent = {
     {
       speaker: { en: 'The man', es: 'el hombre' },
       quote: "My friend didn't help me.",
-      quoteEs: 'Mi amigo no me ayudó.',
+      quoteEs: 'Mi {h:amigo|amiga} no me ayudó.',
       start: 'He said that',
       answer: ['his', 'friend', "hadn't", 'helped', 'him'],
       extra: ['me', 'help'],
-      es: 'Él dijo que su amigo no lo había ayudado.',
+      es: 'Él dijo que su {h:amigo|amiga} no lo había ayudado.',
       tip: "My → his, me → him. didn't help → hadn't helped.",
       reaction: { who: 'special', en: "I can't believe it. What kind of friend does that?", es: 'No lo puedo creer. ¿Qué clase de amigo hace eso?' },
     },

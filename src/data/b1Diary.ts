@@ -28,7 +28,7 @@ export const B1_DIARY: DiaryChapter[] = [
         title: 'What I saw',
         unlock: closeId(1),
         frame: 'Lo escribes esa noche en tu cuarto, todavía con dolor de garganta, después de hablar con Leo.',
-        lines: [{ en: "The man in the memory [lost]p his voice. The friend next to him... [didn't say]p a word.", es: 'El hombre del recuerdo perdió la voz. El amigo que estaba a su lado... no dijo ni una palabra.' }],
+        lines: [{ en: "The man in the memory [lost]p his voice. The friend next to him... [didn't say]p a word.", es: 'El hombre del recuerdo perdió la voz. {h:El amigo|La amiga} que estaba a su lado... no dijo ni una palabra.' }],
         questions: [],
       },
       {
@@ -40,7 +40,7 @@ export const B1_DIARY: DiaryChapter[] = [
         frame: 'Una página de un cuaderno ajeno, escrita a mano. No tiene nombre.',
         lines: [
           { en: 'I [shouted]p until I [had]p no voice.', es: 'Grité hasta quedarme sin voz.' },
-          { en: '~~I can~~ And my friend... [was]p silent.', es: 'Y mi amigo... estaba en silencio.' },
+          { en: '~~I can~~ And my friend... [was]p silent.', es: 'Y mi {h:amigo|amiga}... estaba en silencio.' },
         ],
         questions: [],
       },
@@ -55,12 +55,12 @@ export const B1_DIARY: DiaryChapter[] = [
           { en: 'The man in the memory [was cleaning]p the board when the fire alarm [rang]p.', es: 'El hombre del recuerdo estaba limpiando la pizarra cuando sonó la alarma de incendio.' },
           { en: 'He [shouted]p, so everybody [got]p out.', es: 'Él gritó, así que todos salieron.' },
           { en: "Because of the smoke, he [lost]p his voice, so he [couldn't ask]p for help.", es: 'Por el humo perdió la voz, así que no pudo pedir ayuda.' },
-          { en: 'His friend [was standing]p next to him... but he [was]p silent.', es: 'Su amigo estaba a su lado... pero se quedó en silencio.' },
+          { en: 'His friend [was standing]p next to him... but {h:he|she} [was]p silent.', es: 'Su {h:amigo|amiga} estaba a su lado... pero se quedó en silencio.' },
         ],
         questions: [
           { q: 'Why did the man lose his voice?', options: ['Because of the smoke.', 'Because of the alarm.', 'Because he was tired.'], answer: 0, tip: 'El diario dice: "Because of the smoke, he lost his voice".' },
           { q: 'What was the man doing when the alarm rang?', options: ['He was waiting at the door.', 'He was cleaning the board.', 'He was walking home.'], answer: 1, tip: 'El diario dice: "was cleaning the board when the fire alarm rang".' },
-          { q: 'Did his friend help him?', options: ['Yes, he did. He shouted too.', "No, he wasn't. He was silent.", "No, he didn't. He was silent."], answer: 2, tip: 'Pregunta con did → respuesta con did: No, he didn\'t.' },
+          { q: 'Did his friend help him?', options: ['Yes, {h:he|she} did. {h:He|She} shouted too.', "No, {h:he|she} wasn't. {h:He|She} was silent.", "No, {h:he|she} didn't. {h:He|She} was silent."], answer: 2, tip: 'Pregunta con did → respuesta con did: No, {h:he|she} didn\'t.' },
         ],
       },
     ],
@@ -729,7 +729,7 @@ export const B1_DIARY: DiaryChapter[] = [
         frame: 'Una página de L, escrita junto a una ventana de 2056.',
         lines: [
           { en: 'The device [does not create]n a voice. It [takes]n one.', es: 'El aparato no crea una voz. Toma una.' },
-          { en: 'Unless I [take]n his voice, I [will never speak]f again.', es: 'A menos que le quite la voz, nunca volveré a hablar.' },
+          { en: 'Unless I [take]n {h:his|her} voice, I [will never speak]f again.', es: 'A menos que le quite la voz, nunca volveré a hablar.' },
           { en: 'I [will take]f the clock in case something goes wrong.', es: 'Llevaré el reloj por si algo sale mal.' },
           { en: 'This time tomorrow, I [will be taking]f back what I lost.', es: 'Mañana a esta hora estaré recuperando lo que perdí.' },
         ],
@@ -779,7 +779,7 @@ export const B1_DIARY: DiaryChapter[] = [
         lines: [
           { en: 'This morning I [told]p my friends everything.', es: 'Esta mañana les conté todo a mis amigos.' },
           { en: 'The man in the memory [said]p that he [had lost]p everything.', es: 'El hombre del recuerdo dijo que lo había perdido todo.' },
-          { en: 'He [said]p that his friend [had not helped]p him. Now I [know]n who that friend [is]n.', es: 'Dijo que su amigo no lo había ayudado. Ahora sé quién es ese amigo.' },
+          { en: 'He [said]p that his friend [had not helped]p him. Now I [know]n who that friend [is]n.', es: 'Dijo que su {h:amigo|amiga} no lo había ayudado. Ahora sé quién es {h:ese amigo|esa amiga}.' },
           { en: 'I [do not know]n what I [did]p wrong. But I [am]n not afraid.', es: 'No sé qué hice mal. Pero no tengo miedo.' },
         ],
         questions: [],

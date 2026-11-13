@@ -1,4 +1,5 @@
 import { useMemo, useState, type ReactNode } from 'react'
+import { fillDeep } from '../game/gender'
 import { mixed } from '../game/mix'
 import type { GameState, LessonStep } from '../game/types'
 import { SpriteBody, type SpriteLook } from './Sprite'
@@ -104,10 +105,12 @@ export function Lesson({
 }) {
   // La muletilla de Leo: empieza cada lección con "Hi, hi!"
   const steps = useMemo(() => {
-    const first = rawSteps[0]
-    if (!first || first.who !== 'leo' || /^hi, hi/i.test(first.text)) return rawSteps
-    return [{ ...first, text: `Hi, hi! ${first.text}`, es: first.es ? `¡Hola, hola! ${first.es}` : first.es }, ...rawSteps.slice(1)]
-  }, [rawSteps])
+    // Textos que cambian con el género elegido ({h:…|…}, game/gender.ts)
+    const filled = fillDeep(rawSteps, state)
+    const first = filled[0]
+    if (!first || first.who !== 'leo' || /^hi, hi/i.test(first.text)) return filled
+    return [{ ...first, text: `Hi, hi! ${first.text}`, es: first.es ? `¡Hola, hola! ${first.es}` : first.es }, ...filled.slice(1)]
+  }, [rawSteps, state.hero.name, state.hero.gender, state.interest.name, state.interest.gender])
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
   const [solved, setSolved] = useState(false)

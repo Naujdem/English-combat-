@@ -65,7 +65,7 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
   const hidden = chapter.versions.filter((x) => !versions.includes(x))
   const name = state.hero.name
   const iname = state.interest.name
-  const fill = (t: string) => fillNames(t, name, iname)
+  const fill = (t: string) => fillNames(t, name, iname, state.hero.gender, state.interest.gender)
   const done = (id: string) => state.opened.includes(`diary-${id}`)
   const names = [name, iname]
 
@@ -75,7 +75,7 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
     if (k === q.answer) {
       setSolved(true)
       setTip(null)
-    } else setTip(q.tip)
+    } else setTip(fill(q.tip))
   }
 
   function nextQuestion() {

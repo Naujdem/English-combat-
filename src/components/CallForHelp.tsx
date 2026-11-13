@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { fillDeep } from '../game/gender'
 import type { GameState, Question } from '../game/types'
 import type { Update } from '../game/store'
 import type { SpriteLook } from './Sprite'
@@ -205,7 +206,7 @@ export function TheAccident({ state, update, friend, onDone }: { state: GameStat
   const mark = (id: string) => update((s) => (s.opened.includes(id) ? s : { ...s, opened: [...s.opened, id] }))
 
   if (stage === 'call') return <CallForHelp update={update} onDone={() => setStage('rescue')} />
-  const lines = stage === 'talk' ? ACCIDENT_TALK : stage === 'alarm' ? ACCIDENT_ALARM : ACCIDENT_RESCUE
+  const lines = fillDeep(stage === 'talk' ? ACCIDENT_TALK : stage === 'alarm' ? ACCIDENT_ALARM : ACCIDENT_RESCUE, state)
   return (
     <div className="absolute inset-0 z-40 flex items-end justify-center bg-black/40 px-3 pb-6">
       <div className="w-full max-w-md">

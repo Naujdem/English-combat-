@@ -23,10 +23,10 @@ export const B1_13_DECISION = 'b1-13-decision'
 /** El diario viejo bajo la piedra (secuencia fija, MemoryScript); 'L' = lo que L escribió */
 export const B1_13_JOURNAL_SCRIPT: ScriptLine[] = [
   { who: 'narrator', text: '(Under the stone, an old journal. The pages are wet. You open it.)', es: '(Bajo la piedra, un diario viejo. Las páginas están mojadas. Lo abres.)' },
-  { who: 'L', text: "He didn't shout. He didn't help.", es: 'No gritó. No ayudó.' },
-  { who: 'L', text: 'He lived a full life... and I lost everything.', es: 'Él vivió una vida plena... y yo lo perdí todo.' },
-  { who: 'L', text: "Although he was my friend, he didn't help me.", es: 'Aunque era mi amigo, no me ayudó.' },
-  { who: 'L', text: "Unless I take his voice, I'll never speak again.", es: 'A menos que le quite la voz, nunca volveré a hablar.' },
+  { who: 'L', text: "{h:He|She} didn't shout. {h:He|She} didn't help.", es: 'No gritó. No ayudó.' },
+  { who: 'L', text: '{h:He|She} lived a full life... and I lost everything.', es: '{h:Él|Ella} vivió una vida plena... y yo lo perdí todo.' },
+  { who: 'L', text: "Although {h:he|she} was my friend, {h:he|she} didn't help me.", es: 'Aunque era mi {h:amigo|amiga}, no me ayudó.' },
+  { who: 'L', text: "Unless I take {h:his|her} voice, I'll never speak again.", es: 'A menos que le quite la voz, nunca volveré a hablar.' },
   { who: 'L', text: "I'll take the clock in case something goes wrong.", es: 'Llevaré el reloj por si algo sale mal.' },
 ]
 
@@ -34,7 +34,7 @@ export const B1_13_JOURNAL_SCRIPT: ScriptLine[] = [
 export const B1_13_DECISION_SCRIPT: ScriptLine[] = [
   { who: 'narrator', text: "(The woman is gone. She didn't say goodbye. The fire is almost out.)", es: '(La mujer ya no está. No dijo adiós. La fogata casi se apaga.)' },
   { who: 'L', text: 'I will go back to the day we met.', es: 'Volveré al día en que nos conocimos.' },
-  { who: 'L', text: 'Then we will never be friends. And his voice will be mine.', es: 'Entonces nunca seremos amigos. Y su voz será mía.' },
+  { who: 'L', text: 'Then we will never be friends. And {h:his|her} voice will be mine.', es: 'Entonces nunca seremos amigos. Y su voz será mía.' },
   { who: 'narrator', text: '(You take the clock and the device. Your hands are steady now.)', es: '(Tomas el reloj y el aparato. Tus manos ya no tiemblan.)' },
   { who: 'narrator', text: '(You turn the crown. Light, and then a window.)', es: '(Giras la corona. Luz, y luego una ventana.)' },
 ]

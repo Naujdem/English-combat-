@@ -577,7 +577,7 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     },
     { who: 'leo', text: 'Past continuous (was/were + -ing) is the background: what was happening. Past simple is the event that interrupts it.', es: 'El past continuous (was/were + -ing) es el fondo: lo que estaba pasando. El past simple es el hecho que lo interrumpe.' },
     { who: 'leo', text: "With 'while', the long action comes right after it: 'While we were walking, the lights went out.'", es: "Con 'while', la acción larga va justo después: 'Mientras caminábamos, se fue la luz.'", board: ['While we were walking,', 'the lights went out.'] },
-    { who: 'board', text: 'My friend ___ at the door when the alarm rang.', board: ['was / were + -ing', '+ when + past simple'], choice: { options: ['was waiting', 'were waiting', 'is waiting'], answer: 0, tip: 'Acción en progreso cuando algo la interrumpe: was waiting (my friend = he → was).' } },
+    { who: 'board', text: 'My friend ___ at the door when the alarm rang.', board: ['was / were + -ing', '+ when + past simple'], choice: { options: ['was waiting', 'were waiting', 'is waiting'], answer: 0, tip: 'Acción en progreso cuando algo la interrumpe: was waiting (my friend = he/she → was).' } },
     { who: 'leo', text: 'Now the new part: WHY something happened, and what happened AS A RESULT.', es: 'Ahora lo nuevo: POR QUÉ pasó algo y qué pasó COMO RESULTADO.', board: ['because + oración', 'because of + sustantivo'] },
     {
       who: 'leo',
@@ -971,7 +971,7 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
   ],
   // B1-13 · bloque C (fuera del templo, data/b1TempleCamp.ts): Cuaderno de L, página 63
   'although-unless-b1': [
-    { who: 'notebook', text: "Page 63. Although he was my friend, he didn't help me.", es: 'Página 63. Aunque era mi amigo, no me ayudó.' },
+    { who: 'notebook', text: "Page 63. Although {h:he|she} was my friend, {h:he|she} didn't help me.", es: 'Página 63. Aunque era mi {h:amigo|amiga}, no me ayudó.' },
     { who: 'notebook', text: 'although + clause: two ideas that contrast. Although it was late, I kept walking.', es: 'although + oración: dos ideas que contrastan. Aunque era tarde, seguí caminando.' },
     { who: 'notebook', text: "unless = if not. Unless I take it, I'll never speak again. (= If I don't take it, ...)", es: 'unless = si no. A menos que lo tome, nunca volveré a hablar. (= Si no lo tomo, ...)' },
     { who: 'notebook', text: "in case = because it might happen. I'll take the clock in case something goes wrong.", es: 'in case = por si acaso. Llevaré el reloj por si algo sale mal.' },

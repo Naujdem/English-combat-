@@ -6240,10 +6240,10 @@ NPC_TASKS['b1-13-woman-talk'] = {
     ask: 'Escribe tu respuesta en el cuaderno.',
     turns: [
       {
-        text: "L... please. Don't go back there. He was your friend.",
-        es: 'L... por favor. No vuelvas allí. Era tu amigo.',
+        text: "L... please. Don't go back there. {h:He|She} was your friend.",
+        es: 'L... por favor. No vuelvas allí. Era tu {h:amigo|amiga}.',
         options: [
-          { en: "Although he was my friend, he didn't help me.", es: 'Aunque era mi amigo, no me ayudó.', value: 'good', reply: { text: 'I know you are in pain. But this is not the way.', es: 'Sé que sientes dolor. Pero este no es el camino.' } },
+          { en: "Although {h:he|she} was my friend, {h:he|she} didn't help me.", es: 'Aunque era mi {h:amigo|amiga}, no me ayudó.', value: 'good', reply: { text: 'I know you are in pain. But this is not the way.', es: 'Sé que sientes dolor. Pero este no es el camino.' } },
           { en: "Unless I do this, I'll never speak again.", es: 'Si no hago esto, nunca volveré a hablar.', value: 'good', reply: { text: 'There are other ways to live without a voice. I was there with you.', es: 'Hay otras formas de vivir sin voz. Yo estuve contigo.' } },
           { en: "I don't want to talk about it.", es: 'No quiero hablar de eso.', value: 'neutral', reply: { text: "You never do. That's the problem.", es: 'Nunca quieres. Ese es el problema.' } },
         ],
@@ -6321,7 +6321,7 @@ NPC_TASKS['b1-13-close'] = {
   done: 'b1-13-close',
   activity: 'script',
   script: B1_13_CLOSE_SCRIPT,
-  requires: { id: 'b1-13-planner', text: 'A new student.', es: 'Un estudiante nuevo.', sub: 'Primero escribe tu plan.' },
+  requires: { id: 'b1-13-planner', text: 'A new student.', es: '{h:Un estudiante nuevo|Una estudiante nueva}.', sub: 'Primero escribe tu plan.' },
   recover: ['achievement-b1', 'price-b1', 'future-plans-b1', 'although-unless-b1'],
   coins: 20,
   exitMemory: 13,
