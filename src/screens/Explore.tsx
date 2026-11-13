@@ -24,6 +24,7 @@ import { LostAsk } from '../components/LostAsk'
 import { LOST_INTRO, LOST_ITEMS } from '../data/lostFound'
 import { NPCS } from '../data/npcs'
 import { ALL_DIARY as DIARY, fillNames, unlockedPages } from '../data/diary'
+import { fillDeep } from '../game/gender'
 import { Diary } from '../components/Diary'
 import { FRIENDS, interestFriend } from '../data/friends'
 import { OneMoreRound } from '../components/OneMoreRound'
@@ -167,7 +168,9 @@ type Talk = {
 
 export function Explore({ state, update, onBattle, onWorld }: { state: GameState; update: Update; onBattle: (enemyId: string) => void; onWorld: () => void }) {
   // Textos de las tareas con {name} / {iname}, y personajes con el nombre y el aspecto que eligió el jugador (la persona especial)
-  const fill = (t: string) => fillNames(t, state.hero.name, state.interest.name)
+  const fill = (t: string) => fillNames(t, state.hero.name, state.interest.name, state.hero.gender, state.interest.gender)
+  // Lo mismo para un dato completo (guion, charla…): también resuelve {h:…|…} y {i:…|…} (game/gender.ts)
+  const fillAll = <T,>(v: T) => fillDeep(v, state)
   const npcOf = (id: string) => {
     const n = NPCS[id]
     if (!n?.interest) return n
@@ -1366,7 +1369,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
       {task && NPC_TASKS[task]?.activity === 'script' && NPC_TASKS[task].script && (
         // B1 (recuerdos): secuencia fija con el personaje de la tarea (cara borrosa) y L narrando
         <Overlay>
-          <MemoryScript lines={NPC_TASKS[task].script!} friend={npcOf(NPC_TASKS[task].npc ?? task).look} friendName={npcOf(NPC_TASKS[task].npc ?? task).name} onDone={() => finishTask(task, true)} />
+          <MemoryScript lines={fillAll(NPC_TASKS[task].script!)} friend={npcOf(NPC_TASKS[task].npc ?? task).look} friendName={npcOf(NPC_TASKS[task].npc ?? task).name} onDone={() => finishTask(task, true)} />
         </Overlay>
       )}
       {task && NPC_TASKS[task]?.activity === 'callforhelp' && (
@@ -1402,7 +1405,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   }}
                 />
               )
-            if (t.activity === 'reporter' && t.reporter) return <Reporter {...t.reporter} names={{ leo: 'Leo', maya: 'Maya', special: npcOf('b1-14-special').name }} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
+            if (t.activity === 'reporter' && t.reporter) return <Reporter {...fillAll(t.reporter)} names={{ leo: 'Leo', maya: 'Maya', special: npcOf('b1-14-special').name }} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'whatif' && t.whatif) return <WhatIf {...t.whatif} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'music' && t.music) return <MusicChallenge {...t.music} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'pens') return <AnimalPens onClose={finish} />
@@ -1488,8 +1491,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   name={t.debate.name ?? who.name}
                   look={who.look}
                   title={t.debate.title}
-                  turns={t.debate.turns}
-                  endings={t.debate.endings}
+                  turns={fillAll(t.debate.turns)}
+                  endings={fillAll(t.debate.endings)}
                   ask={t.debate.ask}
                   onClose={(done, tier) => finishTask(task, done, tier && results?.[tier] ? [results[tier]!] : [])}
                 />

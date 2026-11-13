@@ -91,10 +91,10 @@ export const B1_14_KEYCHAIN_SCRIPT: ScriptLine[] = [
   { who: 'narrator', text: "Special person: You're holding the keychain again. Are you OK?", es: 'La persona especial: Otra vez tienes el llavero en la mano. ¿Estás bien?' },
   { who: 'narrator', text: '(You look at the little clock in your hand.)', es: '(Miras el relojito que tienes en la mano.)' },
   { who: 'narrator', text: '(You have seen it before. Not in the shop. In the memory of the fire.)', es: '(Ya lo habías visto. No en la tienda. En el recuerdo del incendio.)' },
-  { who: 'narrator', text: "(It was hanging from the silent friend's backpack. The same keychain.)", es: '(Colgaba de la mochila del amigo callado. El mismo llavero.)' },
+  { who: 'narrator', text: "(It was hanging from the silent friend's backpack. The same keychain.)", es: '(Colgaba de la mochila {h:del amigo callado|de la amiga callada}. El mismo llavero.)' },
   { who: 'narrator', text: '(The fire has not happened yet. It will happen many years from now.)', es: '(El incendio todavía no ha pasado. Pasará dentro de muchos años.)' },
-  { who: 'narrator', text: '(You whisper:) "The silent friend… was me."', es: '(Susurras:) "El amigo callado… era yo."' },
-  { who: 'narrator', text: '(The man said that his friend had not helped him. He was talking about you.)', es: '(El hombre dijo que su amigo no lo había ayudado. Hablaba de ti.)' },
+  { who: 'narrator', text: '(You whisper:) "The silent friend… was me."', es: '(Susurras:) "{h:El amigo callado|La amiga callada}… era yo."' },
+  { who: 'narrator', text: '(The man said that his friend had not helped him. He was talking about you.)', es: '(El hombre dijo que su {h:amigo|amiga} no lo había ayudado. Hablaba de ti.)' },
   { who: 'narrator', text: '(You whisper:) "The stranger blames me."', es: '(Susurras:) "El desconocido me culpa a mí."' },
   { who: 'narrator', text: '(The air goes cold. The water turns black. Something is rising from it.)', es: '(El aire se enfría. El agua se pone negra. Algo sale de ella.)' },
 ]

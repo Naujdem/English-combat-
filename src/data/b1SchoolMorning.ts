@@ -16,7 +16,7 @@ export const B1_13_DONE_TEXT = 'The Price. La misión 13 terminó: la misión 14
 
 /** El cierre (secuencia fija, MemoryScript). La línea de L es la de A1, con voz ronca (fx 'stranger') */
 export const B1_13_CLOSE_SCRIPT: ScriptLine[] = [
-  { who: 'narrator', text: '(Next morning. A new school. A student arrives early, alone.)', es: '(A la mañana siguiente. Una escuela nueva. Un estudiante llega temprano, solo.)' },
+  { who: 'narrator', text: '(Next morning. A new school. A student arrives early, alone.)', es: '(A la mañana siguiente. Una escuela nueva. {h:Un|Una} estudiante llega temprano, {h:solo|sola}.)' },
   { who: 'narrator', text: '(Your voice is hoarse. It is the only voice you have left.)', es: '(Tu voz es ronca. Es la única voz que te queda.)' },
   { who: 'L', text: 'Hi, hi... What a nice voice you have.', es: 'Hola, hola... Qué linda voz tienes. (Su voz es ronca, como si casi no pudiera hablar.)', fx: 'stranger' },
 ]
@@ -55,7 +55,7 @@ export const B1_13_SCHOOL: SceneDef = {
   examine: {},
   links: {},
   requirements: [],
-  chips: (s: GameState) => [{ label: 'El estudiante nuevo', done: s.opened.includes(B1_13_CLOSE) }],
+  chips: (s: GameState) => [{ label: s.hero.gender === 'female' ? 'La estudiante nueva' : 'El estudiante nuevo', done: s.opened.includes(B1_13_CLOSE) }],
   intro: {
     first: 'Next morning. A new school. — A la mañana siguiente. Una escuela nueva.',
     later: (s) => (s.opened.includes(B1_13_CLOSE) ? B1_13_DONE_TEXT : 'Next morning. A new school. — A la mañana siguiente. Una escuela nueva.'),

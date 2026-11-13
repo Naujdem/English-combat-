@@ -1413,7 +1413,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   'b1-13-journal': {
     name: 'Un diario viejo',
     look: { shirt: '#8a7a5e', hair: '#4a3f30', skin: '#c8b896' },
-    doneLine: { text: "Although he was my friend, he didn't help me.", es: 'Aunque era mi amigo, no me ayudó.' },
+    doneLine: { text: "Although {h:he|she} was my friend, {h:he|she} didn't help me.", es: 'Aunque era mi {h:amigo|amiga}, no me ayudó.' },
   },
   'b1-13-woman': {
     name: 'A woman',
