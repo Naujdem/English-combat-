@@ -159,7 +159,7 @@ export const B1_12_QUESTIONS: Question[] = [
   // Bloque D · The Rumor, fase 1 (verbos de estado)
   { id: 'b1-12-bs1', topic: SV, kind: 'fix', prompt: 'I am hating this rumor.', options: ['I hate this rumor.', 'I hating this rumor.', 'I am hate this rumor.'], answer: 0, tip: 'hate es verbo de estado: sin -ing.', tags: BS },
   { id: 'b1-12-bs2', topic: SV, kind: 'fix', prompt: 'She is knowing the truth.', options: ['She is know the truth.', 'She knows the truth.', 'She knowing the truth.'], answer: 1, tip: 'know es verbo de estado.', tags: BS },
-  { id: 'b1-12-bs3', topic: SV, prompt: 'We ___ each other very well.', options: ['are knowing', 'are know', 'know'], answer: 2, tip: 'know: sin -ing.', tags: BS },
+  { id: 'b1-12-bs3', topic: SV, prompt: 'We ___ each other very well.', options: ['are knowing', 'knows', 'know'], answer: 2, tip: 'know: sin -ing.', tags: BS },
   { id: 'b1-12-bs4', topic: SV, prompt: 'Be quiet! I ___ a message right now.', options: ['read', 'am reading', 'reads'], answer: 1, tip: 'Acción en este momento: am reading.', tags: BS },
   { id: 'b1-12-bs5', topic: SV, kind: 'order', prompt: 'Ella tiene dos gatos.', options: ['She', 'has', 'two', 'cats.'], answer: 0, tip: 'have como posesión: sin -ing.', tags: BS },
   {
@@ -177,8 +177,8 @@ export const B1_12_QUESTIONS: Question[] = [
   // Bloque D · The Rumor, fase 2 (future continuous)
   { id: 'b1-12-bf1', topic: FC, kind: 'fix', prompt: 'At 8 I will waiting here.', options: ['At 8 I will be waiting here.', 'At 8 I will be wait here.', 'At 8 I am will waiting here.'], answer: 0, tip: 'will be + -ing.', tags: BF },
   { id: 'b1-12-bf2', topic: FC, kind: 'fix', prompt: 'Tomorrow they will leaving early.', options: ['Tomorrow they will be leave early.', 'Tomorrow they will be leaving early.', 'Tomorrow they be will leaving early.'], answer: 1, tip: 'will be + -ing.', tags: BF },
-  { id: 'b1-12-bf3', topic: FC, prompt: 'This time tomorrow, we ___ in the plaza.', options: ['are meet', 'will meeting', 'will be meeting'], answer: 2, tip: 'will be + -ing.', tags: BF },
-  { id: 'b1-12-bf4', topic: FC, prompt: "Don't call me at 6. I ___ dinner.", options: ['will be having', 'will having', 'am will have'], answer: 0, tip: 'En progreso a las 6: will be having.', tags: BF },
+  { id: 'b1-12-bf3', topic: FC, prompt: 'This time tomorrow, we ___ in the plaza.', options: ['met', 'have met', 'will be meeting'], answer: 2, tip: 'will be + -ing.', tags: BF },
+  { id: 'b1-12-bf4', topic: FC, prompt: "Don't call me at 6. I ___ dinner.", options: ['will be having', 'had', 'have had'], answer: 0, tip: 'En progreso a las 6: will be having.', tags: BF },
   { id: 'b1-12-bf5', topic: FC, kind: 'order', prompt: '¿Estarás esperando a las ocho?', options: ['Will', 'you', 'be', 'waiting', 'at', 'eight?'], answer: 0, tip: 'Will + sujeto + be + -ing.', tags: BF },
   {
     id: 'b1-12-bf6',

@@ -92,7 +92,7 @@ export const B1_04_QUESTIONS: Question[] = [
   { id: 'b1-04-bo1', topic: OB, kind: 'fix', prompt: 'You must to sign here.', options: ['You must signing here.', 'You musts sign here.', 'You must sign here.'], answer: 2, tip: 'must + verbo base, sin to.', tags: BOSS_OB },
   { id: 'b1-04-bo2', topic: OB, kind: 'fix', prompt: "You don't must make noise.", options: ["You don't must to make noise.", "You mustn't make noise.", 'You not must make noise.'], answer: 1, tip: "Prohibido: mustn't (no 'don't must').", tags: BOSS_OB },
   { id: 'b1-04-bo3', topic: OB, kind: 'fix', prompt: 'He have to pay today.', options: ['He has to pay today.', 'He haves to pay today.', 'He have to pays today.'], answer: 0, tip: 'He = has to + verbo base.', tags: BOSS_OB },
-  { id: 'b1-04-bo4', topic: OB, prompt: "It's forbidden to open the door to strangers. You ___ open it.", options: ["don't have to", "needn't to", "mustn't"], answer: 2, tip: "Prohibido: mustn't.", tags: BOSS_OB },
+  { id: 'b1-04-bo4', topic: OB, prompt: "It's forbidden to open the door to strangers. You ___ open it.", options: ["don't have to", 'should', "mustn't"], answer: 2, tip: "Prohibido: mustn't.", tags: BOSS_OB },
   { id: 'b1-04-bo5', topic: OB, prompt: 'Marisol takes out the rubbish on Mondays. You ___ do it.', options: ["don't have to", "mustn't", 'must'], answer: 0, tip: "Lo hace Marisol: no es necesario, don't have to.", tags: BOSS_OB },
   { id: 'b1-04-bo6', topic: OB, kind: 'order', alts: ["Today I have to sign the contract."], prompt: 'Tengo que firmar el contrato hoy.', options: ['I', 'have', 'to', 'sign', 'the', 'contract', 'today.'], answer: 0, tip: 'have to + verbo base.', tags: BOSS_OB },
   {
@@ -112,8 +112,8 @@ export const B1_04_QUESTIONS: Question[] = [
   { id: 'b1-04-bp1', topic: BP, kind: 'fix', prompt: 'Fill in it, please.', options: ['Fill in to it, please.', 'Fill it to in, please.', 'Fill it in, please.'], answer: 2, tip: 'Con pronombre, va en medio: fill it in.', tags: BOSS_PH },
   { id: 'b1-04-bp2', topic: BP, kind: 'fix', prompt: 'Plug in it, please.', options: ['Plug in to it, please.', 'Plug it in, please.', 'Plug it to in, please.'], answer: 1, tip: 'Con pronombre, va en medio: plug it in.', tags: BOSS_PH },
   { id: 'b1-04-bp3', topic: BP, kind: 'fix', prompt: 'Pick up them, please.', options: ['Pick them up, please.', 'Pick up to them, please.', 'Pick them to up, please.'], answer: 0, tip: 'Con pronombre, va en medio: pick them up.', tags: BOSS_PH },
-  { id: 'b1-04-bp4', topic: BP, prompt: 'I want to ___ money at the cash machine.', options: ['take down', 'take under', 'take out'], answer: 2, tip: 'take out = sacar.', tags: BOSS_PH },
-  { id: 'b1-04-bp5', topic: BP, prompt: 'I need a ___ to pay in the shop.', options: ['debit card', 'card debit', 'debit of card'], answer: 0, tip: 'El primer sustantivo describe al segundo: debit card.', tags: BOSS_PH },
+  { id: 'b1-04-bp4', topic: BP, prompt: 'I want to ___ money at the cash machine.', options: ['take off', 'fill in', 'take out'], answer: 2, tip: 'take out = sacar.', tags: BOSS_PH },
+  { id: 'b1-04-bp5', topic: BP, prompt: 'I need a ___ to pay in the shop.', options: ['debit card', 'cash machine', 'proof of address'], answer: 0, tip: 'debit card = tarjeta débito: con ella pagas en la tienda.', tags: BOSS_PH },
   { id: 'b1-04-bp6', topic: BP, kind: 'order', prompt: 'Tengo que llenar este formulario.', options: ['I', 'have', 'to', 'fill', 'in', 'this', 'form.'], answer: 0, tip: 'have to + fill in + objeto.', tags: BOSS_PH },
   {
     id: 'b1-04-bp7',

@@ -188,9 +188,9 @@ export const B1_08_QUESTIONS: Question[] = [
   // Bloque D · The Champion, fase 1: superlativos
   { id: 'b1-08-bs1', topic: SU, kind: 'fix', prompt: 'She is the most strong girl in the team.', options: ['She is the strongest girl in the team.', 'She is the most strongest girl in the team.', 'She is the strongger girl in the team.'], answer: 0, tip: 'Adjetivo corto: the + -est.', tags: BOSS_S },
   { id: 'b1-08-bs2', topic: SU, kind: 'fix', prompt: 'This is the most good match of my life.', options: ['This is the most best match of my life.', 'This is the goodest match of my life.', 'This is the best match of my life.'], answer: 2, tip: 'good es irregular: the best.', tags: BOSS_S },
-  { id: 'b1-08-bs3', topic: SU, prompt: "It's the ___ goal of the season. Nobody can score a worse one.", options: ['most bad', 'worst', 'baddest'], answer: 1, tip: 'bad → the worst.', tags: BOSS_S },
-  { id: 'b1-08-bs4', topic: SU, prompt: 'Ilva is the ___ coach of all.', options: ['experiencedest', 'most experiencest', 'most experienced'], answer: 2, tip: 'Adjetivo largo: the most + adjetivo.', tags: BOSS_S },
-  { id: 'b1-08-bs5', topic: SU, prompt: 'Mateo is the second ___ player in the team.', options: ['tallest', 'most tall', 'tallestest'], answer: 0, tip: 'tall → the tallest.', tags: BOSS_S },
+  { id: 'b1-08-bs3', topic: SU, prompt: "It's the ___ goal of the season. Nobody can score a worse one.", options: ['worse', 'worst', 'best'], answer: 1, tip: 'bad → the worst.', tags: BOSS_S },
+  { id: 'b1-08-bs4', topic: SU, prompt: 'Ilva is the ___ coach of all.', options: ['more experienced', 'most experience', 'most experienced'], answer: 2, tip: 'Adjetivo largo: the most + adjetivo.', tags: BOSS_S },
+  { id: 'b1-08-bs5', topic: SU, prompt: 'Mateo is the second ___ player in the team.', options: ['tallest', 'taller', 'tall'], answer: 0, tip: 'tall → the tallest.', tags: BOSS_S },
   { id: 'b1-08-bs6', topic: SU, kind: 'order', prompt: 'Es el tercer estadio más grande del país.', options: ['It', 'is', 'the', 'third', 'biggest', 'stadium', 'in', 'the', 'country.'], answer: 0, tip: 'the third biggest + sustantivo.', tags: BOSS_S },
   {
     id: 'b1-08-bs7',

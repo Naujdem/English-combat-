@@ -72,12 +72,12 @@ export const B1_14_QUESTIONS: Question[] = [
   { id: 'b1-14-br1', topic: ST, kind: 'fix', prompt: 'You said me nothing that night.', options: ['You said nothing to me that night.', 'You told nothing me that night.', 'You spoke me nothing that night.'], answer: 0, tip: 'say + to + persona: said nothing to me.', tags: BOSS_R },
   { id: 'b1-14-br2', topic: ST, kind: 'fix', prompt: 'You told that you were my friend.', options: ['You told to that you were my friend.', 'You said that you were my friend.', 'You spoke that you were my friend.'], answer: 1, tip: 'Sin persona: said that...', tags: BOSS_R },
   { id: 'b1-14-br3', topic: RS, prompt: '"I am your friend." → He said that he ___ my friend.', options: ['were', 'be', 'was'], answer: 2, tip: 'am → was.', tags: BOSS_R },
-  { id: 'b1-14-br4', topic: RV, prompt: '"I will help you." → He promised that he ___ help me.', options: ['would', 'will to', 'woulds'], answer: 0, tip: 'will → would.', tags: BOSS_R },
+  { id: 'b1-14-br4', topic: RV, prompt: '"I will help you." → He promised that he ___ help me.', options: ['would', 'was', 'has'], answer: 0, tip: 'will → would.', tags: BOSS_R },
   { id: 'b1-14-br5', topic: ST, prompt: 'The witness ___ us that a dark shape had appeared.', options: ['said', 'told', 'explained'], answer: 1, tip: 'tell + persona: told us.', tags: BOSS_R },
   { id: 'b1-14-br6', topic: RS, kind: 'order', prompt: 'Él dijo que lo había perdido todo.', options: ['He', 'said', 'that', 'he', 'had', 'lost', 'everything.'], answer: 0, tip: 'said that + had + participio.', tags: BOSS_R },
-  { id: 'b1-14-br7', topic: RS, prompt: '"I can\'t forgive him." → He said he ___ forgive him.', options: ["can't to", "didn't can", "couldn't"], answer: 2, tip: "can't → couldn't.", tags: BOSS_R },
+  { id: 'b1-14-br7', topic: RS, prompt: '"I can\'t forgive him." → He said he ___ forgive him.', options: ["wouldn't", "didn't", "couldn't"], answer: 2, tip: "can't → couldn't.", tags: BOSS_R },
   { id: 'b1-14-br8', topic: RV, kind: 'fix', prompt: 'She admitted me she was afraid.', options: ['She admitted that she was afraid.', 'She admit me that she was afraid.', 'She admitted me that afraid.'], answer: 0, tip: 'admit + that + oración (sin persona directa).', tags: BOSS_R },
-  { id: 'b1-14-br9', topic: IQ, prompt: 'Do you know why ___ so angry?', options: ['is he', 'he is', 'does he be'], answer: 1, tip: 'Orden normal: why he is so angry.', tags: BOSS_R },
+  { id: 'b1-14-br9', topic: IQ, prompt: 'Do you know why ___ so angry?', options: ['is he', 'he is', 'does he'], answer: 1, tip: 'Orden normal: why he is so angry.', tags: BOSS_R },
   { id: 'b1-14-br10', topic: IQ, kind: 'order', prompt: '¿Sabes dónde empezó?', options: ['Do', 'you', 'know', 'where', 'it', 'started?'], answer: 0, tip: 'Do you know + where + sujeto + verbo.', tags: BOSS_R },
 
   // Bloque C · The Grudge, fase 3: la voz del protagonista (se dicen en voz alta; sin reconocimiento de voz, se escriben)
