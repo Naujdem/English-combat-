@@ -90,7 +90,7 @@ function buildSteps(s: GameState, sceneId: string): Step[] {
     {
       who: otherId as Who,
       text: it.viaLeo ? "Ha ha! Your voice is back! ... And who is this? I don't know your friend." : 'Ha ha! Your voice is back! ... Wait, who is this?',
-      es: it.viaLeo ? '¡Ja, ja! ¡Recuperaste la voz! ... ¿Y quién es? No conozco a tu amigo.' : '¡Ja, ja! ¡Recuperaste la voz! ... Espera, ¿quién es?',
+      es: it.viaLeo ? '¡Ja, ja! ¡Recuperaste la voz! ... ¿Y quién es? No conozco a tu ' + (it.gender === 'female' ? 'amiga' : 'amigo') + '.' : '¡Ja, ja! ¡Recuperaste la voz! ... Espera, ¿quién es?',
       cast,
     },
     {

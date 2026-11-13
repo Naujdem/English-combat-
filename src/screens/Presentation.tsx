@@ -122,7 +122,7 @@ function buildSteps(d: Draft): Step[] {
       options: [
         { text: 'Yes... someone special.', reply: 'Ooh! Tell me more!', es: '¡Uy! ¡Cuéntame más!', apply: () => ({ interestMode: 'romance' }) },
         { text: 'Yes, a good friend.', reply: 'Nice! Tell me more!', es: '¡Qué bien! ¡Cuéntame más!', apply: () => ({ interestMode: 'friendship' }) },
-        { text: "No, I don't.", reply: "That's OK! I can introduce you to my friend.", es: '¡No pasa nada! Te puedo presentar a mi amigo.', apply: () => ({ interestMode: 'none' }) },
+        { text: "No, I don't.", reply: "That's OK! I can introduce you to my friend.", es: '¡No pasa nada! Te puedo presentar a alguien.', apply: () => ({ interestMode: 'none' }) },
       ],
     },
   ]
@@ -174,7 +174,7 @@ function buildSteps(d: Draft): Step[] {
         : {
             kind: 'say',
             text: `Great! ${d.interestName} is my friend too. ${He} is in the library.`,
-            es: `¡Genial! ${d.interestName} también es mi amigo. Está en la biblioteca.`,
+            es: `¡Genial! ${d.interestName} también es mi ${ig === 'female' ? 'amiga' : 'amigo'}. Está en la biblioteca.`,
             board: [`${He} is in the library.`, `${His} name is ${d.interestName}.`],
           },
     )
