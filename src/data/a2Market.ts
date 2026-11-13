@@ -115,7 +115,7 @@ export const A2_MARKET_ENEMIES: Record<string, EnemyDef> = {
     ],
     after: [
       { text: "Well done! You're a real bargain hunter. The scarf is yours.", es: '¡Bien hecho! Eres un verdadero cazador de ofertas. La bufanda es tuya.' },
-      { text: "It suits your friend, I think. Go on, it's a gift!", es: 'Creo que le queda bien a tu amigo. Anda, ¡es un regalo!' },
+      { text: "It suits your friend, I think. Go on, it's a gift!", es: 'Creo que le queda bien a tu {i:amigo|amiga}. Anda, ¡es un regalo!' },
     ],
     freed: { text: "There's a big sale next Saturday. Don't tell anybody!", es: 'Hay una gran rebaja el próximo sábado. ¡No se lo digas a nadie!' },
   },

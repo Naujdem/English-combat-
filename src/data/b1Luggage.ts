@@ -46,9 +46,9 @@ export const B1_LUGGAGE: LuggageContent = {
     {
       mode: 'tap',
       bot: 'Wait! Has anyone seen a blue suitcase? It belongs to your friend. It is on the top shelf, on the right. Touch it!',
-      es: '¡Espera! ¿Alguien ha visto una maleta azul? Es de tu amigo. Está en el estante de arriba, a la derecha. ¡Tócala!',
+      es: '¡Espera! ¿Alguien ha visto una maleta azul? Es de tu {i:amigo|amiga}. Está en el estante de arriba, a la derecha. ¡Tócala!',
       target: 'suitcase',
-      ok: { text: "Perfect! Your friend's suitcase has just come out. Two lost bags found today!", es: '¡Perfecto! La maleta de tu amigo acaba de salir. ¡Dos maletas perdidas encontradas hoy!' },
+      ok: { text: "Perfect! Your friend's suitcase has just come out. Two lost bags found today!", es: '¡Perfecto! La maleta de tu {i:amigo|amiga} acaba de salir. ¡Dos maletas perdidas encontradas hoy!' },
     },
   ],
 }

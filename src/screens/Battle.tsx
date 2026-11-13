@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { fillDeep } from '../game/gender'
 import { mixed } from '../game/mix'
 import { voiceOf } from '../game/speech'
 import type { GameState, Question, QuestionKind, TopicId, Zone } from '../game/types'
@@ -783,7 +784,8 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
 
   const hero = useMemo(() => heroLook(state, { book: true }), [state])
   const keysNow = state.keys[state.sceneId] ?? 0
-  const storyLines = phase === 'after' ? enemy.after : enemy.before
+  // Los textos del enemigo también pueden llevar {name}, {iname} y marcas de género (game/gender.ts)
+  const storyLines = fillDeep(phase === 'after' ? enemy.after : enemy.before, state)
   // Pregunta extra al ser vencido: los esbirros preguntan por el horario y Grimm se despide
   const session = enemy.kind === 'minion' ? sessionFor(enemy.id) : undefined
   const bonusSession = session

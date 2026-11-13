@@ -4347,7 +4347,7 @@ NPC_TASKS['b1-02-luggage'] = {
   reward: {
     text: 'The clerk: "Welcome to Lumen Bay! Have a nice stay."',
     es: '¡Bienvenido a Lumen Bay! Disfruta tu estadía.',
-    sub: 'Recuperaste tu maleta y la de tu amigo. Alguien te espera junto a las puertas de la derecha.',
+    sub: 'Recuperaste tu maleta y la de tu {i:amigo|amiga}. Alguien te espera junto a las puertas de la derecha.',
     say: 'Welcome to Lumen Bay! Have a nice stay.',
   },
 }

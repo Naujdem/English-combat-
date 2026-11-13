@@ -1458,7 +1458,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               const who = npcOf(t.npc ?? task)
               return <MemoryChest name={who.name} look={who.look} title={t.memory.title} intro={t.memory.intro} pairs={t.memory.pairs} onClose={finish} />
             }
-            if (t.activity === 'luggage') return <LostLuggage content={t.luggage} onClose={finish} />
+            if (t.activity === 'luggage') return <LostLuggage content={fillAll(t.luggage)} onClose={finish} />
             if (t.activity === 'enough') return <EnoughForEveryone friend={state.interest.name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'fitting') return <FittingRoom friend={state.interest.name} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'textonly' && t.textOnly) return <TextOnly content={t.textOnly} before={t.steps.map((st) => ({ text: fill(st.text), es: fill(st.es) }))} onClose={finish} />
