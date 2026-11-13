@@ -1433,7 +1433,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     doneLine: { text: 'The wind takes the paper.', es: 'El viento se lleva la hoja.' },
   },
   'b1-13-student': {
-    name: 'Un estudiante nuevo',
+    name: 'A new student',
     look: { shirt: '#4a6fa8', hair: '#3a2a1a', skin: '#c68e6a' },
     doneLine: { text: '...', es: '...' },
   },
