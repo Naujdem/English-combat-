@@ -321,6 +321,8 @@ export function Diary({ state, update, onClose }: { state: GameState; update: Up
                 ? `Sigue con la página ${versions[v + 1].tab}: mira cómo cambian los verbos y la historia de este lugar.`
                 : hidden.length > 0
                 ? 'Leíste todas las páginas abiertas de este capítulo. Las demás se abren cuando viajes en el tiempo.'
+                : versions.length === 1
+                ? 'Terminaste esta lectura. ¡Muy bien!'
                 : 'Leíste las cuatro páginas de este capítulo. ¡Muy bien!'}
             </p>
             <p className="mt-1 text-sm text-paper/65">La primera vez que completas cada página ganas un escudo de palabras (máximo 2).</p>
