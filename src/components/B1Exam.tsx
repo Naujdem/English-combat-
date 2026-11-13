@@ -58,7 +58,7 @@ function Choices({ questions, onDone }: { questions: ExamChoice[]; onDone: (scor
 
 /**
  * Examen final de B1 (misión 14). Cuatro partes seguidas: reading, listening, writing y speaking (data/b1Exam.ts).
- * Reading y listening: 3 de 5 para pasar; si no, se repite la parte. Writing: lista de requisitos (no se revisa la calidad);
+ * Reading y listening: 4 de 5 para pasar; si no, se repite la parte. Writing: lista de requisitos (no se revisa la calidad);
  * tras dos intentos se puede dejar así. Speaking: reconocimiento de voz con palabras clave; siempre se puede escribir.
  * Al final se ven el texto modelo y las respuestas modelo, y Guardar → onSave(resultado). Salir antes reinicia el examen.
  */

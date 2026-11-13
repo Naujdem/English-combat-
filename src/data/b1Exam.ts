@@ -4,12 +4,12 @@
  *  2. Listening: un boletín de radio leído con la voz del juego, con 5 preguntas (el texto no se ve hasta terminar).
  *  3. Writing: un texto de 60 a 90 palabras. Se revisan requisitos (longitud, conectores, un pasado, un condicional), no la calidad.
  *  4. Speaking: 3 preguntas para responder en voz alta (palabras clave); sin reconocimiento de voz, se escriben.
- * Reading y listening se aprueban con 3 de 5; si no, se repite esa parte.
+ * Reading y listening se aprueban con 4 de 5; si no, se repite esa parte.
  */
 export type ExamChoice = { q: string; options: string[]; answer: number; tip: string }
 export type ExamSpeak = { ask: string; es: string; help: string; need: RegExp; needMsg: string; model: string }
 
-export const B1_EXAM_PASS = 3
+export const B1_EXAM_PASS = 4
 
 export const B1_EXAM_READING: { title: string; by: string; paragraphs: string[]; questions: ExamChoice[] } = {
   title: 'Voices return to Lumen Bay',
