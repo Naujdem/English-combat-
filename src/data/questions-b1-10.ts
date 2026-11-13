@@ -34,7 +34,7 @@ export const B1_10_QUEUE_IDS = ['b1-10-v1', 'b1-10-v2', 'b1-10-v3', 'b1-10-v4', 
 /** Práctica de prefer / would rather, en orden */
 export const B1_10_PREFER_IDS = ['b1-10-p1', 'b1-10-p2', 'b1-10-p3', 'b1-10-p4', 'b1-10-p5', 'b1-10-p6', 'b1-10-p7', 'b1-10-p8']
 /** Escucha de la transmisión de Jorge, en orden */
-export const B1_10_STREAM_IDS = ['b1-10-j1', 'b1-10-j2', 'b1-10-j3', 'b1-10-j4']
+export const B1_10_STREAM_IDS = ['b1-10-j1', 'b1-10-j2', 'b1-10-j3', 'b1-10-j4', 'b1-10-j5', 'b1-10-j6', 'b1-10-j7', 'b1-10-j8']
 /** Práctica de opiniones de Jorge, en orden */
 export const B1_10_OPINIONS_IDS = ['b1-10-o1', 'b1-10-o2', 'b1-10-o3', 'b1-10-o4', 'b1-10-o5', 'b1-10-o6', 'b1-10-o7', 'b1-10-o8']
 
@@ -137,6 +137,10 @@ export const B1_10_QUESTIONS: Question[] = [
     tags: STREAM,
   },
   { id: 'b1-10-j4', topic: GA, prompt: 'In a game, the pictures, colours and animations are the ___.', options: ['levels', 'console', 'graphics'], answer: 2, tip: 'graphics = gráficos.', tags: STREAM },
+  { id: 'b1-10-j5', topic: GA, prompt: "You can play with friends online. The ___ is so much fun.", options: ["multiplayer", "price", "level"], answer: 0, tip: "multiplayer = multijugador.", tags: STREAM },
+  { id: 'b1-10-j6', topic: GA, prompt: "The ___ is really smooth: the game is easy and fun to control.", options: ["price", "gameplay", "chat"], answer: 1, tip: "gameplay = jugabilidad.", tags: STREAM },
+  { id: 'b1-10-j7', topic: GA, prompt: "I finished the first ___ in ten minutes. The next one is harder.", options: ["graphics", "viewer", "level"], answer: 2, tip: "level = nivel.", tags: STREAM },
+  { id: 'b1-10-j8', topic: GA, kind: 'order', prompt: "Los gráficos son increíbles.", options: ["The", "graphics", "are", "incredible."], answer: 0, tip: "The graphics are incredible.", tags: STREAM },
   // Bloque B · Jorge y las opiniones (frases nominales)
   { id: 'b1-10-o1', topic: OP, kind: 'fix', prompt: 'The best thing about is the music.', options: ['The best thing about it the music.', 'The best thing about it is the music.', 'The best thing about it are the music.'], answer: 1, tip: 'The best thing about it is…', tags: OPINIONS },
   { id: 'b1-10-o2', topic: OP, kind: 'fix', prompt: 'The main problem it is the price.', options: ['The main problem it the price.', 'The main problem are the price.', 'The main problem is the price.'], answer: 2, tip: 'The main problem is…', tags: OPINIONS },

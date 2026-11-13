@@ -33,7 +33,7 @@ export const B1_12_VERBS_IDS = ['b1-12-sv1', 'b1-12-sv2', 'b1-12-sv3', 'b1-12-sv
 
 export const B1_12_MEMORY_IDS = ['b1-12-mv1', 'b1-12-mv2', 'b1-12-mv3', 'b1-12-mv4', 'b1-12-mv5', 'b1-12-mv6', 'b1-12-mv7', 'b1-12-mv8']
 export const B1_12_RELATIONSHIPS_IDS = ['b1-12-rl1', 'b1-12-rl2', 'b1-12-rl3', 'b1-12-rl4', 'b1-12-rl5', 'b1-12-rl6', 'b1-12-rl7', 'b1-12-rl8']
-export const B1_12_EMPATHY_IDS = ['b1-12-em1', 'b1-12-em2', 'b1-12-em3', 'b1-12-em4', 'b1-12-em5', 'b1-12-em6']
+export const B1_12_EMPATHY_IDS = ['b1-12-em1', 'b1-12-em2', 'b1-12-em3', 'b1-12-em4', 'b1-12-em5', 'b1-12-em6', 'b1-12-em7', 'b1-12-em8']
 export const B1_12_FC_IDS = ['b1-12-fc1', 'b1-12-fc2', 'b1-12-fc3', 'b1-12-fc4', 'b1-12-fc5', 'b1-12-fc6', 'b1-12-fc7', 'b1-12-fc8']
 export const B1_12_CN_IDS = ['b1-12-cn1', 'b1-12-cn2', 'b1-12-cn3', 'b1-12-cn4', 'b1-12-cn5', 'b1-12-cn6', 'b1-12-cn7', 'b1-12-cn8']
 
@@ -78,6 +78,11 @@ export const B1_12_QUESTIONS: Question[] = [
     tip: 'I forgot to buy a map.',
     tags: LEO,
   },
+  // Banco extra (no entra en la práctica): combates y repaso
+  { id: 'b1-12-mv9', topic: MV, prompt: "Don't forget ___ the door when you leave.", options: ["locking", "to lock", "lock"], answer: 1, tip: "Algo por hacer: forget to + verbo.", tags: LEO },
+  { id: 'b1-12-mv10', topic: MV, prompt: "I remember ___ in this garden when I was a child.", options: ["to play", "play", "playing"], answer: 2, tip: "Recuerdo del pasado: remember + -ing.", tags: LEO },
+  { id: 'b1-12-mv11', topic: MV, kind: 'fix', prompt: "Remind me buying milk, please.", options: ["Remind me to buy milk, please.", "Remember me to buy milk, please.", "Remind me of buy milk, please."], answer: 0, tip: "remind someone to + verbo.", tags: LEO },
+  { id: 'b1-12-mv12', topic: MV, kind: 'order', prompt: "Nunca olvidaré haberla conocido.", options: ["I'll", "never", "forget", "meeting", "her."], answer: 0, tip: "Recuerdo: forget + -ing.", tags: LEO },
   // Bloque B · Maya (relaciones y personalidad)
   { id: 'b1-12-rl1', topic: RL, kind: 'fix', prompt: 'I get on with very well my cousin.', options: ['I get on very well with my cousin.', 'I get very well on my cousin.', 'I get on very well my cousin.'], answer: 0, tip: 'get on (very) well with someone.', tags: MAYA },
   { id: 'b1-12-rl2', topic: RL, kind: 'fix', prompt: 'They fall out last week, but now they are friends again.', options: ['They have fallen out last week, but now they are friends again.', 'They falling out last week, but now they are friends again.', 'They fell out last week, but now they are friends again.'], answer: 2, tip: 'Pasado simple: fell out.', tags: MAYA },
@@ -98,6 +103,11 @@ export const B1_12_QUESTIONS: Question[] = [
     tags: MAYA,
   },
   { id: 'b1-12-rl8', topic: RL, prompt: "A 'close friend' es un amigo ___.", options: ['lejano', 'cercano', 'nuevo'], answer: 1, tip: 'close = cercano.', tags: MAYA },
+  // Banco extra (no entra en la práctica): combates y repaso
+  { id: 'b1-12-rl9', topic: RL, prompt: "You can always count on her. She is very ___.", options: ["reliable", "selfish", "stubborn"], answer: 0, tip: "reliable = confiable.", tags: MAYA },
+  { id: 'b1-12-rl10', topic: RL, prompt: "He only thinks about himself. He is very ___.", options: ["caring", "loyal", "selfish"], answer: 2, tip: "selfish = egoísta.", tags: MAYA },
+  { id: 'b1-12-rl11', topic: RL, prompt: "I ___ well with my neighbours. We never argue.", options: ["get on", "fall out", "make up"], answer: 0, tip: "get on well with = llevarse bien con.", tags: MAYA },
+  { id: 'b1-12-rl12', topic: RL, kind: 'fix', prompt: "We fell out, but yesterday we did up.", options: ["We fell out, but yesterday we make up.", "We fell out, but yesterday we made up.", "We fell out, but yesterday we fell up."], answer: 1, tip: "make up = hacer las paces; en pasado: made up.", tags: MAYA },
   // Bloque B · la persona especial (empatía)
   { id: 'b1-12-em1', topic: EM, prompt: "My friend lost her job. I say: 'I'm ___ to hear that.'", options: ['glad', 'sorry', 'happy'], answer: 1, tip: "I'm sorry to hear that.", tags: SPECIAL },
   { id: 'b1-12-em2', topic: EM, prompt: "'I failed my exam.' — 'That must be ___. Do you want to talk about it?'", options: ['hard', 'funny', 'easy'], answer: 0, tip: 'That must be hard.', tags: SPECIAL },
@@ -116,6 +126,8 @@ export const B1_12_QUESTIONS: Question[] = [
     tip: 'It means a lot to me.',
     tags: SPECIAL,
   },
+  { id: 'b1-12-em7', topic: EM, prompt: "'My dog is sick.' — 'I'm so sorry. Do you want to ___ about it?'", options: ["talk", "say", "tell"], answer: 0, tip: "talk about it = hablar de eso.", tags: SPECIAL },
+  { id: 'b1-12-em8', topic: EM, prompt: "'Thank you for listening. It ___ a lot to me.'", options: ["says", "means", "makes"], answer: 1, tip: "It means a lot to me = significa mucho para mí.", tags: SPECIAL },
   // Bloque C · Einer (future continuous)
   { id: 'b1-12-fc1', topic: FC, kind: 'fix', prompt: 'This time next year, I will living in London.', options: ['This time next year, I will be living in London.', 'This time next year, I will be live in London.', 'This time next year, I am will living in London.'], answer: 0, tip: 'will be + -ing.', tags: FCT },
   { id: 'b1-12-fc2', topic: FC, kind: 'fix', prompt: "At 8 o'clock tonight, we will be have dinner.", options: ["At 8 o'clock tonight, we will have being dinner.", "At 8 o'clock tonight, we be will having dinner.", "At 8 o'clock tonight, we will be having dinner."], answer: 2, tip: 'will be + having.', tags: FCT },
@@ -156,6 +168,11 @@ export const B1_12_QUESTIONS: Question[] = [
     tags: CNT,
   },
   { id: 'b1-12-cn8', topic: CN, prompt: 'A ___ is a famous building or place that everyone knows.', options: ['bus stop', 'car park', 'landmark'], answer: 2, tip: 'landmark = lugar emblemático.', tags: CNT },
+  // Banco extra (no entra en la práctica): combates y repaso
+  { id: 'b1-12-cn9', topic: CN, kind: 'fix', prompt: "Let's meet at the centre city.", options: ["Let's meet at the centre of city.", "Let's meet at the cities centre.", "Let's meet at the city centre."], answer: 2, tip: "city centre: el primer sustantivo dice de qué tipo.", tags: CNT },
+  { id: 'b1-12-cn10', topic: CN, prompt: "She works three days a week. She has a ___ job.", options: ["part-time", "landmark", "crowded"], answer: 0, tip: "a part-time job = trabajo de medio tiempo.", tags: CNT },
+  { id: 'b1-12-cn11', topic: CN, prompt: "We live in a quiet ___ with a small park and friendly people.", options: ["skyscraper", "neighbourhood", "car park"], answer: 1, tip: "neighbourhood = vecindario.", tags: CNT },
+  { id: 'b1-12-cn12', topic: CN, kind: 'order', prompt: "Hay una parada de bus cerca del parqueadero.", options: ["There", "is", "a", "bus", "stop", "near", "the", "car", "park."], answer: 0, tip: "bus stop, car park: dos sustantivos juntos.", tags: CNT },
   // Bloque D · The Rumor, fase 1 (verbos de estado)
   { id: 'b1-12-bs1', topic: SV, kind: 'fix', prompt: 'I am hating this rumor.', options: ['I hate this rumor.', 'I hating this rumor.', 'I am hate this rumor.'], answer: 0, tip: 'hate es verbo de estado: sin -ing.', tags: BS },
   { id: 'b1-12-bs2', topic: SV, kind: 'fix', prompt: 'She is knowing the truth.', options: ['She is know the truth.', 'She knows the truth.', 'She knowing the truth.'], answer: 1, tip: 'know es verbo de estado.', tags: BS },

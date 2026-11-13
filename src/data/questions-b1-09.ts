@@ -20,7 +20,7 @@ const CULTURE = ['b1-09-culture']
 
 export const B1_09_JOURNEY_IDS = ['b1-09-j1', 'b1-09-j2', 'b1-09-j3', 'b1-09-j4', 'b1-09-j5', 'b1-09-j6', 'b1-09-j7', 'b1-09-j8']
 export const B1_09_TIME_IDS = ['b1-09-m1', 'b1-09-m2', 'b1-09-m3', 'b1-09-m4', 'b1-09-m5', 'b1-09-m6', 'b1-09-m7', 'b1-09-m8']
-export const B1_09_CULTURE_IDS = ['b1-09-c1', 'b1-09-c2', 'b1-09-c3', 'b1-09-c4']
+export const B1_09_CULTURE_IDS = ['b1-09-c1', 'b1-09-c2', 'b1-09-c3', 'b1-09-c4', 'b1-09-c5', 'b1-09-c6', 'b1-09-c7', 'b1-09-c8']
 
 export const B1_09_QUESTIONS: Question[] = [
   // Bloque A · página 31: el viaje de L
@@ -48,6 +48,10 @@ export const B1_09_QUESTIONS: Question[] = [
   { id: 'b1-09-c2', topic: CU, prompt: 'Is it OK ___ I take a photo?', options: ['that', 'what', 'if'], answer: 2, tip: 'Is it OK if…?', tags: CULTURE },
   { id: 'b1-09-c3', topic: CU, kind: 'fix', prompt: 'Could you to explain this custom?', options: ['Could you explain this custom?', 'Could you explaining this custom?', 'Could you explains this custom?'], answer: 0, tip: 'Could you + verbo base.', tags: CULTURE },
   { id: 'b1-09-c4', topic: CU, kind: 'fix', prompt: 'Could you tell me why do you do that?', options: ['Could you tell me why does you do that?', 'Could you tell me why you do that?', 'Could you tell me why you doing that?'], answer: 1, tip: 'En una pregunta indirecta el orden es normal: why you do that.', tags: CULTURE },
+  { id: 'b1-09-c5', topic: CU, prompt: "Is it OK if I ___ a photo of the temple?", options: ["take", "taking", "to take"], answer: 0, tip: "Is it OK if + sujeto + verbo: if I take.", tags: CULTURE },
+  { id: 'b1-09-c6', topic: CU, prompt: "Before the temple, we ___ our shoes at the door.", options: ["wear", "leave", "forget"], answer: 1, tip: "leave = dejar: we leave our shoes at the door.", tags: CULTURE },
+  { id: 'b1-09-c7', topic: CU, kind: 'order', prompt: "¿Podrías contarme más sobre esta costumbre?", options: ["Could", "you", "tell", "me", "more", "about", "this", "custom?"], answer: 0, tip: "Could you tell me more about…?", tags: CULTURE },
+  { id: 'b1-09-c8', topic: CU, kind: 'fix', prompt: "Is it OK if I asking a question?", options: ["Is it OK if I to ask a question?", "Is it OK if I asks a question?", "Is it OK if I ask a question?"], answer: 2, tip: "if + I + verbo base: if I ask.", tags: CULTURE },
   // Bloque B · el minijefe Stone Guardian (data/b1TempleStones.ts): la pasiva en todas sus formas
   { id: 'b1-09-g1', topic: PA, kind: 'fix', prompt: 'The temple was build a long time ago.', options: ['The temple was builded a long time ago.', 'The temple was built a long time ago.', 'The temple built was a long time ago.'], answer: 1, tip: 'build → built.', tags: GUARDIAN },
   { id: 'b1-09-g2', topic: PA, kind: 'fix', prompt: 'The stones is carved by hand.', options: ['The stones are carved by hand.', 'The stones be carved by hand.', 'The stones carved by hand are.'], answer: 0, tip: 'Plural: are + participio.', tags: GUARDIAN },
