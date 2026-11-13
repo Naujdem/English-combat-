@@ -31,6 +31,7 @@ import { OneMoreRound } from '../components/OneMoreRound'
 import { Practice } from '../components/Practice'
 import { Registration } from '../components/Registration'
 import { WhereIsIt } from '../components/WhereIsIt'
+import { PickGame } from '../components/PickGame'
 import { sfx } from '../game/sfx'
 import { Tappable } from '../components/Words'
 import { CoachSays } from '../components/CoachSays'
@@ -226,7 +227,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
   const doorOpen = bossDoorOpen(state, scene)
   const hasBoss = scene.entities.some((e) => e.type === 'boss')
   const keys = state.keys[scene.id] ?? 0
-  const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | 'sports' | 'timetable' | 'where' | 'coach' | 'directions' | 'cafe' | 'sorry' | null>(null)
+  const [activity, setActivity] = useState<'vocab' | 'reading' | 'registration' | 'sports' | 'timetable' | 'where' | 'whose' | 'many' | 'coach' | 'directions' | 'cafe' | 'sorry' | null>(null)
   const boardNext = nextSession(state.opened, state.defeated)
   const npcTurn = useRef<Record<string, number>>({})
   // La traducción de lo que dicen los personajes se ve solo si se pide
@@ -424,6 +425,14 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           setMsg(null)
           if (!state.seenLesson.includes('prepositions')) setLesson({ topics: ['prepositions'], then: 'where' })
           else setActivity('where')
+        } else if (e.id === 'librarian' && scene.id === 'school' && !state.opened.includes('school-whose')) {
+          // Mr. Brown y los objetos olvidados: el posesivo con 's (Leo's bag)
+          setMsg(null)
+          setActivity('whose')
+        } else if (e.id === 'ben' && scene.id === 'school' && !state.opened.includes('school-many')) {
+          // Ben y sus cosas: this + is / these + are
+          setMsg(null)
+          setActivity('many')
         } else if (e.id === 'rosa' && !state.opened.includes('city-map')) {
           // La oficial Rosa: there is / there are y direcciones
           setMsg(null)
@@ -806,6 +815,8 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   (e.id === 'secretary' && !state.opened.includes('school-registration')) ||
                   (e.id === 'coach' && !state.opened.includes('school-whistle')) ||
                   (e.id === 'ana' && !state.opened.includes('school-supplies')) ||
+                  (e.id === 'librarian' && scene.id === 'school' && !state.opened.includes('school-whose')) ||
+                  (e.id === 'ben' && scene.id === 'school' && !state.opened.includes('school-many')) ||
                   (e.id === 'rosa' && !state.opened.includes('city-map')) ||
                   (e.id === 'lily' && !state.opened.includes('city-coffee')) ||
                   (e.id === 'mia' && !state.opened.includes('city-sorry')) ||
@@ -1105,6 +1116,29 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 tone: 'good',
                 say: 'Now you have your pencil, your book and your notebook. See you in class!',
               })
+            }}
+          />
+        </Overlay>
+      )}
+
+      {(activity === 'whose' || activity === 'many') && (
+        <Overlay>
+          <PickGame
+            game={activity}
+            onClose={(done) => {
+              const flag = activity === 'whose' ? 'school-whose' : 'school-many'
+              const who = activity === 'whose' ? 'Mr. Brown' : 'Ben'
+              const line = activity === 'whose' ? "Thank you! Now every thing is with its owner." : 'Good game! You are a great player!'
+              const es = activity === 'whose' ? '¡Gracias! Ahora cada cosa está con su dueño.' : '¡Buen juego! ¡Juegas muy bien!'
+              setActivity(null)
+              if (!done) return
+              const shield = state.items.shield < 2
+              update((s) => ({
+                ...s,
+                opened: s.opened.includes(flag) ? s.opened : [...s.opened, flag],
+                items: { ...s.items, shield: Math.min(2, s.items.shield + 1) },
+              }))
+              setMsg({ text: `${who}: "${line}"`, sub: shield ? `${es} Ganaste un escudo de palabras.` : es, tone: 'good', say: line })
             }}
           />
         </Overlay>
