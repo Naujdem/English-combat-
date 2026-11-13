@@ -58,8 +58,8 @@ export const B1_04_QUESTIONS: Question[] = [
   { id: 'b1-04-n5', topic: OB, prompt: "It's midnight. You ___ make noise. It's forbidden.", options: ["don't have to", "haven't to", "mustn't"], answer: 2, tip: "Prohibido: mustn't.", tags: NEIGHBOUR },
   { id: 'b1-04-n6', topic: OB, prompt: 'The bills are included. You ___ pay them.', options: ["don't have to", "mustn't", 'must'], answer: 0, tip: "Están incluidas: no es necesario, don't have to.", tags: NEIGHBOUR },
   { id: 'b1-04-n7', topic: OB, prompt: "Rule: you ___ wash your plate after dinner. It's necessary.", options: ["don't have to", 'have to', "mustn't"], answer: 1, tip: 'Necesario: have to.', tags: NEIGHBOUR },
-  { id: 'b1-04-n8', topic: OB, kind: 'order', prompt: 'No deben hacer ruido después de las diez.', options: ['You', "mustn't", 'make', 'noise', 'after', 'ten.'], answer: 0, tip: "mustn't + verbo base.", tags: NEIGHBOUR },
-  { id: 'b1-04-n9', topic: OB, kind: 'order', prompt: 'Tengo que levantarme temprano mañana.', options: ['I', 'have', 'to', 'get', 'up', 'early', 'tomorrow.'], answer: 0, tip: 'have to + verbo base.', tags: NEIGHBOUR },
+  { id: 'b1-04-n8', topic: OB, kind: 'order', alts: ["After ten you mustn't make noise."], prompt: 'No deben hacer ruido después de las diez.', options: ['You', "mustn't", 'make', 'noise', 'after', 'ten.'], answer: 0, tip: "mustn't + verbo base.", tags: NEIGHBOUR },
+  { id: 'b1-04-n9', topic: OB, kind: 'order', alts: ["Tomorrow I have to get up early."], prompt: 'Tengo que levantarme temprano mañana.', options: ['I', 'have', 'to', 'get', 'up', 'early', 'tomorrow.'], answer: 0, tip: 'have to + verbo base.', tags: NEIGHBOUR },
   {
     id: 'b1-04-n10',
     topic: OB,
@@ -94,7 +94,7 @@ export const B1_04_QUESTIONS: Question[] = [
   { id: 'b1-04-bo3', topic: OB, kind: 'fix', prompt: 'He have to pay today.', options: ['He has to pay today.', 'He haves to pay today.', 'He have to pays today.'], answer: 0, tip: 'He = has to + verbo base.', tags: BOSS_OB },
   { id: 'b1-04-bo4', topic: OB, prompt: "It's forbidden to open the door to strangers. You ___ open it.", options: ["don't have to", "needn't to", "mustn't"], answer: 2, tip: "Prohibido: mustn't.", tags: BOSS_OB },
   { id: 'b1-04-bo5', topic: OB, prompt: 'Marisol takes out the rubbish on Mondays. You ___ do it.', options: ["don't have to", "mustn't", 'must'], answer: 0, tip: "Lo hace Marisol: no es necesario, don't have to.", tags: BOSS_OB },
-  { id: 'b1-04-bo6', topic: OB, kind: 'order', prompt: 'Tengo que firmar el contrato hoy.', options: ['I', 'have', 'to', 'sign', 'the', 'contract', 'today.'], answer: 0, tip: 'have to + verbo base.', tags: BOSS_OB },
+  { id: 'b1-04-bo6', topic: OB, kind: 'order', alts: ["Today I have to sign the contract."], prompt: 'Tengo que firmar el contrato hoy.', options: ['I', 'have', 'to', 'sign', 'the', 'contract', 'today.'], answer: 0, tip: 'have to + verbo base.', tags: BOSS_OB },
   {
     id: 'b1-04-bo7',
     topic: OB,

@@ -99,7 +99,7 @@ export const B1_02_QUESTIONS: Question[] = [
   { id: 'b1-02-f3', topic: FB, prompt: "It's cold in here. I ___ the window.", options: ['will close', 'am going closing', 'close to'], answer: 0, tip: 'Decisión en el momento: will + verbo base.', tags: FUT },
   { id: 'b1-02-f4', topic: FB, kind: 'fix', prompt: "I'm going to meets Ms. Haddad tomorrow.", options: ["I'm going meet Ms. Haddad tomorrow.", "I'm going to meet Ms. Haddad tomorrow.", 'I going to meet Ms. Haddad tomorrow.'], answer: 1, tip: 'going to + verbo base (sin -s).', tags: FUT },
   { id: 'b1-02-f5', topic: FB, kind: 'fix', prompt: 'We will to take the bus.', options: ['We will taking the bus.', 'We wills take the bus.', 'We will take the bus.'], answer: 2, tip: 'will + verbo base, sin to.', tags: FUT },
-  { id: 'b1-02-f6', topic: FB, kind: 'order', prompt: 'Esta noche nos encontramos con Leo.', options: ["We're", 'meeting', 'Leo', 'tonight.'], answer: 0, tip: "Cita fija: presente continuo (We're meeting).", tags: FUT },
+  { id: 'b1-02-f6', topic: FB, kind: 'order', alts: ["Tonight we're meeting Leo."], prompt: 'Esta noche nos encontramos con Leo.', options: ["We're", 'meeting', 'Leo', 'tonight.'], answer: 0, tip: "Cita fija: presente continuo (We're meeting).", tags: FUT },
   { id: 'b1-02-f7', topic: FB, prompt: 'Look at the sky! It ___ rain.', options: ['will to', 'is going to', 'going to'], answer: 1, tip: 'Con evidencia visible: is going to + verbo base.', tags: FUT },
   {
     id: 'b1-02-f8',
@@ -141,7 +141,7 @@ export const B1_02_QUESTIONS: Question[] = [
   { id: 'b1-02-b2-4', topic: FB, prompt: 'The screen shows a delay. I ___ a coffee while I wait.', options: ['am going have', 'will have', 'have will'], answer: 1, tip: 'Decisión en el momento: will + verbo base.', tags: BOSS_FUT },
   { id: 'b1-02-b2-5', topic: FB, prompt: 'Look at those dark clouds! It ___ rain, and the flights will be late.', options: ['is going to', 'will to', 'going to'], answer: 0, tip: 'Con evidencia visible: is going to + verbo base.', tags: BOSS_FUT },
   { id: 'b1-02-b2-6', topic: FB, kind: 'fix', prompt: 'I will to wait at gate nine.', options: ['I will waiting at gate nine.', 'I wills wait at gate nine.', 'I will wait at gate nine.'], answer: 2, tip: 'will + verbo base, sin to.', tags: BOSS_FUT },
-  { id: 'b1-02-b2-7', topic: FB, kind: 'order', prompt: 'Esta tarde voy a llamar a mi familia.', options: ['This', 'afternoon', "I'm", 'going', 'to', 'call', 'my', 'family.'], answer: 0, tip: "Plan decidido: I'm going to + verbo base.", tags: BOSS_FUT },
+  { id: 'b1-02-b2-7', topic: FB, kind: 'order', alts: ["I'm going to call my family this afternoon."], prompt: 'Esta tarde voy a llamar a mi familia.', options: ['This', 'afternoon', "I'm", 'going', 'to', 'call', 'my', 'family.'], answer: 0, tip: "Plan decidido: I'm going to + verbo base.", tags: BOSS_FUT },
   {
     id: 'b1-02-b2-8',
     topic: FB,
@@ -155,5 +155,5 @@ export const B1_02_QUESTIONS: Question[] = [
     tags: BOSS_FUT,
   },
 
-  { id: 'b1-02-j-6', topic: PP, kind: 'order', prompt: 'Ya he comprado mi tarjeta SIM.', options: ["I've", 'already', 'bought', 'my', 'SIM', 'card.'], answer: 0, tip: 'have + already + participio.', tags: JACK },
+  { id: 'b1-02-j-6', topic: PP, kind: 'order', alts: ["I've bought my SIM card already."], prompt: 'Ya he comprado mi tarjeta SIM.', options: ["I've", 'already', 'bought', 'my', 'SIM', 'card.'], answer: 0, tip: 'have + already + participio.', tags: JACK },
 ]

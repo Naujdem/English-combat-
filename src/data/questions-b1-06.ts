@@ -147,7 +147,7 @@ export const B1_06_QUESTIONS: Question[] = [
   { id: 'b1-06-be3', topic: EX, prompt: 'I ___ a dog when I was ten.', options: ['had', 'have had', 'has'], answer: 0, tip: 'When I was ten: past simple.', tags: BOSS_E },
   { id: 'b1-06-be4', topic: EX, prompt: 'She ___ with dogs for five years now.', options: ['worked', 'has worked', 'works'], answer: 1, tip: 'For + hasta hoy: present perfect.', tags: BOSS_E },
   { id: 'b1-06-be5', topic: EX, prompt: 'Have you ___ a dog before?', options: ['walk', 'walking', 'walked'], answer: 2, tip: 'Have you + participio.', tags: BOSS_E },
-  { id: 'b1-06-be6', topic: EX, kind: 'order', prompt: 'Trabajé aquí el año pasado.', options: ['I', 'worked', 'here', 'last', 'year.'], answer: 0, tip: 'Last year: past simple.', tags: BOSS_E },
+  { id: 'b1-06-be6', topic: EX, kind: 'order', alts: ["Last year I worked here."], prompt: 'Trabajé aquí el año pasado.', options: ['I', 'worked', 'here', 'last', 'year.'], answer: 0, tip: 'Last year: past simple.', tags: BOSS_E },
   {
     id: 'b1-06-be7',
     topic: EX,

@@ -103,7 +103,7 @@ export const B1_12_QUESTIONS: Question[] = [
   { id: 'b1-12-em2', topic: EM, prompt: "'I failed my exam.' — 'That must be ___. Do you want to talk about it?'", options: ['hard', 'funny', 'easy'], answer: 0, tip: 'That must be hard.', tags: SPECIAL },
   { id: 'b1-12-em3', topic: EM, prompt: "'I'm here ___ you. Call me anytime.'", options: ['to', 'for', 'at'], answer: 1, tip: "I'm here for you.", tags: SPECIAL },
   { id: 'b1-12-em4', topic: EM, kind: 'fix', prompt: 'I am sorry for hear that.', options: ["I'm sorry to hear that.", "I'm sorry of hear that.", "I'm sorry hearing that."], answer: 0, tip: 'sorry to hear that.', tags: SPECIAL },
-  { id: 'b1-12-em5', topic: EM, kind: 'order', prompt: 'Avísame si necesitas algo.', options: ['Let', 'me', 'know', 'if', 'you', 'need', 'anything.'], answer: 0, tip: 'Let me know if you need anything.', tags: SPECIAL },
+  { id: 'b1-12-em5', topic: EM, kind: 'order', alts: ["If you need anything, let me know."], prompt: 'Avísame si necesitas algo.', options: ['Let', 'me', 'know', 'if', 'you', 'need', 'anything.'], answer: 0, tip: 'Let me know if you need anything.', tags: SPECIAL },
   {
     id: 'b1-12-em6',
     topic: EM,

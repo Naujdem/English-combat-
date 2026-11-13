@@ -45,7 +45,7 @@ export const B1_10_QUESTIONS: Question[] = [
   { id: 'b1-10-c3', topic: C2, prompt: 'If I ___ a ticket, I would see every show.', options: ['have', 'had', 'would have'], answer: 1, tip: 'If + pasado simple.', tags: COND },
   { id: 'b1-10-c4', topic: C2, prompt: 'What would you do if you ___ the first prize?', options: ['win', 'would win', 'won'], answer: 2, tip: 'If + pasado simple (won).', tags: COND },
   { id: 'b1-10-c5', topic: C2, prompt: 'I ___ go to every concert if I had more money.', options: ['would', 'will', 'am'], answer: 0, tip: 'Resultado imaginario: would + verbo base.', tags: COND },
-  { id: 'b1-10-c6', topic: C2, kind: 'order', prompt: 'Si yo fuera tú, iría al concierto.', options: ['If', 'I', 'were', 'you,', 'I', 'would', 'go', 'to', 'the', 'concert.'], answer: 0, tip: 'If I were you, I would…', tags: COND },
+  { id: 'b1-10-c6', topic: C2, kind: 'order', alts: ["I would go to the concert if I were you."], prompt: 'Si yo fuera tú, iría al concierto.', options: ['If', 'I', 'were', 'you,', 'I', 'would', 'go', 'to', 'the', 'concert.'], answer: 0, tip: 'If I were you, I would…', tags: COND },
   { id: 'b1-10-c7', topic: C2, prompt: 'If I ___ free tonight, I would go with you.', options: ['am', 'would be', 'were'], answer: 2, tip: 'If + were.', tags: COND },
   {
     id: 'b1-10-c8',
@@ -185,7 +185,7 @@ export const B1_10_QUESTIONS: Question[] = [
   { id: 'b1-10-bc3', topic: C2, prompt: 'If you ___ the headliner, what would you play?', options: ['are', 'were', 'will be'], answer: 1, tip: 'If + were.', tags: BOSS_C },
   { id: 'b1-10-bc4', topic: C2, prompt: 'She would sing here if she ___ a ticket.', options: ['had', 'would have', 'has'], answer: 0, tip: 'If + pasado simple (had).', tags: BOSS_C },
   { id: 'b1-10-bc5', topic: C2, prompt: "I wouldn't go if I ___ tired.", options: ['am', 'would be', 'were'], answer: 2, tip: 'If + were.', tags: BOSS_C },
-  { id: 'b1-10-bc6', topic: C2, kind: 'order', prompt: '¿Qué harías si ganaras?', options: ['What', 'would', 'you', 'do', 'if', 'you', 'won?'], answer: 0, tip: 'What would you do if you won?', tags: BOSS_C },
+  { id: 'b1-10-bc6', topic: C2, kind: 'order', alts: ["If you won, what would you do?"], prompt: '¿Qué harías si ganaras?', options: ['What', 'would', 'you', 'do', 'if', 'you', 'won?'], answer: 0, tip: 'What would you do if you won?', tags: BOSS_C },
   {
     id: 'b1-10-bc7',
     topic: C2,

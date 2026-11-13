@@ -38,7 +38,7 @@ export const B1_11_QUESTIONS: Question[] = [
   { id: 'b1-11-n3', topic: NA, prompt: 'Mia was cooking. ___, her brother was cleaning the kitchen.', options: ['Although', 'Because', 'Meanwhile'], answer: 2, tip: 'Meanwhile = mientras tanto.', tags: NOTEBOOK },
   { id: 'b1-11-n4', topic: NA, prompt: 'I was reading when the lights ___ out.', options: ['going', 'went', 'goes'], answer: 1, tip: 'Pasado simple: went.', tags: NOTEBOOK },
   { id: 'b1-11-n5', topic: NA, prompt: "She ___ her keys, so she couldn't open the door.", options: ['had lost', 'was lose', 'has losing'], answer: 0, tip: 'Lo que pasó antes: past perfect (had lost).', tags: NOTEBOOK },
-  { id: 'b1-11-n6', topic: NA, kind: 'order', prompt: 'Para cuando llegué, el tren ya se había ido.', options: ['By', 'the', 'time', 'I', 'arrived,', 'the', 'train', 'had', 'already', 'left.'], answer: 0, tip: 'By the time + pasado simple, + past perfect.', tags: NOTEBOOK },
+  { id: 'b1-11-n6', topic: NA, kind: 'order', alts: ["The train had already left by the time I arrived."], prompt: 'Para cuando llegué, el tren ya se había ido.', options: ['By', 'the', 'time', 'I', 'arrived,', 'the', 'train', 'had', 'already', 'left.'], answer: 0, tip: 'By the time + pasado simple, + past perfect.', tags: NOTEBOOK },
   {
     id: 'b1-11-n7',
     topic: NA,
@@ -58,7 +58,7 @@ export const B1_11_QUESTIONS: Question[] = [
   { id: 'b1-11-t3', topic: C3, prompt: 'If they ___ earlier, they would have arrived on time.', options: ['would have left', 'leaving', 'had left'], answer: 2, tip: 'If + past perfect (had left).', tags: WALL },
   { id: 'b1-11-t4', topic: C3, prompt: 'I would have helped him if I ___ about it.', options: ['knew', 'had known', 'would know'], answer: 1, tip: 'If + past perfect.', tags: WALL },
   { id: 'b1-11-t5', topic: C3, prompt: 'She ___ the bus if she had run faster.', options: ['would have caught', 'would catch', 'had caught'], answer: 0, tip: 'Resultado: would have + participio.', tags: WALL },
-  { id: 'b1-11-t6', topic: C3, kind: 'order', prompt: 'Si hubiera cerrado la puerta, el humo no se habría esparcido.', options: ['If', 'I', 'had', 'closed', 'the', 'door,', 'the', 'smoke', "wouldn't", 'have', 'spread.'], answer: 0, tip: 'If + had + participio, would have + participio.', tags: WALL },
+  { id: 'b1-11-t6', topic: C3, kind: 'order', alts: ["The smoke wouldn't have spread if I had closed the door."], prompt: 'Si hubiera cerrado la puerta, el humo no se habría esparcido.', options: ['If', 'I', 'had', 'closed', 'the', 'door,', 'the', 'smoke', "wouldn't", 'have', 'spread.'], answer: 0, tip: 'If + had + participio, would have + participio.', tags: WALL },
   {
     id: 'b1-11-t7',
     topic: C3,
@@ -78,7 +78,7 @@ export const B1_11_QUESTIONS: Question[] = [
   { id: 'b1-11-pp3', topic: PP, prompt: 'I ___ never seen so much smoke before that night.', options: ['have', 'had', 'was'], answer: 1, tip: 'Antes de esa noche: past perfect (had seen).', tags: PAGE43 },
   { id: 'b1-11-pp4', topic: PP, prompt: 'They ___ the building before the firefighters came.', options: ['had left', 'have left', 'were leave'], answer: 0, tip: 'had left.', tags: PAGE43 },
   { id: 'b1-11-pp5', topic: PP, prompt: "He ___ known about the alarm, so he didn't run.", options: ["hasn't", "wasn't", "hadn't"], answer: 2, tip: "Negativa: hadn't + participio.", tags: PAGE43 },
-  { id: 'b1-11-pp6', topic: PP, kind: 'order', prompt: 'Cuando llegó, todos ya se habían ido.', options: ['When', 'she', 'arrived,', 'everyone', 'had', 'already', 'gone.'], answer: 0, tip: 'had + already + participio.', tags: PAGE43 },
+  { id: 'b1-11-pp6', topic: PP, kind: 'order', alts: ["Everyone had already gone when she arrived."], prompt: 'Cuando llegó, todos ya se habían ido.', options: ['When', 'she', 'arrived,', 'everyone', 'had', 'already', 'gone.'], answer: 0, tip: 'had + already + participio.', tags: PAGE43 },
   {
     id: 'b1-11-pp7',
     topic: PP,
@@ -99,7 +99,7 @@ export const B1_11_QUESTIONS: Question[] = [
   { id: 'b1-11-x4', topic: PP, prompt: 'The alarm ___ already rung when I woke up.', options: ['has', 'had', 'was'], answer: 1, tip: 'had already rung.', tags: ECHO },
   { id: 'b1-11-x5', topic: C3, prompt: "If she ___ the door, the smoke wouldn't have come in.", options: ['had closed', 'would close', 'closes'], answer: 0, tip: 'If + past perfect.', tags: ECHO },
   { id: 'b1-11-x6', topic: C3, prompt: 'We would have won if we ___ harder.', options: ['train', 'would train', 'had trained'], answer: 2, tip: 'If + past perfect.', tags: ECHO },
-  { id: 'b1-11-x7', topic: C3, kind: 'order', prompt: 'Si hubiera sabido, habría ayudado.', options: ['If', 'I', 'had', 'known,', 'I', 'would', 'have', 'helped.'], answer: 0, tip: 'If + had + participio, would have + participio.', tags: ECHO },
+  { id: 'b1-11-x7', topic: C3, kind: 'order', alts: ["I would have helped if I had known."], prompt: 'Si hubiera sabido, habría ayudado.', options: ['If', 'I', 'had', 'known,', 'I', 'would', 'have', 'helped.'], answer: 0, tip: 'If + had + participio, would have + participio.', tags: ECHO },
   {
     id: 'b1-11-x8',
     topic: C3,
@@ -160,7 +160,7 @@ export const B1_11_QUESTIONS: Question[] = [
   { id: 'b1-11-bc3', topic: C3, prompt: 'If they ___ the alarm, everyone would have escaped.', options: ['had heard', 'would hear', 'hear'], answer: 0, tip: 'If + past perfect.', tags: BOSS_C },
   { id: 'b1-11-bc4', topic: C3, prompt: 'He ___ been safe if he had left earlier.', options: ['will have', 'would have', 'had'], answer: 1, tip: 'would have + participio.', tags: BOSS_C },
   { id: 'b1-11-bc5', topic: C3, prompt: 'If you ___ me, I would have helped you.', options: ['ask', 'would ask', 'had asked'], answer: 2, tip: 'If + past perfect.', tags: BOSS_C },
-  { id: 'b1-11-bc6', topic: C3, kind: 'order', prompt: 'Si hubiéramos corrido, habríamos llegado a tiempo.', options: ['If', 'we', 'had', 'run,', 'we', 'would', 'have', 'arrived', 'on', 'time.'], answer: 0, tip: 'If + had + participio, would have + participio.', tags: BOSS_C },
+  { id: 'b1-11-bc6', topic: C3, kind: 'order', alts: ["We would have arrived on time if we had run."], prompt: 'Si hubiéramos corrido, habríamos llegado a tiempo.', options: ['If', 'we', 'had', 'run,', 'we', 'would', 'have', 'arrived', 'on', 'time.'], answer: 0, tip: 'If + had + participio, would have + participio.', tags: BOSS_C },
   {
     id: 'b1-11-bc7',
     topic: C3,
