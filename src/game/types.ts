@@ -52,6 +52,8 @@ export type Question = {
   prompt: string
   options: string[]
   answer: number
+  /** Ordenar generado a partir de una de corregir: prompt es la frase con error y se arma la correcta con fichas */
+  fixOrder?: boolean
   /** Solo en ordenar: otras oraciones completas que también valen, con las mismas palabras en otro orden */
   alts?: string[]
   /** Explicación corta en español que da un amigo cuando fallas */

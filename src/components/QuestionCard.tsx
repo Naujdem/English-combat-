@@ -170,7 +170,9 @@ export function QuestionCard({
     kind === 'fix'
       ? '¡Corrige al enemigo!'
       : kind === 'order'
-        ? 'Ordena la frase'
+        ? q.fixOrder
+          ? '¡Corrige al enemigo!'
+          : 'Ordena la frase'
         : kind === 'listen'
           ? q.audio
             ? 'Escucha y responde'
@@ -340,8 +342,21 @@ export function QuestionCard({
         </form>
       ) : kind === 'order' ? (
         <>
-          <p className="text-sm text-paper/60">Escribe en inglés:</p>
-          <p className="font-display text-[20px] leading-snug" data-testid="prompt">{q.prompt}</p>
+          {q.fixOrder ? (
+            <>
+              <p className="text-sm text-paper/60">{speaker ?? 'El enemigo'} dice:</p>
+              <div className="mt-1 flex items-start gap-2 rounded-xl border-2 border-danger/60 bg-danger/10 px-3 py-2">
+                <span className="mt-1 text-lg font-bold text-danger" aria-hidden="true">✗</span>
+                <p className="flex-1 font-display text-[20px] leading-snug text-[#f3b0b0]" data-testid="prompt">"{q.prompt}"</p>
+              </div>
+              <p className="mt-2 text-sm text-paper/70">Arma la forma correcta:</p>
+            </>
+          ) : (
+            <>
+              <p className="text-sm text-paper/60">Escribe en inglés:</p>
+              <p className="font-display text-[20px] leading-snug" data-testid="prompt">{q.prompt}</p>
+            </>
+          )}
           <div className="mt-3 flex items-center justify-between text-xs text-paper/55">
             <span>Tu frase · {placed.length} de {q.options.length} palabras</span>
             {ask && (
