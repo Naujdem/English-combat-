@@ -170,7 +170,7 @@ export const B1_14_BOSS_DEF: EnemyDef = {
     {
       hp: 4,
       title: 'Todo B1',
-      topics: ['pp-yet-already', 'futures-b1', 'present-perfect-cont', 'obligation-b1', 'used-to', 'relative-clauses', 'deduction', 'superlatives-b1', 'passive-all', 'passive-news', 'conditional-2', 'conditional-3', 'wish-b1', 'state-verbs-b1', 'future-continuous-b1', 'although-unless-b1'],
+      topics: ['pp-yet-already', 'futures-b1', 'present-perfect-cont', 'obligation-b1', 'used-to', 'relative-clauses', 'deduction', 'superlatives-b1', 'passive-all', 'passive-news', 'conditional-2', 'conditional-3', 'wish-b1', 'state-verbs-b1', 'future-continuous-b1', 'although-unless-b1', 'memory-verbs-b1', 'relationships-b1', 'empathy-b1', 'compound-nouns-b1'],
       kinds: KINDS,
       line: { text: 'I have lose everything! If I would have a voice, I will scream!', es: 'I have lose y If I would have… I will: mal.' },
     },
