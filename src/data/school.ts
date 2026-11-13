@@ -83,10 +83,12 @@ export const SCHOOL: SceneDef = {
     { label: 'Silbato', done: s.opened.includes('school-whistle') },
     { label: 'Uniforme', done: s.opened.includes('school-registration') },
     { label: 'Útiles', done: s.opened.includes('school-supplies') },
+    { label: 'Biblioteca', done: s.opened.includes('school-whose') },
+    { label: 'Juego de Ben', done: s.opened.includes('school-many') },
   ],
   intro: {
     first:
-      'Los estudiantes de la escuela guardan tus palabras. Lee el horario en la pizarra del aula: cada sesión te da una tiza para retar a un estudiante. Vence a los 4 que tienen las llaves, consigue el silbato del entrenador, tus útiles y matricúlate en la secretaría.',
+      'Los estudiantes de la escuela guardan tus palabras. Lee el horario en la pizarra del aula: cada sesión te da una tiza para retar a un estudiante. Vence a los 4 que tienen las llaves, consigue el silbato del entrenador, tus útiles, matricúlate en la secretaría, ayuda a Mr. Brown en la biblioteca y juega con Ben en el patio.',
     later: 'Choca con personas para hablar y con objetos para ver su nombre en inglés. Lee el horario en la pizarra del aula para conseguir tizas.',
   },
   epilogue: 'school-epilogue',
@@ -253,6 +255,22 @@ export const BOSS_REQUIREMENTS: Requirement[] = [
     line: {
       text: "Stop! Where are your book and your pencil? Don't come to my class without your things! Ask Ana in the classroom.",
       es: '¡Alto! ¿Dónde están tu libro y tu lápiz? ¡No vengas a mi clase sin tus cosas! Pregúntale a Ana en el aula.',
+    },
+  },
+  {
+    id: 'school-whose',
+    name: 'devolver las cosas olvidadas (Mr. Brown, en la biblioteca)',
+    line: {
+      text: "Stop! Mr. Brown's table is full of bags and books. Whose things are they? Go to the library and help him!",
+      es: '¡Alto! La mesa de Mr. Brown está llena de mochilas y libros. ¿De quién son esas cosas? ¡Ve a la biblioteca y ayúdalo!',
+    },
+  },
+  {
+    id: 'school-many',
+    name: 'el juego de Ben (en el patio)',
+    line: {
+      text: 'Stop! One ball or many balls? You are not ready for my exam. Go to the patio and play with Ben!',
+      es: '¡Alto! ¿Una pelota o varias pelotas? No estás listo para mi examen. ¡Ve al patio y juega con Ben!',
     },
   },
   {
