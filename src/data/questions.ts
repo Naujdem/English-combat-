@@ -224,6 +224,19 @@ export const QUESTIONS: Question[] = [
   { id: 'tsf-02', topic: 'possessives', tags: ['sala'], kind: 'fix', prompt: 'I am you teacher!', options: ['I is your teacher.', 'I am your teacher.', 'I am yours teacher.'], answer: 1, tip: 'Antes de "teacher" va "your": I am your teacher.' },
   { id: 'tsf-03', topic: 'possessives', tags: ['sala'], kind: 'fix', prompt: 'This is mine classroom!', options: ['This is me classroom.', 'This is I classroom.', 'This is my classroom.'], answer: 2, tip: '"Mine" va solo, sin sustantivo. Antes de "classroom" va "my".' },
   { id: 'tso-01', topic: 'possessives', tags: ['sala'], kind: 'order', prompt: 'Tus palabras están en mi escritorio.', options: ['Your', 'words', 'are', 'in', 'my', 'desk.'], answer: 0, tip: 'Your words + are + in my desk.' },
+  // Examen de Grimm: el posesivo con 's, una o varias cosas con is/are, y más lugares
+  { id: 'tsp-01', topic: 'possessives', tags: ['sala'], prompt: 'This is ___ desk. (de Mr. Grimm)', options: ["Mr. Grimm's", 'Mr. Grimms', 'Mr. Grimm'], answer: 0, tip: "Para decir de quién es algo se agrega 's al dueño: Mr. Grimm's desk." },
+  { id: 'tsp-02', topic: 'possessives', tags: ['sala'], prompt: 'Look! It is ___ bag. (de Leo)', options: ['Leo', "Leo's", 'Leos'], answer: 1, tip: "Dueño + 's + cosa: Leo's bag = la mochila de Leo." },
+  { id: 'tsp-03', topic: 'possessives', tags: ['sala'], kind: 'fix', prompt: "This is the book Maya's!", options: ["This is Maya's book.", 'This is Maya book.', 'This is Mayas book.'], answer: 0, tip: "Primero el dueño con 's y después la cosa: Maya's book." },
+  { id: 'tsp-04', topic: 'possessives', tags: ['sala'], kind: 'order', prompt: 'Es la llave de Mr. Grimm.', options: ['It', 'is', "Mr. Grimm's", 'key.'], answer: 0, tip: "It is + Mr. Grimm's + key." },
+  { id: 'tsp-05', topic: 'possessives', tags: ['sala'], prompt: '"Leo\'s tired." = Leo ___ tired.', options: ['is', 'his', 'has'], answer: 0, tip: '"Tired" es un adjetivo, no una cosa: aquí \'s es "is". Con una cosa sería posesión (Leo\'s bag).' },
+  { id: 'tsb-01', topic: 'to-be', tags: ['sala'], prompt: 'This window ___ open.', options: ['is', 'are', 'am'], answer: 0, tip: '"This window" es una sola: va "is".' },
+  { id: 'tsb-02', topic: 'to-be', tags: ['sala'], prompt: 'These windows ___ open.', options: ['is', 'am', 'are'], answer: 2, tip: '"These windows" son varias: va "are".' },
+  { id: 'tsb-03', topic: 'to-be', tags: ['sala'], kind: 'fix', prompt: 'This windows is dirty!', options: ['This window are dirty.', 'These windows are dirty.', 'These windows is dirty.'], answer: 1, tip: 'Con varias cambia todo: these + windows + are.' },
+  { id: 'tsb-04', topic: 'to-be', tags: ['sala'], kind: 'fix', prompt: 'The keys is in my desk!', options: ['The keys are in my desk.', 'The key are in my desk.', 'The keys am in my desk.'], answer: 0, tip: '"The keys" termina en -s, son varias: va "are".' },
+  { id: 'tspp-01', topic: 'prepositions', tags: ['sala'], prompt: 'The papers are ___ the desk.', hint: 'sobre', options: ['on', 'in', 'under'], answer: 0, tip: 'Encima, tocando la superficie: "on the desk".' },
+  { id: 'tspp-02', topic: 'prepositions', tags: ['sala'], prompt: 'The bag is ___ the chair.', hint: 'debajo de', options: ['on', 'under', 'in'], answer: 1, tip: 'Debajo de se dice "under".' },
+  { id: 'tspp-03', topic: 'prepositions', tags: ['sala'], prompt: 'The key is ___ the box.', hint: 'dentro de', options: ['on', 'under', 'in'], answer: 2, tip: 'Dentro de algo se dice "in".' },
 
   // ── Preguntas de lugar: patio (Max, el competitivo) ─────
   { id: 'tp-01', topic: 'to-be', tags: ['patio'], prompt: 'Football ___ my favorite sport.', options: ['is', 'are', 'am'], answer: 0, tip: '"Football" es un deporte, una sola cosa: va "is".' },
