@@ -70,7 +70,7 @@ export const B1_05_QUESTIONS: Question[] = [
   { id: 'b1-05-a6', topic: JOBS, kind: 'listen', audio: AD2, voice: 'female', prompt: "L can't speak. Which job can he NOT do?", options: ['Call centre assistant.', 'Write a CV.', 'Read the ads.'], answer: 0, tip: 'Un call centre necesita comunicación oral.', tags: ADS },
 
   // ── Bloque B · el banco (bank-phrasal) ──
-  { id: 'b1-05-k1', topic: BP, prompt: "I don't have savings, so I need a ___ from the bank.", options: ['saving', 'loan', 'owe'], answer: 1, tip: 'loan = préstamo.', tags: BANK },
+  { id: 'b1-05-k1', topic: BP, prompt: "I don't have savings, so I need a ___ from the bank.", options: ['debt', 'loan', 'deposit'], answer: 1, tip: 'loan = préstamo.', tags: BANK },
   { id: 'b1-05-k2', topic: BP, prompt: 'I ___ the bank 500. I have to pay it back.', options: ['lend', 'own', 'owe'], answer: 2, tip: 'owe = deber (dinero).', tags: BANK },
   { id: 'b1-05-k3', topic: BP, kind: 'fix', prompt: 'You have to pay back it by June.', options: ['You have to pay back to it by June.', 'You have to pay it back by June.', 'You have to pay it to back by June.'], answer: 1, tip: 'Con pronombre, va en medio: pay it back.', tags: BANK },
   {

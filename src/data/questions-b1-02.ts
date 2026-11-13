@@ -41,7 +41,7 @@ export const B1_02_QUESTIONS: Question[] = [
   // ── Viajero 1 (esbirro, junto a la cinta) ──
   { id: 'b1-02-t1-1', topic: PP, kind: 'fix', prompt: "I haven't find my suitcase yet.", options: ["I didn't found my suitcase yet.", "I haven't found my suitcase yet.", "I hasn't found my suitcase yet."], answer: 1, tip: "haven't + participio: found.", tags: TRAV1 },
   { id: 'b1-02-t1-2', topic: PP, prompt: 'Have you seen a blue suitcase ___?', options: ['yesterday', 'last night', 'yet'], answer: 2, tip: "Pregunta con present perfect: 'ya' al final (yet). Con yesterday o last night va past simple.", tags: TRAV1 },
-  { id: 'b1-02-t1-3', topic: PP, prompt: 'I ___ a blue suitcase. Has anyone seen it?', options: ['has lost', 'have lost', 'losed'], answer: 1, tip: 'Con I: have + participio (lost).', tags: TRAV1 },
+  { id: 'b1-02-t1-3', topic: PP, prompt: 'I ___ a blue suitcase. Has anyone seen it?', options: ['has lost', 'have lost', 'lose'], answer: 1, tip: 'Con I: have + participio (lost).', tags: TRAV1 },
   { id: 'b1-02-t1-4', topic: PP, prompt: 'Has anyone ___ my blue suitcase?', options: ['seen', 'saw', 'see'], answer: 0, tip: 'has + participio: seen.', tags: TRAV1 },
   { id: 'b1-02-t1-5', topic: PP, kind: 'order', prompt: '¿Ya encontraste tu maleta?', options: ['Have', 'you', 'found', 'your', 'suitcase', 'yet?'], answer: 0, tip: 'Have + sujeto + participio + yet al final.', tags: TRAV1 },
   {
@@ -80,8 +80,8 @@ export const B1_02_QUESTIONS: Question[] = [
   { id: 'b1-02-j-1', topic: PP, kind: 'fix', prompt: 'I have arrived yesterday.', options: ['I have arrive yesterday.', 'I arrives yesterday.', 'I arrived yesterday.'], answer: 2, tip: "'yesterday' es momento terminado: past simple.", tags: JACK },
   { id: 'b1-02-j-2', topic: PP, kind: 'fix', prompt: 'I have already see the whole city.', options: ['I have already seen the whole city.', 'I have already saw the whole city.', 'I am already seen the whole city.'], answer: 0, tip: 'have + already + participio: seen.', tags: JACK },
   { id: 'b1-02-j-3', topic: PP, prompt: '___ you seen the harbour yet?', options: ['Did', 'Have', 'Are'], answer: 1, tip: 'Present perfect: Have + sujeto + participio.', tags: JACK },
-  { id: 'b1-02-j-4', topic: PP, prompt: 'I ___ the harbour yet. Do you want to go together?', options: ["didn't saw", "hasn't seen", "haven't seen"], answer: 2, tip: "Con I: haven't + participio.", tags: JACK },
-  { id: 'b1-02-j-5', topic: PP, prompt: 'We ___ to the harbour last Sunday.', options: ['have gone', 'went', 'have went'], answer: 1, tip: "'last Sunday' es momento terminado: past simple.", tags: JACK },
+  { id: 'b1-02-j-4', topic: PP, prompt: 'I ___ the harbour yet. Do you want to go together?', options: ["don't see", "hasn't seen", "haven't seen"], answer: 2, tip: "Con I: haven't + participio.", tags: JACK },
+  { id: 'b1-02-j-5', topic: PP, prompt: 'We ___ to the harbour last Sunday.', options: ['have gone', 'went', 'go'], answer: 1, tip: "'last Sunday' es momento terminado: past simple.", tags: JACK },
   // ── Tienda de celulares (bloque C) ──
   { id: 'b1-02-s1', topic: TP, kind: 'listen', audio: PLANS_AUDIO, voice: 'male', prompt: '¿Qué plan no tiene contrato?', options: ['El plan Blue.', 'El plan Gold.', 'Los dos planes.'], answer: 0, tip: 'The Blue Plan is prepaid: no hay contrato.', tags: SHOP },
   { id: 'b1-02-s2', topic: TP, kind: 'listen', audio: PLANS_AUDIO, voice: 'male', prompt: '¿En cuántos países funciona la cobertura del plan Gold?', options: ['En diez.', 'En uno.', 'En seis.'], answer: 2, tip: 'the coverage works in six countries.', tags: SHOP },
@@ -94,13 +94,13 @@ export const B1_02_QUESTIONS: Question[] = [
   { id: 'b1-02-s8', topic: TP, kind: 'order', prompt: 'Ahora pídelo con tus palabras: «Hola, quisiera el plan Blue, por favor.»', options: ['Hello,', "I'd", 'like', 'the', 'Blue', 'Plan,', 'please.'], answer: 0, tip: "I'd like + el plan, please.", tags: SHOP },
 
   // ── Práctica de Leo en la oficina (bloque C) ──
-  { id: 'b1-02-f1', topic: FB, prompt: "We ___ visit the old port on Saturday. We've planned it.", options: ['are going to', 'will to', 'going'], answer: 0, tip: 'Plan decidido: are going to + verbo base.', tags: FUT },
-  { id: 'b1-02-f2', topic: FB, prompt: 'I ___ my cousin at the station at six. We arranged it yesterday.', options: ['will meeting', 'meet to', 'am meeting'], answer: 2, tip: 'Cita fija: presente continuo.', tags: FUT },
-  { id: 'b1-02-f3', topic: FB, prompt: "It's cold in here. I ___ the window.", options: ['will close', 'am going closing', 'close to'], answer: 0, tip: 'Decisión en el momento: will + verbo base.', tags: FUT },
+  { id: 'b1-02-f1', topic: FB, prompt: "We ___ visit the old port on Saturday. We've planned it.", options: ['are going to', 'used to', 'did'], answer: 0, tip: 'Plan decidido: are going to + verbo base.', tags: FUT },
+  { id: 'b1-02-f2', topic: FB, prompt: 'I ___ my cousin at the station at six. We arranged it yesterday.', options: ['have met', 'meets', 'am meeting'], answer: 2, tip: 'Cita fija: presente continuo.', tags: FUT },
+  { id: 'b1-02-f3', topic: FB, prompt: "It's cold in here. I ___ the window.", options: ['will close', 'closes', 'was closing'], answer: 0, tip: 'Decisión en el momento: will + verbo base.', tags: FUT },
   { id: 'b1-02-f4', topic: FB, kind: 'fix', prompt: "I'm going to meets Ms. Haddad tomorrow.", options: ["I'm going meet Ms. Haddad tomorrow.", "I'm going to meet Ms. Haddad tomorrow.", 'I going to meet Ms. Haddad tomorrow.'], answer: 1, tip: 'going to + verbo base (sin -s).', tags: FUT },
   { id: 'b1-02-f5', topic: FB, kind: 'fix', prompt: 'We will to take the bus.', options: ['We will taking the bus.', 'We wills take the bus.', 'We will take the bus.'], answer: 2, tip: 'will + verbo base, sin to.', tags: FUT },
   { id: 'b1-02-f6', topic: FB, kind: 'order', alts: ["Tonight we're meeting Leo."], prompt: 'Esta noche nos encontramos con Leo.', options: ["We're", 'meeting', 'Leo', 'tonight.'], answer: 0, tip: "Cita fija: presente continuo (We're meeting).", tags: FUT },
-  { id: 'b1-02-f7', topic: FB, prompt: 'Look at the sky! It ___ rain.', options: ['will to', 'is going to', 'going to'], answer: 1, tip: 'Con evidencia visible: is going to + verbo base.', tags: FUT },
+  { id: 'b1-02-f7', topic: FB, prompt: 'Look at the sky! It ___ rain.', options: ['used to', 'is going to', 'would'], answer: 1, tip: 'Con evidencia visible: is going to + verbo base.', tags: FUT },
   {
     id: 'b1-02-f8',
     topic: FB,

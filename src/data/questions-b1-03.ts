@@ -26,14 +26,14 @@ export const B1_03_PRACTICE2_IDS = ['b1-03-pp1', 'b1-03-pp2', 'b1-03-pp3', 'b1-0
 
 export const B1_03_QUESTIONS: Question[] = [
   // ── Cuaderno · página 1 ──
-  { id: 'b1-03-p1', topic: IM, prompt: "Friend: 'Dinner at eight?' You: '___ See you there.'", options: ['Sounds good.', 'Sounds goods.', 'Soundly good.'], answer: 0, tip: 'Sounds good = me parece bien (sin sujeto).', tags: PRACTICE1 },
+  { id: 'b1-03-p1', topic: IM, prompt: "Friend: 'Dinner at eight?' You: '___ See you there.'", options: ['Sounds good.', 'Sound well.', 'Listens good.'], answer: 0, tip: 'Sounds good = me parece bien (sin sujeto).', tags: PRACTICE1 },
   { id: 'b1-03-p2', topic: IM, prompt: 'Please ___ me when you arrive at the airport.', options: ['pinging', 'ping', 'to ping'], answer: 1, tip: 'Orden: el verbo base al principio: ping me.', tags: PRACTICE1 },
   { id: 'b1-03-p3', topic: IM, prompt: "I'll ___ you later. My battery is low.", options: ['texts', 'texting', 'text'], answer: 2, tip: "will + verbo base: I'll text you.", tags: PRACTICE1 },
   { id: 'b1-03-p4', topic: IM, kind: 'order', alts: ["When you arrive, drop me a line."], prompt: 'Mándame un mensaje cuando llegues.', options: ['Drop', 'me', 'a', 'line', 'when', 'you', 'arrive.'], answer: 0, tip: 'Drop me a line = mándame un mensaje.', tags: PRACTICE1 },
   { id: 'b1-03-p5', topic: IM, prompt: "Boss: 'Please send the report by Friday.' You write: '___'", options: ['Got it lol.', 'Understood. I will send it by Friday.', 'Ok bye.'], answer: 1, tip: 'Con un jefe: respuesta completa y cortés.', tags: PRACTICE1 },
   { id: 'b1-03-p6', topic: IM, prompt: "Friend: 'Can you come at six?' You: 'Got it. ___ then!'", options: ['See you', 'Seeing you', 'Saw you'], answer: 0, tip: 'Despedida rápida: See you then!', tags: PRACTICE1 },
   // ── Cuaderno · página 2 ──
-  { id: 'b1-03-pp1', topic: PPC, prompt: "I ___ for you since six o'clock.", options: ['have waiting', 'am wait', 'have been waiting'], answer: 2, tip: 'Empezó a las seis y sigue: have been waiting.', tags: PRACTICE2 },
+  { id: 'b1-03-pp1', topic: PPC, prompt: "I ___ for you since six o'clock.", options: ['am waiting', 'waited', 'have been waiting'], answer: 2, tip: 'Empezó a las seis y sigue: have been waiting.', tags: PRACTICE2 },
   { id: 'b1-03-pp2', topic: PPC, prompt: 'She has been writing messages ___ two hours.', options: ['for', 'since', 'from'], answer: 0, tip: 'Un período de tiempo: for.', tags: PRACTICE2 },
   { id: 'b1-03-pp3', topic: PPC, prompt: 'They have been practicing ___ March.', options: ['for', 'since', 'during'], answer: 1, tip: 'Un punto de inicio: since.', tags: PRACTICE2 },
   { id: 'b1-03-pp4', topic: PPC, prompt: '___ long have you been learning English?', options: ['What', 'When', 'How'], answer: 2, tip: 'Duración: How long...?', tags: PRACTICE2 },
@@ -51,7 +51,7 @@ export const B1_03_QUESTIONS: Question[] = [
   { id: 'b1-03-u8', topic: PPC, kind: 'order', prompt: 'He estado escribiendo todo el día.', options: ["I've", 'been', 'writing', 'all', 'day.'], answer: 0, tip: 'have been + -ing.', tags: UNREAD },
   { id: 'b1-03-u9', topic: IM, kind: 'order', prompt: 'Mándame un mensaje luego.', options: ['Drop', 'me', 'a', 'line', 'later.'], answer: 0, tip: 'Drop me a line = mándame un mensaje.', tags: UNREAD },
   { id: 'b1-03-u10', topic: PPC, prompt: 'How long ___ you been waiting?', options: ['have', 'are', 'did'], answer: 0, tip: 'have you been + -ing.', tags: UNREAD },
-  { id: 'b1-03-u11', topic: PPC, prompt: 'I ___ her messages for weeks, but she never answers.', options: ['am reading', 'have been reading', 'have reading'], answer: 1, tip: 'for weeks + sigue pasando: have been reading.', tags: UNREAD },
+  { id: 'b1-03-u11', topic: PPC, prompt: 'I ___ her messages for weeks, but she never answers.', options: ['am reading', 'have been reading', 'was reading'], answer: 1, tip: 'for weeks + sigue pasando: have been reading.', tags: UNREAD },
   {
     id: 'b1-03-u12',
     topic: IM,
