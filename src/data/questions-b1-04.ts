@@ -31,7 +31,7 @@ export const B1_04_PRACTICE1_IDS = ['b1-04-p1', 'b1-04-p2', 'b1-04-p3', 'b1-04-p
 export const B1_04_QUESTIONS: Question[] = [
   // ── Práctica guiada de Maya (vestíbulo de la residencia) ──
   { id: 'b1-04-p1', topic: OB, prompt: "You ___ show your passport at the bank. It's necessary.", options: ['have to', 'have', 'must to'], answer: 0, tip: 'Necesario: have to + verbo base.', tags: PRACTICE1 },
-  { id: 'b1-04-p2', topic: OB, prompt: "You ___ smoke inside the building. It's forbidden.", options: ["don't have to", "mustn't", "haven't to"], answer: 1, tip: "Prohibido: mustn't.", tags: PRACTICE1 },
+  { id: 'b1-04-p2', topic: OB, prompt: "You ___ smoke inside the building. It's forbidden.", options: ["don't have to", "mustn't", 'should'], answer: 1, tip: "Prohibido: mustn't.", tags: PRACTICE1 },
   { id: 'b1-04-p3', topic: OB, prompt: "It's Sunday. You ___ get up early. You can sleep.", options: ["mustn't", 'must', "don't have to"], answer: 2, tip: "No es necesario: don't have to.", tags: PRACTICE1 },
   { id: 'b1-04-p4', topic: OB, kind: 'fix', prompt: 'You must to pay by the 5th.', options: ['You must paying by the 5th.', 'You must pay by the 5th.', 'You musts pay by the 5th.'], answer: 1, tip: 'must + verbo base, sin to.', tags: PRACTICE1 },
   { id: 'b1-04-p5', topic: OB, kind: 'fix', prompt: "You don't must smoke here.", options: ["You mustn't smoke here.", "You don't must to smoke here.", 'You not must smoke here.'], answer: 0, tip: "Prohibido: mustn't (no 'don't must').", tags: PRACTICE1 },
@@ -55,7 +55,7 @@ export const B1_04_QUESTIONS: Question[] = [
   { id: 'b1-04-n2', topic: OB, kind: 'fix', prompt: "I don't must follow your rules.", options: ["I don't must to follow your rules.", 'I not have to follow your rules.', "I don't have to follow your rules."], answer: 2, tip: "No es necesario: don't have to (no 'don't must').", tags: NEIGHBOUR },
   { id: 'b1-04-n3', topic: OB, kind: 'fix', prompt: 'My neighbour have to wake up early.', options: ['My neighbour haves to wake up early.', 'My neighbour has to wake up early.', 'My neighbour have to wakes up early.'], answer: 1, tip: 'My neighbour = he/she: has to + verbo base.', tags: NEIGHBOUR },
   { id: 'b1-04-n4', topic: OB, kind: 'fix', prompt: "You mustn't to complain.", options: ["You mustn't complain.", "You mustn't to complain.", "You don't mustn't complain."], answer: 0, tip: "mustn't + verbo base, sin to.", tags: NEIGHBOUR },
-  { id: 'b1-04-n5', topic: OB, prompt: "It's midnight. You ___ make noise. It's forbidden.", options: ["don't have to", "haven't to", "mustn't"], answer: 2, tip: "Prohibido: mustn't.", tags: NEIGHBOUR },
+  { id: 'b1-04-n5', topic: OB, prompt: "It's midnight. You ___ make noise. It's forbidden.", options: ["don't have to", 'have to', "mustn't"], answer: 2, tip: "Prohibido: mustn't.", tags: NEIGHBOUR },
   { id: 'b1-04-n6', topic: OB, prompt: 'The bills are included. You ___ pay them.', options: ["don't have to", "mustn't", 'must'], answer: 0, tip: "Están incluidas: no es necesario, don't have to.", tags: NEIGHBOUR },
   { id: 'b1-04-n7', topic: OB, prompt: "Rule: you ___ wash your plate after dinner. It's necessary.", options: ["don't have to", 'have to', "mustn't"], answer: 1, tip: 'Necesario: have to.', tags: NEIGHBOUR },
   { id: 'b1-04-n8', topic: OB, kind: 'order', alts: ["After ten you mustn't make noise."], prompt: 'No deben hacer ruido después de las diez.', options: ['You', "mustn't", 'make', 'noise', 'after', 'ten.'], answer: 0, tip: "mustn't + verbo base.", tags: NEIGHBOUR },
@@ -80,13 +80,13 @@ export const B1_04_QUESTIONS: Question[] = [
   { id: 'b1-04-b4', topic: BP, kind: 'listen', audio: BANK_AUDIO, voice: 'male', prompt: '¿Qué deben hacer con el PIN?', options: ['Mantenerlo en secreto.', 'Dárselo a Marisol.', 'Escribirlo en la tarjeta.'], answer: 0, tip: 'Your PIN must be secret.', tags: BANK },
 
   // ── Bloque C · Maya en el banco: práctica de phrasal verbs ──
-  { id: 'b1-04-f1', topic: BP, prompt: 'Please ___ the form. Use your full name.', options: ['fill on', 'fill in', 'fill at'], answer: 1, tip: 'fill in = llenar un formulario.', tags: PRACTICE2 },
-  { id: 'b1-04-f2', topic: BP, prompt: 'I want to ___ for the swimming class. It starts on Monday.', options: ['sign down', 'sign below', 'sign up'], answer: 2, tip: 'sign up = inscribirse.', tags: PRACTICE2 },
+  { id: 'b1-04-f1', topic: BP, prompt: 'Please ___ the form. Use your full name.', options: ['pay in', 'fill in', 'sign up'], answer: 1, tip: 'fill in = llenar un formulario.', tags: PRACTICE2 },
+  { id: 'b1-04-f2', topic: BP, prompt: 'I want to ___ for the swimming class. It starts on Monday.', options: ['take out', 'pay in', 'sign up'], answer: 2, tip: 'sign up = inscribirse.', tags: PRACTICE2 },
   { id: 'b1-04-f3', topic: BP, prompt: 'The form is on the desk. ___ now, please.', options: ['Fill in it', 'Fill it in', 'Fill on it'], answer: 1, tip: 'Con pronombre, va en medio: fill it in.', tags: PRACTICE2 },
   { id: 'b1-04-f4', topic: BP, kind: 'fix', prompt: 'Turn on it, please.', options: ['Turn it on, please.', 'Turn on to it, please.', 'Turn it to on, please.'], answer: 0, tip: 'Con pronombre, va en medio: turn it on.', tags: PRACTICE2 },
   { id: 'b1-04-f5', topic: BP, kind: 'fix', prompt: 'Pick up it, please.', options: ['Pick up to it, please.', 'Pick it to up, please.', 'Pick it up, please.'], answer: 2, tip: 'Con pronombre, va en medio: pick it up.', tags: PRACTICE2 },
-  { id: 'b1-04-f6', topic: BP, prompt: 'I need to ___ some money into my account.', options: ['pay in', 'pay on', 'pay at'], answer: 0, tip: 'pay in = ingresar dinero.', tags: PRACTICE2 },
-  { id: 'b1-04-f7', topic: BP, prompt: 'I need cash. Where is the ___?', options: ['machine cash', 'cash machine', 'cash of machine'], answer: 1, tip: 'El primer sustantivo describe al segundo: cash machine.', tags: PRACTICE2 },
+  { id: 'b1-04-f6', topic: BP, prompt: 'I need to ___ some money into my account.', options: ['pay in', 'take out', 'fill in'], answer: 0, tip: 'pay in = ingresar dinero.', tags: PRACTICE2 },
+  { id: 'b1-04-f7', topic: BP, prompt: 'I need cash. Where is the ___?', options: ['debit card', 'cash machine', 'bank account'], answer: 1, tip: 'cash machine = cajero automático: de ahí sacas efectivo.', tags: PRACTICE2 },
   { id: 'b1-04-f8', topic: BP, kind: 'order', prompt: 'Quisiera abrir una cuenta bancaria.', options: ["I'd", 'like', 'to', 'open', 'a', 'bank', 'account.'], answer: 0, tip: "I'd like to + verbo base. bank account = cuenta bancaria.", tags: PRACTICE2 },
   // ── Bloque D · Mr. Fine Print, fase 1: obligación ──
   { id: 'b1-04-bo1', topic: OB, kind: 'fix', prompt: 'You must to sign here.', options: ['You must signing here.', 'You musts sign here.', 'You must sign here.'], answer: 2, tip: 'must + verbo base, sin to.', tags: BOSS_OB },
