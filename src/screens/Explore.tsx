@@ -183,7 +183,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
    * En B1 es el personaje con el que hablas (cara borrosa en los recuerdos) o el Cuaderno de L; Leo solo si la tarea es suya.
    */
   const taskGuide = (taskId: string) => {
-    const t = NPC_TASKS[taskId]
+    const t = fillAll(NPC_TASKS[taskId])
     const id = t?.npc ?? taskId
     if (!t || (!taskId.startsWith('b1-') && !PRACTICE_GUIDES.includes(id))) return undefined
     if (t.notebookPage)
@@ -297,7 +297,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
 
   /** Termina la tarea de un personaje: si se completó, se guarda su `done` y se muestra su recompensa */
   function finishTask(id: string, done: boolean, extra: string[] = [], bonusShield = false) {
-    const t = NPC_TASKS[id]
+    const t = fillAll(NPC_TASKS[id])
     setTask(null)
     setInsDone(null)
     if (!done || !t) return
@@ -449,7 +449,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           // Los estudiantes de ambiente dicen una frase distinta cada vez
           const k = npcTurn.current[e.id] ?? 0
           npcTurn.current[e.id] = k + 1
-          const line = npc.lines[k % npc.lines.length]
+          const line = fillAll(npc.lines[k % npc.lines.length])
           setMsg({ text: `${npc.name}: "${line.text}"`, es: line.es, say: line.text })
         } else if (npc.doneLine) {
           setMsg({ text: `${npc.name}: "${fill(npc.doneLine.text)}"`, es: fill(npc.doneLine.es), say: fill(npc.doneLine.text) })
@@ -952,7 +952,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         <Overlay>
           <ConversationView
             friend={talkFriend}
-            lines={talk.lines}
+            lines={fillAll(talk.lines)}
             title={talk.title}
             level={talk.level}
             state={state}
@@ -1169,7 +1169,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             onClose={(done) => {
               if (!done) {
                 setActivity(null)
-                setMsg({ text: 'Coach Mike: "Come back when you are ready!"', sub: '¡Vuelve cuando estés listo!', say: 'Come back when you are ready!' })
+                setMsg({ text: 'Coach Mike: "Come back when you are ready!"', sub: fill('¡Vuelve cuando estés {h:listo|lista}!'), say: 'Come back when you are ready!' })
                 return
               }
               update((s) => ({ ...s, opened: s.opened.includes('school-commands') ? s.opened : [...s.opened, 'school-commands'] }))
@@ -1337,11 +1337,11 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           }}
         />
       )}
-      {outro && NPC_TASKS[outro]?.outro && (
+      {outro && fillAll(NPC_TASKS[outro])?.outro && (
         // B1-04: lo que se dice al terminar (Ricardo entrega la tarjeta) y luego el mensaje de recompensa
         <Overlay>
           {(() => {
-            const t = NPC_TASKS[outro]
+            const t = fillAll(NPC_TASKS[outro])
             const who = npcOf(t.outro!.npc ?? t.npc ?? outro)
             const steps = t.outro!.steps.map((st) => ({ speaker: st.speaker, text: fill(st.text), es: fill(st.es) }))
             const close = () => {
@@ -1352,35 +1352,35 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           })()}
         </Overlay>
       )}
-      {task && (NPC_TASKS[task]?.activity === 'practice' || NPC_TASKS[task]?.activity === 'command') && !!NPC_TASKS[task].intro?.length && introSeen !== task && (
+      {task && (fillAll(NPC_TASKS[task])?.activity === 'practice' || fillAll(NPC_TASKS[task])?.activity === 'command') && !!fillAll(NPC_TASKS[task]).intro?.length && introSeen !== task && (
         // Lo que se dice antes de la práctica o del juego (B1-02: el empleado de la tienda presenta los planes; B1-04: el narrador antes del Repair Shop)
         <Overlay>
           {(() => {
-            const who = npcOf(NPC_TASKS[task].npc ?? task)
-            const steps = NPC_TASKS[task].intro!.map((st) => ({ speaker: st.speaker, text: fill(st.text), es: fill(st.es), choice: st.choice && { ...st.choice, ask: fill(st.choice.ask), options: st.choice.options.map(fill), tip: fill(st.choice.tip) } }))
-            return <MiniTalk name={who.name} look={who.look} steps={steps} icon={NPC_TASKS[task].npc === B1_04_TOOLBOX ? <ToolboxPortrait /> : undefined} onClose={(done) => (done ? setIntroSeen(task) : setTask(null))} />
+            const who = npcOf(fillAll(NPC_TASKS[task]).npc ?? task)
+            const steps = fillAll(NPC_TASKS[task]).intro!.map((st) => ({ speaker: st.speaker, text: fill(st.text), es: fill(st.es), choice: st.choice && { ...st.choice, ask: fill(st.choice.ask), options: st.choice.options.map(fill), tip: fill(st.choice.tip) } }))
+            return <MiniTalk name={who.name} look={who.look} steps={steps} icon={fillAll(NPC_TASKS[task]).npc === B1_04_TOOLBOX ? <ToolboxPortrait /> : undefined} onClose={(done) => (done ? setIntroSeen(task) : setTask(null))} />
           })()}
         </Overlay>
       )}
-      {task && ((NPC_TASKS[task]?.activity === 'practice' && (!NPC_TASKS[task].intro?.length || introSeen === task)) || insDone === task) && NPC_TASKS[task].practice && (
+      {task && ((fillAll(NPC_TASKS[task])?.activity === 'practice' && (!fillAll(NPC_TASKS[task]).intro?.length || introSeen === task)) || insDone === task) && fillAll(NPC_TASKS[task]).practice && (
         // Práctica guiada con Leo (pantalla completa): al terminarla se marca la tarea
-        <Practice state={state} update={update} review={NPC_TASKS[task].practice} ids={NPC_TASKS[task].practiceIds} guided guide={taskGuide(task)} onClose={() => finishTask(task, false)} onDone={(perfect) => finishTask(task, true, [], perfect && !!NPC_TASKS[task].practiceShield)} />
+        <Practice state={state} update={update} review={fillAll(NPC_TASKS[task]).practice} ids={fillAll(NPC_TASKS[task]).practiceIds} guided guide={taskGuide(task)} onClose={() => finishTask(task, false)} onDone={(perfect) => finishTask(task, true, [], perfect && !!fillAll(NPC_TASKS[task]).practiceShield)} />
       )}
-      {task && NPC_TASKS[task]?.activity === 'script' && NPC_TASKS[task].script && (
+      {task && fillAll(NPC_TASKS[task])?.activity === 'script' && fillAll(NPC_TASKS[task]).script && (
         // B1 (recuerdos): secuencia fija con el personaje de la tarea (cara borrosa) y L narrando
         <Overlay>
-          <MemoryScript lines={fillAll(NPC_TASKS[task].script!)} friend={npcOf(NPC_TASKS[task].npc ?? task).look} friendName={npcOf(NPC_TASKS[task].npc ?? task).name} onDone={() => finishTask(task, true)} />
+          <MemoryScript lines={fillAll(NPC_TASKS[task].script!)} friend={npcOf(fillAll(NPC_TASKS[task]).npc ?? task).look} friendName={npcOf(fillAll(NPC_TASKS[task]).npc ?? task).name} onDone={() => finishTask(task, true)} />
         </Overlay>
       )}
-      {task && NPC_TASKS[task]?.activity === 'callforhelp' && (
+      {task && fillAll(NPC_TASKS[task])?.activity === 'callforhelp' && (
         // B1-01: la secuencia del recuerdo 1 (charla, alarma, Call for Help y rescate). Al terminar, se sale del recuerdo
         <TheAccident state={state} update={update} friend={npcOf(B1_01_FRIEND).look} onDone={() => finishTask(task, true)} />
       )}
 
-      {task && NPC_TASKS[task] && insDone !== task && NPC_TASKS[task].activity !== 'practice' && NPC_TASKS[task].activity !== 'callforhelp' && NPC_TASKS[task].activity !== 'script' && (NPC_TASKS[task].activity !== 'command' || !NPC_TASKS[task].intro?.length || introSeen === task) && (
+      {task && fillAll(NPC_TASKS[task]) && insDone !== task && fillAll(NPC_TASKS[task]).activity !== 'practice' && fillAll(NPC_TASKS[task]).activity !== 'callforhelp' && fillAll(NPC_TASKS[task]).activity !== 'script' && (fillAll(NPC_TASKS[task]).activity !== 'command' || !fillAll(NPC_TASKS[task]).intro?.length || introSeen === task) && (
         <Overlay>
           {(() => {
-            const t = NPC_TASKS[task]
+            const t = fillAll(NPC_TASKS[task])
             const finish = (done: boolean) => finishTask(task, done)
             if (t.activity === 'guess') return <GuessAnimal onClose={finish} />
             if (t.activity === 'whichdog' && t.whichdog) return <WhichDog rounds={t.whichdog} onClose={finish} />

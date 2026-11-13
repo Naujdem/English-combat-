@@ -37,7 +37,7 @@ const ROUNDS: Round[] = [
 ]
 
 const INTRO = [
-  { text: "Oh! You're the new student! Look, your school things are everywhere!", es: '¡Oh! ¡Eres el estudiante nuevo! ¡Mira, tus útiles están por todas partes!' },
+  { text: "Oh! You're the new student! Look, your school things are everywhere!", es: '¡Oh! ¡Hoy es tu primer día aquí! ¡Mira, tus útiles están por todas partes!' },
   { text: 'A man in a dark coat threw them. Come on, I can help you!', es: 'Un hombre con abrigo oscuro los tiró. ¡Ven, te ayudo!' },
 ]
 
@@ -56,7 +56,7 @@ export function WhereIsIt({ onClose }: { onClose: (done: boolean) => void }) {
   const anaLine = intro < INTRO.length
     ? INTRO[intro]
     : done
-      ? { text: 'You have all your things! Put them in your bag. Now you are ready for class!', es: '¡Tienes todas tus cosas! Guárdalas en tu mochila. ¡Ya estás listo para clase!' }
+      ? { text: 'You have all your things! Put them in your bag. Now you are ready for class!', es: '¡Tienes todas tus cosas! Guárdalas en tu mochila. ¡Ya puedes ir a clase!' }
       : round.mode === 'choose'
         ? { text: `Where is your ${item.en}?`, es: `¿Dónde está tu ${item.es}?` }
         : { text: `Your ${item.en} ${item.en === 'scissors' ? 'are' : 'is'} ${item.where}. Touch ${item.en === 'scissors' ? 'them' : 'it'}!`, es: `Tu${item.en === 'scissors' ? 's' : ''} ${item.es} está${item.en === 'scissors' ? 'n' : ''} ${item.whereEs}. ¡Tócalo${item.en === 'scissors' ? 's' : ''}!` }

@@ -110,7 +110,7 @@ export const SCHOOL_ENEMIES: Record<string, EnemyDef> = {
     tags: ['patio'],
     look: { shirt: '#2e9d8f', hair: '#a0522d', skin: '#f1c27d', accessory: 'cap' },
     before: [
-      { text: 'Hey! This is MY court. Are you fast? Are you strong? Run! Jump! Ha ha!', es: '¡Oye! Esta es MI cancha. ¿Eres rápido? ¿Eres fuerte? ¡Corre! ¡Salta! ¡Ja, ja!' },
+      { text: 'Hey! This is MY court. Are you fast? Are you strong? Run! Jump! Ha ha!', es: '¡Oye! Esta es MI cancha. ¿Eres {h:rápido|rápida}? ¿Eres fuerte? ¡Corre! ¡Salta! ¡Ja, ja!' },
       { text: 'Mr. Grimm gave me a piece of the key. It is MY prize, because I am the best player here!', es: 'El profesor Grimm me dio un pedazo de la llave. ¡Es MI premio, porque soy el mejor jugador de aquí!' },
     ],
     after: [
@@ -134,7 +134,7 @@ export const SCHOOL_ENEMIES: Record<string, EnemyDef> = {
     ],
     after: [
       { text: 'Wow! You are a fast learner!', es: '¡Guau! ¡Aprendes rápido!' },
-      { text: 'Now you are ready. The students in this school have your words. Let\'s go and get them back!', es: 'Ya estás listo. Los estudiantes de esta escuela tienen tus palabras. ¡Vamos a recuperarlas!' },
+      { text: 'Now you are ready. The students in this school have your words. Let\'s go and get them back!', es: 'Ya estás {h:listo|lista}. Los estudiantes de esta escuela tienen tus palabras. ¡Vamos a recuperarlas!' },
     ],
     freed: { text: "Let's practice again anytime!", es: '¡Practiquemos otra vez cuando quieras!' },
   },
@@ -149,7 +149,7 @@ export const SCHOOL_ENEMIES: Record<string, EnemyDef> = {
     tags: ['aula'],
     look: { shirt: '#c0504d', hair: '#2b5c3a', skin: '#e0ac69', accessory: 'cap' },
     before: [
-      { text: "Ha! You are the new student. You can't talk? That is funny!", es: '¡Ja! Eres el estudiante nuevo. ¿No puedes hablar? ¡Qué chistoso!' },
+      { text: "Ha! You are the new student. You can't talk? That is funny!", es: '¡Ja! Eres {h:el estudiante nuevo|la estudiante nueva}. ¿No puedes hablar? ¡Qué chistoso!' },
       { text: 'Mr. Grimm gave me a piece of a key. It is MY prize. Do you want it? Answer me!', es: 'El profesor Grimm me dio un pedazo de llave. Es MI premio. ¿Lo quieres? ¡Respóndeme!' },
     ],
     after: [

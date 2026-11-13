@@ -303,7 +303,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#2f5d50', hair: '#2d2d3a', skin: '#e0ac69', accessory: 'glasses' },
     lines: [
       { text: 'Hi, hi again! This is my house. My grandpa Joe built it with his hands in 1996.', es: '¡Hola, hola otra vez! Esta es mi casa. Mi abuelo Joe la construyó con sus manos en 1996.' },
-      { text: "What am I going to say at the party? I'm going to talk about my best friend... and about being brave.", es: '¿Qué voy a decir en la fiesta? Voy a hablar de mi mejor amigo... y de ser valiente.' },
+      { text: "What am I going to say at the party? I'm going to talk about my best friend... and about being brave.", es: '¿Qué voy a decir en la fiesta? Voy a hablar de mi {h:mejor amigo|mejor amiga}... y de ser valiente.' },
       { text: 'Every night I read a story to Joey. Tonight we are going to read a story about a magic clock!', es: 'Todas las noches le leo un cuento a Joey. ¡Esta noche vamos a leer un cuento sobre un reloj mágico!' },
     ],
   },
@@ -401,13 +401,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'The clerk',
     look: { shirt: '#5d8fd4', hair: '#3b2a1a', skin: '#e0ac69', gender: 'male' },
     after: 'b1-02-trav2',
-    doneLine: { text: 'Welcome to Lumen Bay! Have a nice stay.', es: '¡Bienvenido a Lumen Bay! Disfruta tu estadía.' },
+    doneLine: { text: 'Welcome to Lumen Bay! Have a nice stay.', es: '¡{h:Bienvenido|Bienvenida} a Lumen Bay! Disfruta tu estadía.' },
   },
   // Bloque C (data/b1Office.ts): el empleado de la tienda, Ms. Haddad y Leo en la oficina y en la calle
   'b1-02-assistant': {
     name: 'The shop assistant',
     look: { shirt: '#3b9d5d', hair: '#2b1d12', skin: '#c68642', gender: 'male' },
-    doneLine: { text: 'Here is your SIM card. Welcome to Lumen Bay!', es: 'Aquí tienes tu tarjeta SIM. ¡Bienvenido a Lumen Bay!' },
+    doneLine: { text: 'Here is your SIM card. Welcome to Lumen Bay!', es: 'Aquí tienes tu tarjeta SIM. ¡{h:Bienvenido|Bienvenida} a Lumen Bay!' },
   },
   'b1-02-haddad': {
     name: 'Ms. Haddad',
@@ -1059,7 +1059,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'Esteban',
     look: { shirt: '#38527a', hair: '#3a3a3a', skin: '#e1b896', gender: 'male' },
     after: 'b1-06-friend',
-    doneLine: { text: 'Welcome to Lumen Paws. You start on Monday.', es: 'Bienvenido a Lumen Paws. Empieza el lunes.' },
+    doneLine: { text: 'Welcome to Lumen Paws. You start on Monday.', es: '{h:Bienvenido|Bienvenida} a Lumen Paws. Empieza el lunes.' },
   },
   // Los 5 perros: solo examinables (se dibujan con ShelterDog, Explore.tsx)
   'b1-06-zirius': {

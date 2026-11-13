@@ -7,7 +7,7 @@ import type { LuggageContent } from '../components/LostLuggage'
 export const B1_LUGGAGE: LuggageContent = {
   title: 'Aeropuerto de Lumen Bay · Lost Luggage',
   clerk: 'human',
-  finish: { text: 'Welcome to Lumen Bay! Have a nice stay.', es: '¡Bienvenido a Lumen Bay! Disfruta tu estadía.' },
+  finish: { text: 'Welcome to Lumen Bay! Have a nice stay.', es: '¡{h:Bienvenido|Bienvenida} a Lumen Bay! Disfruta tu estadía.' },
   rounds: [
     {
       mode: 'choose',

@@ -47,7 +47,7 @@ export function Directions({ onClose }: { onClose: (done: boolean) => void }) {
   const round = ROUNDS[Math.min(r, ROUNDS.length - 1)]
 
   const line = intro
-    ? { text: "Hello! I'm Officer Rosa. You're new in the city, right? Let's look at the map together.", es: '¡Hola! Soy la oficial Rosa. Eres nuevo en la ciudad, ¿verdad? Miremos el mapa juntos.' }
+    ? { text: "Hello! I'm Officer Rosa. You're new in the city, right? Let's look at the map together.", es: '¡Hola! Soy la oficial Rosa. Es tu primera vez en la ciudad, ¿verdad? Miremos el mapa juntos.' }
     : done
       ? { text: 'Great job! Take this city map. Now you can find everything. Be careful on the street!', es: '¡Buen trabajo! Toma este mapa de la ciudad. Ahora puedes encontrar todo. ¡Ten cuidado en la calle!' }
       : { text: round.rosa, es: round.es }

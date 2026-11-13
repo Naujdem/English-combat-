@@ -133,7 +133,7 @@ export const CITY_ENEMIES: Record<string, EnemyDef> = {
     tags: ['tienda'],
     look: { shirt: '#c2185b', hair: '#e0b04a', skin: '#f6d3b3', gender: 'female' },
     before: [
-      { text: 'Welcome to my shop! This shoes are beautiful! These jacket is perfect for you!', es: '¡Bienvenido a mi tienda! ¡"Este" zapatos son hermosos! ¡"Estas" chaqueta es perfecta para ti!' },
+      { text: 'Welcome to my shop! This shoes are beautiful! These jacket is perfect for you!', es: '¡{h:Bienvenido|Bienvenida} a mi tienda! ¡"Este" zapatos son hermosos! ¡"Estas" chaqueta es perfecta para ti!' },
       { text: 'Mr. Rossi says I am the best seller in the city. Buy something... or answer me!', es: 'El señor Rossi dice que soy la mejor vendedora de la ciudad. Compra algo... ¡o respóndeme!' },
     ],
     after: [
@@ -193,7 +193,7 @@ export const CITY_ENEMIES: Record<string, EnemyDef> = {
     ],
     look: { shirt: '#2f5d50', hair: '#6b6b6b', skin: '#e0ac69', accessory: 'cap' },
     before: [
-      { text: 'Welcome to the city, tourist! I am Mr. Rossi, the best guide in town.', es: '¡Bienvenido a la ciudad, turista! Soy el señor Rossi, el mejor guía de la ciudad.' },
+      { text: 'Welcome to the city, tourist! I am Mr. Rossi, the best guide in town.', es: '¡{h:Bienvenido|Bienvenida} a la ciudad, turista! Soy el señor Rossi, el mejor guía de la ciudad.' },
       { text: 'Look at this shiny piece of a clock. I found it next to the fountain. It is MY treasure! Now every tourist goes to the wrong place! Ha ha!', es: 'Mira esta pieza brillante de un reloj. La encontré al lado de la fuente. ¡Es MI tesoro! ¡Ahora todos los turistas van al lugar equivocado! ¡Ja, ja!' },
       { text: 'Is there a bank here? How much is this? Answer me, if you can!', es: '¿Hay un banco aquí? ¿Cuánto cuesta esto? ¡Respóndeme, si puedes!' },
     ],
@@ -202,7 +202,7 @@ export const CITY_ENEMIES: Record<string, EnemyDef> = {
       { text: 'Yesterday a man in a dark coat asked me about it. His voice was very strange. Then he took a bus to a quiet neighborhood. Green Street, I think.', es: 'Ayer un hombre con abrigo oscuro me preguntó por él. Su voz era muy extraña. Luego tomó un autobús a un barrio tranquilo. Green Street, creo.' },
       { text: 'Take this piece of the clock. It is yours. And thank you for the coffee!', es: 'Toma esta pieza del reloj. Es tuya. ¡Y gracias por el café!' },
     ],
-    freed: { text: 'Welcome to the city! There is a great café next to the shop.', es: '¡Bienvenido a la ciudad! Hay un café genial al lado de la tienda.' },
+    freed: { text: 'Welcome to the city! There is a great café next to the shop.', es: '¡{h:Bienvenido|Bienvenida} a la ciudad! Hay un café genial al lado de la tienda.' },
     farewell: {
       q: 'Thank you, my friend! Here is a free map of the city. Have a nice day!',
       options: ["You're welcome!", 'Thank you! You too!', 'Good night!'],

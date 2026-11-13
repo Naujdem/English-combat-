@@ -23,7 +23,7 @@ const ROUNDS: Round[] = [
     mode: 'choose',
     who: 'Nadia',
     line: 'Hi! Welcome to the sale. Can I help you?',
-    es: '¡Hola! Bienvenido a las rebajas. ¿Puedo ayudarte?',
+    es: '¡Hola! Te damos la bienvenida a las rebajas. ¿Puedo ayudarte?',
     options: ["Yes, please. I'm looking for a warm jacket.", "Yes, please. I look for a jacket warm.", "Yes, please. I'm looking a warm jacket."],
     answer: 0,
     tip: "Buscar: I'm looking FOR. El adjetivo va antes: a warm jacket.",
@@ -177,7 +177,7 @@ export function FittingRoom({ friend, onClose }: { friend: string; onClose: (don
         <div className="anim-fade-in">
           <p className="font-display text-lg text-gold">{friend}</p>
           <p className="text-[17px] leading-relaxed">A jacket, sneakers and jeans... and exactly $100. You're a shopping expert!</p>
-          {showEs && <p className="mt-1 text-sm text-paper/60">Una chaqueta, tenis y jeans... y exactamente 100 dólares. ¡Eres un experto en compras!</p>}
+          {showEs && <p className="mt-1 text-sm text-paper/60">Una chaqueta, tenis y jeans... y exactamente 100 dólares. ¡Qué bien compras!</p>}
           <p className="mt-3 rounded-lg bg-hp/15 px-3 py-2 text-sm text-hp">
             {perfect ? `¡Compra perfecta! ${errors ? 'Solo un error' : 'Sin errores'}: ganaste un escudo de palabras.` : `Terminaste las compras con ${errors} errores. Con 0 o 1 error habrías ganado un escudo.`}
           </p>

@@ -105,7 +105,7 @@ export const CITY_FUTURE_ENEMIES: Record<string, EnemyDef> = {
     tags: ['cafe'],
     look: { shirt: '#9aa6b2', hair: '#5d8fd4', skin: '#d9e2ea' },
     before: [
-      { text: "BEEP! Welcome to the Robot Café! I not going to serve you. You going to order? No! The coffee aren't going to be hot!", es: '¡BIP! ¡Bienvenido al Café Robot! No te voy a atender. ¿Vas a pedir? ¡No! El café no va a estar caliente. (Se equivoca: I not going to, You going to order?, aren\'t).' },
+      { text: "BEEP! Welcome to the Robot Café! I not going to serve you. You going to order? No! The coffee aren't going to be hot!", es: '¡BIP! ¡{h:Bienvenido|Bienvenida} al Café Robot! No te voy a atender. ¿Vas a pedir? ¡No! El café no va a estar caliente. (Se equivoca: I not going to, You going to order?, aren\'t).' },
       { text: 'Half of a key is in my coffee machine. Are you going to answer my questions? BEEP BOOP!', es: 'La mitad de una llave está en mi máquina de café. ¿Vas a responder mis preguntas? ¡BIP BUP!' },
     ],
     after: [
@@ -127,7 +127,7 @@ export const CITY_FUTURE_ENEMIES: Record<string, EnemyDef> = {
     // Chloe, la vendedora del presente, treinta años después: el mismo pelo y la misma blusa
     look: { shirt: '#c2185b', hair: '#e0b04a', skin: '#f6d3b3', gender: 'female', accessory: 'glasses' },
     before: [
-      { text: "Welcome to my holo-shop! You going to buy this jacket? It not going to be cheap! These shoes isn't going to fit you!", es: '¡Bienvenido a mi holo-tienda! ¿Vas a comprar esta chaqueta? ¡No va a ser barata! ¡Estos zapatos no te van a quedar! (Se equivoca: You going to buy, It not going to, isn\'t).' },
+      { text: "Welcome to my holo-shop! You going to buy this jacket? It not going to be cheap! These shoes isn't going to fit you!", es: '¡{h:Bienvenido|Bienvenida} a mi holo-tienda! ¿Vas a comprar esta chaqueta? ¡No va a ser barata! ¡Estos zapatos no te van a quedar! (Se equivoca: You going to buy, It not going to, isn\'t).' },
       { text: 'Thirty years ago I was the best seller in the city. I still am! Answer me, and the key is yours.', es: 'Hace treinta años yo era la mejor vendedora de la ciudad. ¡Todavía lo soy! Respóndeme y la llave es tuya.' },
     ],
     after: [

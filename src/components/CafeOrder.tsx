@@ -33,7 +33,7 @@ function rounds(name: string): Round[] {
   return [
     {
       lily: 'Hi! Welcome to Sunny Café. What can I get you?',
-      es: '¡Hola! Bienvenido a Sunny Café. ¿Qué te sirvo?',
+      es: '¡Hola! Te damos la bienvenida a Sunny Café. ¿Qué te sirvo?',
       ask: '¿Cómo pides un jugo?',
       options: ['Can I have a juice, please?', 'I want juice.', 'Give me a juice!'],
       answer: 0,
