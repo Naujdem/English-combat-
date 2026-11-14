@@ -150,6 +150,10 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'Do you like ___?', board: ['dance → dancing', 'run → running · swim → swimming'], choice: { options: ['swiming', 'swimming', 'swim'], answer: 1, tip: 'swim → swimming, con doble m.' } },
     { who: 'leo', text: 'With he and she, LIKE takes -S: Maya likes drawing. To say no: I don\'t like, he doesn\'t like.', es: 'Con he y she, like lleva -s. Para negar: I don\'t like, he doesn\'t like.', board: ['she likes · he doesn\'t like', "I don't like cooking."], table: {"head": ["", "Afirmativa", "Negativa"], "rows": [["<I>", "<I> [like] cooking.", "<I> [don't like] cooking."], ["<She>", "<She> [like]{s} cooking.", "<She> [doesn't like] cooking."]]} },
     { who: 'board', text: 'Mr. Hill ___ like noise.', board: ['she likes · he doesn\'t like', "I don't like cooking."], choice: { options: ["don't", "doesn't", 'not'], answer: 1, tip: "Con he: doesn't like." } },
+
+    { who: 'leo', text: 'To join ideas, use AND, BUT and OR. AND adds: I like tea and coffee. BUT is for a contrast: I like tea, but I don\'t like coffee. OR is for a choice: Tea or coffee?', es: 'Para unir ideas: and (y) suma, but (pero) muestra algo contrario, or (o) da a elegir.', board: ['and = y · but = pero · or = o', "I like tea, but I don't like coffee."], table: {"head": ["Palabra", "Para qué", "Ejemplo"], "rows": [["{and}", "sumar", "Maya likes reading {and} drawing."], ["{but}", "algo contrario", "I can swim, {but} I can't dance."], ["{or}", "elegir", "Juice {or} water?"]]} },
+    { who: 'board', text: "I like cats, ___ I don't like dogs.", board: ['and = y · but = pero · or = o', "I like tea, but I don't like coffee."], choice: { options: ['and', 'but', 'or'], answer: 1, tip: 'Una idea positiva y otra negativa: but (pero).' } },
+    { who: 'board', text: 'Do you want pizza ___ pasta?', board: ['and = y · but = pero · or = o', 'Tea or coffee?'], choice: { options: ['or', 'but', 'and'], answer: 0, tip: 'Para elegir entre dos cosas: or.' } },
   ],
 
   can: [
