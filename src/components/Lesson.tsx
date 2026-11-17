@@ -113,9 +113,27 @@ export function Lesson({
   }, [rawSteps, state.hero.name, state.hero.gender, state.interest.name, state.interest.gender])
   const [i, setI] = useState(0)
   const [hideEs, setHideEs] = useState(true)
-  const [solved, setSolved] = useState(false)
+  // Ejercicios ya resueltos (por paso): al volver atrás siguen resueltos
+  const [solvedAt, setSolvedAt] = useState<number[]>([])
+  const solved = solvedAt.includes(i)
   const [tip, setTip] = useState<string | null>(null)
+  // Hasta dónde llegó el jugador: puede saltar a cualquier parte ya vista
+  const [reached, setReached] = useState(0)
+  const [summary, setSummary] = useState(false)
   const s = steps[i]
+  // La lección por partes: cada cambio de título en la pizarra empieza una parte nueva
+  const parts = useMemo(() => {
+    const out: { label: string; line?: string; start: number }[] = []
+    steps.forEach((x, k) => {
+      if (x.board && x.board[0] !== out[out.length - 1]?.label) out.push({ label: x.board[0], line: x.board[1], start: k })
+    })
+    return out
+  }, [steps])
+  const partOf = (k: number) => parts.reduce((acc, p, n) => (p.start <= k ? n : acc), -1)
+  const part = partOf(i)
+  const showParts = parts.length >= 3
+  // La última tabla de la lección (suele ser la completa) para el resumen
+  const lastTable = [...steps].reverse().find((x) => x.table)?.table
   // Guía de la lección: Leo, o Maya si la lección tiene pasos 'maya' (B1-04). Mismo tratamiento: retrato, nombre y voz
   // B1-06: Ms. Haddad guía la lección si tiene pasos 'haddad'
   // B1-08: la persona especial guía la lección si tiene pasos 'special' (nombre, aspecto y voz que eligió el jugador)
@@ -139,26 +157,83 @@ export function Lesson({
   // La pizarra conserva lo último escrito si el paso actual no trae nada nuevo
   const board = steps.slice(0, i + 1).reverse().find((x) => x.board)?.board
 
-  function next() {
-    setSolved(false)
+  function go(k: number) {
     setTip(null)
-    if (last) onDone(true)
-    else setI(i + 1)
+    setI(k)
+    setReached((r) => Math.max(r, k))
+  }
+
+  function next() {
+    if (!last) return go(i + 1)
+    setTip(null)
+    // Al terminar: resumen de lo aprendido (no en el Cuaderno de L, que es una página escrita)
+    if (showParts && !notebook) setSummary(true)
+    else onDone(true)
   }
 
   function choose(k: number) {
     if (!s.choice) return
     if (k === s.choice.answer) {
-      setSolved(true)
+      setSolvedAt((v) => [...v, i])
       setTip(null)
     } else setTip(s.choice.tip)
   }
 
   const text = s.choice && solved && s.text.includes('___') ? s.text.replace('___', s.choice.options[s.choice.answer]) : s.text
 
+  if (summary) {
+    return (
+      <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 px-4 py-6">
+        <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{title ?? `${guide.name} te ayuda`}</p>
+        <Panel>
+          <p className="font-display text-lg text-gold">Lo que aprendiste</p>
+          <ul className="mt-2 grid gap-1.5">
+            {parts.map((p) => (
+              <li key={p.start} className="rounded-lg bg-black/25 px-3 py-1.5">
+                <p className="font-semibold">{p.label}</p>
+                {p.line && <p className="text-sm text-paper/70">{p.line}</p>}
+              </li>
+            ))}
+          </ul>
+          {lastTable && <GrammarTable table={lastTable} />}
+          <p className="mt-3 text-xs text-paper/60">Puedes volver a ver esta lección cuando quieras en Repaso.</p>
+          <div className="mt-4 flex items-center justify-between gap-2">
+            <button className={btnGhost} onClick={() => setSummary(false)}>Atrás</button>
+            <button className={btnPrimary} onClick={() => onDone(true)} autoFocus>Listo</button>
+          </div>
+        </Panel>
+      </div>
+    )
+  }
+
+  // Índice de la lección: la parte actual se ilumina, las vistas quedan marcadas y se puede volver a ellas
+  const index = showParts && (
+    <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1" aria-label="Partes de la lección">
+      {parts.map((p, n) => {
+        const seen = p.start <= reached
+        const now = n === part
+        return (
+          <button
+            key={p.start}
+            ref={now ? (el) => el?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }) : undefined}
+            disabled={!seen}
+            onClick={() => go(p.start)}
+            title={p.label}
+            className={`max-w-[14rem] shrink-0 truncate whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold transition ${
+              now ? 'border-gold bg-gold text-ink' : seen ? 'border-gold/50 text-gold' : 'border-line text-paper/40'
+            }`}
+          >
+            {seen && !now && n < part ? '✓ ' : ''}{p.label}
+          </button>
+        )
+      })}
+    </div>
+  )
+
   return (
     <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 px-4 py-6">
       {(title ?? !notebook) && <p className="text-center text-xs font-semibold uppercase tracking-wide text-gold">{title ?? `${guide.name} te ayuda`}</p>}
+      {index}
       {notebook ? null : phone ? (
         <PhoneStage board={board} mine={phone.mine} />
       ) : (
@@ -214,6 +289,9 @@ export function Lesson({
               )}
               <button className="rounded-lg px-2 py-1 text-sm underline underline-offset-4" onClick={() => onDone(false)}>Saltar guía</button>
             </div>
+            {i > 0 && (
+              <button className="rounded-lg px-2 py-1 text-sm underline underline-offset-4" onClick={() => go(i - 1)}>Atrás</button>
+            )}
             {!waiting && (
               <button className={btnPrimary} onClick={next} autoFocus>
                 {last ? 'Listo' : 'Siguiente'}
@@ -267,6 +345,7 @@ export function Lesson({
             )}
             <button className={btnGhost} onClick={() => onDone(false)}>Saltar guía</button>
           </div>
+          {i > 0 && <button className={btnGhost} onClick={() => go(i - 1)}>Atrás</button>}
           {!waiting && (
             <button className={btnPrimary} onClick={next} autoFocus>
               {last ? 'Listo' : 'Siguiente'}
