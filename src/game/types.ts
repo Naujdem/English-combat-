@@ -284,6 +284,8 @@ export type GameState = {
   items: { shield: number; soup?: number }
   /** Preguntas falladas que siguen pendientes en el cuaderno de errores */
   mistakes: string[]
+  /** Preguntas falladas al perder contra un enemigo: salen primero en la revancha (por id de enemigo) */
+  rematch?: Record<string, string[]>
   /** Fichas de vocabulario guardadas desde las lecturas */
   cards: Card[]
   /** Aciertos y errores por tema, para la pantalla de progreso */
