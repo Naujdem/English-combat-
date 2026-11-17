@@ -315,9 +315,16 @@ export function Lesson({
           key={i}
           className={`anim-fade-in leading-relaxed ${s.who === 'narrator' ? 'text-[17px] italic text-paper/85' : s.who === 'board' ? 'font-display text-[22px]' : 'text-[17px]'}`}
         >
-          {talks ? <Tappable text={text} /> : text}
+          {/* Una oración por renglón: así cada regla se lee por separado */}
+          {sentences(text).map((t, k) => (
+            <span key={k} className={`block ${k ? 'mt-1.5' : ''}`}>{talks ? <Tappable text={t} /> : t}</span>
+          ))}
         </p>
-        {!hideEs && s.es && <p className="mt-1 text-sm text-paper/60">{s.es}</p>}
+        {!hideEs && s.es && (
+          <p className="mt-1 text-sm text-paper/60">
+            {sentences(s.es).map((t, k) => <span key={k} className={`block ${k ? 'mt-1' : ''}`}>{t}</span>)}
+          </p>
+        )}
         {s.table && <GrammarTable key={`t${i}`} table={s.table} />}
 
         {waiting && (
@@ -359,4 +366,29 @@ export function Lesson({
       )}
     </div>
   )
+}
+
+/**
+ * Parte un texto en oraciones (después de . ! ? seguido de mayúscula), sin cortar en Mr. Ms. Mrs. Dr. St.
+ * Los "Hi, hi!" y saludos cortos quedan pegados a la oración siguiente.
+ */
+export function sentences(text: string): string[] {
+  // Sin lookbehind (no funciona en iPhone viejos): se buscan los cortes a mano
+  const parts: string[] = []
+  const re = /[.!?]\s+(?=[A-ZÁÉÍÓÚÑ"'“¡¿(])/g
+  let from = 0
+  for (let m = re.exec(text); m; m = re.exec(text)) {
+    if (/\b(?:Mr|Ms|Mrs|Dr|St)$/.test(text.slice(0, m.index))) continue
+    parts.push(text.slice(from, m.index + 1))
+    from = m.index + m[0].length
+  }
+  parts.push(text.slice(from))
+  const out: string[] = []
+  for (const p of parts) {
+    const prev = out[out.length - 1]
+    // Fragmentos muy cortos (Hi, hi! · Look! · ¡Genial!) van con lo siguiente
+    if (prev !== undefined && prev.split(' ').length <= 2 && !/:\s*$/.test(prev)) out[out.length - 1] = `${prev} ${p}`
+    else out.push(p)
+  }
+  return out
 }
