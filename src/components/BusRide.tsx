@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useState } from 'react'
 import { mixed } from '../game/mix'
 import { SpriteBody, type SpriteLook } from './Sprite'
@@ -579,7 +580,7 @@ export function BusRide({ trip, hero, friend, friendName = '', onDone }: { trip:
               <SpeakButton text={s.text} size="sm" auto voice="male" />
             </div>
           )}
-          <p key={i} className={`anim-fade-in text-[17px] leading-relaxed ${s.who === 'narrator' ? 'italic text-paper/85' : ''}`}>{s.text}</p>
+          <p key={i} className={`anim-fade-in text-[17px] leading-relaxed ${s.who === 'narrator' ? 'italic text-paper/85' : ''}`}><Tappable text={s.text} /></p>
           {s.es && s.who !== 'narrator' && showEs && <p className="mt-1 text-sm text-paper/60">{s.es}</p>}
           {s.es && s.who !== 'narrator' && (
             <button className="mt-1 text-xs font-semibold text-paper/55 underline underline-offset-4" onClick={() => setShowEs((v) => !v)}>

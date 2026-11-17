@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useState, type ReactNode } from 'react'
 import { mixed } from '../game/mix'
 import { SpeakButton } from './SpeakButton'
@@ -215,7 +216,7 @@ export function LostLuggage({ onClose, content }: { onClose: (done: boolean) => 
         <p className="font-display text-lg text-gold">{human ? 'The clerk' : 'Lost & Found Bot'}</p>
         <SpeakButton text={line.text} size="sm" auto />
       </div>
-      <p key={`${r}-${solved}`} className="anim-fade-in text-[17px] leading-relaxed">{line.text}</p>
+      <p key={`${r}-${solved}`} className="anim-fade-in text-[17px] leading-relaxed"><Tappable text={line.text} /></p>
       {showEs && <p className="mt-1 text-sm text-paper/60">{line.es}</p>}
 
       {!done && round.mode === 'choose' && !solved && (

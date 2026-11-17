@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useState } from 'react'
 import { mixed } from '../game/mix'
 import { SpriteBody } from './Sprite'
@@ -162,7 +163,7 @@ export function CafeOrder({ name, onClose }: { name: string; onClose: (done: boo
         <p className="font-display text-lg text-gold">Lily</p>
         <SpeakButton text={line.text} size="sm" auto voice="female" />
       </div>
-      <p key={`${r}-${solved}`} className="anim-fade-in text-[17px] leading-relaxed">{line.text}</p>
+      <p key={`${r}-${solved}`} className="anim-fade-in text-[17px] leading-relaxed"><Tappable text={line.text} /></p>
       {showEs && <p className="mt-1 text-sm text-paper/60">{line.es}</p>}
 
       {!done && !solved && (

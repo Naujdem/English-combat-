@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useState } from 'react'
 import { SpeakButton } from './SpeakButton'
 import { btnGhost, btnPrimary, Panel } from './ui'
@@ -91,7 +92,7 @@ export function MusicChallenge({ title, intro, tempo, verses, finish, onClose }:
           </ol>
           <div className="mt-3 flex items-start gap-2">
             <div className="flex-1">
-              <p className="text-[15px] text-paper">{end.en}</p>
+              <p className="text-[15px] text-paper"><Tappable text={end.en} /></p>
               <p className="text-xs text-paper/60">{end.es}</p>
             </div>
             <SpeakButton text={end.en} size="sm" auto />
@@ -102,7 +103,7 @@ export function MusicChallenge({ title, intro, tempo, verses, finish, onClose }:
         <>
           {i === 0 && !right && wrong.length === 0 && (
             <div className="mt-2">
-              <p className="text-sm text-paper/85">{intro.en}</p>
+              <p className="text-sm text-paper/85"><Tappable text={intro.en} /></p>
               <p className="text-xs text-paper/55">{intro.es}</p>
             </div>
           )}
@@ -112,7 +113,7 @@ export function MusicChallenge({ title, intro, tempo, verses, finish, onClose }:
               <p className="text-lg leading-snug text-paper">
                 {v.line.split('___').map((part, k, arr) => (
                   <span key={k}>
-                    {part}
+                    <Tappable text={part} />
                     {k < arr.length - 1 && (
                       <span className={`mx-0.5 rounded px-1.5 font-bold ${right ? 'bg-hp/20 text-hp' : 'bg-gold/20 text-gold'}`}>{right ? v.options[v.answer] : '___'}</span>
                     )}

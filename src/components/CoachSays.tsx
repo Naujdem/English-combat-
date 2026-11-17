@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useEffect, useState } from 'react'
 import { mixed } from '../game/mix'
 import { SpriteBody, type SpriteLook } from './Sprite'
@@ -104,7 +105,7 @@ export function CoachSays({ look, onClose }: { look: SpriteLook; onClose: (done:
         <p className="font-display text-lg text-gold">Coach Mike</p>
         <SpeakButton text={line.text} size="sm" voice="male" />
       </div>
-      <p key={r} className="anim-fade-in font-display text-[20px] leading-snug">{line.text}</p>
+      <p key={r} className="anim-fade-in font-display text-[20px] leading-snug"><Tappable text={line.text} /></p>
       {showEs && <p className="mt-1 text-sm text-paper/60">{line.es}</p>}
 
       {!done && (

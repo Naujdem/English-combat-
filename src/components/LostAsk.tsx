@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useState } from 'react'
 import { mixed } from '../game/mix'
 import type { LostItem } from '../data/lostFound'
@@ -56,7 +57,7 @@ export function LostAsk({
           <p className="rounded-xl bg-[#3b6fb6]/25 px-3 py-2 text-[15px]">{item.ask.options[item.ask.answer]}</p>
           <div className="flex items-start gap-2">
             <p className="flex-1 text-[17px] leading-relaxed">
-              <span className="font-semibold text-gold">{npcName}: </span>"{reply.text}"
+              <span className="font-semibold text-gold">{npcName}: </span>"<Tappable text={reply.text} />"
             </p>
             <SpeakButton text={reply.text} size="sm" auto voice={voice} />
           </div>

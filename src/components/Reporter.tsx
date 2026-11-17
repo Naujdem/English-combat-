@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useMemo, useState } from 'react'
 import { SpeakButton } from './SpeakButton'
 import { btnGhost, btnPrimary, Panel } from './ui'
@@ -114,7 +115,7 @@ export function Reporter({ title, intro, rounds, finish, names, onClose }: Repor
           </ol>
           <div className="mt-3 flex items-start gap-2">
             <div className="flex-1">
-              <p className="text-[15px] text-paper">{finish.en}</p>
+              <p className="text-[15px] text-paper"><Tappable text={finish.en} /></p>
               <p className="text-xs text-paper/60">{finish.es}</p>
             </div>
             <SpeakButton text={finish.en} size="sm" auto />
@@ -126,7 +127,7 @@ export function Reporter({ title, intro, rounds, finish, names, onClose }: Repor
           <p className="mt-1 text-sm text-paper/75">Frase {i + 1} de {rounds.length}</p>
           {i === 0 && !right && tries === 0 && (
             <div className="mt-2">
-              <p className="text-sm text-paper/85">{intro.en}</p>
+              <p className="text-sm text-paper/85"><Tappable text={intro.en} /></p>
               <p className="text-xs text-paper/55">{intro.es}</p>
             </div>
           )}
@@ -136,7 +137,7 @@ export function Reporter({ title, intro, rounds, finish, names, onClose }: Repor
             <div className="flex-1">
               <p className="text-xs uppercase tracking-wide text-[#c9a9f0]">En el recuerdo · {r.speaker.es}</p>
               <p className="mt-0.5 text-lg leading-snug text-paper">
-                {r.speaker.en}: “{r.quote}”
+                {r.speaker.en}: “<Tappable text={r.quote} />”
               </p>
               <button className="mt-1 text-xs text-paper/55 underline" onClick={() => setShowEs((s) => !s)}>
                 {showEs ? 'Ocultar traducción' : 'Ver traducción'}
@@ -188,7 +189,7 @@ export function Reporter({ title, intro, rounds, finish, names, onClose }: Repor
               <div className="mt-2 flex items-start gap-2 rounded-xl border border-line px-3 py-2">
                 <div className="flex-1">
                   <p className="text-[15px] text-paper">
-                    <span className="font-bold text-gold">{names[r.reaction.who]}:</span> {r.reaction.en}
+                    <span className="font-bold text-gold">{names[r.reaction.who]}:</span> <Tappable text={r.reaction.en} />
                   </p>
                   <p className="text-xs text-paper/60">{r.reaction.es}</p>
                 </div>

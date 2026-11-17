@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useEffect } from 'react'
 import type { GameState } from '../game/types'
 import type { Update } from '../game/store'
@@ -44,7 +45,7 @@ function MemoryWake({ onDone }: { onDone: () => void }) {
   return (
     <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black px-4" role="dialog" aria-label="Despiertas">
       <div className="anim-fade-in w-full max-w-sm text-center">
-        <p className="text-[18px] text-paper/90">{WAKE.en}</p>
+        <p className="text-[18px] text-paper/90"><Tappable text={WAKE.en} /></p>
         <p className="mt-1 text-sm text-paper/60">{WAKE.es}</p>
         <div className="mt-2 flex justify-center"><SpeakButton text="You wake up. Your throat hurts." size="sm" /></div>
         <button className={`${btnPrimary} mt-5 w-full`} onClick={onDone}>Continuar</button>

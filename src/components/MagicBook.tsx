@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useState, type ReactNode } from 'react'
 import { mixed } from '../game/mix'
 import { SpeakButton } from './SpeakButton'
@@ -185,7 +186,7 @@ export function MagicBook({ name, onClose }: { name: string; onClose: (done: boo
         className={`anim-fade-in text-[17px] leading-relaxed ${!intro && !done ? 'rounded-lg bg-[#efe3c2] px-3 py-2 font-serif text-ink' : ''} ${!intro && !done && page.mode === 'fix' && !solved ? 'text-[#7b3fa3]' : ''}`}
         style={!intro && !done && page.mode === 'fix' && !solved ? { textShadow: '0 0 6px #b06ad4' } : undefined}
       >
-        {line.text}
+        <Tappable text={line.text} />
       </p>
       {showEs && <p className="mt-1 text-sm text-paper/60">{line.es}</p>}
 

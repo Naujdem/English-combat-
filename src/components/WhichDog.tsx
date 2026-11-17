@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useState } from 'react'
 import { ShelterDog, type ShelterDogId } from './ShelterDog'
 import { SpeakButton } from './SpeakButton'
@@ -63,7 +64,7 @@ export function WhichDog({ rounds, onClose }: { rounds: WhichDogRound[]; onClose
 
       <div className="mt-2 flex items-start gap-2 rounded-xl bg-panel-2 px-3 py-2">
         <div className="flex-1">
-          <p className="text-[15px] text-paper">Nayi: "{r.en}"</p>
+          <p className="text-[15px] text-paper">Nayi: "<Tappable text={r.en} />"</p>
           <p className="text-xs text-paper/60">{r.es}</p>
         </div>
         <SpeakButton key={round} text={r.en} voice="female" size="sm" auto />

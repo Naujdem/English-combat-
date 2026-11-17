@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useEffect, useState } from 'react'
 import { SpeakButton } from './SpeakButton'
 import { btnGhost, btnPrimary, Panel } from './ui'
@@ -168,7 +169,7 @@ export function WhatIf({ title, intro, rounds, finish, onClose }: WhatIfContent 
           </ol>
           <div className="mt-3 flex items-start gap-2">
             <div className="flex-1">
-              <p className="text-[15px] text-paper">{end.en}</p>
+              <p className="text-[15px] text-paper"><Tappable text={end.en} /></p>
               <p className="text-xs text-paper/60">{end.es}</p>
             </div>
             <SpeakButton text={end.en} size="sm" auto />
@@ -183,7 +184,7 @@ export function WhatIf({ title, intro, rounds, finish, onClose }: WhatIfContent 
           </div>
           {i === 0 && !right && wrong.length === 0 && (
             <div className="mt-2">
-              <p className="text-sm text-paper/85">{intro.en}</p>
+              <p className="text-sm text-paper/85"><Tappable text={intro.en} /></p>
               <p className="text-xs text-paper/55">{intro.es}</p>
             </div>
           )}
@@ -196,7 +197,7 @@ export function WhatIf({ title, intro, rounds, finish, onClose }: WhatIfContent 
               <p className="text-lg leading-snug text-paper">
                 {r.line.split('___').map((part, k, arr) => (
                   <span key={k}>
-                    {part}
+                    <Tappable text={part} />
                     {k < arr.length - 1 && (
                       <span className={`mx-0.5 rounded px-1.5 font-bold ${right ? 'bg-hp/20 text-hp' : 'bg-gold/20 text-gold'}`}>{right ? r.options[r.answer] : '___'}</span>
                     )}
@@ -237,7 +238,7 @@ export function WhatIf({ title, intro, rounds, finish, onClose }: WhatIfContent 
             <div className="anim-fade-in mt-3">
               <div className="flex items-start gap-2 rounded-xl border border-danger/40 bg-danger/10 px-3 py-2">
                 <div className="flex-1">
-                  <p className="text-[15px] text-paper">{r.result.en}</p>
+                  <p className="text-[15px] text-paper"><Tappable text={r.result.en} /></p>
                   <p className="text-xs text-paper/60">{r.result.es}</p>
                 </div>
                 <SpeakButton key={`r${i}`} text={r.result.en} size="sm" />

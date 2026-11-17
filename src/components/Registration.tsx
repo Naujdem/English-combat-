@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useState } from 'react'
 import { voiceOf } from '../game/speech'
 import type { GameState } from '../game/types'
@@ -219,7 +220,7 @@ export function Registration({ state, onClose }: { state: GameState; onClose: (f
             <p className="font-display text-lg text-gold">{npc.name}</p>
             <SpeakButton text={s.say ?? s.text} size="sm" auto voice={voiceOf(npc.look)} />
           </div>
-          <p key={i} className="anim-fade-in text-[16px] leading-relaxed">{s.text}</p>
+          <p key={i} className="anim-fade-in text-[16px] leading-relaxed"><Tappable text={s.text} /></p>
           {!hideEs && <p className="mt-0.5 text-sm text-paper/60">{s.es}</p>}
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useState, type ReactNode } from 'react'
 import { SpeakButton } from './SpeakButton'
 import { btn, btnGhost, btnPrimary, Panel } from './ui'
@@ -128,7 +129,7 @@ export function Predict({ onClose, content }: { onClose: (done: boolean) => void
         <p className="font-display text-lg text-gold">{content?.title ?? '¿Qué va a pasar?'} · {i + 1} de {rounds.length}</p>
         <button className={btnGhost} onClick={() => onClose(false)}>Salir</button>
       </div>
-      <p className="mt-1 text-sm text-paper/70">{content ? `${content.intro.en} ${content.intro.es}` : 'Rosie: "Look! What is going to happen?" Mira el dibujo y di lo que va a pasar.'}</p>
+      <p className="mt-1 text-sm text-paper/70">{content ? <><Tappable text={content.intro.en} /> {content.intro.es}</> : 'Rosie: "Look! What is going to happen?" Mira el dibujo y di lo que va a pasar.'}</p>
       <svg key={i} viewBox="0 0 200 150" className="anim-fade-in mt-2 w-full rounded-xl border-2 border-line" role="img" aria-label={r.es}>
         {r.scene}
       </svg>

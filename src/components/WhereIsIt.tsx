@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useState, type ReactNode } from 'react'
 import { mixed } from '../game/mix'
 import { SpriteBody } from './Sprite'
@@ -169,7 +170,7 @@ export function WhereIsIt({ onClose }: { onClose: (done: boolean) => void }) {
         <p className="font-display text-lg text-gold">Ana</p>
         <SpeakButton text={anaLine.text} size="sm" auto voice="female" />
       </div>
-      <p key={`${intro}-${r}`} className="anim-fade-in text-[17px] leading-relaxed">{anaLine.text}</p>
+      <p key={`${intro}-${r}`} className="anim-fade-in text-[17px] leading-relaxed"><Tappable text={anaLine.text} /></p>
       {showEs && <p className="mt-1 text-sm text-paper/60">{anaLine.es}</p>}
 
       {intro >= INTRO.length && !done && round.mode === 'choose' && !solved && (

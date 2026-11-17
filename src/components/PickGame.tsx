@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useState } from 'react'
 import { mixed } from '../game/mix'
 import { SpriteBody } from './Sprite'
@@ -155,7 +156,7 @@ export function PickGame({ game, onClose }: { game: PickGameId; onClose: (done: 
         <p className="font-display text-lg text-gold">{npc.name}</p>
         {(inIntro || done || !round.ask.includes('___')) && <SpeakButton text={line.text} size="sm" auto voice={g.voice} />}
       </div>
-      <p key={`${intro}-${r}`} className="anim-fade-in text-[17px] leading-relaxed">{line.text}</p>
+      <p key={`${intro}-${r}`} className="anim-fade-in text-[17px] leading-relaxed"><Tappable text={line.text} /></p>
       {(showEs || (inIntro && !!line.board)) && <p className="mt-1 text-sm text-paper/60">{line.es}</p>}
 
       {!inIntro && !done && !solved && (

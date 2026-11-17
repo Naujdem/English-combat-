@@ -1,3 +1,4 @@
+import { Tappable } from './Words'
 import { useState } from 'react'
 import { mixed } from '../game/mix'
 import { SpeakButton } from './SpeakButton'
@@ -209,7 +210,7 @@ export function RouteChallenge({ name, onClose, content }: { name: string; onClo
         <p className="font-display text-lg text-gold">{name}</p>
         <SpeakButton text={line.text} size="sm" auto />
       </div>
-      <p key={`${intro}-${r}`} className="anim-fade-in text-[17px] leading-relaxed">{line.text}</p>
+      <p key={`${intro}-${r}`} className="anim-fade-in text-[17px] leading-relaxed"><Tappable text={line.text} /></p>
       {showEs && <p className="mt-1 text-sm text-paper/60">{line.es}</p>}
 
       {!intro && !done && round.mode === 'choose' && !solved && (
