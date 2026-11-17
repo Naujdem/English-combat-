@@ -547,7 +547,16 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
     return pickQuestion(p.topics, kinds, usedIds, state.mistakes, p.tags ?? [], focus, enemy.onlyTags, b1 && focus === 'produce')
   }
   const [interlude, setInterlude] = useState<{ text: string; es?: string } | null>(null)
-  const [q, setQ] = useState<Question>(() => pick(battle.enemyHp, []))
+  // Revancha: las preguntas falladas al perder la vez anterior salen primero, con las opciones en otro orden
+  const [again, setAgain] = useState<Question[]>(() => toQuestions(state.rematch?.[enemy.id] ?? []).slice(1))
+  const [q, setQ] = useState<Question>(() => {
+    const first = toQuestions(state.rematch?.[enemy.id] ?? [])[0]
+    return first ? reshuffle(first) : pick(battle.enemyHp, [])
+  })
+  useEffect(() => {
+    if (state.rematch?.[enemy.id]) update((s) => { const r = { ...s.rematch }; delete r[enemy.id]; return { ...s, rematch: r } })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const [correct, setCorrect] = useState(false)
   const [blocked, setBlocked] = useState(false)
   const [heroAnim, setHeroAnim] = useState('')
@@ -645,18 +654,20 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
     const alt = pickQuestion([missed.topic], [kind], [...usedIds, missed.id], [], p.tags ?? [], undefined, enemy.onlyTags)
     const fresh = alt && alt.id !== missed.id && !usedIds.includes(alt.id) && (alt.kind ?? 'fill') === kind && !!alt.audio === !!missed.audio
     if (fresh) return alt
-    if (kind === 'order' || kind === 'write' || kind === 'speak') return missed
-    let idx = missed.options.map((_, k) => k)
-    for (let t = 0; t < 6 && idx.every((v, k) => v === k); t++) idx = mixed(missed.options, `${missed.id}-${Date.now()}-${t}`).map(([, k]) => k)
-    return { ...missed, options: idx.map((k) => missed.options[k]), answer: idx.indexOf(missed.answer) }
+    return reshuffle(missed)
   }
 
-  function nextQuestion() {
+  function nextQuestion(queue: Question[] = again) {
     const nextUsed = [...used, q.id]
     setUsed(nextUsed)
     const left = state.battle?.enemyHp ?? battle.enemyHp
-    // Las falladas salen al final: cuando lo que le queda al enemigo alcanza justo para repetirlas todas
-    if (retry.length > 0 && left <= retry.length) {
+    if (queue.length > 0) {
+      // Revancha: primero las que se fallaron al perder
+      setQ(reshuffle(queue[0]))
+      setAgain(queue.slice(1))
+      setSlotFails(0)
+    } else if (retry.length > 0 && left <= retry.length) {
+      // Las falladas salen al final: cuando lo que le queda al enemigo alcanza justo para repetirlas todas
       const { q: missed, n } = retry[0]
       setQ(similar(missed, nextUsed))
       setSlotFails(n)
@@ -747,7 +758,10 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       if (phase === 'lost') {
         // Con Leo no se pierde nada: se vuelve a intentar con la vida llena
         update((s) => ({ ...s, hp: s.maxHp, battle: s.battle ? { ...s.battle, enemyHp: enemy.hp } : null }))
-        nextQuestion()
+        const queue = toQuestions(failed)
+        setRetry([])
+        setFailed([])
+        nextQuestion(queue)
         return
       }
       // El duelo amistoso se juega dentro de un escenario: al ganar se vuelve a él, no al mapa
@@ -762,7 +776,11 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       setUsed(nextUsed)
       setRetry([])
       setSlotFails(0)
-      setQ(pick(enemy.hp, nextUsed))
+      // Las falladas vuelven primero en el nuevo intento
+      const queue = toQuestions(failed)
+      setFailed([])
+      setAgain(queue.slice(1))
+      setQ(queue[0] ? reshuffle(queue[0]) : pick(enemy.hp, nextUsed))
       setExplain(false)
       setInterlude(null)
       setCorrect(false)
@@ -772,7 +790,9 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       return
     }
     if (phase === 'lost') {
-      update((s) => ({ ...s, hp: s.maxHp, pos: { ...scene.start }, battle: null, screen: 'explore' }))
+      // Lo fallado se guarda para la revancha contra este enemigo
+      const ids = [...new Set(failed)]
+      update((s) => ({ ...s, hp: s.maxHp, pos: { ...scene.start }, battle: null, screen: 'explore', rematch: ids.length ? { ...s.rematch, [enemy.id]: ids } : s.rematch }))
     } else if (enemy.kind === 'boss') {
       // Al vencer al jefe viene el final del capítulo
       update((s) => ({ ...s, battle: null, screen: scene.epilogue && !s.opened.includes(scene.epilogue) ? 'epilogue' : 'explore' }))
@@ -825,7 +845,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
                 {phase === 'lost' ? (
                   <button className={btnPrimary} onClick={leave} autoFocus>{enemy.kind === 'trainer' ? 'Intentar otra vez' : 'Volver a intentarlo'}</button>
                 ) : (
-                  <button className={btnPrimary} onClick={nextQuestion} autoFocus>Seguir</button>
+                  <button className={btnPrimary} onClick={() => nextQuestion()} autoFocus>Seguir</button>
                 )}
               </div>
               {phase === 'lost' && (
@@ -999,7 +1019,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               {interlude.es && showEs && <p className="mt-1 text-sm text-paper/60">{interlude.es}</p>}
               <div className="mt-3 flex items-center justify-between">
                 {interlude.es ? <button className={btnGhost} onClick={() => setShowEs((v) => !v)}>{showEs ? 'Ocultar' : 'Traducir'}</button> : <span />}
-                <button className={btnPrimary} onClick={nextQuestion} autoFocus>Siguiente fase</button>
+                <button className={btnPrimary} onClick={() => nextQuestion()} autoFocus>Siguiente fase</button>
               </div>
             </div>
           )}
@@ -1011,7 +1031,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
                   No es correcto. Esta pregunta volverá al final del combate.
                   <span className="block text-xs font-normal text-paper/60">Fallos: {slotFails || 1} de 3. A la tercera, Leo te la explica.</span>
                 </p>
-                <button className={btnPrimary} onClick={nextQuestion} autoFocus>Seguir</button>
+                <button className={btnPrimary} onClick={() => nextQuestion()} autoFocus>Seguir</button>
               </div>
             </div>
           )}
@@ -1020,7 +1040,7 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
               <p className="text-sm font-semibold text-hp">
                 {q.kind === 'fix' ? '¡Lo corregiste! El golpe acertó.' : '¡Correcto! El golpe acertó.'}
               </p>
-              <button className={btnPrimary} onClick={nextQuestion} autoFocus>Seguir</button>
+              <button className={btnPrimary} onClick={() => nextQuestion()} autoFocus>Seguir</button>
             </div>
           )}
         </Panel>
@@ -1142,6 +1162,20 @@ export function Battle({ state, update, onExit }: { state: GameState; update: Up
       )}
     </div>
   )
+}
+
+/** Ids de preguntas → preguntas (sin repetir; se omiten las que no se pueden mostrar en este dispositivo) */
+function toQuestions(ids: string[]): Question[] {
+  return [...new Set(ids)].map((id) => questionById(id)).filter((x): x is Question => !!x)
+}
+
+/** La misma pregunta con las opciones en otro orden, para no acertar de memoria por la posición */
+function reshuffle(missed: Question): Question {
+  const kind = missed.kind ?? 'fill'
+  if (kind === 'order' || kind === 'write' || kind === 'speak' || missed.options.length < 2) return missed
+  let idx = missed.options.map((_, k) => k)
+  for (let t = 0; t < 6 && idx.every((v, k) => v === k); t++) idx = mixed(missed.options, `${missed.id}-${Date.now()}-${t}`).map(([, k]) => k)
+  return { ...missed, options: idx.map((k) => missed.options[k]), answer: idx.indexOf(missed.answer) }
 }
 
 /** Los temas de las preguntas falladas, en palabras */
