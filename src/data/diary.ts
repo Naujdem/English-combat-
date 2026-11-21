@@ -1,4 +1,5 @@
 import { B1_DIARY } from './b1Diary'
+import { B2_DIARY } from './b2Diary'
 import { fillGender } from '../game/gender'
 import type { Gender } from '../game/types'
 /**
@@ -1245,4 +1246,4 @@ export function lookup(raw: string, names: string[] = []): string | null {
 }
 
 /** Todos los capítulos del diario: A1 y A2 (DIARY) y los recuerdos de B1 (data/b1Diary.ts) */
-export const ALL_DIARY: DiaryChapter[] = [...DIARY, ...B1_DIARY]
+export const ALL_DIARY: DiaryChapter[] = [...DIARY, ...B1_DIARY, ...B2_DIARY]

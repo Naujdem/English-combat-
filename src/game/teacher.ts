@@ -953,6 +953,8 @@ PRESETS.push(
   { id: 'b2-start', label: 'B2: inicio (B1 completo, sin apertura)', apply: (s) => b2Start(s, []) },
   { id: 'b2-opened', label: 'B2: después de la apertura', apply: (s) => b2Start(s, ['b2-00-opening']) },
   { id: 'b2-01', label: 'B2-01: el paseo del puerto (bloque 1)', apply: (s) => ({ ...b2Start(s, ['b2-00-opening']), screen: 'explore' as const, sceneId: 'b2-01-port', pos: { x: 5, y: 3 } }) },
+  { id: 'b2-01-b2', label: 'B2-01: bloque 2 (reacciones, chat y jefe)', apply: (s) => ({ ...b2Start(s, ['b2-00-opening', 'b2-01-breakfast', 'b2-01-catchup', 'b2-01-marisol-talk', 'b2-01-jeison-talk', 'b2-01-nayi-talk', 'b2-01-ppcont']), screen: 'explore' as const, sceneId: 'b2-01-port', pos: { x: 5, y: 3 } }) },
+  { id: 'b2-01-b3', label: 'B2-01: bloque 3 (eco vencido: amistad y cierre)', apply: (s) => { const b = b2Start(s, ['b2-00-opening', 'b2-01-breakfast', 'b2-01-catchup', 'b2-01-marisol-talk', 'b2-01-jeison-talk', 'b2-01-nayi-talk', 'b2-01-ppcont', 'b2-01-reactions', 'b2-01-chat']); return { ...b, defeated: add(b.defeated, ['b2-01-silence1', 'b2-01-silence2', 'b2-01-boss']), screen: 'explore' as const, sceneId: 'b2-01-port', pos: { x: 5, y: 3 } } } },
   { id: 'b2-core', label: 'B2: núcleo a medio llenar (lugares 1 a 4 cerrados)', apply: (s) => b2Start(s, ['b2-00-opening', b2Close(1), b2Close(2), b2Close(3), b2Close(4)]) },
 )
 

@@ -12,17 +12,19 @@ export type TextOnlyContent = {
   intro?: { text: string; es: string }
   chats: { contact: string; steps: MiniStep[] }[]
   finish: { text: string; es: string }
+  /** B2: el que escribe es el protagonista en el presente (no L): sin el retrato de L */
+  hero?: boolean
 }
 
 /** Una línea que narra L (no habla: no suena sola) */
-function LLine({ line, title, onNext, onExit, button }: { line: { text: string; es: string }; title: string; onNext: () => void; onExit?: () => void; button: string }) {
+function LLine({ line, title, onNext, onExit, button, hero }: { line: { text: string; es: string }; title: string; onNext: () => void; onExit?: () => void; button: string; hero?: boolean }) {
   const [showEs, setShowEs] = useState(false)
   return (
     <Panel>
       <p className="text-xs font-semibold uppercase tracking-wide text-gold">{title}</p>
       <div className="mt-2 flex items-center gap-3">
-        <LIcon size={48} pose="profile" />
-        <p className="flex-1 font-display text-lg text-[#c9b8e8]">L recuerda</p>
+        {!hero && <LIcon size={48} pose="profile" />}
+        <p className={`flex-1 font-display text-lg ${hero ? 'text-gold' : 'text-[#c9b8e8]'}`}>{hero ? 'Tú' : 'L recuerda'}</p>
         <SpeakButton text={line.text} size="sm" />
       </div>
       <p className="anim-fade-in mt-2 text-[17px] italic leading-relaxed">
@@ -54,7 +56,7 @@ export function TextOnly({ content, before = [], onClose }: { content: TextOnlyC
   const exit = () => onClose(false)
 
   if (k < nBefore) return <LLine key={`b${k}`} line={before[k]} title={content.title} onNext={() => setK(k + 1)} onExit={exit} button="Siguiente" />
-  if (k === nBefore && content.intro) return <LLine key="intro" line={content.intro} title={content.title} onNext={() => setK(k + 1)} onExit={exit} button="Empezar" />
+  if (k === nBefore && content.intro) return <LLine key="intro" line={content.intro} title={content.title} onNext={() => setK(k + 1)} onExit={exit} button="Empezar" hero={content.hero} />
   const c = k - nBefore - nIntro
   if (c < total) {
     const chat = content.chats[c]
@@ -77,5 +79,5 @@ export function TextOnly({ content, before = [], onClose }: { content: TextOnlyC
       </div>
     )
   }
-  return <LLine key="finish" line={content.finish} title={content.title} onNext={() => onClose(true)} button="Listo" />
+  return <LLine key="finish" line={content.finish} title={content.title} onNext={() => onClose(true)} button="Listo" hero={content.hero} />
 }

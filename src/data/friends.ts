@@ -786,6 +786,20 @@ export const B1_04_MAYA_CHAT: CasualChat = {
   ],
 }
 
+/** B2-01 · Catching Up, bloque 3: la charla de amistad con la persona especial en el café (una vez; se guarda B2_01_FRIEND en Explore.tsx) */
+export const B2_01_SPECIAL_CHAT: CasualChat = {
+  requires: null,
+  level: 'B2',
+  text: "So much has changed since we arrived in Lumen Bay. What's been different for you?",
+  es: 'Han cambiado tantas cosas desde que llegamos a Lumen Bay. ¿Qué ha sido distinto para ti?',
+  options: [
+    { text: "I've been speaking English every day. I feel braver than before.", textEs: 'He estado hablando inglés todos los días. Me siento más valiente que antes.', reply: "I've noticed! You don't hold back anymore.", es: '¡Lo he notado! Ya no te contienes.', effect: 2 },
+    { text: "Honestly? I've been worrying a lot. About the clock… and about Leo.", textEs: '¿Sinceramente? He estado muy preocupado. Por el reloj… y por Leo.', reply: "So have I. His voice… you've heard it too, haven't you?", es: 'Yo también. Su voz… tú también la has oído, ¿verdad?', effect: 2 },
+    { text: "Not much. I've just been studying and sleeping.", textEs: 'No mucho. Solo he estado estudiando y durmiendo.', reply: 'Fair enough! Sometimes that\'s exactly what you need.', es: '¡Vale! A veces eso es justo lo que necesitas.', effect: 1 },
+    { text: 'Different been have Lumen me the.', textEs: '(No tiene sentido.)', reply: "Sorry, I didn't understand.", es: 'Perdón, no te entendí.', effect: -1 },
+  ],
+}
+
 /** B1-06 · First Job, bloque D: la charla de amistad con Leo en la oficina (una vez; se guarda B1_06_FRIEND en Explore.tsx) */
 export const B1_06_LEO_CHAT: CasualChat = {
   requires: null,

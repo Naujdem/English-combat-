@@ -1,5 +1,6 @@
-import type { GameState, SceneDef, Zone } from '../game/types'
+import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
+import type { TextOnlyContent } from '../components/TextOnly'
 
 /**
  * B2-01 · Catching Up (presente). Bloque 1: el paseo del puerto de Lumen Bay con la terraza del café (escena b2-01-port).
@@ -9,7 +10,10 @@ import type { ScriptLine } from './b1Accident'
  *   la persona especial: lección 'catching-up-b2' + práctica (b2-01-catchup) →
  *   ponerse al día con Marisol, Jeison y Nayi (b2-01-marisol, b2-01-jeison, b2-01-nayi, scripts) →
  *   la persona especial: lección 'pp-contrast-b2' + práctica (b2-01-ppcont).
- * Bloque 2 (pendiente): reacciones, Group Chat, esbirros y el jefe Echo of the Grudge. Bloque 3: amistad, diario, recompensa y cierre.
+ * Bloque 2: la persona especial: lección 'reactions-b2' + práctica (b2-01-reactions) → Maya: Group Chat (b2-01-chat, Text Only) →
+ *   dos Awkward Silences (esbirros) → el jefe ligero Echo of the Grudge (2 fases), en el muelle.
+ * Bloque 3: la persona especial: charla de amistad (B2_01_FRIEND, Explore.tsx) → Leo: el cierre (b2-01-close): recupera los temas,
+ *   el eco suelta UN fragmento que queda suelto en el reloj (b2Core, data/b2World.ts) y se abre el lugar 2. Diario: data/b2Diary.ts.
  */
 export const B2_01_PORT_ID = 'b2-01-port'
 export const B2_01_SPECIAL = 'b2-01-special'
@@ -24,6 +28,15 @@ export const B2_01_MOSCU = 'b2-01-moscu'
 export const B2_01_BREAKFAST = 'b2-01-breakfast'
 export const B2_01_CATCHUP = 'b2-01-catchup'
 export const B2_01_PPCONT = 'b2-01-ppcont'
+/** Bloque 2 */
+export const B2_01_REACTIONS = 'b2-01-reactions'
+export const B2_01_CHAT = 'b2-01-chat'
+export const B2_01_SILENCE1 = 'b2-01-silence1'
+export const B2_01_SILENCE2 = 'b2-01-silence2'
+export const B2_01_BOSS = 'b2-01-boss'
+/** Bloque 3: la charla de amistad con la persona especial y el cierre de la misión (b2CloseId(1) = 'b2-01-close') */
+export const B2_01_FRIEND = 'b2-01-friend'
+export const B2_01_CLOSE = 'b2-01-close'
 /** Charlas con Marisol, Jeison y Nayi: la marca es el id del NPC + '-talk' */
 export const B2_01_TALKS = [`${B2_01_MARISOL}-talk`, `${B2_01_JEISON}-talk`, `${B2_01_NAYI}-talk`]
 
@@ -60,6 +73,10 @@ export const B2_01_PORT: SceneDef = {
     { type: 'npc', id: B2_01_MOSCU, x: 10, y: 2 },
     { type: 'npc', id: B2_01_JEISON, x: 7, y: 4 },
     { type: 'npc', id: B2_01_NAYI, x: 9, y: 4 },
+    // Bloque 2: los silencios incómodos y el eco, en el muelle
+    { type: 'enemy', id: B2_01_SILENCE1, x: 3, y: 4, after: B2_01_CHAT },
+    { type: 'enemy', id: B2_01_SILENCE2, x: 6, y: 3, after: B2_01_SILENCE1 },
+    { type: 'enemy', id: B2_01_BOSS, x: 8, y: 3, after: B2_01_SILENCE2 },
   ],
   labels: [{ text: 'Port Café', x: 2, y: 0 }],
   zoneAt: (_x, y) => zoneAt(y),
@@ -74,6 +91,12 @@ export const B2_01_PORT: SceneDef = {
     { label: 'Ponerse al día (lección)', done: s.opened.includes(B2_01_CATCHUP) },
     { label: 'Marisol, Jeison y Nayi', done: B2_01_TALKS.every((t) => s.opened.includes(t)) },
     { label: 'Present perfect: simple o continuo', done: s.opened.includes(B2_01_PPCONT) },
+    { label: 'Reacciones (lección)', done: s.opened.includes(B2_01_REACTIONS) },
+    { label: 'El chat de grupo', done: s.opened.includes(B2_01_CHAT) },
+    { label: 'Los silencios incómodos (2)', done: s.defeated.includes(B2_01_SILENCE2) },
+    { label: 'Echo of the Grudge', done: s.defeated.includes(B2_01_BOSS) },
+    { label: 'Charla con la persona especial', done: s.opened.includes(B2_01_FRIEND) },
+    { label: 'El cierre (Leo)', done: s.opened.includes(B2_01_CLOSE) },
   ],
   intro: {
     first: 'The morning after the harbour. The Port Café smells of coffee. — La mañana después del puerto. El café huele a café.',
@@ -115,3 +138,86 @@ export const B2_01_NAYI_SCRIPT: ScriptLine[] = [
   { who: 'narrator', text: 'Nayi: I\'ve walked five dogs today. Lupe is the last one.', es: 'Nayi: Hoy ya paseé cinco perros. Lupe es la última.' },
   { who: 'narrator', text: 'Nayi: How long have you been in Lumen Bay now? It feels like forever!', es: 'Nayi: ¿Cuánto llevas en Lumen Bay ya? ¡Parece una eternidad!' },
 ]
+
+/** Group Chat (Maya; components/TextOnly.tsx con hero): el chat del grupo del intercambio. En cada elección solo UNA opción es correcta */
+const ASK = 'Tú respondes:'
+const LOOK = {
+  maya: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' as const },
+  jeison: { shirt: '#3b9d5d', hair: '#2b2b33', skin: '#c68642', gender: 'male' as const },
+  nayi: { shirt: '#e0873a', hair: '#6b3a2a', skin: '#d9a37a', gender: 'female' as const },
+  leo: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' as const },
+}
+export const B2_01_GROUP_CHAT: TextOnlyContent = {
+  title: 'Group Chat',
+  hero: true,
+  intro: { text: 'Your phone buzzes. The exchange group chat is full of news.', es: 'Tu teléfono vibra. El chat de grupo del intercambio está lleno de novedades.' },
+  chats: [
+    {
+      contact: 'Lumen Exchange 💬',
+      steps: [
+        { text: "Guess what? I've been learning to surf!", es: '¿Adivina qué? ¡He estado aprendiendo a surfear!', speaker: { name: 'Maya', look: LOOK.maya }, choice: { ask: ASK, options: ["No way! That's amazing!", "No road! That's amazed!", 'I am very surprised by this information.'], answer: 0, tip: 'Reacción natural: No way! That\'s amazing!' } },
+        { text: "I've finished my second exam!", es: '¡Ya terminé mi segundo examen!', speaker: { name: 'Jeison', look: LOOK.jeison }, choice: { ask: ASK, options: ['Congrats! You must relieved.', 'Felicitations upon your academic achievement.', 'Congrats! You must be relieved.'], answer: 2, tip: 'You must be + adjetivo: You must be relieved.' } },
+        { text: 'I love Lumen Bay in the morning.', es: 'Me encanta Lumen Bay por la mañana.', speaker: { name: 'Nayi', look: LOOK.nayi }, choice: { ask: ASK, options: ['So I do!', 'So do I!', 'Neither do I!'], answer: 1, tip: 'Frase positiva con love → So do I (auxiliar antes del sujeto).' } },
+        { text: "I haven't slept much this week.", es: 'No he dormido mucho esta semana.', speaker: { name: 'Leo', look: LOOK.leo }, choice: { ask: ASK, options: ['Neither have I.', 'Neither I have.', 'So have I.'], answer: 0, tip: "Frase negativa con haven't → Neither have I." } },
+        { text: 'Are we meeting at the café tomorrow?', es: '¿Nos vemos mañana en el café?', choice: { ask: ASK, options: ['I am of the opinion that this is so.', 'I think so!', 'I think yes so!'], answer: 1, tip: 'Respuesta corta: I think so!' } },
+      ],
+    },
+  ],
+  finish: { text: "Everyone has been moving on. And Leo hasn't said a word about his voice.", es: 'Todos han seguido adelante. Y Leo no ha dicho ni una palabra sobre su voz.' },
+}
+
+const RE = 'reactions-b2' as const
+const PC = 'pp-contrast-b2' as const
+const KINDS: EnemyDef['kinds'] = ['fill', 'fix']
+const SILENCE_LOOK = { shirt: '#5b5f6b', hair: '#3a3d46', skin: '#9da1ab' }
+
+/** Awkward Silences: silencios incómodos corrompidos que cortan las conversaciones. Preguntas: etiqueta b2-01-silence */
+const SILENCE = (id: string, line: { text: string; es: string }): EnemyDef => ({
+  id,
+  name: 'Awkward Silence',
+  person: 'Awkward Silence',
+  kind: 'minion',
+  hp: 4,
+  topics: [PC, RE],
+  kinds: KINDS,
+  tags: ['b2-01-silence'],
+  onlyTags: true,
+  zone: 'calle',
+  look: SILENCE_LOOK,
+  before: [line],
+  after: [{ text: '(The silence breaks. Somewhere, someone laughs.)', es: '(El silencio se rompe. En algún lugar, alguien se ríe.)' }],
+  freed: { text: '(Only the sound of the sea.)', es: '(Solo el sonido del mar.)' },
+})
+
+/**
+ * Echo of the Grudge: un resto de The Grudge (B1) que se forma en el muelle. Jefe ligero de 2 fases.
+ * Fase 1: present perfect simple o continuo (etiqueta b2-01-boss-pp) · Fase 2: reacciones y respuestas cortas (b2-01-boss-re).
+ * Suelta la sudadera del café del puerto ('sudadera-cafe', data/school.ts). El fragmento suelto se cuenta en el cierre (Leo).
+ */
+export const B2_01_BOSS_DEF: EnemyDef = {
+  id: B2_01_BOSS,
+  name: 'Echo of the Grudge',
+  person: 'Echo of the Grudge',
+  kind: 'boss',
+  reward: 'sudadera-cafe',
+  hp: 8,
+  topics: [PC, RE],
+  kinds: KINDS,
+  tags: ['b2-01-boss-pp'],
+  phases: [
+    { hp: 4, title: 'Lo que has hecho', topics: [PC], kinds: KINDS, tags: ['b2-01-boss-pp'], line: { text: "I've been finishing everything! How long are you living with your silence?", es: "I've been finishing (algo ya terminado) y How long are you living: mal." } },
+    { hp: 4, title: 'Reacciones', topics: [RE], kinds: KINDS, tags: ['b2-01-boss-re'], line: { text: 'So am I! I think not so! Nobody reacts like you!', es: 'So am I (a "I love…") y I think not so: mal.' } },
+  ],
+  onlyTags: true,
+  zone: 'calle',
+  look: { shirt: '#2a2a33', hair: '#15151b', skin: '#6a6a76' },
+  before: [{ text: "Everyone has moved on… but you haven't. I've been waiting for you.", es: 'Todos siguieron adelante… pero tú no. Te he estado esperando.' }],
+  after: [{ text: '(The echo fades like smoke over the water.)', es: '(El eco se desvanece como humo sobre el agua.)' }],
+  freed: { text: '(A small piece of light floats where the echo was.)', es: '(Un pedacito de luz flota donde estaba el eco.)' },
+}
+
+export const B2_01_ENEMIES: Record<string, EnemyDef> = {
+  [B2_01_SILENCE1]: SILENCE(B2_01_SILENCE1, { text: "So… I've been read three books… Neither I have anything to say.", es: "I've been read y Neither I have: mal." }),
+  [B2_01_SILENCE2]: SILENCE(B2_01_SILENCE2, { text: "…So I do. How long are you waiting here?", es: 'So I do y How long are you waiting: mal.' }),
+  [B2_01_BOSS]: B2_01_BOSS_DEF,
+}

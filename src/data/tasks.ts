@@ -75,8 +75,8 @@ import { B1_08_PREDICT } from './b1Predict'
 import { B1_07_DETECTIVE_CONTENT, B1_07_TAKE_SCRIPT } from './b1Market'
 import { B1_07_ESCAPE_ROOM } from './b1Escape'
 import { B1_07_CLOSE_SCRIPT } from './b1Room'
-import { B2_01_BREAKFAST_SCRIPT, B2_01_JEISON_SCRIPT, B2_01_MARISOL_SCRIPT, B2_01_NAYI_SCRIPT } from './b2CatchingUp'
-import { B2_01_CATCHUP_IDS, B2_01_PPCONT_IDS } from './questions-b2-01'
+import { B2_01_BREAKFAST_SCRIPT, B2_01_GROUP_CHAT, B2_01_JEISON_SCRIPT, B2_01_MARISOL_SCRIPT, B2_01_NAYI_SCRIPT } from './b2CatchingUp'
+import { B2_01_CATCHUP_IDS, B2_01_PPCONT_IDS, B2_01_REACTIONS_IDS } from './questions-b2-01'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -6754,7 +6754,71 @@ NPC_TASKS['b2-01-ppcont'] = {
   reward: {
     text: "Some have been working, some have finished. Now you can tell the difference.",
     es: 'Unos han estado trabajando, otros ya terminaron. Ahora sabes la diferencia.',
-    sub: 'Bloque 1 terminado. (El resto de la misión llega en el bloque 2.)',
+    sub: 'Lección hecha. Vuelve a hablar con la persona especial: falta aprender a reaccionar.',
     say: 'Now you can tell the difference.',
+  },
+}
+
+// ── B2-01 · Catching Up, bloque 2 (el mismo paseo). NO guarda el cierre de la misión ──
+// La persona especial: lección 'reactions-b2' + práctica b2-01-re1…re8. 5 monedas
+NPC_TASKS['b2-01-reactions'] = {
+  npc: 'b2-01-special',
+  done: 'b2-01-reactions',
+  lesson: 'reactions-b2',
+  activity: 'practice',
+  practice: 'reactions-b2',
+  practiceIds: B2_01_REACTIONS_IDS,
+  coins: 5,
+  requires: { id: 'b2-01-ppcont', text: 'One thing at a time!', es: '¡Una cosa a la vez!', sub: 'Primero termina la lección del present perfect.' },
+  steps: [],
+  reward: {
+    text: 'No way! So do I! Neither have I! See? Easy.',
+    es: '¡No puede ser! ¡Yo también! ¡Yo tampoco! ¿Ves? Fácil.',
+    sub: 'Lección hecha. Maya te está mostrando su teléfono.',
+    say: 'See? Easy.',
+  },
+}
+
+// Maya: Group Chat (Text Only del protagonista, en el presente). 10 monedas
+NPC_TASKS['b2-01-chat'] = {
+  npc: 'b2-01-maya',
+  done: 'b2-01-chat',
+  activity: 'textonly',
+  textOnly: B2_01_GROUP_CHAT,
+  coins: 10,
+  requires: { id: 'b2-01-reactions', text: 'Your hot chocolate is getting cold!', es: '¡Tu chocolate se está enfriando!', sub: 'Primero aprende a reaccionar con la persona especial.' },
+  steps: [{ text: 'Check the group chat! Everybody is sharing news.', es: '¡Mira el chat del grupo! Todos están contando novedades.' }],
+  reward: {
+    text: "Everyone has been moving on. And Leo hasn't said a word about his voice.",
+    es: 'Todos han seguido adelante. Y Leo no ha dicho ni una palabra sobre su voz.',
+    sub: 'Chat terminado. En el muelle, algo corta las conversaciones…',
+  },
+}
+
+// ── B2-01 · Catching Up, bloque 3: cierre (Leo en la mesa del café, después de la charla con la persona especial).
+// done = b2CloseId(1) = 'b2-01-close': abre el lugar 2. El eco soltó UN fragmento: queda suelto en el reloj (b2Core, data/b2World.ts)
+NPC_TASKS['b2-01-close'] = {
+  npc: 'b2-01-leo',
+  done: 'b2-01-close',
+  recover: ['catching-up-b2', 'pp-contrast-b2', 'reactions-b2'],
+  coins: 15,
+  requires: {
+    id: 'b2-01-friend',
+    text: "Leo: \"I'm fine, really. It's just the coffee.\"",
+    es: 'Estoy bien, de verdad. Es solo el café.',
+    sub: 'Antes, vence a Echo of the Grudge en el muelle y habla con la persona especial.',
+  },
+  steps: [
+    { text: "That echo… it looked like The Grudge. Small, but the same.", es: 'Ese eco… se parecía a The Grudge. Pequeño, pero igual.' },
+    { text: '(A small piece of light falls into your hand. It goes into the clock… and stays there, alone, next to the empty core.)', es: '(Un pedacito de luz cae en tu mano. Entra en el reloj… y se queda ahí, solo, junto al núcleo vacío.)' },
+    { text: "One fragment. It's waiting for another one.", es: 'Un fragmento. Está esperando a otro.' },
+    { text: "(You write in your diary:) 'Everyone has been moving on. And Leo has been hiding something.'", es: '(Escribes en tu diario:) «Todos han seguido adelante. Y Leo ha estado escondiendo algo».' },
+    { text: "Hey, don't look at me like that! I'm… fine. *cough* Let's go. Manuel has been texting you all morning.", es: '¡Oye, no me mires así! Estoy… bien. *tos* Vamos. Manuel te ha estado escribiendo toda la mañana.' },
+  ],
+  reward: {
+    text: 'Mission 1: Catching Up',
+    es: 'Misión 1: Ponerse al día',
+    sub: 'Ganaste la sudadera del café del puerto. Un fragmento quedó suelto en el reloj. Se abrió el lugar 2: The Herald.',
+    say: 'Catching up.',
   },
 }

@@ -1137,6 +1137,15 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'special', text: 'Informal answers are short. You can drop the subject: "Been busy." "Not much, you?" "Same old."', es: 'Las respuestas informales son cortas. Se puede quitar el sujeto: "He estado ocupado." "Nada especial, ¿y tú?" "Lo de siempre."' },
     { who: 'board', text: 'Hey! Long time no see! What have you been ___ to?', choice: { options: ['up', 'on', 'in'], answer: 0, tip: 'La expresión fija es "be up to": What have you been up to?' } },
   ],
+  // B2-01 · bloque 2: la persona especial, reacciones y respuestas cortas
+  'reactions-b2': [
+    { who: 'special', text: 'When a friend tells you news, react! Short and natural: No way! That\'s amazing! I bet. Fair enough.', es: 'Cuando un amigo te cuenta algo, ¡reacciona! Corto y natural: ¡No puede ser! ¡Increíble! Me imagino. Vale, tiene sentido.' },
+    { who: 'special', text: 'Guess the feeling with "must be": You got the job? You must be thrilled! Your team lost? You must be gutted.', es: 'Adivina el sentimiento con "must be": ¿Conseguiste el trabajo? ¡Debes estar feliz! ¿Perdió tu equipo? Debes estar muy decepcionado.' },
+    { who: 'special', text: 'To agree, use So or Neither + the auxiliary + I. Positive: "I love this café." → So do I. "I\'m tired." → So am I.', es: 'Para decir "yo también", usa So o Neither + el auxiliar + I. Positivo: "Me encanta este café." → So do I. "Estoy cansado." → So am I.' },
+    { who: 'special', text: 'Negative: "I haven\'t slept." → Neither have I. "I can\'t swim." → Neither can I. The auxiliary comes BEFORE I.', es: 'Negativo: "No he dormido." → Neither have I. "No sé nadar." → Neither can I. El auxiliar va ANTES de I.' },
+    { who: 'special', text: 'Short answers: I think so / I don\'t think so. I hope so / I hope not. Never: I think not so.', es: 'Respuestas cortas: I think so / I don\'t think so. I hope so / I hope not. Nunca: I think not so.' },
+    { who: 'board', text: '"I haven\'t eaten yet." — "Neither ___ I."', choice: { options: ["haven't", 'have', 'do'], answer: 1, tip: "Neither ya es negativo: Neither have I (nunca Neither haven't I)." } },
+  ],
   // B2-01 · bloque 1: la persona especial, present perfect simple o continuo (nivel B2)
   'pp-contrast-b2': [
     { who: 'special', text: 'You know both forms. At B2 the question is: which one, and why?', es: 'Ya conoces las dos formas. En B2 la pregunta es: ¿cuál, y por qué?' },
