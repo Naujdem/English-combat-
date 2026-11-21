@@ -130,3 +130,12 @@ button { cursor: pointer; touch-action: manipulation; }
   .b1-alarm-flash { animation: none; opacity: 0.14 }
   .b1-alarm-light, .b1-smoke { animation: none }
 }
+
+/* B2 · Ventanas (components/WindowFrame.tsx): destello azul al entrar y fundido azul al salir */
+@keyframes b2-window-flash { 0% { opacity: 1 } 30% { opacity: 1 } 100% { opacity: 0 } }
+.b2-window-flash { animation: b2-window-flash 1s ease-out forwards; }
+@keyframes b2-year { 0% { opacity: 0; transform: scale(0.9) } 25%, 75% { opacity: 1; transform: none } 100% { opacity: 0 } }
+.b2-window-year { opacity: 0; animation: b2-year 1.6s ease-out both; }
+@keyframes b2-fade-blue { from { opacity: 0 } to { opacity: 1 } }
+.b2-fade-blue { animation: b2-fade-blue 0.9s ease-in forwards; }
+@media (prefers-reduced-motion: reduce) { .b2-window-flash, .b2-fade-blue { animation-duration: 0.4s } .b2-window-year { animation: none; opacity: 0 } }

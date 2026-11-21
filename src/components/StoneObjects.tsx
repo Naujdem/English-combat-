@@ -188,6 +188,23 @@ export const STONE_OBJECTS: Record<string, StoneObject> = {
       </g>
     ),
   },
+  // B2 · Unheard (ficha 0.7): las escaleras traseras de la escuela nocturna. Al acertar, la nota queda pegada y brilla la flecha
+  stairs: {
+    names: ['back stairs', 'stairs', 'staircase'],
+    es: 'las escaleras traseras',
+    draw: (a) => (
+      <g>
+        <path d="M6 58 H18 V46 H30 V34 H42 V22 H58 V58 Z" fill="#9a8c78" stroke="#5a5144" strokeWidth="2" />
+        <path d="M50 16 L58 8 M58 8 H51 M58 8 V15" stroke={a ? '#3fa9ff' : '#7d8794'} strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        {a && (
+          <g className="stone-fade">
+            <rect x="8" y="10" width="26" height="20" rx="2" fill="#fff8dc" stroke="#3fa9ff" strokeWidth="1.5" />
+            <path d="M12 17 h18 M12 23 h12" stroke="#3a2e1e" strokeWidth="1.5" />
+          </g>
+        )}
+      </g>
+    ),
+  },
 }
 
 /** Los nombres de los objetos de una sala (para matchCommand) */

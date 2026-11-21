@@ -20,6 +20,9 @@ import { ALL_DIARY as DIARY, pageNotified, pageSeen, unlockedPages } from '../da
 import { dueCards } from '../game/cards'
 import { B1_PREFIX, isA2Unlocked, type Update } from '../game/store'
 import { B1Map } from '../components/B1Map'
+import { B2Map, CoreBar } from '../components/B2Map'
+import { B2Opening } from '../components/B2Opening'
+import { B2_NODES, B2_OPENING, B2_PART_NAMES, B2_ERA_COLOR, b2LockedText, b2Message, b2NodeDone, b2NodeOpen, isB2Unlocked, type B2Node, type B2Part } from '../data/b2World'
 import { enterMemory, memoryFlag } from '../game/memory'
 import { B1_01_SCHOOL } from '../data/b1Accident'
 import { B1_03_HOSPITAL } from '../data/b1Words'
@@ -169,14 +172,30 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
   const a2Open = teacher || isA2Unlocked(state)
   // B1: la pestaña aparece al terminar A2-13 (o en modo profesor). No se cambia de pestaña sola al terminar A2.
   const b1Open = teacher || isB1Unlocked(state)
-  const [level, setLevel] = useState<'A1' | 'A2' | 'B1'>(
-    b1Open && state.sceneId.startsWith(B1_PREFIX) ? 'B1' : a2Open && A2_NODES.some((n) => n.sceneId === state.sceneId) ? 'A2' : 'A1',
+  // B2: la pestaña aparece al cerrar B1 (b1-14-close) o en modo profesor
+  const b2Open = teacher || isB2Unlocked(state)
+  const [level, setLevel] = useState<'A1' | 'A2' | 'B1' | 'B2'>(
+    b2Open && state.sceneId.startsWith('b2-') ? 'B2' : b1Open && state.sceneId.startsWith(B1_PREFIX) ? 'B1' : a2Open && A2_NODES.some((n) => n.sceneId === state.sceneId) ? 'A2' : 'A1',
   )
   // Partes de B1: una parte aparece cuando alguno de sus lugares está abierto (antes de la apertura se ve la parte 1 cerrada)
   const b1PartsOpen = ([1, 2, 3, 4] as const).filter((p) => B1_NODES.some((n) => n.part === p && b1NodeOpen(n, state)))
   const b1Parts: B1Part[] = b1PartsOpen.length ? [...b1PartsOpen] : [1]
   const b1Next = B1_NODES.find((n) => n.num && b1NodeOpen(n, state) && !b1NodeDone(n, state)) ?? [...B1_NODES].reverse().find((n) => n.num && b1NodeOpen(n, state))
   const [b1Part, setB1Part] = useState<B1Part>(b1Next?.part ?? 1)
+  // Partes de B2: igual que en B1
+  const b2PartsOpen = ([1, 2, 3, 4] as const).filter((p) => B2_NODES.some((n) => n.part === p && b2NodeOpen(n, state)))
+  const b2Parts: B2Part[] = b2PartsOpen.length ? [...b2PartsOpen] : [1]
+  const b2Next = B2_NODES.find((n) => n.num && b2NodeOpen(n, state) && !b2NodeDone(n, state)) ?? [...B2_NODES].reverse().find((n) => n.num && b2NodeOpen(n, state))
+  const [b2Part, setB2Part] = useState<B2Part>(b2Next?.part ?? 1)
+  const [b2Opening, setB2Opening] = useState(false)
+  function tapB2(n: B2Node) {
+    const label = n.num ? `${n.num}. ${n.name}` : `★ ${n.name}`
+    // Antes de la apertura, el lugar 1 lanza la escena de apertura (ficha 0.1)
+    if (n.num === 1 && !state.opened.includes(B2_OPENING)) return setB2Opening(true)
+    if (!b2NodeOpen(n, state)) return setMsg(`${label} está cerrado. ${b2LockedText(n)}`)
+    // Las misiones de B2 todavía no están construidas (fichas 1 a 14)
+    setMsg(`${label}${n.year ? ` (Ventana ${n.year})` : ''}: este lugar se construirá pronto.`)
+  }
   function tapB1(n: B1Node) {
     const label = n.num ? `${n.num}. ${n.name}` : `★ ${n.name}`
     if (!b1NodeOpen(n, state)) return setMsg(`${label} está cerrado. ${b1LockedText(n)}`)
@@ -310,9 +329,20 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
         <button className={btnGhost} onClick={() => setFriends(true)}>Amigos</button>
       </header>
 
+      {b2Opening && (
+        <B2Opening
+          onExit={() => setB2Opening(false)}
+          onDone={() => {
+            setB2Opening(false)
+            update((s) => (s.opened.includes(B2_OPENING) ? s : { ...s, opened: [...s.opened, B2_OPENING] }))
+            setMsg('B2 · El lugar 1 está abierto: Leo te espera en el café del puerto.')
+          }}
+        />
+      )}
+
       {a2Open && (
         <div className="flex gap-1.5" role="tablist" aria-label="Nivel">
-          {(b1Open ? (['A1', 'A2', 'B1'] as const) : (['A1', 'A2'] as const)).map((l) => (
+          {(b2Open ? (['A1', 'A2', 'B1', 'B2'] as const) : b1Open ? (['A1', 'A2', 'B1'] as const) : (['A1', 'A2'] as const)).map((l) => (
             <button
               key={l}
               role="tab"
@@ -321,6 +351,7 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
               onClick={() => {
                 setLevel(l)
                 if (l === 'B1') setMsg(b1Message(state))
+                if (l === 'B2') setMsg(b2Message(state))
               }}
             >
               Nivel {l}
@@ -364,6 +395,25 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       )}
       {level === 'B1' && b1Parts.length === 1 && <p className="text-center text-sm font-semibold text-paper/70">{B1_PART_NAMES[b1Parts[0]]}</p>}
 
+      {level === 'B2' && b2Parts.length > 1 && (
+        <div className="flex flex-wrap gap-1.5" role="tablist" aria-label="Partes de B2">
+          {b2Parts.map((p) => (
+            <button
+              key={p}
+              role="tab"
+              aria-selected={b2Part === p}
+              className={`rounded-full border-2 px-3 py-1 text-sm font-semibold ${b2Part === p ? 'border-transparent text-ink' : 'border-line text-paper/70'}`}
+              style={b2Part === p ? { background: p === 4 ? B2_ERA_COLOR.Presente : B2_ERA_COLOR.Ventana } : undefined}
+              onClick={() => setB2Part(p)}
+            >
+              {B2_PART_NAMES[p]}
+            </button>
+          ))}
+        </div>
+      )}
+      {level === 'B2' && b2Parts.length === 1 && <p className="text-center text-sm font-semibold text-paper/70">{B2_PART_NAMES[b2Parts[0]]}</p>}
+      {level === 'B2' && <CoreBar state={state} />}
+
       {level === 'A1' && pastOpen && (
         <div className="flex gap-1.5" role="tablist" aria-label="Épocas">
           {(futureOpen ? (['Presente', 'Pasado', 'Futuro'] as const) : (['Presente', 'Pasado'] as const)).map((e) => (
@@ -382,7 +432,9 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
       )}
 
       <div className={desktop ? 'grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_21rem] items-start gap-5' : 'contents'}>
-      {level === 'B1' ? (
+      {level === 'B2' ? (
+        <B2Map state={state} part={b2Parts.includes(b2Part) ? b2Part : b2Parts[0]} onTap={tapB2} style={desktop ? { height: 'calc(100svh - 96px)' } : { aspectRatio: '360 / 380' }} />
+      ) : level === 'B1' ? (
         <B1Map state={state} part={b1Parts.includes(b1Part) ? b1Part : b1Parts[0]} onTap={tapB1} style={desktop ? { height: 'calc(100svh - 96px)' } : { aspectRatio: '360 / 380' }} />
       ) : level === 'A2' ? (
       <svg
