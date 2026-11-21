@@ -230,7 +230,7 @@ export type DialogLine = {
 export type CasualChat = {
   requires: TopicId | null
   /** Nivel CEFR, para mostrarlo en la charla (las de B1 lo llevan) */
-  level?: 'A1' | 'A2' | 'B1'
+  level?: 'A1' | 'A2' | 'B1' | 'B2'
   text: string
   es?: string
   options: ChatOption[]

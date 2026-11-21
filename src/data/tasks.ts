@@ -6794,3 +6794,31 @@ NPC_TASKS['b2-01-chat'] = {
     sub: 'Chat terminado. En el muelle, algo corta las conversaciones…',
   },
 }
+
+// ── B2-01 · Catching Up, bloque 3: cierre (Leo en la mesa del café, después de la charla con la persona especial).
+// done = b2CloseId(1) = 'b2-01-close': abre el lugar 2. El eco soltó UN fragmento: queda suelto en el reloj (b2Core, data/b2World.ts)
+NPC_TASKS['b2-01-close'] = {
+  npc: 'b2-01-leo',
+  done: 'b2-01-close',
+  recover: ['catching-up-b2', 'pp-contrast-b2', 'reactions-b2'],
+  coins: 15,
+  requires: {
+    id: 'b2-01-friend',
+    text: "Leo: \"I'm fine, really. It's just the coffee.\"",
+    es: 'Estoy bien, de verdad. Es solo el café.',
+    sub: 'Antes, vence a Echo of the Grudge en el muelle y habla con la persona especial.',
+  },
+  steps: [
+    { text: "That echo… it looked like The Grudge. Small, but the same.", es: 'Ese eco… se parecía a The Grudge. Pequeño, pero igual.' },
+    { text: '(A small piece of light falls into your hand. It goes into the clock… and stays there, alone, next to the empty core.)', es: '(Un pedacito de luz cae en tu mano. Entra en el reloj… y se queda ahí, solo, junto al núcleo vacío.)' },
+    { text: "One fragment. It's waiting for another one.", es: 'Un fragmento. Está esperando a otro.' },
+    { text: "(You write in your diary:) 'Everyone has been moving on. And Leo has been hiding something.'", es: '(Escribes en tu diario:) «Todos han seguido adelante. Y Leo ha estado escondiendo algo».' },
+    { text: "Hey, don't look at me like that! I'm… fine. *cough* Let's go. Manuel has been texting you all morning.", es: '¡Oye, no me mires así! Estoy… bien. *tos* Vamos. Manuel te ha estado escribiendo toda la mañana.' },
+  ],
+  reward: {
+    text: 'Mission 1: Catching Up',
+    es: 'Misión 1: Ponerse al día',
+    sub: 'Ganaste la sudadera del café del puerto. Un fragmento quedó suelto en el reloj. Se abrió el lugar 2: The Herald.',
+    say: 'Catching up.',
+  },
+}

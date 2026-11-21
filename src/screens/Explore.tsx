@@ -54,6 +54,8 @@ import { NotebookIcon } from '../components/LNotebook'
 import { B1_03_NOTEBOOK, B1_03_PHONE } from '../data/b1Words'
 import { B1_05_BOX, B1_05_BOXES, B1_05_ENVELOPE, B1_05_NOTEBOOK, B1_05_PAPERS } from '../data/b1Flat'
 import { B1_04_CLOSE, B1_04_FRAGMENTS, B1_04_FRIEND, B1_04_MAYA, B1_04_MAYA_BANK, B1_04_MAYA_LOBBY, B1_04_MOSCU, B1_04_RESIDENCE_ID, B1_04_RICARDO } from '../data/b1Residence'
+import { B2_01_SPECIAL_CHAT } from '../data/friends'
+import { B2_01_BOSS, B2_01_FRIEND, B2_01_SPECIAL } from '../data/b2CatchingUp'
 import { B1_04_MAYA_CHAT, B1_06_LEO_CHAT, B1_08_SPECIAL_CHAT, B1_10_LEO_CHAT, B1_12_LEO_CHAT, B1_12_MAYA_CHAT, B1_12_SPECIAL_CHAT } from '../data/friends'
 import { B1_12_GARDEN_MAYA, B1_12_LEO, B1_12_LEO_FRIEND, B1_12_LEO_LESSON, B1_12_MAYA_FRIEND, B1_12_MAYA_LESSON, B1_12_SPECIAL, B1_12_SPECIAL_FRIEND, B1_12_SPECIAL_LESSON } from '../data/b1HostGarden'
 import { B1_12_CLOSE, B1_12_FRAGMENTS, B1_12_PLAZA_ID } from '../data/b1HostPlaza'
@@ -165,7 +167,7 @@ type Talk = {
   level?: string
   note?: string
   /** Charla especial de una misión */
-  quest?: 'lostIntro' | 'b1-02-plane' | 'b1-04-maya' | 'b1-06-leo' | 'b1-08-special' | 'b1-10-leo' | 'b1-12-leo' | 'b1-12-maya' | 'b1-12-special'
+  quest?: 'lostIntro' | 'b1-02-plane' | 'b1-04-maya' | 'b1-06-leo' | 'b1-08-special' | 'b1-10-leo' | 'b1-12-leo' | 'b1-12-maya' | 'b1-12-special' | 'b2-01-special'
 }
 
 export function Explore({ state, update, onBattle, onWorld }: { state: GameState; update: Update; onBattle: (enemyId: string) => void; onWorld: () => void }) {
@@ -356,6 +358,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
     (e: Entity) => {
       if (e.type === 'npc') {
         const npc = npcOf(e.id)
+        // B2-01 · Catching Up: la charla de amistad con la persona especial, después de vencer al eco (una sola vez; se guarda B2_01_FRIEND)
+        if (e.id === B2_01_SPECIAL && state.defeated.includes(B2_01_BOSS) && !state.opened.includes(B2_01_FRIEND)) {
+          setMsg(null)
+          const c = B2_01_SPECIAL_CHAT
+          setTalk({ friendId: 'interest', story: null, lines: [{ who: 'friend', text: c.text, es: c.es, options: c.options }], title: 'Charla casual', level: 'B2', quest: 'b2-01-special' })
+          return
+        }
         // B1-04 · House Rules: la charla de amistad con Maya en el vestíbulo (una sola vez; se guarda B1_04_FRIEND)
         if (e.id === B1_04_MAYA_LOBBY && !state.opened.includes(B1_04_FRIEND)) {
           setMsg(null)
@@ -984,6 +993,16 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 })
                 if (delta < 0) setMsg({ text: `${talkFriend.name} no te entendió. La amistad bajó un poco.`, sub: 'La puerta del avión ya está abierta. Leo espera junto a la cinta de equipaje.', tone: 'warn' })
                 else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: 'La puerta del avión ya está abierta. Leo espera junto a la cinta de equipaje.', tone: 'good' })
+                return
+              }
+              if (t.quest === 'b2-01-special') {
+                // Charla casual B2 con la persona especial: la amistad cambia con la regla de las charlas casuales. Después, Leo cierra la misión
+                update((s) => {
+                  const n = applyCasual(s, 'interest', delta)
+                  return { ...n, opened: n.opened.includes(B2_01_FRIEND) ? n.opened : [...n.opened, B2_01_FRIEND] }
+                })
+                if (delta < 0) setMsg({ text: `${talkFriend.name} no te entendió. La amistad bajó un poco.`, sub: 'Leo te espera en la mesa del café.', tone: 'warn' })
+                else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: 'Leo te espera en la mesa del café.', tone: 'good' })
                 return
               }
               if (t.quest === 'b1-04-maya') {

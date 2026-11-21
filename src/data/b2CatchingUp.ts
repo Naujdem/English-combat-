@@ -12,7 +12,8 @@ import type { TextOnlyContent } from '../components/TextOnly'
  *   la persona especial: lección 'pp-contrast-b2' + práctica (b2-01-ppcont).
  * Bloque 2: la persona especial: lección 'reactions-b2' + práctica (b2-01-reactions) → Maya: Group Chat (b2-01-chat, Text Only) →
  *   dos Awkward Silences (esbirros) → el jefe ligero Echo of the Grudge (2 fases), en el muelle.
- * Bloque 3 (pendiente): amistad, diario, recompensa y cierre (el fragmento suelto).
+ * Bloque 3: la persona especial: charla de amistad (B2_01_FRIEND, Explore.tsx) → Leo: el cierre (b2-01-close): recupera los temas,
+ *   el eco suelta UN fragmento que queda suelto en el reloj (b2Core, data/b2World.ts) y se abre el lugar 2. Diario: data/b2Diary.ts.
  */
 export const B2_01_PORT_ID = 'b2-01-port'
 export const B2_01_SPECIAL = 'b2-01-special'
@@ -33,6 +34,9 @@ export const B2_01_CHAT = 'b2-01-chat'
 export const B2_01_SILENCE1 = 'b2-01-silence1'
 export const B2_01_SILENCE2 = 'b2-01-silence2'
 export const B2_01_BOSS = 'b2-01-boss'
+/** Bloque 3: la charla de amistad con la persona especial y el cierre de la misión (b2CloseId(1) = 'b2-01-close') */
+export const B2_01_FRIEND = 'b2-01-friend'
+export const B2_01_CLOSE = 'b2-01-close'
 /** Charlas con Marisol, Jeison y Nayi: la marca es el id del NPC + '-talk' */
 export const B2_01_TALKS = [`${B2_01_MARISOL}-talk`, `${B2_01_JEISON}-talk`, `${B2_01_NAYI}-talk`]
 
@@ -91,6 +95,8 @@ export const B2_01_PORT: SceneDef = {
     { label: 'El chat de grupo', done: s.opened.includes(B2_01_CHAT) },
     { label: 'Los silencios incómodos (2)', done: s.defeated.includes(B2_01_SILENCE2) },
     { label: 'Echo of the Grudge', done: s.defeated.includes(B2_01_BOSS) },
+    { label: 'Charla con la persona especial', done: s.opened.includes(B2_01_FRIEND) },
+    { label: 'El cierre (Leo)', done: s.opened.includes(B2_01_CLOSE) },
   ],
   intro: {
     first: 'The morning after the harbour. The Port Café smells of coffee. — La mañana después del puerto. El café huele a café.',
@@ -186,13 +192,14 @@ const SILENCE = (id: string, line: { text: string; es: string }): EnemyDef => ({
 /**
  * Echo of the Grudge: un resto de The Grudge (B1) que se forma en el muelle. Jefe ligero de 2 fases.
  * Fase 1: present perfect simple o continuo (etiqueta b2-01-boss-pp) · Fase 2: reacciones y respuestas cortas (b2-01-boss-re).
- * En el bloque 3 suelta UN fragmento (queda suelto en el reloj) y el atuendo.
+ * Suelta la sudadera del café del puerto ('sudadera-cafe', data/school.ts). El fragmento suelto se cuenta en el cierre (Leo).
  */
 export const B2_01_BOSS_DEF: EnemyDef = {
   id: B2_01_BOSS,
   name: 'Echo of the Grudge',
   person: 'Echo of the Grudge',
   kind: 'boss',
+  reward: 'sudadera-cafe',
   hp: 8,
   topics: [PC, RE],
   kinds: KINDS,
