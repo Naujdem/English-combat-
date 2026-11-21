@@ -75,6 +75,8 @@ import { B1_08_PREDICT } from './b1Predict'
 import { B1_07_DETECTIVE_CONTENT, B1_07_TAKE_SCRIPT } from './b1Market'
 import { B1_07_ESCAPE_ROOM } from './b1Escape'
 import { B1_07_CLOSE_SCRIPT } from './b1Room'
+import { B2_01_BREAKFAST_SCRIPT, B2_01_JEISON_SCRIPT, B2_01_MARISOL_SCRIPT, B2_01_NAYI_SCRIPT } from './b2CatchingUp'
+import { B2_01_CATCHUP_IDS, B2_01_PPCONT_IDS } from './questions-b2-01'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -6676,4 +6678,83 @@ NPC_TASKS['b1-s3-close'] = {
   coins: 20,
   steps: [],
   reward: { text: 'Extra: House Party', es: 'Extra: Fiesta en casa', sub: 'Extra completado. Ganaste la camisa de fiesta.', say: "Great party, isn't it?" },
+}
+
+// ── B2-01 · Catching Up, bloque 1 (el paseo del puerto, data/b2CatchingUp.ts). NO guarda el cierre de la misión ──
+// La persona especial: el desayuno y la voz de Leo (script)
+NPC_TASKS['b2-01-breakfast'] = {
+  npc: 'b2-01-special',
+  done: 'b2-01-breakfast',
+  activity: 'script',
+  script: B2_01_BREAKFAST_SCRIPT,
+  steps: [],
+  reward: { text: "Come on, I'll show you.", es: 'Ven, te enseño.', sub: 'Vuelve a hablar con la persona especial.' },
+}
+
+// La persona especial: lección 'catching-up-b2' + práctica b2-01-cu1…cu8. 5 monedas
+NPC_TASKS['b2-01-catchup'] = {
+  npc: 'b2-01-special',
+  done: 'b2-01-catchup',
+  lesson: 'catching-up-b2',
+  activity: 'practice',
+  practice: 'catching-up-b2',
+  practiceIds: B2_01_CATCHUP_IDS,
+  coins: 5,
+  requires: { id: 'b2-01-breakfast', text: 'Good morning!', es: '¡Buenos días!', sub: 'Primero desayuna con tus amigos.' },
+  steps: [],
+  reward: {
+    text: 'Long time no see! What have you been up to?',
+    es: '¡Cuánto tiempo sin verte! ¿En qué has andado?',
+    sub: 'Lección hecha. Ponte al día con Marisol, Jeison y Nayi en el paseo.',
+    say: 'Long time no see! What have you been up to?',
+  },
+}
+
+// Ponerse al día: Marisol → Jeison → Nayi (scripts, en ese orden). Cada uno cuenta qué ha estado haciendo
+const B2_01_TALK_REQ = { id: 'b2-01-catchup', text: 'Oh, hi! Give me a second.', es: '¡Ah, hola! Dame un segundo.', sub: 'Primero termina la lección de la persona especial.' }
+NPC_TASKS['b2-01-marisol'] = {
+  npc: 'b2-01-marisol',
+  done: 'b2-01-marisol-talk',
+  activity: 'script',
+  script: B2_01_MARISOL_SCRIPT,
+  requires: B2_01_TALK_REQ,
+  steps: [],
+  reward: { text: "I've been working on the garden for weeks.", es: 'Llevo semanas trabajando en el jardín.', sub: 'Te pusiste al día con Marisol.' },
+}
+NPC_TASKS['b2-01-jeison'] = {
+  npc: 'b2-01-jeison',
+  done: 'b2-01-jeison-talk',
+  activity: 'script',
+  script: B2_01_JEISON_SCRIPT,
+  requires: { id: 'b2-01-marisol-talk', text: 'Hey! One minute, I\'m reading.', es: '¡Hola! Un minuto, estoy leyendo.', sub: 'Primero ponte al día con Marisol, en la terraza.' },
+  steps: [],
+  reward: { text: "I've finished two exams.", es: 'Ya terminé dos exámenes.', sub: 'Te pusiste al día con Jeison.' },
+}
+NPC_TASKS['b2-01-nayi'] = {
+  npc: 'b2-01-nayi',
+  done: 'b2-01-nayi-talk',
+  activity: 'script',
+  script: B2_01_NAYI_SCRIPT,
+  requires: { id: 'b2-01-jeison-talk', text: 'Lupe, wait!', es: '¡Lupe, espera!', sub: 'Primero ponte al día con Jeison.' },
+  steps: [],
+  reward: { text: "I've been running with the dogs since seven!", es: '¡Llevo corriendo con los perros desde las siete!', sub: 'Te pusiste al día con Nayi.' },
+}
+
+// La persona especial: lección 'pp-contrast-b2' + práctica b2-01-pc1…pc8, después de las tres charlas. 5 monedas
+NPC_TASKS['b2-01-ppcont'] = {
+  npc: 'b2-01-special',
+  done: 'b2-01-ppcont',
+  lesson: 'pp-contrast-b2',
+  activity: 'practice',
+  practice: 'pp-contrast-b2',
+  practiceIds: B2_01_PPCONT_IDS,
+  coins: 5,
+  requires: { id: 'b2-01-nayi-talk', text: 'Talk to everyone first!', es: '¡Primero habla con todos!', sub: 'Ponte al día con Marisol, Jeison y Nayi.' },
+  steps: [],
+  reward: {
+    text: "Some have been working, some have finished. Now you can tell the difference.",
+    es: 'Unos han estado trabajando, otros ya terminaron. Ahora sabes la diferencia.',
+    sub: 'Bloque 1 terminado. (El resto de la misión llega en el bloque 2.)',
+    say: 'Now you can tell the difference.',
+  },
 }

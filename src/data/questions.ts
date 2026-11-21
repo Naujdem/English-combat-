@@ -52,6 +52,7 @@ import { B1_13_QUESTIONS } from './questions-b1-13'
 import { B1_10_QUESTIONS } from './questions-b1-10'
 import { B1_12_QUESTIONS } from './questions-b1-12'
 import { B1_14_QUESTIONS } from './questions-b1-14'
+import { B2_01_QUESTIONS } from './questions-b2-01'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
@@ -438,6 +439,7 @@ export const QUESTIONS: Question[] = [
   ...B1_09_QUESTIONS,
   ...B1_12_QUESTIONS,
   ...B1_14_QUESTIONS,
+  ...B2_01_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
   ...B1_11_QUESTIONS,
   ...B1_13_QUESTIONS,
@@ -657,7 +659,27 @@ export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: str
   return from[Math.floor(Math.random() * from.length)]
 }
 
-export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1'; lesson: string[] }> = {
+export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' | 'B2'; lesson: string[] }> = {
+  // B2-01 · Catching Up (data/b2CatchingUp.ts)
+  'catching-up-b2': {
+    name: 'Ponerse al día',
+    level: 'B2',
+    lesson: [
+      'Preguntas clave: What have you been up to? · How have you been? · How\'s it going with…?',
+      'Para empezar: Long time no see! · It\'s been ages! · Good to see you!',
+      'Respuestas informales cortas: Been busy. · Not much, you? · Same old.',
+    ],
+  },
+  'pp-contrast-b2': {
+    name: 'Present perfect simple o continuo (B2)',
+    level: 'B2',
+    lesson: [
+      'Actividad → continuo (I\'ve been painting). Resultado → simple (I\'ve painted two walls).',
+      'Número o cantidad → simple: I\'ve walked five dogs.',
+      'Evidencia visible → continuo: You\'re wet. Have you been running?',
+      'How long → continuo · How many / how much → simple. Verbos de estado: siempre simple (I\'ve known her for years).',
+    ],
+  },
   greetings: {
     name: 'Saludos y presentación',
     level: 'A1',

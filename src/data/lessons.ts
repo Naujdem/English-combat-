@@ -1129,4 +1129,22 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: "Frase negativa → tag positivo: You don't eat meat, do you? · She didn't call, did she? · We won't be late, will we?", topic: 'party-b1' },
     { who: 'board', text: "You didn't invite Mr. Fine Print, ___ you?", choice: { options: ["didn't", 'do', 'did'], answer: 2, tip: 'Frase negativa en pasado → tag positivo: did you?' } },
   ],
+  // B2-01 · bloque 1 (el paseo del puerto, data/b2CatchingUp.ts): la persona especial, ponerse al día
+  'catching-up-b2': [
+    { who: 'special', text: 'When you meet a friend after some time, you "catch up": you ask what is new.', es: 'Cuando ves a un amigo después de un tiempo, se "ponen al día": preguntan qué hay de nuevo.' },
+    { who: 'special', text: 'Key questions: What have you been up to? How have you been? How\'s it going with your job?', es: 'Preguntas clave: ¿En qué has andado? ¿Cómo has estado? ¿Cómo te va con tu trabajo?' },
+    { who: 'special', text: 'To start: Long time no see! It\'s been ages! Good to see you!', es: 'Para empezar: ¡Cuánto tiempo sin verte! ¡Hace siglos! ¡Qué bueno verte!' },
+    { who: 'special', text: 'Informal answers are short. You can drop the subject: "Been busy." "Not much, you?" "Same old."', es: 'Las respuestas informales son cortas. Se puede quitar el sujeto: "He estado ocupado." "Nada especial, ¿y tú?" "Lo de siempre."' },
+    { who: 'board', text: 'Hey! Long time no see! What have you been ___ to?', choice: { options: ['up', 'on', 'in'], answer: 0, tip: 'La expresión fija es "be up to": What have you been up to?' } },
+  ],
+  // B2-01 · bloque 1: la persona especial, present perfect simple o continuo (nivel B2)
+  'pp-contrast-b2': [
+    { who: 'special', text: 'You know both forms. At B2 the question is: which one, and why?', es: 'Ya conoces las dos formas. En B2 la pregunta es: ¿cuál, y por qué?' },
+    { who: 'special', text: 'Activity → continuous. Result → simple. "I\'ve been painting the kitchen" (the activity). "I\'ve painted two walls" (the result).', es: 'Actividad → continuo. Resultado → simple. "He estado pintando la cocina" (la actividad). "He pintado dos paredes" (el resultado).' },
+    { who: 'special', text: 'A number or a quantity → simple: "Nayi has walked five dogs today." Never: has been walking five dogs.', es: 'Un número o una cantidad → simple: "Nayi ha paseado cinco perros hoy". Nunca: has been walking five dogs.' },
+    { who: 'special', text: 'You can see the evidence now → continuous: "You\'re out of breath. Have you been running?"', es: 'Ves la evidencia ahora → continuo: "Estás sin aliento. ¿Has estado corriendo?"' },
+    { who: 'special', text: 'How long → continuous. How many / how much → simple. "How long have you been studying?" "How many exams have you finished?"', es: 'How long → continuo. How many / how much → simple. "¿Cuánto tiempo llevas estudiando?" "¿Cuántos exámenes has terminado?"' },
+    { who: 'special', text: 'Remember B1: state verbs (know, like, have = own) don\'t use the continuous. "I\'ve known her for years."', es: 'Recuerda B1: los verbos de estado (know, like, have = tener) no van en continuo. "La conozco desde hace años".' },
+    { who: 'board', text: "Jeison: I've ___ two exams. Only one more!", choice: { options: ['been finishing', 'finished', 'finish'], answer: 1, tip: 'Un resultado con número (two exams) → simple: finished.' } },
+  ],
 }

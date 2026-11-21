@@ -1455,6 +1455,46 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#6b3fa0', hair: '#222222', skin: '#c68e6a', gender: 'male' },
     doneLine: { text: 'This final is so exciting!', es: '¡Esta final es tan emocionante!' },
   },
+  // ── B2-01 · Catching Up, bloque 1 (el paseo del puerto, data/b2CatchingUp.ts) ──
+  // La persona especial (guía): tareas b2-01-breakfast, b2-01-catchup y b2-01-ppcont
+  'b2-01-special': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: "See? Catching up isn't so hard.", es: '¿Ves? Ponerse al día no es tan difícil.' },
+  },
+  // Leo y Maya (mismo aspecto que en B1), en la mesa del café. Sin tarea en este bloque
+  'b2-01-leo': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    doneLine: { text: "I'm fine, really. It's just the coffee.", es: 'Estoy bien, de verdad. Es solo el café.' },
+  },
+  'b2-01-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    doneLine: { text: "Your hot chocolate is getting cold!", es: '¡Tu chocolate se está enfriando!' },
+  },
+  // Marisol, Jeison y Nayi (mismo aspecto que en B1): charlas para ponerse al día
+  'b2-01-marisol': {
+    name: 'Marisol',
+    look: { shirt: '#b5653a', hair: '#5a3a22', skin: '#d7a77a', gender: 'female' },
+    doneLine: { text: "Come and see the garden when it's finished!", es: '¡Ven a ver el jardín cuando esté terminado!' },
+  },
+  'b2-01-moscu': {
+    name: 'Moscú',
+    look: { shirt: '#9a9a9a', hair: '#9a9a9a', skin: '#9a9a9a' },
+    doneLine: { text: 'Meow.', es: 'Miau.' },
+  },
+  'b2-01-jeison': {
+    name: 'Jeison',
+    look: { shirt: '#3b9d5d', hair: '#2b2b33', skin: '#c68642', gender: 'male' },
+    doneLine: { text: 'One more exam. Wish me luck!', es: 'Un examen más. ¡Deséame suerte!' },
+  },
+  'b2-01-nayi': {
+    name: 'Nayi',
+    look: { shirt: '#e0873a', hair: '#6b3a2a', skin: '#d9a37a', gender: 'female' },
+    doneLine: { text: 'Lupe wants to keep running!', es: '¡Lupe quiere seguir corriendo!' },
+  },
 }
 
 /** Datos inventados del papel de traslado: así no se pide información real del jugador */
