@@ -670,6 +670,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
       'Respuestas informales cortas: Been busy. · Not much, you? · Same old.',
     ],
   },
+  'reactions-b2': {
+    name: 'Reacciones y respuestas cortas',
+    level: 'B2',
+    lesson: [
+      'Reacciones: No way! · That\'s amazing! · You must be thrilled! · I bet. · Fair enough.',
+      'So + auxiliar + sujeto (frase positiva): "I love it." → So do I. · "I\'m tired." → So am I.',
+      'Neither + auxiliar + sujeto (frase negativa): "I haven\'t slept." → Neither have I.',
+      'I think so / I don\'t think so · I hope so / I hope not.',
+    ],
+  },
   'pp-contrast-b2': {
     name: 'Present perfect simple o continuo (B2)',
     level: 'B2',
