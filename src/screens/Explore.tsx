@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { isB2Unlocked } from '../data/b2World'
 import type { DialogLine, Entity, GameState } from '../game/types'
 import type { Update } from '../game/store'
 import { SCENES, bossDoorOpen, friendById, heroLook } from '../game/helpers'
@@ -1657,7 +1658,8 @@ function Backpack({ state, update, chips, hasBoss, onNotebook }: { state: GameSt
               </button>
               {b1 && (
                 <button role="tab" aria-selected={tab === 'memories'} className={`rounded-xl border-2 px-2 py-1.5 text-sm font-semibold ${tab === 'memories' ? 'border-[#9b6ad6] bg-[#9b6ad6]/15 text-[#d9c7f2]' : 'border-line text-paper/70'}`} onClick={() => setTab('memories')}>
-                  Recuerdos
+                  {/* B2 (ficha 0.3): la pestaña pasa a llamarse "Recuerdos y Ventanas" */}
+                  {isB2Unlocked(state) ? 'Recuerdos y Ventanas' : 'Recuerdos'}
                 </button>
               )}
             </div>

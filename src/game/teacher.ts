@@ -942,6 +942,19 @@ PRESETS.push(
   }),
 )
 
+/** B2 (ficha 0): B1 completo (los 14 cierres). Con apertura: además el lugar 1 de B2 queda abierto. Núcleo: n cierres de B2 */
+const B1_ALL = [B1_OPENING, ...Array.from({ length: 14 }, (_, j) => closeId(j + 1))]
+const b2Start = (s: GameState, extra: string[]) => {
+  const b = b1Start(s, B1_ALL)
+  return { ...b, opened: add(b.opened.filter((o) => !o.startsWith('b2-')), extra) }
+}
+const b2Close = (n: number) => `b2-${String(n).padStart(2, '0')}-close`
+PRESETS.push(
+  { id: 'b2-start', label: 'B2: inicio (B1 completo, sin apertura)', apply: (s) => b2Start(s, []) },
+  { id: 'b2-opened', label: 'B2: después de la apertura', apply: (s) => b2Start(s, ['b2-00-opening']) },
+  { id: 'b2-core', label: 'B2: núcleo a medio llenar (lugares 1 a 4 cerrados)', apply: (s) => b2Start(s, ['b2-00-opening', b2Close(1), b2Close(2), b2Close(3), b2Close(4)]) },
+)
+
 /** Marca todas las lecciones como vistas (para no repetirlas al revisar) */
 export function skipLessons(s: GameState): GameState {
   return { ...s, seenLesson: add(s.seenLesson, Object.keys(LESSONS)) as GameState['seenLesson'] }

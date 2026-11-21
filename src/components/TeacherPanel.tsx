@@ -10,7 +10,7 @@ import { SCENES } from '../game/helpers'
 import { walkable } from './Tiles'
 import { ENEMIES } from '../data/enemies'
 import { NPCS } from '../data/npcs'
-import { btn, btnGhost, Overlay, Panel } from './ui'
+import { btn, btnGhost, btnPrimary, Overlay, Panel } from './ui'
 import { FragmentJoin } from './FragmentJoin'
 import { MemoryFrame } from './MemoryFrame'
 import { MiniTalk } from './MiniTalk'
@@ -22,13 +22,18 @@ import { Inscriptions } from './Inscriptions'
 import { INS_DEMOS } from '../data/b1InscriptionsDemo'
 import { CommandPuzzle } from './CommandPuzzle'
 import { STONE_DEMOS } from '../data/b1StoneDemo'
+import { WindowFrame, UnheardLine, WindowExit } from './WindowFrame'
+import { CoreBar } from './B2Map'
+import { FactCheck } from './FactCheck'
+import { Unheard } from './Unheard'
+import { B2_FACT_CHECK_DEMO, B2_UNHEARD_DEMO } from '../data/b2Demos'
 
 /** Botón flotante y panel del modo profesor */
 export function TeacherPanel({ state, update }: { state: GameState; update: Update }) {
   const t = useTeacher()
   const [open, setOpen] = useState(false)
   // B1: vistas de prueba de la estética de los recuerdos (no cambian la partida)
-  const [demo, setDemo] = useState<'frag-first' | 'frag-next' | 'static' | 'ins-door' | 'ins-bridge' | 'stone-temple' | 'stone-room' | 'stone-tunnel' | 'music' | 'whatif' | null>(null)
+  const [demo, setDemo] = useState<'frag-first' | 'frag-next' | 'static' | 'ins-door' | 'ins-bridge' | 'stone-temple' | 'stone-room' | 'stone-tunnel' | 'music' | 'whatif' | 'b2-window' | 'b2-exit' | 'b2-factcheck' | 'b2-unheard' | null>(null)
   if (!t.on) return null
 
   const scene = SCENES[state.sceneId]
@@ -68,6 +73,33 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
               const r = INS_DEMOS[demo === 'ins-door' ? 'door' : 'bridge']
               return <Inscriptions title={r.title} intro={r.intro} scene={r.scene} plates={r.plates} finish={r.finish} onClose={() => setDemo(null)} />
             })()}
+          </div>
+        </div>
+      )}
+      {demo === 'b2-window' && (
+        <div className="fixed inset-0 z-[80] bg-ink">
+          <WindowFrame year={2061} entering>
+            <div className="mx-auto flex h-full max-w-md flex-col justify-center gap-3 overflow-y-auto px-3 py-4">
+              <p className="text-center text-xs text-paper/60">Prueba de Ventana (ficha 0.3): filtro azul, caras normales y la regla de "nadie te oye"</p>
+              <CoreBar filled={2.5} />
+              <div className="rounded-xl border border-line bg-black/30 p-3">
+                <p className="text-xs font-semibold text-paper/60">Tú intentas decir: "Hello? Can you hear me?"</p>
+                <UnheardLine tried="Hello? Can you hear me?" />
+              </div>
+              <button className={btnPrimary} onClick={() => setDemo('b2-exit')}>Salir de la Ventana</button>
+            </div>
+          </WindowFrame>
+        </div>
+      )}
+      {demo === 'b2-exit' && <WindowExit onDone={() => setDemo(null)} />}
+      {(demo === 'b2-factcheck' || demo === 'b2-unheard') && (
+        <div className="fixed inset-0 z-[80] overflow-y-auto bg-ink/95 p-3">
+          <div className="mx-auto max-w-md">
+            {demo === 'b2-factcheck' ? (
+              <FactCheck {...B2_FACT_CHECK_DEMO} onClose={() => setDemo(null)} />
+            ) : (
+              <Unheard place="2061 · Night School" room={B2_UNHEARD_DEMO} onClose={() => setDemo(null)} />
+            )}
           </div>
         </div>
       )}
@@ -359,6 +391,15 @@ export function TeacherPanel({ state, update }: { state: GameState; update: Upda
                 <button className={`${btn} px-2 text-sm`} onClick={() => { setOpen(false); setDemo('stone-temple') }}>Templo</button>
                 <button className={`${btn} px-2 text-sm`} onClick={() => { setOpen(false); setDemo('stone-room') }}>Cuarto</button>
                 <button className={`${btn} px-2 text-sm`} onClick={() => { setOpen(false); setDemo('stone-tunnel') }}>Túnel</button>
+              </div>
+            </div>
+
+            <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-paper/55">B2 · Lo común (ficha 0)</p>
+            <div className="mt-1 grid gap-2">
+              <button className={`${btn} text-left text-sm`} onClick={() => { setOpen(false); setDemo('b2-window') }}>Probar Ventana (entrada, filtro azul, nadie te oye, salida)</button>
+              <div className="grid grid-cols-2 gap-2">
+                <button className={`${btn} text-sm`} onClick={() => { setOpen(false); setDemo('b2-factcheck') }}>Probar Fact Check</button>
+                <button className={`${btn} text-sm`} onClick={() => { setOpen(false); setDemo('b2-unheard') }}>Probar Unheard</button>
               </div>
             </div>
 
