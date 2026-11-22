@@ -77,7 +77,8 @@ import { B1_07_ESCAPE_ROOM } from './b1Escape'
 import { B1_07_CLOSE_SCRIPT } from './b1Room'
 import { B2_01_BREAKFAST_SCRIPT, B2_01_GROUP_CHAT, B2_01_JEISON_SCRIPT, B2_01_MARISOL_SCRIPT, B2_01_NAYI_SCRIPT } from './b2CatchingUp'
 import { B2_01_CATCHUP_IDS, B2_01_PPCONT_IDS, B2_01_REACTIONS_IDS } from './questions-b2-01'
-import { B2_02_ARRIVAL_SCRIPT } from './b2Herald'
+import type { FactCheckContent } from '../components/FactCheck'
+import { B2_02_ARRIVAL_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
 import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
 
 /**
@@ -102,7 +103,9 @@ export type NpcTask = {
   /** Sopas de la abuela que da al completarse (A Dinner to Remember): en combate llenan la vida una vez */
   soup?: number
   /** En vez de la charla, abre un juego propio */
-  activity?: 'review' | 'b1exam' | 'reporter' | 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music' | 'whatif'
+  activity?: 'review' | 'b1exam' | 'reporter' | 'guess' | 'pens' | 'planner' | 'vocab' | 'attendance' | 'sounds' | 'verbs' | 'mystery' | 'timeline' | 'plan' | 'tour' | 'party60' | 'predict' | 'speech' | 'clocks' | 'round' | 'practice' | 'sequence' | 'reconstruct' | 'fixradio' | 'debate' | 'command' | 'memory' | 'luggage' | 'route' | 'book' | 'futureplan' | 'exam' | 'fitting' | 'enough' | 'inscriptions' | 'callforhelp' | 'script' | 'textonly' | 'fineprint' | 'whichdog' | 'music' | 'whatif' | 'factcheck'
+  /** Para activity 'factcheck' (Fact Check, B2-02): declaraciones y borradores del Herald (components/FactCheck.tsx) */
+  factcheck?: FactCheckContent
   /** Para activity 'music' (Music Challenge, B1-10): la canción con huecos (components/MusicChallenge.tsx) */
   music?: MusicContent
   /** Para activity 'party60' con contenido propio (B1 · Extras, House Party): sin él, la fiesta de los 60 años */
@@ -6869,7 +6872,7 @@ NPC_TASKS['b2-02-interview-prep'] = {
   reward: {
     text: "Reliable, adaptable, good under pressure. That's you.",
     es: '{h:Confiable, adaptable, bueno|Confiable, adaptable, buena} bajo presión. Así eres tú.',
-    sub: 'Lección hecha. Priya te espera en la mesa de redacción con la guía de estilo.',
+    sub: 'Lección hecha. Amara te espera en la sala de reuniones para la entrevista.',
     say: "Reliable, adaptable, good under pressure. That's you.",
   },
 }
@@ -6883,12 +6886,12 @@ NPC_TASKS['b2-02-style'] = {
   practice: 'inclusive-b2',
   practiceIds: B2_02_STYLE_IDS,
   coins: 5,
-  requires: { id: 'b2-02-interview-prep', text: "Hi! I'm Priya. Busy morning, sorry.", es: '¡Hola! Soy Priya. Mañana ocupada, perdón.', sub: 'Primero prepara la entrevista con Manuel.' },
+  requires: { id: 'b2-02-interview', text: "Hi! I'm Priya. Busy morning, sorry.", es: '¡Hola! Soy Priya. Mañana ocupada, perdón.', sub: 'Primero haz la entrevista con Amara, en la sala de reuniones.' },
   steps: [],
   reward: {
     text: 'Firefighter, police officer, chairperson. And singular they.',
     es: 'Bombero, policía, quien preside. Y they en singular.',
-    sub: 'Guía de estilo leída. Manuel te prepara para la reunión editorial.',
+    sub: 'Lección hecha. Habla otra vez con Priya: tiene un borrador para revisar.',
     say: 'Firefighter, police officer, chairperson.',
   },
 }
@@ -6902,7 +6905,7 @@ NPC_TASKS['b2-02-meeting'] = {
   practice: 'meetings-b2',
   practiceIds: B2_02_MEETING_IDS,
   coins: 5,
-  requires: { id: 'b2-02-style', text: 'Have you read the style guide?', es: '¿Ya leíste la guía de estilo?', sub: 'Primero habla con Priya en la mesa de redacción.' },
+  requires: { id: 'b2-02-styleguide', text: 'Have you read the style guide?', es: '¿Ya leíste la guía de estilo?', sub: 'Primero revisa el borrador con Priya (Style Guide).' },
   steps: [],
   reward: {
     text: 'Could you run that by me again?',
@@ -6926,7 +6929,62 @@ NPC_TASKS['b2-02-patterns'] = {
   reward: {
     text: 'Remember to check the date. I remember checking it.',
     es: 'Acuérdate de revisar la fecha. Recuerdo haberla revisado.',
-    sub: 'Bloque 1 terminado. (La entrevista, la reunión y el jefe llegan en el bloque 2.)',
+    sub: 'Lección hecha. Viktor te espera en la mesa de redacción con unos borradores.',
     say: 'Remember to check the date.',
+  },
+}
+
+// ── B2-02 · The Herald, bloque 2 (la misma redacción). NO guarda el cierre de la misión ──
+// Amara: la entrevista (DebateTalk). Siempre termina; todos los desenlaces dan la práctica. 10 monedas
+NPC_TASKS['b2-02-interview'] = {
+  npc: 'b2-02-amara',
+  done: 'b2-02-interview',
+  activity: 'debate',
+  requires: { id: 'b2-02-interview-prep', text: "I'll see you for the interview when you're ready.", es: 'Te veo para la entrevista cuando estés {h:listo|lista}.', sub: 'Primero prepara la entrevista con Manuel.' },
+  debate: {
+    title: 'The interview',
+    ask: 'Tú respondes:',
+    turns: B2_02_INTERVIEW_TURNS,
+    endings: B2_02_INTERVIEW_ENDINGS,
+  },
+  coins: 10,
+  steps: [],
+  reward: {
+    text: 'You start today. Welcome to the Herald.',
+    es: 'Empiezas hoy. {h:Bienvenido|Bienvenida} al Herald.',
+    sub: 'Ya tienes la práctica. Priya, la otra practicante, te explica la guía de estilo.',
+    say: 'You start today. Welcome to the Herald.',
+  },
+}
+
+// Priya: Style Guide (The Fine Print con sellos STYLE OK / FIX IT). Sin errores, escudo. 5 monedas
+NPC_TASKS['b2-02-styleguide'] = {
+  npc: 'b2-02-priya',
+  done: 'b2-02-styleguide',
+  activity: 'fineprint',
+  fineprint: B2_02_STYLE_GUIDE,
+  requires: { id: 'b2-02-style', text: 'Style guide first, coffee second.', es: 'Primero la guía de estilo, después el café.', sub: 'Primero haz la lección de Priya.' },
+  coins: 5,
+  steps: [],
+  reward: {
+    text: 'Clean copy! Amara will be happy.',
+    es: '¡Texto limpio! Amara estará contenta.',
+    sub: 'Borrador revisado. Manuel te prepara para la reunión editorial.',
+  },
+}
+
+// Viktor: Fact Check, versión fácil (6 rondas, se gana con 5). Al terminar, Viktor se corrompe (desaparece) y salen los practicantes. 10 monedas
+NPC_TASKS['b2-02-factcheck'] = {
+  npc: 'b2-02-viktor',
+  done: 'b2-02-factcheck',
+  activity: 'factcheck',
+  factcheck: B2_02_FACT_CHECK,
+  requires: { id: 'b2-02-patterns', text: "Not now. I've been fighting with this page all morning.", es: 'Ahora no. Llevo toda la mañana peleando con esta página.', sub: 'Primero termina las lecciones de Manuel.' },
+  coins: 10,
+  steps: [],
+  reward: {
+    text: 'Viktor stares at the wall clock. Tick… tock… tick-tock-tick-tock…',
+    es: 'Viktor mira el reloj de pared. Tic… tac… tic-tac-tic-tac…',
+    sub: 'Fact Check terminado. El reloj de Viktor se acelera… y los practicantes ya no parecen ellos mismos.',
   },
 }

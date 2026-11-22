@@ -68,3 +68,56 @@ export const B2_02_QUESTIONS: Question[] = [
   { id: 'b2-02-vp5', topic: VP, prompt: 'He stopped ___ the phone. It was his mother.', options: ['answer', 'answering', 'to answer'], answer: 2, tip: 'Se detuvo para contestar → stop to.', tags: T_VP },
   { id: 'b2-02-vp6', topic: VP, kind: 'fix', prompt: 'She suggested me to call him.', options: ['She suggested calling him.', 'She suggested to me call him.', 'She suggested me calling him.'], answer: 0, tip: 'suggest + -ing (o suggest that I call), nunca suggest me to.', tags: T_VP },
 ]
+
+const INTERN = ['b2-02-intern']
+const BOSS_PP = ['b2-02-boss-pp']
+const BOSS_VP = ['b2-02-boss-vp']
+
+/** Bloque 2: practicantes agotados (b2-02-it1…it6) y The Deadline (fase 1: b2-02-bp1…bp6 · fase 2: b2-02-bv1…bv6) */
+export const B2_02_COMBAT_QUESTIONS: Question[] = [
+  // Bloque 2 · practicantes agotados (esbirros)
+  { id: 'b2-02-it1', topic: PP, kind: 'fix', prompt: 'I had been work here for a year.', options: ['I had been working here for a year.', 'I had been worked here for a year.', 'I have been work here for a year.'], answer: 0, tip: 'had been + -ing: had been working.', tags: INTERN },
+  { id: 'b2-02-it2', topic: VP, kind: 'fix', prompt: 'I want that you check it.', options: ['I want you checking it.', 'I want you to check it.', 'I want to you check it.'], answer: 1, tip: 'want + objeto + to.', tags: INTERN },
+  { id: 'b2-02-it3', topic: VP, kind: 'fix', prompt: 'She suggested me to call him.', options: ['She suggested me calling him.', 'She suggested to call me him.', 'She suggested that I call him.'], answer: 2, tip: 'suggest that I call (o suggest calling).', tags: INTERN },
+  { id: 'b2-02-it4', topic: IN, prompt: 'Every intern should finish ___ article before six.', options: ['their', 'they', 'theirs'], answer: 0, tip: 'Posesivo neutro: their.', tags: INTERN },
+  { id: 'b2-02-it5', topic: PP, prompt: 'They were tired because they ___ all night.', options: ['had been working', 'have been working', 'had been worked'], answer: 0, tip: 'Causa en el pasado de algo que duró → had been working.', tags: INTERN },
+  { id: 'b2-02-it6', topic: VP, prompt: 'Viktor told us ___ the headline.', options: ['changing', 'change', 'to change'], answer: 2, tip: 'tell + objeto + to.', tags: INTERN },
+
+  // Bloque 2 · The Deadline, fase 1 (past perfect continuous y entrevista)
+  { id: 'b2-02-bp1', topic: PP, kind: 'fix', prompt: 'By the time I arrived, they had been finish the article.', options: ['By the time I arrived, they had been finishing the article.', 'By the time I arrived, they had finished the article.', 'By the time I arrived, they finish the article.'], answer: 1, tip: 'Ya estaba listo (un resultado) → had finished.', tags: BOSS_PP },
+  { id: 'b2-02-bp2', topic: PP, prompt: 'The floor was wet. It ___ raining.', options: ['has been', 'had been', 'was being'], answer: 1, tip: 'Evidencia en el pasado → had been + -ing.', tags: BOSS_PP },
+  { id: 'b2-02-bp3', topic: PP, kind: 'order', alts: ['When I got the job, I had been volunteering for months.'], prompt: 'Llevaba meses de voluntariado cuando conseguí el trabajo.', options: ['I', 'had', 'been', 'volunteering', 'for', 'months', 'when', 'I', 'got', 'the', 'job.'], answer: 0, tip: 'had been + -ing + for + tiempo.', tags: BOSS_PP },
+  { id: 'b2-02-bp4', topic: IV, prompt: 'I learned to cope ___ difficult customers.', options: ['to', 'with', 'for'], answer: 1, tip: 'cope with + algo.', tags: BOSS_PP },
+  { id: 'b2-02-bp5', topic: IV, prompt: 'She ___ her fear of speaking in public.', options: ['overcame', 'overcame with', 'overcame of'], answer: 0, tip: 'overcome + objeto, sin preposición.', tags: BOSS_PP },
+  { id: 'b2-02-bp6', topic: PP, prompt: 'How long ___ waiting when the bus finally came?', options: ['had you been', 'have you been', 'you had been'], answer: 0, tip: 'Pregunta: How long had you been + -ing?', tags: BOSS_PP },
+
+  // Bloque 2 · The Deadline, fase 2 (verbo + objeto + to, cambio de significado, reunión)
+  { id: 'b2-02-bv1', topic: VP, kind: 'fix', prompt: 'He made me to rewrite it.', options: ['He made me rewrite it.', 'He made me rewriting it.', 'He made to me rewrite it.'], answer: 0, tip: 'make + objeto + verbo sin to.', tags: BOSS_VP },
+  { id: 'b2-02-bv2', topic: MT, kind: 'fix', prompt: 'Could you repeat me that?', options: ['Could you repeat to me that?', 'Could you repeat that?', 'Could you me repeat that?'], answer: 1, tip: 'repeat no lleva "me".', tags: BOSS_VP },
+  { id: 'b2-02-bv3', topic: VP, prompt: 'The line was busy, so I tried ___ her on the other number.', options: ['call', 'calling', 'called'], answer: 1, tip: 'Probar otra solución → try + -ing.', tags: BOSS_VP },
+  { id: 'b2-02-bv4', topic: VP, prompt: 'He stopped ___ emails. Nobody knows why.', options: ['answering', 'to answering', 'answer'], answer: 0, tip: 'Dejó de hacerlo → stop + -ing.', tags: BOSS_VP },
+  {
+    id: 'b2-02-bv5',
+    topic: MT,
+    kind: 'listen',
+    audio: "Right, let's move on to the next item: the voice blackouts at the port. Priya, what do you think? And I'd like the new intern to call the harbour office before six.",
+    voice: 'male',
+    prompt: 'What does Viktor want the new intern to do?',
+    options: ['Write the headline.', 'Call the harbour office before six.', 'Go to the port at night.'],
+    answer: 1,
+    tip: "I'd like the new intern to call the harbour office before six.",
+    tags: BOSS_VP,
+  },
+  {
+    id: 'b2-02-bv6',
+    topic: MT,
+    kind: 'listen',
+    audio: "How about checking the photos from last night? It might be worth asking the fishermen too. Could you run that by Amara before the meeting ends?",
+    voice: 'male',
+    prompt: 'What does Viktor suggest first?',
+    options: ['Checking the photos from last night.', 'Cancelling the meeting.', 'Calling the police.'],
+    answer: 0,
+    tip: 'How about checking the photos from last night?',
+    tags: BOSS_VP,
+  },
+]

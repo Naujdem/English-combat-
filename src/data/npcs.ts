@@ -1466,11 +1466,12 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   'b2-02-amara': {
     name: 'Amara Okafor',
     look: { shirt: '#c9a227', hair: '#151515', skin: '#6b4226', gender: 'female' },
-    doneLine: { text: "I'll see you for the interview when you're ready.", es: 'Te veo para la entrevista cuando estés {h:listo|lista}.' },
+    doneLine: { text: 'Welcome to the team. Make me proud.', es: '{h:Bienvenido|Bienvenida} al equipo. Hazme sentir orgullosa.' },
   },
-  // Viktor Novak, el editor de mesa (modera la reunión; en el bloque 2 se corrompe: The Deadline)
+  // Viktor Novak, el editor de mesa (tarea b2-02-factcheck). Al terminar Fact Check se corrompe: desaparece y sale The Deadline
   'b2-02-viktor': {
     name: 'Viktor Novak',
+    until: 'b2-02-factcheck',
     look: { shirt: '#4a5568', hair: '#8a8a8a', skin: '#e8c4a0', gender: 'male' },
     doneLine: { text: "Not now. I've been fighting with this page all morning.", es: 'Ahora no. Llevo toda la mañana peleando con esta página.' },
   },

@@ -8,7 +8,8 @@ import { Tappable } from './Words'
 import { btnGhost, btnPrimary, Panel } from './ui'
 
 /** Tipo de cláusula: obligatoria (must / have to), prohibida (mustn't) o no obligatoria (don't have to / needn't) */
-export type ClauseKind = 'must' | 'mustnt' | 'optional'
+/** B2-02 (Style Guide): 'follows' cumple la guía de estilo · 'breaks' no la cumple */
+export type ClauseKind = 'must' | 'mustnt' | 'optional' | 'follows' | 'breaks'
 export type FineClause = { en: string; es: string; kind: ClauseKind; tip: string }
 /** Modo anuncios (B1-05): cada anuncio tiene secciones con etiqueta (Job, Requirements, Pay, How to apply) */
 export type FineAdvert = { sections: { label: string; en: string; es: string }[] }
@@ -25,6 +26,10 @@ export type FinePrintContent = {
   clauses: FineClause[]
   finish: { en: string; es: string }
   paper?: { heading: string; sub: string }
+  /** Sellos que se muestran (por defecto must, mustn't y not necessary). B2-02 Style Guide: ['follows', 'breaks'] */
+  stamps?: ClauseKind[]
+  /** Texto del sello redondo de la esquina (por defecto RESIDENCE) */
+  seal?: string
   adverts?: FineAdvert[]
   questions?: FineQuestion[]
 }
@@ -34,6 +39,8 @@ const STAMPS: Record<ClauseKind, { label: string; es: string; shape: string; col
   must: { label: 'MUST', es: 'obligatorio', shape: '■', color: '#2f6fb0' },
   mustnt: { label: "MUSTN'T", es: 'prohibido', shape: '✖', color: '#c0392b' },
   optional: { label: 'NOT NECESSARY', es: 'no es obligatorio', shape: '○', color: '#3b8f57' },
+  follows: { label: 'STYLE OK', es: 'cumple la guía', shape: '✔', color: '#3b8f57' },
+  breaks: { label: 'FIX IT', es: 'no la cumple', shape: '✖', color: '#c0392b' },
 }
 const ORDER: ClauseKind[] = ['must', 'mustnt', 'optional']
 
@@ -56,6 +63,8 @@ export function FinePrint({
   paper,
   adverts,
   questions,
+  stamps,
+  seal,
   onClose,
 }: FinePrintContent & {
   name: string
@@ -64,12 +73,12 @@ export function FinePrint({
 }) {
   if (adverts?.length && questions?.length)
     return <AdvertPage name={name} look={look} title={title} intro={intro} finish={finish} paper={paper} adverts={adverts} questions={questions} onClose={onClose} />
-  return <ContractPage name={name} look={look} title={title} intro={intro} clauses={clauses} finish={finish} paper={paper} onClose={onClose} />
+  return <ContractPage name={name} look={look} title={title} intro={intro} clauses={clauses} finish={finish} paper={paper} stamps={stamps} seal={seal} onClose={onClose} />
 }
 
 type PageProps = { name: string; look: SpriteLook; onClose: (done: boolean, perfect: boolean) => void }
 
-function ContractPage({ name, look, title, intro, clauses, finish, paper, onClose }: PageProps & Omit<FinePrintContent, 'adverts' | 'questions'>) {
+function ContractPage({ name, look, title, intro, clauses, finish, paper, stamps, seal, onClose }: PageProps & Omit<FinePrintContent, 'adverts' | 'questions'>) {
   const [sealed, setSealed] = useState<boolean[]>(() => clauses.map(() => false))
   const [sel, setSel] = useState<number | null>(null)
   const [wrong, setWrong] = useState<{ k: number; n: number } | null>(null)
@@ -182,7 +191,7 @@ function ContractPage({ name, look, title, intro, clauses, finish, paper, onClos
             <circle cx="28" cy="28" r="25" fill="none" stroke="#8a3b6d" strokeWidth="2.5" />
             <circle cx="28" cy="28" r="19" fill="none" stroke="#8a3b6d" strokeWidth="1" />
             <text x="28" y="26" textAnchor="middle" fontSize="7" fontWeight="700" fill="#8a3b6d">LUMEN BAY</text>
-            <text x="28" y="35" textAnchor="middle" fontSize="6" fill="#8a3b6d">RESIDENCE</text>
+            <text x="28" y="35" textAnchor="middle" fontSize="6" fill="#8a3b6d">{seal ?? 'RESIDENCE'}</text>
           </svg>
         </div>
       </div>
@@ -193,8 +202,8 @@ function ContractPage({ name, look, title, intro, clauses, finish, paper, onClos
       {!done ? (
         <>
           <p className="mt-3 text-xs text-paper/60">Toca una cláusula y elige su sello. Toca una palabra para ver qué significa.</p>
-          <div className="mt-2 grid grid-cols-3 gap-2">
-            {ORDER.map((kind) => {
+          <div className={`mt-2 grid gap-2 ${(stamps ?? ORDER).length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+            {(stamps ?? ORDER).map((kind) => {
               const st = STAMPS[kind]
               return (
                 <button
@@ -212,7 +221,7 @@ function ContractPage({ name, look, title, intro, clauses, finish, paper, onClos
           </div>
         </>
       ) : (
-        <p className="anim-fade-in mt-3 text-sm text-hp">{errors === 0 ? '¡Todo el contrato sin errores!' : `Contrato sellado. Errores: ${errors}.`}</p>
+        <p className="anim-fade-in mt-3 text-sm text-hp">{errors === 0 ? (seal ? '¡Todo sellado sin errores!' : '¡Todo el contrato sin errores!') : `${seal ? 'Todo sellado' : 'Contrato sellado'}. Errores: ${errors}.`}</p>
       )}
 
       <div className="mt-4 flex items-center justify-between gap-2">

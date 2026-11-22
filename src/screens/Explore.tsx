@@ -68,6 +68,7 @@ import { B1_04_TOOLBOX } from '../data/b1Neighbours'
 import { B1_06_BOARD, B1_06_DESK } from '../data/b1Shelter'
 import { ToolboxIcon, ToolboxPortrait } from '../components/ToolboxIcon'
 import { FinePrint } from '../components/FinePrint'
+import { FactCheck } from '../components/FactCheck'
 import { TextOnly } from '../components/TextOnly'
 import { isB1Unlocked } from '../data/b1World'
 import { B1_CALL, B1_PHONE } from '../data/b1Home'
@@ -1520,6 +1521,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               const who = npcOf(t.npc ?? task)
               return <FinePrint name={who.name} look={who.look} {...t.fineprint} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             }
+            if (t.activity === 'factcheck' && t.factcheck) return <FactCheck {...t.factcheck} onClose={(done, perfect) => finishTask(task, done, [], perfect)} />
             if (t.activity === 'route') return <RouteChallenge name={npcOf(t.npc ?? task).name} content={t.route} onClose={finish} />
             if (t.activity === 'exam' && t.exam) {
               const era = t.exam
