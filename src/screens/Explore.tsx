@@ -56,6 +56,7 @@ import { B1_05_BOX, B1_05_BOXES, B1_05_ENVELOPE, B1_05_NOTEBOOK, B1_05_PAPERS } 
 import { B1_04_CLOSE, B1_04_FRAGMENTS, B1_04_FRIEND, B1_04_MAYA, B1_04_MAYA_BANK, B1_04_MAYA_LOBBY, B1_04_MOSCU, B1_04_RESIDENCE_ID, B1_04_RICARDO } from '../data/b1Residence'
 import { B2_01_SPECIAL_CHAT } from '../data/friends'
 import { B2_01_BOSS, B2_01_FRIEND, B2_01_SPECIAL } from '../data/b2CatchingUp'
+import { B2_02_CLOSE, B2_02_FRAGMENTS, B2_02_HERALD_ID, B2_FIRST_SEGMENT } from '../data/b2Herald'
 import { B1_04_MAYA_CHAT, B1_06_LEO_CHAT, B1_08_SPECIAL_CHAT, B1_10_LEO_CHAT, B1_12_LEO_CHAT, B1_12_MAYA_CHAT, B1_12_SPECIAL_CHAT } from '../data/friends'
 import { B1_12_GARDEN_MAYA, B1_12_LEO, B1_12_LEO_FRIEND, B1_12_LEO_LESSON, B1_12_MAYA_FRIEND, B1_12_MAYA_LESSON, B1_12_SPECIAL, B1_12_SPECIAL_FRIEND, B1_12_SPECIAL_LESSON } from '../data/b1HostGarden'
 import { B1_12_CLOSE, B1_12_FRAGMENTS, B1_12_PLAZA_ID } from '../data/b1HostPlaza'
@@ -1388,6 +1389,18 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           memoryNumber={13}
           onDone={() => {
             update((s) => (s.opened.includes(B1_12_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B1_12_FRAGMENTS] }))
+            onWorld()
+          }}
+        />
+      )}
+      {/* B2-02 · cierre: al guardar b2CloseId(2), dos fragmentos se juntan y llenan el primer segmento del núcleo (abre la Ventana 3) */}
+      {scene.id === B2_02_HERALD_ID && state.opened.includes(B2_02_CLOSE) && !state.opened.includes(B2_02_FRAGMENTS) && !task && !outro && (
+        <FragmentJoin
+          state={state}
+          update={update}
+          message={B2_FIRST_SEGMENT}
+          onDone={() => {
+            update((s) => (s.opened.includes(B2_02_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B2_02_FRAGMENTS] }))
             onWorld()
           }}
         />

@@ -78,7 +78,7 @@ import { B1_07_CLOSE_SCRIPT } from './b1Room'
 import { B2_01_BREAKFAST_SCRIPT, B2_01_GROUP_CHAT, B2_01_JEISON_SCRIPT, B2_01_MARISOL_SCRIPT, B2_01_NAYI_SCRIPT } from './b2CatchingUp'
 import { B2_01_CATCHUP_IDS, B2_01_PPCONT_IDS, B2_01_REACTIONS_IDS } from './questions-b2-01'
 import type { FactCheckContent } from '../components/FactCheck'
-import { B2_02_ARRIVAL_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
+import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
 import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
 
 /**
@@ -6986,5 +6986,38 @@ NPC_TASKS['b2-02-factcheck'] = {
     text: 'Viktor stares at the wall clock. Tick… tock… tick-tock-tick-tock…',
     es: 'Viktor mira el reloj de pared. Tic… tac… tic-tac-tic-tac…',
     sub: 'Fact Check terminado. El reloj de Viktor se acelera… y los practicantes ya no parecen ellos mismos.',
+  },
+}
+
+// ── B2-02 · The Herald, bloque 3 ──
+// Viktor, ya normal: cuenta que encontró el vidrio en el puerto (script). Aparece al vencer a The Deadline
+NPC_TASKS['b2-02-viktor-back'] = {
+  npc: 'b2-02-viktor-back',
+  done: 'b2-02-viktor-back',
+  activity: 'script',
+  script: B2_02_VIKTOR_BACK_SCRIPT,
+  steps: [],
+  reward: { text: 'Remember to take breaks, intern.', es: 'Acuérdate de tomar descansos, practicante.', sub: 'Viktor está bien. Manuel te espera en la recepción.' },
+}
+
+// Cierre con Manuel en la recepción. done = b2CloseId(2) = 'b2-02-close': abre el lugar 3 (Ventana 2061).
+// Al guardarse, Explore muestra FragmentJoin con el mensaje del primer segmento (B2_02_FRAGMENTS); el núcleo cuenta 1 segmento (b2Core)
+NPC_TASKS['b2-02-close'] = {
+  npc: 'b2-02-manuel',
+  done: 'b2-02-close',
+  recover: ['ppc-b2', 'interview-b2', 'inclusive-b2', 'meetings-b2', 'verb-to-ing-b2'],
+  coins: 15,
+  requires: { id: 'b2-02-viktor-back', text: 'Is Viktor OK?', es: '¿Viktor está bien?', sub: 'Antes, vence a The Deadline y habla con Viktor.' },
+  steps: [
+    { text: 'You saved the page… and Viktor. Not bad for your first day.', es: 'Salvaste la página… y a Viktor. Nada mal para tu primer día.' },
+    { text: '(The two pieces of light from the desk fall into your hand. They move towards each other…)', es: '(Los dos pedacitos de luz del escritorio caen en tu mano. Se acercan el uno al otro…)' },
+    { text: 'Amara asked me to give you your first story: the voice blackouts at the port.', es: 'Amara me pidió que te diera tu primera noticia: los apagones de voz del puerto.' },
+    { text: 'Remember to check every source. People had been losing their voices for weeks before anyone noticed.', es: 'Acuérdate de revisar cada fuente. La gente llevaba semanas perdiendo la voz antes de que alguien lo notara.' },
+  ],
+  reward: {
+    text: 'Mission 2: The Herald',
+    es: 'Misión 2: The Herald',
+    sub: 'Ganaste la credencial de prensa. El primer segmento del núcleo se llenó. Se abrió la Ventana 3 (2061).',
+    say: 'The Herald.',
   },
 }
