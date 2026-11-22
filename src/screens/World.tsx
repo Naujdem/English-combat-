@@ -23,6 +23,7 @@ import { B1Map } from '../components/B1Map'
 import { B2Map, CoreBar } from '../components/B2Map'
 import { B2Opening } from '../components/B2Opening'
 import { B2_01_PORT_ID } from '../data/b2CatchingUp'
+import { B2_02_HERALD_ID } from '../data/b2Herald'
 import { B2_NODES, B2_OPENING, B2_PART_NAMES, B2_ERA_COLOR, b2LockedText, b2Message, b2NodeDone, b2NodeOpen, isB2Unlocked, type B2Node, type B2Part } from '../data/b2World'
 import { enterMemory, memoryFlag } from '../game/memory'
 import { B1_01_SCHOOL } from '../data/b1Accident'
@@ -196,7 +197,9 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     if (!b2NodeOpen(n, state)) return setMsg(`${label} está cerrado. ${b2LockedText(n)}`)
     // Lugar 1 (presente): Catching Up, el paseo del puerto (data/b2CatchingUp.ts)
     if (n.num === 1) return onEnter(B2_01_PORT_ID)
-    // Las demás misiones de B2 todavía no están construidas (fichas 2 a 14)
+    // Lugar 2 (presente): The Herald, la redacción (data/b2Herald.ts)
+    if (n.num === 2) return onEnter(B2_02_HERALD_ID)
+    // Las demás misiones de B2 todavía no están construidas (fichas 3 a 14)
     setMsg(`${label}${n.year ? ` (Ventana ${n.year})` : ''}: este lugar se construirá pronto.`)
   }
   function tapB1(n: B1Node) {

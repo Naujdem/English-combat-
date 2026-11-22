@@ -9,6 +9,7 @@ import { heroLook } from '../game/helpers'
 import { FRIENDS, interestFriend } from '../data/friends'
 import { B1_06_HADDAD_LOOK } from '../data/b1Shelter'
 import { B1_06_NAYI_LOOK } from '../data/b1Kennels'
+import { B2_MANUEL_LOOK, B2_PRIYA_LOOK } from '../data/b2Herald'
 import { SpeakButton } from './SpeakButton'
 import { Tappable } from './Words'
 import { GrammarPattern, GrammarTable, RoleSentence } from './Grammar'
@@ -138,7 +139,12 @@ export function Lesson({
   // B1-06: Ms. Haddad guía la lección si tiene pasos 'haddad'
   // B1-08: la persona especial guía la lección si tiene pasos 'special' (nombre, aspecto y voz que eligió el jugador)
   // B1-12: el abuelo Einer guía la lección si tiene pasos 'einer'
-  const guide = steps.some((x) => x.who === 'einer')
+  // B2-02: Manuel o Priya guían la lección si tiene pasos 'manuel' o 'priya'
+  const guide = steps.some((x) => x.who === 'manuel')
+    ? { name: 'Manuel', look: B2_MANUEL_LOOK, voice: 'male' as const }
+    : steps.some((x) => x.who === 'priya')
+    ? { name: 'Priya', look: B2_PRIYA_LOOK, voice: 'female' as const }
+    : steps.some((x) => x.who === 'einer')
     ? { name: 'Einer', look: { shirt: '#6b4a2f', hair: '#d8d8d8', skin: '#c98f68', gender: 'male' as const }, voice: 'male' as const }
     : steps.some((x) => x.who === 'special')
     ? { name: state.interest.name, look: interestFriend(state.interest).look, voice: state.interest.gender === 'female' ? ('female' as const) : ('male' as const) }
@@ -151,7 +157,7 @@ export function Lesson({
     : steps.some((x) => x.who === 'leo') || !defaultGuide
     ? { name: 'Leo', look: FRIENDS.leo.look, voice: 'male' as const }
     : defaultGuide
-  const talks = s.who === 'leo' || s.who === 'maya' || s.who === 'haddad' || s.who === 'nayi' || s.who === 'special' || s.who === 'einer'
+  const talks = s.who === 'leo' || s.who === 'maya' || s.who === 'haddad' || s.who === 'nayi' || s.who === 'special' || s.who === 'einer' || s.who === 'manuel' || s.who === 'priya'
   const last = i === steps.length - 1
   const waiting = !!s.choice && !solved
   // La pizarra conserva lo último escrito si el paso actual no trae nada nuevo

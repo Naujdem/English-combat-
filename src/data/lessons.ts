@@ -1129,6 +1129,58 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: "Frase negativa → tag positivo: You don't eat meat, do you? · She didn't call, did she? · We won't be late, will we?", topic: 'party-b1' },
     { who: 'board', text: "You didn't invite Mr. Fine Print, ___ you?", choice: { options: ["didn't", 'do', 'did'], answer: 2, tip: 'Frase negativa en pasado → tag positivo: did you?' } },
   ],
+  // B2-02 · bloque 1 (la redacción del Herald, data/b2Herald.ts): Manuel, past perfect continuous
+  'ppc-b2': [
+    { who: 'manuel', text: 'In an interview you tell your story. Sometimes you need an activity that continued up to a moment in the past.', es: 'En una entrevista cuentas tu historia. A veces necesitas una actividad que continuó hasta un momento del pasado.' },
+    { who: 'manuel', text: 'That is the past perfect continuous: had been + -ing. "I had been volunteering at Lumen Paws for months when I got the job."', es: 'Eso es el past perfect continuous: had been + -ing. "Llevaba meses de {h:voluntario|voluntaria} en Lumen Paws cuando conseguí el trabajo".' },
+    { who: 'manuel', text: 'It is the present perfect continuous moved back in time. "I have been waiting" (now) → "I had been waiting" (then).', es: 'Es el present perfect continuous movido hacia atrás. "He estado esperando" (ahora) → "Había estado esperando" (en ese momento).' },
+    { who: 'manuel', text: 'Use it for an activity before another past moment, often with for, since or how long. "How long had you been living there when you moved?"', es: 'Úsalo para una actividad anterior a otro momento pasado, a menudo con for, since o how long. "¿Cuánto llevabas viviendo allí cuando te mudaste?"' },
+    { who: 'manuel', text: 'It also explains evidence in the past: "Her eyes were red. She had been crying."', es: 'También explica evidencia en el pasado: "Tenía los ojos rojos. Había estado llorando".' },
+    { who: 'manuel', text: 'Duration → continuous. Result → simple. "I had been writing all morning." But: "I had written three articles by noon."', es: 'Duración → continuo. Resultado → simple. "Había estado escribiendo toda la mañana". Pero: "Había escrito tres artículos al mediodía".' },
+    { who: 'manuel', text: 'And state verbs stay simple: "I had known Leo for years." Never: had been knowing.', es: 'Y los verbos de estado siguen en simple: "Conocía a Leo desde hacía años". Nunca: had been knowing.' },
+    { who: 'board', text: 'I had been ___ at Lumen Paws for months when I got the job.', choice: { options: ['volunteer', 'volunteering', 'volunteered'], answer: 1, tip: 'had been + -ing: had been volunteering.' } },
+  ],
+  // B2-02 · bloque 1: Manuel, preparar la entrevista (competencias y experiencias difíciles)
+  'interview-b2': [
+    { who: 'manuel', text: 'Amara will ask about your skills. Use the words employers want to hear.', es: 'Amara te va a preguntar por tus habilidades. Usa las palabras que los empleadores quieren oír.' },
+    { who: 'manuel', text: 'Reliable: people can count on you. Adaptable: you can change when things change.', es: 'Reliable (confiable): pueden contar contigo. Adaptable: puedes cambiar cuando las cosas cambian.' },
+    { who: 'manuel', text: 'Attention to detail: you notice small mistakes. "I work well under pressure": you stay calm with a deadline.', es: 'Attention to detail (atención al detalle): notas los errores pequeños. "I work well under pressure": mantienes la calma con un plazo encima.' },
+    { who: 'manuel', text: 'For difficult experiences: cope with, deal with, overcome. "I had to deal with an angry customer." "I overcame my fear of speaking in public."', es: 'Para experiencias difíciles: cope with, deal with (lidiar con), overcome (superar). "Tuve que lidiar con un cliente enojado". "Superé mi miedo a hablar en público".' },
+    { who: 'manuel', text: 'Be careful: deal with and cope with need "with". Overcome needs no preposition: "overcome a problem", never "overcome with a problem".', es: 'Cuidado: deal with y cope with llevan "with". Overcome no lleva preposición: "overcome a problem", nunca "overcome with a problem".' },
+    { who: 'manuel', text: 'And struggle to + verb for something that was hard: "At first I struggled to understand the accent."', es: 'Y struggle to + verbo para algo que costó: "Al principio me costó entender el acento".' },
+    { who: 'board', text: 'Tell me about a time you had to deal ___ pressure.', choice: { options: ['of', 'with', 'about'], answer: 1, tip: 'deal with + algo.' } },
+  ],
+  // B2-02 · bloque 1: Priya, la guía de estilo del Herald (lenguaje inclusivo, Busuu 14)
+  'inclusive-b2': [
+    { who: 'priya', text: "Hi, I'm Priya, the other intern. Before you write anything, read the Herald's style guide.", es: 'Hola, soy Priya, la otra practicante. Antes de escribir nada, lee la guía de estilo del Herald.' },
+    { who: 'priya', text: 'Rule 1: if you don\'t know someone\'s gender, use singular "they". "A reader called. They said the story was wrong."', es: 'Regla 1: si no sabes el género de alguien, usa "they" en singular. "Llamó un lector. Dijo que la noticia estaba mal".' },
+    { who: 'priya', text: 'With singular they the verb is still plural: "they are", "they were". Never "they is".', es: 'Con they en singular el verbo sigue en plural: "they are", "they were". Nunca "they is".' },
+    { who: 'priya', text: 'Rule 2: neutral job words. Firefighter, not fireman. Police officer, not policeman. Chairperson or chair, not chairman.', es: 'Regla 2: palabras neutras para los oficios. Firefighter, no fireman. Police officer, no policeman. Chairperson o chair, no chairman.' },
+    { who: 'priya', text: 'Rule 3: avoid stereotypes. Don\'t write "a female doctor" if you would never write "a male doctor". Just "a doctor".', es: 'Regla 3: evita estereotipos. No escribas "una doctora mujer" si nunca escribirías "un doctor hombre". Solo "un médico".' },
+    { who: 'priya', text: 'Rule 4: don\'t assume. "Every student should bring their notebook", not "his notebook".', es: 'Regla 4: no supongas. "Every student should bring their notebook", no "his notebook".' },
+    { who: 'board', text: 'Two ___ arrived at the port in ten minutes.', choice: { options: ['firemen', 'firefighters', 'fire men'], answer: 1, tip: 'Palabra neutra: firefighters.' } },
+  ],
+  // B2-02 · bloque 1: Manuel, frases de reunión (Busuu 6), antes de la reunión que modera Viktor
+  'meetings-b2': [
+    { who: 'manuel', text: 'Viktor chairs the editorial meeting at ten. Interns are expected to speak. Here is what you need.', es: 'Viktor modera la reunión editorial a las diez. Se espera que los practicantes hablen. Esto es lo que necesitas.' },
+    { who: 'manuel', text: 'To bring others in: "What do you think, Priya?" "Would you like to add anything?"', es: 'Para dar la palabra a otros: "¿Qué piensas, Priya?" "¿Quieres añadir algo?"' },
+    { who: 'manuel', text: 'To ask for clarification: "Could you run that by me again?" "What exactly do you mean by…?"', es: 'Para pedir aclaraciones: "¿Me lo puedes repetir?" "¿Qué quieres decir exactamente con…?"' },
+    { who: 'manuel', text: 'Careful: "Could you repeat that?" is fine, but never "Could you repeat me that?"', es: 'Cuidado: "Could you repeat that?" está bien, pero nunca "Could you repeat me that?"' },
+    { who: 'manuel', text: 'To suggest: "How about + -ing?" "It might be worth + -ing." "How about calling the port?" "It might be worth checking the photos."', es: 'Para sugerir: "How about + -ing?" "It might be worth + -ing." "¿Qué tal si llamamos al puerto?" "Podría valer la pena revisar las fotos".' },
+    { who: 'manuel', text: 'Meeting words: the agenda (the list of items), the minutes (the notes), the chair (the person who leads). "Let\'s move on to the next item."', es: 'Palabras de reunión: the agenda (la lista de puntos), the minutes (el acta), the chair (quien la dirige). "Pasemos al siguiente punto".' },
+    { who: 'board', text: 'How about ___ the port tomorrow?', choice: { options: ['call', 'to call', 'calling'], answer: 2, tip: 'How about + -ing: How about calling…?' } },
+  ],
+  // B2-02 · bloque 1: Manuel, verbo + objeto + to; -ing o to con cambio de significado (Murphy 55–58)
+  'verb-to-ing-b2': [
+    { who: 'manuel', text: 'In the meeting, people give each other tasks. For that: verb + object + to. "She asked me to check the sources." "He wants us to finish today."', es: 'En la reunión, la gente se reparte tareas. Para eso: verbo + objeto + to. "Me pidió revisar las fuentes". "Quiere que terminemos hoy".' },
+    { who: 'manuel', text: 'In English, want never takes "that": "I want you to check it", never "I want that you check it".', es: 'En inglés, want nunca lleva "that": "I want you to check it", nunca "I want that you check it".' },
+    { who: 'manuel', text: 'Same pattern: ask, tell, expect, would like, remind. But make and let take no "to": "He made me rewrite it." "She let us leave early."', es: 'Mismo patrón: ask, tell, expect, would like, remind. Pero make y let van sin "to": "Me hizo reescribirlo". "Nos dejó salir temprano".' },
+    { who: 'manuel', text: 'And suggest doesn\'t take object + to: "She suggested calling him" or "She suggested that I call him", never "She suggested me to call him".', es: 'Y suggest no lleva objeto + to: "She suggested calling him" o "She suggested that I call him", nunca "She suggested me to call him".' },
+    { who: 'manuel', text: 'Some verbs change meaning with -ing or to. Remember to = don\'t forget (before). Remember -ing = I have the memory (after). "Remember to check the date." "I remember checking it."', es: 'Algunos verbos cambian de significado con -ing o to. Remember to = no olvidar (antes). Remember -ing = tengo el recuerdo (después). "Acuérdate de revisar la fecha". "Recuerdo haberla revisado".' },
+    { who: 'manuel', text: 'Stop to = stop in order to do something. Stop -ing = not do it anymore. "He stopped to answer the phone." "He stopped answering emails."', es: 'Stop to = parar para hacer algo. Stop -ing = dejar de hacerlo. "Se detuvo para contestar el teléfono". "Dejó de contestar correos".' },
+    { who: 'manuel', text: 'Try -ing = test a solution. Try to = make an effort (maybe it fails). "Try calling her on the other number." "I tried to call her, but the line was busy."', es: 'Try -ing = probar una solución. Try to = intentar con esfuerzo (quizá falla). "Prueba llamarla al otro número". "Intenté llamarla, pero la línea estaba ocupada".' },
+    { who: 'board', text: 'I remember ___ the date. It was correct.', choice: { options: ['to check', 'checking', 'check'], answer: 1, tip: 'Es un recuerdo de algo que ya pasó → remember + -ing.' } },
+  ],
   // B2-01 · bloque 1 (el paseo del puerto, data/b2CatchingUp.ts): la persona especial, ponerse al día
   'catching-up-b2': [
     { who: 'special', text: 'When you meet a friend after some time, you "catch up": you ask what is new.', es: 'Cuando ves a un amigo después de un tiempo, se "ponen al día": preguntan qué hay de nuevo.' },
