@@ -53,6 +53,7 @@ import { B1_10_QUESTIONS } from './questions-b1-10'
 import { B1_12_QUESTIONS } from './questions-b1-12'
 import { B1_14_QUESTIONS } from './questions-b1-14'
 import { B2_01_QUESTIONS } from './questions-b2-01'
+import { B2_02_QUESTIONS } from './questions-b2-02'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
@@ -440,6 +441,7 @@ export const QUESTIONS: Question[] = [
   ...B1_12_QUESTIONS,
   ...B1_14_QUESTIONS,
   ...B2_01_QUESTIONS,
+  ...B2_02_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
   ...B1_11_QUESTIONS,
   ...B1_13_QUESTIONS,
@@ -660,6 +662,51 @@ export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: str
 }
 
 export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' | 'B2'; lesson: string[] }> = {
+  // B2-02 · The Herald (data/b2Herald.ts)
+  'ppc-b2': {
+    name: 'Past perfect continuous',
+    level: 'B2',
+    lesson: [
+      'had been + -ing: actividad que continuó hasta un momento del pasado. I had been volunteering for months when I got the job.',
+      'Evidencia en el pasado: Her eyes were red. She had been crying.',
+      'Duración → continuo (had been writing) · Resultado → simple (had written three articles). Verbos de estado: siempre simple (had known).',
+    ],
+  },
+  'interview-b2': {
+    name: 'Entrevistas y competencias',
+    level: 'B2',
+    lesson: [
+      'Competencias: reliable · adaptable · attention to detail · work well under pressure.',
+      'Experiencias difíciles: deal with · cope with · overcome (sin preposición) · struggle to + verbo.',
+    ],
+  },
+  'inclusive-b2': {
+    name: 'Lenguaje inclusivo',
+    level: 'B2',
+    lesson: [
+      'Género desconocido → singular they, con verbo en plural: They were very polite. · Every student… their notebook.',
+      'Palabras neutras: firefighter · police officer · chairperson / chair.',
+      'Evita estereotipos: "a doctor", no "a female doctor".',
+    ],
+  },
+  'meetings-b2': {
+    name: 'Frases de reunión',
+    level: 'B2',
+    lesson: [
+      'Dar la palabra: What do you think, Priya? · Would you like to add anything?',
+      'Pedir aclaraciones: Could you run that by me again? · What exactly do you mean by…? (nunca "repeat me that")',
+      'Sugerir: How about + -ing? · It might be worth + -ing. Palabras: agenda · minutes · chair · item.',
+    ],
+  },
+  'verb-to-ing-b2': {
+    name: 'Verbo + objeto + to; -ing o to',
+    level: 'B2',
+    lesson: [
+      'ask / tell / want / expect + objeto + to: She asked me to check it. · I want you to check it (nunca want that).',
+      'make / let + objeto + verbo sin to: He made me rewrite it. · suggest + -ing (nunca suggest me to).',
+      'Cambian de significado: remember to (no olvidar) / remember -ing (recuerdo) · stop to (para hacer algo) / stop -ing (dejar de) · try -ing (probar) / try to (intentar).',
+    ],
+  },
   // B2-01 · Catching Up (data/b2CatchingUp.ts)
   'catching-up-b2': {
     name: 'Ponerse al día',

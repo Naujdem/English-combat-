@@ -1455,6 +1455,31 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#6b3fa0', hair: '#222222', skin: '#c68e6a', gender: 'male' },
     doneLine: { text: 'This final is so exciting!', es: '¡Esta final es tan emocionante!' },
   },
+  // ── B2-02 · The Herald, bloque 1 (la redacción, data/b2Herald.ts) ──
+  // Manuel (guía): tareas b2-02-arrival, b2-02-ppc, b2-02-interview-prep, b2-02-meeting y b2-02-patterns
+  'b2-02-manuel': {
+    name: 'Manuel',
+    look: { shirt: '#7a2f3a', hair: '#2a1a12', skin: '#b9805c', gender: 'male' },
+    doneLine: { text: 'Deadlines are at six. Always.', es: 'El cierre es a las seis. Siempre.' },
+  },
+  // Amara Okafor, la editora jefe (la entrevista llega en el bloque 2)
+  'b2-02-amara': {
+    name: 'Amara Okafor',
+    look: { shirt: '#c9a227', hair: '#151515', skin: '#6b4226', gender: 'female' },
+    doneLine: { text: "I'll see you for the interview when you're ready.", es: 'Te veo para la entrevista cuando estés {h:listo|lista}.' },
+  },
+  // Viktor Novak, el editor de mesa (modera la reunión; en el bloque 2 se corrompe: The Deadline)
+  'b2-02-viktor': {
+    name: 'Viktor Novak',
+    look: { shirt: '#4a5568', hair: '#8a8a8a', skin: '#e8c4a0', gender: 'male' },
+    doneLine: { text: "Not now. I've been fighting with this page all morning.", es: 'Ahora no. Llevo toda la mañana peleando con esta página.' },
+  },
+  // Priya Raman, la otra practicante (tarea b2-02-style)
+  'b2-02-priya': {
+    name: 'Priya',
+    look: { shirt: '#2f8f8a', hair: '#1a1a1a', skin: '#a8714f', gender: 'female' },
+    doneLine: { text: 'Style guide first, coffee second.', es: 'Primero la guía de estilo, después el café.' },
+  },
   // ── B2-01 · Catching Up, bloque 1 (el paseo del puerto, data/b2CatchingUp.ts) ──
   // La persona especial (guía): tareas b2-01-breakfast, b2-01-catchup y b2-01-ppcont
   'b2-01-special': {

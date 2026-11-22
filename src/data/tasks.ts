@@ -77,6 +77,8 @@ import { B1_07_ESCAPE_ROOM } from './b1Escape'
 import { B1_07_CLOSE_SCRIPT } from './b1Room'
 import { B2_01_BREAKFAST_SCRIPT, B2_01_GROUP_CHAT, B2_01_JEISON_SCRIPT, B2_01_MARISOL_SCRIPT, B2_01_NAYI_SCRIPT } from './b2CatchingUp'
 import { B2_01_CATCHUP_IDS, B2_01_PPCONT_IDS, B2_01_REACTIONS_IDS } from './questions-b2-01'
+import { B2_02_ARRIVAL_SCRIPT } from './b2Herald'
+import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
 
 /**
  * Tareas de personajes que no pelean: una charla corta con elecciones (MiniTalk).
@@ -6820,5 +6822,111 @@ NPC_TASKS['b2-01-close'] = {
     es: 'Misión 1: Ponerse al día',
     sub: 'Ganaste la sudadera del café del puerto. Un fragmento quedó suelto en el reloj. Se abrió el lugar 2: The Herald.',
     say: 'Catching up.',
+  },
+}
+
+// ── B2-02 · The Herald, bloque 1 (la redacción, data/b2Herald.ts). NO guarda el cierre de la misión ──
+// Manuel: la llegada al Herald (script)
+NPC_TASKS['b2-02-arrival'] = {
+  npc: 'b2-02-manuel',
+  done: 'b2-02-arrival',
+  activity: 'script',
+  script: B2_02_ARRIVAL_SCRIPT,
+  steps: [],
+  reward: { text: 'Let me show you a tense that journalists love.', es: 'Te muestro un tiempo verbal que a los periodistas les encanta.', sub: 'Vuelve a hablar con Manuel.' },
+}
+
+// Manuel: lección 'ppc-b2' + práctica b2-02-pp1…pp6. 5 monedas
+NPC_TASKS['b2-02-ppc'] = {
+  npc: 'b2-02-manuel',
+  done: 'b2-02-ppc',
+  lesson: 'ppc-b2',
+  activity: 'practice',
+  practice: 'ppc-b2',
+  practiceIds: B2_02_PPC_IDS,
+  coins: 5,
+  requires: { id: 'b2-02-arrival', text: 'Welcome!', es: '¡{h:Bienvenido|Bienvenida}!', sub: 'Primero habla con Manuel en la recepción.' },
+  steps: [],
+  reward: {
+    text: 'I had been volunteering for months when I got the job.',
+    es: 'Llevaba meses de voluntariado cuando conseguí el trabajo.',
+    sub: 'Lección hecha. Habla otra vez con Manuel para preparar la entrevista.',
+    say: 'I had been volunteering for months when I got the job.',
+  },
+}
+
+// Manuel: lección 'interview-b2' + práctica b2-02-iv1…iv6 (antes de la entrevista con Amara, bloque 2). 5 monedas
+NPC_TASKS['b2-02-interview-prep'] = {
+  npc: 'b2-02-manuel',
+  done: 'b2-02-interview-prep',
+  lesson: 'interview-b2',
+  activity: 'practice',
+  practice: 'interview-b2',
+  practiceIds: B2_02_INTERVIEW_IDS,
+  coins: 5,
+  requires: { id: 'b2-02-ppc', text: 'One thing at a time.', es: 'Una cosa a la vez.', sub: 'Primero termina la lección del past perfect continuous.' },
+  steps: [],
+  reward: {
+    text: "Reliable, adaptable, good under pressure. That's you.",
+    es: '{h:Confiable, adaptable, bueno|Confiable, adaptable, buena} bajo presión. Así eres tú.',
+    sub: 'Lección hecha. Priya te espera en la mesa de redacción con la guía de estilo.',
+    say: "Reliable, adaptable, good under pressure. That's you.",
+  },
+}
+
+// Priya: lección 'inclusive-b2' (ella la guía) + práctica b2-02-in1…in6. 5 monedas
+NPC_TASKS['b2-02-style'] = {
+  npc: 'b2-02-priya',
+  done: 'b2-02-style',
+  lesson: 'inclusive-b2',
+  activity: 'practice',
+  practice: 'inclusive-b2',
+  practiceIds: B2_02_STYLE_IDS,
+  coins: 5,
+  requires: { id: 'b2-02-interview-prep', text: "Hi! I'm Priya. Busy morning, sorry.", es: '¡Hola! Soy Priya. Mañana ocupada, perdón.', sub: 'Primero prepara la entrevista con Manuel.' },
+  steps: [],
+  reward: {
+    text: 'Firefighter, police officer, chairperson. And singular they.',
+    es: 'Bombero, policía, quien preside. Y they en singular.',
+    sub: 'Guía de estilo leída. Manuel te prepara para la reunión editorial.',
+    say: 'Firefighter, police officer, chairperson.',
+  },
+}
+
+// Manuel: lección 'meetings-b2' + práctica b2-02-mt1…mt6. 5 monedas
+NPC_TASKS['b2-02-meeting'] = {
+  npc: 'b2-02-manuel',
+  done: 'b2-02-meeting',
+  lesson: 'meetings-b2',
+  activity: 'practice',
+  practice: 'meetings-b2',
+  practiceIds: B2_02_MEETING_IDS,
+  coins: 5,
+  requires: { id: 'b2-02-style', text: 'Have you read the style guide?', es: '¿Ya leíste la guía de estilo?', sub: 'Primero habla con Priya en la mesa de redacción.' },
+  steps: [],
+  reward: {
+    text: 'Could you run that by me again?',
+    es: '¿Me lo puedes repetir?',
+    sub: 'Lección hecha. Habla otra vez con Manuel: en la reunión se reparten tareas.',
+    say: 'Could you run that by me again?',
+  },
+}
+
+// Manuel: lección 'verb-to-ing-b2' + práctica b2-02-vp1…vp6. 5 monedas
+NPC_TASKS['b2-02-patterns'] = {
+  npc: 'b2-02-manuel',
+  done: 'b2-02-patterns',
+  lesson: 'verb-to-ing-b2',
+  activity: 'practice',
+  practice: 'verb-to-ing-b2',
+  practiceIds: B2_02_PATTERNS_IDS,
+  coins: 5,
+  requires: { id: 'b2-02-meeting', text: 'Meeting phrases first.', es: 'Primero las frases de reunión.', sub: 'Termina la lección de frases de reunión.' },
+  steps: [],
+  reward: {
+    text: 'Remember to check the date. I remember checking it.',
+    es: 'Acuérdate de revisar la fecha. Recuerdo haberla revisado.',
+    sub: 'Bloque 1 terminado. (La entrevista, la reunión y el jefe llegan en el bloque 2.)',
+    say: 'Remember to check the date.',
   },
 }
