@@ -91,8 +91,8 @@ import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_I
 import { B2_08_ARRIVAL_SCRIPT, B2_08_CLOSE_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNCH_SCRIPT, B2_08_UNHEARD_ROOM } from './b2Pitch'
 import { B2_08_ACRONYMS_IDS, B2_08_COMPARE_IDS, B2_08_PERKS_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
-import { B2_09_ARRIVAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_TOUR_SCRIPT } from './b2Gallery'
-import { B2_09_ORDER_IDS, B2_09_RELATIVE_IDS, B2_09_STRONG_IDS } from './questions-b2-09'
+import { B2_09_ARRIVAL_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
+import { B2_09_ADVERBS_IDS, B2_09_ORDER_IDS, B2_09_RELATIVE_IDS, B2_09_REVIEW_IDS, B2_09_STRONG_IDS } from './questions-b2-09'
 import { B2_07_OLIVER_SCRIPT, B2_07_ARRIVAL_SCRIPT, B2_07_DEBATE_ENDINGS, B2_07_DEBATE_TURNS, B2_07_EXPLORE_ROOM, B2_07_POSTER_SCRIPT, B2_07_ROSA_SCRIPT, B2_07_SAM_INTRO } from './b2OldBuilding'
 import { B2_07_CHANGE_IDS, B2_07_CONDITIONS_IDS, B2_07_GET_IDS } from './questions-b2-07'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
@@ -8183,7 +8183,66 @@ NPC_TASKS['b2-09-inscriptions'] = {
   reward: {
     text: 'A voice that is taken returns only when two voices rise together.',
     es: 'Una voz que es arrebatada solo regresa cuando dos voces se alzan juntas.',
-    sub: 'Ganaste 10 monedas. Lo anotas sin entenderlo. Leo lee la tablilla, se toca la garganta y se va a otra sala sin decir nada.',
+    sub: 'Ganaste 10 monedas. Lo anotas sin entenderlo. Leo lee la tablilla, se toca la garganta y se va a otra sala sin decir nada. La sala de arte digital ya está abierta.',
     say: 'Two voices together.',
+  },
+}
+
+// ── B2-09 · The Gallery, bloque 2 (la sala de arte digital y la librería). NO guarda el cierre de la misión ──
+// La persona especial: la instalación de luz y sonido "ECHO" (script, escucha)
+NPC_TASKS['b2-09-digital'] = {
+  npc: 'b2-09-special-digital',
+  done: 'b2-09-digital',
+  activity: 'script',
+  script: B2_09_DIGITAL_SCRIPT,
+  steps: [],
+  reward: { text: 'It was well worth seeing.', es: 'Valió mucho la pena verlo.', sub: 'Vuelve a hablar con la persona especial: la reseña.', say: 'It was well worth seeing.' },
+}
+
+// La persona especial: lección 'review-b2' + práctica b2-09-rv1…rv6. Al terminar se abre la librería. 5 monedas
+NPC_TASKS['b2-09-review'] = {
+  npc: 'b2-09-special-digital',
+  done: 'b2-09-review',
+  lesson: 'review-b2',
+  activity: 'practice',
+  practice: 'review-b2',
+  practiceIds: B2_09_REVIEW_IDS,
+  coins: 5,
+  requires: { id: 'b2-09-digital', text: 'Shh… the show is starting.', es: 'Shh… ya empieza el espectáculo.', sub: 'Primero mira la instalación con la persona especial.' },
+  steps: [],
+  reward: {
+    text: 'Overall, four stars out of five. I\'d definitely recommend it.',
+    es: 'En general, cuatro estrellas de cinco. Sin duda lo recomendaría.',
+    sub: 'Lección hecha. La librería del museo ya está abierta.',
+    say: "I'd definitely recommend it.",
+  },
+}
+
+// Ingrid Larsen: el cuento "The Man Who Lost His Voice" (script, lectura)
+NPC_TASKS['b2-09-story'] = {
+  npc: 'b2-09-ingrid',
+  done: 'b2-09-story',
+  activity: 'script',
+  script: B2_09_STORY_SCRIPT,
+  steps: [],
+  reward: { text: 'Someone has torn out the last page…', es: 'Alguien arrancó la última página…', sub: 'Habla otra vez con Ingrid: las palabras del cuento.', say: 'At long last.' },
+}
+
+// Ingrid (la lección la guía la persona especial): 'adv-phrases-b2' + práctica b2-09-ad1…ad6. Al terminar, las estatuas se mueven. 5 monedas
+NPC_TASKS['b2-09-adverbs'] = {
+  npc: 'b2-09-ingrid',
+  done: 'b2-09-adverbs',
+  lesson: 'adv-phrases-b2',
+  activity: 'practice',
+  practice: 'adv-phrases-b2',
+  practiceIds: B2_09_ADVERBS_IDS,
+  coins: 5,
+  requires: { id: 'b2-09-story', text: 'Our best seller. Have a look!', es: 'El más vendido. ¡Échale un vistazo!', sub: 'Primero lee el cuento.' },
+  steps: [],
+  reward: {
+    text: 'All of a sudden, a crash from the exhibition!',
+    es: '¡De repente, un estruendo desde la exposición!',
+    sub: 'Lección hecha. Las estatuas de "Voices of Stone" se están moviendo. Vuelve a la exposición.',
+    say: 'All of a sudden.',
   },
 }

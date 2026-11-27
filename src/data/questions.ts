@@ -768,6 +768,22 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
     ],
   },
   // B2-09 · The Gallery (data/b2Gallery.ts)
+  'review-b2': {
+    name: 'Opinar y reseñar',
+    level: 'B2',
+    lesson: [
+      'What I liked most was… · The highlight was… · It really stood out. · It was rather slow. · It didn\'t live up to my expectations.',
+      'Overall, it was well worth seeing. stand out = destacarse · take in = asimilar.',
+    ],
+  },
+  'adv-phrases-b2': {
+    name: 'Locuciones adverbiales',
+    level: 'B2',
+    lesson: [
+      'without a word · in silence (no "in a silence") · all of a sudden · at long last · by no means.',
+      'Personajes: brave, shy, bitter, complex, relatable. look up to = admirar · pick out = escoger.',
+    ],
+  },
   'gradable-b2': {
     name: 'Graduables y no graduables',
     level: 'B2',

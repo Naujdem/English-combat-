@@ -1666,6 +1666,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // La persona especial (guía): tareas b2-09-arrival, b2-09-strong, b2-09-order y b2-09-relative
   'b2-09-special': {
     name: '',
+    until: 'b2-09-inscriptions',
     look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
     interest: true,
     doneLine: { text: "It's not very amazing. It's absolutely amazing!", es: 'No es muy increíble. ¡Es absolutamente increíble!' },
@@ -1680,8 +1681,24 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // Arturo Silva, el curador: tareas b2-09-tour y b2-09-inscriptions
   'b2-09-arturo': {
     name: 'Arturo Silva',
+    // Al terminar la librería se convierte en The Curator (enemigo b2-09-boss)
+    until: 'b2-09-adverbs',
     look: { shirt: '#7a4fa3', hair: '#6b6b6b', skin: '#c68e63', gender: 'male' },
     doneLine: { text: 'The last tablet, which is the oldest, finally speaks.', es: 'La última tablilla, que es la más antigua, por fin habla.' },
+  },
+  // B2-09 · bloque 2: la persona especial en la sala de arte digital (b2-09-digital y b2-09-review)
+  'b2-09-special-digital': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    after: 'b2-09-inscriptions',
+    doneLine: { text: 'What I liked most was the ending. It really stood out.', es: 'Lo que más me gustó fue el final. De verdad se destacó.' },
+  },
+  // Ingrid Larsen, la librera del museo: b2-09-story y b2-09-adverbs
+  'b2-09-ingrid': {
+    name: 'Ingrid Larsen',
+    look: { shirt: '#c0504d', hair: '#e8d27a', skin: '#f1d3bd', gender: 'female' },
+    doneLine: { text: 'At long last, someone who reads to the end!', es: '¡Por fin, alguien que lee hasta el final!' },
   },
   // ── B2-07 · The Old Building, bloque 1 (el barrio antiguo y el edificio, data/b2OldBuilding.ts) ──
   // Leo en la calle: tareas b2-07-arrival y b2-07-change. Entra al edificio cuando Sam lo abre
