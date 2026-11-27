@@ -261,6 +261,36 @@ export const STONE_OBJECTS: Record<string, StoneObject> = {
       </g>
     ),
   },
+  // B2-12 · Unheard en el cuarto de G (2056): el cajón del escritorio (adentro, el reloj brillando) y el plan de la pared,
+  // que no se deja quitar (al "acertar" solo brillan los alfileres: es un hecho fijo)
+  'desk-drawer': {
+    names: ['desk drawer', 'drawer'],
+    es: 'el cajón del escritorio',
+    draw: (a) => (
+      <g>
+        <rect x="6" y="18" width="52" height="8" fill="#8a5a32" stroke="#5a3a20" strokeWidth="2" />
+        <rect x="10" y="26" width="44" height="30" fill="#7a4e2a" stroke="#5a3a20" strokeWidth="2" />
+        {a && <circle className="stone-fade" cx="32" cy="34" r="10" fill="#3fa9ff" opacity="0.55" />}
+        <g className="stone-move" style={{ transform: a ? 'translateY(10px) scale(1.08)' : 'none', transformOrigin: '50% 100%' }}>
+          <rect x="14" y="30" width="36" height="14" fill="#9a6a3e" stroke="#5a3a20" strokeWidth="1.5" />
+          <rect x="27" y="35" width="10" height="3" rx="1" fill="#5a3a20" />
+        </g>
+        {!a && <path d="M16 45 h32" stroke="#3fa9ff" strokeWidth="2" opacity="0.8" />}
+      </g>
+    ),
+  },
+  plan: {
+    names: ['plan', 'paper', 'map'],
+    es: 'el plan de la pared',
+    draw: (a) => (
+      <g>
+        <rect x="8" y="8" width="48" height="44" fill="#f3ead2" stroke="#9a8c78" strokeWidth="1.5" />
+        <path d="M14 18 h36 M14 25 h30 M14 32 h36 M14 39 h24" stroke="#3a2e1e" strokeWidth="1.5" />
+        {[12, 52].map((x) => [12, 48].map((y) => <circle key={`${x}-${y}`} cx={x} cy={y} r="2.6" fill={a ? '#3fa9ff' : '#c0392b'} className="stone-fill" />))}
+        {a && <rect className="stone-fade" x="6" y="6" width="52" height="48" fill="none" stroke="#3fa9ff" strokeWidth="2" opacity="0.8" />}
+      </g>
+    ),
+  },
   // B2 · Unheard (ficha 0.7): las escaleras traseras de la escuela nocturna. Al acertar, la nota queda pegada y brilla la flecha
   stairs: {
     names: ['back stairs', 'stairs', 'staircase'],
