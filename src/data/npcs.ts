@@ -1520,6 +1520,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#f4f4f0', hair: '#2b2b33', skin: '#d7a77a', gender: 'male' },
     doneLine: { text: "We're looking into it. Be careful online.", es: 'Lo estamos revisando. Tengan cuidado en internet.' },
   },
+  // Leo (bloque 3): aparece en el vestíbulo al vencer a The Catfish; charla de amistad (B2_04_LEO_CHAT, Explore.tsx)
+  'b2-04-leo': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    after: 'b2-04-boss',
+    doneLine: { text: "Go and talk to Maya. She's been worried all day.", es: 'Ve a hablar con Maya. Ha estado preocupada todo el día.' },
+  },
   // Priya con el Herald impreso: aparece al terminar en el banco (tarea b2-04-echo)
   'b2-04-priya': {
     name: 'Priya',

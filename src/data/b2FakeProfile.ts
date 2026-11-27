@@ -17,7 +17,10 @@ import { B1_04_MAP } from './b1Residence'
  *   Priya, en la calle con el Herald impreso (b2-04-echo, script: el artículo sobre la dark web y el Echo Market).
  * Bloque 2: el detective (arriba); tras el artículo de Priya, dos Phishing Bots en la calle (esbirros) y el jefe The Catfish
  *   (2 fases) en el vestíbulo, junto al mostrador de Marisol.
- * Bloque 3: amistad con Leo, diario, recompensas y cierre (fragmento que se une con el del lugar 1; se abren el lugar 5 y Fusion Night).
+ * Bloque 3: tras vencer a The Catfish aparece Leo en el vestíbulo: charla de amistad (B2_04_FRIEND, Explore.tsx) →
+ *   Maya: el cierre (b2-04-close): recupera los temas; Explore muestra FragmentJoin (el fragmento de The Catfish se une con el del
+ *   lugar 1 y el segundo segmento queda a la mitad, B2_04_FRAGMENTS). Se abren el lugar 5 y el Extra Fusion Night.
+ *   Hoodie de hacker (regalo de The Catfish). Diario y lectura larga "Inside the Echo Market": data/b2Diary.ts.
  */
 export const B2_04_RESIDENCE_ID = 'b2-04-residence'
 export const B2_04_MAYA = 'b2-04-maya'
@@ -37,6 +40,13 @@ export const B2_04_DETECTIVE = 'b2-04-detective'
 export const B2_04_BOT1 = 'b2-04-bot1'
 export const B2_04_BOT2 = 'b2-04-bot2'
 export const B2_04_BOSS = 'b2-04-boss'
+/** Bloque 3 */
+export const B2_04_LEO = 'b2-04-leo'
+export const B2_04_FRIEND = 'b2-04-friend'
+export const B2_04_CLOSE = 'b2-04-close'
+/** Se guarda al terminar la animación: el fragmento se une con el del lugar 1 (medio segundo segmento del núcleo) */
+export const B2_04_FRAGMENTS = 'b2-04-fragments'
+export const B2_04_HALF_SEGMENT = { en: 'The two fragments join… but the second segment only lights up halfway.', es: 'Los dos fragmentos se unen… pero el segundo segmento solo se enciende a la mitad.' }
 
 /** Aspecto de Ricardo como guía de lección (Lesson.tsx): el mismo que en B1-04 */
 export const B2_RICARDO_LOOK: SpriteLook = { shirt: '#f4f4f0', hair: '#2b2b33', skin: '#d7a77a', gender: 'male' }
@@ -70,6 +80,8 @@ export const B2_04_RESIDENCE: SceneDef = {
     { type: 'enemy', id: B2_04_BOT1, x: 19, y: 4, after: B2_04_ECHO },
     { type: 'enemy', id: B2_04_BOT2, x: 21, y: 3, after: B2_04_BOT1 },
     { type: 'enemy', id: B2_04_BOSS, x: 7, y: 3, after: B2_04_BOT2 },
+    // Bloque 3: Leo llega al vestíbulo al vencer a The Catfish (npcs.ts, after: b2-04-boss)
+    { type: 'npc', id: B2_04_LEO, x: 2, y: 4 },
   ],
   labels: [
     { text: 'Vestíbulo', x: 5, y: 6 },
@@ -105,11 +117,15 @@ export const B2_04_RESIDENCE: SceneDef = {
     { label: 'El artículo de Priya', done: s.opened.includes(B2_04_ECHO) },
     { label: 'Phishing Bots (2)', done: s.defeated.includes(B2_04_BOT2) },
     { label: 'The Catfish', done: s.defeated.includes(B2_04_BOSS) },
+    { label: 'Charla con Leo', done: s.opened.includes(B2_04_FRIEND) },
+    { label: 'El cierre (Maya)', done: s.opened.includes(B2_04_CLOSE) },
   ],
   intro: {
     first: 'Presente. La residencia de Lumen Bay. Maya te espera en el vestíbulo con el teléfono en la mano.',
     later: (s) =>
-      s.opened.includes(B2_04_ECHO)
+      s.opened.includes(B2_04_CLOSE)
+        ? 'La residencia de Lumen Bay. El perfil "G" desapareció. La misión 4 terminó: el lugar 5 y Fusion Night te esperan en el mapa.'
+        : s.opened.includes(B2_04_ECHO)
         ? 'La residencia de Lumen Bay. Alguien está usando el nombre "G" en internet.'
         : 'La residencia de Lumen Bay.',
   },
@@ -228,6 +244,7 @@ export const B2_04_BOSS_DEF: EnemyDef = {
   name: 'The Catfish',
   person: 'The Catfish',
   kind: 'boss',
+  reward: 'hoodie-hacker',
   hp: 10,
   topics: [PM, NN, OS],
   kinds: ['fill', 'fix', 'order', 'listen'],

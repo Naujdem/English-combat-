@@ -58,7 +58,8 @@ import { NotebookIcon } from '../components/LNotebook'
 import { B1_03_NOTEBOOK, B1_03_PHONE } from '../data/b1Words'
 import { B1_05_BOX, B1_05_BOXES, B1_05_ENVELOPE, B1_05_NOTEBOOK, B1_05_PAPERS } from '../data/b1Flat'
 import { B1_04_CLOSE, B1_04_FRAGMENTS, B1_04_FRIEND, B1_04_MAYA, B1_04_MAYA_BANK, B1_04_MAYA_LOBBY, B1_04_MOSCU, B1_04_RESIDENCE_ID, B1_04_RICARDO } from '../data/b1Residence'
-import { B2_01_SPECIAL_CHAT } from '../data/friends'
+import { B2_01_SPECIAL_CHAT, B2_04_LEO_CHAT } from '../data/friends'
+import { B2_04_BOSS, B2_04_CLOSE, B2_04_FRAGMENTS, B2_04_FRIEND, B2_04_HALF_SEGMENT, B2_04_LEO, B2_04_RESIDENCE_ID } from '../data/b2FakeProfile'
 import { B2_01_BOSS, B2_01_FRIEND, B2_01_SPECIAL } from '../data/b2CatchingUp'
 import { B2_02_CLOSE, B2_02_FRAGMENTS, B2_02_HERALD_ID, B2_FIRST_SEGMENT } from '../data/b2Herald'
 import { B1_04_MAYA_CHAT, B1_06_LEO_CHAT, B1_08_SPECIAL_CHAT, B1_10_LEO_CHAT, B1_12_LEO_CHAT, B1_12_MAYA_CHAT, B1_12_SPECIAL_CHAT } from '../data/friends'
@@ -173,7 +174,7 @@ type Talk = {
   level?: string
   note?: string
   /** Charla especial de una misión */
-  quest?: 'lostIntro' | 'b1-02-plane' | 'b1-04-maya' | 'b1-06-leo' | 'b1-08-special' | 'b1-10-leo' | 'b1-12-leo' | 'b1-12-maya' | 'b1-12-special' | 'b2-01-special'
+  quest?: 'lostIntro' | 'b1-02-plane' | 'b1-04-maya' | 'b1-06-leo' | 'b1-08-special' | 'b1-10-leo' | 'b1-12-leo' | 'b1-12-maya' | 'b1-12-special' | 'b2-01-special' | 'b2-04-leo'
 }
 
 export function Explore({ state, update, onBattle, onWorld }: { state: GameState; update: Update; onBattle: (enemyId: string) => void; onWorld: () => void }) {
@@ -374,6 +375,13 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
     (e: Entity) => {
       if (e.type === 'npc') {
         const npc = npcOf(e.id)
+        // B2-04 · Fake Profile: la charla de amistad con Leo en el vestíbulo, después de vencer a The Catfish (una sola vez; se guarda B2_04_FRIEND)
+        if (e.id === B2_04_LEO && state.defeated.includes(B2_04_BOSS) && !state.opened.includes(B2_04_FRIEND)) {
+          setMsg(null)
+          const c = B2_04_LEO_CHAT
+          setTalk({ friendId: 'leo', story: null, lines: [{ who: 'friend', text: c.text, es: c.es, options: c.options }], title: 'Charla casual', level: 'B2', quest: 'b2-04-leo' })
+          return
+        }
         // B2-01 · Catching Up: la charla de amistad con la persona especial, después de vencer al eco (una sola vez; se guarda B2_01_FRIEND)
         if (e.id === B2_01_SPECIAL && state.defeated.includes(B2_01_BOSS) && !state.opened.includes(B2_01_FRIEND)) {
           setMsg(null)
@@ -1011,6 +1019,16 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: 'La puerta del avión ya está abierta. Leo espera junto a la cinta de equipaje.', tone: 'good' })
                 return
               }
+              if (t.quest === 'b2-04-leo') {
+                // Charla casual B2 con Leo: la amistad cambia con la regla de las charlas casuales. Después, Maya cierra la misión
+                update((s) => {
+                  const n = applyCasual(s, 'leo', delta)
+                  return { ...n, opened: n.opened.includes(B2_04_FRIEND) ? n.opened : [...n.opened, B2_04_FRIEND] }
+                })
+                if (delta < 0) setMsg({ text: `${talkFriend.name} no te entendió. La amistad bajó un poco.`, sub: 'Maya te espera en el vestíbulo.', tone: 'warn' })
+                else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: 'Maya te espera en el vestíbulo.', tone: 'good' })
+                return
+              }
               if (t.quest === 'b2-01-special') {
                 // Charla casual B2 con la persona especial: la amistad cambia con la regla de las charlas casuales. Después, Leo cierra la misión
                 update((s) => {
@@ -1416,6 +1434,18 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
               return { ...s, sceneId: back.sceneId, pos: { ...back.pos }, b2Window: undefined, opened: s.opened.includes(B2_03_EXITED) ? s.opened : [...s.opened, B2_03_EXITED], screen: 'world' }
             })
           }
+        />
+      )}
+      {/* B2-04 · cierre: al guardar b2CloseId(4), el fragmento de The Catfish se une con el del lugar 1 (medio segundo segmento) */}
+      {scene.id === B2_04_RESIDENCE_ID && state.opened.includes(B2_04_CLOSE) && !state.opened.includes(B2_04_FRAGMENTS) && !task && !outro && (
+        <FragmentJoin
+          state={state}
+          update={update}
+          message={B2_04_HALF_SEGMENT}
+          onDone={() => {
+            update((s) => (s.opened.includes(B2_04_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B2_04_FRAGMENTS] }))
+            onWorld()
+          }}
         />
       )}
       {/* B2-02 · cierre: al guardar b2CloseId(2), dos fragmentos se juntan y llenan el primer segmento del núcleo (abre la Ventana 3) */}
