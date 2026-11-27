@@ -1718,6 +1718,20 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b2-12-goals',
     doneLine: { text: "Don't do it.", es: 'No lo hagas.' },
   },
+  // B2-12 · bloque 2: G vuelve al terminar Unheard; su cuaderno queda abierto en el piso después de que habla solo
+  'b2-12-g': {
+    name: 'G',
+    look: { shirt: '#23252d', hair: '#9b9ea6', skin: '#363b46', gender: 'male' },
+    after: 'b2-12-unheard',
+    until: 'b2-12-boss',
+    doneLine: { text: '(He is sitting on the mattress, looking at the clock.)', es: '(Está sentado en el colchón, mirando el reloj.)' },
+  },
+  'b2-12-g-notebook': {
+    name: 'El cuaderno de G',
+    look: { shirt: '#3a2f25', hair: '#1d1d1d', skin: '#3a2f25' },
+    after: 'b2-12-return',
+    doneLine: { text: "Tomorrow I'll have my voice back. And he'll have lost his.", es: 'Mañana tendré mi voz de vuelta. Y él habrá perdido la suya.' },
+  },
   // ── B2-11 · Who Is G?, bloque 1 (el archivo del Herald y la sala común, data/b2WhoIsG.ts) ──
   // Manuel en el archivo (mismo look que en B2-02 y B2-05): tareas b2-11-arrival, b2-11-indirect y b2-11-factcheck
   'b2-11-manuel': {

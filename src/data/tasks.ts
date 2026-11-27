@@ -92,8 +92,8 @@ import { B2_08_ARRIVAL_SCRIPT, B2_08_CLOSE_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNC
 import { B2_08_ACRONYMS_IDS, B2_08_COMPARE_IDS, B2_08_PERKS_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_11_ARRIVAL_SCRIPT, B2_11_CLOSE_STEPS, B2_11_PYJAMAS_STEPS, B2_11_REVIEW_GAME, B2_11_CONFESS_SCRIPT, B2_11_BOARD_ITEMS, B2_11_FACT_CHECK, B2_11_MOVIE_SCRIPT } from './b2WhoIsG'
-import { B2_12_ARRIVAL_SCRIPT, B2_12_UNHEARD_ROOM } from './b2Countdown'
-import { B2_12_GOALS_IDS, B2_12_PLAN_IDS } from './questions-b2-12'
+import { B2_12_ARRIVAL_SCRIPT, B2_12_PLANNER_CONTENT, B2_12_RETURN_SCRIPT, B2_12_UNHEARD_ROOM } from './b2Countdown'
+import { B2_12_GOALS_IDS, B2_12_NOTEBOOK_IDS, B2_12_PLAN_IDS } from './questions-b2-12'
 import { B2_11_FILM_IDS, B2_11_INDIRECT_IDS, B2_11_NARRATIVE_IDS } from './questions-b2-11'
 import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
 import { B2_10_ARRIVAL_SCRIPT, B2_10_BENCH_SCRIPT, B2_10_CARD_CONTENT, B2_10_CLASS_SCRIPT, B2_10_CLOSE_SCRIPT, B2_10_GIFT_SCRIPT } from './b2Card'
@@ -8655,4 +8655,47 @@ NPC_TASKS['b2-12-unheard'] = {
     sub: 'Unheard completado. La nota quedó junto al reloj. Se oyen pasos en la escalera…',
     say: "Don't do it.",
   },
+}
+
+// ── B2-12 · Countdown, bloque 2: G vuelve, su cuaderno, la línea de tiempo en la pared, Ticking Shadows y The Countdown ──
+// G vuelve y lee la nota; habla solo (script)
+NPC_TASKS['b2-12-return'] = {
+  npc: 'b2-12-g',
+  done: 'b2-12-return',
+  activity: 'script',
+  script: B2_12_RETURN_SCRIPT,
+  steps: [],
+  reward: { text: "I'm about to change everything.", es: 'Estoy a punto de cambiarlo todo.', sub: 'G dejó su cuaderno abierto en el piso. Léelo.', say: "I'm about to change everything." },
+}
+
+// El cuaderno de G: lección 'time-clauses-b2' (la guía el cuaderno) + práctica b2-12-tc1…tc6 (2 de escucha). 5 monedas
+NPC_TASKS['b2-12-notebook'] = {
+  npc: 'b2-12-g-notebook',
+  done: 'b2-12-notebook',
+  lesson: 'time-clauses-b2',
+  placeGuide: { name: 'El cuaderno de G', icon: '✎' },
+  activity: 'practice',
+  practice: 'time-clauses-b2',
+  practiceIds: B2_12_NOTEBOOK_IDS,
+  coins: 5,
+  requires: { id: 'b2-12-return', text: "G's notebook.", es: 'El cuaderno de G.', sub: 'Primero mira a G.' },
+  steps: [],
+  reward: {
+    text: "By the time he sees me, it will be too late.",
+    es: 'Para cuando me vea, será demasiado tarde.',
+    sub: 'G se levanta y va a la pared del plan con un marcador.',
+    say: "I'll wait until he's alone.",
+  },
+}
+
+// Future Planner, versión G (reutilizado): la línea de tiempo de mañana en la pared. 10 monedas
+NPC_TASKS['b2-12-timeline'] = {
+  npc: 'b2-12-wall',
+  done: 'b2-12-timeline',
+  activity: 'futureplan',
+  planner: B2_12_PLANNER_CONTENT,
+  coins: 10,
+  requires: { id: 'b2-12-notebook', text: 'G is writing on the wall.', es: 'G escribe en la pared.', sub: 'Primero lee el cuaderno de G.' },
+  steps: [],
+  reward: { text: 'Tick… tock…', es: 'Tic… tac…', sub: 'Los alfileres del mapa hacen tic-tac. ¡Unas sombras salen de la pared!', say: 'By 8 a.m., I will have left this room.' },
 }
