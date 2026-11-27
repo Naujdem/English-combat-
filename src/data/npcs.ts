@@ -1602,6 +1602,33 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b2-06-boss',
     doneLine: { text: 'Project Voice — Sources: Stones · Time · Echoes', es: 'Proyecto Voz — Fuentes: Stones · Time · Echoes' },
   },
+  // ── B2-07 · The Old Building, bloque 1 (el barrio antiguo y el edificio, data/b2OldBuilding.ts) ──
+  // Leo en la calle: tareas b2-07-arrival y b2-07-change. Entra al edificio cuando Sam lo abre
+  'b2-07-leo': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    until: 'b2-07-explore',
+    doneLine: { text: 'The area has changed so much. Talk to Rosa, she knows everyone.', es: 'El barrio ha cambiado muchísimo. Habla con Rosa, ella conoce a todo el mundo.' },
+  },
+  // Leo dentro del edificio, junto al cartel viejo: tareas b2-07-poster, b2-07-conditions y b2-07-get
+  'b2-07-leo-in': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    after: 'b2-07-explore',
+    doneLine: { text: 'A night school… Unless we do something, it will be luxury flats.', es: 'Una escuela nocturna… Si no hacemos algo, serán apartamentos de lujo.' },
+  },
+  // Rosa Benítez, vecina de toda la vida (tarea b2-07-rosa-talk)
+  'b2-07-rosa': {
+    name: 'Rosa Benítez',
+    look: { shirt: '#b5523b', hair: '#d8d8d8', skin: '#c68e63', gender: 'female' },
+    doneLine: { text: 'Sixty years on this street. And now I need a map to get around it!', es: 'Sesenta años en esta calle. ¡Y ahora necesito un mapa para moverme por ella!' },
+  },
+  // Sam Achebe, explorador urbano con permiso del ayuntamiento (tarea b2-07-explore)
+  'b2-07-sam': {
+    name: 'Sam Achebe',
+    look: { shirt: '#e0892b', hair: '#1a1a1a', skin: '#6b4329', gender: 'male' },
+    doneLine: { text: "Watch your step. The old stairs are weak.", es: 'Cuidado al pisar. La escalera vieja está débil.' },
+  },
   // ── B2-05 · Voice Blackouts, bloque 1 (el puerto de noche y el Herald, data/b2VoiceBlackouts.ts) ──
   // Manuel en el puerto (mismo look que b2-02-manuel): tareas b2-05-arrival y b2-05-verbs-to, b2-05-verbs-ing
   'b2-05-manuel': {

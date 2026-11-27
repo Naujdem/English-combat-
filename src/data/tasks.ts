@@ -89,6 +89,8 @@ import { B2_S1_WORDS_IDS } from './questions-b2-s1'
 import { B2_06_ARRIVAL_SCRIPT, B2_06_CLOSE_SCRIPT, B2_06_FINDING_SCRIPT, B2_06_UNHEARD_ROOM } from './b2Lab'
 import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_IDS } from './questions-b2-06'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
+import { B2_07_ARRIVAL_SCRIPT, B2_07_EXPLORE_ROOM, B2_07_POSTER_SCRIPT, B2_07_ROSA_SCRIPT, B2_07_SAM_INTRO } from './b2OldBuilding'
+import { B2_07_CHANGE_IDS, B2_07_CONDITIONS_IDS, B2_07_GET_IDS } from './questions-b2-07'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
 import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
 
@@ -7512,6 +7514,113 @@ NPC_TASKS['b2-05-close'] = {
     es: 'Misión 5: Apagones de voz',
     sub: 'El segundo segmento del núcleo quedó completo. Se abrió la Ventana 6. Anotaste la pista "Vocalis" en tu diario.',
     say: 'Voice Blackouts.',
+  },
+}
+
+// ── B2-07 · The Old Building, bloque 1 (el barrio antiguo y el edificio, data/b2OldBuilding.ts). NO guarda el cierre de la misión ──
+// Leo: el barrio antiguo, lleno de turistas (script)
+NPC_TASKS['b2-07-arrival'] = {
+  npc: 'b2-07-leo',
+  done: 'b2-07-arrival',
+  activity: 'script',
+  script: B2_07_ARRIVAL_SCRIPT,
+  steps: [],
+  reward: { text: 'The area has changed a lot.', es: 'El barrio ha cambiado mucho.', sub: 'Vuelve a hablar con Leo: la lección.', say: 'The area has changed a lot.' },
+}
+
+// Leo: lección 'change-b2' + práctica b2-07-ch1…ch6. 5 monedas
+NPC_TASKS['b2-07-change'] = {
+  npc: 'b2-07-leo',
+  done: 'b2-07-change',
+  lesson: 'change-b2',
+  activity: 'practice',
+  practice: 'change-b2',
+  practiceIds: B2_07_CHANGE_IDS,
+  coins: 5,
+  requires: { id: 'b2-07-arrival', text: 'Look at all these tourists…', es: 'Mira todos estos turistas…', sub: 'Primero habla con Leo.' },
+  steps: [],
+  reward: {
+    text: 'The more tourists come, the higher the rents get.',
+    es: 'Cuantos más turistas vienen, más suben los arriendos.',
+    sub: 'Lección hecha. Rosa, la vecina que barre su puerta, lleva toda la vida en esta calle.',
+    say: 'The more tourists come, the higher the rents get.',
+  },
+}
+
+// Rosa Benítez: el sobreturismo (script, escucha)
+NPC_TASKS['b2-07-rosa-talk'] = {
+  npc: 'b2-07-rosa',
+  done: 'b2-07-rosa-talk',
+  activity: 'script',
+  script: B2_07_ROSA_SCRIPT,
+  requires: { id: 'b2-07-change', text: 'Excuse me, I have to sweep before the next group comes.', es: 'Disculpa, tengo que barrer antes de que llegue el próximo grupo.', sub: 'Primero termina la lección con Leo.' },
+  steps: [],
+  reward: { text: "I can't get around my own street anymore.", es: 'Ya no puedo moverme por mi propia calle.', sub: 'Sam Achebe, el explorador urbano, está junto a la puerta del edificio viejo.', say: "I can't get around my own street anymore." },
+}
+
+// Sam: The Moving Stone escrito (reutilizado). Con 0-1 errores, escudo. 10 monedas. Al terminar se abre el edificio y Leo entra
+NPC_TASKS['b2-07-explore'] = {
+  npc: 'b2-07-sam',
+  done: 'b2-07-explore',
+  activity: 'command',
+  command: B2_07_EXPLORE_ROOM,
+  intro: B2_07_SAM_INTRO,
+  coins: 10,
+  requires: { id: 'b2-07-rosa-talk', text: 'Are you from the town hall too?', es: '¿Tú también eres del ayuntamiento?', sub: 'Primero habla con Rosa.' },
+  steps: [],
+  reward: {
+    text: 'The old building is open. And it was a school!',
+    es: '¡El edificio viejo está abierto. Y era una escuela!',
+    sub: 'Exploración completada. Leo entró al edificio y se quedó mirando algo en la pared.',
+    say: 'It was a school!',
+  },
+}
+
+// Leo frente al cartel de la escuela nocturna (script)
+NPC_TASKS['b2-07-poster'] = {
+  npc: 'b2-07-leo-in',
+  done: 'b2-07-poster',
+  activity: 'script',
+  script: B2_07_POSTER_SCRIPT,
+  steps: [],
+  reward: { text: "I've always wanted to teach in a place like this.", es: 'Siempre he querido enseñar en un lugar así.', sub: 'Vuelve a hablar con Leo: las condiciones.', say: "I've always wanted to teach in a place like this." },
+}
+
+// Leo: lección 'if-alt-b2' + práctica b2-07-ia1…ia6. 5 monedas
+NPC_TASKS['b2-07-conditions'] = {
+  npc: 'b2-07-leo-in',
+  done: 'b2-07-conditions',
+  lesson: 'if-alt-b2',
+  activity: 'practice',
+  practice: 'if-alt-b2',
+  practiceIds: B2_07_CONDITIONS_IDS,
+  coins: 5,
+  requires: { id: 'b2-07-poster', text: 'Look at this poster…', es: 'Mira este cartel…', sub: 'Primero mira el cartel con Leo.' },
+  steps: [],
+  reward: {
+    text: "We'll support it as long as it stays public.",
+    es: 'Lo apoyamos siempre y cuando siga siendo público.',
+    sub: 'Lección hecha. Leo quiere enseñarte una cosa más: lo que dijo Rosa.',
+    say: "We'll support it as long as it stays public.",
+  },
+}
+
+// Leo: lección 'get-b2' + práctica b2-07-gt1…gt6. 5 monedas
+NPC_TASKS['b2-07-get'] = {
+  npc: 'b2-07-leo-in',
+  done: 'b2-07-get',
+  lesson: 'get-b2',
+  activity: 'practice',
+  practice: 'get-b2',
+  practiceIds: B2_07_GET_IDS,
+  coins: 5,
+  requires: { id: 'b2-07-conditions', text: 'Conditions first.', es: 'Primero las condiciones.', sub: 'Primero termina la lección de las condiciones.' },
+  steps: [],
+  reward: {
+    text: "The builder won't get away with it. Not if we speak up.",
+    es: 'El constructor no se va a salir con la suya. No si hablamos.',
+    sub: 'Lección hecha. Pronto empieza la reunión vecinal en el ayuntamiento.',
+    say: "The builder won't get away with it.",
   },
 }
 

@@ -57,6 +57,7 @@ import { B2_02_COMBAT_QUESTIONS, B2_02_QUESTIONS } from './questions-b2-02'
 import { B2_03_COMBAT_QUESTIONS, B2_03_QUESTIONS } from './questions-b2-03'
 import { B2_04_COMBAT_QUESTIONS, B2_04_QUESTIONS } from './questions-b2-04'
 import { B2_05_COMBAT_QUESTIONS, B2_05_QUESTIONS } from './questions-b2-05'
+import { B2_07_QUESTIONS } from './questions-b2-07'
 import { B2_06_COMBAT_QUESTIONS, B2_06_QUESTIONS } from './questions-b2-06'
 import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
@@ -453,6 +454,7 @@ export const QUESTIONS: Question[] = [
   ...B2_04_COMBAT_QUESTIONS,
   ...B2_05_QUESTIONS,
   ...B2_05_COMBAT_QUESTIONS,
+  ...B2_07_QUESTIONS,
   ...B2_06_QUESTIONS,
   ...B2_06_COMBAT_QUESTIONS,
   ...B2_S1_QUESTIONS,
@@ -757,6 +759,32 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
       'have / get + objeto + participio: We had the prototype tested. I got my phone repaired (nunca "got repaired my phone").',
       'En todos los tiempos: She is having the lab rebuilt. · Algo malo que te pasó: We had our files stolen.',
       'Phrasal verbs: carry out · set up · rule out · point out.',
+    ],
+  },
+  // B2-07 · The Old Building (data/b2OldBuilding.ts)
+  'change-b2': {
+    name: 'Hablar del cambio',
+    level: 'B2',
+    lesson: [
+      'has changed (resultado) · have been rising (sigue pasando) · used to be (antes) · getting busier and busier (en curso).',
+      'The more tourists come, the higher the rents get. (Nunca "the more it is busy" ni "more expensiver".)',
+      'neighbourhood · rent · run-down · renovate · gentrification · overtourism · locals · short-term rentals.',
+    ],
+  },
+  'if-alt-b2': {
+    name: 'Alternativas a if',
+    level: 'B2',
+    lesson: [
+      'unless = if… not (nunca "unless you don\'t"). as long as / provided (that) = solo si. otherwise = si no. suppose = imagina que.',
+      'Después de unless, as long as y provided va presente, no will: as long as it stays public.',
+    ],
+  },
+  'get-b2': {
+    name: 'Phrasal verbs con get',
+    level: 'B2',
+    lesson: [
+      'get by (arreglárselas) · get around (moverse por un lugar) · get along with (llevarse bien con).',
+      'get over (superar) · get through (pasar por algo difícil) · get away with (salirse con la suya; no "get away from").',
     ],
   },
   // B2-05 · Voice Blackouts (data/b2VoiceBlackouts.ts)
