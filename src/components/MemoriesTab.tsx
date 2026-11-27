@@ -3,6 +3,7 @@ import { fillText } from '../game/gender'
 import type { GameState } from '../game/types'
 import { B1_MEMORIES, type B1Memory } from '../data/b1Memories'
 import { isB1NodeOpen } from '../data/b1World'
+import { B2_WINDOW_CLUES } from '../data/b2Card'
 import { SpriteL } from './SpriteL'
 import { btnGhost } from './ui'
 
@@ -30,8 +31,26 @@ export function MemoriesTab({ state }: { state: GameState }) {
     )
   }
 
-  if (!open.length) return <p className="text-sm text-paper/60">Aún no tienes recuerdos. Se abren al juntar dos fragmentos.</p>
+  // B2 (ficha 10): pistas que el protagonista se trae de las Ventanas (la tarjeta de G…)
+  const clues = B2_WINDOW_CLUES.filter((c) => state.opened.includes(c.flag))
+  const clueList = clues.length > 0 && (
+    <div className="mt-3">
+      <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-[#7fb0ff]">Pistas de las Ventanas</p>
+      <ul className="grid gap-1.5">
+        {clues.map((c) => (
+          <li key={c.flag} className="rounded-xl border-2 border-[#3fa9ff]/50 px-3 py-2">
+            <p className="text-xs text-[#7fb0ff]">Ventana {c.year} · {c.title}</p>
+            <p className="font-display text-[16px] italic">{c.text}</p>
+            <p className="text-sm text-paper/70">{c.es}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+
+  if (!open.length) return clueList || <p className="text-sm text-paper/60">Aún no tienes recuerdos. Se abren al juntar dos fragmentos.</p>
   return (
+    <>
     <ul className="grid gap-1.5">
       {open.map((m) => (
         <li key={m.n}>
@@ -42,6 +61,8 @@ export function MemoriesTab({ state }: { state: GameState }) {
         </li>
       ))}
     </ul>
+    {clueList}
+    </>
   )
 }
 

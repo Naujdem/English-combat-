@@ -1684,7 +1684,15 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'G',
     look: { shirt: '#23252d', hair: '#9b9ea6', skin: '#363b46', gender: 'male' },
     after: 'b2-10-contrast',
+    until: 'b2-10-boss',
     doneLine: { text: '(He is writing slowly. He doesn\'t look up.)', es: '(Escribe despacio. No levanta la mirada.)' },
+  },
+  // B2-10 · bloque 3: G con el regalo, al vencer a Second Thoughts (el cierre, tarea b2-10-close)
+  'b2-10-g-leaving': {
+    name: 'G',
+    look: { shirt: '#23252d', hair: '#9b9ea6', skin: '#363b46', gender: 'male' },
+    after: 'b2-10-boss',
+    doneLine: { text: '(He walks towards the old port.)', es: '(Camina hacia el puerto viejo.)' },
   },
   'b2-10-notebook': {
     name: 'El cuaderno de G',

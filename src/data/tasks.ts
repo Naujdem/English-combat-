@@ -92,7 +92,7 @@ import { B2_08_ARRIVAL_SCRIPT, B2_08_CLOSE_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNC
 import { B2_08_ACRONYMS_IDS, B2_08_COMPARE_IDS, B2_08_PERKS_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
-import { B2_10_ARRIVAL_SCRIPT, B2_10_BENCH_SCRIPT, B2_10_CARD_CONTENT, B2_10_CLASS_SCRIPT, B2_10_GIFT_SCRIPT } from './b2Card'
+import { B2_10_ARRIVAL_SCRIPT, B2_10_BENCH_SCRIPT, B2_10_CARD_CONTENT, B2_10_CLASS_SCRIPT, B2_10_CLOSE_SCRIPT, B2_10_GIFT_SCRIPT } from './b2Card'
 import { B2_10_CONTRAST_IDS, B2_10_ING_IDS } from './questions-b2-10'
 import { B2_09_ADVERBS_IDS, B2_09_ORDER_IDS, B2_09_RELATIVE_IDS, B2_09_REVIEW_IDS, B2_09_STRONG_IDS } from './questions-b2-09'
 import { B2_07_OLIVER_SCRIPT, B2_07_ARRIVAL_SCRIPT, B2_07_DEBATE_ENDINGS, B2_07_DEBATE_TURNS, B2_07_EXPLORE_ROOM, B2_07_POSTER_SCRIPT, B2_07_ROSA_SCRIPT, B2_07_SAM_INTRO } from './b2OldBuilding'
@@ -8394,5 +8394,23 @@ NPC_TASKS['b2-10-gift'] = {
   requires: { id: 'b2-10-card', text: 'G is holding the card.', es: 'G tiene la tarjeta en la mano.', sub: 'Primero ayuda a armar la tarjeta.' },
   steps: [],
   reward: { text: 'Happy birthday… Leo.', es: 'Feliz cumpleaños… Leo.', sub: 'Las manchas de tinta del cuaderno saltan al patio. ¡Defiende la tarjeta!', say: 'Happy birthday… Leo.' },
+}
+
+// ── B2-10 · The Card, bloque 3: G se va con el regalo. done = b2CloseId(10) = 'b2-10-close'. Al guardarse, Explore
+// muestra WindowExit (fundido azul) y se vuelve al presente: se abre el lugar 11 ──
+NPC_TASKS['b2-10-close'] = {
+  npc: 'b2-10-g-leaving',
+  done: 'b2-10-close',
+  activity: 'script',
+  script: B2_10_CLOSE_SCRIPT,
+  recover: ['contrast-b2', 'ing-prep-b2'],
+  coins: 15,
+  steps: [],
+  reward: {
+    text: "The man in the park on Leo's birthday… it was G.",
+    es: 'El hombre del parque en el cumpleaños de Leo… era G.',
+    sub: 'Misión 10: The Card. La tarjeta quedó en Mochila › Recuerdos y Ventanas. Se abrió el lugar 11 en el mapa.',
+    say: 'Why would he know Leo?',
+  },
 }
 

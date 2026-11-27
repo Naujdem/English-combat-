@@ -500,5 +500,68 @@ export const B2_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B2-10 · The Card (Ventana 2056): página del protagonista, página del cuaderno de G (letra a mano) y página mezclada
+  {
+    id: 'b2-mission-10',
+    title: 'B2 · Misión 10: The Card (Ventana 2056)',
+    unlock: 'b2-10-close',
+    words: [
+      { title: 'Contraste', words: [['whereas', 'mientras que'], ['while', 'mientras que'], ['however', 'sin embargo'], ['nevertheless', 'aun así'], ['on the other hand', 'por otro lado'], ['despite', 'a pesar de'], ['in spite of', 'a pesar de']] },
+      { title: 'Sentimientos encontrados', words: [['resentment', 'resentimiento'], ['forgive', 'perdonar'], ['grudge', 'rencor'], ['miss', 'extrañar'], ['mixed feelings', 'sentimientos encontrados'], ['torn', 'dividido, indeciso']] },
+      { title: 'Expresiones con -ing', words: [["there's no point in", 'no tiene sentido'], ["it's worth", 'vale la pena'], ['have difficulty', 'costarle a uno'], ['tired of', 'cansado de'], ['afraid of', 'con miedo de']] },
+      { title: 'Phrasal verbs', words: [['look up to', 'admirar'], ['let go of', 'soltar, dejar ir'], ['hold on to', 'aferrarse a'], ['give in', 'ceder, rendirse']] },
+    ],
+    versions: [
+      {
+        id: 'b2-mission-10-mine',
+        tense: 'p',
+        tab: 'Mi diario',
+        title: 'A school, 2056',
+        unlock: 'b2-10-close',
+        frame: 'Lo escribes al volver al presente.',
+        lines: [
+          { en: 'Today the Window [took]p me to a school in 2056. An old man with a hood [was standing]p at a classroom window.', es: 'Hoy la Ventana me llevó a una escuela en 2056. Un viejo con capucha estaba parado frente a la ventana de un salón.' },
+          { en: 'Inside, a teacher [said]p: "Be brave. Use your voice." The old man [didn\'t move]p.', es: 'Adentro, un profesor dijo: "Sean valientes. Usen su voz". El viejo no se movió.' },
+          { en: 'Then he [sat]p on a bench and [wrote]p a card. It [was]p G. Despite being so close, I [couldn\'t speak]p to him.', es: 'Luego se sentó en una banca y escribió una tarjeta. Era G. A pesar de estar tan cerca, no pude hablarle.' },
+          { en: 'The man in the park on Leo\'s birthday… it [was]p G. Why would he know Leo?', es: 'El hombre del parque en el cumpleaños de Leo… era G. ¿Por qué conocería a Leo?' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-10-g',
+        kind: 'L',
+        tense: 'mix',
+        tab: 'Cuaderno de G',
+        title: 'The card',
+        unlock: 'b2-10-close',
+        frame: 'La página que G escribió en la banca. Letra temblorosa, tachones y la mancha de tinta.',
+        lines: [
+          { en: '~~I hate~~ Despite hating him, I [can\'t stop]n thinking about our friendship.', es: 'A pesar de odiarlo, no puedo dejar de pensar en nuestra amistad.' },
+          { en: 'I [have held]p on to this grudge for years. I [am]n torn.', es: 'Me he aferrado a este rencor durante años. Estoy dividido.' },
+          { en: '~~I will never~~ I [won\'t give]f in. But I [miss]n him.', es: 'No voy a ceder. Pero lo extraño.' },
+          { en: 'Despite everything… he [was]p a good teacher. I [hope]n he still [is]n.', es: 'A pesar de todo… fue un buen profesor. Espero que todavía lo sea.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-10-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'Mixed feelings',
+        unlock: 'b2-10-close',
+        frame: 'Todo lo que pasó en la Ventana, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'G [has]n mixed feelings: he [is]n full of resentment, whereas part of him [wants]n to forgive.', es: 'G tiene sentimientos encontrados: está lleno de resentimiento, mientras que una parte de él quiere perdonar.' },
+          { en: 'He [had]p difficulty writing the card. Nevertheless, he [finished]p it.', es: 'Le costó escribir la tarjeta. Aun así, la terminó.' },
+          { en: 'Leo [looks]n up to his teachers. One day, he [will open]f a gift from G in the park.', es: 'Leo admira a sus profesores. Un día abrirá un regalo de G en el parque.' },
+          { en: 'Maybe it [is]n time to let go of the past… but G [is holding]n on to it.', es: 'Quizá es hora de soltar el pasado… pero G se aferra a él.' },
+        ],
+        questions: [
+          { q: 'How does G feel?', options: ['He has mixed feelings.', 'He is completely happy.', 'He feels nothing.'], answer: 0, tip: 'El diario dice: "G has mixed feelings".' },
+          { q: 'Was it easy for G to write the card?', options: ['Yes, very easy.', 'No, he had difficulty writing it.', 'He didn\'t write it.'], answer: 1, tip: 'El diario dice: "He had difficulty writing the card".' },
+          { q: 'What is G doing with the past?', options: ['He is letting go of it.', 'He is forgetting it.', 'He is holding on to it.'], answer: 2, tip: 'El diario dice: "G is holding on to it" (hold on to = aferrarse).' },
+        ],
+      },
+    ],
+  },
 ]
-
