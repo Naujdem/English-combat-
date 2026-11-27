@@ -60,6 +60,7 @@ import { B2_05_COMBAT_QUESTIONS, B2_05_QUESTIONS } from './questions-b2-05'
 import { B2_07_COMBAT_QUESTIONS, B2_07_QUESTIONS } from './questions-b2-07'
 import { B2_06_COMBAT_QUESTIONS, B2_06_QUESTIONS } from './questions-b2-06'
 import { B2_08_COMBAT_QUESTIONS, B2_08_QUESTIONS } from './questions-b2-08'
+import { B2_09_QUESTIONS } from './questions-b2-09'
 import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
@@ -461,6 +462,7 @@ export const QUESTIONS: Question[] = [
   ...B2_06_COMBAT_QUESTIONS,
   ...B2_08_QUESTIONS,
   ...B2_08_COMBAT_QUESTIONS,
+  ...B2_09_QUESTIONS,
   ...B2_S1_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
@@ -763,6 +765,31 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
       'ASAP (lo antes posible) · ETA (hora estimada de llegada) · FYI (para que sepas) · EOD (fin del día) · TBC (por confirmar) · RSVP (responde).',
       'Informales: BTW (por cierto) · IMO (en mi opinión).',
       'Fecha límite con by: by EOD (nunca "until EOD").',
+    ],
+  },
+  // B2-09 · The Gallery (data/b2Gallery.ts)
+  'gradable-b2': {
+    name: 'Graduables y no graduables',
+    level: 'B2',
+    lesson: [
+      'Graduables: very / a bit / quite + good, big, interesting. Extremos: absolutely / really + amazing, stunning, awful, tiny, huge.',
+      'Nunca "very amazing" ni "absolutely good". quite · pretty · fairly · rather matizan: "It\'s rather strange."',
+    ],
+  },
+  'adj-order-b2': {
+    name: 'Orden de adjetivos',
+    level: 'B2',
+    lesson: [
+      'opinión – tamaño – edad – forma – color – origen – material – propósito + sustantivo.',
+      'a beautiful small ancient grey stone tablet · a small old wooden box (no "a wooden old small box").',
+    ],
+  },
+  'nd-relative-b2': {
+    name: 'Relativas explicativas',
+    level: 'B2',
+    lesson: [
+      'Información extra entre comas: , which (cosas) · , who (personas) · , whose (posesión). Con comas, nunca that.',
+      'which de toda la oración: "Nobody could read it, which made it famous." (coma + which = y eso).',
     ],
   },
   // B2-06 · The Lab (Ventana 2062, data/b2Lab.ts)

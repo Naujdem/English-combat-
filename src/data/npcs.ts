@@ -1662,6 +1662,27 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b2-06-boss',
     doneLine: { text: 'Project Voice — Sources: Stones · Time · Echoes', es: 'Proyecto Voz — Fuentes: Stones · Time · Echoes' },
   },
+  // ── B2-09 · The Gallery, bloque 1 (el museo de arte, data/b2Gallery.ts) ──
+  // La persona especial (guía): tareas b2-09-arrival, b2-09-strong, b2-09-order y b2-09-relative
+  'b2-09-special': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: "It's not very amazing. It's absolutely amazing!", es: 'No es muy increíble. ¡Es absolutamente increíble!' },
+  },
+  // Leo frente a las tablillas. Al leer la última (b2-09-inscriptions) se va a otra sala
+  'b2-09-leo': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    until: 'b2-09-inscriptions',
+    doneLine: { text: '…Sorry. I was miles away.', es: '…Perdón. Estaba en otro mundo.' },
+  },
+  // Arturo Silva, el curador: tareas b2-09-tour y b2-09-inscriptions
+  'b2-09-arturo': {
+    name: 'Arturo Silva',
+    look: { shirt: '#7a4fa3', hair: '#6b6b6b', skin: '#c68e63', gender: 'male' },
+    doneLine: { text: 'The last tablet, which is the oldest, finally speaks.', es: 'La última tablilla, que es la más antigua, por fin habla.' },
+  },
   // ── B2-07 · The Old Building, bloque 1 (el barrio antiguo y el edificio, data/b2OldBuilding.ts) ──
   // Leo en la calle: tareas b2-07-arrival y b2-07-change. Entra al edificio cuando Sam lo abre
   'b2-07-leo': {
