@@ -1,5 +1,7 @@
-import type { GameState, SceneDef, Zone } from '../game/types'
+import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
+import type { CallForHelpConfig } from '../components/CallForHelp'
+import { canRecognize } from '../game/mic'
 
 /**
  * B2-13 · The Fire (Ventana, 2061). La noche del incendio, la misma de la Ventana 3 y del recuerdo 1 de B1.
@@ -54,6 +56,11 @@ export const B2_13_SCHOOL: SceneDef = {
     { type: 'npc', id: B2_13_ADULT, x: 7, y: 1 },
     { type: 'npc', id: B2_13_SIGN, x: 2, y: 1 },
     { type: 'npc', id: B2_13_REFLECTION, x: 12, y: 1 },
+    // Bloque 2: las sombras del humo salen de las escaleras principales; Panic sujeta a tu yo adulto
+    { type: 'enemy', id: 'b2-13-shadow1', x: 14, y: 2, after: 'b2-13-alarm' },
+    { type: 'enemy', id: 'b2-13-shadow2', x: 14, y: 1, after: 'b2-13-shadow1' },
+    { type: 'enemy', id: 'b2-13-boss', x: 8, y: 1, after: 'b2-13-shadow2' },
+    { type: 'npc', id: 'b2-13-leo', x: 6, y: 1 },
   ],
   labels: [
     { text: '2061', x: 10, y: 3 },
@@ -78,6 +85,10 @@ export const B2_13_SCHOOL: SceneDef = {
     { label: 'Antes de la alarma', done: s.opened.includes(B2_13_BEFORE) },
     { label: 'El cartel: had better', done: s.opened.includes(B2_13_HADBETTER) },
     { label: "Tu voz: it's time", done: s.opened.includes(B2_13_TIME) },
+    { label: 'Suena la alarma', done: s.opened.includes('b2-13-alarm') },
+    { label: 'Smoke Shadows (2)', done: s.defeated.includes('b2-13-shadow2') },
+    { label: 'Panic, segunda forma', done: s.defeated.includes('b2-13-boss') },
+    { label: 'Call for Help a dos voces', done: s.opened.includes('b2-13-call') },
   ],
   intro: {
     first: '2061. The night school again, the third floor. — 2061. Otra vez la escuela nocturna, el tercer piso. Esta vez, tu voz funciona.',
@@ -107,3 +118,96 @@ export const B2_13_BEFORE_SCRIPT: ScriptLine[] = [
   { who: 'L', text: 'Not this time.', es: 'Esta vez no.' },
   { who: 'narrator', text: '(The fire will happen. That can\'t change. But the silence can. Next to the back stairs there is an evacuation sign.)', es: '(El incendio va a ocurrir. Eso no puede cambiar. Pero el silencio sí. Junto a las escaleras traseras hay un cartel de evacuación.)' },
 ]
+
+// ── Bloque 2 ──
+// La alarma (b2-13-alarm, script con tu yo adulto) → dos Smoke Shadows → Panic, segunda forma (3 fases; la 3.ª se dice en voz alta
+// o se escribe) → Call for Help a dos voces (b2-13-call, reutilizado de B1 en modo steady: la barra de voz de Leo no baja).
+export const B2_13_ALARM = 'b2-13-alarm'
+export const B2_13_SHADOW1 = 'b2-13-shadow1'
+export const B2_13_SHADOW2 = 'b2-13-shadow2'
+export const B2_13_BOSS = 'b2-13-boss'
+export const B2_13_CALL = 'b2-13-call'
+
+/** Suena la alarma: humo en las escaleras principales y tu yo adulto se paraliza, igual que en la Ventana 3 */
+export const B2_13_ALARM_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', fx: 'alarm', text: '(Ten thirty-five. The fire alarm goes off.)', es: '(Las diez y treinta y cinco. Suena la alarma de incendio.)' },
+  { who: 'narrator', text: '(Smoke is coming up the main stairs. People run out of the classroom.)', es: '(Sube humo por las escaleras principales. La gente sale corriendo del aula.)' },
+  { who: 'narrator', text: '(Your older self doesn\'t move. A figure of frost grows behind {h:him|her}, bigger than last time, and holds {h:his|her} shoulders.)', es: '(Tu yo adulto no se mueve. Detrás crece una figura de escarcha, más grande que la última vez, y le sujeta los hombros.)' },
+  { who: 'L', text: 'Hey! Can you hear me? You\'d better not stay here!', es: '¡Oye! ¿Me oyes? ¡Más vale que no te quedes aquí!' },
+  { who: 'friend', text: '…I can\'t move. I… I can hear someone. Who\'s there?', es: '…No me puedo mover. Yo… oigo a alguien. ¿Quién está ahí?' },
+  { who: 'narrator', text: '(This time, {h:he|she} heard you. But the smoke is taking shape between you.)', es: '(Esta vez te oyó. Pero el humo está tomando forma entre ustedes.)' },
+]
+
+const HB = 'hadbetter-b2' as const
+const IT = 'itstime-b2' as const
+const FI = 'fire-b2' as const
+const SHADOW_LOOK = { shirt: '#30353d', hair: '#15181c', skin: '#4c525c' }
+
+/** Smoke Shadows (los mismos de la Ventana 3, más fuertes). Preguntas: etiqueta b2-13-shadow */
+const SHADOW = (id: string, line: { text: string; es: string }): EnemyDef => ({
+  id,
+  name: 'Smoke Shadow',
+  person: 'Smoke Shadow',
+  kind: 'minion',
+  hp: 5,
+  topics: [HB, IT],
+  kinds: ['fill', 'fix'],
+  tags: ['b2-13-shadow'],
+  onlyTags: true,
+  zone: 'pasillo-noche',
+  look: SHADOW_LOOK,
+  before: [line],
+  after: [{ text: '(The shadow breaks into grey smoke and disappears.)', es: '(La sombra se deshace en humo gris y desaparece.)' }],
+  freed: { text: '(The corridor is a little clearer now.)', es: '(El pasillo está un poco más despejado.)' },
+})
+
+/**
+ * Panic, segunda forma: más grande, vuelve a sujetar a tu yo adulto. Jefe de 3 fases.
+ * Fase 1: had better e it's time (b2-13-boss-hb) · Fase 2: repaso de la Parte 3 (b2-13-boss-mix: relativas explicativas,
+ * contraste, preposición + -ing, tiempos narrativos y futuro perfecto) · Fase 3: tu voz (b2-13-boss-v): le hablas en voz
+ * alta a tu yo adulto; sin micrófono se escribe. Las Ventanas no dan atuendos: solo despedida.
+ */
+export const B2_13_BOSS_DEF: EnemyDef = {
+  id: B2_13_BOSS,
+  name: 'Panic',
+  person: 'Panic',
+  kind: 'boss',
+  hp: 12,
+  topics: [HB, IT, FI],
+  kinds: ['fill', 'fix', 'order', 'listen'],
+  tags: ['b2-13-boss-hb'],
+  phases: [
+    { hp: 4, title: 'Escarcha: más vale quedarse', topics: [HB, IT], kinds: ['fill', 'fix', 'listen'], tags: ['b2-13-boss-hb'], line: { text: 'You had better to stay. It\'s time to staying still…', es: 'had better to stay y it\'s time to staying: mal.' } },
+    { hp: 4, title: 'Escarcha: todo lo que callaste', topics: ['nd-relative-b2', 'contrast-b2', 'ing-prep-b2', 'narrative-b2', 'fperfect-b2'], kinds: ['fill', 'fix'], tags: ['b2-13-boss-mix'], line: { text: 'Despite of the smoke, nobody will have notice you…', es: 'despite of y will have notice: mal.' } },
+    { hp: 4, title: 'Tu voz', topics: [FI, IT], kinds: canRecognize ? ['speak'] : ['write'], tags: ['b2-13-boss-v'], line: { text: 'Don\'t speak. Stay quiet. Nobody needs your voice…', es: 'No hables. Quédate callado. Nadie necesita tu voz…' } },
+  ],
+  onlyTags: true,
+  zone: 'pasillo-noche',
+  look: { shirt: '#a9d6fb', hair: '#e8f5ff', skin: '#8dbde2' },
+  before: [{ text: 'Shhh… You had better to stay. Don\'t speak. Last time, it worked…', es: 'Shhh… "had better to stay" (mal). No hables. La última vez funcionó…' }],
+  after: [{ text: '(The frost cracks. Your older self takes a deep breath… and moves.)', es: '(La escarcha se rompe. Tu yo adulto respira hondo… y se mueve.)' }],
+  freed: { text: '(Your older self looks at you. "Who… who are you?" There is no time to explain.)', es: '(Tu yo adulto te mira. "¿Quién… quién eres?". No hay tiempo para explicar.)' },
+  farewell: {
+    q: 'Panic (cracking): "Why didn\'t you stay quiet this time?"',
+    options: ["Because it was time someone spoke up.", "Because it was time someone speak up.", "Because it was time someone to speak up."],
+    answer: 0,
+    tip: "it's / it was time + sujeto + pasado: someone spoke up.",
+  },
+}
+
+export const B2_13_ENEMIES: Record<string, EnemyDef> = {
+  [B2_13_SHADOW1]: SHADOW(B2_13_SHADOW1, { text: "You'd better to go back… You'd better to hide…", es: "You'd better to go: mal (sin to)." }),
+  [B2_13_SHADOW2]: SHADOW(B2_13_SHADOW2, { text: "It's time to staying… It's time everyone stay inside…", es: "It's time to staying y everyone stay: mal." }),
+  [B2_13_BOSS]: B2_13_BOSS_DEF,
+}
+
+/** Call for Help a dos voces (ficha 13): Leo adulto y tu yo adulto gritan juntos. La barra de voz de Leo no baja */
+export const B2_13_CALL_CONFIG: CallForHelpConfig = {
+  ids: ['b2-13-c1', 'b2-13-c2', 'b2-13-c3', 'b2-13-c4', 'b2-13-c5'],
+  shouts: ['Follow our voices! Use the back stairs!', 'Fire! Get out!', "You'd better not use the lift!", "Stay calm! We're coming!", 'Is anybody there? Get out now!'],
+  badge: 'Ventana 2061 · a dos voces',
+  voiceLabel: 'Voz de ▒▒▒',
+  steady: true,
+  lastLabel: 'Los tres a la vez…',
+  together: 'Esta vez no grita solo: la barra no baja.',
+}

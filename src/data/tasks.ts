@@ -1,4 +1,5 @@
 import type { LessonStep, TopicId } from '../game/types'
+import type { CallForHelpConfig } from '../components/CallForHelp'
 import type { MiniStep } from '../components/MiniTalk'
 import type { RoundItem, RoundLines } from '../components/OneMoreRound'
 import type { RaceLeg, SequenceStep } from '../components/SequenceMaster'
@@ -94,7 +95,7 @@ import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './ques
 import { B2_11_ARRIVAL_SCRIPT, B2_11_CLOSE_STEPS, B2_11_PYJAMAS_STEPS, B2_11_REVIEW_GAME, B2_11_CONFESS_SCRIPT, B2_11_BOARD_ITEMS, B2_11_FACT_CHECK, B2_11_MOVIE_SCRIPT } from './b2WhoIsG'
 import { B2_12_ARRIVAL_SCRIPT, B2_12_CLOSE_SCRIPT, B2_12_PLANNER_CONTENT, B2_12_RETURN_SCRIPT, B2_12_UNHEARD_ROOM } from './b2Countdown'
 import { B2_12_GOALS_IDS, B2_12_NOTEBOOK_IDS, B2_12_PLAN_IDS } from './questions-b2-12'
-import { B2_13_ARRIVAL_SCRIPT, B2_13_BEFORE_SCRIPT } from './b2Fire'
+import { B2_13_ALARM_SCRIPT, B2_13_ARRIVAL_SCRIPT, B2_13_BEFORE_SCRIPT, B2_13_CALL_CONFIG } from './b2Fire'
 import { B2_13_HADBETTER_IDS, B2_13_TIME_IDS } from './questions-b2-13'
 import { B2_11_FILM_IDS, B2_11_INDIRECT_IDS, B2_11_NARRATIVE_IDS } from './questions-b2-11'
 import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
@@ -202,6 +203,8 @@ export type NpcTask = {
   notebookPage?: number
   /** B2 (Ventanas): la lección y la práctica las guía lo que hay en el lugar (la pizarra, un cartel, un cuaderno), sin voz propia */
   placeGuide?: { name: string; icon: string }
+  /** B2-13: Call for Help reutilizado con otra configuración (a dos voces). Con activity 'callforhelp' */
+  callForHelp?: CallForHelpConfig
   /** Para activity 'script' (B1, recuerdos): secuencia fija sin elecciones (MemoryScript); 'friend' = el personaje de la tarea */
   script?: ScriptLine[]
   /** Para activity 'textonly' (B1-03, Text Only): los chats en el teléfono de L. Los steps de la tarea los narra L antes */
@@ -8779,5 +8782,33 @@ NPC_TASKS['b2-13-time'] = {
     es: 'Ya es hora de que todos se vayan. Ya es hora de que alces la voz.',
     sub: 'Son las diez y treinta y cuatro. Falta un minuto para la alarma.',
     say: "It's time you spoke up.",
+  },
+}
+
+// ── B2-13 · The Fire, bloque 2: la alarma, Smoke Shadows, Panic (3 fases) y Call for Help a dos voces. NO guarda el cierre ──
+// Suena la alarma: tu yo adulto se paraliza y Panic vuelve, más grande (script)
+NPC_TASKS['b2-13-alarm'] = {
+  npc: 'b2-13-adult',
+  done: 'b2-13-alarm',
+  activity: 'script',
+  script: B2_13_ALARM_SCRIPT,
+  requires: { id: 'b2-13-time', text: 'Ten thirty-four…', es: 'Las diez y treinta y cuatro…', sub: 'Primero mira tu reflejo en la ventana.' },
+  steps: [],
+  reward: { text: 'This time, someone heard you.', es: 'Esta vez alguien te oyó.', sub: 'Unas sombras de humo suben por las escaleras principales. ¡Véncelas!', say: "You'd better not stay here!" },
+}
+
+// Call for Help a dos voces (components/CallForHelp.tsx en modo steady): Leo adulto y tu yo adulto gritan juntos. 10 monedas
+NPC_TASKS['b2-13-call'] = {
+  npc: 'b2-13-leo',
+  done: 'b2-13-call',
+  activity: 'callforhelp',
+  callForHelp: B2_13_CALL_CONFIG,
+  coins: 10,
+  steps: [],
+  reward: {
+    text: 'Is anybody there? Get out now!',
+    es: '¿Hay alguien ahí? ¡Salgan ya!',
+    sub: 'Esta vez no gritó solo. Se oyen las sirenas de los bomberos.',
+    say: 'Get out now!',
   },
 }

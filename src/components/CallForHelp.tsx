@@ -21,40 +21,64 @@ const SHOUTS = ["Stay there! We're coming!", 'Follow my voice! The fire exit is 
 const SHOUT_SIZE = [26, 22, 18, 15, 14]
 
 /**
+ * Configuración de Call for Help. Sin config: la versión de B1 (recuerdo 1, L grita solo y pierde la voz).
+ * steady (B2-13, a dos voces): la barra de voz no baja, el texto no se achica y no hay tos.
+ */
+export type CallForHelpConfig = {
+  ids: string[]
+  shouts: string[]
+  badge: string
+  voiceLabel: string
+  steady?: boolean
+  /** Texto antes de la última ronda (la que se dice en voz alta) */
+  lastLabel: string
+  /** Quién grita (voz de la síntesis) */
+  voice?: 'male' | 'female'
+  /** Lo que se ve debajo de la barra en modo steady */
+  together?: string
+}
+const B1_CONFIG: CallForHelpConfig = { ids: B1_01_CALL_IDS, shouts: SHOUTS, badge: 'Recuerdo 1', voiceLabel: 'Voz de L', lastLabel: 'Con lo que te queda de voz…' }
+
+/**
  * Call for Help (B1-01, recuerdo 1). No es un minijuego del catálogo: es una secuencia de la escena.
  * L grita para sacar a todos del edificio mientras el humo se espesa. 5 rondas, una pregunta cada una (tag b1-01-call).
  * La barra de voz baja 20% por ronda aunque aciertes (es narrativo). Equivocarse no quita vida ni baja más la barra:
  * se muestra la pista y se repite la misma ronda. Ronda 5: decirlo en voz alta (o escribirlo, sin micrófono).
  */
-export function CallForHelp({ update, onDone }: { update: Update; onDone: () => void }) {
+export function CallForHelp({ update, onDone, config = B1_CONFIG }: { update: Update; onDone: () => void; config?: CallForHelpConfig }) {
+  const { ids, shouts, steady } = config
   const [round, setRound] = useState(0)
   /** null = respondiendo · true = acertó (se ve el grito) · false = falló (pista y reintento) */
   const [result, setResult] = useState<boolean | null>(null)
   const [attempt, setAttempt] = useState(0)
   // Sin micrófono (o si falla), la última ronda se escribe
   const [noMic, setNoMic] = useState(!canRecognize)
-  const last = round === B1_01_CALL_IDS.length - 1
-  const voice = Math.max(0, 100 - 20 * (round + (result ? 1 : 0)))
+  const last = round === ids.length - 1
+  const voice = steady ? 100 : Math.max(0, 100 - 20 * (round + (result ? 1 : 0)))
 
   const q = useMemo<Question | null>(() => {
-    const id = B1_01_CALL_IDS[round]
+    const id = ids[round]
     if (!last) return questionById(id) ?? null
     const base = questionById(noMic ? `T-${id}` : `S-${id}`)
     if (!base) return null
-    return noMic ? base : { ...base, prompt: 'Con lo que te queda de voz… di en voz alta:' }
-  }, [round, last, noMic])
+    return noMic ? base : { ...base, prompt: `${config.lastLabel} di en voz alta:` }
+  }, [round, last, noMic, ids, config.lastLabel])
 
   // Se corta la voz: al acertar la última ronda, silencio
   useEffect(() => {
     if (!result) return
-    if (last) {
+    if (last && !steady) {
       stopSpeaking()
       return
     }
+    if (steady) {
+      speak(shouts[round], false, config.voice ?? 'male')
+      return
+    }
     if (round >= 1) sfx('cough')
-    const t = window.setTimeout(() => speak(SHOUTS[round], round >= 2, 'male'), round >= 1 ? 350 : 0)
+    const t = window.setTimeout(() => speak(shouts[round], round >= 2, 'male'), round >= 1 ? 350 : 0)
     return () => window.clearTimeout(t)
-  }, [result, round, last])
+  }, [result, round, last, steady, shouts, config.voice])
 
   function answer(ok: boolean) {
     if (q) update((s) => recordAnswer(s, q, ok))
@@ -67,43 +91,45 @@ export function CallForHelp({ update, onDone }: { update: Update; onDone: () => 
     setRound(round + 1)
   }
 
-  const shout = result ? SHOUTS[round] : round > 0 ? SHOUTS[round - 1] : null
+  const shout = result ? shouts[round] : round > 0 ? shouts[round - 1] : null
   const shoutRound = result ? round : round - 1
-  const cough = shoutRound >= 1 && shout !== '…'
+  const cough = !steady && shoutRound >= 1 && shout !== '…'
 
   return (
     <div className="absolute inset-0 z-40 overflow-y-auto bg-ink">
       <div className="mx-auto flex max-w-md flex-col gap-3 px-3 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-[#c9b8e8]">Recuerdo 1</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-[#c9b8e8]">{config.badge}</p>
             <p className="font-display text-xl text-gold">Call for Help</p>
           </div>
-          <p className="text-sm text-paper/60">Ronda {round + 1} de {B1_01_CALL_IDS.length}</p>
+          <p className="text-sm text-paper/60">Ronda {round + 1} de {ids.length}</p>
         </div>
 
-        <SmokeHallway level={round + (result ? 1 : 0)} mute={voice <= 60} />
+        <SmokeHallway level={round + (result ? 1 : 0)} mute={!steady && voice <= 60} />
 
         {/* Barra de voz: baja aunque aciertes */}
         <div>
           <div className="mb-1 flex items-center justify-between text-xs font-semibold uppercase tracking-wide text-paper/60">
-            <span>Voz de L</span>
+            <span>{config.voiceLabel}</span>
             <span>{voice}%</span>
           </div>
-          <div className="h-3 overflow-hidden rounded-full bg-black/40" role="meter" aria-label="Voz de L" aria-valuemin={0} aria-valuemax={100} aria-valuenow={voice}>
+          <div className="h-3 overflow-hidden rounded-full bg-black/40" role="meter" aria-label={config.voiceLabel} aria-valuemin={0} aria-valuemax={100} aria-valuenow={voice}>
             <div className="h-full rounded-full bg-[#8fd0d4] transition-[width] duration-700 motion-reduce:transition-none" style={{ width: `${voice}%` }} />
           </div>
         </div>
 
+        {steady && config.together && <p className="text-center text-xs text-paper/60">{config.together}</p>}
+
         {/* Lo que L grita: cada vez más pequeño, con tos */}
         {shout && (
-          <p key={`${shoutRound}-${shout}`} className="anim-fade-in text-center font-display leading-snug text-paper" style={{ fontSize: SHOUT_SIZE[Math.max(0, shoutRound)] }} aria-live="polite">
+          <p key={`${shoutRound}-${shout}`} className="anim-fade-in text-center font-display leading-snug text-paper" style={{ fontSize: steady ? 22 : SHOUT_SIZE[Math.max(0, shoutRound)] }} aria-live="polite">
             {cough && <span className="mr-1 text-paper/50">*cough*</span>}
             {shout === '…' ? '…' : `"${shout}"`}
           </p>
         )}
 
-        {result === null && last && <p className="text-center text-sm text-[#c9b8e8]">Con lo que te queda de voz…</p>}
+        {result === null && last && <p className="text-center text-sm text-[#c9b8e8]">{config.lastLabel}</p>}
 
         {result !== true && q && (
           <Panel>
