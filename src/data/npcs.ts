@@ -1704,13 +1704,22 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   'b2-13-student': {
     name: 'A student',
     look: { shirt: '#2e8b8b', hair: '#1d1d1d', skin: '#8d5a3b', gender: 'female' },
+    until: 'b2-13-alarm',
     doneLine: { text: 'The class next door is about to finish.', es: 'La clase de al lado está a punto de terminar.' },
   },
   // Leo adulto: en sombra, de espaldas, con el nombre en estática (ficha 0.3)
   'b2-13-teacher': {
     name: 'The teacher',
     look: { shirt: '#1d2430', hair: '#0e1218', skin: '#2a313c', gender: 'male' },
+    until: 'b2-13-boss',
     doneLine: { text: "(He is putting his books away. He doesn't turn around.)", es: '(Guarda sus libros. No se da la vuelta.)' },
+  },
+  // Bloque 2: Leo adulto sale al pasillo al vencer a Panic (tarea b2-13-call). Sigue en sombra y con el nombre en estática
+  'b2-13-leo': {
+    name: 'The teacher',
+    look: { shirt: '#1d2430', hair: '#0e1218', skin: '#2a313c', gender: 'male' },
+    after: 'b2-13-boss',
+    doneLine: { text: 'Is anybody there? Get out now!', es: '¿Hay alguien ahí? ¡Salgan ya!' },
   },
   // El protagonista adulto (mismo sprite, con lentes)
   'b2-13-adult': {
