@@ -219,6 +219,9 @@ export const ACHIEVEMENTS: Achievement[] = [
   },
   { id: 'cuaderno', name: 'Cuaderno limpio', desc: 'Deja tu cuaderno de errores en cero (después de responder 50 preguntas).', progress: (s) => (answers(s).total < 50 ? [answers(s).total, 50] : s.mistakes.length === 0 ? [1, 1] : [0, 1]) },
   { id: 'escritor', name: 'Mis propias palabras', desc: 'Escribe tus frases en los tres exámenes de época (presente, pasado y futuro).', progress: (s) => [['presente', 'pasado', 'futuro'].filter((e) => s.writings?.[e]).length, 3] },
+  // B2: las 14 misiones cerradas y el final del juego (b2-14-close)
+  { id: 'b2-completo', name: 'B2 completado', desc: 'Termina las 14 misiones de B2.', progress: (s) => [Array.from({ length: 14 }, (_, k) => `b2-${String(k + 1).padStart(2, '0')}-close`).filter((c) => s.opened.includes(c)).length, 14] },
+  { id: 'juego-completo', name: 'Juego completado', desc: 'Termina English Combat: de A1 a B2. Use your voice.', progress: (s) => [s.opened.includes('b2-14-close') ? 1 : 0, 1] },
   // B2-13 · The Fire: la única recompensa de una Ventana que no es una despedida
   { id: 'dos-voces', name: 'Two Voices', desc: 'Grita junto a Leo en la noche del incendio (B2, Ventana 13).', progress: (s) => [s.opened.includes('b2-13-close') ? 1 : 0, 1] },
   { id: 'atuendos', name: 'A la moda', desc: 'Consigue 12 atuendos.', progress: (s) => [Math.min(s.outfits.length, 12), 12] },

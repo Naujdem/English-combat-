@@ -97,7 +97,7 @@ import { B2_12_ARRIVAL_SCRIPT, B2_12_CLOSE_SCRIPT, B2_12_PLANNER_CONTENT, B2_12_
 import { B2_12_GOALS_IDS, B2_12_NOTEBOOK_IDS, B2_12_PLAN_IDS } from './questions-b2-12'
 import { B2_13_ALARM_SCRIPT, B2_13_ARRIVAL_SCRIPT, B2_13_BEFORE_SCRIPT, B2_13_CALL_CONFIG, B2_13_CLOSE_SCRIPT } from './b2Fire'
 import { B2_13_HADBETTER_IDS, B2_13_TIME_IDS } from './questions-b2-13'
-import { B2_14_ARRIVAL_SCRIPT, B2_14_ENDING_SCRIPT, B2_14_REVEAL_SCRIPT } from './b2UseYourVoice'
+import { B2_14_ARRIVAL_SCRIPT, B2_14_CLOSE_SCRIPT, B2_14_ENDING_SCRIPT, B2_14_REFLECT_TURNS, B2_14_REVEAL_SCRIPT } from './b2UseYourVoice'
 import { B2_14_MIXED_IDS, B2_14_WISH_IDS } from './questions-b2-14'
 import { B2_11_FILM_IDS, B2_11_INDIRECT_IDS, B2_11_NARRATIVE_IDS } from './questions-b2-11'
 import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
@@ -216,6 +216,8 @@ export type NpcTask = {
   /** B1-07: al terminar la tarea se pasa a esta escena (misma misión de recuerdo; Escape Room → el cuarto de L) */
   goto?: { sceneId: string; pos: { x: number; y: number } }
   closeMemory?: boolean
+  /** Para activity 'b1exam': 'b2' usa el contenido del examen de B2 (data/b2Exam.ts) en la misma pantalla */
+  examLevel?: 'b2'
   /** Para activity 'exam': el examen escrito de una época o nivel (EraExam). Al guardar las frases se completa la tarea */
   exam?: 'a2'
   /** Dialogue Under Pressure: segundos para cada elección de la charla */
@@ -8911,5 +8913,53 @@ NPC_TASKS['b2-14-ending'] = {
     es: 'Lo que pasó, sigue habiendo pasado. El reloj guarda cada eco.',
     sub: 'El núcleo está completo y tu voz volvió entera. Tus amigos te esperan en el muelle.',
     say: 'Be brave. Use your voice.',
+  },
+}
+
+// ── B2-14 · Use Your Voice, bloque 3: recordar juntos, el examen de B2 y la despedida (cierre de B2 y del juego) ──
+// Recordar juntos (DebateTalk con Maya; Busuu 24): todas las respuestas valen
+NPC_TASKS['b2-14-reflect'] = {
+  npc: 'b2-14-maya',
+  done: 'b2-14-reflect',
+  activity: 'debate',
+  requires: { id: 'b2-14-ending', text: "We're all here. Together.", es: 'Estamos todos aquí. Juntos.', sub: 'Primero termina lo que pasó con G.' },
+  debate: { title: 'Looking back', ask: 'Recuerden juntos. No hay respuestas malas.', turns: B2_14_REFLECT_TURNS },
+  coins: 10,
+  steps: [],
+  reward: { text: "I'm grateful that I met you all.", es: 'Agradezco haberlos conocido a todos.', sub: 'Leo tiene algo para ti: el examen de B2.', say: "I'm grateful that I met you all." },
+}
+
+// Leo: el examen final de B2 (components/B1Exam.tsx con data/b2Exam.ts). Al guardar se completa la tarea
+NPC_TASKS['b2-14-exam'] = {
+  npc: 'b2-14-leo',
+  done: 'b2-14-exam',
+  activity: 'b1exam',
+  examLevel: 'b2',
+  requires: { id: 'b2-14-reflect', text: "I'm not going anywhere.", es: 'No me voy a ningún lado.', sub: 'Primero recuerden juntos con Maya.' },
+  coins: 30,
+  steps: [],
+  reward: {
+    text: 'Leo: "You read, you listened, you wrote, you spoke. That is B2."',
+    es: 'Leíste, escuchaste, escribiste y hablaste. Eso es B2.',
+    sub: 'Examen de B2 guardado. Habla otra vez con Leo.',
+    say: 'That is B2.',
+  },
+}
+
+// Leo otra vez: la despedida, los créditos y el cierre (b2-14-close = b2CloseId(14)). Fin del juego
+NPC_TASKS['b2-14-close'] = {
+  npc: 'b2-14-leo',
+  done: 'b2-14-close',
+  activity: 'script',
+  script: B2_14_CLOSE_SCRIPT,
+  requires: { id: 'b2-14-exam', text: 'One more thing first.', es: 'Primero una cosa más.', sub: 'Primero haz el examen de B2.' },
+  recover: ['mixed-cond-b2', 'wish-b2'],
+  coins: 30,
+  steps: [],
+  reward: {
+    text: 'Mission 14: Use Your Voice',
+    es: '¡B2 completado! ¡Terminaste English Combat!',
+    sub: 'Insignias "B2 completado" y "Juego completado". Desde el menú puedes volver a jugar cualquier nivel (A1 a B2).',
+    say: 'Use your voice.',
   },
 }
