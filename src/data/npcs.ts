@@ -1598,7 +1598,15 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   'b2-08-mensah': {
     name: 'Dr. Kwame Mensah',
     look: { shirt: '#2f4a6b', hair: '#1a1a1a', skin: '#6b4226', gender: 'male' },
+    until: 'b2-08-boss',
     doneLine: { text: 'Far easier than you think… Easier for whom?', es: 'Mucho más fácil de lo que crees… ¿Más fácil para quién?' },
+  },
+  // B2-08 · bloque 3: Mensah vuelve a su escritorio al vencer a The Salesman (el cierre, tarea b2-08-close)
+  'b2-08-mensah-desk': {
+    name: 'Dr. Kwame Mensah',
+    look: { shirt: '#2f4a6b', hair: '#1a1a1a', skin: '#6b4226', gender: 'male' },
+    after: 'b2-08-boss',
+    doneLine: { text: "I'm handing in my notice.", es: 'Presento mi renuncia.' },
   },
   'b2-08-podium': {
     name: 'El escenario del lanzamiento',

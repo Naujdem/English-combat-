@@ -14,6 +14,9 @@ import type { TextCommandRoom } from '../components/TextCommand'
  * Bloque 2: el manual del empleado: lección 'perks-b2' + práctica (b2-08-perks) → los correos de Chloe: lección 'acronyms-b2'
  *   + práctica (b2-08-acronyms) → The Fine Print con el contrato de Restore (b2-08-fineprint; abre el salón del lanzamiento)
  *   → el lanzamiento (b2-08-launch, script: G con capucha entre el público) → dos Promo Bots (esbirros) → el jefe The Salesman (2 fases).
+ * Bloque 3: al vencer a The Salesman, Mensah vuelve a su escritorio (b2-08-mensah-desk): el cierre (b2-08-close, script) con la
+ *   nota y su renuncia recupera los temas → Explore muestra WindowExit (fundido azul) y vuelves al presente (B2_08_EXITED);
+ *   se abren el lugar 9 y el Extra Paws Debate. Diario y lectura larga: data/b2Diary.ts. Las Ventanas no dan atuendos.
  */
 export const B2_08_VOCALIS_ID = 'b2-08-vocalis'
 export const B2_08_SLOGAN = 'b2-08-slogan'
@@ -40,6 +43,11 @@ export const B2_08_LAUNCH = 'b2-08-launch'
 export const B2_08_BOT1 = 'b2-08-bot1'
 export const B2_08_BOT2 = 'b2-08-bot2'
 export const B2_08_BOSS = 'b2-08-boss'
+/** Bloque 3 */
+export const B2_08_MENSAH_DESK = 'b2-08-mensah-desk'
+export const B2_08_CLOSE = 'b2-08-close'
+/** Se guarda al salir de la Ventana (después del fundido azul) */
+export const B2_08_EXITED = 'b2-08-exited'
 
 /**
  * Leyenda: # pared · i pantalla en la pared · q pared de vidrio · d puerta · M escritorio · K mesa de reuniones
@@ -90,6 +98,8 @@ export const B2_08_VOCALIS: SceneDef = {
     { type: 'enemy', id: B2_08_BOT1, x: 2, y: 9, after: B2_08_LAUNCH },
     { type: 'enemy', id: B2_08_BOT2, x: 13, y: 9, after: B2_08_BOT1 },
     { type: 'enemy', id: B2_08_BOSS, x: 8, y: 9, after: B2_08_BOT2 },
+    // Bloque 3: Mensah vuelve a su escritorio (aparece al vencer a The Salesman)
+    { type: 'npc', id: B2_08_MENSAH_DESK, x: 3, y: 4 },
   ],
   labels: [
     { text: 'Marketing', x: 3, y: 5 },
@@ -127,6 +137,7 @@ export const B2_08_VOCALIS: SceneDef = {
     { label: 'El lanzamiento', done: s.opened.includes(B2_08_LAUNCH) },
     { label: 'Promo Bots (2)', done: s.defeated.includes(B2_08_BOT2) },
     { label: 'The Salesman', done: s.defeated.includes(B2_08_BOSS) },
+    { label: 'La nota de Mensah', done: s.opened.includes(B2_08_CLOSE) },
   ],
   intro: {
     first: '2064. The Vocalis offices, launch day. — 2064. Las oficinas de Vocalis, el día del lanzamiento. Aquí nadie te oye.',
@@ -289,3 +300,16 @@ export const B2_08_ENEMIES: Record<string, EnemyDef> = {
   [B2_08_BOT2]: BOT(B2_08_BOT2, { text: 'I need some advices! Restore is very more cheaper! Buy, buy, buy!', es: 'some advices y very more cheaper: mal.' }),
   [B2_08_BOSS]: B2_08_BOSS_DEF,
 }
+
+// ── Bloque 3 ──
+
+/** El cierre: Mensah lee la nota, renuncia, y el protagonista escribe su frase antes del fundido azul */
+export const B2_08_CLOSE_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(The launch is over. The office is almost empty. Dr. Mensah sits down at his desk and sees the printed page… and your note.)', es: '(El lanzamiento terminó. La oficina está casi vacía. El Dr. Mensah se sienta en su escritorio y ve la hoja impresa… y tu nota.)' },
+  { who: 'narrator', text: '(He reads it in a low voice: "A compatible donor voice is required." Then the note: "Read the small print aloud.")', es: '(La lee en voz baja: "Se requiere una voz donante compatible". Luego la nota: "Lee la letra pequeña en voz alta".)' },
+  { who: 'narrator', text: '(He looks at the note for a long time. He looks around the office, as if someone were there.)', es: '(Mira la nota un buen rato. Mira alrededor de la oficina, como si hubiera alguien.)' },
+  { who: 'friend', text: 'Somebody wants me to say it out loud. Fine. I will.', es: 'Alguien quiere que lo diga en voz alta. Está bien. Lo haré.' },
+  { who: 'narrator', text: '(He writes an email to Chloe: "Chloe, I\'m handing in my notice. I won\'t help you cover this up. — Kwame")', es: '(Le escribe un correo a Chloe: "Chloe, presento mi renuncia. No te voy a ayudar a encubrir esto. — Kwame".)' },
+  { who: 'narrator', text: '(Send. The blue light grows around you. The offices fade.)', es: '(Enviar. La luz azul crece a tu alrededor. Las oficinas se desvanecen.)' },
+  { who: 'narrator', text: '(Back in your notebook, you write one line: "They sell it as wellbeing. Somebody always pays the price.")', es: '(De vuelta en tu cuaderno, escribes una línea: "Lo venden como bienestar. Alguien siempre paga el precio".)' },
+]
