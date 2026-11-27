@@ -19,6 +19,7 @@ import { MemoryFrame } from './components/MemoryFrame'
 import { MemoryTransitions } from './components/MemoryTransitions'
 import { isMemoryScene } from './game/memory'
 import { isB2WindowScene } from './game/b2Window'
+import { setStaticRevealed } from './game/staticName'
 import { WindowFrame } from './components/WindowFrame'
 
 /** Epílogo de la torre de 2056 (final de A1) y primera escena de A2 */
@@ -34,6 +35,8 @@ function pendingEpilogue(s: ReturnType<typeof useGameState>['state']) {
 
 export default function App() {
   const { state, update, setState } = useGameState()
+  // B2-14: después de la revelación, los nombres con estática se ven como "García" (game/staticName.ts)
+  setStaticRevealed(state.opened.includes('b2-14-reveal'))
   const [flash, setFlash] = useState(0)
   const [toast, setToast] = useState<{ kind: 'logro' | 'fichas'; text: string }[]>([])
 

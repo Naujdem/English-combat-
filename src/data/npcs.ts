@@ -1700,6 +1700,36 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b2-10-contrast',
     doneLine: { text: "It's worth trying one last time.", es: 'Vale la pena intentarlo una última vez.' },
   },
+  // ── B2-14 · Use Your Voice, bloque 1 (el puerto al atardecer, data/b2UseYourVoice.ts). Guía: Leo ──
+  'b2-14-leo': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    doneLine: { text: "I don't understand… but I'm not going anywhere.", es: 'No entiendo… pero no me voy a ningún lado.' },
+  },
+  'b2-14-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    doneLine: { text: "We're all here. Together.", es: 'Estamos todos aquí. Juntos.' },
+  },
+  'b2-14-special': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: "Whatever happens, I'm with you.", es: 'Pase lo que pase, estoy contigo.' },
+  },
+  // La figura con capucha (transparente, Explore.tsx); se convierte en G al caer la capucha
+  'b2-14-figure': {
+    name: 'A hooded figure',
+    look: { shirt: '#23252d', hair: '#23252d', skin: '#363b46', gender: 'male' },
+    until: 'b2-14-reveal',
+    doneLine: { text: 'That night was mine.', es: 'Esa noche era mía.' },
+  },
+  'b2-14-g': {
+    name: 'G (García)',
+    look: { shirt: '#23252d', hair: '#c9ccd2', skin: '#d7a77a', gender: 'male' },
+    after: 'b2-14-reveal',
+    doneLine: { text: "But tonight… you didn't stay silent.", es: 'Pero esta noche… no te quedaste en silencio.' },
+  },
   // ── B2-13 · The Fire, bloque 1 (Ventana 2061, el pasillo del tercer piso, data/b2Fire.ts). Aquí sí te oyen ──
   'b2-13-student': {
     name: 'A student',

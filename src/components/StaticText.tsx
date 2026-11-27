@@ -1,12 +1,14 @@
 import { useEffect, type ReactNode } from 'react'
-import { STATIC_NAME, STATIC_SHOWN } from '../game/staticName'
+import { REVEALED_NAME, STATIC_NAME, STATIC_SHOWN, isStaticRevealed, unStatic } from '../game/staticName'
 import { sfx } from '../game/sfx'
 
 /** Un nombre tapado por la estática: ▒▒▒ con un leve temblor. Con `sound`, suena la estática al aparecer */
 export function StaticName({ sound = false }: { sound?: boolean }) {
+  const clear = isStaticRevealed()
   useEffect(() => {
-    if (sound) sfx('static')
-  }, [sound])
+    if (sound && !clear) sfx('static')
+  }, [sound, clear])
+  if (clear) return <>{REVEALED_NAME}</>
   return (
     <span className="b1-static-name" aria-label="nombre con estática" title="Nombre con estática">
       {STATIC_SHOWN}
@@ -19,6 +21,7 @@ export function StaticName({ sound = false }: { sound?: boolean }) {
  * `piece` dibuja cada trozo normal (por ejemplo, con palabras que se pueden tocar). Solo el primer nombre de la línea suena.
  */
 export function withStatic(text: string, piece: (part: string, key: number) => ReactNode = (p) => p): ReactNode {
+  text = unStatic(text)
   if (!text.includes(STATIC_NAME)) return piece(text, 0)
   const parts = text.split(STATIC_NAME)
   return parts.map((p, i) => (
