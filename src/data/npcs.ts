@@ -1566,6 +1566,8 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'Zoe Park',
     look: { shirt: '#e05fa0', hair: '#1a1a1a', skin: '#f0c8a0', gender: 'female' },
     after: 'b2-05-verbs-ing',
+    // Bloque 2: al terminar Fact Check, Zoe se va y su blog se convierte en The Tabloid
+    until: 'b2-05-factcheck',
     doneLine: { text: 'Like and subscribe! The ghost is real!', es: '¡Dale like y suscríbete! ¡El fantasma es real!' },
   },
   // ── B2-02 · The Herald, bloque 1 (la redacción, data/b2Herald.ts) ──
