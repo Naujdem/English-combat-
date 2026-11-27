@@ -9,7 +9,8 @@ import { btnGhost, btnPrimary, Panel } from './ui'
 
 /** Tipo de cláusula: obligatoria (must / have to), prohibida (mustn't) o no obligatoria (don't have to / needn't) */
 /** B2-02 (Style Guide): 'follows' cumple la guía de estilo · 'breaks' no la cumple */
-export type ClauseKind = 'must' | 'mustnt' | 'optional' | 'follows' | 'breaks'
+/** B2-08 (contrato de Restore): 'advertised' sale en la publicidad · 'hidden' lo esconde la publicidad */
+export type ClauseKind = 'must' | 'mustnt' | 'optional' | 'follows' | 'breaks' | 'advertised' | 'hidden'
 export type FineClause = { en: string; es: string; kind: ClauseKind; tip: string }
 /** Modo anuncios (B1-05): cada anuncio tiene secciones con etiqueta (Job, Requirements, Pay, How to apply) */
 export type FineAdvert = { sections: { label: string; en: string; es: string }[] }
@@ -41,6 +42,8 @@ const STAMPS: Record<ClauseKind, { label: string; es: string; shape: string; col
   optional: { label: 'NOT NECESSARY', es: 'no es obligatorio', shape: '○', color: '#3b8f57' },
   follows: { label: 'STYLE OK', es: 'cumple la guía', shape: '✔', color: '#3b8f57' },
   breaks: { label: 'FIX IT', es: 'no la cumple', shape: '✖', color: '#c0392b' },
+  advertised: { label: 'IN THE ADS', es: 'sale en la publicidad', shape: '✔', color: '#2f6fb0' },
+  hidden: { label: 'HIDDEN', es: 'lo esconde la publicidad', shape: '✖', color: '#c0392b' },
 }
 const ORDER: ClauseKind[] = ['must', 'mustnt', 'optional']
 

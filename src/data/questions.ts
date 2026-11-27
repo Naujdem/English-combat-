@@ -59,7 +59,7 @@ import { B2_04_COMBAT_QUESTIONS, B2_04_QUESTIONS } from './questions-b2-04'
 import { B2_05_COMBAT_QUESTIONS, B2_05_QUESTIONS } from './questions-b2-05'
 import { B2_07_COMBAT_QUESTIONS, B2_07_QUESTIONS } from './questions-b2-07'
 import { B2_06_COMBAT_QUESTIONS, B2_06_QUESTIONS } from './questions-b2-06'
-import { B2_08_QUESTIONS } from './questions-b2-08'
+import { B2_08_COMBAT_QUESTIONS, B2_08_QUESTIONS } from './questions-b2-08'
 import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
@@ -460,6 +460,7 @@ export const QUESTIONS: Question[] = [
   ...B2_06_QUESTIONS,
   ...B2_06_COMBAT_QUESTIONS,
   ...B2_08_QUESTIONS,
+  ...B2_08_COMBAT_QUESTIONS,
   ...B2_S1_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
@@ -744,6 +745,24 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
       'Incontables: advice, information, research, equipment, feedback, news. Sin plural y sin a / an.',
       'some information · a piece of advice · a lot of feedback · how much research? (nunca "an information" ni "advices").',
       'news va en singular: The news is good.',
+    ],
+  },
+  'perks-b2': {
+    name: 'Beneficios laborales y permisos',
+    level: 'B2',
+    lesson: [
+      'perks: health insurance, flexible hours, bonus · leave: sick leave, parental leave, annual leave.',
+      'resign (renunciar) · notice period (preaviso) · hand in your notice (entregar la renuncia).',
+      'Phrasal verbs: sign up for · roll out (lanzar) · cover up (encubrir) · hand in.',
+    ],
+  },
+  'acronyms-b2': {
+    name: 'Acrónimos de trabajo y de correo',
+    level: 'B2',
+    lesson: [
+      'ASAP (lo antes posible) · ETA (hora estimada de llegada) · FYI (para que sepas) · EOD (fin del día) · TBC (por confirmar) · RSVP (responde).',
+      'Informales: BTW (por cierto) · IMO (en mi opinión).',
+      'Fecha límite con by: by EOD (nunca "until EOD").',
     ],
   },
   // B2-06 · The Lab (Ventana 2062, data/b2Lab.ts)
