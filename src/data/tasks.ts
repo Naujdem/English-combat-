@@ -92,7 +92,7 @@ import { B2_08_ARRIVAL_SCRIPT, B2_08_CLOSE_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNC
 import { B2_08_ACRONYMS_IDS, B2_08_COMPARE_IDS, B2_08_PERKS_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
-import { B2_10_ARRIVAL_SCRIPT, B2_10_BENCH_SCRIPT, B2_10_CLASS_SCRIPT } from './b2Card'
+import { B2_10_ARRIVAL_SCRIPT, B2_10_BENCH_SCRIPT, B2_10_CARD_CONTENT, B2_10_CLASS_SCRIPT, B2_10_GIFT_SCRIPT } from './b2Card'
 import { B2_10_CONTRAST_IDS, B2_10_ING_IDS } from './questions-b2-10'
 import { B2_09_ADVERBS_IDS, B2_09_ORDER_IDS, B2_09_RELATIVE_IDS, B2_09_REVIEW_IDS, B2_09_STRONG_IDS } from './questions-b2-09'
 import { B2_07_OLIVER_SCRIPT, B2_07_ARRIVAL_SCRIPT, B2_07_DEBATE_ENDINGS, B2_07_DEBATE_TURNS, B2_07_EXPLORE_ROOM, B2_07_POSTER_SCRIPT, B2_07_ROSA_SCRIPT, B2_07_SAM_INTRO } from './b2OldBuilding'
@@ -8366,3 +8366,33 @@ NPC_TASKS['b2-10-ing'] = {
     say: "It's worth trying one last time.",
   },
 }
+
+// ── B2-10 · The Card, bloque 2: G escribe la tarjeta en la banca (Reconstruct) y envuelve el regalo ──
+// Reconstruct (reutilizado): se descartan los borradores tachados hasta la tarjeta de A1. 5 monedas
+NPC_TASKS['b2-10-card'] = {
+  npc: 'b2-10-g-bench',
+  done: 'b2-10-card',
+  activity: 'reconstruct',
+  reconstruct: B2_10_CARD_CONTENT,
+  coins: 5,
+  requires: { id: 'b2-10-ing', text: 'G is writing on a blank card.', es: 'G escribe en una tarjeta en blanco.', sub: 'Primero lee el cuaderno de G.' },
+  steps: [],
+  reward: {
+    text: 'Happy birthday, Leo. Be brave. Use your voice. — G',
+    es: 'Feliz cumpleaños, Leo. Sé valiente. Usa tu voz. — G',
+    sub: 'Ganaste 5 monedas. G mira la tarjeta un largo rato.',
+    say: 'Happy birthday, Leo. Be brave. Use your voice.',
+  },
+}
+
+// G envuelve el regalo (script). Después las manchas de tinta cobran vida: dos Ink Blots y Second Thoughts
+NPC_TASKS['b2-10-gift'] = {
+  npc: 'b2-10-g-bench',
+  done: 'b2-10-gift',
+  activity: 'script',
+  script: B2_10_GIFT_SCRIPT,
+  requires: { id: 'b2-10-card', text: 'G is holding the card.', es: 'G tiene la tarjeta en la mano.', sub: 'Primero ayuda a armar la tarjeta.' },
+  steps: [],
+  reward: { text: 'Happy birthday… Leo.', es: 'Feliz cumpleaños… Leo.', sub: 'Las manchas de tinta del cuaderno saltan al patio. ¡Defiende la tarjeta!', say: 'Happy birthday… Leo.' },
+}
+
