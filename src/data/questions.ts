@@ -55,7 +55,7 @@ import { B1_14_QUESTIONS } from './questions-b1-14'
 import { B2_01_QUESTIONS } from './questions-b2-01'
 import { B2_02_COMBAT_QUESTIONS, B2_02_QUESTIONS } from './questions-b2-02'
 import { B2_03_COMBAT_QUESTIONS, B2_03_QUESTIONS } from './questions-b2-03'
-import { B2_04_QUESTIONS } from './questions-b2-04'
+import { B2_04_COMBAT_QUESTIONS, B2_04_QUESTIONS } from './questions-b2-04'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
@@ -447,6 +447,7 @@ export const QUESTIONS: Question[] = [
   ...B2_03_QUESTIONS,
   ...B2_03_COMBAT_QUESTIONS,
   ...B2_04_QUESTIONS,
+  ...B2_04_COMBAT_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
   ...B1_11_QUESTIONS,

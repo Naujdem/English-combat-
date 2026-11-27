@@ -1,4 +1,5 @@
-import type { GameState, SceneDef, Zone } from '../game/types'
+import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
+import type { ReconstructItem } from '../components/Reconstruct'
 import type { ScriptLine } from './b1Accident'
 import type { SpriteLook } from '../components/Sprite'
 import { B1_04_MAP } from './b1Residence'
@@ -9,11 +10,13 @@ import { B1_04_MAP } from './b1Residence'
  * Orden: Maya (b2-04-profile, script: la solicitud del perfil "G") →
  *   Maya: lección 'online-safety-b2' + práctica (b2-04-security) →
  *   Maya: lección 'past-modals-b2' + práctica (b2-04-modals) →
- *   Maya: lección 'neednt-b2' + práctica (b2-04-neednt) → se abre el pasillo →
+ *   Maya: lección 'neednt-b2' + práctica (b2-04-neednt) →
+ *   Maya: Reconstruct (Detective) del perfil falso (b2-04-detective, bloque 2) → se abre el pasillo →
  *   Jeison (b2-04-jeison, script: el pago falso a nombre de "G") → se abren la calle y el banco →
  *   Ricardo: lección 'fraud-b2' + práctica (b2-04-bank) →
  *   Priya, en la calle con el Herald impreso (b2-04-echo, script: el artículo sobre la dark web y el Echo Market).
- * Bloque 2: Reconstruct (Detective) del perfil falso, Phishing Bots (2) y el jefe The Catfish (2 fases).
+ * Bloque 2: el detective (arriba); tras el artículo de Priya, dos Phishing Bots en la calle (esbirros) y el jefe The Catfish
+ *   (2 fases) en el vestíbulo, junto al mostrador de Marisol.
  * Bloque 3: amistad con Leo, diario, recompensas y cierre (fragmento que se une con el del lugar 1; se abren el lugar 5 y Fusion Night).
  */
 export const B2_04_RESIDENCE_ID = 'b2-04-residence'
@@ -29,6 +32,11 @@ export const B2_04_NEEDNT = 'b2-04-neednt'
 export const B2_04_JEISON_TALK = 'b2-04-jeison-talk'
 export const B2_04_BANK = 'b2-04-bank'
 export const B2_04_ECHO = 'b2-04-echo'
+/** Bloque 2 */
+export const B2_04_DETECTIVE = 'b2-04-detective'
+export const B2_04_BOT1 = 'b2-04-bot1'
+export const B2_04_BOT2 = 'b2-04-bot2'
+export const B2_04_BOSS = 'b2-04-boss'
 
 /** Aspecto de Ricardo como guía de lección (Lesson.tsx): el mismo que en B1-04 */
 export const B2_RICARDO_LOOK: SpriteLook = { shirt: '#f4f4f0', hair: '#2b2b33', skin: '#d7a77a', gender: 'male' }
@@ -58,6 +66,10 @@ export const B2_04_RESIDENCE: SceneDef = {
     { type: 'npc', id: B2_04_RICARDO, x: 26, y: 1 },
     // Priya llega con el Herald impreso cuando terminas en el banco (npcs.ts, after: b2-04-bank)
     { type: 'npc', id: B2_04_PRIYA, x: 20, y: 3 },
+    // Bloque 2: dos Phishing Bots en la calle (tras el artículo de Priya) y The Catfish junto al mostrador de Marisol
+    { type: 'enemy', id: B2_04_BOT1, x: 19, y: 4, after: B2_04_ECHO },
+    { type: 'enemy', id: B2_04_BOT2, x: 21, y: 3, after: B2_04_BOT1 },
+    { type: 'enemy', id: B2_04_BOSS, x: 7, y: 3, after: B2_04_BOT2 },
   ],
   labels: [
     { text: 'Vestíbulo', x: 5, y: 6 },
@@ -76,7 +88,7 @@ export const B2_04_RESIDENCE: SceneDef = {
     '4,0': { text: 'Notice: "Residence Wi-Fi password changed. Ask Marisol."', sub: 'Aviso: "Cambió la contraseña del wifi de la residencia. Pregúntale a Marisol".', say: 'Residence Wi-Fi password changed.' },
   },
   locked: (x, y, s) => {
-    if (x === 8 && y === 4 && !s.opened.includes(B2_04_NEEDNT)) return NOT_YET('Primero termina las lecciones con Maya.')
+    if (x === 8 && y === 4 && !s.opened.includes(B2_04_DETECTIVE)) return NOT_YET('Primero termina con Maya: lecciones y detective.')
     if (y === 2 && (x === 10 || x === 12 || x === 14)) return NOT_YET('Es el cuarto de un vecino.')
     if (((x === 16 && y === 4) || (x === 23 && y === 4)) && !s.opened.includes(B2_04_JEISON_TALK)) return NOT_YET('Primero habla con Jeison en el pasillo.')
     return null
@@ -87,9 +99,12 @@ export const B2_04_RESIDENCE: SceneDef = {
     { label: 'Seguridad en internet', done: s.opened.includes(B2_04_SECURITY) },
     { label: 'Modales en pasado', done: s.opened.includes(B2_04_MODALS) },
     { label: "needn't have / didn't need to", done: s.opened.includes(B2_04_NEEDNT) },
+    { label: 'Detective: el perfil falso', done: s.opened.includes(B2_04_DETECTIVE) },
     { label: 'Jeison y el pago falso', done: s.opened.includes(B2_04_JEISON_TALK) },
     { label: 'Reportar el fraude (Ricardo)', done: s.opened.includes(B2_04_BANK) },
     { label: 'El artículo de Priya', done: s.opened.includes(B2_04_ECHO) },
+    { label: 'Phishing Bots (2)', done: s.defeated.includes(B2_04_BOT2) },
+    { label: 'The Catfish', done: s.defeated.includes(B2_04_BOSS) },
   ],
   intro: {
     first: 'Presente. La residencia de Lumen Bay. Maya te espera en el vestíbulo con el teléfono en la mano.',
@@ -133,3 +148,110 @@ export const B2_04_ECHO_SCRIPT: ScriptLine[] = [
   { who: 'narrator', text: "Priya: Lost voices. It must be a joke… right?", es: 'Priya: Voces perdidas. Debe ser una broma… ¿no?' },
   { who: 'narrator', text: '(You don\'t answer. A black market for voices… where have you heard that before?)', es: '(No respondes. Un mercado negro de voces… ¿dónde has oído eso antes?)' },
 ]
+
+// ── Bloque 2 ──
+
+/** Reconstruct (Detective), reutilizado: Maya y el protagonista analizan el perfil "G" con modales en pasado */
+export const B2_04_DETECTIVE_CONTENT: { title: string; intro: { en: string; es: string }; items: ReconstructItem[] } = {
+  title: 'Detective: the "G" profile',
+  intro: { en: "Let's look at the profile carefully. Compare each clue with the note.", es: 'Miremos el perfil con cuidado. Compara cada pista con la nota.' },
+  items: [
+    {
+      source: 'Account information',
+      clue: { en: 'Account created: yesterday, 11:48 p.m.', es: 'Cuenta creada: ayer, 11:48 p. m.' },
+      claim: { en: 'The account might have been created years ago.', es: 'La cuenta pudo crearse hace años.' },
+      options: ['The account must have been created yesterday.', "The account can't have been created yesterday.", 'The account must has been created yesterday.'],
+      answer: 0,
+      tip: 'Hay una prueba (la fecha): must have + participio.',
+      mode: 'choose',
+    },
+    {
+      source: 'The Herald website',
+      clue: { en: 'Your photo is also on the Herald website, in the article about the new interns.', es: 'Tu foto también está en la página del Herald, en el artículo sobre los nuevos practicantes.' },
+      claim: { en: 'Nobody could have copied the photo.', es: 'Nadie pudo copiar la foto.' },
+      options: ['Someone could have copy the photo from the Herald.', 'Someone could have copied the photo from the Herald.', 'Nobody could have copied the photo.'],
+      answer: 1,
+      tip: 'Es una posibilidad: could have + participio (copied).',
+      mode: 'choose',
+    },
+    {
+      source: 'The profile text',
+      clue: { en: 'The profile says: "I has many friend. I am live in Lumen Bay."', es: 'El perfil dice: "I has many friend. I am live in Lumen Bay."' },
+      claim: { en: 'The person who wrote it must have been an English teacher.', es: 'Quien lo escribió debió de ser profesor de inglés.' },
+      options: ["The person who wrote it can't have be an English teacher.", 'The person who wrote it must have been an English teacher.', "The person who wrote it can't have been an English teacher."],
+      answer: 2,
+      tip: 'Tantos errores: es casi imposible → can\'t have been.',
+      mode: 'choose',
+    },
+    {
+      source: 'Maya',
+      clue: { en: 'Last week you did a quiz: "Which animal are you?" It asked for your birthday and your photo.', es: 'La semana pasada hiciste un test: "¿Qué animal eres?" Te pidió tu cumpleaños y tu foto.' },
+      claim: { en: 'You should have given your birthday to the quiz.', es: 'Debiste darle tu cumpleaños al test.' },
+      options: ["You shouldn't have given your birthday to the quiz.", "You shouldn't have gave your birthday to the quiz.", 'You should have given your birthday to the quiz.'],
+      answer: 0,
+      tip: 'Crítica de algo que hiciste: shouldn\'t have + participio (given).',
+      mode: 'choose',
+    },
+  ],
+}
+
+const PM = 'past-modals-b2' as const
+const NN = 'neednt-b2' as const
+const OS = 'online-safety-b2' as const
+const FR = 'fraud-b2' as const
+
+/** Phishing Bots, bots corrompidos de mensajes falsos. Preguntas: etiqueta b2-04-bot */
+const BOT = (id: string, line: { text: string; es: string }): EnemyDef => ({
+  id,
+  name: 'Phishing Bot',
+  person: 'Phishing Bot',
+  kind: 'minion',
+  hp: 4,
+  topics: [PM, NN],
+  kinds: ['fill', 'fix'],
+  tags: ['b2-04-bot'],
+  onlyTags: true,
+  zone: 'calle',
+  look: { shirt: '#5b6b7a', hair: '#9fd3ff', skin: '#c9d3dc' },
+  before: [line],
+  after: [{ text: '(The bot sends one last message: "ERROR". Then it switches off.)', es: '(El bot manda un último mensaje: "ERROR". Luego se apaga.)' }],
+  freed: { text: '(Your phone stops buzzing.)', es: '(Tu teléfono deja de vibrar.)' },
+})
+
+/**
+ * The Catfish: el avatar corrompido del perfil "G", que cambia de cara en cada turno. Jefe de 2 fases.
+ * Fase 1: could / might / should have (b2-04-boss-pm) · Fase 2: needn't have contra didn't need to y vocabulario de seguridad,
+ * con escuchas de Ricardo en el banco (b2-04-boss-os). El fragmento y el cierre llegan en el bloque 3.
+ */
+export const B2_04_BOSS_DEF: EnemyDef = {
+  id: B2_04_BOSS,
+  name: 'The Catfish',
+  person: 'The Catfish',
+  kind: 'boss',
+  hp: 10,
+  topics: [PM, NN, OS],
+  kinds: ['fill', 'fix', 'order', 'listen'],
+  tags: ['b2-04-boss-pm'],
+  phases: [
+    { hp: 5, title: 'Una cara nueva: el pasado', topics: [PM], kinds: ['fill', 'fix', 'order'], tags: ['b2-04-boss-pm'], line: { text: 'You should of changed your password… It might have be me. Or you!', es: 'should of y might have be: mal.' } },
+    { hp: 5, title: 'Otra cara: la seguridad', topics: [NN, OS, FR], kinds: ['fill', 'fix', 'listen'], tags: ['b2-04-boss-os'], line: { text: 'I needn\'t have to pay… Turn on your two-factor password!', es: 'needn\'t have to y two-factor password: mal.' } },
+  ],
+  onlyTags: true,
+  zone: 'recepcion',
+  look: { shirt: '#2a6f7a', hair: '#7fe0d0', skin: '#b8c4cc' },
+  before: [{ text: '(The phone screen grows and grows. A face made of photos steps out of it. Every second, it changes.)', es: '(La pantalla del teléfono crece y crece. Una cara hecha de fotos sale de ella. Cada segundo cambia.)' }, { text: 'I am you. I am anyone. Who will believe you now?', es: 'Soy tú. Soy cualquiera. ¿Quién te va a creer ahora?' }],
+  after: [{ text: '(The faces fall like playing cards. Only a blank screen is left.)', es: '(Las caras caen como cartas. Solo queda una pantalla en blanco.)' }],
+  freed: { text: '(On the floor, something glows. A fragment.)', es: '(En el suelo, algo brilla. Un fragmento.)' },
+  farewell: {
+    q: 'The Catfish (fading): "I only borrowed your face… You needn\'t have fought so hard."',
+    options: ['You should have asked first.', 'You should of asked first.', 'You should have ask first.'],
+    answer: 0,
+    tip: 'should have + participio (asked). Nunca "should of".',
+  },
+}
+
+export const B2_04_ENEMIES: Record<string, EnemyDef> = {
+  [B2_04_BOT1]: BOT(B2_04_BOT1, { text: 'NEW MESSAGE: You should have check the link! Click again!', es: 'should have check: mal (should have checked).' }),
+  [B2_04_BOT2]: BOT(B2_04_BOT2, { text: "NEW MESSAGE: He must has deleted it… She needn't to have paid…", es: "must has y needn't to have: mal." }),
+  [B2_04_BOSS]: B2_04_BOSS_DEF,
+}

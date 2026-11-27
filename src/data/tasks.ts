@@ -81,7 +81,7 @@ import type { FactCheckContent } from '../components/FactCheck'
 import { B2_03_ADULT_SCRIPT, B2_03_ALARM_SCRIPT, B2_03_CLOSE_SCRIPT, B2_03_CLASS_SCRIPT, B2_03_FREEZE_SCRIPT, B2_03_HELLO_SCRIPT } from './b2Frozen'
 import { B2_UNHEARD_DEMO } from './b2Demos'
 import { B2_03_DIARY_IDS, B2_03_FEELINGS_IDS, B2_03_INJURY_IDS, B2_03_SENSES_IDS } from './questions-b2-03'
-import { B2_04_ECHO_SCRIPT, B2_04_JEISON_SCRIPT, B2_04_PROFILE_SCRIPT } from './b2FakeProfile'
+import { B2_04_DETECTIVE_CONTENT, B2_04_ECHO_SCRIPT, B2_04_JEISON_SCRIPT, B2_04_PROFILE_SCRIPT } from './b2FakeProfile'
 import { B2_04_FRAUD_IDS, B2_04_MODALS_IDS, B2_04_NEEDNT_IDS, B2_04_SECURITY_IDS } from './questions-b2-04'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
 import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
@@ -7262,7 +7262,7 @@ NPC_TASKS['b2-04-neednt'] = {
   reward: {
     text: "You needn't have paid. I didn't need to.",
     es: 'No hacía falta que pagaras. Yo no tuve que hacerlo.',
-    sub: 'Lección hecha. Se oye a Jeison en el pasillo: algo le pasó.',
+    sub: 'Lección hecha. Habla otra vez con Maya: analicen el perfil como detectives.',
     say: "You needn't have paid.",
   },
 }
@@ -7273,7 +7273,7 @@ NPC_TASKS['b2-04-jeison-talk'] = {
   done: 'b2-04-jeison-talk',
   activity: 'script',
   script: B2_04_JEISON_SCRIPT,
-  requires: { id: 'b2-04-neednt', text: 'Not now, sorry…', es: 'Ahora no, perdón…', sub: 'Primero termina las lecciones con Maya.' },
+  requires: { id: 'b2-04-detective', text: 'Not now, sorry…', es: 'Ahora no, perdón…', sub: 'Primero termina con Maya.' },
   steps: [],
   reward: { text: "I should have checked the account first.", es: 'Debí revisar la cuenta primero.', sub: 'Acompaña a Jeison al banco: cruza la calle.', say: 'I should have checked the account first.' },
 }
@@ -7304,5 +7304,23 @@ NPC_TASKS['b2-04-echo'] = {
   activity: 'script',
   script: B2_04_ECHO_SCRIPT,
   steps: [],
-  reward: { text: 'The Echo Market… lost voices.', es: 'El Echo Market… voces perdidas.', sub: 'Bloque 1 terminado. (El detective, los bots y el jefe llegan en el bloque 2.)', say: 'The Echo Market.' },
+  reward: { text: 'The Echo Market… lost voices.', es: 'El Echo Market… voces perdidas.', sub: 'Cuidado: unos bots de mensajes falsos llenan la calle.', say: 'The Echo Market.' },
+}
+
+// ── B2-04 · Fake Profile, bloque 2 ──
+// Maya: Reconstruct (Detective) del perfil "G". 5 monedas. Al terminar se abre el pasillo (Jeison)
+NPC_TASKS['b2-04-detective'] = {
+  npc: 'b2-04-maya',
+  done: 'b2-04-detective',
+  activity: 'reconstruct',
+  reconstruct: B2_04_DETECTIVE_CONTENT,
+  coins: 5,
+  requires: { id: 'b2-04-neednt', text: 'One more lesson first.', es: 'Primero una lección más.', sub: "Termina la lección de needn't have." },
+  steps: [],
+  reward: {
+    text: "It must have been created yesterday. And whoever wrote it can't have been an English teacher.",
+    es: 'Debió de crearse ayer. Y quien lo escribió no pudo ser profesor de inglés.',
+    sub: 'Ganaste 5 monedas. Se oye a Jeison en el pasillo: algo le pasó.',
+    say: 'It must have been created yesterday.',
+  },
 }
