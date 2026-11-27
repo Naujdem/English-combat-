@@ -96,4 +96,50 @@ export const B2_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B2-03 · Frozen (Ventana 2061): sin página de G (G aún no existe en esta escena). Se abre al cerrar la misión 3
+  {
+    id: 'b2-mission-3',
+    title: 'B2 · Misión 3: Frozen (Ventana 2061)',
+    unlock: 'b2-03-close',
+    words: [
+      { title: 'Sentimientos', words: [['overwhelmed', 'abrumado'], ['anxious / anxiety', 'ansioso / ansiedad'], ['ashamed / shame', 'avergonzado / vergüenza'], ['guilty / guilt', 'culpable / culpa'], ['numb', 'insensible'], ['relieved / relief', 'aliviado / alivio'], ['frozen', 'paralizado']] },
+      { title: 'Sentidos', words: [['hear someone scream', 'oír a alguien gritar'], ['hear someone screaming', 'oír a alguien que grita'], ['notice', 'notar'], ['as if', 'como si'], ['sound like', 'sonar como']] },
+      { title: 'Cuerpo y lesiones', words: [['sprain', 'torcerse'], ['burn', 'quemarse'], ['bruise', 'moretón'], ['bleed', 'sangrar'], ['twist', 'torcer'], ['injury', 'lesión']] },
+      { title: 'Phrasal verbs', words: [['hold back', 'contenerse'], ['freeze up', 'quedarse paralizado'], ['calm down', 'calmarse'], ['speak up', 'hablar, alzar la voz']] },
+    ],
+    versions: [
+      {
+        id: 'b2-mission-3-mine',
+        tense: 'p',
+        tab: 'Mi diario',
+        title: 'What I saw in 2061',
+        unlock: 'b2-03-close',
+        frame: 'Lo escribes al volver al presente.',
+        lines: [
+          { en: 'Tonight I [went]p into the future. Nobody [could]p hear me.', es: 'Esta noche entré al futuro. Nadie podía oírme.' },
+          { en: 'I [heard]p the alarm ring and I [saw]p people running to the back stairs.', es: 'Oí sonar la alarma y vi a la gente correr hacia las escaleras traseras.' },
+          { en: 'I [saw]p myself freeze. It [wasn\'t]p that I [didn\'t care]p. I [couldn\'t move]p.', es: 'Me vi a mí {h:mismo|misma} paralizarme. No era que no me importara. No podía moverme.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-3-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'The night school',
+        unlock: 'b2-03-close',
+        frame: 'La noche entera, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'My older self [had been feeling]p tired for weeks. In the notebook I [read]p: "I used to speak up more."', es: 'Mi yo adulto llevaba semanas sintiéndose cansado. En el cuaderno leí: "Antes hablaba más".' },
+          { en: 'Fear [can freeze]n anyone. It [doesn\'t mean]n you don\'t care.', es: 'El miedo puede paralizar a cualquiera. No quiere decir que no te importe.' },
+          { en: 'Next time, I [am going to speak]f up.', es: 'La próxima vez, voy a alzar la voz.' },
+        ],
+        questions: [
+          { q: 'Why could nobody answer you in 2061?', options: ['Nobody could hear you.', 'You were asleep.', 'Everyone was angry with you.'], answer: 0, tip: 'El diario dice: "Nobody could hear me".' },
+          { q: 'What did your older self do when the alarm rang?', options: ['Ran to the back stairs.', 'Froze and couldn\'t move.', 'Called the firefighters.'], answer: 1, tip: 'El diario dice: "I saw myself freeze. I couldn\'t move".' },
+          { q: 'What does the diary say about fear?', options: ['Only cowards feel it.', 'It never happens to adults.', 'It can freeze anyone.'], answer: 2, tip: 'El diario dice: "Fear can freeze anyone".' },
+        ],
+      },
+    ],
+  },
 ]

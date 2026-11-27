@@ -45,7 +45,8 @@ import { BlurFace, BlurFaceIcon } from '../components/BlurFace'
 import { exitMemory, isMemoryScene } from '../game/memory'
 import { isB2WindowScene } from '../game/b2Window'
 import { Unheard } from '../components/Unheard'
-import { B2_LEO_ADULT_LOOK } from '../data/b2Frozen'
+import { B2_03_CLOSE, B2_03_EXITED, B2_03_SCHOOL_ID, B2_LEO_ADULT_LOOK } from '../data/b2Frozen'
+import { WindowExit } from '../components/WindowFrame'
 import { MemoriesTab } from '../components/MemoriesTab'
 import { Inscriptions } from '../components/Inscriptions'
 import { B1_DEMO_TABLET } from '../data/b1TabletDemo'
@@ -1404,6 +1405,17 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             update((s) => (s.opened.includes(B1_12_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B1_12_FRAGMENTS] }))
             onWorld()
           }}
+        />
+      )}
+      {/* B2-03 · cierre: fundido azul y vuelta al presente (al último lugar donde estabas); se vuelve al mapa con el lugar 4 abierto */}
+      {scene.id === B2_03_SCHOOL_ID && state.opened.includes(B2_03_CLOSE) && !state.opened.includes(B2_03_EXITED) && !task && !outro && !msg && (
+        <WindowExit
+          onDone={() =>
+            update((s) => {
+              const back = s.b2Window?.returnTo ?? { sceneId: 'b2-02-herald', pos: { x: 5, y: 3 } }
+              return { ...s, sceneId: back.sceneId, pos: { ...back.pos }, b2Window: undefined, opened: s.opened.includes(B2_03_EXITED) ? s.opened : [...s.opened, B2_03_EXITED], screen: 'world' }
+            })
+          }
         />
       )}
       {/* B2-02 · cierre: al guardar b2CloseId(2), dos fragmentos se juntan y llenan el primer segmento del núcleo (abre la Ventana 3) */}

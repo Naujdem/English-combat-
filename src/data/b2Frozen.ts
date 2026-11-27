@@ -12,7 +12,9 @@ import type { ScriptLine } from './b1Accident'
  * Bloque 2: el panel de emergencia (b2-03-alarm, script con la alarma) → Unheard (b2-03-unheard, 3 metas sin voz) →
  *   la parálisis de tu yo adulto (b2-03-freeze, script) → la estudiante del tobillo: lección 'injuries-b2' + práctica
  *   (b2-03-injury, guía el botiquín) → dos Smoke Shadows (esbirros) → el jefe Panic (2 fases), junto a tu yo adulto.
- * Bloque 3: cierre, salida de la Ventana, diario y abrir el lugar 4.
+ * Bloque 3: al vencer a Panic llega una bombera por las escaleras (b2-03-firefighter): el cierre (b2-03-close, script)
+ *   recupera los temas → Explore muestra WindowExit (fundido azul) y vuelves al presente (B2_03_EXITED); se abre el lugar 4.
+ *   Diario: data/b2Diary.ts (sin página de G). Las Ventanas no dan atuendos: Panic solo tiene despedida.
  */
 export const B2_03_SCHOOL_ID = 'b2-03-school'
 export const B2_03_STUDENT = 'b2-03-student'
@@ -37,6 +39,11 @@ export const B2_03_INJURY = 'b2-03-injury'
 export const B2_03_SHADOW1 = 'b2-03-shadow1'
 export const B2_03_SHADOW2 = 'b2-03-shadow2'
 export const B2_03_BOSS = 'b2-03-boss'
+/** Bloque 3 */
+export const B2_03_FIREFIGHTER = 'b2-03-firefighter'
+export const B2_03_CLOSE = 'b2-03-close'
+/** Se guarda al salir de la Ventana (después del fundido azul) */
+export const B2_03_EXITED = 'b2-03-exited'
 
 /** Leo adulto: siempre en sombra (ficha 0.3) */
 export const B2_LEO_ADULT_LOOK = { shirt: '#1d2430', hair: '#0e1218', skin: '#2a313c', gender: 'male' as const }
@@ -82,6 +89,8 @@ export const B2_03_SCHOOL: SceneDef = {
     { type: 'enemy', id: B2_03_SHADOW1, x: 11, y: 1, after: B2_03_INJURY },
     { type: 'enemy', id: B2_03_SHADOW2, x: 13, y: 1, after: B2_03_SHADOW1 },
     { type: 'enemy', id: B2_03_BOSS, x: 11, y: 2, after: B2_03_SHADOW2 },
+    // Bloque 3: la bombera (aparece al vencer a Panic)
+    { type: 'npc', id: B2_03_FIREFIGHTER, x: 14, y: 2 },
   ],
   labels: [
     { text: 'Aula', x: 3, y: 6 },
@@ -116,6 +125,7 @@ export const B2_03_SCHOOL: SceneDef = {
     { label: 'El tobillo de la estudiante', done: s.opened.includes(B2_03_INJURY) },
     { label: 'Smoke Shadows (2)', done: s.defeated.includes(B2_03_SHADOW2) },
     { label: 'Panic', done: s.defeated.includes(B2_03_BOSS) },
+    { label: 'Llegan los bomberos', done: s.opened.includes(B2_03_CLOSE) },
   ],
   intro: {
     first: '2061. A night school. A class is just finishing. — 2061. Una escuela nocturna. Una clase está terminando. Aquí nadie te oye.',
@@ -221,6 +231,13 @@ export const B2_03_BOSS_DEF: EnemyDef = {
   before: [{ text: 'Shhh… Don\'t move. Don\'t speak. If you stay still, nothing can go wrong.', es: 'Shhh… No te muevas. No hables. Si no te mueves, nada puede salir mal.' }],
   after: [{ text: '(The frost melts and falls to the floor like rain.)', es: '(La escarcha se derrite y cae al suelo como lluvia.)' }],
   freed: { text: '(Panic is gone… but your older self is still standing there, frozen.)', es: '(Panic se fue… pero tu yo adulto sigue ahí, paralizado.)' },
+  // Las Ventanas no dan atuendos (ficha 0.4): solo la despedida
+  farewell: {
+    q: 'Panic (melting): "Why are you still here? Nobody can hear you…"',
+    options: ['I heard you whisper. And I saw you melting.', 'I heard you to whisper. And I saw you to melt.', 'I heard you whispered. And I saw you melted.'],
+    answer: 0,
+    tip: 'hear / see + objeto + forma base o -ing, nunca to.',
+  },
 }
 
 export const B2_03_ENEMIES: Record<string, EnemyDef> = {
@@ -228,3 +245,14 @@ export const B2_03_ENEMIES: Record<string, EnemyDef> = {
   [B2_03_SHADOW2]: SHADOW(B2_03_SHADOW2, { text: "I'm boring in this class… so boring… I'm exhausting…", es: "I'm boring (por bored) e I'm exhausting (por exhausted): mal." }),
   [B2_03_BOSS]: B2_03_BOSS_DEF,
 }
+
+// ── Bloque 3 ──
+
+/** El cierre: llegan los bomberos y todos salen (script con la bombera). Afuera, Leo adulto se lleva la mano a la garganta */
+export const B2_03_CLOSE_SCRIPT: ScriptLine[] = [
+  { who: 'friend', text: 'Fire service! Is anyone still up here? Everybody out, now!', es: '¡Bomberos! ¿Queda alguien aquí arriba? ¡Todos afuera, ya!' },
+  { who: 'narrator', text: '(The firefighter takes your older self by the arm. Slowly, {h:he|she} starts to walk.)', es: '(La bombera toma a tu yo adulto del brazo. Despacio, empieza a caminar.)' },
+  { who: 'narrator', text: '(Outside, in the cold air, everyone is safe. Your older self is looking at the floor.)', es: '(Afuera, con el aire frío, todos están a salvo. Tu yo adulto mira el suelo.)' },
+  { who: 'narrator', text: '(In the shadows, the teacher puts a hand to his throat. He tries to speak… and only a whisper comes out.)', es: '(En la sombra, el profesor se lleva la mano a la garganta. Intenta hablar… y solo sale un susurro.)' },
+  { who: 'narrator', text: '(The blue light grows around you. The night school fades.)', es: '(La luz azul crece a tu alrededor. La escuela nocturna se desvanece.)' },
+]
