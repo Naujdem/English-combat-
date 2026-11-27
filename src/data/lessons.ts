@@ -1173,6 +1173,45 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'narrator', text: 'Injury is the noun: "a serious injury". Injured is the adjective: "Three people were injured."', es: 'Injury es el sustantivo: "una lesión grave". Injured es el adjetivo: "Tres personas resultaron heridas".' },
     { who: 'board', text: 'She fell on the stairs and sprained ___ ankle.', choice: { options: ['her', 'the', 'hers'], answer: 0, tip: 'Con el cuerpo se usa el posesivo: her ankle.' } },
   ],
+  // B2-04 · bloque 1 (la residencia, data/b2FakeProfile.ts): Maya, seguridad en internet (Busuu 4)
+  'online-safety-b2': [
+    { who: 'maya', text: 'Your account is your page on an app. You log in with your username and your password.', es: 'Tu cuenta (account) es tu página en una app. Inicias sesión (log in) con tu usuario y tu contraseña (password).' },
+    { who: 'maya', text: 'Two-factor authentication: after the password, the app sends a code to your phone. A thief needs both.', es: 'Autenticación en dos pasos (two-factor authentication): después de la contraseña, la app manda un código a tu teléfono. Un ladrón necesita las dos cosas.' },
+    { who: 'maya', text: 'Phishing is a fake message that tries to steal your data. "Click here to win a prize!" It is a scam.', es: 'Phishing es un mensaje falso que intenta robar tus datos. "¡Haz clic aquí para ganar un premio!" Es una estafa (scam).' },
+    { who: 'maya', text: 'If someone hacks into your account, your account has been hacked. Change your password immediately.', es: 'Si alguien entra sin permiso (hacks into) a tu cuenta, tu cuenta fue hackeada (hacked). Cambia la contraseña de inmediato.' },
+    { who: 'maya', text: 'Privacy settings decide who can see your photos. Don\'t give away personal data: your address, your birthday, your bank details.', es: 'La configuración de privacidad (privacy settings) decide quién ve tus fotos. No regales (give away) datos personales: tu dirección, tu cumpleaños, tus datos bancarios.' },
+    { who: 'maya', text: 'And when you find a fake profile, you report it. Then the app can take it down.', es: 'Y cuando encuentras un perfil falso (fake profile), lo reportas. Así la app puede eliminarlo (take it down).' },
+    { who: 'board', text: 'Never click links in ___ messages. They want your password.', choice: { options: ['phishing', 'privacy', 'profile'], answer: 0, tip: 'Mensajes falsos que roban datos = phishing.' } },
+  ],
+  // B2-04 · bloque 1: Maya, deducción y crítica en pasado (Murphy 27, 30, 33–34)
+  'past-modals-b2': [
+    { who: 'maya', text: 'Someone used your photo. Who? We don\'t know yet, so we talk about possibilities in the past.', es: 'Alguien usó tu foto. ¿Quién? Aún no sabemos, así que hablamos de posibilidades en el pasado.' },
+    { who: 'maya', text: 'might have, may have, could have + past participle: "Someone might have stolen your photo." "They could have copied it from the Herald."', es: 'might have, may have, could have + participio: "Alguien pudo haber robado tu foto". "Pudieron copiarla del Herald".', board: ['Possibility', 'might / may / could + have + participle'] },
+    { who: 'maya', text: 'Remember B1? must have = I\'m sure it happened. can\'t have = I\'m sure it didn\'t. "The account must have been created yesterday."', es: '¿Recuerdas B1? must have = estoy seguro de que pasó. can\'t have = estoy seguro de que no pasó. "La cuenta debió crearse ayer".' },
+    { who: 'maya', text: 'To criticise the past, use should have or shouldn\'t have: "You should have used a stronger password." "You shouldn\'t have clicked that link."', es: 'Para criticar el pasado, usa should have o shouldn\'t have: "Debiste usar una contraseña más segura". "No debiste hacer clic en ese enlace".', board: ['Criticism', 'should / shouldn\'t + have + participle'] },
+    { who: 'maya', text: 'Always have + past participle: "should have checked", never "should have check". And people say "should of", but in writing it\'s always "should have".', es: 'Siempre have + participio: "should have checked", nunca "should have check". Y la gente pronuncia "should of", pero por escrito siempre es "should have".' },
+    { who: 'maya', text: 'Could have also means a chance you didn\'t take: "You could have told me!" = it was possible, but you didn\'t.', es: 'Could have también es una oportunidad que no aprovechaste: "¡Me lo pudiste haber dicho!" = era posible, pero no lo hiciste.' },
+    { who: 'board', text: 'You should have ___ a stronger password.', choice: { options: ['use', 'used', 'using'], answer: 1, tip: 'should have + participio: used.' } },
+  ],
+  // B2-04 · bloque 1: Maya, needn't have contra didn't need to (Murphy 32)
+  'neednt-b2': [
+    { who: 'maya', text: 'Look: you paid for the "premium security" app yesterday. But the free app does the same.', es: 'Mira: ayer pagaste la app de "seguridad premium". Pero la app gratis hace lo mismo.' },
+    { who: 'maya', text: 'So: "You needn\'t have paid." You did it, but it wasn\'t necessary. A small waste.', es: 'Entonces: "You needn\'t have paid". Lo hiciste, pero no hacía falta. Un pequeño desperdicio.', board: ["needn't have + participle", 'You did it, but it wasn\'t necessary.'] },
+    { who: 'maya', text: 'Now me: my app was free, so I didn\'t pay. "I didn\'t need to pay." It wasn\'t necessary, and usually you didn\'t do it.', es: 'Ahora yo: mi app era gratis, así que no pagué. "I didn\'t need to pay". No hacía falta, y normalmente no lo hiciste.', board: ["didn't need to + verb", "It wasn't necessary (so usually you didn't)."] },
+    { who: 'maya', text: 'Careful with the forms: "needn\'t have paid" (participle), "didn\'t need to pay" (base verb). Never "needn\'t to have" or "needn\'t have to".', es: 'Cuidado con las formas: "needn\'t have paid" (participio), "didn\'t need to pay" (verbo base). Nunca "needn\'t to have" ni "needn\'t have to".' },
+    { who: 'maya', text: '"We needn\'t have hurried. The bank was still open." "We didn\'t need to hurry, so we walked slowly."', es: '"No hacía falta que nos apuráramos. El banco seguía abierto". "No necesitábamos apurarnos, así que caminamos despacio".' },
+    { who: 'board', text: 'The app was free. You ___ paid for it.', choice: { options: ["needn't have", "didn't need to", "needn't to have"], answer: 0, tip: 'Pagaste, pero no hacía falta → needn\'t have paid.' } },
+  ],
+  // B2-04 · bloque 1: Ricardo, reportar un fraude con educación (Busuu 4)
+  'fraud-b2': [
+    { who: 'ricardo', text: 'Good morning. How can I help? Ah, a payment problem. Let me help you say it clearly.', es: 'Buenos días. ¿En qué les ayudo? Ah, un problema con un pago. Les ayudo a decirlo con claridad.' },
+    { who: 'ricardo', text: 'Start politely: "I\'d like to report a payment." If you didn\'t make it: "I\'d like to report a payment I didn\'t make."', es: 'Empiecen con educación: "Quisiera reportar un pago". Si no lo hicieron: "Quisiera reportar un pago que no hice".' },
+    { who: 'ricardo', text: 'To show you are worried, but stay polite: "I\'m concerned that someone has used my account." "I\'m worried about this payment."', es: 'Para mostrar preocupación sin perder la educación: "Me preocupa que alguien haya usado mi cuenta". "Me preocupa este pago".' },
+    { who: 'ricardo', text: 'To ask the bank to act: "Could you look into it?" Look into = investigate. "Would it be possible to get a refund?"', es: 'Para pedirle al banco que actúe: "¿Podrían revisarlo?" Look into = investigar. "¿Sería posible un reembolso (refund)?"' },
+    { who: 'ricardo', text: 'Bank words: an unauthorised payment is a payment without your permission. Suspicious = it looks dishonest. A refund = the money comes back.', es: 'Palabras del banco: un pago no autorizado (unauthorised payment) es un pago sin tu permiso. Suspicious = sospechoso. A refund = te devuelven el dinero.' },
+    { who: 'ricardo', text: 'Not "I want my money now!" but "I\'d be grateful if you could look into it." Polite words get faster help.', es: 'No "¡Quiero mi dinero ya!", sino "Les agradecería que lo revisaran". Las palabras amables consiguen ayuda más rápido.' },
+    { who: 'board', text: "I'd like to ___ a payment I didn't make.", choice: { options: ['report', 'refund', 'return'], answer: 0, tip: 'Avisar al banco de un problema = report.' } },
+  ],
   // B2-02 · bloque 1 (la redacción del Herald, data/b2Herald.ts): Manuel, past perfect continuous
   'ppc-b2': [
     { who: 'manuel', text: 'In an interview you tell your story. Sometimes you need an activity that continued up to a moment in the past.', es: 'En una entrevista cuentas tu historia. A veces necesitas una actividad que continuó hasta un momento del pasado.' },

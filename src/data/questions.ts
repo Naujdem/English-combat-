@@ -55,6 +55,7 @@ import { B1_14_QUESTIONS } from './questions-b1-14'
 import { B2_01_QUESTIONS } from './questions-b2-01'
 import { B2_02_COMBAT_QUESTIONS, B2_02_QUESTIONS } from './questions-b2-02'
 import { B2_03_COMBAT_QUESTIONS, B2_03_QUESTIONS } from './questions-b2-03'
+import { B2_04_QUESTIONS } from './questions-b2-04'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
@@ -445,6 +446,7 @@ export const QUESTIONS: Question[] = [
   ...B2_02_QUESTIONS,
   ...B2_03_QUESTIONS,
   ...B2_03_COMBAT_QUESTIONS,
+  ...B2_04_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
   ...B1_11_QUESTIONS,
@@ -666,6 +668,41 @@ export function pickQuestion(topics: TopicId[], kinds: QuestionKind[], used: str
 }
 
 export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' | 'B2'; lesson: string[] }> = {
+  // B2-04 · Fake Profile (data/b2FakeProfile.ts)
+  'online-safety-b2': {
+    name: 'Seguridad en internet',
+    level: 'B2',
+    lesson: [
+      'account · password · two-factor authentication · phishing · scam · hacked · privacy settings · fake profile.',
+      'Phrasal verbs: log in · hack into (an account) · take down (a profile) · give away (personal data).',
+    ],
+  },
+  'past-modals-b2': {
+    name: 'Modales en pasado',
+    level: 'B2',
+    lesson: [
+      'Posibilidad: might / may / could + have + participio. Someone might have stolen your photo.',
+      'Seguridad: must have (sí pasó) · can\'t have (no pasó). It must have been created yesterday.',
+      'Crítica: should / shouldn\'t + have + participio. You should have used a stronger password. (Nunca "should of".)',
+    ],
+  },
+  'neednt-b2': {
+    name: "needn't have / didn't need to",
+    level: 'B2',
+    lesson: [
+      "needn't have + participio: lo hiciste, pero no hacía falta. You needn't have paid. It was free.",
+      "didn't need to + verbo base: no hacía falta (y normalmente no lo hiciste). I didn't need to pay.",
+      "Nunca needn't to have ni needn't have to.",
+    ],
+  },
+  'fraud-b2': {
+    name: 'Reportar un fraude',
+    level: 'B2',
+    lesson: [
+      "I'd like to report a payment I didn't make. · I'm concerned that… · Could you look into it?",
+      "unauthorised payment · suspicious · refund · I'd be grateful if you could…",
+    ],
+  },
   // B2-02 · The Herald (data/b2Herald.ts)
   'ppc-b2': {
     name: 'Past perfect continuous',

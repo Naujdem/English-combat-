@@ -81,6 +81,8 @@ import type { FactCheckContent } from '../components/FactCheck'
 import { B2_03_ADULT_SCRIPT, B2_03_ALARM_SCRIPT, B2_03_CLOSE_SCRIPT, B2_03_CLASS_SCRIPT, B2_03_FREEZE_SCRIPT, B2_03_HELLO_SCRIPT } from './b2Frozen'
 import { B2_UNHEARD_DEMO } from './b2Demos'
 import { B2_03_DIARY_IDS, B2_03_FEELINGS_IDS, B2_03_INJURY_IDS, B2_03_SENSES_IDS } from './questions-b2-03'
+import { B2_04_ECHO_SCRIPT, B2_04_JEISON_SCRIPT, B2_04_PROFILE_SCRIPT } from './b2FakeProfile'
+import { B2_04_FRAUD_IDS, B2_04_MODALS_IDS, B2_04_NEEDNT_IDS, B2_04_SECURITY_IDS } from './questions-b2-04'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
 import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
 
@@ -7195,4 +7197,112 @@ NPC_TASKS['b2-03-close'] = {
     sub: 'Misión 3: Frozen. Se abrió el lugar 4 en el mapa.',
     say: "I saw myself freeze. It wasn't that I didn't care. I couldn't move.",
   },
+}
+
+// ── B2-04 · Fake Profile, bloque 1 (la residencia y el banco, data/b2FakeProfile.ts). NO guarda el cierre de la misión ──
+// Maya: el perfil "G" (script)
+NPC_TASKS['b2-04-profile'] = {
+  npc: 'b2-04-maya',
+  done: 'b2-04-profile',
+  activity: 'script',
+  script: B2_04_PROFILE_SCRIPT,
+  steps: [],
+  reward: { text: "Let's start with the words.", es: 'Empecemos por las palabras.', sub: 'Vuelve a hablar con Maya.' },
+}
+
+// Maya: lección 'online-safety-b2' + práctica b2-04-os1…os6. 5 monedas
+NPC_TASKS['b2-04-security'] = {
+  npc: 'b2-04-maya',
+  done: 'b2-04-security',
+  lesson: 'online-safety-b2',
+  activity: 'practice',
+  practice: 'online-safety-b2',
+  practiceIds: B2_04_SECURITY_IDS,
+  coins: 5,
+  requires: { id: 'b2-04-profile', text: 'Have you seen this?', es: '¿Ya viste esto?', sub: 'Primero habla con Maya en el vestíbulo.' },
+  steps: [],
+  reward: {
+    text: 'Strong password, two-factor on, privacy settings checked.',
+    es: 'Contraseña segura, dos pasos activados, privacidad revisada.',
+    sub: 'Lección hecha. Habla otra vez con Maya: ¿quién pudo hacer el perfil?',
+    say: 'Strong password, two-factor on.',
+  },
+}
+
+// Maya: lección 'past-modals-b2' + práctica b2-04-pm1…pm6. 5 monedas
+NPC_TASKS['b2-04-modals'] = {
+  npc: 'b2-04-maya',
+  done: 'b2-04-modals',
+  lesson: 'past-modals-b2',
+  activity: 'practice',
+  practice: 'past-modals-b2',
+  practiceIds: B2_04_MODALS_IDS,
+  coins: 5,
+  requires: { id: 'b2-04-security', text: 'Words first.', es: 'Primero las palabras.', sub: 'Termina la lección de seguridad en internet.' },
+  steps: [],
+  reward: {
+    text: 'Someone might have stolen your photo. You should have told me sooner!',
+    es: 'Alguien pudo haber robado tu foto. ¡Me lo debiste contar antes!',
+    sub: 'Lección hecha. Habla otra vez con Maya.',
+    say: 'Someone might have stolen your photo.',
+  },
+}
+
+// Maya: lección 'neednt-b2' + práctica b2-04-nn1…nn6. 5 monedas. Al terminar se abre el pasillo
+NPC_TASKS['b2-04-neednt'] = {
+  npc: 'b2-04-maya',
+  done: 'b2-04-neednt',
+  lesson: 'neednt-b2',
+  activity: 'practice',
+  practice: 'neednt-b2',
+  practiceIds: B2_04_NEEDNT_IDS,
+  coins: 5,
+  requires: { id: 'b2-04-modals', text: 'One thing at a time.', es: 'Una cosa a la vez.', sub: 'Primero termina la lección de modales en pasado.' },
+  steps: [],
+  reward: {
+    text: "You needn't have paid. I didn't need to.",
+    es: 'No hacía falta que pagaras. Yo no tuve que hacerlo.',
+    sub: 'Lección hecha. Se oye a Jeison en el pasillo: algo le pasó.',
+    say: "You needn't have paid.",
+  },
+}
+
+// Jeison: el pago falso a nombre de "G" (script). Al terminar se abren la calle y el banco
+NPC_TASKS['b2-04-jeison-talk'] = {
+  npc: 'b2-04-jeison',
+  done: 'b2-04-jeison-talk',
+  activity: 'script',
+  script: B2_04_JEISON_SCRIPT,
+  requires: { id: 'b2-04-neednt', text: 'Not now, sorry…', es: 'Ahora no, perdón…', sub: 'Primero termina las lecciones con Maya.' },
+  steps: [],
+  reward: { text: "I should have checked the account first.", es: 'Debí revisar la cuenta primero.', sub: 'Acompaña a Jeison al banco: cruza la calle.', say: 'I should have checked the account first.' },
+}
+
+// Ricardo: lección 'fraud-b2' (él la guía) + práctica b2-04-fr1…fr6. 5 monedas
+NPC_TASKS['b2-04-bank'] = {
+  npc: 'b2-04-ricardo',
+  done: 'b2-04-bank',
+  lesson: 'fraud-b2',
+  activity: 'practice',
+  practice: 'fraud-b2',
+  practiceIds: B2_04_FRAUD_IDS,
+  coins: 5,
+  requires: { id: 'b2-04-jeison-talk', text: 'Good morning. How can I help?', es: 'Buenos días. ¿En qué le ayudo?', sub: 'Primero habla con Jeison en el pasillo.' },
+  steps: [],
+  reward: {
+    text: "We'll look into it. You might get a refund.",
+    es: 'Lo vamos a revisar. Quizá le devuelvan el dinero.',
+    sub: 'Jeison reportó el pago. Alguien te busca en la calle.',
+    say: "We'll look into it.",
+  },
+}
+
+// Priya: el artículo del Herald sobre la dark web y el Echo Market (script)
+NPC_TASKS['b2-04-echo'] = {
+  npc: 'b2-04-priya',
+  done: 'b2-04-echo',
+  activity: 'script',
+  script: B2_04_ECHO_SCRIPT,
+  steps: [],
+  reward: { text: 'The Echo Market… lost voices.', es: 'El Echo Market… voces perdidas.', sub: 'Bloque 1 terminado. (El detective, los bots y el jefe llegan en el bloque 2.)', say: 'The Echo Market.' },
 }

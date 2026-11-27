@@ -1501,6 +1501,32 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#efe6d2', hair: '#8a5a32', skin: '#efe6d2' },
     doneLine: { text: 'Sometimes I feel as if I\'m always holding back.', es: 'A veces siento como si siempre me estuviera conteniendo.' },
   },
+  // ── B2-04 · Fake Profile, bloque 1 (la residencia y el banco, data/b2FakeProfile.ts) ──
+  // Maya (guía, mismo look que FRIENDS.maya): tareas b2-04-profile, b2-04-security, b2-04-modals y b2-04-neednt
+  'b2-04-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    doneLine: { text: "Whoever made that profile, we'll find out.", es: 'Quien sea que hizo ese perfil, lo vamos a descubrir.' },
+  },
+  // Jeison, el vecino: perdió dinero con un pago falso a nombre de "G" (tarea b2-04-jeison-talk)
+  'b2-04-jeison': {
+    name: 'Jeison',
+    look: { shirt: '#3b9d5d', hair: '#2b2b33', skin: '#c68642', gender: 'male' },
+    doneLine: { text: "Thanks for coming with me. I'm still angry with myself.", es: 'Gracias por acompañarme. Todavía estoy molesto conmigo mismo.' },
+  },
+  // Ricardo, el empleado del banco de B1 (tarea b2-04-bank)
+  'b2-04-ricardo': {
+    name: 'Ricardo',
+    look: { shirt: '#f4f4f0', hair: '#2b2b33', skin: '#d7a77a', gender: 'male' },
+    doneLine: { text: "We're looking into it. Be careful online.", es: 'Lo estamos revisando. Tengan cuidado en internet.' },
+  },
+  // Priya con el Herald impreso: aparece al terminar en el banco (tarea b2-04-echo)
+  'b2-04-priya': {
+    name: 'Priya',
+    look: { shirt: '#2f8f8a', hair: '#1a1a1a', skin: '#a8714f', gender: 'female' },
+    after: 'b2-04-bank',
+    doneLine: { text: "I'll keep digging. Something about this market feels wrong.", es: 'Voy a seguir investigando. Algo de ese mercado no me cuadra.' },
+  },
   // ── B2-02 · The Herald, bloque 1 (la redacción, data/b2Herald.ts) ──
   // Manuel (guía): tareas b2-02-arrival, b2-02-ppc, b2-02-interview-prep, b2-02-meeting y b2-02-patterns
   'b2-02-manuel': {

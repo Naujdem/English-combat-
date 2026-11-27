@@ -10,6 +10,7 @@ import { FRIENDS, interestFriend } from '../data/friends'
 import { B1_06_HADDAD_LOOK } from '../data/b1Shelter'
 import { B1_06_NAYI_LOOK } from '../data/b1Kennels'
 import { B2_MANUEL_LOOK, B2_PRIYA_LOOK } from '../data/b2Herald'
+import { B2_RICARDO_LOOK } from '../data/b2FakeProfile'
 import { SpeakButton } from './SpeakButton'
 import { Tappable } from './Words'
 import { GrammarPattern, GrammarTable, RoleSentence } from './Grammar'
@@ -140,7 +141,10 @@ export function Lesson({
   // B1-08: la persona especial guía la lección si tiene pasos 'special' (nombre, aspecto y voz que eligió el jugador)
   // B1-12: el abuelo Einer guía la lección si tiene pasos 'einer'
   // B2-02: Manuel o Priya guían la lección si tiene pasos 'manuel' o 'priya'
-  const guide = steps.some((x) => x.who === 'manuel')
+  // B2-04: Ricardo guía la lección si tiene pasos 'ricardo'
+  const guide = steps.some((x) => x.who === 'ricardo')
+    ? { name: 'Ricardo', look: B2_RICARDO_LOOK, voice: 'male' as const }
+    : steps.some((x) => x.who === 'manuel')
     ? { name: 'Manuel', look: B2_MANUEL_LOOK, voice: 'male' as const }
     : steps.some((x) => x.who === 'priya')
     ? { name: 'Priya', look: B2_PRIYA_LOOK, voice: 'female' as const }
@@ -158,7 +162,7 @@ export function Lesson({
     ? { name: 'Leo', look: FRIENDS.leo.look, voice: 'male' as const }
     : defaultGuide
   const place = 'place' in guide && !!guide.place
-  const talks = (place && s.who === 'narrator') || s.who === 'leo' || s.who === 'maya' || s.who === 'haddad' || s.who === 'nayi' || s.who === 'special' || s.who === 'einer' || s.who === 'manuel' || s.who === 'priya'
+  const talks = (place && s.who === 'narrator') || s.who === 'leo' || s.who === 'maya' || s.who === 'haddad' || s.who === 'nayi' || s.who === 'special' || s.who === 'einer' || s.who === 'manuel' || s.who === 'priya' || s.who === 'ricardo'
   const last = i === steps.length - 1
   const waiting = !!s.choice && !solved
   // La pizarra conserva lo último escrito si el paso actual no trae nada nuevo
