@@ -1432,4 +1432,25 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'narrator', text: 'Compare: a suggestion → some suggestions (countable), but some advice (uncountable). A job → two jobs, but work (uncountable).', es: 'Compara: a suggestion → some suggestions (contable), pero some advice (incontable). A job → two jobs, pero work (incontable).' },
     { who: 'board', text: 'The survey gave us a lot of useful ___.', choice: { options: ['feedbacks', 'a feedback', 'feedback'], answer: 2, tip: 'feedback es incontable: sin -s.' } },
   ],
+  // B2-08 · bloque 2: el manual del empleado, beneficios laborales y permisos (Busuu 17) y phrasal verbs del trabajo
+  'perks-b2': [
+    { who: 'narrator', text: '(A thick book on the shelf: "Vocalis — Employee Handbook". Page 1: "Our perks".)', es: '(Un libro grueso en el estante: "Vocalis — Manual del empleado". Página 1: "Nuestros beneficios".)', board: ['Perks', 'health insurance · flexible hours · bonus'] },
+    { who: 'narrator', text: 'Perks are the extra things a job gives you: health insurance, flexible hours, a bonus at the end of the year.', es: 'Los perks son los beneficios extra de un trabajo: health insurance (seguro médico), flexible hours (horario flexible), un bonus (bonificación) a fin de año.' },
+    { who: 'narrator', text: 'Leave is time away from work: sick leave (when you are ill), parental leave (when you have a baby), annual leave (holidays).', es: 'Leave es el tiempo fuera del trabajo: sick leave (incapacidad por enfermedad), parental leave (licencia de maternidad o paternidad), annual leave (vacaciones).', board: ['Leave', 'sick leave · parental leave · annual leave'] },
+    { who: 'board', text: 'I had the flu, so I took two days of ___.', choice: { options: ['parental leave', 'sick leave', 'a bonus'], answer: 1, tip: 'Enfermo → sick leave.' } },
+    { who: 'narrator', text: 'To resign is to leave your job. Before you go, you work your notice period. You hand in your notice (you give the letter).', es: 'Resign es renunciar. Antes de irte, trabajas el notice period (el preaviso). Hand in your notice es entregar la carta de renuncia.', board: ['Leaving a job', 'resign · notice period · hand in your notice'] },
+    { who: 'narrator', text: 'More phrasal verbs from the handbook: sign up for (a course or a plan), roll out (launch a product), cover up (hide a problem).', es: 'Más phrasal verbs del manual: sign up for (inscribirse en un curso o un plan), roll out (lanzar un producto), cover up (encubrir un problema).', board: ['Phrasal verbs', 'sign up for · roll out · cover up · hand in'] },
+    { who: 'board', text: 'Vocalis will ___ Restore in twenty countries next year.', choice: { options: ['roll out', 'cover up', 'hand in'], answer: 0, tip: 'Lanzar un producto: roll out.' } },
+  ],
+  // B2-08 · bloque 2: los correos de Chloe, acrónimos de trabajo y de correo (Busuu 18)
+  'acronyms-b2': [
+    { who: 'narrator', text: '(Chloe\'s laptop is open. Her inbox is full of short, fast emails.)', es: '(La portátil de Chloe está abierta. Su bandeja de entrada está llena de correos cortos y rápidos.)', board: ['Work acronyms', 'ASAP · ETA · FYI · EOD · TBC · RSVP'] },
+    { who: 'narrator', text: 'ASAP = as soon as possible. ETA = estimated time of arrival. FYI = for your information.', es: 'ASAP = lo antes posible. ETA = hora estimada de llegada. FYI = para tu información (para que sepas).' },
+    { who: 'narrator', text: 'EOD = end of day. TBC = to be confirmed. RSVP = please reply (to an invitation).', es: 'EOD = fin del día. TBC = por confirmar. RSVP = por favor responde (a una invitación).' },
+    { who: 'narrator', text: 'A deadline goes with by, not until: "Send me the report by EOD." Until is for something that continues: "I\'ll be here until 6."', es: 'Una fecha límite va con by, no con until: "Mándame el informe antes del fin del día". Until es para algo que continúa: "Estaré aquí hasta las 6".', board: ['by vs until', 'by EOD (deadline) · until 6 (it continues)'] },
+    { who: 'board', text: 'Please send me the slides ___ EOD.', choice: { options: ['until', 'by', 'for'], answer: 1, tip: 'Fecha límite → by.' } },
+    { who: 'narrator', text: 'In informal emails: BTW = by the way, IMO = in my opinion. Don\'t use them with clients or your boss\'s boss!', es: 'En correos informales: BTW = por cierto, IMO = en mi opinión. ¡No los uses con clientes ni con el jefe de tu jefe!' },
+    { who: 'narrator', text: '(One email from Chloe: "FYI, the donor issue is TBC. Keep it off the ads. Launch ASAP.")', es: '(Un correo de Chloe: "Para que sepan, el tema del donante está por confirmar. Que no salga en los anuncios. Lanzamiento lo antes posible".)' },
+    { who: 'board', text: 'The date of the party is not decided yet. It\'s ___.', choice: { options: ['TBC', 'ASAP', 'FYI'], answer: 0, tip: 'Todavía no se sabe: TBC (to be confirmed).' } },
+  ],
 }

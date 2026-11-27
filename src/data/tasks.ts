@@ -88,8 +88,8 @@ import { B2_S1_CLOSE_SCRIPT, B2_S1_MENU_PLAN, B2_S1_POST_SCRIPT } from './b2Fusi
 import { B2_S1_WORDS_IDS } from './questions-b2-s1'
 import { B2_06_ARRIVAL_SCRIPT, B2_06_CLOSE_SCRIPT, B2_06_FINDING_SCRIPT, B2_06_UNHEARD_ROOM } from './b2Lab'
 import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_IDS } from './questions-b2-06'
-import { B2_08_ARRIVAL_SCRIPT, B2_08_UNHEARD_ROOM } from './b2Pitch'
-import { B2_08_COMPARE_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
+import { B2_08_ARRIVAL_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNCH_SCRIPT, B2_08_UNHEARD_ROOM } from './b2Pitch'
+import { B2_08_ACRONYMS_IDS, B2_08_COMPARE_IDS, B2_08_PERKS_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_07_OLIVER_SCRIPT, B2_07_ARRIVAL_SCRIPT, B2_07_DEBATE_ENDINGS, B2_07_DEBATE_TURNS, B2_07_EXPLORE_ROOM, B2_07_POSTER_SCRIPT, B2_07_ROSA_SCRIPT, B2_07_SAM_INTRO } from './b2OldBuilding'
 import { B2_07_CHANGE_IDS, B2_07_CONDITIONS_IDS, B2_07_GET_IDS } from './questions-b2-07'
@@ -7996,5 +7996,78 @@ NPC_TASKS['b2-08-unheard'] = {
     es: 'Se requiere una voz donante compatible.',
     sub: 'Unheard completado. La puerta de la sala de reuniones se abrió: va a empezar la reunión de la campaña.',
     say: 'A compatible donor voice is required.',
+  },
+}
+
+// ── B2-08 · Pitch, bloque 2 (la sala de reuniones, el lanzamiento y el combate). NO guarda el cierre ──
+// El manual del empleado: lección 'perks-b2' + práctica b2-08-pk1…pk6. 5 monedas
+NPC_TASKS['b2-08-perks'] = {
+  npc: 'b2-08-manual',
+  done: 'b2-08-perks',
+  lesson: 'perks-b2',
+  placeGuide: { name: 'El manual del empleado', icon: '❏' },
+  activity: 'practice',
+  practice: 'perks-b2',
+  practiceIds: B2_08_PERKS_IDS,
+  coins: 5,
+  requires: { id: 'b2-08-unheard', text: 'Employee Handbook.', es: 'Manual del empleado.', sub: 'Primero haz Unheard en la oficina de marketing.' },
+  steps: [],
+  reward: {
+    text: 'health insurance · sick leave · hand in your notice',
+    es: 'seguro médico · incapacidad · entregar la renuncia',
+    sub: 'Manual leído. La portátil de Chloe sigue abierta.',
+    say: 'Hand in your notice.',
+  },
+}
+
+// Los correos de Chloe: lección 'acronyms-b2' + práctica b2-08-ac1…ac6. 5 monedas
+NPC_TASKS['b2-08-acronyms'] = {
+  npc: 'b2-08-laptop',
+  done: 'b2-08-acronyms',
+  lesson: 'acronyms-b2',
+  placeGuide: { name: 'Los correos de Chloe', icon: '✉' },
+  activity: 'practice',
+  practice: 'acronyms-b2',
+  practiceIds: B2_08_ACRONYMS_IDS,
+  coins: 5,
+  requires: { id: 'b2-08-perks', text: "Chloe's inbox.", es: 'La bandeja de entrada de Chloe.', sub: 'Primero lee el manual del empleado.' },
+  steps: [],
+  reward: {
+    text: 'FYI, the donor issue is TBC. Keep it off the ads. Launch ASAP.',
+    es: 'Para que sepan, el tema del donante está por confirmar. Que no salga en los anuncios. Lanzamiento lo antes posible.',
+    sub: 'Correos leídos. Sobre la mesa hay una copia del contrato de Restore.',
+    say: 'Keep it off the ads.',
+  },
+}
+
+// The Fine Print (reutilizado de B1-04): el contrato de Restore, lo que sale en la publicidad y lo que esconde. Sin errores, escudo.
+// Al terminar se abre el salón del lanzamiento
+NPC_TASKS['b2-08-fineprint'] = {
+  npc: 'b2-08-contract',
+  done: 'b2-08-fineprint',
+  activity: 'fineprint',
+  fineprint: B2_08_FINE_PRINT,
+  requires: { id: 'b2-08-acronyms', text: 'A copy of the contract.', es: 'Una copia del contrato.', sub: 'Primero lee los correos de Chloe.' },
+  steps: [],
+  reward: {
+    text: 'A compatible donor voice is required.',
+    es: 'Se requiere una voz donante compatible.',
+    sub: 'Contrato leído. Suena música abajo: se abrieron las puertas del salón del lanzamiento.',
+    say: 'They sell the voice and hide the donor.',
+  },
+}
+
+// El lanzamiento (script): el holograma presenta Restore y G aparece al fondo con capucha. Después, los Promo Bots
+NPC_TASKS['b2-08-launch'] = {
+  npc: 'b2-08-podium',
+  done: 'b2-08-launch',
+  activity: 'script',
+  script: B2_08_LAUNCH_SCRIPT,
+  requires: { id: 'b2-08-fineprint', text: 'The launch has not started yet.', es: 'El lanzamiento todavía no empieza.', sub: 'Primero lee el contrato de la sala de reuniones.' },
+  steps: [],
+  reward: {
+    text: 'Vocalis Restore. Far easier than you think.',
+    es: 'Vocalis Restore. Mucho más fácil de lo que crees.',
+    sub: 'Al fondo había alguien con capucha… El holograma parpadea y los Promo Bots vienen hacia ti.',
   },
 }

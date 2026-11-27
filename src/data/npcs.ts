@@ -1574,6 +1574,37 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#3fa9ff', hair: '#1f5d8c', skin: '#3fa9ff' },
     doneLine: { text: 'Read the small print aloud.', es: 'Lee la letra pequeña en voz alta.' },
   },
+  // B2-08 · bloque 2: la sala de reuniones y el salón del lanzamiento (aquí la gente sí tiene cara)
+  'b2-08-manual': {
+    name: 'El manual del empleado',
+    look: { shirt: '#f4f7fa', hair: '#1f5d8c', skin: '#f4f7fa' },
+    doneLine: { text: 'Our perks: health insurance, flexible hours, a bonus.', es: 'Nuestros beneficios: seguro médico, horario flexible, bonificación.' },
+  },
+  'b2-08-laptop': {
+    name: 'La portátil de Chloe',
+    look: { shirt: '#1c232c', hair: '#3fa9ff', skin: '#1c232c' },
+    doneLine: { text: 'FYI, the donor issue is TBC. Keep it off the ads. Launch ASAP.', es: 'Para que sepan, el tema del donante está por confirmar. Que no salga en los anuncios. Lanzamiento lo antes posible.' },
+  },
+  'b2-08-contract': {
+    name: 'El contrato de Restore',
+    look: { shirt: '#f6f0e1', hair: '#2b2620', skin: '#f6f0e1' },
+    doneLine: { text: 'A compatible donor voice is required.', es: 'Se requiere una voz donante compatible.' },
+  },
+  'b2-08-chloe': {
+    name: 'Chloe Martin',
+    look: { shirt: '#c0392b', hair: '#e0b25a', skin: '#f0cfb0', gender: 'female' },
+    doneLine: { text: 'Our feedback is far better than we expected! Launch ASAP!', es: '¡Las opiniones son mucho mejores de lo que esperábamos! ¡Lanzamiento lo antes posible!' },
+  },
+  'b2-08-mensah': {
+    name: 'Dr. Kwame Mensah',
+    look: { shirt: '#2f4a6b', hair: '#1a1a1a', skin: '#6b4226', gender: 'male' },
+    doneLine: { text: 'Far easier than you think… Easier for whom?', es: 'Mucho más fácil de lo que crees… ¿Más fácil para quién?' },
+  },
+  'b2-08-podium': {
+    name: 'El escenario del lanzamiento',
+    look: { shirt: '#1f3a5f', hair: '#3fa9ff', skin: '#1f3a5f' },
+    doneLine: { text: 'Vocalis Restore. Get your voice back.', es: 'Vocalis Restore. Recupera tu voz.' },
+  },
   // ── B2-06 · The Lab, bloque 1 (Ventana 2062, la recepción y el archivo de Vocalis, data/b2Lab.ts). Nadie oye al protagonista ──
   'b2-06-motto': {
     name: 'El lema de la pared',
