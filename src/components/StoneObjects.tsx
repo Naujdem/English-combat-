@@ -69,7 +69,7 @@ export const STONE_OBJECTS: Record<string, StoneObject> = {
     ),
   },
   box: {
-    names: ['box'],
+    names: ['boxes', 'box'],
     es: 'la caja',
     draw: (a) => (
       <g className="stone-move" style={{ transform: a ? 'translateY(-16px)' : 'none' }}>

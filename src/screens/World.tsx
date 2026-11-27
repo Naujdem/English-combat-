@@ -29,6 +29,7 @@ import { B2_05_PORT_ID } from '../data/b2VoiceBlackouts'
 import { B2_S1_RESTAURANT_ID } from '../data/b2FusionNight'
 import { B2_03_SCHOOL } from '../data/b2Frozen'
 import { B2_06_LAB } from '../data/b2Lab'
+import { B2_07_OLDTOWN_ID } from '../data/b2OldBuilding'
 import { enterB2Window, isB2WindowScene } from '../game/b2Window'
 import { B2_NODES, B2_OPENING, B2_PART_NAMES, B2_ERA_COLOR, b2LockedText, b2Message, b2NodeDone, b2NodeOpen, isB2Unlocked, type B2Node, type B2Part } from '../data/b2World'
 import { enterMemory, memoryFlag } from '../game/memory'
@@ -213,6 +214,8 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     if (n.num === 5) return onEnter(B2_05_PORT_ID)
     // Lugar 6 (Ventana 2062): The Lab, el laboratorio de Vocalis (data/b2Lab.ts). Con la animación de entrada solo la primera vez
     if (n.num === 6) return state.b2Window?.n === 6 && isB2WindowScene(state.sceneId) ? onEnter(B2_06_LAB.id) : update((s) => enterB2Window(s, 6, B2_06_LAB.id, B2_06_LAB.start))
+    // Lugar 7 (presente): The Old Building, el barrio antiguo, el edificio y el ayuntamiento (data/b2OldBuilding.ts)
+    if (n.num === 7) return onEnter(B2_07_OLDTOWN_ID)
     // Extras (presente): Fusion Night, el restaurante de Mei (data/b2FusionNight.ts)
     if (n.id === 'b2-s1') return onEnter(B2_S1_RESTAURANT_ID)
     // Las demás misiones de B2 todavía no están construidas (fichas 3 a 14)
