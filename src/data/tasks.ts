@@ -92,6 +92,8 @@ import { B2_08_ARRIVAL_SCRIPT, B2_08_CLOSE_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNC
 import { B2_08_ACRONYMS_IDS, B2_08_COMPARE_IDS, B2_08_PERKS_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_11_ARRIVAL_SCRIPT, B2_11_CLOSE_STEPS, B2_11_PYJAMAS_STEPS, B2_11_REVIEW_GAME, B2_11_CONFESS_SCRIPT, B2_11_BOARD_ITEMS, B2_11_FACT_CHECK, B2_11_MOVIE_SCRIPT } from './b2WhoIsG'
+import { B2_12_ARRIVAL_SCRIPT, B2_12_UNHEARD_ROOM } from './b2Countdown'
+import { B2_12_GOALS_IDS, B2_12_PLAN_IDS } from './questions-b2-12'
 import { B2_11_FILM_IDS, B2_11_INDIRECT_IDS, B2_11_NARRATIVE_IDS } from './questions-b2-11'
 import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
 import { B2_10_ARRIVAL_SCRIPT, B2_10_BENCH_SCRIPT, B2_10_CARD_CONTENT, B2_10_CLASS_SCRIPT, B2_10_CLOSE_SCRIPT, B2_10_GIFT_SCRIPT } from './b2Card'
@@ -8585,5 +8587,72 @@ NPC_TASKS['b2-11-close'] = {
     es: 'Misión 11: ¿Quién es G?',
     sub: 'El quinto segmento del núcleo se llenó. Se abrió la Ventana 12 (2056).',
     say: 'Who is G?',
+  },
+}
+
+// ── B2-12 · Countdown, bloque 1 (Ventana 2056, el cuarto de G, data/b2Countdown.ts). Nadie te oye. NO guarda el cierre ──
+// El cuarto vacío: entrada a la Ventana (script)
+NPC_TASKS['b2-12-arrival'] = {
+  npc: 'b2-12-wall',
+  done: 'b2-12-arrival',
+  activity: 'script',
+  script: B2_12_ARRIVAL_SCRIPT,
+  steps: [],
+  reward: { text: 'G lives here.', es: 'G vive aquí.', sub: 'En la pared hay un plan escrito en letras grandes. Léelo.', say: 'G lives here.' },
+}
+
+// La pared del plan: lección 'fperfect-b2' (la guía la pared) + práctica b2-12-fp1…fp6 (1 de escucha). 5 monedas
+NPC_TASKS['b2-12-plan'] = {
+  npc: 'b2-12-wall',
+  done: 'b2-12-plan',
+  lesson: 'fperfect-b2',
+  placeGuide: { name: 'La pared del plan', icon: '▭' },
+  activity: 'practice',
+  practice: 'fperfect-b2',
+  practiceIds: B2_12_PLAN_IDS,
+  coins: 5,
+  requires: { id: 'b2-12-arrival', text: 'A plan on the wall.', es: 'Un plan en la pared.', sub: 'Primero mira el cuarto.' },
+  steps: [],
+  reward: {
+    text: 'will have arrived · will have taken · will never have become',
+    es: 'habré llegado · habré quitado · nunca habrán llegado a ser',
+    sub: 'Sobre el escritorio hay una hoja vieja y amarillenta.',
+    say: 'They will never have become friends.',
+  },
+}
+
+// La lista vieja de metas: lección 'goals-b2' (la guía la hoja) + práctica b2-12-gl1…gl6. 5 monedas
+NPC_TASKS['b2-12-goals'] = {
+  npc: 'b2-12-list',
+  done: 'b2-12-goals',
+  lesson: 'goals-b2',
+  placeGuide: { name: 'La lista vieja de metas', icon: '✎' },
+  activity: 'practice',
+  practice: 'goals-b2',
+  practiceIds: B2_12_GOALS_IDS,
+  coins: 5,
+  requires: { id: 'b2-12-plan', text: 'An old yellow sheet of paper.', es: 'Una hoja vieja y amarillenta.', sub: 'Primero lee el plan de la pared.' },
+  steps: [],
+  reward: {
+    text: "I'll have been teaching for ten years by 40.",
+    es: 'Para los 40, llevaré diez años enseñando.',
+    sub: 'Las metas se cumplieron hasta "teacher". Debajo del escritorio sale una luz azul.',
+    say: 'By the time I am 30, I will have become a teacher.',
+  },
+}
+
+// Unheard en el escritorio (reutilizado, components/Unheard.tsx): el cajón con el reloj, el plan que no se deja quitar y la nota
+NPC_TASKS['b2-12-unheard'] = {
+  npc: 'b2-12-desk',
+  done: 'b2-12-unheard',
+  activity: 'command',
+  command: B2_12_UNHEARD_ROOM,
+  requires: { id: 'b2-12-goals', text: 'A blue light under the desk.', es: 'Una luz azul debajo del escritorio.', sub: 'Primero lee la lista vieja de metas.' },
+  steps: [],
+  reward: {
+    text: "Don't do it.",
+    es: 'No lo hagas.',
+    sub: 'Unheard completado. La nota quedó junto al reloj. Se oyen pasos en la escalera…',
+    say: "Don't do it.",
   },
 }

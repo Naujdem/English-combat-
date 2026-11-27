@@ -1700,6 +1700,24 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b2-10-contrast',
     doneLine: { text: "It's worth trying one last time.", es: 'Vale la pena intentarlo una última vez.' },
   },
+  // ── B2-12 · Countdown, bloque 1 (Ventana 2056, el cuarto de G, data/b2Countdown.ts). Nadie oye al protagonista. G no está ──
+  'b2-12-wall': {
+    name: 'La pared del plan',
+    look: { shirt: '#f3ead2', hair: '#c0392b', skin: '#f3ead2' },
+    doneLine: { text: 'By tomorrow morning, I will have arrived at his school.', es: 'Para mañana por la mañana, habré llegado a su escuela.' },
+  },
+  'b2-12-list': {
+    name: 'La lista vieja de metas',
+    look: { shirt: '#e9d48a', hair: '#1d1d1d', skin: '#e9d48a' },
+    after: 'b2-12-plan',
+    doneLine: { text: "By the time I'm 30, I will have become a teacher.", es: 'Para cuando tenga 30, me habré vuelto profesor.' },
+  },
+  'b2-12-desk': {
+    name: 'El escritorio de G',
+    look: { shirt: '#7a4e2a', hair: '#3fa9ff', skin: '#7a4e2a' },
+    after: 'b2-12-goals',
+    doneLine: { text: "Don't do it.", es: 'No lo hagas.' },
+  },
   // ── B2-11 · Who Is G?, bloque 1 (el archivo del Herald y la sala común, data/b2WhoIsG.ts) ──
   // Manuel en el archivo (mismo look que en B2-02 y B2-05): tareas b2-11-arrival, b2-11-indirect y b2-11-factcheck
   'b2-11-manuel': {

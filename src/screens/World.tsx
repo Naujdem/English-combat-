@@ -34,6 +34,7 @@ import { B2_08_VOCALIS } from '../data/b2Pitch'
 import { B2_09_GALLERY_ID } from '../data/b2Gallery'
 import { B2_10_SCHOOL } from '../data/b2Card'
 import { B2_11_HERALD_ID } from '../data/b2WhoIsG'
+import { B2_12_ROOM } from '../data/b2Countdown'
 import { enterB2Window, isB2WindowScene } from '../game/b2Window'
 import { B2_NODES, B2_OPENING, B2_PART_NAMES, B2_ERA_COLOR, b2LockedText, b2Message, b2NodeDone, b2NodeOpen, isB2Unlocked, type B2Node, type B2Part } from '../data/b2World'
 import { enterMemory, memoryFlag } from '../game/memory'
@@ -228,6 +229,8 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     if (n.num === 10) return state.b2Window?.n === 10 && isB2WindowScene(state.sceneId) ? onEnter(B2_10_SCHOOL.id) : update((s) => enterB2Window(s, 10, B2_10_SCHOOL.id, B2_10_SCHOOL.start))
     // Lugar 11 (presente): Who Is G?, el archivo del Herald y la noche de cine (data/b2WhoIsG.ts)
     if (n.num === 11) return onEnter(B2_11_HERALD_ID)
+    // Lugar 12 (Ventana 2056): Countdown, el cuarto de G cerca del puerto viejo (data/b2Countdown.ts). Con la animación de entrada solo la primera vez
+    if (n.num === 12) return state.b2Window?.n === 12 && isB2WindowScene(state.sceneId) ? onEnter(B2_12_ROOM.id) : update((s) => enterB2Window(s, 12, B2_12_ROOM.id, B2_12_ROOM.start))
     // Extras (presente): Fusion Night, el restaurante de Mei (data/b2FusionNight.ts)
     if (n.id === 'b2-s1') return onEnter(B2_S1_RESTAURANT_ID)
     // Las demás misiones de B2 todavía no están construidas (fichas 3 a 14)

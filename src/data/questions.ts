@@ -63,6 +63,7 @@ import { B2_08_COMBAT_QUESTIONS, B2_08_QUESTIONS } from './questions-b2-08'
 import { B2_09_QUESTIONS } from './questions-b2-09'
 import { B2_10_COMBAT_QUESTIONS, B2_10_QUESTIONS } from './questions-b2-10'
 import { B2_11_COMBAT_QUESTIONS, B2_11_QUESTIONS } from './questions-b2-11'
+import { B2_12_QUESTIONS } from './questions-b2-12'
 import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
@@ -469,6 +470,7 @@ export const QUESTIONS: Question[] = [
   ...B2_10_COMBAT_QUESTIONS,
   ...B2_11_QUESTIONS,
   ...B2_11_COMBAT_QUESTIONS,
+  ...B2_12_QUESTIONS,
   ...B2_S1_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
@@ -824,6 +826,25 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
       'Después de preposición, -ing: tired of waiting · afraid of failing · despite hating.',
       "There's no point in + -ing (es inútil) · It's worth + -ing (vale la pena). Nunca \"worth to try\".",
       'have difficulty + -ing: I had difficulty writing this. (Nunca "difficulty to write".)',
+    ],
+  },
+  // B2-12 · Countdown (Ventana 2056, data/b2Countdown.ts)
+  'fperfect-b2': {
+    name: 'Futuro perfecto',
+    level: 'B2',
+    lesson: [
+      'will have + participio: la acción ya estará terminada antes de un momento del futuro. By tomorrow, I will have arrived.',
+      'Con by + momento (a más tardar): by 2060, by the end of the year. Irregulares: take → taken, become → become.',
+      "Negativo: will never have become · won't have finished. Pregunta: Will you have finished by Friday?",
+    ],
+  },
+  'goals-b2': {
+    name: 'Metas y el yo del futuro',
+    level: 'B2',
+    lesson: [
+      'will have been + -ing (+ for): cuánto tiempo llevará algo en el futuro. By 40, I will have been teaching for ten years.',
+      'Metas: goal · ambition · achieve a goal · fulfil a dream · milestone.',
+      "Phrasal verbs: look back on (mirar atrás) · turn out (resultar): Life didn't turn out as I planned.",
     ],
   },
   'adv-phrases-b2': {
