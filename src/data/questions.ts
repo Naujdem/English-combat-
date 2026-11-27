@@ -66,6 +66,7 @@ import { B2_11_COMBAT_QUESTIONS, B2_11_QUESTIONS } from './questions-b2-11'
 import { B2_12_COMBAT_QUESTIONS, B2_12_QUESTIONS } from './questions-b2-12'
 import { B2_13_COMBAT_QUESTIONS, B2_13_QUESTIONS } from './questions-b2-13'
 import { B2_14_COMBAT_QUESTIONS, B2_14_QUESTIONS } from './questions-b2-14'
+import { B2_S2_QUESTIONS } from './questions-b2-s2'
 import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
@@ -477,6 +478,7 @@ export const QUESTIONS: Question[] = [
   ...B2_13_COMBAT_QUESTIONS,
   ...B2_14_QUESTIONS,
   ...B2_14_COMBAT_QUESTIONS,
+  ...B2_S2_QUESTIONS,
   ...B2_12_COMBAT_QUESTIONS,
   ...B2_S1_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
@@ -899,6 +901,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
       'wish / if only + had + participio: arrepentimiento del pasado. I wish I had trusted you. If only I had known.',
       'wish + would: quieres que otra persona cambie algo que te molesta. I wish you would stop blaming him.',
       "would rather + otra persona + pasado: I'd rather you didn't fight. · Misma persona + forma base: I'd rather stay.",
+    ],
+  },
+  // B2 · Extras: Paws Debate (data/b2PawsDebate.ts)
+  'paws-b2': {
+    name: 'Contraste y both / neither / either',
+    level: 'B2',
+    lesson: [
+      'En la misma oración: whereas / while. Laica is calm, whereas Kitay never stops. (Nunca "Whereas…, but…".)',
+      'Oración nueva, con coma: However, … · On the other hand, …',
+      'both (los dos) · neither (ninguno de los dos) · either (uno u otro). Forma segura: Neither of them is…',
     ],
   },
   'time-clauses-b2': {

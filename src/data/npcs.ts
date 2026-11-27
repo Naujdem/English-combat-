@@ -1535,6 +1535,21 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     doneLine: { text: "I'll keep digging. Something about this market feels wrong.", es: 'Voy a seguir investigando. Algo de ese mercado no me cuadra.' },
   },
   // ── B2 · Extras: Fusion Night (el restaurante de Mei, data/b2FusionNight.ts) ──
+  // ── B2 · Extras: Paws Debate (Lumen Paws, data/b2PawsDebate.ts). Nayi, la pantalla, el tablero, los perros y los gatos ──
+  'b2-s2-nayi': {
+    name: 'Nayi',
+    look: { shirt: '#e0873a', hair: '#6b3a2a', skin: '#d9a37a', gender: 'female' },
+    doneLine: { text: 'Both sides have reasons. Listen first.', es: 'Los dos lados tienen razones. Escucha primero.' },
+  },
+  'b2-s2-tv': { name: 'La pantalla', look: { shirt: '#1d2430', hair: '#3fa9ff', skin: '#1d2430' }, doneLine: { text: 'Whereas some people…, others…', es: 'Mientras que algunos…, otros…' } },
+  'b2-s2-board': { name: 'El tablero de pedidos', look: { shirt: '#8a6a40', hair: '#f2d98a', skin: '#8a6a40' }, after: 'b2-s2-words', doneLine: { text: 'All the orders are done.', es: 'Todos los pedidos están hechos.' } },
+  'b2-s2-zirius': { name: 'Zirius', look: { shirt: '#8a6a40', hair: '#8a6a40', skin: '#8a6a40' }, doneLine: { text: 'Woof! (He drops the ball at your feet.)', es: '¡Guau! (Te deja la pelota a los pies.)' } },
+  'b2-s2-laica': { name: 'Laica', look: { shirt: '#d9c29a', hair: '#d9c29a', skin: '#d9c29a' }, doneLine: { text: '(She is sleeping. Of course.)', es: '(Está durmiendo. Claro.)' } },
+  'b2-s2-kitay': { name: 'Kitay', look: { shirt: '#2b2b2b', hair: '#2b2b2b', skin: '#2b2b2b' }, doneLine: { text: '(He runs around you three times.)', es: '(Corre tres veces a tu alrededor.)' } },
+  'b2-s2-fresas': { name: 'Fresas', look: { shirt: '#c98a5a', hair: '#c98a5a', skin: '#c98a5a' }, doneLine: { text: '(She hides behind the plant.)', es: '(Se esconde detrás de la planta.)' } },
+  'b2-s2-lupe': { name: 'Lupe', look: { shirt: '#a0a0a0', hair: '#a0a0a0', skin: '#a0a0a0' }, doneLine: { text: 'Woof! Woof! WOOF!', es: '¡Guau! ¡Guau! ¡GUAU!' } },
+  'b2-s2-moscu': { name: 'Moscú', look: { shirt: '#9a9a9a', hair: '#9a9a9a', skin: '#9a9a9a' }, doneLine: { text: 'Meow.', es: 'Miau.' } },
+  'b2-s2-minus': { name: 'Minus', look: { shirt: '#2b2b2b', hair: '#2b2b2b', skin: '#2b2b2b' }, doneLine: { text: 'Mrrr…', es: 'Mrrr…' } },
   // Mei Lin, la chef: tareas b2-s1-post, b2-s1-words, b2-s1-menu y b2-s1-close
   'b2-s1-mei': {
     name: 'Mei Lin',
