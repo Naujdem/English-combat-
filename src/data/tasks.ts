@@ -83,6 +83,8 @@ import { B2_UNHEARD_DEMO } from './b2Demos'
 import { B2_03_DIARY_IDS, B2_03_FEELINGS_IDS, B2_03_INJURY_IDS, B2_03_SENSES_IDS } from './questions-b2-03'
 import { B2_04_DETECTIVE_CONTENT, B2_04_ECHO_SCRIPT, B2_04_JEISON_SCRIPT, B2_04_PROFILE_SCRIPT } from './b2FakeProfile'
 import { B2_04_FRAUD_IDS, B2_04_MODALS_IDS, B2_04_NEEDNT_IDS, B2_04_SECURITY_IDS } from './questions-b2-04'
+import { B2_05_ARRIVAL_SCRIPT, B2_05_CAPTAIN_SCRIPT, B2_05_TOMAS_SCRIPT, B2_05_ZOE_SCRIPT } from './b2VoiceBlackouts'
+import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
 import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
 
@@ -7346,5 +7348,105 @@ NPC_TASKS['b2-04-close'] = {
     es: 'Misión 4: Perfil falso',
     sub: 'Ganaste el hoodie de hacker. El segundo segmento del núcleo quedó a la mitad. Se abrieron el lugar 5 y Fusion Night.',
     say: 'Fake Profile.',
+  },
+}
+
+// ── B2-05 · Voice Blackouts, bloque 1 (el puerto de noche y el Herald, data/b2VoiceBlackouts.ts). NO guarda el cierre de la misión ──
+// Manuel: los apagones de voz (script)
+NPC_TASKS['b2-05-arrival'] = {
+  npc: 'b2-05-manuel',
+  done: 'b2-05-arrival',
+  activity: 'script',
+  script: B2_05_ARRIVAL_SCRIPT,
+  steps: [],
+  reward: { text: 'Words are actions. Let me show you.', es: 'Las palabras son acciones. Te muestro.', sub: 'Vuelve a hablar con Manuel.' },
+}
+
+// Manuel: lección 'reporting-to-b2' + práctica b2-05-rt1…rt6. 5 monedas. Al terminar se abre el muelle de pescadores
+NPC_TASKS['b2-05-verbs-to'] = {
+  npc: 'b2-05-manuel',
+  done: 'b2-05-verbs-to',
+  lesson: 'reporting-to-b2',
+  activity: 'practice',
+  practice: 'reporting-to-b2',
+  practiceIds: B2_05_VERBS_TO_IDS,
+  coins: 5,
+  requires: { id: 'b2-05-arrival', text: 'Strange night, huh?', es: 'Noche rara, ¿no?', sub: 'Primero habla con Manuel.' },
+  steps: [],
+  reward: {
+    text: 'He promised to help. She warned us not to go.',
+    es: 'Prometió ayudar. Nos advirtió que no fuéramos.',
+    sub: 'Lección hecha. Habla con el pescador del muelle: perdió la voz.',
+    say: 'He promised to help.',
+  },
+}
+
+// Tomás, en el muelle de pescadores (script, escucha)
+NPC_TASKS['b2-05-tomas-talk'] = {
+  npc: 'b2-05-tomas',
+  done: 'b2-05-tomas-talk',
+  activity: 'script',
+  script: B2_05_TOMAS_SCRIPT,
+  requires: { id: 'b2-05-verbs-to', text: 'Leave me alone…', es: 'Déjenme en paz…', sub: 'Primero termina la lección con Manuel.' },
+  steps: [],
+  reward: { text: 'He denied making it up.', es: 'Negó habérselo inventado.', sub: 'Ahora la capitana, junto al muelle norte.', say: 'He denied making it up.' },
+}
+
+// La capitana Halvorsen, junto al muelle norte (script, escucha)
+NPC_TASKS['b2-05-captain-talk'] = {
+  npc: 'b2-05-captain',
+  done: 'b2-05-captain-talk',
+  activity: 'script',
+  script: B2_05_CAPTAIN_SCRIPT,
+  requires: { id: 'b2-05-tomas-talk', text: 'No interviews.', es: 'Nada de entrevistas.', sub: 'Primero habla con Tomás en el muelle de pescadores.' },
+  steps: [],
+  reward: { text: 'She warned us to keep away.', es: 'Nos advirtió que nos alejáramos.', sub: 'Vuelve con Manuel: faltan los verbos con -ing.', say: 'She warned us to keep away.' },
+}
+
+// Manuel: lección 'reporting-ing-b2' + práctica b2-05-ri1…ri6. 5 monedas. Al terminar Manuel se va al Herald y llega Zoe
+NPC_TASKS['b2-05-verbs-ing'] = {
+  npc: 'b2-05-manuel',
+  done: 'b2-05-verbs-ing',
+  lesson: 'reporting-ing-b2',
+  activity: 'practice',
+  practice: 'reporting-ing-b2',
+  practiceIds: B2_05_VERBS_ING_IDS,
+  coins: 5,
+  requires: { id: 'b2-05-captain-talk', text: 'Talk to the witnesses first.', es: 'Primero habla con los testigos.', sub: 'Habla con Tomás y con la capitana.' },
+  steps: [],
+  reward: {
+    text: 'He denied making it up. She accused them of breaking the lights.',
+    es: 'Negó habérselo inventado. Los acusó de romper las luces.',
+    sub: 'Lección hecha. Alguien está grabando en el paseo…',
+    say: 'He denied making it up.',
+  },
+}
+
+// Zoe Park en el paseo: su blog (script). Al terminar se abre la puerta del Herald
+NPC_TASKS['b2-05-zoe-talk'] = {
+  npc: 'b2-05-zoe',
+  done: 'b2-05-zoe-talk',
+  activity: 'script',
+  script: B2_05_ZOE_SCRIPT,
+  steps: [],
+  reward: { text: 'GHOST STEALS VOICES AT PORT!', es: '¡FANTASMA ROBA VOCES EN EL PUERTO!', sub: 'Ve con Manuel a la redacción del Herald (la puerta a la izquierda).', say: 'Ghost steals voices at port!' },
+}
+
+// Manuel en el Herald: lección 'tabloid-b2' + práctica b2-05-tb1…tb6. 5 monedas
+NPC_TASKS['b2-05-press'] = {
+  npc: 'b2-05-manuel-desk',
+  done: 'b2-05-press',
+  lesson: 'tabloid-b2',
+  activity: 'practice',
+  practice: 'tabloid-b2',
+  practiceIds: B2_05_PRESS_IDS,
+  coins: 5,
+  requires: { id: 'b2-05-zoe-talk', text: 'Did you see Zoe outside?', es: '¿Viste a Zoe afuera?', sub: 'Primero habla con Zoe en el paseo.' },
+  steps: [],
+  reward: {
+    text: 'Rumours get clicks. Facts get the truth.',
+    es: 'Los rumores dan clics. Los hechos dan la verdad.',
+    sub: 'Bloque 1 terminado. (Fact Check, las gaviotas y el jefe llegan en el bloque 2.)',
+    say: 'Facts get the truth.',
   },
 }

@@ -25,6 +25,7 @@ import { B2Opening } from '../components/B2Opening'
 import { B2_01_PORT_ID } from '../data/b2CatchingUp'
 import { B2_02_HERALD_ID } from '../data/b2Herald'
 import { B2_04_RESIDENCE_ID } from '../data/b2FakeProfile'
+import { B2_05_PORT_ID } from '../data/b2VoiceBlackouts'
 import { B2_03_SCHOOL } from '../data/b2Frozen'
 import { enterB2Window, isB2WindowScene } from '../game/b2Window'
 import { B2_NODES, B2_OPENING, B2_PART_NAMES, B2_ERA_COLOR, b2LockedText, b2Message, b2NodeDone, b2NodeOpen, isB2Unlocked, type B2Node, type B2Part } from '../data/b2World'
@@ -206,6 +207,8 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     if (n.num === 3) return state.b2Window?.n === 3 && isB2WindowScene(state.sceneId) ? onEnter(B2_03_SCHOOL.id) : update((s) => enterB2Window(s, 3, B2_03_SCHOOL.id, B2_03_SCHOOL.start))
     // Lugar 4 (presente): Fake Profile, la residencia y el banco (data/b2FakeProfile.ts)
     if (n.num === 4) return onEnter(B2_04_RESIDENCE_ID)
+    // Lugar 5 (presente): Voice Blackouts, el puerto de noche y el Herald (data/b2VoiceBlackouts.ts)
+    if (n.num === 5) return onEnter(B2_05_PORT_ID)
     // Las demás misiones de B2 todavía no están construidas (fichas 3 a 14)
     setMsg(`${label}${n.year ? ` (Ventana ${n.year})` : ''}: este lugar se construirá pronto.`)
   }

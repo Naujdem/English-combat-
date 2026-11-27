@@ -1534,6 +1534,40 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b2-04-bank',
     doneLine: { text: "I'll keep digging. Something about this market feels wrong.", es: 'Voy a seguir investigando. Algo de ese mercado no me cuadra.' },
   },
+  // ── B2-05 · Voice Blackouts, bloque 1 (el puerto de noche y el Herald, data/b2VoiceBlackouts.ts) ──
+  // Manuel en el puerto (mismo look que b2-02-manuel): tareas b2-05-arrival y b2-05-verbs-to, b2-05-verbs-ing
+  'b2-05-manuel': {
+    name: 'Manuel',
+    look: { shirt: '#7a2f3a', hair: '#2a1a12', skin: '#b9805c', gender: 'male' },
+    until: 'b2-05-verbs-ing',
+    doneLine: { text: 'Write down exactly what they did with their words.', es: 'Anota exactamente qué hicieron con sus palabras.' },
+  },
+  // Manuel en su escritorio del Herald, después de la segunda lección (tarea b2-05-press)
+  'b2-05-manuel-desk': {
+    name: 'Manuel',
+    look: { shirt: '#7a2f3a', hair: '#2a1a12', skin: '#b9805c', gender: 'male' },
+    after: 'b2-05-verbs-ing',
+    doneLine: { text: 'Facts first. Always.', es: 'Primero los hechos. Siempre.' },
+  },
+  // Tomás Quispe, pescador: perdió la voz diez minutos (tarea b2-05-tomas-talk)
+  'b2-05-tomas': {
+    name: 'Tomás Quispe',
+    look: { shirt: '#2f5d8a', hair: '#9a9a9a', skin: '#a8714f', gender: 'male' },
+    doneLine: { text: "I didn't make it up. You believe me, right?", es: 'No me lo inventé. Tú me crees, ¿verdad?' },
+  },
+  // Captain Ingrid Halvorsen, capitana del ferry nocturno (tarea b2-05-captain-talk)
+  'b2-05-captain': {
+    name: 'Captain Halvorsen',
+    look: { shirt: '#1f2f4f', hair: '#e8d9a0', skin: '#f1d3bd', gender: 'female' },
+    doneLine: { text: 'Keep away from the north pier. I mean it.', es: 'Manténganse lejos del muelle norte. Lo digo en serio.' },
+  },
+  // Zoe Park, bloguera de chismes: aparece en el paseo tras la segunda lección (tarea b2-05-zoe-talk)
+  'b2-05-zoe': {
+    name: 'Zoe Park',
+    look: { shirt: '#e05fa0', hair: '#1a1a1a', skin: '#f0c8a0', gender: 'female' },
+    after: 'b2-05-verbs-ing',
+    doneLine: { text: 'Like and subscribe! The ghost is real!', es: '¡Dale like y suscríbete! ¡El fantasma es real!' },
+  },
   // ── B2-02 · The Herald, bloque 1 (la redacción, data/b2Herald.ts) ──
   // Manuel (guía): tareas b2-02-arrival, b2-02-ppc, b2-02-interview-prep, b2-02-meeting y b2-02-patterns
   'b2-02-manuel': {
