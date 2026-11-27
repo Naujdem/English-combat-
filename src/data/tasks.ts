@@ -92,6 +92,8 @@ import { B2_08_ARRIVAL_SCRIPT, B2_08_CLOSE_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNC
 import { B2_08_ACRONYMS_IDS, B2_08_COMPARE_IDS, B2_08_PERKS_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
+import { B2_10_ARRIVAL_SCRIPT, B2_10_BENCH_SCRIPT, B2_10_CLASS_SCRIPT } from './b2Card'
+import { B2_10_CONTRAST_IDS, B2_10_ING_IDS } from './questions-b2-10'
 import { B2_09_ADVERBS_IDS, B2_09_ORDER_IDS, B2_09_RELATIVE_IDS, B2_09_REVIEW_IDS, B2_09_STRONG_IDS } from './questions-b2-09'
 import { B2_07_OLIVER_SCRIPT, B2_07_ARRIVAL_SCRIPT, B2_07_DEBATE_ENDINGS, B2_07_DEBATE_TURNS, B2_07_EXPLORE_ROOM, B2_07_POSTER_SCRIPT, B2_07_ROSA_SCRIPT, B2_07_SAM_INTRO } from './b2OldBuilding'
 import { B2_07_CHANGE_IDS, B2_07_CONDITIONS_IDS, B2_07_GET_IDS } from './questions-b2-07'
@@ -8289,5 +8291,78 @@ NPC_TASKS['b2-09-close'] = {
     es: 'Misión 9: La galería',
     sub: 'El cuarto segmento del núcleo se llenó. Se abrió la Ventana 10 (2056).',
     say: 'The Gallery.',
+  },
+}
+
+// ── B2-10 · The Card, bloque 1 (Ventana 2056, la escuela, data/b2Card.ts). Nadie te oye. NO guarda el cierre ──
+// La figura con capucha en la ventana: entrada a la Ventana (script)
+NPC_TASKS['b2-10-arrival'] = {
+  npc: 'b2-10-g-window',
+  done: 'b2-10-arrival',
+  activity: 'script',
+  script: B2_10_ARRIVAL_SCRIPT,
+  steps: [],
+  reward: { text: 'You have seen this window before.', es: 'Ya viste esta ventana antes.', sub: 'Por la ventana se ve una clase. Acércate a mirar.', say: 'You have seen this window before.' },
+}
+
+// La clase por la ventana (escucha): el debate "Should we always speak up?"
+NPC_TASKS['b2-10-class'] = {
+  npc: 'b2-10-window',
+  done: 'b2-10-class',
+  activity: 'script',
+  script: B2_10_CLASS_SCRIPT,
+  requires: { id: 'b2-10-arrival', text: 'A classroom full of students.', es: 'Un salón lleno de estudiantes.', sub: 'Primero mira al hombre de la capucha.' },
+  steps: [],
+  reward: { text: 'Despite being scared, you can still say what you think.', es: 'A pesar de tener miedo, igual pueden decir lo que piensan.', sub: 'El profesor escribió en la pizarra. Se lee desde la otra ventana.', say: 'Despite being scared, you can still say what you think.' },
+}
+
+// La pizarra: lección 'contrast-b2' (la guía la pizarra) + práctica b2-10-ct1…ct6 (2 de escucha). 5 monedas
+NPC_TASKS['b2-10-contrast'] = {
+  npc: 'b2-10-board',
+  done: 'b2-10-contrast',
+  lesson: 'contrast-b2',
+  placeGuide: { name: 'La pizarra del salón', icon: '▭' },
+  activity: 'practice',
+  practice: 'contrast-b2',
+  practiceIds: B2_10_CONTRAST_IDS,
+  coins: 5,
+  requires: { id: 'b2-10-class', text: 'The board, through the window.', es: 'La pizarra, a través de la ventana.', sub: 'Primero escucha el debate de la clase.' },
+  steps: [],
+  reward: {
+    text: 'whereas · however · nevertheless · despite being scared',
+    es: 'mientras que · sin embargo · aun así · a pesar de tener miedo',
+    sub: 'El viejo se aleja de la ventana y baja al patio. La puerta del patio quedó abierta.',
+    say: 'Be brave. Use your voice.',
+  },
+}
+
+// La banca del patio: G se sienta y abre su cuaderno (script). G no escribe nada en la ventana: escribe aquí, en el patio (canon de B1)
+NPC_TASKS['b2-10-bench'] = {
+  npc: 'b2-10-g-bench',
+  done: 'b2-10-bench',
+  activity: 'script',
+  script: B2_10_BENCH_SCRIPT,
+  requires: { id: 'b2-10-contrast', text: 'An old man on a bench.', es: 'Un viejo en una banca.', sub: 'Primero lee la pizarra.' },
+  steps: [],
+  reward: { text: 'G.', es: 'G.', sub: 'El cuaderno está abierto sobre la banca. Léelo por encima de su hombro.', say: 'G.' },
+}
+
+// El cuaderno de G: lección 'ing-prep-b2' (la guía el cuaderno) + práctica b2-10-ig1…ig6. 5 monedas
+NPC_TASKS['b2-10-ing'] = {
+  npc: 'b2-10-notebook',
+  done: 'b2-10-ing',
+  lesson: 'ing-prep-b2',
+  placeGuide: { name: 'El cuaderno de G', icon: '✎' },
+  activity: 'practice',
+  practice: 'ing-prep-b2',
+  practiceIds: B2_10_ING_IDS,
+  coins: 5,
+  requires: { id: 'b2-10-bench', text: "G's notebook.", es: 'El cuaderno de G.', sub: 'Primero acércate a la banca.' },
+  steps: [],
+  reward: {
+    text: "tired of waiting · there's no point in forgiving · it's worth trying",
+    es: 'cansado de esperar · no tiene sentido perdonar · vale la pena intentarlo',
+    sub: 'G pasa la página. Saca una tarjeta en blanco y empieza a escribir.',
+    say: "It's worth trying one last time.",
   },
 }

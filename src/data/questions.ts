@@ -61,6 +61,7 @@ import { B2_07_COMBAT_QUESTIONS, B2_07_QUESTIONS } from './questions-b2-07'
 import { B2_06_COMBAT_QUESTIONS, B2_06_QUESTIONS } from './questions-b2-06'
 import { B2_08_COMBAT_QUESTIONS, B2_08_QUESTIONS } from './questions-b2-08'
 import { B2_09_QUESTIONS } from './questions-b2-09'
+import { B2_10_QUESTIONS } from './questions-b2-10'
 import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
@@ -463,6 +464,7 @@ export const QUESTIONS: Question[] = [
   ...B2_08_QUESTIONS,
   ...B2_08_COMBAT_QUESTIONS,
   ...B2_09_QUESTIONS,
+  ...B2_10_QUESTIONS,
   ...B2_S1_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
@@ -774,6 +776,25 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
     lesson: [
       'What I liked most was… · The highlight was… · It really stood out. · It was rather slow. · It didn\'t live up to my expectations.',
       'Overall, it was well worth seeing. stand out = destacarse · take in = asimilar.',
+    ],
+  },
+  // B2-10 · The Card (Ventana 2056, data/b2Card.ts)
+  'contrast-b2': {
+    name: 'Contraste e ideas opuestas',
+    level: 'B2',
+    lesson: [
+      'Una oración: Some people speak up, whereas / while others stay quiet. (Sin but: nunca "Whereas…, but…".)',
+      'Oración nueva con coma: However, … · Nevertheless, … · On the other hand, …',
+      'despite / in spite of + sustantivo o -ing: Despite the rain · Despite being scared. (Nunca "despite of" ni "in spite" sin of.)',
+    ],
+  },
+  'ing-prep-b2': {
+    name: 'Preposición + -ing',
+    level: 'B2',
+    lesson: [
+      'Después de preposición, -ing: tired of waiting · afraid of failing · despite hating.',
+      "There's no point in + -ing (es inútil) · It's worth + -ing (vale la pena). Nunca \"worth to try\".",
+      'have difficulty + -ing: I had difficulty writing this. (Nunca "difficulty to write".)',
     ],
   },
   'adv-phrases-b2': {
