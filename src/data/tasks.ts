@@ -83,7 +83,7 @@ import { B2_UNHEARD_DEMO } from './b2Demos'
 import { B2_03_DIARY_IDS, B2_03_FEELINGS_IDS, B2_03_INJURY_IDS, B2_03_SENSES_IDS } from './questions-b2-03'
 import { B2_04_DETECTIVE_CONTENT, B2_04_ECHO_SCRIPT, B2_04_JEISON_SCRIPT, B2_04_PROFILE_SCRIPT } from './b2FakeProfile'
 import { B2_04_FRAUD_IDS, B2_04_MODALS_IDS, B2_04_NEEDNT_IDS, B2_04_SECURITY_IDS } from './questions-b2-04'
-import { B2_05_ARRIVAL_SCRIPT, B2_05_CAPTAIN_SCRIPT, B2_05_FACT_CHECK, B2_05_TOMAS_SCRIPT, B2_05_ZOE_SCRIPT } from './b2VoiceBlackouts'
+import { B2_05_ARRIVAL_SCRIPT, B2_05_CAPTAIN_SCRIPT, B2_05_FACT_CHECK, B2_05_TOMAS_SCRIPT, B2_05_ZOE_SCRIPT, B2_05_APOLOGY_SCRIPT, B2_05_VOCALIS } from './b2VoiceBlackouts'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
 import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
@@ -7464,5 +7464,49 @@ NPC_TASKS['b2-05-factcheck'] = {
     text: 'Six drafts, six facts. Now listen… What is that noise outside?',
     es: 'Seis borradores, seis hechos. Ahora escucha… ¿Qué es ese ruido afuera?',
     sub: 'Fact Check terminado. Las gaviotas del puerto gritan rumores, y el blog de Zoe está creciendo en el paseo.',
+  },
+}
+
+// ── B2-05 · Voice Blackouts, bloque 3: Zoe se disculpa, el regalo de Tomás y el cierre (Manuel junto al muelle norte) ──
+NPC_TASKS['b2-05-apology'] = {
+  npc: 'b2-05-zoe-back',
+  done: 'b2-05-apology',
+  activity: 'script',
+  script: B2_05_APOLOGY_SCRIPT,
+  steps: [],
+  reward: { text: 'I apologise for exaggerating.', es: 'Me disculpo por exagerar.', sub: 'Tomás quiere hablar contigo en el paseo.', say: 'I apologise for exaggerating.' },
+}
+
+// Tomás: la chaqueta de pescador
+NPC_TASKS['b2-05-jacket'] = {
+  npc: 'b2-05-tomas-back',
+  done: 'b2-05-jacket',
+  outfit: 'chaqueta-pescador',
+  steps: [
+    { text: 'You believed me when nobody did. That means a lot to an old fisherman.', es: 'Me creíste cuando nadie lo hacía. Eso significa mucho para un viejo pescador.' },
+    { text: 'Take my jacket. It kept me warm for thirty years. I insist on giving it to you!', es: 'Llévate mi chaqueta. Me mantuvo caliente treinta años. ¡Insisto en dártela!' },
+  ],
+  reward: { text: 'Fisherman\'s jacket', es: 'Chaqueta de pescador', sub: 'Ganaste la chaqueta de pescador. Manuel te espera junto al muelle norte.', say: 'I insist on giving it to you.' },
+}
+
+// Cierre. done = b2CloseId(5) = 'b2-05-close'. Al guardarse, Explore muestra FragmentJoin: dos fragmentos completan el segundo
+// segmento del núcleo (b2Core en data/b2World.ts) y se abre la Ventana 6
+NPC_TASKS['b2-05-close'] = {
+  npc: 'b2-05-manuel-pier',
+  done: 'b2-05-close',
+  recover: ['reporting-to-b2', 'reporting-ing-b2', 'tabloid-b2'],
+  coins: 15,
+  requires: { id: 'b2-05-jacket', text: 'Talk to Zoe and Tomás first.', es: 'Primero habla con Zoe y con Tomás.', sub: 'Zoe y Tomás están en el paseo.' },
+  steps: [
+    { text: 'The lights are steady. The captain said that nobody had lost their voice tonight.', es: 'Las luces están estables. La capitana dijo que nadie había perdido la voz esta noche.' },
+    { text: '(The two lights from the newspaper fly into your clock. Click. Click.)', es: '(Las dos lucecitas del periódico vuelan hacia tu reloj. Clic. Clic.)' },
+    B2_05_VOCALIS,
+    { text: "That isn't a ghost. Ghosts don't have logos. Find out who Vocalis is.", es: 'Eso no es un fantasma. Los fantasmas no tienen logo. Averigua quién es Vocalis.' },
+  ],
+  reward: {
+    text: 'Mission 5: Voice Blackouts',
+    es: 'Misión 5: Apagones de voz',
+    sub: 'El segundo segmento del núcleo quedó completo. Se abrió la Ventana 6. Anotaste la pista "Vocalis" en tu diario.',
+    say: 'Voice Blackouts.',
   },
 }

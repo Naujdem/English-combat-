@@ -1553,6 +1553,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   'b2-05-tomas': {
     name: 'Tomás Quispe',
     look: { shirt: '#2f5d8a', hair: '#9a9a9a', skin: '#a8714f', gender: 'male' },
+    until: 'b2-05-apology',
     doneLine: { text: "I didn't make it up. You believe me, right?", es: 'No me lo inventé. Tú me crees, ¿verdad?' },
   },
   // Captain Ingrid Halvorsen, capitana del ferry nocturno (tarea b2-05-captain-talk)
@@ -1569,6 +1570,27 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     // Bloque 2: al terminar Fact Check, Zoe se va y su blog se convierte en The Tabloid
     until: 'b2-05-factcheck',
     doneLine: { text: 'Like and subscribe! The ghost is real!', es: '¡Dale like y suscríbete! ¡El fantasma es real!' },
+  },
+  // B2-05 · bloque 3: Zoe, otra vez ella misma, al vencer a The Tabloid (tarea b2-05-apology)
+  'b2-05-zoe-back': {
+    name: 'Zoe Park',
+    look: { shirt: '#e05fa0', hair: '#1a1a1a', skin: '#f0c8a0', gender: 'female' },
+    after: 'b2-05-boss',
+    doneLine: { text: "No more ghosts. Only facts. Well… mostly facts.", es: 'Se acabaron los fantasmas. Solo hechos. Bueno… casi siempre hechos.' },
+  },
+  // Tomás, en el paseo al vencer a The Tabloid: regala la chaqueta de pescador (tarea b2-05-jacket)
+  'b2-05-tomas-back': {
+    name: 'Tomás Quispe',
+    look: { shirt: '#2f5d8a', hair: '#9a9a9a', skin: '#a8714f', gender: 'male' },
+    after: 'b2-05-apology',
+    doneLine: { text: 'The jacket looks good on you. Keep it dry!', es: 'La chaqueta te queda bien. ¡Mantenla seca!' },
+  },
+  // Manuel junto al muelle norte: el cierre de la misión (tarea b2-05-close)
+  'b2-05-manuel-pier': {
+    name: 'Manuel',
+    look: { shirt: '#7a2f3a', hair: '#2a1a12', skin: '#b9805c', gender: 'male' },
+    after: 'b2-05-boss',
+    doneLine: { text: 'Find out who Vocalis is.', es: 'Averigua quién es Vocalis.' },
   },
   // ── B2-02 · The Herald, bloque 1 (la redacción, data/b2Herald.ts) ──
   // Manuel (guía): tareas b2-02-arrival, b2-02-ppc, b2-02-interview-prep, b2-02-meeting y b2-02-patterns

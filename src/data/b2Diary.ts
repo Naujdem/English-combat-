@@ -224,4 +224,53 @@ export const B2_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B2-05 · Voice Blackouts (presente): nota de prensa (reported speech) y página mezclada, con la pista Vocalis. Se abre al cerrar la misión 5
+  {
+    id: 'b2-mission-5',
+    title: 'B2 · Misión 5: Voice Blackouts',
+    unlock: 'b2-05-close',
+    words: [
+      { title: 'Prensa', words: [['tabloid', 'tabloide'], ['broadsheet', 'periódico serio'], ['headline', 'titular'], ['gossip', 'chisme'], ['rumour', 'rumor'], ['allegedly', 'supuestamente'], ['exclusive', 'exclusiva'], ['eyewitness', 'testigo presencial'], ['sources', 'fuentes']] },
+      { title: 'Verbo + to', words: [['promise to', 'prometer'], ['refuse to', 'negarse a'], ['threaten to', 'amenazar con'], ['warn someone (not) to', 'advertirle a alguien que (no)'], ['remind someone to', 'recordarle a alguien'], ['persuade someone to', 'convencer a alguien de']] },
+      { title: 'Verbo + -ing', words: [['deny + -ing', 'negar'], ['admit + -ing', 'admitir'], ['suggest + -ing', 'sugerir'], ['accuse someone of', 'acusar de'], ['blame someone for', 'culpar de'], ['apologise for', 'disculparse por'], ['insist on', 'insistir en']] },
+      { title: 'Phrasal verbs', words: [['make up', 'inventar'], ['turn out', 'resultar'], ['look into', 'investigar'], ['play down', 'restar importancia']] },
+      { title: 'Pista', words: [['Vocalis', 'el logo de la placa del muelle norte. ¿Quién es?']] },
+    ],
+    versions: [
+      {
+        id: 'b2-mission-5-mine',
+        tense: 'p',
+        tab: 'Mi nota de prensa',
+        title: 'Voice blackouts at the port: the facts',
+        unlock: 'b2-05-close',
+        frame: 'Lo escribes como una nota del Herald, con los verbos declarativos de Manuel.',
+        lines: [
+          { en: 'A fisherman, Tomás Quispe, [denied]p making up his story. He [claimed]p that he had seen a purple light under the water.', es: 'Un pescador, Tomás Quispe, negó haberse inventado su historia. Afirmó que había visto una luz morada bajo el agua.' },
+          { en: 'Captain Ingrid Halvorsen [warned]p the fishermen not to sail after midnight and [refused]p to give an interview.', es: 'La capitana Ingrid Halvorsen advirtió a los pescadores que no navegaran después de medianoche y se negó a dar una entrevista.' },
+          { en: 'The blogger Zoe Park [apologised]p for exaggerating and [promised]p to check her facts.', es: 'La bloguera Zoe Park se disculpó por exagerar y prometió revisar sus datos.' },
+          { en: 'A metal plate with the logo "VOCALIS" [was found]p near the north pier. Nobody [knows]n who Vocalis is.', es: 'Se encontró una placa de metal con el logo "VOCALIS" cerca del muelle norte. Nadie sabe quién es Vocalis.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-5-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'A night at the port',
+        unlock: 'b2-05-close',
+        frame: 'La noche entera, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'Tonight Manuel and I [investigated]p the voice blackouts at the port.', es: 'Esta noche Manuel y yo investigamos los apagones de voz en el puerto.' },
+          { en: 'Zoe\'s blog [turned]p into a giant newspaper, but now she [is writing]n a real article.', es: 'El blog de Zoe se convirtió en un periódico gigante, pero ahora está escribiendo un artículo de verdad.' },
+          { en: 'Tomás [gave]p me his old jacket. I [will wear]f it when I [go]n back to the port.', es: 'Tomás me regaló su chaqueta vieja. Me la voy a poner cuando vuelva al puerto.' },
+          { en: 'Manuel [told]p me to find out who Vocalis is. Tomorrow I [will start]f.', es: 'Manuel me dijo que averiguara quién es Vocalis. Mañana empiezo.' },
+        ],
+        questions: [
+          { q: 'What happened to Zoe\'s blog?', options: ['It turned into a giant newspaper.', 'It won a prize.', 'The police closed it.'], answer: 0, tip: 'El diario dice: "Zoe\'s blog turned into a giant newspaper".' },
+          { q: 'What did Tomás give you?', options: ['His boat.', 'His old jacket.', 'A purple light.'], answer: 1, tip: 'El diario dice: "Tomás gave me his old jacket".' },
+          { q: 'What did Manuel tell you to do?', options: ['To write about Zoe.', 'To sail after midnight.', 'To find out who Vocalis is.'], answer: 2, tip: 'El diario dice: "Manuel told me to find out who Vocalis is".' },
+        ],
+      },
+    ],
+  },
 ]
