@@ -78,7 +78,7 @@ import { B1_07_CLOSE_SCRIPT } from './b1Room'
 import { B2_01_BREAKFAST_SCRIPT, B2_01_GROUP_CHAT, B2_01_JEISON_SCRIPT, B2_01_MARISOL_SCRIPT, B2_01_NAYI_SCRIPT } from './b2CatchingUp'
 import { B2_01_CATCHUP_IDS, B2_01_PPCONT_IDS, B2_01_REACTIONS_IDS } from './questions-b2-01'
 import type { FactCheckContent } from '../components/FactCheck'
-import { B2_03_ADULT_SCRIPT, B2_03_ALARM_SCRIPT, B2_03_CLASS_SCRIPT, B2_03_FREEZE_SCRIPT, B2_03_HELLO_SCRIPT } from './b2Frozen'
+import { B2_03_ADULT_SCRIPT, B2_03_ALARM_SCRIPT, B2_03_CLOSE_SCRIPT, B2_03_CLASS_SCRIPT, B2_03_FREEZE_SCRIPT, B2_03_HELLO_SCRIPT } from './b2Frozen'
 import { B2_UNHEARD_DEMO } from './b2Demos'
 import { B2_03_DIARY_IDS, B2_03_FEELINGS_IDS, B2_03_INJURY_IDS, B2_03_SENSES_IDS } from './questions-b2-03'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
@@ -7175,5 +7175,24 @@ NPC_TASKS['b2-03-injury'] = {
     text: '(You leave the first aid kit next to her. A friend helps her to the back stairs.)',
     es: '(Le dejas el botiquín al lado. Una amiga la ayuda a llegar a las escaleras traseras.)',
     sub: 'En el pasillo, el humo toma forma: Smoke Shadows. Y algo frío sujeta a tu yo adulto.',
+  },
+}
+
+// ── B2-03 · Frozen, bloque 3 ──
+// Cierre con la bombera (script). done = b2CloseId(3) = 'b2-03-close': abre el lugar 4. Las Ventanas no sueltan fragmentos.
+// Después del mensaje, Explore muestra WindowExit (fundido azul) y el protagonista vuelve al presente
+NPC_TASKS['b2-03-close'] = {
+  npc: 'b2-03-firefighter',
+  done: 'b2-03-close',
+  activity: 'script',
+  script: B2_03_CLOSE_SCRIPT,
+  recover: ['senses-b2', 'feelings-b2', 'diary-b2', 'injuries-b2'],
+  coins: 15,
+  steps: [],
+  reward: {
+    text: "I saw myself freeze. It wasn't that I didn't care. I couldn't move.",
+    es: 'Me vi a mí {h:mismo|misma} paralizarme. No era que no me importara. No podía moverme.',
+    sub: 'Misión 3: Frozen. Se abrió el lugar 4 en el mapa.',
+    say: "I saw myself freeze. It wasn't that I didn't care. I couldn't move.",
   },
 }

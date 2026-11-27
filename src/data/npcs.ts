@@ -1489,6 +1489,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#c0392b', hair: '#f2d98a', skin: '#c0392b' },
     doneLine: { text: 'FIRE ALARM · EMERGENCY LIGHTS · FIRE DOOR', es: 'ALARMA DE INCENDIO · LUCES DE EMERGENCIA · PUERTA DE EMERGENCIA' },
   },
+  // Bloque 3: la bombera, que sube por las escaleras al vencer a Panic (tarea b2-03-close)
+  'b2-03-firefighter': {
+    name: 'A firefighter',
+    look: { shirt: '#b8860b', hair: '#2a1a12', skin: '#8d5a3b', gender: 'female' },
+    after: 'b2-03-boss',
+    doneLine: { text: 'Everyone is out. You did well.', es: 'Todos salieron. Lo hiciste bien.' },
+  },
   'b2-03-notebook': {
     name: 'El cuaderno olvidado',
     look: { shirt: '#efe6d2', hair: '#8a5a32', skin: '#efe6d2' },
