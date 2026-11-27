@@ -964,6 +964,7 @@ PRESETS.push(
   { id: 'b2-04', label: 'B2-04: Fake Profile, la residencia y el banco (bloque 1)', apply: (s) => ({ ...b2Start(s, ['b2-00-opening', b2Close(1), b2Close(2), b2Close(3)]), screen: 'explore' as const, sceneId: 'b2-04-residence', pos: { x: 4, y: 6 } }) },
   { id: 'b2-04-b2', label: 'B2-04: bloque 2 (detective, Phishing Bots y The Catfish)', apply: (s) => ({ ...b2Start(s, ['b2-00-opening', b2Close(1), b2Close(2), b2Close(3), 'b2-04-profile', 'b2-04-security', 'b2-04-modals', 'b2-04-neednt']), screen: 'explore' as const, sceneId: 'b2-04-residence', pos: { x: 4, y: 6 } }) },
   { id: 'b2-04-b3', label: 'B2-04: bloque 3 (The Catfish vencido: Leo y el cierre)', apply: (s) => { const b = b2Start(s, ['b2-00-opening', b2Close(1), b2Close(2), b2Close(3), 'b2-04-profile', 'b2-04-security', 'b2-04-modals', 'b2-04-neednt', 'b2-04-detective', 'b2-04-jeison-talk', 'b2-04-bank', 'b2-04-echo']); return { ...b, defeated: add(b.defeated, ['b2-04-bot1', 'b2-04-bot2', 'b2-04-boss']), screen: 'explore' as const, sceneId: 'b2-04-residence', pos: { x: 4, y: 6 } } } },
+  { id: 'b2-05', label: 'B2-05: Voice Blackouts, el puerto de noche (bloque 1)', apply: (s) => ({ ...b2Start(s, ['b2-00-opening', b2Close(1), b2Close(2), b2Close(3), b2Close(4)]), screen: 'explore' as const, sceneId: 'b2-05-port', pos: { x: 12, y: 3 } }) },
   { id: 'b2-core', label: 'B2: núcleo a medio llenar (lugares 1 a 4 cerrados)', apply: (s) => b2Start(s, ['b2-00-opening', b2Close(1), b2Close(2), b2Close(3), b2Close(4)]) },
 )
 
