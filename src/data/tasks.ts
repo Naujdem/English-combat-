@@ -91,7 +91,7 @@ import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_I
 import { B2_08_ARRIVAL_SCRIPT, B2_08_CLOSE_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNCH_SCRIPT, B2_08_UNHEARD_ROOM } from './b2Pitch'
 import { B2_08_ACRONYMS_IDS, B2_08_COMPARE_IDS, B2_08_PERKS_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
-import { B2_11_ARRIVAL_SCRIPT, B2_11_BOARD_ITEMS, B2_11_FACT_CHECK, B2_11_MOVIE_SCRIPT } from './b2WhoIsG'
+import { B2_11_ARRIVAL_SCRIPT, B2_11_CONFESS_SCRIPT, B2_11_BOARD_ITEMS, B2_11_FACT_CHECK, B2_11_MOVIE_SCRIPT } from './b2WhoIsG'
 import { B2_11_FILM_IDS, B2_11_INDIRECT_IDS, B2_11_NARRATIVE_IDS } from './questions-b2-11'
 import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
 import { B2_10_ARRIVAL_SCRIPT, B2_10_BENCH_SCRIPT, B2_10_CARD_CONTENT, B2_10_CLASS_SCRIPT, B2_10_CLOSE_SCRIPT, B2_10_GIFT_SCRIPT } from './b2Card'
@@ -8534,4 +8534,15 @@ NPC_TASKS['b2-11-board'] = {
     sub: 'Ganaste 10 monedas. Leo te mira desde el fondo de la sala. Parece que quiere decirte algo.',
     say: 'Everything points to G.',
   },
+}
+
+// ── B2-11 · Who Is G?, bloque 2: Leo confiesa; después salen de la pantalla los Plot Holes y The Spoiler ──
+NPC_TASKS['b2-11-confess'] = {
+  npc: 'b2-11-leo',
+  done: 'b2-11-confess',
+  activity: 'script',
+  script: B2_11_CONFESS_SCRIPT,
+  requires: { id: 'b2-11-board', text: "…I'm fine. Really.", es: '…Estoy bien. De verdad.', sub: 'Primero termina el tablero de pistas con la persona especial.' },
+  steps: [],
+  reward: { text: "I didn't want to worry you.", es: 'No quería preocuparlos.', sub: 'La pantalla está llena de huecos. ¡Cierra los Plot Holes!', say: "I didn't want to worry you." },
 }

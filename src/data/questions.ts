@@ -62,7 +62,7 @@ import { B2_06_COMBAT_QUESTIONS, B2_06_QUESTIONS } from './questions-b2-06'
 import { B2_08_COMBAT_QUESTIONS, B2_08_QUESTIONS } from './questions-b2-08'
 import { B2_09_QUESTIONS } from './questions-b2-09'
 import { B2_10_COMBAT_QUESTIONS, B2_10_QUESTIONS } from './questions-b2-10'
-import { B2_11_QUESTIONS } from './questions-b2-11'
+import { B2_11_COMBAT_QUESTIONS, B2_11_QUESTIONS } from './questions-b2-11'
 import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
@@ -468,6 +468,7 @@ export const QUESTIONS: Question[] = [
   ...B2_10_QUESTIONS,
   ...B2_10_COMBAT_QUESTIONS,
   ...B2_11_QUESTIONS,
+  ...B2_11_COMBAT_QUESTIONS,
   ...B2_S1_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
