@@ -57,6 +57,7 @@ import { B2_02_COMBAT_QUESTIONS, B2_02_QUESTIONS } from './questions-b2-02'
 import { B2_03_COMBAT_QUESTIONS, B2_03_QUESTIONS } from './questions-b2-03'
 import { B2_04_COMBAT_QUESTIONS, B2_04_QUESTIONS } from './questions-b2-04'
 import { B2_05_COMBAT_QUESTIONS, B2_05_QUESTIONS } from './questions-b2-05'
+import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
@@ -451,6 +452,7 @@ export const QUESTIONS: Question[] = [
   ...B2_04_COMBAT_QUESTIONS,
   ...B2_05_QUESTIONS,
   ...B2_05_COMBAT_QUESTIONS,
+  ...B2_S1_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
   ...B1_11_QUESTIONS,
@@ -705,6 +707,16 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
     lesson: [
       "I'd like to report a payment I didn't make. · I'm concerned that… · Could you look into it?",
       "unauthorised payment · suspicious · refund · I'd be grateful if you could…",
+    ],
+  },
+  // B2 · Extras: Fusion Night (data/b2FusionNight.ts)
+  'food-b2': {
+    name: 'Describir comida',
+    level: 'B2',
+    lesson: [
+      'Adjetivos compuestos: home-made · deep-fried · slow-cooked · well-done · sugar-free · mouth-watering.',
+      'Sabor y textura: bland · spicy · tangy · rich · crunchy · chewy.',
+      "It's worth + -ing: It's worth trying the arepa dumplings. (Nunca \"worth to try\".)",
     ],
   },
   // B2-05 · Voice Blackouts (data/b2VoiceBlackouts.ts)
