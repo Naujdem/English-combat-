@@ -86,8 +86,8 @@ import { B2_04_FRAUD_IDS, B2_04_MODALS_IDS, B2_04_NEEDNT_IDS, B2_04_SECURITY_IDS
 import { B2_05_ARRIVAL_SCRIPT, B2_05_CAPTAIN_SCRIPT, B2_05_FACT_CHECK, B2_05_TOMAS_SCRIPT, B2_05_ZOE_SCRIPT, B2_05_APOLOGY_SCRIPT, B2_05_VOCALIS } from './b2VoiceBlackouts'
 import { B2_S1_CLOSE_SCRIPT, B2_S1_MENU_PLAN, B2_S1_POST_SCRIPT } from './b2FusionNight'
 import { B2_S1_WORDS_IDS } from './questions-b2-s1'
-import { B2_06_ARRIVAL_SCRIPT, B2_06_UNHEARD_ROOM } from './b2Lab'
-import { B2_06_PASSIVE_IDS, B2_06_WORDS_IDS } from './questions-b2-06'
+import { B2_06_ARRIVAL_SCRIPT, B2_06_FINDING_SCRIPT, B2_06_UNHEARD_ROOM } from './b2Lab'
+import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_IDS } from './questions-b2-06'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
 import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
@@ -7674,5 +7674,61 @@ NPC_TASKS['b2-06-unheard'] = {
     es: 'Prueba 7 — resultados: restringidos.',
     sub: 'Unheard completado. El guardia dejó abierta la puerta de la sala de datos.',
     say: 'Trial seven. Results restricted.',
+  },
+}
+
+// ── B2-06 · The Lab, bloque 2 (la sala de datos, el memo, la prueba 7 y el combate). NO guarda el cierre ──
+// Las gráficas: lección 'trends-b2' (la guían las gráficas) + práctica b2-06-tr1…tr6. 5 monedas
+NPC_TASKS['b2-06-trends'] = {
+  npc: 'b2-06-charts',
+  done: 'b2-06-trends',
+  lesson: 'trends-b2',
+  placeGuide: { name: 'Las gráficas de las pruebas', icon: '↗' },
+  activity: 'practice',
+  practice: 'trends-b2',
+  practiceIds: B2_06_TRENDS_IDS,
+  coins: 5,
+  requires: { id: 'b2-06-unheard', text: 'Graphs on the screens.', es: 'Gráficas en las pantallas.', sub: 'Primero entra al archivo (Unheard).' },
+  steps: [],
+  reward: {
+    text: 'The success rate rose sharply from 12% to 40%, then levelled off.',
+    es: 'La tasa de éxito subió bruscamente del 12 % al 40 %, y luego se estabilizó.',
+    sub: 'Gráficas leídas. En el escritorio hay un memo interno.',
+    say: 'The success rate rose sharply, then levelled off.',
+  },
+}
+
+// El memo interno: lección 'causative-b2' + práctica b2-06-ca1…ca6. 5 monedas. Al terminar se abre la sala de pruebas
+NPC_TASKS['b2-06-memo'] = {
+  npc: 'b2-06-memo-npc',
+  done: 'b2-06-memo',
+  lesson: 'causative-b2',
+  placeGuide: { name: 'El memo interno', icon: '✉' },
+  activity: 'practice',
+  practice: 'causative-b2',
+  practiceIds: B2_06_CAUSATIVE_IDS,
+  coins: 5,
+  requires: { id: 'b2-06-trends', text: 'A memo: "INTERNAL — Do not share".', es: 'Un memo: "INTERNO — No compartir".', sub: 'Primero mira las gráficas de las pantallas.' },
+  steps: [],
+  reward: {
+    text: 'Last year we had our files stolen.',
+    es: 'El año pasado nos robaron los archivos.',
+    sub: 'Memo leído. La luz roja de la sala de pruebas se apagó: ya puedes entrar.',
+    say: 'Last year we had our files stolen.',
+  },
+}
+
+// El hallazgo (script): el informe de la prueba 7, el Dr. Mensah duda y la Dra. Sato sigue. Al terminar salen los drones
+NPC_TASKS['b2-06-finding'] = {
+  npc: 'b2-06-mensah',
+  done: 'b2-06-finding',
+  activity: 'script',
+  script: B2_06_FINDING_SCRIPT,
+  requires: { id: 'b2-06-memo', text: "We're supposed to help people…", es: 'Se supone que ayudamos a la gente…', sub: 'Primero lee el memo de la sala de datos.' },
+  steps: [],
+  reward: {
+    text: 'Trial 7: voice restored. The donor lost theirs.',
+    es: 'Prueba 7: voz recuperada. El donante perdió la suya.',
+    sub: 'Vocalis lo sabe y lo esconde. Suenan los drones de seguridad… y el prototipo de la mesa se enciende solo.',
   },
 }

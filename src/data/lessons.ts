@@ -1354,4 +1354,26 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'narrator', text: 'Be supposed to has two meanings. 1) People say it: "The device is supposed to restore lost voices." 2) It should happen: "You\'re supposed to wear a badge."', es: 'Be supposed to tiene dos significados. 1) La gente lo dice: "Se supone que el aparato devuelve las voces perdidas". 2) Debería pasar: "Se supone que debes llevar una credencial".', board: ['be supposed to', 'It is supposed to restore voices. · You\'re supposed to wear a badge.'] },
     { who: 'board', text: 'Dr. Sato is said ___ the key in a temple.', choice: { options: ['to have found', 'that found', 'to found'], answer: 0, tip: 'Algo que ya pasó → is said to have + participio.' } },
   ],
+  // B2-06 · bloque 2 (la sala de datos de Vocalis, data/b2Lab.ts): las gráficas de las pruebas, tendencias (Busuu 16)
+  'trends-b2': [
+    { who: 'narrator', text: '(Graphs on the screens: "Device trials 1–6. Success rate".)', es: '(Gráficas en las pantallas: "Pruebas del aparato 1–6. Tasa de éxito".)', board: ['Trends: verbs', 'rise · fall · peak · level off · fluctuate'] },
+    { who: 'narrator', text: 'To describe a graph: rise (go up), fall (go down), peak (reach the highest point), level off (stop changing), fluctuate (go up and down).', es: 'Para describir una gráfica: rise (subir), fall (bajar), peak (llegar al punto más alto), level off (estabilizarse), fluctuate (subir y bajar).' },
+    { who: 'narrator', text: 'Rise is irregular: rise, rose, risen. Fall too: fall, fell, fallen. "The rate rose. Then it fell."', es: 'Rise es irregular: rise, rose, risen. Fall también: fall, fell, fallen. "La tasa subió. Luego bajó".' },
+    { who: 'board', text: 'In trial 3 the success rate ___ to 25%.', choice: { options: ['rised', 'rose', 'raised'], answer: 1, tip: 'rise → rose (irregular). Raise necesita un objeto.' } },
+    { who: 'narrator', text: 'How fast? Sharply (fast and a lot), steadily (little by little, without stopping), slightly (a little).', es: '¿Qué tan rápido? Sharply (rápido y mucho), steadily (poco a poco, sin parar), slightly (un poco).', board: ['How fast?', 'sharply · steadily · slightly'] },
+    { who: 'narrator', text: 'Numbers: from… to… is the start and the end. By is the difference. "It rose from 12% to 40%." "It rose by 28%."', es: 'Números: from… to… es el comienzo y el final. By es la diferencia. "Subió del 12 % al 40 %". "Subió un 28 %".', board: ['from / to / by', 'It rose from 12% to 40%. · It rose by 28%.'] },
+    { who: 'narrator', text: '"The success rate rose sharply from 12% to 40%, then levelled off."', es: '"La tasa de éxito subió bruscamente del 12 % al 40 %, y luego se estabilizó".' },
+    { who: 'board', text: 'The rate fell ___ 10%, from 50% to 40%.', choice: { options: ['by', 'with', 'in'], answer: 0, tip: 'La diferencia va con by.' } },
+  ],
+  // B2-06 · bloque 2: el memo interno de Vocalis, el causativo (Murphy 46, Busuu 16) y phrasal verbs del laboratorio
+  'causative-b2': [
+    { who: 'narrator', text: '(A printed memo on the desk: "INTERNAL — Do not share".)', es: '(Un memo impreso en el escritorio: "INTERNO — No compartir".)', board: ['have / get + object + past participle', 'We had the prototype tested.'] },
+    { who: 'narrator', text: 'When somebody else does a job for you, use have + object + past participle: "We had the prototype tested by an outside team."', es: 'Cuando otra persona hace un trabajo por ti, usa have + objeto + participio: "Hicimos que un equipo externo probara el prototipo".' },
+    { who: 'narrator', text: 'It works in every tense: "Dr. Sato is having the lab rebuilt." "We will have the results checked."', es: 'Funciona en todos los tiempos: "La Dra. Sato está haciendo reconstruir el laboratorio". "Haremos revisar los resultados".' },
+    { who: 'narrator', text: 'Get is more informal: "I got my phone repaired." The order is important: never "I got repaired my phone".', es: 'Get es más informal: "Me arreglaron el teléfono". El orden es importante: nunca "I got repaired my phone".', board: ['The order', 'I got my phone repaired. · Never: I got repaired my phone.'] },
+    { who: 'board', text: 'We ___ the prototype tested last month.', choice: { options: ['had', 'made', 'did'], answer: 0, tip: 'have + objeto + participio: had the prototype tested.' } },
+    { who: 'narrator', text: 'Have something done can also mean that something bad happened to you: "Last year we had our files stolen."', es: 'Have something done también puede significar que te pasó algo malo: "El año pasado nos robaron los archivos".', board: ['Something bad happened', 'Last year we had our files stolen.'] },
+    { who: 'narrator', text: 'The memo also uses phrasal verbs of the lab: carry out (do) a trial, set up (prepare) a test, rule out (decide it is not possible) a risk, point out (show) a problem.', es: 'El memo también usa phrasal verbs del laboratorio: carry out (realizar) una prueba, set up (preparar) un ensayo, rule out (descartar) un riesgo, point out (señalar) un problema.', board: ['Lab phrasal verbs', 'carry out · set up · rule out · point out'] },
+    { who: 'board', text: 'Dr. Mensah pointed ___ a serious side effect.', choice: { options: ['up', 'out', 'off'], answer: 1, tip: 'point out = señalar.' } },
+  ],
 }

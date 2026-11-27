@@ -1574,6 +1574,27 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#9aa3ad', hair: '#4a525e', skin: '#9aa3ad' },
     doneLine: { text: 'Trial 7 — results: restricted.', es: 'Prueba 7 — resultados: restringidos.' },
   },
+  // B2-06 · bloque 2: la sala de datos y la sala de pruebas (aquí los científicos sí tienen cara)
+  'b2-06-charts': {
+    name: 'Las gráficas de las pruebas',
+    look: { shirt: '#0e2a44', hair: '#3fa9ff', skin: '#0e2a44' },
+    doneLine: { text: 'The success rate rose sharply from 12% to 40%, then levelled off.', es: 'La tasa de éxito subió bruscamente del 12 % al 40 %, y luego se estabilizó.' },
+  },
+  'b2-06-memo-npc': {
+    name: 'El memo interno',
+    look: { shirt: '#f4f7fa', hair: '#c0392b', skin: '#f4f7fa' },
+    doneLine: { text: 'Last year we had our files stolen.', es: 'El año pasado nos robaron los archivos.' },
+  },
+  'b2-06-mensah': {
+    name: 'Dr. Kwame Mensah',
+    look: { shirt: '#f4f7fa', hair: '#1a1a1a', skin: '#6b4226', gender: 'male' },
+    doneLine: { text: "We're supposed to help people…", es: 'Se supone que ayudamos a la gente…' },
+  },
+  'b2-06-sato': {
+    name: 'Dr. Hana Sato',
+    look: { shirt: '#f4f7fa', hair: '#1c1c24', skin: '#e8c4a0', gender: 'female' },
+    doneLine: { text: 'The results are too good to stop now.', es: 'Los resultados son demasiado buenos para parar ahora.' },
+  },
   // ── B2-05 · Voice Blackouts, bloque 1 (el puerto de noche y el Herald, data/b2VoiceBlackouts.ts) ──
   // Manuel en el puerto (mismo look que b2-02-manuel): tareas b2-05-arrival y b2-05-verbs-to, b2-05-verbs-ing
   'b2-05-manuel': {

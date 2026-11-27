@@ -1,4 +1,4 @@
-import type { GameState, SceneDef, Zone } from '../game/types'
+import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
 import type { TextCommandRoom } from '../components/TextCommand'
 
@@ -9,7 +9,10 @@ import type { TextCommandRoom } from '../components/TextCommand'
  * Bloque 1: el lema de la recepción (b2-06-arrival, script) → los folletos: lección 'wordform-b2' + práctica (b2-06-words)
  *   → los recortes de prensa: lección 'passive-report-b2' + práctica (b2-06-clippings) → el archivo: Unheard (b2-06-unheard,
  *   3 metas: abrir el cajón del archivo, encender la pantalla de datos, esconderse detrás del estante). Al terminar se abre
- *   la puerta de la sala de datos (bloque 2: tendencias, el memo, el hallazgo, Lab Drones y The Prototype).
+ *   la puerta de la sala de datos.
+ * Bloque 2: las gráficas de la sala de datos: lección 'trends-b2' + práctica (b2-06-trends) → el memo interno: lección
+ *   'causative-b2' + práctica (b2-06-memo; abre la sala de pruebas) → el hallazgo con el Dr. Mensah y la Dra. Sato
+ *   (b2-06-finding, script: el informe de la prueba 7) → dos Lab Drones (esbirros) → el jefe The Prototype (2 fases).
  */
 export const B2_06_LAB_ID = 'b2-06-lab'
 export const B2_06_MOTTO = 'b2-06-motto'
@@ -21,6 +24,17 @@ export const B2_06_ARRIVAL = 'b2-06-arrival'
 export const B2_06_WORDS = 'b2-06-words'
 export const B2_06_PASSIVE = 'b2-06-clippings'
 export const B2_06_UNHEARD = 'b2-06-unheard'
+/** Bloque 2 */
+export const B2_06_CHARTS = 'b2-06-charts'
+export const B2_06_MEMO_NPC = 'b2-06-memo-npc'
+export const B2_06_SATO = 'b2-06-sato'
+export const B2_06_MENSAH = 'b2-06-mensah'
+export const B2_06_TRENDS = 'b2-06-trends'
+export const B2_06_MEMO = 'b2-06-memo'
+export const B2_06_FINDING = 'b2-06-finding'
+export const B2_06_DRONE1 = 'b2-06-drone1'
+export const B2_06_DRONE2 = 'b2-06-drone2'
+export const B2_06_BOSS = 'b2-06-boss'
 
 /**
  * Leyenda: # pared · i pantalla en la pared · q pared de vidrio · d puerta · C mostrador · O asiento · M escritorio
@@ -61,6 +75,14 @@ export const B2_06_LAB: SceneDef = {
     { type: 'npc', id: B2_06_BROCHURES, x: 5, y: 2 },
     { type: 'npc', id: B2_06_CLIPPINGS, x: 1, y: 1 },
     { type: 'npc', id: B2_06_ARCHIVE, x: 3, y: 8 },
+    // Bloque 2: la sala de datos (gráficas y memo) y la sala de pruebas (los científicos, los drones y el prototipo)
+    { type: 'npc', id: B2_06_CHARTS, x: 10, y: 1 },
+    { type: 'npc', id: B2_06_MEMO_NPC, x: 12, y: 3 },
+    { type: 'npc', id: B2_06_MENSAH, x: 9, y: 7 },
+    { type: 'npc', id: B2_06_SATO, x: 12, y: 7 },
+    { type: 'enemy', id: B2_06_DRONE1, x: 8, y: 10, after: B2_06_FINDING },
+    { type: 'enemy', id: B2_06_DRONE2, x: 13, y: 10, after: B2_06_DRONE1 },
+    { type: 'enemy', id: B2_06_BOSS, x: 11, y: 8, after: B2_06_DRONE2 },
   ],
   labels: [
     { text: 'Recepción', x: 3, y: 5 },
@@ -79,7 +101,7 @@ export const B2_06_LAB: SceneDef = {
     '4,9': { text: 'Empty boxes, ready for new results.', sub: 'Cajas vacías, listas para nuevos resultados.', say: 'Empty boxes.' },
   },
   // Bloque 1: la sala de datos se abre después de Unheard
-  locked: (x, y, s) => (x === 6 && y === 3 && !s.opened.includes(B2_06_UNHEARD) ? { text: 'The door is locked. A small screen says "Data room — staff only".', sub: 'Todavía no. Primero mira la recepción y el archivo.' } : x === 10 && y === 6 ? { text: 'Not yet.', sub: 'Todavía no.' } : x === 6 && y === 8 ? { text: 'Not yet.', sub: 'La sala de pruebas está cerrada.' } : null),
+  locked: (x, y, s) => (x === 6 && y === 3 && !s.opened.includes(B2_06_UNHEARD) ? { text: 'The door is locked. A small screen says "Data room — staff only".', sub: 'Todavía no. Primero mira la recepción y el archivo.' } : (x === 10 && y === 6) || (x === 6 && y === 8) ? (s.opened.includes(B2_06_MEMO) ? null : { text: 'The test room is closed. A red light: "Trial in progress".', sub: 'Todavía no. Primero mira lo que hay en la sala de datos.' }) : null),
   links: {},
   requirements: [],
   chips: (s: GameState) => [
@@ -87,6 +109,11 @@ export const B2_06_LAB: SceneDef = {
     { label: 'Los folletos: formación de palabras', done: s.opened.includes(B2_06_WORDS) },
     { label: 'Los recortes: "It is said that…"', done: s.opened.includes(B2_06_PASSIVE) },
     { label: 'Unheard en el archivo', done: s.opened.includes(B2_06_UNHEARD) },
+    { label: 'Las gráficas: tendencias', done: s.opened.includes(B2_06_TRENDS) },
+    { label: 'El memo: have something done', done: s.opened.includes(B2_06_MEMO) },
+    { label: 'La prueba 7', done: s.opened.includes(B2_06_FINDING) },
+    { label: 'Lab Drones (2)', done: s.defeated.includes(B2_06_DRONE2) },
+    { label: 'The Prototype', done: s.defeated.includes(B2_06_BOSS) },
   ],
   intro: {
     first: '2062. The Vocalis lab, late at night. — 2062. El laboratorio de Vocalis, tarde en la noche. Aquí nadie te oye.',
@@ -150,4 +177,79 @@ export const B2_06_UNHEARD_ROOM: TextCommandRoom = {
     },
   ],
   finish: { en: 'Nobody heard you… and nobody saw you.', es: 'Nadie te oyó… y nadie te vio.', banner: 'Unheard completado' },
+}
+
+// ── Bloque 2 ──
+
+/** El hallazgo (ficha 6, paso 7): el informe de la prueba 7 en la mesa de pruebas. Habla el Dr. Mensah; la Dra. Sato responde (narrador) */
+export const B2_06_FINDING_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(The test room. Two scientists are standing next to a metal table. On the table there is a report: "Trial 7".)', es: '(La sala de pruebas. Dos científicos están de pie junto a una mesa de metal. Sobre la mesa hay un informe: "Prueba 7".)' },
+  { who: 'narrator', text: '(You read it over their shoulders: "Trial 7: voice restored. The donor lost theirs.")', es: '(Lo lees por encima de sus hombros: "Prueba 7: voz recuperada. El donante perdió la suya".)' },
+  { who: 'narrator', text: '(You already knew the price. But now you can see it: Vocalis knows, and it is hiding it.)', es: '(Ya conocías el precio. Pero ahora lo ves: Vocalis lo sabe, y lo está escondiendo.)' },
+  { who: 'friend', text: "Dr. Sato, we're supposed to help people. Not take a voice from one person and give it to another.", es: 'Dra. Sato, se supone que ayudamos a la gente. No que le quitamos la voz a una persona para dársela a otra.' },
+  { who: 'narrator', text: '(Dr. Sato doesn\'t look up from the report: "The results are too good to stop now, Kwame.")', es: '(La Dra. Sato no levanta la vista del informe: "Los resultados son demasiado buenos para parar ahora, Kwame".)' },
+  { who: 'L', fx: 'unheard', text: "You can't do this!", es: 'Intentas gritar: "¡No pueden hacer esto!"' },
+  { who: 'narrator', text: '(Nobody hears you. But behind them, the machine on the table starts to hum. A small red light turns on.)', es: '(Nadie te oye. Pero detrás de ellos, la máquina de la mesa empieza a zumbar. Se enciende una lucecita roja.)' },
+]
+
+const TR = 'trends-b2' as const
+const CA = 'causative-b2' as const
+const PR = 'passive-report-b2' as const
+const WF = 'wordform-b2' as const
+const DRONE_LOOK = { shirt: '#c9d2dc', hair: '#3fa9ff', skin: '#8a96a3' }
+
+/** Lab Drones, drones de seguridad. Preguntas: etiqueta b2-06-drone */
+const DRONE = (id: string, line: { text: string; es: string }): EnemyDef => ({
+  id,
+  name: 'Lab Drone',
+  person: 'Lab Drone',
+  kind: 'minion',
+  hp: 4,
+  topics: [PR, CA, WF],
+  kinds: ['fill', 'fix'],
+  tags: ['b2-06-drone'],
+  onlyTags: true,
+  zone: 'oficina-torre',
+  look: DRONE_LOOK,
+  before: [line],
+  after: [{ text: '(The drone beeps twice and lands on the floor.)', es: '(El dron pita dos veces y aterriza en el suelo.)' }],
+  freed: { text: '(The red light of the drone goes off.)', es: '(Se apaga la luz roja del dron.)' },
+})
+
+/**
+ * The Prototype: la primera versión del aparato, que se activa sola e intenta quitarle al protagonista una voz que ahí no tiene.
+ * Fase 1: pasiva de reporte y be supposed to (b2-06-boss-pr) · Fase 2: causativo y tendencias, con escuchas de Sato y Mensah (b2-06-boss-ca).
+ */
+export const B2_06_BOSS_DEF: EnemyDef = {
+  id: B2_06_BOSS,
+  name: 'The Prototype',
+  person: 'The Prototype',
+  kind: 'boss',
+  hp: 10,
+  topics: [PR, CA, TR],
+  kinds: ['fill', 'fix', 'order', 'listen'],
+  tags: ['b2-06-boss-pr'],
+  phases: [
+    { hp: 5, title: 'Escaneo: lo que se dice', topics: [PR], kinds: ['fill', 'fix', 'order'], tags: ['b2-06-boss-pr'], line: { text: 'Scanning… She is said to discovering it. It is supposed that works.', es: 'is said to discovering e It is supposed that works: mal.' } },
+    { hp: 5, title: 'Escaneo: los resultados', topics: [CA, TR], kinds: ['fill', 'fix', 'listen'], tags: ['b2-06-boss-ca'], line: { text: 'Success rate rose with 30%. I got repaired my circuits. Voice… not found…', es: 'rose with (por rose by) y got repaired my circuits: mal.' } },
+  ],
+  onlyTags: true,
+  zone: 'oficina-torre',
+  look: { shirt: '#5a6672', hair: '#e35d5d', skin: '#c9d2dc' },
+  before: [{ text: 'Trial 8. Donor found. Scanning for a voice…', es: 'Prueba 8. Donante encontrado. Buscando una voz…' }],
+  after: [{ text: '(Sparks. The machine shakes, and its red light goes dark.)', es: '(Chispas. La máquina tiembla, y su luz roja se apaga.)' }],
+  freed: { text: '(The Prototype is silent now. The scientists look at it as if it had switched off by itself.)', es: '(The Prototype está en silencio. Los científicos lo miran como si se hubiera apagado solo.)' },
+  // Las Ventanas no dan atuendos (ficha 0.4): solo la despedida
+  farewell: {
+    q: 'The Prototype (fading): "Error… I was supposed to take a voice…"',
+    options: ['You were supposed to help people, not hurt them.', 'You were supposed helping people, not hurt them.', 'You supposed to help people, not hurt them.'],
+    answer: 0,
+    tip: 'be supposed to + forma base: were supposed to help.',
+  },
+}
+
+export const B2_06_ENEMIES: Record<string, EnemyDef> = {
+  [B2_06_DRONE1]: DRONE(B2_06_DRONE1, { text: 'Intruder… They had the prototype test… He is said to has found it…', es: 'had the prototype test y is said to has found: mal.' }),
+  [B2_06_DRONE2]: DRONE(B2_06_DRONE2, { text: 'It is believed that be old… Unable… unsafe… inable…', es: 'It is believed that be old e inable: mal.' }),
+  [B2_06_BOSS]: B2_06_BOSS_DEF,
 }
