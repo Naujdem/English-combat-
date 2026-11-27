@@ -355,6 +355,8 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   'chaqueta-lumen': { name: 'Chaqueta de Lumen Bay', color: '#1f6f8a' },
   // B2-01 · Catching Up: regalo de Echo of the Grudge (jefe ligero)
   'sudadera-cafe': { name: 'Sudadera del café del puerto', color: '#8a5a3c' },
+  // B2 · Extras, Fusion Night: regalo de Mei Lin
+  'delantal-fusion': { name: 'Delantal de fusión', color: '#c0392b' },
   // B2-05 · Voice Blackouts: regalo de Tomás Quispe al cerrar la misión
   'chaqueta-pescador': { name: 'Chaqueta de pescador', color: '#c9a227' },
   // B2-04 · Fake Profile: regalo de The Catfish (jefe)

@@ -84,6 +84,8 @@ import { B2_03_DIARY_IDS, B2_03_FEELINGS_IDS, B2_03_INJURY_IDS, B2_03_SENSES_IDS
 import { B2_04_DETECTIVE_CONTENT, B2_04_ECHO_SCRIPT, B2_04_JEISON_SCRIPT, B2_04_PROFILE_SCRIPT } from './b2FakeProfile'
 import { B2_04_FRAUD_IDS, B2_04_MODALS_IDS, B2_04_NEEDNT_IDS, B2_04_SECURITY_IDS } from './questions-b2-04'
 import { B2_05_ARRIVAL_SCRIPT, B2_05_CAPTAIN_SCRIPT, B2_05_FACT_CHECK, B2_05_TOMAS_SCRIPT, B2_05_ZOE_SCRIPT, B2_05_APOLOGY_SCRIPT, B2_05_VOCALIS } from './b2VoiceBlackouts'
+import { B2_S1_CLOSE_SCRIPT, B2_S1_MENU_PLAN, B2_S1_POST_SCRIPT } from './b2FusionNight'
+import { B2_S1_WORDS_IDS } from './questions-b2-s1'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
 import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
@@ -7509,4 +7511,99 @@ NPC_TASKS['b2-05-close'] = {
     sub: 'El segundo segmento del núcleo quedó completo. Se abrió la Ventana 6. Anotaste la pista "Vocalis" en tu diario.',
     say: 'Voice Blackouts.',
   },
+}
+
+// ── B2 · Extras: Fusion Night (el restaurante de Mei, data/b2FusionNight.ts) ──
+// Mei Lin: la publicación del restaurante en redes (script, lectura)
+NPC_TASKS['b2-s1-post'] = {
+  npc: 'b2-s1-mei',
+  done: 'b2-s1-post',
+  activity: 'script',
+  script: B2_S1_POST_SCRIPT,
+  steps: [],
+  reward: { text: "Let's fix my menu together.", es: 'Arreglemos mi menú juntos.', sub: 'Vuelve a hablar con Mei Lin.' },
+}
+
+// Mei Lin: lección 'food-b2' ('narrator' con su nombre) + práctica b2-s1-f1…f8 (con escucha). 5 monedas
+NPC_TASKS['b2-s1-words'] = {
+  npc: 'b2-s1-mei',
+  done: 'b2-s1-words',
+  lesson: 'food-b2',
+  activity: 'practice',
+  practice: 'food-b2',
+  practiceIds: B2_S1_WORDS_IDS,
+  coins: 5,
+  requires: { id: 'b2-s1-post', text: 'Welcome!', es: '¡Bienvenido!', sub: 'Primero habla con Mei Lin.' },
+  steps: [],
+  reward: { text: "Home-made, slow-cooked, mouth-watering. It's worth trying!", es: 'Casero, a fuego lento, delicioso. ¡Vale la pena probarlo!', sub: 'Lección hecha. Ahora, el menú de la noche.', say: "It's worth trying!" },
+}
+
+// Mei Lin: el menú de la noche de apertura (PartyPlan, versión menú). 10 monedas
+NPC_TASKS['b2-s1-menu'] = {
+  npc: 'b2-s1-mei',
+  done: 'b2-s1-menu',
+  activity: 'party60',
+  party: B2_S1_MENU_PLAN,
+  requires: { id: 'b2-s1-words', text: 'First, the words.', es: 'Primero, las palabras.', sub: 'Primero termina la lección de Mei Lin.' },
+  coins: 10,
+  steps: [],
+  reward: { text: 'A balanced menu! Something for everyone.', es: '¡Un menú equilibrado! Algo para cada uno.', sub: 'Jhoana quiere hablar contigo.', say: 'Something for everyone.' },
+}
+
+// Jhoana: el mejor y el peor plato (charla sin respuestas malas: todas las opciones son válidas)
+NPC_TASKS['b2-s1-jhoana'] = {
+  npc: 'b2-s1-jhoana-npc',
+  done: 'b2-s1-jhoana',
+  activity: 'debate',
+  requires: { id: 'b2-s1-menu', text: "Is the menu ready, dear?", es: '¿Ya está el menú, mijo?', sub: 'Primero ayuda a Mei Lin con el menú.' },
+  debate: {
+    title: 'Best and worst dishes',
+    name: 'Jhoana',
+    ask: 'Charla con Jhoana. No hay respuestas malas.',
+    turns: [
+      {
+        text: "What's the best dish you've ever tasted?",
+        es: '¿Cuál es el mejor plato que has probado?',
+        options: [
+          { en: "My mum's home-made soup. Nothing is better.", es: 'La sopa casera de mi mamá. Nada es mejor.', value: 'good', reply: { text: 'Of course! Mothers always win.', es: '¡Claro! Las mamás siempre ganan.' } },
+          { en: 'Your arepas, Jhoana!', es: '¡Tus arepas, Jhoana!', value: 'good', reply: { text: 'Ha! Flattery will get you a second arepa.', es: '¡Ja! Con esos halagos te ganas otra arepa.' } },
+          { en: 'Hmm, a spicy noodle soup in a small market.', es: 'Mmm, una sopa de fideos picante en un mercadito.', value: 'neutral', reply: { text: 'Spicy! You are braver than Einer.', es: '¡Picante! Eres más valiente que Einer.' } },
+        ],
+      },
+      {
+        text: "And the worst? Tell me the truth. I won't tell anyone.",
+        es: '¿Y el peor? Dime la verdad. No le cuento a nadie.',
+        options: [
+          { en: 'A chewy steak. I chewed for ten minutes!', es: 'Un bistec duro. ¡Lo mastiqué diez minutos!', value: 'good', reply: { text: 'Ten minutes! That is a jaw workout.', es: '¡Diez minutos! Eso es ejercicio para la mandíbula.' } },
+          { en: 'A very bland rice at a hotel.', es: 'Un arroz muy simple en un hotel.', value: 'good', reply: { text: 'Rice without love. The worst.', es: 'Arroz sin amor. Lo peor.' } },
+          { en: "I can't remember. I like almost everything.", es: 'No me acuerdo. Me gusta casi todo.', value: 'neutral', reply: { text: 'A good guest! Mei will love you.', es: '¡Buen invitado! Mei te va a adorar.' } },
+        ],
+      },
+      {
+        text: 'Which dish from tonight is worth trying first?',
+        es: '¿Qué plato de esta noche vale la pena probar primero?',
+        options: [
+          { en: "The arepa dumplings. They're mouth-watering.", es: 'Los dumplings de arepa. Se ven deliciosos.', value: 'good', reply: { text: 'Good choice. I already ate three.', es: 'Buena elección. Yo ya me comí tres.' } },
+          { en: 'The rice pudding. You recommended it!', es: 'El arroz con leche. ¡Tú lo recomendaste!', value: 'good', reply: { text: 'Dessert first? I like you.', es: '¿El postre primero? Me caes bien.' } },
+          { en: "I'm not sure. Everything looks good.", es: 'No estoy seguro. Todo se ve bien.', value: 'neutral', reply: { text: 'Then try a little of everything.', es: 'Entonces prueba un poquito de todo.' } },
+        ],
+      },
+    ],
+  },
+  steps: [],
+  reward: { text: 'Now, be careful. A food critic just came in…', es: 'Ahora, cuidado. Acaba de entrar un crítico gastronómico…', sub: 'El crítico Mr. Ashworth está en una mesa. Convéncelo.' },
+}
+
+// Mei Lin: el cierre, después del duelo con el crítico. Recupera el tema. Delantal de fusión
+NPC_TASKS['b2-s1-close'] = {
+  npc: 'b2-s1-mei',
+  done: 'b2-s1-close',
+  activity: 'script',
+  script: B2_S1_CLOSE_SCRIPT,
+  requires: { id: 'b2-s1-critic', text: 'The critic is watching us…', es: 'El crítico nos está mirando…', sub: 'Primero convence al crítico Mr. Ashworth.' },
+  recover: ['food-b2'],
+  outfit: 'delantal-fusion',
+  coins: 20,
+  steps: [],
+  reward: { text: 'Extra: Fusion Night', es: 'Extra: Noche de fusión', sub: 'Extra completado. Ganaste el delantal de fusión.', say: "It's worth trying!" },
 }

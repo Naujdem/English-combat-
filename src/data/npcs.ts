@@ -1534,6 +1534,25 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b2-04-bank',
     doneLine: { text: "I'll keep digging. Something about this market feels wrong.", es: 'Voy a seguir investigando. Algo de ese mercado no me cuadra.' },
   },
+  // ── B2 · Extras: Fusion Night (el restaurante de Mei, data/b2FusionNight.ts) ──
+  // Mei Lin, la chef: tareas b2-s1-post, b2-s1-words, b2-s1-menu y b2-s1-close
+  'b2-s1-mei': {
+    name: 'Mei Lin',
+    look: { shirt: '#f4efe4', hair: '#1a1a1a', skin: '#e8c29a', gender: 'female' },
+    doneLine: { text: 'Come back any time. The dumplings are always fresh.', es: 'Vuelve cuando quieras. Los dumplings siempre están frescos.' },
+  },
+  // Jhoana (mismo look que en B1-12): la charla del mejor y el peor plato (tarea b2-s1-jhoana)
+  'b2-s1-jhoana-npc': {
+    name: 'Jhoana',
+    look: { shirt: '#b0463a', hair: '#cfcfcf', skin: '#b9805c', gender: 'female' },
+    doneLine: { text: 'Mei cooks almost as well as me. Almost!', es: 'Mei cocina casi tan bien como yo. ¡Casi!' },
+  },
+  // Einer (mismo look que en B1-12), sin tarea
+  'b2-s1-einer': {
+    name: 'Einer',
+    look: { shirt: '#6b4a2f', hair: '#d8d8d8', skin: '#c98f68', gender: 'male' },
+    doneLine: { text: 'Guests of honour! At my age! Ha!', es: '¡Invitados de honor! ¡A mi edad! ¡Ja!' },
+  },
   // ── B2-05 · Voice Blackouts, bloque 1 (el puerto de noche y el Herald, data/b2VoiceBlackouts.ts) ──
   // Manuel en el puerto (mismo look que b2-02-manuel): tareas b2-05-arrival y b2-05-verbs-to, b2-05-verbs-ing
   'b2-05-manuel': {

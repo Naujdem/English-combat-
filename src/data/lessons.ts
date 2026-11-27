@@ -1212,6 +1212,16 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'ricardo', text: 'Not "I want my money now!" but "I\'d be grateful if you could look into it." Polite words get faster help.', es: 'No "¡Quiero mi dinero ya!", sino "Les agradecería que lo revisaran". Las palabras amables consiguen ayuda más rápido.' },
     { who: 'board', text: "I'd like to ___ a payment I didn't make.", choice: { options: ['report', 'refund', 'return'], answer: 0, tip: 'Avisar al banco de un problema = report.' } },
   ],
+  // B2 · Extras: Fusion Night (data/b2FusionNight.ts): Mei Lin, describir comida (Busuu 3)
+  'food-b2': [
+    { who: 'narrator', text: "Mei Lin: A good menu makes people hungry before they taste anything. The secret? Compound adjectives.", es: 'Mei Lin: Un buen menú da hambre antes de probar nada. ¿El secreto? Los adjetivos compuestos.' },
+    { who: 'narrator', text: 'Mei Lin: Two words with a hyphen: home-made (made at home), deep-fried (fried in a lot of oil), slow-cooked (cooked for hours).', es: 'Mei Lin: Dos palabras con guion: home-made (hecho en casa), deep-fried (frito en mucho aceite), slow-cooked (cocinado por horas).', board: ['word + participle', 'home-made · deep-fried · slow-cooked · well-done'] },
+    { who: 'narrator', text: 'Mei Lin: The second word is usually a participle: home-MADE, never home-make. Also: sugar-free (no sugar) and mouth-watering (it makes you hungry).', es: 'Mei Lin: La segunda palabra casi siempre es un participio: home-MADE, nunca home-make. También: sugar-free (sin azúcar) y mouth-watering (te hace agua la boca).' },
+    { who: 'narrator', text: 'Mei Lin: Flavour: bland = no flavour. spicy = hot, with chilli. tangy = a little sour, in a nice way. rich = heavy, full of flavour.', es: 'Mei Lin: Sabor: bland = sin sabor. spicy = picante. tangy = un poco ácido, agradable. rich = pesado, lleno de sabor.', board: ['Flavour', 'bland · spicy · tangy · rich'] },
+    { who: 'narrator', text: 'Mei Lin: Texture: crunchy = it makes a noise when you bite it, like chips. chewy = you chew and chew, like old meat.', es: 'Mei Lin: Textura: crunchy = suena al morderlo, como los chips. chewy = masticas y masticas, como la carne dura.', board: ['Texture', 'crunchy · chewy'] },
+    { who: 'narrator', text: 'Mei Lin: And to recommend something: it\'s worth + -ing. "It\'s worth trying the arepa dumplings." Never "worth to try".', es: 'Mei Lin: Y para recomendar algo: it\'s worth + -ing. "Vale la pena probar los dumplings de arepa". Nunca "worth to try".' },
+    { who: 'board', text: 'Try the soup. It\'s ___!', choice: { options: ['home-make', 'home-made', 'made-home'], answer: 1, tip: 'home + participio: home-made.' } },
+  ],
   // B2-05 · bloque 1 (el puerto de noche, data/b2VoiceBlackouts.ts): Manuel, verbos declarativos 1 y 2 (Busuu 19, Murphy 55)
   'reporting-to-b2': [
     { who: 'manuel', text: 'In B1 you learned "He said that…". Good reporters choose a better verb: it tells us what the person did with the words.', es: 'En B1 aprendiste "He said that…". Los buenos periodistas eligen un verbo mejor: dice qué hizo la persona con sus palabras.' },
