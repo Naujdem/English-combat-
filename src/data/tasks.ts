@@ -88,6 +88,8 @@ import { B2_05_ARRIVAL_SCRIPT, B2_05_CAPTAIN_SCRIPT, B2_05_FACT_CHECK, B2_05_TOM
 import { B2_S1_CLOSE_SCRIPT, B2_S1_MENU_PLAN, B2_S1_POST_SCRIPT } from './b2FusionNight'
 import { B2_S1_WORDS_IDS } from './questions-b2-s1'
 import { B2_S2_WORDS_IDS } from './questions-b2-s2'
+import { B2_S3_WORDS_IDS } from './questions-b2-s3'
+import { B2_S3_BILL_CONTENT, B2_S3_CALL_SCRIPT, B2_S3_CHAT_CONTENT, B2_S3_CLOSE_SCRIPT, B2_S3_OFFER_SCRIPT } from './b2YearAbroad'
 import { B2_S2_CLOSE_SCRIPT, B2_S2_DEBATE_TURNS, B2_S2_VIDEO_SCRIPT, B2_S2_WHICH_DOG } from './b2PawsDebate'
 import { B2_06_ARRIVAL_SCRIPT, B2_06_CLOSE_SCRIPT, B2_06_FINDING_SCRIPT, B2_06_UNHEARD_ROOM } from './b2Lab'
 import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_IDS } from './questions-b2-06'
@@ -9026,4 +9028,77 @@ NPC_TASKS['b2-s2-close'] = {
   coins: 20,
   steps: [],
   reward: { text: 'Extra: Paws Debate', es: 'Extra: el debate de Lumen Paws', sub: 'Extra completado. Ganaste la pañoleta de Lumen Paws.', say: 'Neither of them cares!' },
+}
+
+// ── B2 · Extras: A Year Abroad (la oficina del intercambio, data/b2YearAbroad.ts). Se abre al cerrar la misión 12 ──
+// Ms. Haddad: la oferta del semestre en Galway (script)
+NPC_TASKS['b2-s3-offer'] = {
+  npc: 'b2-s3-haddad',
+  done: 'b2-s3-offer',
+  activity: 'script',
+  script: B2_S3_OFFER_SCRIPT,
+  steps: [],
+  reward: { text: 'A semester in Galway, Ireland!', es: '¡Un semestre en Galway, Irlanda!', sub: 'Un estudiante de Galway te espera en el portátil.', say: 'A semester in Galway!' },
+}
+
+// El portátil: la videollamada con Ciarán (escucha: el inglés de Irlanda)
+NPC_TASKS['b2-s3-call'] = {
+  npc: 'b2-s3-laptop',
+  done: 'b2-s3-call',
+  activity: 'script',
+  script: B2_S3_CALL_SCRIPT,
+  requires: { id: 'b2-s3-offer', text: 'The laptop is on.', es: 'El portátil está encendido.', sub: 'Primero habla con Ms. Haddad.' },
+  steps: [],
+  reward: { text: 'Read every bill. Ask about every fee.', es: 'Lean cada factura. Pregunten por cada cobro.', sub: 'Ms. Haddad te va a explicar las facturas.', say: 'Grand!' },
+}
+
+// Ms. Haddad: lección 'abroad-b2' + práctica b2-s3-a1…a8 (1 de escucha). 5 monedas
+NPC_TASKS['b2-s3-words'] = {
+  npc: 'b2-s3-haddad',
+  done: 'b2-s3-words',
+  lesson: 'abroad-b2',
+  activity: 'practice',
+  practice: 'abroad-b2',
+  practiceIds: B2_S3_WORDS_IDS,
+  coins: 5,
+  requires: { id: 'b2-s3-call', text: 'Did you talk to the student from Galway?', es: '¿Hablaste con el estudiante de Galway?', sub: 'Primero la videollamada en el portátil.' },
+  steps: [],
+  reward: { text: 'A rate is per unit. A fee is a fixed charge.', es: 'Un rate es por unidad. Un fee es un cobro fijo.', sub: 'Lección hecha. Ya llegó la primera factura.', say: 'Could you tell me what the monthly fee is?' },
+}
+
+// La factura: The Fine Print, versión factura (reutilizado). 5 monedas
+NPC_TASKS['b2-s3-bill'] = {
+  npc: 'b2-s3-bill-paper',
+  done: 'b2-s3-bill',
+  activity: 'fineprint',
+  fineprint: B2_S3_BILL_CONTENT,
+  requires: { id: 'b2-s3-words', text: 'The first bill.', es: 'La primera factura.', sub: 'Primero haz la lección de Ms. Haddad.' },
+  coins: 5,
+  steps: [],
+  reward: { text: 'Three hidden fees!', es: '¡Tres cobros escondidos!', sub: 'Escríbele al proveedor desde el teléfono para elegir un plan mejor.', say: 'Three hidden fees!' },
+}
+
+// El teléfono: Text Only con el proveedor para elegir un plan de pago (reutilizado)
+NPC_TASKS['b2-s3-chat'] = {
+  npc: 'b2-s3-phone',
+  done: 'b2-s3-chat',
+  activity: 'textonly',
+  textOnly: B2_S3_CHAT_CONTENT,
+  requires: { id: 'b2-s3-bill', text: 'The provider chat.', es: 'El chat del proveedor.', sub: 'Primero revisa la factura.' },
+  steps: [],
+  reward: { text: 'Student Plan: lower rate, no hidden fees.', es: 'Plan de estudiante: tarifa más baja, sin cobros escondidos.', sub: '¡Click, click! El contador de la cocina se está moviendo solo…' },
+}
+
+// Ms. Haddad: el cierre (gorra de lana irlandesa). El viaje queda para después de todo esto
+NPC_TASKS['b2-s3-close'] = {
+  npc: 'b2-s3-haddad',
+  done: 'b2-s3-close',
+  activity: 'script',
+  script: B2_S3_CLOSE_SCRIPT,
+  requires: { id: 'b2-s3-meter', text: 'What is that noise?', es: '¿Qué es ese ruido?', sub: 'Primero vence al contador corrompido.' },
+  recover: ['abroad-b2'],
+  outfit: 'gorra-irlandesa',
+  coins: 20,
+  steps: [],
+  reward: { text: 'Extra: A Year Abroad', es: 'Extra: un año en el extranjero', sub: 'Extra completado. Ganaste la gorra de lana irlandesa.', say: 'Maybe after all this.' },
 }

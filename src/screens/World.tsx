@@ -38,6 +38,7 @@ import { B2_12_ROOM } from '../data/b2Countdown'
 import { B2_13_SCHOOL } from '../data/b2Fire'
 import { B2_14_PORT_ID } from '../data/b2UseYourVoice'
 import { B2_S2_SHELTER_ID } from '../data/b2PawsDebate'
+import { B2_S3_OFFICE_ID } from '../data/b2YearAbroad'
 import { enterB2Window, isB2WindowScene } from '../game/b2Window'
 import { B2_13_ENTERED, B2_NODES, B2_OPENING, B2_PART_NAMES, B2_ERA_COLOR, b2LockedText, b2Message, b2NodeDone, b2NodeOpen, isB2Unlocked, type B2Node, type B2Part } from '../data/b2World'
 import { enterMemory, memoryFlag } from '../game/memory'
@@ -242,6 +243,8 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     if (n.id === 'b2-s1') return onEnter(B2_S1_RESTAURANT_ID)
     // Extras (presente): Paws Debate, Lumen Paws (data/b2PawsDebate.ts)
     if (n.id === 'b2-s2') return onEnter(B2_S2_SHELTER_ID)
+    // Extras (presente): A Year Abroad, la oficina del intercambio (data/b2YearAbroad.ts)
+    if (n.id === 'b2-s3') return onEnter(B2_S3_OFFICE_ID)
     // Las demás misiones de B2 todavía no están construidas (fichas 3 a 14)
     setMsg(`${label}${n.year ? ` (Ventana ${n.year})` : ''}: este lugar se construirá pronto.`)
   }

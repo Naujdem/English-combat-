@@ -1535,6 +1535,16 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     doneLine: { text: "I'll keep digging. Something about this market feels wrong.", es: 'Voy a seguir investigando. Algo de ese mercado no me cuadra.' },
   },
   // ── B2 · Extras: Fusion Night (el restaurante de Mei, data/b2FusionNight.ts) ──
+  // ── B2 · Extras: A Year Abroad (la oficina del intercambio, data/b2YearAbroad.ts) ──
+  'b2-s3-haddad': {
+    name: 'Ms. Haddad',
+    look: { shirt: '#2f6f73', hair: '#1f1f1f', skin: '#c68642', gender: 'female' },
+    doneLine: { text: 'Galway will still be there when you are ready.', es: 'Galway va a seguir ahí cuando estén listos.' },
+  },
+  // El portátil: Ciarán, un estudiante de Galway, en videollamada ('friend' del guion b2-s3-call)
+  'b2-s3-laptop': { name: 'Ciarán (videollamada)', look: { shirt: '#3a7d44', hair: '#c0532b', skin: '#f1d3bd', gender: 'male' }, after: 'b2-s3-offer', doneLine: { text: "Grand! See you in Galway!", es: '¡Genial! ¡Nos vemos en Galway!' } },
+  'b2-s3-bill-paper': { name: 'La factura', look: { shirt: '#f6f0e1', hair: '#2f6fb0', skin: '#f6f0e1' }, after: 'b2-s3-words', doneLine: { text: 'Meter reading fee: 8 euros per visit.', es: 'Cobro por leer el contador: 8 euros por visita.' } },
+  'b2-s3-phone': { name: 'Tu teléfono', look: { shirt: '#1d2430', hair: '#3fa9ff', skin: '#1d2430' }, after: 'b2-s3-bill', doneLine: { text: 'Student Plan: confirmed.', es: 'Plan de estudiante: confirmado.' } },
   // ── B2 · Extras: Paws Debate (Lumen Paws, data/b2PawsDebate.ts). Nayi, la pantalla, el tablero, los perros y los gatos ──
   'b2-s2-nayi': {
     name: 'Nayi',

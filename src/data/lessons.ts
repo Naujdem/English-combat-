@@ -1647,4 +1647,14 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: '___ option is perfect.', choice: { options: ['Both', 'Neither', 'Either of'], answer: 1, tip: 'neither + singular: ninguna de las dos.' } },
     { who: 'nayi', text: 'In a formal exam, use the singular after neither of / either of: "Neither of them IS dangerous." It\'s the safe form.', es: 'En un examen formal, usa el singular después de neither of / either of: "Neither of them IS dangerous". Es la forma segura.', board: ['Exam-safe', 'Neither of them is…'] },
   ],
+  // B2 · Extras: A Year Abroad (la oficina del intercambio, data/b2YearAbroad.ts): Ms. Haddad, servicios públicos (Busuu 23)
+  'abroad-b2': [
+    { who: 'haddad', text: 'A flat abroad comes with bills. Two words are easy to confuse: rate and fee.', es: 'Un piso en el extranjero trae facturas. Hay dos palabras fáciles de confundir: rate y fee.', board: ['rate ≠ fee'] },
+    { who: 'haddad', text: 'A rate is a price per unit: 20 cents per kilowatt hour. A fee is a fixed charge for something: a cancellation fee, a paper bill fee.', es: 'Un rate es un precio por unidad: 20 centavos por kilovatio hora. Un fee es un cobro fijo por algo: por cancelar, por la factura en papel.', board: ['rate = per unit', 'fee = fixed charge'] },
+    { who: 'board', text: 'There is a 150-euro cancellation ___.', choice: { options: ['rate', 'fee', 'meter'], answer: 1, tip: 'Cobro fijo = fee.' } },
+    { who: 'haddad', text: 'More words: the bill (what you pay each month), the meter (the machine that counts), direct debit (automatic payment) and the contract.', es: 'Más palabras: the bill (lo que pagas cada mes), the meter (el aparato que cuenta), direct debit (pago automático) y the contract (el contrato).', board: ['Services', 'bill · meter · direct debit · contract'] },
+    { who: 'haddad', text: 'To ask politely, use indirect questions, like in the Herald: "Could you tell me what the monthly fee is?" Subject before verb, no do.', es: 'Para preguntar con cortesía, usa preguntas indirectas, como en el Herald: "¿Me podría decir cuál es el cobro mensual?". Sujeto antes del verbo, sin do.', board: ['Indirect questions', 'Could you tell me what the monthly fee is?'] },
+    { who: 'board', text: 'Could you tell me how much ___?', choice: { options: ['is the rate', 'the rate is', 'does the rate'], answer: 1, tip: 'Sujeto + verbo: the rate is.' } },
+    { who: 'haddad', text: 'And in Galway you will hear Irish English: "grand" (fine), "the craic" (the fun), "your man" (that guy), "giving out" (complaining).', es: 'Y en Galway vas a oír el inglés de Irlanda: "grand" (bien), "the craic" (el ambiente, la diversión), "your man" (ese tipo), "giving out" (regañar, quejarse).', board: ['Irish English', 'grand · the craic · your man · giving out'] },
+  ],
 }
