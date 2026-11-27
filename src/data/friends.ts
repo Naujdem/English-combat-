@@ -910,3 +910,18 @@ export const B1_12_SPECIAL_CHAT: CasualChat = {
     { text: "Hmm. I don't know what to say.", textEs: 'Mmm. No sé qué decir.', reply: "That's OK. You don't have to say anything.", es: 'Está bien. No tienes que decir nada.', effect: 0 },
   ],
 }
+
+/** B2-04 · Fake Profile, bloque 3: la charla de amistad con Leo en el vestíbulo (una vez; se guarda B2_04_FRIEND en Explore.tsx).
+ *  Leo cambia de tema cuando se menciona su voz; "You should have told me something" → "Maybe. Not yet." No hay respuestas malas */
+export const B2_04_LEO_CHAT: CasualChat = {
+  requires: null,
+  level: 'B2',
+  text: 'Online, everybody looks happy all the time. What do you think people hide?',
+  es: 'En internet todos se ven felices todo el tiempo. ¿Qué crees que esconde la gente?',
+  options: [
+    { text: "Their problems, I think. It's easier to post a photo than to say \"I'm not OK\".", textEs: 'Sus problemas, creo. Es más fácil subir una foto que decir "no estoy bien".', reply: "True. Nobody posts the bad days. They might have had a terrible week and you'd never know.", es: 'Cierto. Nadie publica los días malos. Pueden haber tenido una semana terrible y nunca lo sabrías.', effect: 2 },
+    { text: 'Some people hide their real voice. Like you, Leo. Is your voice OK?', textEs: 'Algunos esconden su voz de verdad. Como tú, Leo. ¿Está bien tu voz?', reply: "My voice? It's… nothing. Hey, did you hear? Jeison might get his money back!", es: '¿Mi voz? No es… nada. Oye, ¿supiste? ¡Puede que a Jeison le devuelvan el dinero!', effect: 2 },
+    { text: 'You should have told me something.', textEs: 'Me debiste contar algo.', reply: 'Maybe. Not yet.', es: 'Quizá. Todavía no.', effect: 1 },
+    { text: 'Online hide the voice people what.', textEs: '(No tiene sentido.)', reply: "Sorry, I didn't understand.", es: 'Perdón, no te entendí.', effect: -1 },
+  ],
+}

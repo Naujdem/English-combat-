@@ -142,4 +142,86 @@ export const B2_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B2-04 · Fake Profile (presente): sin página de G. Se abre al cerrar la misión 4
+  {
+    id: 'b2-mission-4',
+    title: 'B2 · Misión 4: Fake Profile',
+    unlock: 'b2-04-close',
+    words: [
+      { title: 'Seguridad', words: [['password', 'contraseña'], ['two-factor authentication', 'autenticación en dos pasos'], ['phishing', 'mensajes falsos para robar datos'], ['scam', 'estafa'], ['hacked', 'hackeado'], ['privacy settings', 'configuración de privacidad'], ['fake profile', 'perfil falso'], ['data', 'datos']] },
+      { title: 'Fraude', words: [['report', 'reportar'], ['refund', 'reembolso'], ['unauthorised payment', 'pago no autorizado'], ['look into', 'investigar, revisar'], ['suspicious', 'sospechoso']] },
+      { title: 'Modales en pasado', words: [['might have', 'pudo haber (quizá)'], ['must have', 'debió de (seguro)'], ["can't have", 'no pudo (imposible)'], ['should have', 'debió (crítica)'], ["needn't have", 'no hacía falta (y lo hiciste)']] },
+      { title: 'Phrasal verbs', words: [['log in', 'iniciar sesión'], ['hack into', 'entrar sin permiso'], ['take down', 'eliminar (una página)'], ['give away', 'revelar, regalar (datos)']] },
+    ],
+    versions: [
+      {
+        id: 'b2-mission-4-mine',
+        tense: 'p',
+        tab: 'Mi diario',
+        title: 'The "G" profile',
+        unlock: 'b2-04-close',
+        frame: 'Lo escribes esa noche en tu cuarto de la residencia.',
+        lines: [
+          { en: 'Today someone [used]p my photo to make a fake profile called "G".', es: 'Hoy alguien usó mi foto para hacer un perfil falso llamado "G".' },
+          { en: 'It [must have been]p created yesterday. I [shouldn\'t have given]p my birthday to that silly quiz.', es: 'Debió de crearse ayer. No debí darle mi cumpleaños a ese test tonto.' },
+          { en: 'Someone [wants]n me to remember. But who?', es: 'Alguien quiere que recuerde. Pero ¿quién?' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-4-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'A day of fake messages',
+        unlock: 'b2-04-close',
+        frame: 'El día entero, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'Jeison [paid]p for a bike that [didn\'t exist]p. He [should have checked]p the account first.', es: 'Jeison pagó por una bicicleta que no existía. Debió revisar la cuenta primero.' },
+          { en: 'Ricardo [is looking]n into it, and Jeison [will get]f a full refund.', es: 'Ricardo lo está revisando y a Jeison le van a devolver todo el dinero.' },
+          { en: 'Leo [changed]p the subject when I [asked]p about his voice. "Maybe. Not yet," he [said]p.', es: 'Leo cambió de tema cuando le pregunté por su voz. "Quizá. Todavía no", dijo.' },
+        ],
+        questions: [
+          { q: 'Why did Jeison lose his money?', options: ['He paid for a bike that didn\'t exist.', 'He forgot his password.', 'The bank closed his account.'], answer: 0, tip: 'El diario dice: "paid for a bike that didn\'t exist".' },
+          { q: 'What will happen with Jeison\'s money?', options: ['Nothing.', 'He will get a full refund.', 'Ricardo will keep it.'], answer: 1, tip: 'El diario dice: "Jeison will get a full refund".' },
+          { q: 'What did Leo do when you asked about his voice?', options: ['He told you everything.', 'He got angry.', 'He changed the subject.'], answer: 2, tip: 'El diario dice: "Leo changed the subject".' },
+        ],
+      },
+    ],
+  },
+  // Lectura larga de B2 (opcional, unas 250 palabras con 5 preguntas). Se abre al cerrar la misión 4
+  {
+    id: 'b2-reading-1',
+    title: 'Lectura: Inside the Echo Market',
+    unlock: 'b2-04-close',
+    words: [
+      { title: 'El artículo', words: [['dark web', 'internet oculto'], ['search engine', 'buscador'], ['seller', 'vendedor'], ['buyer', 'comprador'], ['advert', 'anuncio'], ['claim', 'afirmar']] },
+    ],
+    versions: [
+      {
+        id: 'b2-reading-1-text',
+        tense: 'mix',
+        tab: 'Lectura',
+        title: 'Inside the Echo Market',
+        unlock: 'b2-04-close',
+        frame: 'El artículo de Priya para The Lumen Bay Herald. Es un texto largo: léelo con calma antes de responder.',
+        lines: [
+          { en: 'Most of us use the internet every day without thinking about it. But there is a part of the internet that you will never find with a normal search engine: the dark web.', es: 'La mayoría usamos internet todos los días sin pensarlo. Pero hay una parte de internet que nunca encontrarás con un buscador normal: la dark web.' },
+          { en: 'Not everything on the dark web is illegal. Some journalists use it to talk to sources safely. However, it is also where criminals sell stolen passwords, bank details and fake profiles.', es: 'No todo en la dark web es ilegal. Algunos periodistas la usan para hablar con sus fuentes de forma segura. Sin embargo, también es donde los delincuentes venden contraseñas robadas, datos bancarios y perfiles falsos.' },
+          { en: 'Last month, a reader sent the Herald a strange link. It led to a market called the Echo Market.', es: 'El mes pasado, un lector le envió al Herald un enlace extraño. Llevaba a un mercado llamado Echo Market.' },
+          { en: 'At first, it looked like any other black market. But one advert was different. The seller claimed to offer "lost voices" and said that buyers "needn\'t have suffered in silence".', es: 'Al principio parecía un mercado negro cualquiera. Pero un anuncio era distinto. El vendedor decía ofrecer "voces perdidas" y aseguraba que los compradores "no tenían por qué haber sufrido en silencio".' },
+          { en: 'We don\'t know who wrote the advert. It might have been a joke, or it could have been a trick to steal money. Two days after we found it, the page was taken down.', es: 'No sabemos quién escribió el anuncio. Pudo ser una broma, o pudo ser un truco para robar dinero. Dos días después de encontrarlo, la página fue eliminada.' },
+          { en: 'Experts say that you should never pay for something you cannot see, and you should report suspicious adverts to the police.', es: 'Los expertos dicen que nunca debes pagar por algo que no puedes ver y que debes reportar los anuncios sospechosos a la policía.' },
+          { en: 'However, one question is still open. In the last few weeks, several people in Lumen Bay have lost their voices for a few seconds. Is it a coincidence, or is someone listening?', es: 'Sin embargo, queda una pregunta abierta. En las últimas semanas, varias personas en Lumen Bay han perdido la voz durante unos segundos. ¿Es una coincidencia, o alguien está escuchando?' },
+          { en: 'Priya Raman, intern, The Lumen Bay Herald', es: 'Priya Raman, practicante, The Lumen Bay Herald' },
+        ],
+        questions: [
+          { q: 'Why do some journalists use the dark web?', options: ['To talk to sources safely.', 'To sell fake profiles.', 'To find a normal search engine.'], answer: 0, tip: 'El artículo dice: "Some journalists use it to talk to sources safely".' },
+          { q: 'How did the Herald find the Echo Market?', options: ['Priya found it with a search engine.', 'A reader sent a strange link.', 'The police told them.'], answer: 1, tip: 'El artículo dice: "a reader sent the Herald a strange link".' },
+          { q: 'What was different about one advert?', options: ['It sold cheap bikes.', 'It was written by the police.', 'It offered "lost voices".'], answer: 2, tip: 'El artículo dice: "The seller claimed to offer lost voices".' },
+          { q: 'What happened to the page two days later?', options: ['It was taken down.', 'It became more popular.', 'The Herald bought it.'], answer: 0, tip: 'El artículo dice: "the page was taken down".' },
+          { q: 'What have several people in Lumen Bay experienced?', options: ['Their bank accounts were hacked.', 'They lost their voices for a few seconds.', 'They received fake friend requests.'], answer: 1, tip: 'El artículo dice: "several people in Lumen Bay have lost their voices for a few seconds".' },
+        ],
+      },
+    ],
+  },
 ]

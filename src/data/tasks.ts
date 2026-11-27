@@ -7324,3 +7324,27 @@ NPC_TASKS['b2-04-detective'] = {
     say: 'It must have been created yesterday.',
   },
 }
+
+// ── B2-04 · Fake Profile, bloque 3: cierre (Maya en el vestíbulo, después de la charla con Leo).
+// done = b2CloseId(4) = 'b2-04-close': abre el lugar 5 y el Extra Fusion Night. Al guardarse, Explore muestra FragmentJoin
+// (el fragmento de The Catfish se une con el del lugar 1; el segundo segmento queda a la mitad, b2Core en data/b2World.ts)
+NPC_TASKS['b2-04-close'] = {
+  npc: 'b2-04-maya',
+  done: 'b2-04-close',
+  recover: ['online-safety-b2', 'past-modals-b2', 'neednt-b2', 'fraud-b2'],
+  coins: 15,
+  requires: { id: 'b2-04-friend', text: 'Have you talked to Leo?', es: '¿Ya hablaste con Leo?', sub: 'Antes, vence a The Catfish y habla con Leo en el vestíbulo.' },
+  steps: [
+    { text: 'Look! The "G" profile is gone. The app must have taken it down.', es: '¡Mira! El perfil "G" desapareció. La app debió de eliminarlo.' },
+    { text: '(The fragment from the floor flies into the clock. It finds the lonely fragment from the port…)', es: '(El fragmento del suelo vuela hacia el reloj. Encuentra al fragmento solitario del puerto…)' },
+    { text: "Ricardo called. Jeison will get a full refund. He needn't have worried so much!", es: 'Llamó Ricardo. A Jeison le van a devolver todo el dinero. ¡No tenía que preocuparse tanto!' },
+    { text: "(You write in your diary:) 'Someone wants me to remember. But who?'", es: '(Escribes en tu diario:) «Alguien quiere que recuerde. Pero ¿quién?»' },
+    { text: 'Come on. Tonight is Fusion Night at the residence, and you could use a break.', es: 'Vamos. Esta noche es Fusion Night en la residencia, y te vendría bien un descanso.' },
+  ],
+  reward: {
+    text: 'Mission 4: Fake Profile',
+    es: 'Misión 4: Perfil falso',
+    sub: 'Ganaste el hoodie de hacker. El segundo segmento del núcleo quedó a la mitad. Se abrieron el lugar 5 y Fusion Night.',
+    say: 'Fake Profile.',
+  },
+}
