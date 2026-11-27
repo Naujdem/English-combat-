@@ -91,6 +91,8 @@ import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_I
 import { B2_08_ARRIVAL_SCRIPT, B2_08_CLOSE_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNCH_SCRIPT, B2_08_UNHEARD_ROOM } from './b2Pitch'
 import { B2_08_ACRONYMS_IDS, B2_08_COMPARE_IDS, B2_08_PERKS_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
+import { B2_09_ARRIVAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_TOUR_SCRIPT } from './b2Gallery'
+import { B2_09_ORDER_IDS, B2_09_RELATIVE_IDS, B2_09_STRONG_IDS } from './questions-b2-09'
 import { B2_07_OLIVER_SCRIPT, B2_07_ARRIVAL_SCRIPT, B2_07_DEBATE_ENDINGS, B2_07_DEBATE_TURNS, B2_07_EXPLORE_ROOM, B2_07_POSTER_SCRIPT, B2_07_ROSA_SCRIPT, B2_07_SAM_INTRO } from './b2OldBuilding'
 import { B2_07_CHANGE_IDS, B2_07_CONDITIONS_IDS, B2_07_GET_IDS } from './questions-b2-07'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
@@ -8087,5 +8089,101 @@ NPC_TASKS['b2-08-close'] = {
     es: 'Lo venden como bienestar. Alguien siempre paga el precio.',
     sub: 'Misión 8: Pitch. Se abrieron el lugar 9 y el Extra Paws Debate en el mapa.',
     say: 'Somebody always pays the price.',
+  },
+}
+
+// ── B2-09 · The Gallery, bloque 1 (la exposición "Voices of Stone", data/b2Gallery.ts). NO guarda el cierre de la misión ──
+// La persona especial en la entrada del museo (script)
+NPC_TASKS['b2-09-arrival'] = {
+  npc: 'b2-09-special',
+  done: 'b2-09-arrival',
+  activity: 'script',
+  script: B2_09_ARRIVAL_SCRIPT,
+  steps: [],
+  reward: { text: "It's absolutely amazing!", es: '¡Es absolutamente increíble!', sub: 'Vuelve a hablar con la persona especial: la lección.', say: "It's absolutely amazing!" },
+}
+
+// La persona especial: lección 'gradable-b2' + práctica b2-09-gr1…gr6. 5 monedas
+NPC_TASKS['b2-09-strong'] = {
+  npc: 'b2-09-special',
+  done: 'b2-09-strong',
+  lesson: 'gradable-b2',
+  activity: 'practice',
+  practice: 'gradable-b2',
+  practiceIds: B2_09_STRONG_IDS,
+  coins: 5,
+  requires: { id: 'b2-09-arrival', text: 'Hi! I got tickets for us!', es: '¡Hola! ¡Conseguí entradas para nosotros!', sub: 'Primero habla con la persona especial.' },
+  steps: [],
+  reward: {
+    text: "It's quite impressive. No: it's absolutely stunning.",
+    es: 'Es bastante impresionante. No: es absolutamente impresionante.',
+    sub: 'Lección hecha. Vuelve a hablar con la persona especial: el orden de los adjetivos.',
+    say: "It's absolutely stunning.",
+  },
+}
+
+// La persona especial: lección 'adj-order-b2' + práctica b2-09-ao1…ao6. 5 monedas
+NPC_TASKS['b2-09-order'] = {
+  npc: 'b2-09-special',
+  done: 'b2-09-order',
+  lesson: 'adj-order-b2',
+  activity: 'practice',
+  practice: 'adj-order-b2',
+  practiceIds: B2_09_ORDER_IDS,
+  coins: 5,
+  requires: { id: 'b2-09-strong', text: 'Words first.', es: 'Primero las palabras.', sub: 'Primero termina la lección de los adjetivos fuertes.' },
+  steps: [],
+  reward: {
+    text: 'A beautiful small ancient grey stone tablet.',
+    es: 'Una hermosa tablilla de piedra, pequeña, antigua y gris.',
+    sub: 'Lección hecha. Arturo Silva, el curador, va a empezar la visita guiada.',
+    say: 'A beautiful small ancient grey stone tablet.',
+  },
+}
+
+// Arturo Silva: la visita guiada (script, escucha)
+NPC_TASKS['b2-09-tour'] = {
+  npc: 'b2-09-arturo',
+  done: 'b2-09-tour',
+  activity: 'script',
+  script: B2_09_TOUR_SCRIPT,
+  requires: { id: 'b2-09-order', text: 'The tour starts in a few minutes.', es: 'La visita empieza en unos minutos.', sub: 'Primero termina las lecciones con la persona especial.' },
+  steps: [],
+  reward: { text: 'This tablet, which was found in 1998, comes from the Temple of Echoes.', es: 'Esta tablilla, que fue hallada en 1998, viene del Templo de los Ecos.', sub: 'La persona especial quiere explicarte cómo habla Arturo.', say: 'This tablet, which was found in 1998, comes from the Temple of Echoes.' },
+}
+
+// La persona especial: lección 'nd-relative-b2' + práctica b2-09-nd1…nd6 (2 de escucha). 5 monedas
+NPC_TASKS['b2-09-relative'] = {
+  npc: 'b2-09-special',
+  done: 'b2-09-relative',
+  lesson: 'nd-relative-b2',
+  activity: 'practice',
+  practice: 'nd-relative-b2',
+  practiceIds: B2_09_RELATIVE_IDS,
+  coins: 5,
+  requires: { id: 'b2-09-tour', text: "Shh! Arturo's tour is starting.", es: '¡Shh! Va a empezar la visita de Arturo.', sub: 'Primero escucha la visita guiada de Arturo.' },
+  steps: [],
+  reward: {
+    text: 'Nobody could read it, which made it famous.',
+    es: 'Nadie podía leerla, lo que la hizo famosa.',
+    sub: 'Lección hecha. Arturo quiere que intentes traducir las tablillas.',
+    say: 'Nobody could read it, which made it famous.',
+  },
+}
+
+// Arturo: Inscriptions, versión museo (reutilizado, 4 tablillas). La última es la pista de las dos voces. Leo se va. 10 monedas
+NPC_TASKS['b2-09-inscriptions'] = {
+  npc: 'b2-09-arturo',
+  done: 'b2-09-inscriptions',
+  activity: 'inscriptions',
+  inscriptions: B2_09_INSCRIPTIONS_ROOM,
+  coins: 10,
+  requires: { id: 'b2-09-relative', text: 'You seem to know these marks…', es: 'Parece que conoces estas marcas…', sub: 'Primero termina la lección de las relativas con la persona especial.' },
+  steps: [],
+  reward: {
+    text: 'A voice that is taken returns only when two voices rise together.',
+    es: 'Una voz que es arrebatada solo regresa cuando dos voces se alzan juntas.',
+    sub: 'Ganaste 10 monedas. Lo anotas sin entenderlo. Leo lee la tablilla, se toca la garganta y se va a otra sala sin decir nada.',
+    say: 'Two voices together.',
   },
 }
