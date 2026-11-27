@@ -14,6 +14,10 @@ import type { FactCheckContent } from '../components/FactCheck'
  *   Manuel en su escritorio del Herald: lección 'tabloid-b2' + práctica (b2-05-press): prensa sensacionalista contra prensa seria.
  * Bloque 2: Manuel en el Herald: Fact Check completo (b2-05-factcheck, 6 rondas, se gana con 5) → Zoe se va del paseo →
  *   dos Rumour Gulls en el puerto (esbirros) → el jefe The Tabloid (2 fases) donde estaba Zoe.
+ * Bloque 3: tras vencer a The Tabloid: Zoe vuelve a la normalidad (b2-05-apology, script) → Tomás regala la chaqueta de pescador
+ *   (b2-05-jacket) → Manuel junto al muelle norte: el cierre (b2-05-close): la placa "VOCALIS" en el agua; recupera los temas;
+ *   Explore muestra FragmentJoin (dos fragmentos completan el segundo segmento, B2_05_FRAGMENTS) y se abre la Ventana 6.
+ *   Diario (nota de prensa en reported speech y página mezclada, con la pista Vocalis): data/b2Diary.ts. Sin amistad.
  * Bloque 3: el cierre (Zoe se disculpa, dos fragmentos completan el segundo segmento, la placa "VOCALIS"), diario y recompensa.
  */
 export const B2_05_PORT_ID = 'b2-05-port'
@@ -35,6 +39,16 @@ export const B2_05_FACTCHECK = 'b2-05-factcheck'
 export const B2_05_GULL1 = 'b2-05-gull1'
 export const B2_05_GULL2 = 'b2-05-gull2'
 export const B2_05_BOSS = 'b2-05-boss'
+/** Bloque 3 */
+export const B2_05_ZOE_BACK = 'b2-05-zoe-back'
+export const B2_05_TOMAS_BACK = 'b2-05-tomas-back'
+export const B2_05_MANUEL_PIER = 'b2-05-manuel-pier'
+export const B2_05_APOLOGY = 'b2-05-apology'
+export const B2_05_JACKET = 'b2-05-jacket'
+export const B2_05_CLOSE = 'b2-05-close'
+/** Se guarda al terminar la animación: dos fragmentos completan el segundo segmento del núcleo (abre la Ventana 6) */
+export const B2_05_FRAGMENTS = 'b2-05-fragments'
+export const B2_SECOND_SEGMENT = { en: 'The two fragments complete the second segment. The core remembers another place… and another year.', es: 'Los dos fragmentos completan el segundo segmento. El núcleo recuerda otro lugar… y otro año.' }
 
 /**
  * Leyenda (Tiles.tsx, sin dibujos nuevos): # pared · h afiche · O escritorio · F archivador · p planta · . suelo · d puerta ·
@@ -78,6 +92,10 @@ export const B2_05_PORT: SceneDef = {
     { type: 'enemy', id: B2_05_GULL1, x: 13, y: 4, after: B2_05_FACTCHECK },
     { type: 'enemy', id: B2_05_GULL2, x: 17, y: 3, after: B2_05_GULL1 },
     { type: 'enemy', id: B2_05_BOSS, x: 15, y: 2, after: B2_05_GULL2 },
+    // Bloque 3: al vencer a The Tabloid vuelven Zoe y Tomás al paseo, y Manuel espera junto al muelle norte (npcs.ts, after: b2-05-boss)
+    { type: 'npc', id: B2_05_ZOE_BACK, x: 14, y: 2 },
+    { type: 'npc', id: B2_05_TOMAS_BACK, x: 11, y: 4 },
+    { type: 'npc', id: B2_05_MANUEL_PIER, x: 20, y: 4 },
   ],
   labels: [
     { text: 'The Herald', x: 3, y: 4 },
@@ -108,12 +126,17 @@ export const B2_05_PORT: SceneDef = {
     { label: 'Fact Check (Manuel)', done: s.opened.includes(B2_05_FACTCHECK) },
     { label: 'Rumour Gulls (2)', done: s.defeated.includes(B2_05_GULL2) },
     { label: 'The Tabloid', done: s.defeated.includes(B2_05_BOSS) },
+    { label: 'Zoe se disculpa', done: s.opened.includes(B2_05_APOLOGY) },
+    { label: 'El regalo de Tomás', done: s.opened.includes(B2_05_JACKET) },
+    { label: 'El cierre (Manuel)', done: s.opened.includes(B2_05_CLOSE) },
   ],
   intro: {
     first: 'Presente. El puerto de Lumen Bay, de noche. Las luces parpadean. Manuel te espera junto al muelle.',
     later: (s) =>
-      s.defeated.includes(B2_05_BOSS)
-        ? 'El puerto de noche. El blog de Zoe se apagó. (El cierre llega en el bloque 3.)'
+      s.opened.includes(B2_05_CLOSE)
+        ? 'El puerto de Lumen Bay. Los apagones pararon. La misión 5 terminó: la Ventana 6 te espera en el mapa.'
+        : s.defeated.includes(B2_05_BOSS)
+        ? 'El puerto de noche. El blog de Zoe se apagó. Zoe, Tomás y Manuel te esperan.'
         : s.opened.includes(B2_05_FACTCHECK)
         ? 'El puerto de noche. Las gaviotas gritan rumores y el blog de Zoe crece sobre el paseo.'
         : s.opened.includes(B2_05_PRESS)
@@ -293,3 +316,15 @@ export const B2_05_ENEMIES: Record<string, EnemyDef> = {
   [B2_05_GULL2]: GULL(B2_05_GULL2, { text: 'SQUAWK! She suggested us to leave! They accused him for stealing!', es: 'suggested us to leave y accused him for: mal.' }),
   [B2_05_BOSS]: B2_05_BOSS_DEF,
 }
+
+/** Zoe vuelve a la normalidad (MemoryScript) */
+export const B2_05_APOLOGY_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(Zoe is sitting on a bench, holding her phone. The screen is dark.)', es: '(Zoe está sentada en una banca con el teléfono en la mano. La pantalla está oscura.)' },
+  { who: 'narrator', text: "Zoe: I don't know what happened. My blog… it started writing things on its own.", es: 'Zoe: No sé qué pasó. Mi blog… empezó a escribir cosas solo.' },
+  { who: 'narrator', text: 'Zoe: But the first headline was mine. "Ghost steals voices." I made it up.', es: 'Zoe: Pero el primer titular sí era mío. "Fantasma roba voces". Me lo inventé.' },
+  { who: 'narrator', text: 'Zoe: I apologise for exaggerating. Tomás was scared, and I turned his story into a joke.', es: 'Zoe: Me disculpo por exagerar. Tomás tenía miedo, y yo convertí su historia en un chiste.' },
+  { who: 'narrator', text: "Zoe: I promise to check my facts next time. And I'll admit it on my blog.", es: 'Zoe: Prometo revisar mis datos la próxima vez. Y lo voy a admitir en mi blog.' },
+]
+
+/** El cierre (Manuel junto al muelle norte): la placa "VOCALIS" */
+export const B2_05_VOCALIS = { text: 'Something metal is floating near the north pier. A small plate with a logo: "VOCALIS".', es: 'Algo de metal flota cerca del muelle norte. Una placa pequeña con un logo: "VOCALIS".' }
