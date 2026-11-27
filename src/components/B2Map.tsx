@@ -76,8 +76,8 @@ function ClockLock({ x, y }: { x: number; y: number }) {
 export function CoreBar({ state, filled: forced }: { state?: GameState; filled?: number }) {
   const core = state ? b2Core(state) : { filled: forced ?? 0, loose: false }
   const filled = forced ?? core.filled
-  // Ficha 12: al volver de Countdown el núcleo tiembla hasta que se entra a la Ventana 13
-  const tremble = !!state && state.opened.includes(b2CloseId(12)) && !state.opened.includes(B2_13_ENTERED)
+  // Ficha 12: al volver de Countdown el núcleo tiembla hasta que se entra a la Ventana 13. Ficha 13: vuelve a temblar al salir, hasta el final
+  const tremble = !!state && ((state.opened.includes(b2CloseId(12)) && !state.opened.includes(B2_13_ENTERED)) || (state.opened.includes(b2CloseId(13)) && !state.opened.includes(b2CloseId(14))))
   return (
     <div className={`flex items-center gap-2${tremble ? ' anim-tremble' : ''}`} aria-label={`Núcleo del reloj: ${filled} de 6 segmentos`}>
       <span className="text-xs font-semibold uppercase tracking-wide text-[#8fcbff]">Núcleo</span>

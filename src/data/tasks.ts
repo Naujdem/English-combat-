@@ -95,7 +95,7 @@ import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './ques
 import { B2_11_ARRIVAL_SCRIPT, B2_11_CLOSE_STEPS, B2_11_PYJAMAS_STEPS, B2_11_REVIEW_GAME, B2_11_CONFESS_SCRIPT, B2_11_BOARD_ITEMS, B2_11_FACT_CHECK, B2_11_MOVIE_SCRIPT } from './b2WhoIsG'
 import { B2_12_ARRIVAL_SCRIPT, B2_12_CLOSE_SCRIPT, B2_12_PLANNER_CONTENT, B2_12_RETURN_SCRIPT, B2_12_UNHEARD_ROOM } from './b2Countdown'
 import { B2_12_GOALS_IDS, B2_12_NOTEBOOK_IDS, B2_12_PLAN_IDS } from './questions-b2-12'
-import { B2_13_ALARM_SCRIPT, B2_13_ARRIVAL_SCRIPT, B2_13_BEFORE_SCRIPT, B2_13_CALL_CONFIG } from './b2Fire'
+import { B2_13_ALARM_SCRIPT, B2_13_ARRIVAL_SCRIPT, B2_13_BEFORE_SCRIPT, B2_13_CALL_CONFIG, B2_13_CLOSE_SCRIPT } from './b2Fire'
 import { B2_13_HADBETTER_IDS, B2_13_TIME_IDS } from './questions-b2-13'
 import { B2_11_FILM_IDS, B2_11_INDIRECT_IDS, B2_11_NARRATIVE_IDS } from './questions-b2-11'
 import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
@@ -8810,5 +8810,23 @@ NPC_TASKS['b2-13-call'] = {
     es: '¿Hay alguien ahí? ¡Salgan ya!',
     sub: 'Esta vez no gritó solo. Se oyen las sirenas de los bomberos.',
     say: 'Get out now!',
+  },
+}
+
+// ── B2-13 · The Fire, bloque 3: el rescate y la vuelta al presente. done = b2CloseId(13) = 'b2-13-close'. Al guardarse, Explore
+// muestra WindowExit (fundido azul) y se vuelve al presente: se abre el lugar 14 y se gana la insignia "Two Voices" ──
+NPC_TASKS['b2-13-close'] = {
+  npc: 'b2-13-firefighter',
+  done: 'b2-13-close',
+  activity: 'script',
+  script: B2_13_CLOSE_SCRIPT,
+  recover: ['hadbetter-b2', 'itstime-b2', 'fire-b2'],
+  coins: 15,
+  steps: [],
+  reward: {
+    text: "I didn't change the fire. I changed the silence.",
+    es: 'No cambié el incendio. Cambié el silencio.',
+    sub: 'Misión 13: The Fire. Insignia "Two Voices". En el puerto, una figura se está borrando: se abrió el lugar 14 en el mapa.',
+    say: 'I changed the silence.',
   },
 }
