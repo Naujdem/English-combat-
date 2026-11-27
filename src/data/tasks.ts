@@ -86,6 +86,8 @@ import { B2_04_FRAUD_IDS, B2_04_MODALS_IDS, B2_04_NEEDNT_IDS, B2_04_SECURITY_IDS
 import { B2_05_ARRIVAL_SCRIPT, B2_05_CAPTAIN_SCRIPT, B2_05_FACT_CHECK, B2_05_TOMAS_SCRIPT, B2_05_ZOE_SCRIPT, B2_05_APOLOGY_SCRIPT, B2_05_VOCALIS } from './b2VoiceBlackouts'
 import { B2_S1_CLOSE_SCRIPT, B2_S1_MENU_PLAN, B2_S1_POST_SCRIPT } from './b2FusionNight'
 import { B2_S1_WORDS_IDS } from './questions-b2-s1'
+import { B2_06_ARRIVAL_SCRIPT, B2_06_UNHEARD_ROOM } from './b2Lab'
+import { B2_06_PASSIVE_IDS, B2_06_WORDS_IDS } from './questions-b2-06'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
 import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
@@ -7606,4 +7608,71 @@ NPC_TASKS['b2-s1-close'] = {
   coins: 20,
   steps: [],
   reward: { text: 'Extra: Fusion Night', es: 'Extra: Noche de fusión', sub: 'Extra completado. Ganaste el delantal de fusión.', say: "It's worth trying!" },
+}
+
+// ── B2-06 · The Lab, bloque 1 (Ventana 2062, la recepción y el archivo de Vocalis, data/b2Lab.ts). Nadie te oye. NO guarda el cierre ──
+// El lema de la recepción: entrada a la Ventana (script)
+NPC_TASKS['b2-06-arrival'] = {
+  npc: 'b2-06-motto',
+  done: 'b2-06-arrival',
+  activity: 'script',
+  script: B2_06_ARRIVAL_SCRIPT,
+  steps: [],
+  reward: { text: 'Restoring human abilities. Wellbeing for everyone.', es: 'Devolvemos las capacidades humanas. Bienestar para todos.', sub: 'En el mostrador hay una pila de folletos.', say: 'Restoring human abilities. Wellbeing for everyone.' },
+}
+
+// Los folletos: lección 'wordform-b2' (la guían los folletos) + práctica b2-06-wf1…wf6. 5 monedas
+NPC_TASKS['b2-06-words'] = {
+  npc: 'b2-06-brochures',
+  done: 'b2-06-words',
+  lesson: 'wordform-b2',
+  placeGuide: { name: 'Los folletos de Vocalis', icon: '❏' },
+  activity: 'practice',
+  practice: 'wordform-b2',
+  practiceIds: B2_06_WORDS_IDS,
+  coins: 5,
+  requires: { id: 'b2-06-arrival', text: 'A pile of brochures.', es: 'Una pila de folletos.', sub: 'Primero mira el lema de la pared.' },
+  steps: [],
+  reward: {
+    text: 'restore → restoration · able → ability · well → wellbeing',
+    es: 'devolver → restauración · capaz → capacidad · bien → bienestar',
+    sub: 'Folletos leídos. En la pared de la recepción hay recortes de prensa enmarcados.',
+    say: 'Restoration. Ability. Wellbeing.',
+  },
+}
+
+// Los recortes de prensa: lección 'passive-report-b2' + práctica b2-06-pr1…pr6. 5 monedas
+NPC_TASKS['b2-06-clippings'] = {
+  npc: 'b2-06-clippings',
+  done: 'b2-06-clippings',
+  lesson: 'passive-report-b2',
+  placeGuide: { name: 'Los recortes de prensa', icon: '✎' },
+  activity: 'practice',
+  practice: 'passive-report-b2',
+  practiceIds: B2_06_PASSIVE_IDS,
+  coins: 5,
+  requires: { id: 'b2-06-words', text: 'Newspaper clippings in frames.', es: 'Recortes de periódico enmarcados.', sub: 'Primero lee los folletos del mostrador.' },
+  steps: [],
+  reward: {
+    text: 'Dr. Sato is said to have found the key in a temple.',
+    es: 'Se dice que la Dra. Sato encontró la clave en un templo.',
+    sub: 'Recortes leídos. La puerta de abajo lleva al archivo.',
+    say: 'Dr. Sato is said to have found the key in a temple.',
+  },
+}
+
+// Unheard en el archivo (ficha 6): abrir el cajón, encender la pantalla y esconderse del guardia. Con 0-1 errores, escudo
+NPC_TASKS['b2-06-unheard'] = {
+  npc: 'b2-06-archive',
+  done: 'b2-06-unheard',
+  activity: 'command',
+  command: B2_06_UNHEARD_ROOM,
+  requires: { id: 'b2-06-clippings', text: 'The archive. Rows of boxes and a metal drawer.', es: 'El archivo. Filas de cajas y un cajón de metal.', sub: 'Primero lee los recortes de prensa de la recepción.' },
+  steps: [],
+  reward: {
+    text: 'Trial 7 — results: restricted.',
+    es: 'Prueba 7 — resultados: restringidos.',
+    sub: 'Unheard completado. El guardia dejó abierta la puerta de la sala de datos.',
+    say: 'Trial seven. Results restricted.',
+  },
 }

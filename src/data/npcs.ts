@@ -1553,6 +1553,27 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#6b4a2f', hair: '#d8d8d8', skin: '#c98f68', gender: 'male' },
     doneLine: { text: 'Guests of honour! At my age! Ha!', es: '¡Invitados de honor! ¡A mi edad! ¡Ja!' },
   },
+  // ── B2-06 · The Lab, bloque 1 (Ventana 2062, la recepción y el archivo de Vocalis, data/b2Lab.ts). Nadie oye al protagonista ──
+  'b2-06-motto': {
+    name: 'El lema de la pared',
+    look: { shirt: '#dfe6ee', hair: '#9aa5b4', skin: '#dfe6ee' },
+    doneLine: { text: 'Restoring human abilities. Wellbeing for everyone.', es: 'Devolvemos las capacidades humanas. Bienestar para todos.' },
+  },
+  'b2-06-brochures': {
+    name: 'Los folletos de Vocalis',
+    look: { shirt: '#f4f7fa', hair: '#3fa9ff', skin: '#f4f7fa' },
+    doneLine: { text: 'Restoration. Ability. Wellbeing.', es: 'Restauración. Capacidad. Bienestar.' },
+  },
+  'b2-06-clippings': {
+    name: 'Los recortes de prensa',
+    look: { shirt: '#efe6d2', hair: '#3a2e1e', skin: '#efe6d2' },
+    doneLine: { text: 'The device is supposed to restore lost voices.', es: 'Se supone que el aparato devuelve las voces perdidas.' },
+  },
+  'b2-06-archive': {
+    name: 'El archivo',
+    look: { shirt: '#9aa3ad', hair: '#4a525e', skin: '#9aa3ad' },
+    doneLine: { text: 'Trial 7 — results: restricted.', es: 'Prueba 7 — resultados: restringidos.' },
+  },
   // ── B2-05 · Voice Blackouts, bloque 1 (el puerto de noche y el Herald, data/b2VoiceBlackouts.ts) ──
   // Manuel en el puerto (mismo look que b2-02-manuel): tareas b2-05-arrival y b2-05-verbs-to, b2-05-verbs-ing
   'b2-05-manuel': {
