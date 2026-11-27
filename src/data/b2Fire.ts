@@ -61,6 +61,8 @@ export const B2_13_SCHOOL: SceneDef = {
     { type: 'enemy', id: 'b2-13-shadow2', x: 14, y: 1, after: 'b2-13-shadow1' },
     { type: 'enemy', id: 'b2-13-boss', x: 8, y: 1, after: 'b2-13-shadow2' },
     { type: 'npc', id: 'b2-13-leo', x: 6, y: 1 },
+    // Bloque 3: la bombera sube al terminar Call for Help
+    { type: 'npc', id: 'b2-13-firefighter', x: 1, y: 1 },
   ],
   labels: [
     { text: '2061', x: 10, y: 3 },
@@ -89,6 +91,7 @@ export const B2_13_SCHOOL: SceneDef = {
     { label: 'Smoke Shadows (2)', done: s.defeated.includes('b2-13-shadow2') },
     { label: 'Panic, segunda forma', done: s.defeated.includes('b2-13-boss') },
     { label: 'Call for Help a dos voces', done: s.opened.includes('b2-13-call') },
+    { label: 'Llegan los bomberos', done: s.opened.includes('b2-13-close') },
   ],
   intro: {
     first: '2061. The night school again, the third floor. — 2061. Otra vez la escuela nocturna, el tercer piso. Esta vez, tu voz funciona.',
@@ -211,3 +214,26 @@ export const B2_13_CALL_CONFIG: CallForHelpConfig = {
   lastLabel: 'Los tres a la vez…',
   together: 'Esta vez no grita solo: la barra no baja.',
 }
+
+// ── Bloque 3 ──
+// Al terminar Call for Help suben los bomberos (b2-13-firefighter): el cierre (b2-13-close, script) recupera los temas →
+// Explore muestra WindowExit (fundido azul) y vuelves al presente (B2_13_EXITED); se abre el lugar 14.
+// Diario: data/b2Diary.ts (sin página de G: en esta línea de tiempo G está dejando de existir). Insignia "Two Voices"
+// (data/collection.ts). Las Ventanas no dan atuendos: Panic solo tiene despedida.
+export const B2_13_FIREFIGHTER = 'b2-13-firefighter'
+export const B2_13_CLOSE = 'b2-13-close'
+/** Se guarda al salir de la Ventana (después del fundido azul) */
+export const B2_13_EXITED = 'b2-13-exited'
+
+/** El rescate y la vuelta al presente: Leo llama con la voz perfecta, pero en el puerto una figura con capucha se está borrando */
+export const B2_13_CLOSE_SCRIPT: ScriptLine[] = [
+  { who: 'friend', text: 'Fire service! Everyone down the back stairs, now! Is anyone still up here?', es: '¡Bomberos! ¡Todos por las escaleras traseras, ya! ¿Queda alguien aquí arriba?' },
+  { who: 'narrator', text: '(The firefighters open the door. Everybody goes down the back stairs: the students, the teacher… and your older self.)', es: '(Los bomberos abren la puerta. Todos bajan por las escaleras traseras: los estudiantes, el profesor… y tu yo adulto.)' },
+  { who: 'narrator', text: '(Outside, in the cold air, everyone is safe. Everyone got out because WE shouted.)', es: '(Afuera, con el aire frío, todos están a salvo. Todos salieron porque NOSOTROS gritamos.)' },
+  { who: 'narrator', text: '(The teacher coughs… but his voice is clear: "Thank you… for not staying silent." Your older self nods.)', es: '(El profesor tose… pero su voz suena clara: "Gracias… por no quedarte en silencio". Tu yo adulto asiente.)' },
+  { who: 'narrator', text: '(They look around. Neither of them can see you anymore.)', es: '(Miran a su alrededor. Ninguno de los dos te ve ya.)' },
+  { who: 'narrator', text: '(Blue light. You wake up in Lumen Bay. You say "Hello"… and your voice sounds different. Stronger.)', es: '(Luz azul. Despiertas en Lumen Bay. Dices "Hello"… y tu voz suena distinta. Más fuerte.)' },
+  { who: 'narrator', text: '(Your phone rings. It\'s Leo. His voice is perfect: "Weird… my throat feels fine. Like something just healed.")', es: '(Suena tu teléfono. Es Leo. Su voz está perfecta: "Qué raro… la garganta se me siente bien. Como si algo acabara de sanar".)' },
+  { who: 'narrator', text: '(But the clock in your hand is still shaking. Down at the harbour, a figure in a hood is standing alone…)', es: '(Pero el reloj en tu mano sigue temblando. Abajo, en el puerto, una figura con capucha está sola de pie…)' },
+  { who: 'narrator', text: '(…and you can see the sea through it. As if it were being erased.)', es: '(…y a través de ella se ve el mar. Como si se estuviera borrando.)' },
+]

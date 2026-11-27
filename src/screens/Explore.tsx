@@ -51,6 +51,7 @@ import { B2_06_CLOSE, B2_06_EXITED, B2_06_LAB_ID } from '../data/b2Lab'
 import { B2_08_CLOSE, B2_08_EXITED, B2_08_VOCALIS_ID } from '../data/b2Pitch'
 import { B2_10_CLOSE, B2_10_EXITED, B2_10_SCHOOL_ID } from '../data/b2Card'
 import { B2_12_CLOSE, B2_12_EXITED, B2_12_ROOM_ID } from '../data/b2Countdown'
+import { B2_13_CLOSE, B2_13_EXITED, B2_13_SCHOOL_ID } from '../data/b2Fire'
 import { MemoriesTab } from '../components/MemoriesTab'
 import { Inscriptions } from '../components/Inscriptions'
 import { B1_DEMO_TABLET } from '../data/b1TabletDemo'
@@ -1491,6 +1492,17 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             update((s) => (s.opened.includes(B1_12_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B1_12_FRAGMENTS] }))
             onWorld()
           }}
+        />
+      )}
+      {/* B2-13 · cierre: fundido azul y vuelta al presente; se vuelve al mapa con el lugar 14 abierto */}
+      {scene.id === B2_13_SCHOOL_ID && state.opened.includes(B2_13_CLOSE) && !state.opened.includes(B2_13_EXITED) && !task && !outro && !msg && (
+        <WindowExit
+          onDone={() =>
+            update((s) => {
+              const back = s.b2Window?.returnTo ?? { sceneId: 'b2-11-herald', pos: { x: 3, y: 3 } }
+              return { ...s, sceneId: back.sceneId, pos: { ...back.pos }, b2Window: undefined, opened: s.opened.includes(B2_13_EXITED) ? s.opened : [...s.opened, B2_13_EXITED], screen: 'world' }
+            })
+          }
         />
       )}
       {/* B2-12 · cierre: fundido azul y vuelta al presente; se vuelve al mapa con la Ventana 13 abierta (el núcleo tiembla) */}

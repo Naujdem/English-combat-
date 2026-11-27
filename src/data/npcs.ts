@@ -1714,6 +1714,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     until: 'b2-13-boss',
     doneLine: { text: "(He is putting his books away. He doesn't turn around.)", es: '(Guarda sus libros. No se da la vuelta.)' },
   },
+  // Bloque 3: la bombera sube por las escaleras traseras al terminar Call for Help (tarea b2-13-close)
+  'b2-13-firefighter': {
+    name: 'A firefighter',
+    look: { shirt: '#b8860b', hair: '#1d1d1d', skin: '#c68e6a', gender: 'male' },
+    after: 'b2-13-call',
+    doneLine: { text: 'Everyone got out. Good job.', es: 'Todos salieron. Buen trabajo.' },
+  },
   // Bloque 2: Leo adulto sale al pasillo al vencer a Panic (tarea b2-13-call). Sigue en sombra y con el nombre en estática
   'b2-13-leo': {
     name: 'The teacher',

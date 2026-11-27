@@ -712,4 +712,52 @@ export const B2_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B2-13 · The Fire (Ventana 2061): página del protagonista y página mezclada. Sin página de G: en esta línea de tiempo se está borrando
+  {
+    id: 'b2-mission-13',
+    title: 'B2 · Misión 13: The Fire (Ventana 2061)',
+    unlock: 'b2-13-close',
+    words: [
+      { title: 'Emergencia', words: [['fire exit', 'salida de emergencia'], ['back stairs', 'escaleras traseras'], ['evacuate', 'evacuar'], ['firefighter', 'bombero'], ['smoke', 'humo'], ['trapped', 'atrapado']] },
+      { title: 'Dar ánimo', words: [['take a deep breath', 'respirar hondo'], ['stay calm', 'mantener la calma'], ['you can do it', 'tú puedes'], ["I've got you", 'te tengo'], ["you're not alone", 'no estás solo']] },
+      { title: "Had better e it's time", words: [["you'd better go", 'más vale que te vayas'], ["you'd better not stay", 'más vale que no te quedes'], ["it's time to leave", 'es hora de irse'], ["it's time we left", 'ya es hora de que nos vayamos']] },
+      { title: 'Phrasal verbs', words: [['speak up', 'alzar la voz'], ['hold back', 'contenerse'], ['calm down', 'calmarse'], ['get out', 'salir']] },
+    ],
+    versions: [
+      {
+        id: 'b2-mission-13-mine',
+        tense: 'p',
+        tab: 'Mi diario',
+        title: 'The night of the fire',
+        unlock: 'b2-13-close',
+        frame: 'Lo escribes al volver al presente, con tu voz nueva.',
+        lines: [
+          { en: 'Tonight I [went]p back to the night of the fire. This time, people [could]p hear me.', es: 'Esta noche volví a la noche del incendio. Esta vez, la gente podía oírme.' },
+          { en: 'When the alarm [went]p off, my older self [froze]p again. But I [told]p {h:him|her}: "It\'s time you spoke up."', es: 'Cuando sonó la alarma, mi yo adulto se paralizó otra vez. Pero le dije: "Ya es hora de que alces la voz".' },
+          { en: 'The frost [broke]p. We [shouted]p together, and everyone [got]p out.', es: 'La escarcha se rompió. Gritamos juntos, y todos salieron.' },
+          { en: "I didn't change the fire. I changed the silence.", es: 'No cambié el incendio. Cambié el silencio.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-13-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'Two voices',
+        unlock: 'b2-13-close',
+        frame: 'Todo lo que pasó en la Ventana, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'The first time, the teacher [had shouted]p alone, and he [lost]p his voice.', es: 'La primera vez, el profesor había gritado solo, y perdió la voz.' },
+          { en: 'This time two voices [were shouting]p in the corridor: "You\'d better use the back stairs!"', es: 'Esta vez dos voces gritaban en el pasillo: "¡Más vale que usen las escaleras traseras!".' },
+          { en: 'Now Leo\'s voice [is]n perfect. But a figure at the harbour [is disappearing]n.', es: 'Ahora la voz de Leo está perfecta. Pero una figura en el puerto se está borrando.' },
+          { en: 'Tomorrow I [am going to find]f out who it [is]n.', es: 'Mañana voy a averiguar quién es.' },
+        ],
+        questions: [
+          { q: 'What was different this time?', options: ['The fire didn\'t start.', 'Two voices shouted together.', 'Nobody could hear you.'], answer: 1, tip: 'El diario dice: "two voices were shouting in the corridor".' },
+          { q: 'What happened to the teacher the first time?', options: ['He shouted alone and lost his voice.', 'He stayed silent.', 'He used the lift.'], answer: 0, tip: 'El diario dice: "the teacher had shouted alone, and he lost his voice".' },
+          { q: 'What is happening at the harbour?', options: ['A ship is arriving.', 'Leo is waiting for you.', 'A figure is disappearing.'], answer: 2, tip: 'El diario dice: "a figure at the harbour is disappearing".' },
+        ],
+      },
+    ],
+  },
 ]

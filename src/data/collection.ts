@@ -219,6 +219,8 @@ export const ACHIEVEMENTS: Achievement[] = [
   },
   { id: 'cuaderno', name: 'Cuaderno limpio', desc: 'Deja tu cuaderno de errores en cero (después de responder 50 preguntas).', progress: (s) => (answers(s).total < 50 ? [answers(s).total, 50] : s.mistakes.length === 0 ? [1, 1] : [0, 1]) },
   { id: 'escritor', name: 'Mis propias palabras', desc: 'Escribe tus frases en los tres exámenes de época (presente, pasado y futuro).', progress: (s) => [['presente', 'pasado', 'futuro'].filter((e) => s.writings?.[e]).length, 3] },
+  // B2-13 · The Fire: la única recompensa de una Ventana que no es una despedida
+  { id: 'dos-voces', name: 'Two Voices', desc: 'Grita junto a Leo en la noche del incendio (B2, Ventana 13).', progress: (s) => [s.opened.includes('b2-13-close') ? 1 : 0, 1] },
   { id: 'atuendos', name: 'A la moda', desc: 'Consigue 12 atuendos.', progress: (s) => [Math.min(s.outfits.length, 12), 12] },
 ]
 
