@@ -1,6 +1,7 @@
-import type { GameState, SceneDef, Zone } from '../game/types'
+import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
 import type { TextCommandRoom } from '../components/TextCommand'
+import type { DebateEndings, DebateTurn } from '../components/DebateTalk'
 
 /**
  * B2-07 · The Old Building (presente, Lumen Bay). Guía: Leo. El barrio antiguo, el edificio abandonado y el ayuntamiento
@@ -11,7 +12,10 @@ import type { TextCommandRoom } from '../components/TextCommand'
  *   Leo dentro del edificio: el cartel de la escuela nocturna (b2-07-poster, script) → lección 'if-alt-b2' + práctica
  *   (b2-07-conditions): unless, as long as, provided, otherwise, suppose → lección 'get-b2' + práctica (b2-07-get):
  *   phrasal verbs con get. El salón del ayuntamiento queda cerrado hasta el bloque 2.
- * Bloque 2 (pendiente): la reunión vecinal (DebateTalk, la condición de las dos salidas de emergencia), Rent Raisers y The Developer.
+ * Bloque 2: el salón del ayuntamiento se abre. La concejala Ana Petrova dirige la reunión vecinal (b2-07-debate, DebateTalk):
+ *   ¿apartamentos de lujo o escuela comunitaria? En el último turno el protagonista pide la condición de las dos salidas de
+ *   emergencia; con cualquier desenlace se guarda B2_07_TWO_EXITS (dato de historia para el lugar 13: las escaleras traseras de
+ *   2061). Oliver Grant sale furioso → dos Rent Raisers en la calle (esbirros) → el jefe The Developer (2 fases) frente al edificio.
  * Bloque 3 (pendiente): el cierre (dos fragmentos llenan el tercer segmento del núcleo y se abre la Ventana 8), diario y recompensas.
  */
 export const B2_07_OLDTOWN_ID = 'b2-07-oldtown'
@@ -27,6 +31,16 @@ export const B2_07_EXPLORE = 'b2-07-explore'
 export const B2_07_POSTER = 'b2-07-poster'
 export const B2_07_CONDITIONS = 'b2-07-conditions'
 export const B2_07_GET = 'b2-07-get'
+/** Bloque 2 */
+export const B2_07_CHAIR = 'b2-07-chair'
+export const B2_07_OLIVER = 'b2-07-oliver'
+export const B2_07_LEO_HALL = 'b2-07-leo-hall'
+export const B2_07_DEBATE = 'b2-07-debate'
+/** Dato de historia: el protagonista pidió dos salidas de emergencia (las escaleras traseras que en 2061 salvan a la gente; lugar 13) */
+export const B2_07_TWO_EXITS = 'b2-07-two-exits'
+export const B2_07_RAISER1 = 'b2-07-raiser1'
+export const B2_07_RAISER2 = 'b2-07-raiser2'
+export const B2_07_BOSS = 'b2-07-boss'
 
 /**
  * Leyenda (Tiles.tsx, sin dibujos nuevos): b pared de ladrillo · h afiche · ^ escalera · g andamio · 8 caja de herramientas ·
@@ -62,6 +76,14 @@ export const B2_07_OLDTOWN: SceneDef = {
     { type: 'npc', id: B2_07_LEO_IN, x: 3, y: 1 },
     { type: 'npc', id: B2_07_ROSA, x: 10, y: 2 },
     { type: 'npc', id: B2_07_SAM, x: 8, y: 3 },
+    // Bloque 2: la reunión vecinal en el salón (Leo pasa del edificio al salón al terminar la lección de get)
+    { type: 'npc', id: B2_07_LEO_HALL, x: 19, y: 3 },
+    { type: 'npc', id: B2_07_CHAIR, x: 21, y: 1 },
+    { type: 'npc', id: B2_07_OLIVER, x: 21, y: 3 },
+    // Al terminar la reunión, Oliver sale furioso: dos Rent Raisers en la calle y The Developer frente al edificio
+    { type: 'enemy', id: B2_07_RAISER1, x: 11, y: 4, after: B2_07_DEBATE },
+    { type: 'enemy', id: B2_07_RAISER2, x: 14, y: 2, after: B2_07_RAISER1 },
+    { type: 'enemy', id: B2_07_BOSS, x: 7, y: 2, after: B2_07_RAISER2 },
   ],
   labels: [
     { text: 'The old building', x: 3, y: 5 },
@@ -81,7 +103,7 @@ export const B2_07_OLDTOWN: SceneDef = {
   },
   locked: (x, y, s) => {
     if (x === 6 && y === 3 && !s.opened.includes(B2_07_EXPLORE)) return { text: 'The door is stuck.', sub: 'La puerta está atascada. Sam Achebe tiene permiso para entrar: habla con él.' }
-    if (x === 17 && y === 3) return NOT_YET('La reunión vecinal todavía no empieza. Primero termina en el edificio con Leo.')
+    if (x === 17 && y === 3 && !s.opened.includes(B2_07_GET)) return NOT_YET('La reunión vecinal todavía no empieza. Primero termina en el edificio con Leo.')
     return null
   },
   requirements: [],
@@ -93,12 +115,17 @@ export const B2_07_OLDTOWN: SceneDef = {
     { label: 'El cartel viejo', done: s.opened.includes(B2_07_POSTER) },
     { label: 'unless / as long as / provided', done: s.opened.includes(B2_07_CONDITIONS) },
     { label: 'Phrasal verbs con get', done: s.opened.includes(B2_07_GET) },
+    { label: 'La reunión vecinal', done: s.opened.includes(B2_07_DEBATE) },
+    { label: 'Rent Raisers (2)', done: s.defeated.includes(B2_07_RAISER2) },
+    { label: 'The Developer', done: s.defeated.includes(B2_07_BOSS) },
   ],
   intro: {
     first: 'Presente. El barrio antiguo de Lumen Bay. Hay turistas por todas partes. Leo te espera en la calle.',
     later: (s) =>
-      s.opened.includes(B2_07_GET)
-        ? 'El barrio antiguo. Mañana hay reunión vecinal en el ayuntamiento: se decide el futuro del edificio.'
+      s.opened.includes(B2_07_DEBATE)
+        ? 'El barrio antiguo. Oliver Grant salió furioso de la reunión… y algo enorme se mueve frente al edificio.'
+        : s.opened.includes(B2_07_GET)
+        ? 'El barrio antiguo. La reunión vecinal empieza en el ayuntamiento: se decide el futuro del edificio.'
         : s.opened.includes(B2_07_EXPLORE)
         ? 'El edificio abandonado está abierto. Leo se quedó adentro, mirando un cartel viejo.'
         : 'El barrio antiguo de Lumen Bay. Los arriendos suben y el edificio viejo espera.',
@@ -196,3 +223,113 @@ export const B2_07_POSTER_SCRIPT: ScriptLine[] = [
   { who: 'narrator', text: "Leo: Sam says the builder wants it for luxury flats. Unless we do something, that's what will happen.", es: 'Leo: Sam dice que el constructor lo quiere para apartamentos de lujo. A menos que hagamos algo, eso es lo que va a pasar.' },
   { who: 'narrator', text: 'Leo: "Unless"… At the meeting we have to put conditions on the table. Let me explain how.', es: '"Unless"… En la reunión tenemos que poner condiciones sobre la mesa. Te explico cómo.' },
 ]
+
+// ── Bloque 2 ──
+
+/** La reunión vecinal (DebateTalk): la concejala Ana Petrova y Oliver Grant. El último turno es la condición de las dos salidas */
+export const B2_07_DEBATE_TURNS: DebateTurn[] = [
+  {
+    text: 'Councillor Petrova: Welcome, everyone. Tonight we discuss the old building: luxury flats or a community school. Who wants to start?',
+    es: 'Concejala Petrova: Bienvenidos todos. Esta noche hablamos del edificio viejo: apartamentos de lujo o escuela comunitaria. ¿Quién empieza?',
+    options: [
+      { en: 'This area has been changing fast. The more flats go to tourists, the fewer families can stay.', es: 'Este barrio ha estado cambiando rápido. Cuantos más apartamentos se van para turistas, menos familias pueden quedarse.', value: 'good', reply: { text: 'Rosa (from the seats): That\'s right! My street used to be full of children.', es: 'Rosa (desde las sillas): ¡Así es! Mi calle antes estaba llena de niños.' } },
+      { en: 'I think a school is a nice idea.', es: 'Creo que una escuela es una buena idea.', value: 'neutral', reply: { text: 'Councillor Petrova: Nice… but can you tell us why?', es: 'Concejala Petrova: Buena… pero ¿nos puedes decir por qué?' } },
+      { en: 'Rents are rising since years.', es: '(Desde hace años y sigue: have been rising for years.)', value: 'bad', reply: { text: 'Leo (quietly): Have been rising for years… But yes, they have.', es: 'Leo (en voz baja): Have been rising for years… Pero sí, han subido.' } },
+    ],
+  },
+  {
+    text: 'Oliver Grant: Flats bring money to Lumen Bay. Unless we build them, that building will just fall down.',
+    es: 'Oliver Grant: Los apartamentos traen dinero a Lumen Bay. Si no los construimos, ese edificio simplemente se va a caer.',
+    options: [
+      { en: 'Unless we build a school, people who work all day will have nowhere to study at night.', es: 'Si no construimos una escuela, la gente que trabaja todo el día no tendrá dónde estudiar de noche.', value: 'good', reply: { text: 'Councillor Petrova: A night school… That is an interesting point.', es: 'Concejala Petrova: Una escuela nocturna… Es un punto interesante.' } },
+      { en: "Unless we don't build flats, it will fall down too.", es: '(unless ya es negativo: Unless we build…)', value: 'bad', reply: { text: 'Oliver Grant: Exactly! Even the kid agrees with me. I think.', es: 'Oliver Grant: ¡Exacto! Hasta el chico está de acuerdo conmigo. Creo.' } },
+      { en: "Maybe. I don't know much about buildings.", es: 'Puede ser. No sé mucho de edificios.', value: 'neutral', reply: { text: 'Oliver Grant: Then leave it to the experts.', es: 'Oliver Grant: Entonces déjaselo a los expertos.' } },
+    ],
+  },
+  {
+    text: 'Councillor Petrova: Suppose we choose the school. Who would pay for it?',
+    es: 'Concejala Petrova: Supongamos que elegimos la escuela. ¿Quién la pagaría?',
+    options: [
+      { en: 'Someone will pay. Schools are important.', es: 'Alguien pagará. Las escuelas son importantes.', value: 'neutral', reply: { text: 'Councillor Petrova: "Someone" is not a plan, I\'m afraid.', es: 'Concejala Petrova: Me temo que "alguien" no es un plan.' } },
+      { en: 'Provided that the town hall will pay for the building, the neighbours help.', es: '(Después de provided va presente: provided that the town hall pays…)', value: 'bad', reply: { text: 'Councillor Petrova: Provided that the town hall pays… I see what you mean.', es: 'Concejala Petrova: Siempre que el ayuntamiento pague… Entiendo lo que quieres decir.' } },
+      { en: 'Supposing the town hall pays for the building, the neighbours could help with the repairs.', es: 'Supongamos que el ayuntamiento paga el edificio: los vecinos podrían ayudar con las reparaciones.', value: 'good', reply: { text: 'Sam Achebe: I can help! And so can half the street.', es: 'Sam Achebe: ¡Yo puedo ayudar! Y la mitad de la calle también.' } },
+    ],
+  },
+  {
+    text: 'Councillor Petrova: Before we vote next week, does anyone have conditions?',
+    es: 'Concejala Petrova: Antes de votar la próxima semana, ¿alguien tiene condiciones?',
+    options: [
+      { en: "We'll support the school as long as it has two fire exits.", es: 'Apoyaremos la escuela siempre y cuando tenga dos salidas de emergencia.', value: 'good', reply: { text: 'Councillor Petrova: Two fire exits. Very sensible. I\'m writing it down.', es: 'Concejala Petrova: Dos salidas de emergencia. Muy sensato. Lo anoto.' } },
+      { en: 'As long as it will have two fire exits.', es: '(Después de as long as va presente: as long as it has…)', value: 'bad', reply: { text: 'Councillor Petrova: As long as it has two fire exits. Yes. I\'m writing it down.', es: 'Concejala Petrova: Siempre que tenga dos salidas de emergencia. Sí. Lo anoto.' } },
+      { en: 'No conditions. Two exits would be good, I guess.', es: 'Sin condiciones. Dos salidas estarían bien, supongo.', value: 'neutral', reply: { text: 'Councillor Petrova: Two exits? That should be a condition, not a guess. I\'m writing it down.', es: 'Concejala Petrova: ¿Dos salidas? Eso debería ser una condición, no una suposición. Lo anoto.' } },
+    ],
+  },
+]
+export const B2_07_DEBATE_ENDINGS: DebateEndings = {
+  high: { text: 'The neighbours applaud. Oliver Grant stands up, red in the face. "You won\'t get away with this!" He storms outside.', es: 'Los vecinos aplauden. Oliver Grant se levanta, rojo de rabia. "¡No se van a salir con la suya!". Sale furioso.' },
+  mid: { text: 'Some neighbours nod. Oliver Grant shakes his head. "We\'ll see about that." He walks out and slams the door.', es: 'Algunos vecinos asienten. Oliver Grant niega con la cabeza. "Eso ya lo veremos". Sale y tira la puerta.' },
+  low: { text: 'The room is quiet. Leo finishes your ideas for you. Oliver Grant laughs, but his eyes are strange… purple. He walks out.', es: 'La sala queda en silencio. Leo termina tus ideas por ti. Oliver Grant se ríe, pero sus ojos se ven raros… morados. Sale.' },
+}
+
+const CH = 'change-b2' as const
+const IA = 'if-alt-b2' as const
+const GT = 'get-b2' as const
+
+/** Rent Raisers, agentes inmobiliarios corrompidos. Preguntas: etiqueta b2-07-raiser */
+const RAISER = (id: string, line: { text: string; es: string }): EnemyDef => ({
+  id,
+  name: 'Rent Raiser',
+  person: 'Rent Raiser',
+  kind: 'minion',
+  hp: 4,
+  topics: [CH, IA],
+  kinds: ['fill', 'fix'],
+  tags: ['b2-07-raiser'],
+  onlyTags: true,
+  zone: 'calle',
+  look: { shirt: '#2b2b33', hair: '#6a3fa0', skin: '#c9a6e0' },
+  before: [line],
+  after: [{ text: '(The agent drops a pile of contracts. The purple light leaves his eyes.)', es: '(El agente deja caer una pila de contratos. La luz morada sale de sus ojos.)' }],
+  freed: { text: '(He looks around, confused. "Why was I shouting about prices?")', es: '(Mira a su alrededor, confundido. "¿Por qué estaba gritando precios?")' },
+})
+
+/**
+ * The Developer: Oliver Grant corrompido, un brazo de grúa con bola de demolición. Jefe de 2 fases.
+ * Fase 1: tiempos para el cambio y the more… the more (b2-07-boss-change) · Fase 2: alternativas a if y phrasal verbs con get,
+ * con la reunión en escucha (b2-07-boss-if). Los fragmentos y el cierre llegan en el bloque 3.
+ */
+export const B2_07_BOSS_DEF: EnemyDef = {
+  id: B2_07_BOSS,
+  name: 'The Developer',
+  person: 'The Developer',
+  kind: 'boss',
+  hp: 10,
+  topics: [CH, IA, GT],
+  kinds: ['fill', 'fix', 'order', 'listen'],
+  tags: ['b2-07-boss-change'],
+  phases: [
+    { hp: 5, title: 'Demolición: lo que cambió', topics: [CH], kinds: ['fill', 'fix', 'order'], tags: ['b2-07-boss-change'], line: { text: 'Rents are rising since 2020! The more it is busy, the more I earn!', es: 'are rising since y the more it is busy: mal.' } },
+    { hp: 5, title: 'Última oferta: las condiciones', topics: [IA, GT], kinds: ['fill', 'fix', 'listen'], tags: ['b2-07-boss-if'], line: { text: 'Provided that it will have exits… HA! You won\'t get away from me!', es: 'provided… will have y get away from: mal.' } },
+  ],
+  onlyTags: true,
+  zone: 'calle',
+  look: { shirt: '#e0a92b', hair: '#3a3a3a', skin: '#8a8f99' },
+  before: [
+    { text: '(In front of the old building, Oliver Grant\'s arm grows into a giant crane. A wrecking ball swings from it.)', es: '(Frente al edificio viejo, el brazo de Oliver Grant crece hasta volverse una grúa gigante. De ella cuelga una bola de demolición.)' },
+    { text: 'LUXURY FLATS! UNLESS YOU DON\'T MOVE, I\'LL KNOCK IT DOWN!', es: '¡APARTAMENTOS DE LUJO! ¡SI NO TE QUITAS, LO TUMBO!' },
+  ],
+  after: [{ text: '(The crane folds up like paper. The wrecking ball rolls away and stops.)', es: '(La grúa se dobla como papel. La bola de demolición rueda y se detiene.)' }],
+  freed: { text: '(Where the wrecking ball stopped, two small lights are shining.)', es: '(Donde se detuvo la bola de demolición brillan dos lucecitas.)' },
+  farewell: {
+    q: 'The Developer (fading): "Money, money… The more I had, the more I wanted…"',
+    options: ["You can't get away with everything.", "You can't get away from everything.", "You can't get by with everything."],
+    answer: 0,
+    tip: 'get away with = salirse con la suya.',
+  },
+}
+
+export const B2_07_ENEMIES: Record<string, EnemyDef> = {
+  [B2_07_RAISER1]: RAISER(B2_07_RAISER1, { text: "Unless you don't pay, you'll lose the flat! As long as you will sign, it's cheap!", es: "unless you don't pay y as long as you will sign: mal." }),
+  [B2_07_RAISER2]: RAISER(B2_07_RAISER2, { text: "It's getting more and more expensiver! Rents are going up since Monday!", es: 'more expensiver y are going up since: mal.' }),
+  [B2_07_BOSS]: B2_07_BOSS_DEF,
+}

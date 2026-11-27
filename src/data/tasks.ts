@@ -89,7 +89,7 @@ import { B2_S1_WORDS_IDS } from './questions-b2-s1'
 import { B2_06_ARRIVAL_SCRIPT, B2_06_CLOSE_SCRIPT, B2_06_FINDING_SCRIPT, B2_06_UNHEARD_ROOM } from './b2Lab'
 import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_IDS } from './questions-b2-06'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
-import { B2_07_ARRIVAL_SCRIPT, B2_07_EXPLORE_ROOM, B2_07_POSTER_SCRIPT, B2_07_ROSA_SCRIPT, B2_07_SAM_INTRO } from './b2OldBuilding'
+import { B2_07_ARRIVAL_SCRIPT, B2_07_DEBATE_ENDINGS, B2_07_DEBATE_TURNS, B2_07_EXPLORE_ROOM, B2_07_POSTER_SCRIPT, B2_07_ROSA_SCRIPT, B2_07_SAM_INTRO } from './b2OldBuilding'
 import { B2_07_CHANGE_IDS, B2_07_CONDITIONS_IDS, B2_07_GET_IDS } from './questions-b2-07'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
 import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
@@ -7621,6 +7621,30 @@ NPC_TASKS['b2-07-get'] = {
     es: 'El constructor no se va a salir con la suya. No si hablamos.',
     sub: 'Lección hecha. Pronto empieza la reunión vecinal en el ayuntamiento.',
     say: "The builder won't get away with it.",
+  },
+}
+
+// ── B2-07 · The Old Building, bloque 2 (la reunión vecinal). NO guarda el cierre de la misión ──
+// La concejala Petrova: la reunión (DebateTalk). Siempre termina; con cualquier desenlace se guarda la condición de las dos
+// salidas de emergencia (b2-07-two-exits, dato de historia para el lugar 13). Al terminar, Oliver sale y aparecen los Rent Raisers. 10 monedas
+NPC_TASKS['b2-07-debate'] = {
+  npc: 'b2-07-chair',
+  done: 'b2-07-debate',
+  activity: 'debate',
+  requires: { id: 'b2-07-get', text: 'The meeting starts soon. Take a seat.', es: 'La reunión empieza pronto. Toma asiento.', sub: 'Primero termina las lecciones con Leo en el edificio.' },
+  debate: {
+    title: 'The town hall meeting',
+    ask: 'Tú hablas:',
+    turns: B2_07_DEBATE_TURNS,
+    endings: B2_07_DEBATE_ENDINGS,
+    results: { high: 'b2-07-two-exits', mid: 'b2-07-two-exits', low: 'b2-07-two-exits' },
+  },
+  coins: 10,
+  steps: [],
+  reward: {
+    text: 'Outside, someone is shouting prices…',
+    es: 'Afuera, alguien está gritando precios…',
+    sub: 'Reunión terminada. La condición de las dos salidas quedó en el acta. Oliver Grant salió furioso a la calle.',
   },
 }
 

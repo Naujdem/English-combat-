@@ -57,7 +57,7 @@ import { B2_02_COMBAT_QUESTIONS, B2_02_QUESTIONS } from './questions-b2-02'
 import { B2_03_COMBAT_QUESTIONS, B2_03_QUESTIONS } from './questions-b2-03'
 import { B2_04_COMBAT_QUESTIONS, B2_04_QUESTIONS } from './questions-b2-04'
 import { B2_05_COMBAT_QUESTIONS, B2_05_QUESTIONS } from './questions-b2-05'
-import { B2_07_QUESTIONS } from './questions-b2-07'
+import { B2_07_COMBAT_QUESTIONS, B2_07_QUESTIONS } from './questions-b2-07'
 import { B2_06_COMBAT_QUESTIONS, B2_06_QUESTIONS } from './questions-b2-06'
 import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
@@ -455,6 +455,7 @@ export const QUESTIONS: Question[] = [
   ...B2_05_QUESTIONS,
   ...B2_05_COMBAT_QUESTIONS,
   ...B2_07_QUESTIONS,
+  ...B2_07_COMBAT_QUESTIONS,
   ...B2_06_QUESTIONS,
   ...B2_06_COMBAT_QUESTIONS,
   ...B2_S1_QUESTIONS,
