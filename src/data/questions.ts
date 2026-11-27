@@ -63,7 +63,7 @@ import { B2_08_COMBAT_QUESTIONS, B2_08_QUESTIONS } from './questions-b2-08'
 import { B2_09_QUESTIONS } from './questions-b2-09'
 import { B2_10_COMBAT_QUESTIONS, B2_10_QUESTIONS } from './questions-b2-10'
 import { B2_11_COMBAT_QUESTIONS, B2_11_QUESTIONS } from './questions-b2-11'
-import { B2_12_QUESTIONS } from './questions-b2-12'
+import { B2_12_COMBAT_QUESTIONS, B2_12_QUESTIONS } from './questions-b2-12'
 import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
@@ -471,6 +471,7 @@ export const QUESTIONS: Question[] = [
   ...B2_11_QUESTIONS,
   ...B2_11_COMBAT_QUESTIONS,
   ...B2_12_QUESTIONS,
+  ...B2_12_COMBAT_QUESTIONS,
   ...B2_S1_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
@@ -845,6 +846,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
       'will have been + -ing (+ for): cuánto tiempo llevará algo en el futuro. By 40, I will have been teaching for ten years.',
       'Metas: goal · ambition · achieve a goal · fulfil a dream · milestone.',
       "Phrasal verbs: look back on (mirar atrás) · turn out (resultar): Life didn't turn out as I planned.",
+    ],
+  },
+  'time-clauses-b2': {
+    name: 'By the time, until y be about to',
+    level: 'B2',
+    lesson: [
+      "by the time + presente (aunque sea futuro): By the time he sees me, it will be too late. (Nunca \"by the time he will see\".)",
+      "by = a más tardar · until = todo el tiempo hasta: be there by eight · I'll wait until he's alone.",
+      "when / if + presente para el futuro: When I take his voice, I'll speak again. · be about to + verbo = a punto de: I'm about to leave.",
     ],
   },
   'adv-phrases-b2': {

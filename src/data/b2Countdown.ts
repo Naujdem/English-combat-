@@ -1,4 +1,5 @@
-import type { GameState, SceneDef, Zone } from '../game/types'
+import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
+import type { FuturePlannerContent } from '../components/FuturePlanner'
 import type { ScriptLine } from './b1Accident'
 import type { TextCommandRoom } from '../components/TextCommand'
 
@@ -10,6 +11,9 @@ import type { TextCommandRoom } from '../components/TextCommand'
  * Bloque 1: el cuarto vacío (b2-12-arrival, script) → la pared del plan: lección 'fperfect-b2' + práctica (b2-12-plan)
  *   → la lista vieja de metas: lección 'goals-b2' + práctica (b2-12-goals) → Unheard en el escritorio (b2-12-unheard):
  *   abrir el cajón (el reloj), intentar quitar el plan (no se puede: ya ocurrió) y dejar la nota "Don't do it."
+ * Bloque 2: G vuelve y lee la nota (b2-12-return, script, escucha: be about to y futuro perfecto continuo) → el cuaderno de G:
+ *   lección 'time-clauses-b2' + práctica (b2-12-notebook) → Future Planner versión G en la pared (b2-12-timeline, reutilizado:
+ *   la línea de tiempo de G con futuro perfecto) → dos Ticking Shadows (esbirros) → el jefe The Countdown (2 fases).
  */
 export const B2_12_ROOM_ID = 'b2-12-room'
 export const B2_12_WALL = 'b2-12-wall'
@@ -20,6 +24,15 @@ export const B2_12_ARRIVAL = 'b2-12-arrival'
 export const B2_12_PLAN = 'b2-12-plan'
 export const B2_12_GOALS = 'b2-12-goals'
 export const B2_12_UNHEARD = 'b2-12-unheard'
+/** Bloque 2 */
+export const B2_12_G = 'b2-12-g'
+export const B2_12_NOTEBOOK_NPC = 'b2-12-g-notebook'
+export const B2_12_RETURN = 'b2-12-return'
+export const B2_12_NOTEBOOK = 'b2-12-notebook'
+export const B2_12_TIMELINE = 'b2-12-timeline'
+export const B2_12_SHADOW1 = 'b2-12-shadow1'
+export const B2_12_SHADOW2 = 'b2-12-shadow2'
+export const B2_12_BOSS = 'b2-12-boss'
 /** Se guarda al salir de la Ventana (después del fundido azul) */
 export const B2_12_EXITED = 'b2-12-exited'
 
@@ -52,6 +65,13 @@ export const B2_12_ROOM: SceneDef = {
     { type: 'npc', id: B2_12_WALL, x: 3, y: 0 },
     { type: 'npc', id: B2_12_LIST, x: 1, y: 5 },
     { type: 'npc', id: B2_12_DESK, x: 8, y: 5 },
+    // Bloque 2: G vuelve (al terminar Unheard) y deja su cuaderno abierto en el piso, junto al colchón
+    { type: 'npc', id: B2_12_G, x: 9, y: 3 },
+    { type: 'npc', id: B2_12_NOTEBOOK_NPC, x: 3, y: 2 },
+    // Al completar la línea de tiempo, los alfileres hacen tic-tac: dos sombras y luego la obsesión de G
+    { type: 'enemy', id: B2_12_SHADOW1, x: 5, y: 1, after: B2_12_TIMELINE },
+    { type: 'enemy', id: B2_12_SHADOW2, x: 3, y: 4, after: B2_12_SHADOW1 },
+    { type: 'enemy', id: B2_12_BOSS, x: 6, y: 3, after: B2_12_SHADOW2 },
   ],
   labels: [{ text: '2056', x: 5, y: 3 }],
   zoneAt,
@@ -69,6 +89,11 @@ export const B2_12_ROOM: SceneDef = {
     { label: 'La pared del plan', done: s.opened.includes(B2_12_PLAN) },
     { label: 'La lista vieja de metas', done: s.opened.includes(B2_12_GOALS) },
     { label: 'Unheard: el cajón, el plan y la nota', done: s.opened.includes(B2_12_UNHEARD) },
+    { label: 'G vuelve', done: s.opened.includes(B2_12_RETURN) },
+    { label: 'El cuaderno de G', done: s.opened.includes(B2_12_NOTEBOOK) },
+    { label: 'La línea de tiempo de G', done: s.opened.includes(B2_12_TIMELINE) },
+    { label: 'Ticking Shadows (2)', done: s.defeated.includes(B2_12_SHADOW2) },
+    { label: 'The Countdown', done: s.defeated.includes(B2_12_BOSS) },
   ],
   intro: {
     first: '2056. A small room near the old port, at night. — 2056. Un cuarto pequeño cerca del puerto viejo, de noche. Aquí nadie te oye.',
@@ -153,4 +178,105 @@ export const B2_12_UNHEARD_ROOM: TextCommandRoom = {
     },
   ],
   finish: { en: 'Footsteps on the stairs. Someone is coming…', es: 'Pasos en la escalera. Alguien viene…', banner: 'Unheard completado' },
+}
+
+// ── Bloque 2 ──
+
+/** G vuelve y lee la nota. No ve a nadie. Habla solo (escucha): be about to y futuro perfecto continuo */
+export const B2_12_RETURN_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(The key turns. The door opens. The old man in the dark coat comes in, with a small gift under his arm.)', es: '(La llave gira. La puerta se abre. Entra el viejo del abrigo oscuro, con un regalito bajo el brazo.)' },
+  { who: 'narrator', text: '(He sees the note next to the clock. He reads it. His hands stop shaking for a second.)', es: '(Ve la nota junto al reloj. La lee. Por un segundo, sus manos dejan de temblar.)' },
+  { who: 'narrator', text: 'G: "Don\'t do it."… Who\'s there?', es: 'G: "No lo hagas"… ¿Quién está ahí?' },
+  { who: 'narrator', text: '(He looks around the room. He looks straight at you… and sees nothing.)', es: '(Mira por todo el cuarto. Te mira directo a ti… y no ve nada.)' },
+  { who: 'L', fx: 'unheard', text: "I'm here! Please, listen to me!", es: 'Intentas decir: "¡Estoy aquí! ¡Por favor, escúchame!"' },
+  { who: 'narrator', text: 'G: No one can stop me now. I\'m about to change everything.', es: 'G: Ya nadie puede detenerme. Estoy a punto de cambiarlo todo.' },
+  { who: 'narrator', text: 'G: By tomorrow, I\'ll have been waiting for this for thirty years.', es: 'G: Para mañana, llevaré treinta años esperando esto.' },
+  { who: 'narrator', text: '(He drops his notebook on the floor, open, and sits on the mattress. You can read the page.)', es: '(Deja caer su cuaderno en el piso, abierto, y se sienta en el colchón. Puedes leer la página.)' },
+]
+
+/** Future Planner, versión G (reutilizado, components/FuturePlanner.tsx): la línea de tiempo de mañana, con futuro perfecto */
+export const B2_12_PLANNER_CONTENT: FuturePlannerContent = {
+  title: "G's timeline",
+  intro: 'G completa la línea de tiempo de mañana en la pared. Mira el tablero y completa cada frase: casi todas usan el futuro perfecto.',
+  headers: ['When', 'Where', 'Action', 'Status'],
+  colors: { PLAN: '#f2c230', DONE: '#7ee08a', NOW: '#3fa9ff' },
+  rows: [
+    { who: 'By 8 a.m.', to: 'This room', time: 'leave', status: 'PLAN' },
+    { who: 'By 9 a.m.', to: 'His school', time: 'arrive', status: 'PLAN' },
+    { who: 'By 10 a.m.', to: 'The window', time: 'stand', status: 'PLAN' },
+    { who: 'After class', to: 'The classroom', time: 'take his voice', status: 'PLAN' },
+    { who: 'Tonight', to: '2056', time: 'come back', status: 'PLAN' },
+  ],
+  rounds: [
+    { who: 'G', row: 0, q: 'By 8 a.m., I ___ this room.', es: 'Para las 8 a. m., ya habré salido de este cuarto.', options: ['will have left', 'will have leave', 'will leaving'], answer: 0, tip: 'will have + participio: leave → left.', set: { status: 'DONE' } },
+    { who: 'G', row: 1, q: 'By 9 a.m., I ___ at his school.', es: 'Para las 9 a. m., ya habré llegado a su escuela.', options: ['will arrived', 'will have arrived', 'have will arrived'], answer: 1, tip: 'will have + participio: arrived.', set: { status: 'DONE' } },
+    { who: 'G', row: 2, q: 'By 10 a.m., I ___ at the window for an hour.', es: 'Para las 10 a. m., llevaré una hora parado junto a la ventana.', options: ['will have standing', 'will be stood', 'will have been standing'], answer: 2, tip: 'Cuánto tiempo llevará: will have been + -ing.', set: { status: 'DONE' } },
+    { who: 'G', row: 3, q: "By the time the class ___, I'll have taken his voice.", es: 'Para cuando termine la clase, ya le habré quitado la voz.', options: ['ends', 'will end', 'ending'], answer: 0, tip: 'by the time + presente: ends.', set: { status: 'DONE' } },
+    { who: 'G', row: 4, q: "When I ___ back, I'll speak again.", es: 'Cuando vuelva, hablaré otra vez.', options: ['will come', 'came', 'come'], answer: 2, tip: 'when + presente para el futuro: come.', set: { status: 'DONE' } },
+    { who: 'G', row: 4, q: "I'm ___ to change everything.", es: 'Estoy a punto de cambiarlo todo.', options: ['about', 'going about', 'ready about'], answer: 0, tip: 'be about to + verbo.', set: { status: 'NOW' } },
+  ],
+  finish: 'La línea de tiempo está completa. Los alfileres del mapa empiezan a hacer tic-tac…',
+}
+
+const FP = 'fperfect-b2' as const
+const GL = 'goals-b2' as const
+const TC = 'time-clauses-b2' as const
+
+/** Ticking Shadows: sombras que hacen tic-tac, salidas de los alfileres del mapa. Preguntas: etiqueta b2-12-shadow */
+const SHADOW = (id: string, line: { text: string; es: string }): EnemyDef => ({
+  id,
+  name: 'Ticking Shadow',
+  person: 'Ticking Shadow',
+  kind: 'minion',
+  hp: 4,
+  topics: [FP, GL, TC],
+  kinds: ['fill', 'fix'],
+  tags: ['b2-12-shadow'],
+  onlyTags: true,
+  zone: 'casa',
+  look: { shirt: '#1a2233', hair: '#0b0f18', skin: '#2a3550' },
+  before: [line],
+  after: [{ text: '(The shadow stops ticking.)', es: '(La sombra deja de hacer tic-tac.)' }],
+  freed: { text: '(It goes back into a pin on the map.)', es: '(Vuelve a un alfiler del mapa.)' },
+})
+
+/**
+ * The Countdown: la obsesión de G hecha reloj gigante. Jefe de 2 fases.
+ * Fase 1: futuro perfecto simple y continuo (b2-12-boss-fp) · Fase 2: by the time / until / when + presente y be about to,
+ * con escucha (b2-12-boss-tc). Las Ventanas no dan atuendos: solo despedida.
+ */
+export const B2_12_BOSS_DEF: EnemyDef = {
+  id: B2_12_BOSS,
+  name: 'The Countdown',
+  person: 'The Countdown',
+  kind: 'boss',
+  hp: 10,
+  topics: [FP, GL, TC],
+  kinds: ['fill', 'fix', 'order', 'listen'],
+  tags: ['b2-12-boss-fp'],
+  phases: [
+    { hp: 5, title: 'Tic-tac: el plan de treinta años', topics: [FP, GL], kinds: ['fill', 'fix', 'order'], tags: ['b2-12-boss-fp'], line: { text: 'By 2060 I will have been became everything! By next year she will finish!', es: 'will have been became: mal. Y "will finish" cuando el contexto pide "will have finished".' } },
+    { hp: 5, title: 'Las últimas horas', topics: [TC], kinds: ['fill', 'fix', 'listen'], tags: ['b2-12-boss-tc'], line: { text: "By the time he will arrive, I'll have left! Wait here until I will come back!", es: 'by the time he will arrive y until I will come: mal (van en presente).' } },
+  ],
+  onlyTags: true,
+  zone: 'casa',
+  look: { shirt: '#1c2a3e', hair: '#3fa9ff', skin: '#25344d' },
+  before: [
+    { text: '(The clock in the drawer rises into the air. It grows and grows until it fills the room.)', es: '(El reloj del cajón se eleva en el aire. Crece y crece hasta llenar el cuarto.)' },
+    { text: 'TICK. TOCK. THIRTY YEARS. NOTHING CAN STOP THE COUNTDOWN.', es: 'TIC. TAC. TREINTA AÑOS. NADA PUEDE DETENER LA CUENTA REGRESIVA.' },
+  ],
+  after: [{ text: '(The giant clock slows down… and shrinks back into the drawer.)', es: '(El reloj gigante va más despacio… y se encoge hasta volver al cajón.)' }],
+  freed: { text: '(The ticking stops. For a moment, the room is silent.)', es: '(El tic-tac se detiene. Por un momento, el cuarto queda en silencio.)' },
+  farewell: {
+    q: 'The Countdown (fading): "Tick… tock… by the time he…"',
+    options: ['By the time he understands, it will be too late.', 'By the time he will understand, it will be too late.', 'By the time he understanding, it will be too late.'],
+    answer: 0,
+    tip: 'by the time + presente: understands.',
+  },
+}
+
+export const B2_12_ENEMIES: Record<string, EnemyDef> = {
+  [B2_12_SHADOW1]: SHADOW(B2_12_SHADOW1, { text: "Tick! By tomorrow I will have finish! Tock! I'm about leaving!", es: 'will have finish y about leaving: mal.' }),
+  [B2_12_SHADOW2]: SHADOW(B2_12_SHADOW2, { text: 'Tick, tock… I will have been wait for years!', es: 'will have been wait: mal.' }),
+  [B2_12_BOSS]: B2_12_BOSS_DEF,
 }
