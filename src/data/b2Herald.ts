@@ -18,7 +18,9 @@ import type { SpriteLook } from '../components/Sprite'
  *   Priya: Style Guide (b2-02-styleguide, The Fine Print con sellos STYLE OK / FIX IT) → tras las dos lecciones de Manuel,
  *   Viktor: Fact Check versión fácil (b2-02-factcheck; say / tell / ask + objeto + to) → Viktor desaparece (se corrompe) →
  *   dos practicantes agotados (esbirros) → el jefe The Deadline (2 fases), en el escritorio de Viktor.
- * Bloque 3 (pendiente): diario, recompensas, núcleo (dos fragmentos, primer segmento) y cierre (abre la Ventana 3).
+ * Bloque 3: Viktor vuelve a la normalidad (b2-02-viktor-back, script) → Manuel: el cierre (b2-02-close): recupera los temas y
+ *   le asigna al protagonista los apagones del puerto; Explore muestra FragmentJoin (dos fragmentos → primer segmento del núcleo,
+ *   B2_02_FRAGMENTS) y se abre la Ventana 3. Credencial de prensa (regalo de The Deadline). Diario: data/b2Diary.ts.
  */
 export const B2_02_HERALD_ID = 'b2-02-herald'
 export const B2_02_MANUEL = 'b2-02-manuel'
@@ -39,6 +41,13 @@ export const B2_02_FACTCHECK = 'b2-02-factcheck'
 export const B2_02_INTERN1 = 'b2-02-intern1'
 export const B2_02_INTERN2 = 'b2-02-intern2'
 export const B2_02_BOSS = 'b2-02-boss'
+/** Bloque 3 */
+export const B2_02_VIKTOR_BACK = 'b2-02-viktor-back'
+export const B2_02_CLOSE = 'b2-02-close'
+/** Se guarda al terminar la animación de los dos fragmentos (primer segmento del núcleo) */
+export const B2_02_FRAGMENTS = 'b2-02-fragments'
+/** Mensaje de la primera vez que se llena un segmento (ficha 0.4) */
+export const B2_FIRST_SEGMENT = { en: 'The core remembers something… but this time, you can go there.', es: 'El núcleo recuerda algo… pero esta vez, puedes ir allí.' }
 
 /** Aspecto de los guías de lección (Lesson.tsx). Manuel: el mismo que en B1-14 */
 export const B2_MANUEL_LOOK: SpriteLook = { shirt: '#7a2f3a', hair: '#2a1a12', skin: '#b9805c', gender: 'male' }
@@ -79,6 +88,8 @@ export const B2_02_HERALD: SceneDef = {
     { type: 'enemy', id: B2_02_INTERN1, x: 2, y: 5, after: B2_02_FACTCHECK },
     { type: 'enemy', id: B2_02_INTERN2, x: 6, y: 5, after: B2_02_INTERN1 },
     { type: 'enemy', id: B2_02_BOSS, x: 8, y: 5, after: B2_02_INTERN2 },
+    // Bloque 3: Viktor, ya normal, junto a su escritorio (aparece al vencer a The Deadline)
+    { type: 'npc', id: B2_02_VIKTOR_BACK, x: 9, y: 5 },
   ],
   labels: [{ text: 'The Lumen Bay Herald', x: 1, y: 0 }],
   zoneAt,
@@ -100,6 +111,8 @@ export const B2_02_HERALD: SceneDef = {
     { label: 'Fact Check', done: s.opened.includes(B2_02_FACTCHECK) },
     { label: 'Practicantes agotados (2)', done: s.defeated.includes(B2_02_INTERN2) },
     { label: 'The Deadline', done: s.defeated.includes(B2_02_BOSS) },
+    { label: 'Viktor vuelve', done: s.opened.includes(B2_02_VIKTOR_BACK) },
+    { label: 'El cierre (Manuel)', done: s.opened.includes(B2_02_CLOSE) },
   ],
   intro: {
     first: 'The Lumen Bay Herald. Phones ring, keyboards click. — The Lumen Bay Herald. Suenan teléfonos, suenan teclados.',
@@ -284,6 +297,7 @@ export const B2_02_BOSS_DEF: EnemyDef = {
   name: 'The Deadline',
   person: 'The Deadline',
   kind: 'boss',
+  reward: 'credencial-prensa',
   hp: 10,
   topics: [PP, IV, VP, MT],
   kinds: ['fill', 'fix', 'order', 'listen'],
@@ -298,6 +312,12 @@ export const B2_02_BOSS_DEF: EnemyDef = {
   before: [{ text: 'Tick. Tock. The page closes at six. I had been waiting for you… and you are LATE.', es: 'Tic. Tac. La página cierra a las seis. Te había estado esperando… y llegas TARDE.' }],
   after: [{ text: '(The clock slows down… and stops. Viktor falls into his chair.)', es: '(El reloj va más despacio… y se detiene. Viktor cae en su silla.)' }],
   freed: { text: '(Two small pieces of light float above the desk.)', es: '(Dos pedacitos de luz flotan sobre el escritorio.)' },
+  farewell: {
+    q: 'Viktor (tired): "What happened? Did I ask you to stay late?"',
+    options: ['No. You told us to finish before six.', 'No. You told us finish before six.', 'No. You said us to finish before six.'],
+    answer: 0,
+    tip: 'tell + objeto + to: You told us to finish.',
+  },
 }
 
 export const B2_02_ENEMIES: Record<string, EnemyDef> = {
@@ -305,3 +325,11 @@ export const B2_02_ENEMIES: Record<string, EnemyDef> = {
   [B2_02_INTERN2]: INTERN(B2_02_INTERN2, { text: 'She suggested me to call him. Every intern does his job… Tick, tock…', es: 'suggested me to call y every intern… his: mal.' }),
   [B2_02_BOSS]: B2_02_BOSS_DEF,
 }
+
+/** Viktor vuelve a la normalidad (MemoryScript), después de vencer a The Deadline */
+export const B2_02_VIKTOR_BACK_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(Viktor rubs his eyes. The wall clock is just a clock again.)', es: '(Viktor se frota los ojos. El reloj de pared vuelve a ser solo un reloj.)' },
+  { who: 'narrator', text: "Viktor: I'm sorry. I had been working without a break for days. I don't remember much.", es: 'Viktor: Lo siento. Llevaba días trabajando sin descanso. No recuerdo mucho.' },
+  { who: 'narrator', text: 'Viktor: I found a strange piece of glass at the port last week. I put it on my desk… and then everything went fast.', es: 'Viktor: La semana pasada encontré un trozo de vidrio extraño en el puerto. Lo puse en mi escritorio… y después todo se aceleró.' },
+  { who: 'narrator', text: 'Viktor: Remember to take breaks, intern. I clearly forgot to.', es: 'Viktor: Acuérdate de tomar descansos, practicante. Yo claramente lo olvidé.' },
+]

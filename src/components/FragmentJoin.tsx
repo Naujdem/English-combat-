@@ -16,7 +16,7 @@ const ANIM_MS = 2500
  * memoryNumber: al terminar, el recuerdo con ese número queda abierto en el mapa.
  * preview (modo profesor): solo se ve, no guarda nada.
  */
-export function FragmentJoin({ state, update, memoryNumber, onDone, preview }: { state: GameState; update: Update; memoryNumber?: number; onDone: () => void; preview?: 'first' | 'next' }) {
+export function FragmentJoin({ state, update, memoryNumber, onDone, preview, message }: { state: GameState; update: Update; memoryNumber?: number; onDone: () => void; preview?: 'first' | 'next'; /** B2: texto propio (p. ej., el primer segmento del núcleo) en lugar del de B1 */ message?: { en: string; es: string } }) {
   const [first] = useState(() => (preview ? preview === 'first' : !state.opened.includes(FRAGMENTS_FIRST)))
   const [ended, setEnded] = useState(false)
 
@@ -52,7 +52,12 @@ export function FragmentJoin({ state, update, memoryNumber, onDone, preview }: {
         <FragmentPair joined={ended} />
         {ended && (
           <div className="anim-fade-in">
-            {first ? (
+            {message ? (
+              <>
+                <p className="mt-4 rounded-xl border-2 border-[#3fa9ff] bg-[#3fa9ff]/20 px-3 py-3 font-display text-lg text-[#d6ecff]">{message.en}</p>
+                <p className="mt-1 text-sm text-paper/60">{message.es}</p>
+              </>
+            ) : first ? (
               <>
                 <p className="mt-4 rounded-xl border-2 border-[#9b6ad6] bg-[#9b6ad6]/20 px-3 py-3 font-display text-lg text-[#e6d6ff]">Two fragments joined. They hold a memory... but it's not yours.</p>
                 <p className="mt-1 text-sm text-paper/60">Dos fragmentos se juntaron. Guardan un recuerdo... pero no es tuyo.</p>

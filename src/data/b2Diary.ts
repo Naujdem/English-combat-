@@ -49,4 +49,51 @@ export const B2_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B2-02 · The Herald (presente): sin página de G. Se abre al cerrar la misión 2
+  {
+    id: 'b2-mission-2',
+    title: 'B2 · Misión 2: The Herald',
+    unlock: 'b2-02-close',
+    words: [
+      { title: 'Redacción', words: [['editor', 'editor, editora'], ['deadline', 'hora de cierre, plazo'], ['draft', 'borrador'], ['source', 'fuente'], ['headline', 'titular'], ['byline', 'firma del autor'], ['scoop', 'primicia'], ['fact-check', 'verificar datos']] },
+      { title: 'Competencias', words: [['reliable', 'confiable'], ['adaptable', 'adaptable'], ['attention to detail', 'atención al detalle'], ['cope with', 'lidiar con'], ['overcome', 'superar'], ['under pressure', 'bajo presión']] },
+      { title: 'Reuniones', words: [['agenda', 'orden del día'], ['minutes', 'acta'], ['chair', 'quien preside'], ['item', 'punto (de la agenda)'], ['follow up', 'hacer seguimiento'], ['bring up', 'sacar un tema']] },
+      { title: 'Lenguaje inclusivo', words: [['chairperson', 'quien preside'], ['firefighter', 'bombero, bombera'], ['singular they', 'they en singular'], ['stereotype', 'estereotipo']] },
+      { title: 'Phrasal verbs', words: [['follow up', 'hacer seguimiento'], ['bring up', 'sacar un tema'], ['run by', 'consultar, explicar a alguien'], ['come up with', 'ocurrírsele (una idea)']] },
+    ],
+    versions: [
+      {
+        id: 'b2-mission-2-mine',
+        tense: 'p',
+        tab: 'Mi diario',
+        title: 'My first day at the Herald',
+        unlock: 'b2-02-close',
+        frame: 'Lo escribes esa noche en la residencia.',
+        lines: [
+          { en: 'Today I [started]p at the Herald. Amara [asked]p me about the time I [had been volunteering]p at Lumen Paws.', es: 'Hoy empecé en el Herald. Amara me preguntó por el tiempo que llevaba de voluntariado en Lumen Paws.' },
+          { en: 'Viktor [had been working]p for days without a break. A fragment [had made]p him the Deadline.', es: 'Viktor llevaba días trabajando sin descanso. Un fragmento lo había convertido en The Deadline.' },
+          { en: 'Manuel [asked]p me to write about the voice blackouts.', es: 'Manuel me pidió escribir sobre los apagones de voz.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-2-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'A day in the newsroom',
+        unlock: 'b2-02-close',
+        frame: 'Tu día entero, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'Priya [showed]p me the style guide: we [write]n "firefighter", not "fireman".', es: 'Priya me mostró la guía de estilo: escribimos "firefighter", no "fireman".' },
+          { en: 'The core of the clock [has filled]n its first part.', es: 'El núcleo del reloj ha llenado su primera parte.' },
+          { en: 'Tomorrow I [am going to call]f the harbour office.', es: 'Mañana voy a llamar a la oficina del puerto.' },
+        ],
+        questions: [
+          { q: 'What had Viktor been doing for days?', options: ['Sleeping at the port.', 'Working without a break.', 'Writing a book.'], answer: 1, tip: 'El diario dice: "Viktor had been working for days without a break".' },
+          { q: 'What does the style guide say?', options: ['Write "firefighter", not "fireman".', 'Write "fireman", not "firefighter".', 'Never write about fires.'], answer: 0, tip: 'El diario dice: we write "firefighter", not "fireman".' },
+          { q: 'What is your first story about?', options: ['The new café.', 'Lumen Paws.', 'The voice blackouts.'], answer: 2, tip: 'El diario dice: "Manuel asked me to write about the voice blackouts".' },
+        ],
+      },
+    ],
+  },
 ]

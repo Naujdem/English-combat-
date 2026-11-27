@@ -355,6 +355,8 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   'chaqueta-lumen': { name: 'Chaqueta de Lumen Bay', color: '#1f6f8a' },
   // B2-01 · Catching Up: regalo de Echo of the Grudge (jefe ligero)
   'sudadera-cafe': { name: 'Sudadera del café del puerto', color: '#8a5a3c' },
+  // B2-02 · The Herald: regalo de The Deadline (jefe)
+  'credencial-prensa': { name: 'Credencial de prensa', color: '#2f4f6f' },
   // B1-12 · Old Friends: regalo de The Rumor (jefe). Un delantal crema sobre el torso, con bolsillo y cordones (Sprite.tsx, charm 'apron'); no cambia la camiseta
   'delantal-jhoana': { name: 'Delantal de la abuela Jhoana', color: '#c9a56a' },
   // Regalos de algunos esbirros de A2 (al liberarlos)

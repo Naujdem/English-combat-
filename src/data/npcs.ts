@@ -1475,6 +1475,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#4a5568', hair: '#8a8a8a', skin: '#e8c4a0', gender: 'male' },
     doneLine: { text: "Not now. I've been fighting with this page all morning.", es: 'Ahora no. Llevo toda la mañana peleando con esta página.' },
   },
+  // Viktor, ya normal (bloque 3): aparece al vencer a The Deadline (tarea b2-02-viktor-back)
+  'b2-02-viktor-back': {
+    name: 'Viktor Novak',
+    look: { shirt: '#4a5568', hair: '#8a8a8a', skin: '#e8c4a0', gender: 'male' },
+    after: 'b2-02-boss',
+    doneLine: { text: "I've stopped working at night. Promise.", es: 'Dejé de trabajar de noche. Lo prometo.' },
+  },
   // Priya Raman, la otra practicante (tarea b2-02-style)
   'b2-02-priya': {
     name: 'Priya',
