@@ -47,7 +47,8 @@ export const B1_04_FRAGMENTS = 'b1-04-fragments'
  * Vestíbulo x 1-7 (puerta al pasillo en 8,4). Pasillo x 9-15 (cuartos arriba: 10,1 · 12,1 · 14,1 = tu cuarto; puertas en y 2).
  * Calle x 17-22 (puerta desde el pasillo en 16,4). Banco x 24-29 (puerta desde la calle en 23,4; mostrador en y 2, Ricardo detrás).
  */
-const MAP = [
+/** Mapa de la residencia, la calle y el banco (B2-04 lo reutiliza: data/b2FakeProfile.ts) */
+export const B1_04_MAP = [
   '####h######################h###',
   '#^.....p##.#.#.#########.....F#',
   '#^......##d#d#d#########.CCCC.#',
@@ -76,7 +77,7 @@ export const B1_04_RESIDENCE: SceneDef = {
   id: B1_04_RESIDENCE_ID,
   name: 'Lumen Bay · Residencia',
   topics: [],
-  map: MAP,
+  map: B1_04_MAP,
   start: { x: 4, y: 6 },
   // Sin jefe en este bloque: la puerta del jefe apunta a un muro y no hace falta ninguna llave
   bossDoor: { x: 0, y: 0 },
