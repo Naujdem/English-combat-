@@ -75,3 +75,56 @@ export const B2_07_QUESTIONS: Question[] = [
     tags: T_GT,
   },
 ]
+
+const RAISER = ['b2-07-raiser']
+const BOSS_CH = ['b2-07-boss-change']
+const BOSS_IF = ['b2-07-boss-if']
+
+/** Bloque 2 · combate: Rent Raisers (b2-07-raiser) y The Developer (fase 1: b2-07-boss-change · fase 2: b2-07-boss-if) */
+export const B2_07_COMBAT_QUESTIONS: Question[] = [
+  // Rent Raisers (esbirros): unless doble negativo, will después de as long as, comparativos dobles
+  { id: 'b2-07-rr1', topic: IA, kind: 'fix', prompt: "Unless you don't pay, you'll lose the flat.", options: ["Unless you pay, you'll lose the flat.", "Unless you will pay, you'll lose the flat.", "Unless you paid, you'll lose the flat."], answer: 0, tip: 'unless ya es negativo: Unless you pay (= if you don\'t pay).', tags: RAISER },
+  { id: 'b2-07-rr2', topic: IA, kind: 'fix', prompt: 'As long as you will sign today, the price stays the same.', options: ['As long as you signing today, the price stays the same.', 'As long as you sign today, the price stays the same.', 'As long you sign today, the price stays the same.'], answer: 1, tip: 'Después de as long as va presente: as long as you sign.', tags: RAISER },
+  { id: 'b2-07-rr3', topic: CH, kind: 'fix', prompt: "It's getting more and more expensiver.", options: ["It's getting more expensive and expensive.", "It's getting expensiver and expensiver.", "It's getting more and more expensive."], answer: 2, tip: 'Adjetivo largo: more and more expensive (sin -er).', tags: RAISER },
+  { id: 'b2-07-rr4', topic: CH, prompt: 'Prices are getting ___.', options: ['higher and higher', 'more and more high', 'high and higher'], answer: 0, tip: 'Adjetivo corto: higher and higher.', tags: RAISER },
+  { id: 'b2-07-rr5', topic: IA, prompt: "Pay the deposit now, ___ someone else will take the flat.", options: ['unless', 'otherwise', 'as long as'], answer: 1, tip: 'otherwise = si no (si no pagas…).', tags: RAISER },
+  { id: 'b2-07-rr6', topic: CH, prompt: 'The rent ___ three times since January.', options: ['went up', 'has gone up', 'is going up'], answer: 1, tip: 'Desde enero hasta hoy → present perfect: has gone up.', tags: RAISER },
+
+  // The Developer, fase 1 (tiempos para hablar del cambio, the more… the more)
+  { id: 'b2-07-dc1', topic: CH, kind: 'fix', prompt: 'Rents are rising since 2020.', options: ['Rents rise since 2020.', 'Rents have been rising since 2020.', 'Rents were rising since 2020.'], answer: 1, tip: 'Desde 2020 y sigue → have been rising.', tags: BOSS_CH },
+  { id: 'b2-07-dc2', topic: CH, kind: 'fix', prompt: 'The more it is busy, the more I like it.', options: ['The busier it is, the more I like it.', 'The more busy it is, more I like it.', 'The busiest it is, the more I like it.'], answer: 0, tip: 'the + comparativo: the busier it is.', tags: BOSS_CH },
+  { id: 'b2-07-dc3', topic: CH, prompt: 'The more flats he builds, ___ money he makes.', options: ['the most', 'more', 'the more'], answer: 2, tip: 'the more…, the more…', tags: BOSS_CH },
+  { id: 'b2-07-dc4', topic: CH, prompt: 'There ___ be a bakery on this corner. Now it\'s a souvenir shop.', options: ['used to', 'use to', 'is used to'], answer: 0, tip: 'Antes había y ya no: there used to be.', tags: BOSS_CH },
+  { id: 'b2-07-dc5', topic: CH, prompt: 'The old building is ___: the windows are broken and the walls are dirty.', options: ['renovated', 'run-down', 'crowded'], answer: 1, tip: 'run-down = viejo y en mal estado.', tags: BOSS_CH },
+  { id: 'b2-07-dc6', topic: CH, kind: 'order', prompt: 'Cuantos más turistas vienen, más suben los arriendos.', options: ['The', 'more', 'tourists', 'come,', 'the', 'higher', 'the', 'rents', 'get.'], answer: 0, tip: 'the + comparativo…, the + comparativo…', tags: BOSS_CH },
+
+  // The Developer, fase 2 (alternativas a if, phrasal verbs con get; la reunión en escucha)
+  { id: 'b2-07-di1', topic: IA, kind: 'fix', prompt: 'Provided that it will have exits, we agree.', options: ['Provided that it has exits, we agree.', 'Provided that it having exits, we agree.', 'Provided it will has exits, we agree.'], answer: 0, tip: 'provided + presente: it has.', tags: BOSS_IF },
+  { id: 'b2-07-di2', topic: GT, kind: 'fix', prompt: "You won't get away from it.", options: ["You won't get over it.", "You won't get away with it.", "You won't get by it."], answer: 1, tip: 'Hacer algo malo sin castigo: get away with.', tags: BOSS_IF },
+  { id: 'b2-07-di3', topic: GT, prompt: 'Rosa has always ___ well with her neighbours.', options: ['got along', 'got by', 'got over'], answer: 0, tip: 'get along (well) with = llevarse bien con.', tags: BOSS_IF },
+  { id: 'b2-07-di4', topic: IA, prompt: "We won't sign ___ you promise to keep the building public.", options: ['otherwise', 'unless', 'suppose'], answer: 1, tip: 'unless = if… not: no firmamos si no lo prometes.', tags: BOSS_IF },
+  {
+    id: 'b2-07-di5',
+    topic: IA,
+    kind: 'listen',
+    audio: "The council will consider the school, provided that the neighbours help with the repairs. Otherwise, the building will be sold.",
+    voice: 'female',
+    prompt: 'What will happen if the neighbours do not help?',
+    options: ['The school will open anyway.', 'The building will be sold.', 'The council will pay for everything.'],
+    answer: 1,
+    tip: 'Otherwise (si no ayudan), the building will be sold.',
+    tags: BOSS_IF,
+  },
+  {
+    id: 'b2-07-di6',
+    topic: GT,
+    kind: 'listen',
+    audio: "When my shop closed, it took me a year to get over it. Now I get by with a small stall in the market.",
+    voice: 'male',
+    prompt: 'How is the speaker now?',
+    options: ['He still cannot accept it.', 'He has a big new shop.', 'He manages with a small stall.'],
+    answer: 2,
+    tip: 'get by = arreglárselas: I get by with a small stall.',
+    tags: BOSS_IF,
+  },
+]

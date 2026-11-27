@@ -1615,7 +1615,28 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'Leo',
     look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     after: 'b2-07-explore',
+    until: 'b2-07-get',
     doneLine: { text: 'A night school… Unless we do something, it will be luxury flats.', es: 'Una escuela nocturna… Si no hacemos algo, serán apartamentos de lujo.' },
+  },
+  // B2-07 · bloque 2: Leo en el salón del ayuntamiento
+  'b2-07-leo-hall': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    after: 'b2-07-get',
+    doneLine: { text: "Councillor Petrova is chairing the meeting. Go on, it's your turn to speak.", es: 'La concejala Petrova preside la reunión. Anda, te toca hablar.' },
+  },
+  // Councillor Ana Petrova, concejala que preside la reunión vecinal (tarea b2-07-debate)
+  'b2-07-chair': {
+    name: 'Councillor Petrova',
+    look: { shirt: '#2f4b7a', hair: '#8a5a2b', skin: '#f1d3bd', gender: 'female' },
+    doneLine: { text: 'Two fire exits. It\'s in the minutes now.', es: 'Dos salidas de emergencia. Ya quedó en el acta.' },
+  },
+  // Oliver Grant, el constructor: en la reunión hasta que termina el debate; después se corrompe (The Developer)
+  'b2-07-oliver': {
+    name: 'Oliver Grant',
+    look: { shirt: '#e0a92b', hair: '#3a3a3a', skin: '#e8b896', gender: 'male' },
+    until: 'b2-07-debate',
+    doneLine: { text: 'Luxury flats. That\'s the future of this street.', es: 'Apartamentos de lujo. Ese es el futuro de esta calle.' },
   },
   // Rosa Benítez, vecina de toda la vida (tarea b2-07-rosa-talk)
   'b2-07-rosa': {
