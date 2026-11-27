@@ -1163,6 +1163,16 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'narrator', text: '"When people shout, I freeze up. Then I tell myself to calm down." It is not a choice. It happens to many people.', es: '"Cuando la gente grita, me congelo. Luego me digo que me calme". No es una decisión. Le pasa a mucha gente.' },
     { who: 'board', text: 'I used to ___ up more in class.', choice: { options: ['speak', 'spoke', 'speaking'], answer: 0, tip: 'used to + verbo en forma base.' } },
   ],
+  // B2-03 · bloque 2: el botiquín del pasillo, el cuerpo y las lesiones (Busuu 13)
+  'injuries-b2': [
+    { who: 'narrator', text: '(A first aid kit on the wall. On the lid there is a short guide.)', es: '(Un botiquín en la pared. En la tapa hay una guía corta.)', board: ['Injuries', 'sprain · twist · burn · cut · bruise · bleed'] },
+    { who: 'narrator', text: 'Sprain or twist your ankle: you turn it badly and it hurts. "She sprained her ankle on the stairs."', es: 'Sprain o twist your ankle: lo giras mal y duele. "Se torció el tobillo en las escaleras".' },
+    { who: 'narrator', text: 'Burn your hand: with fire or something hot. Cut your finger: with something sharp. Then it bleeds.', es: 'Burn your hand: quemarse la mano, con fuego o algo caliente. Cut your finger: cortarse el dedo, con algo filoso. Entonces sangra (bleed).' },
+    { who: 'narrator', text: 'A bruise is a dark mark on the skin after a hit. "I have a bruise on my arm."', es: 'A bruise es un moretón, una marca oscura después de un golpe. "Tengo un moretón en el brazo".' },
+    { who: 'narrator', text: 'In English we use my, your, her with the body: "She sprained her ankle." Not "the ankle", and never "her ankle\'s".', es: 'En inglés se usa my, your, her con el cuerpo: "She sprained her ankle". No "the ankle", y nunca "her ankle\'s".', board: ['Body + possessive', 'I burned my hand. · She sprained her ankle.'] },
+    { who: 'narrator', text: 'Injury is the noun: "a serious injury". Injured is the adjective: "Three people were injured."', es: 'Injury es el sustantivo: "una lesión grave". Injured es el adjetivo: "Tres personas resultaron heridas".' },
+    { who: 'board', text: 'She fell on the stairs and sprained ___ ankle.', choice: { options: ['her', 'the', 'hers'], answer: 0, tip: 'Con el cuerpo se usa el posesivo: her ankle.' } },
+  ],
   // B2-02 · bloque 1 (la redacción del Herald, data/b2Herald.ts): Manuel, past perfect continuous
   'ppc-b2': [
     { who: 'manuel', text: 'In an interview you tell your story. Sometimes you need an activity that continued up to a moment in the past.', es: 'En una entrevista cuentas tu historia. A veces necesitas una actividad que continuó hasta un momento del pasado.' },

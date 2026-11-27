@@ -1,4 +1,4 @@
-import type { GameState, SceneDef, Zone } from '../game/types'
+import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
 
 /**
@@ -9,7 +9,9 @@ import type { ScriptLine } from './b1Accident'
  * Orden: la estudiante (b2-03-hello, script: nadie te oye) → el profesor (b2-03-class, script) →
  *   la pizarra: lección 'senses-b2' + práctica (b2-03-senses) → tu yo adulto (b2-03-adult, script) →
  *   el cartel: lección 'feelings-b2' + práctica (b2-03-feelings) → el cuaderno: lección 'diary-b2' + práctica (b2-03-diary).
- * Bloque 2 (pendiente): la alarma, Unheard, la parálisis y las lesiones, los Smoke Shadows y el jefe Panic.
+ * Bloque 2: el panel de emergencia (b2-03-alarm, script con la alarma) → Unheard (b2-03-unheard, 3 metas sin voz) →
+ *   la parálisis de tu yo adulto (b2-03-freeze, script) → la estudiante del tobillo: lección 'injuries-b2' + práctica
+ *   (b2-03-injury, guía el botiquín) → dos Smoke Shadows (esbirros) → el jefe Panic (2 fases), junto a tu yo adulto.
  * Bloque 3: cierre, salida de la Ventana, diario y abrir el lugar 4.
  */
 export const B2_03_SCHOOL_ID = 'b2-03-school'
@@ -26,6 +28,15 @@ export const B2_03_SENSES = 'b2-03-senses'
 export const B2_03_ADULT_SEEN = 'b2-03-adult'
 export const B2_03_FEELINGS = 'b2-03-feelings'
 export const B2_03_DIARY = 'b2-03-diary'
+/** Bloque 2 */
+export const B2_03_PANEL = 'b2-03-panel'
+export const B2_03_ALARM = 'b2-03-alarm'
+export const B2_03_UNHEARD = 'b2-03-unheard'
+export const B2_03_FREEZE = 'b2-03-freeze'
+export const B2_03_INJURY = 'b2-03-injury'
+export const B2_03_SHADOW1 = 'b2-03-shadow1'
+export const B2_03_SHADOW2 = 'b2-03-shadow2'
+export const B2_03_BOSS = 'b2-03-boss'
 
 /** Leo adulto: siempre en sombra (ficha 0.3) */
 export const B2_LEO_ADULT_LOOK = { shirt: '#1d2430', hair: '#0e1218', skin: '#2a313c', gender: 'male' as const }
@@ -66,6 +77,11 @@ export const B2_03_SCHOOL: SceneDef = {
     { type: 'npc', id: B2_03_ADULT, x: 9, y: 2 },
     { type: 'npc', id: B2_03_NOTEBOOK, x: 10, y: 2 },
     { type: 'npc', id: B2_03_POSTER, x: 12, y: 1 },
+    // Bloque 2: el panel de emergencia del pasillo; las sombras del humo y Panic, que sujeta a tu yo adulto
+    { type: 'npc', id: B2_03_PANEL, x: 13, y: 2 },
+    { type: 'enemy', id: B2_03_SHADOW1, x: 11, y: 1, after: B2_03_INJURY },
+    { type: 'enemy', id: B2_03_SHADOW2, x: 13, y: 1, after: B2_03_SHADOW1 },
+    { type: 'enemy', id: B2_03_BOSS, x: 11, y: 2, after: B2_03_SHADOW2 },
   ],
   labels: [
     { text: 'Aula', x: 3, y: 6 },
@@ -94,6 +110,12 @@ export const B2_03_SCHOOL: SceneDef = {
     { label: 'Tu yo adulto', done: s.opened.includes(B2_03_ADULT_SEEN) },
     { label: 'El cartel: sentimientos', done: s.opened.includes(B2_03_FEELINGS) },
     { label: 'El cuaderno olvidado', done: s.opened.includes(B2_03_DIARY) },
+    { label: 'Suena la alarma', done: s.opened.includes(B2_03_ALARM) },
+    { label: 'Unheard', done: s.opened.includes(B2_03_UNHEARD) },
+    { label: 'Tu yo adulto no se mueve', done: s.opened.includes(B2_03_FREEZE) },
+    { label: 'El tobillo de la estudiante', done: s.opened.includes(B2_03_INJURY) },
+    { label: 'Smoke Shadows (2)', done: s.defeated.includes(B2_03_SHADOW2) },
+    { label: 'Panic', done: s.defeated.includes(B2_03_BOSS) },
   ],
   intro: {
     first: '2061. A night school. A class is just finishing. — 2061. Una escuela nocturna. Una clase está terminando. Aquí nadie te oye.',
@@ -129,3 +151,80 @@ export const B2_03_ADULT_SCRIPT: ScriptLine[] = [
   { who: 'L', fx: 'unheard', text: "That's… me?", es: 'Intentas decir: "¿Ese… soy yo?"' },
   { who: 'narrator', text: '(Your older self looks at the floor. Next to the door there is a poster: "How are you REALLY feeling?")', es: '(Tu yo adulto mira el suelo. Junto a la puerta hay un cartel: "¿Cómo te sientes DE VERDAD?")' },
 ]
+
+// ── Bloque 2 ──
+
+/** El panel de emergencia: suena la alarma y hay humo en las escaleras (como el recuerdo 1 de B1, ahora visto desde fuera) */
+export const B2_03_ALARM_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', fx: 'alarm', text: '(Suddenly the fire alarm goes off.)', es: '(De repente suena la alarma de incendio.)' },
+  { who: 'narrator', text: '(Smoke is coming up the main stairs. You have seen this night before… but from inside a memory.)', es: '(Sube humo por las escaleras principales. Ya viste esta noche… pero desde dentro de un recuerdo.)' },
+  { who: 'friend', text: 'Attention, please. This is not a drill. Leave the building by the nearest exit.', es: 'Atención, por favor. No es un simulacro. Salgan del edificio por la salida más cercana.' },
+  { who: 'L', fx: 'unheard', text: 'Everyone, get out!', es: 'Intentas gritar: "¡Todos afuera!"' },
+  { who: 'narrator', text: '(Nobody hears you. But this panel has buttons, and people read notes. You can still help.)', es: '(Nadie te oye. Pero este panel tiene botones, y la gente lee notas. Todavía puedes ayudar.)' },
+]
+
+/** La parálisis: tu yo adulto no se mueve. La narración usa los verbos de los sentidos y as if (sin culpar) */
+export const B2_03_FREEZE_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(The lights are on. The fire door is open. People are running to the back stairs.)', es: '(Las luces están encendidas. La puerta de emergencia está abierta. La gente corre a las escaleras traseras.)' },
+  { who: 'narrator', text: '(But your older self is still standing in the corridor.)', es: '(Pero tu yo adulto sigue de pie en el pasillo.)' },
+  { who: 'narrator', text: "({h:He|She} could hear the teacher shouting. {h:He|She} could feel the heat on {h:his|her} face. {h:He|She} watched people running past {h:him|her}… but {h:he|she} didn't move.)", es: '(Podía oír al profesor gritando. Podía sentir el calor en la cara. Veía a la gente pasar corriendo… pero no se movió.)' },
+  { who: 'narrator', text: '({h:He|She} looked as if {h:he|she} were made of stone.)', es: '(Parecía {h:hecho|hecha} de piedra.)' },
+  { who: 'L', fx: 'unheard', text: 'Move! Please, move!', es: 'Intentas gritar: "¡Muévete! ¡Por favor, muévete!"' },
+  { who: 'narrator', text: '(It is not that {h:he doesn\'t|she doesn\'t} care. Fear can freeze anyone. On the stairs, a student falls and cries out.)', es: '(No es que no le importe. El miedo puede paralizar a cualquiera. En las escaleras, una estudiante se cae y grita.)' },
+]
+
+const SN = 'senses-b2' as const
+const FE = 'feelings-b2' as const
+const DI = 'diary-b2' as const
+const IJ = 'injuries-b2' as const
+const SHADOW_LOOK = { shirt: '#3a3f48', hair: '#1c1f24', skin: '#5a606b' }
+
+/** Smoke Shadows, sombras del humo. Preguntas: etiqueta b2-03-shadow */
+const SHADOW = (id: string, line: { text: string; es: string }): EnemyDef => ({
+  id,
+  name: 'Smoke Shadow',
+  person: 'Smoke Shadow',
+  kind: 'minion',
+  hp: 4,
+  topics: [SN, FE, DI],
+  kinds: ['fill', 'fix'],
+  tags: ['b2-03-shadow'],
+  onlyTags: true,
+  zone: 'pasillo-noche',
+  look: SHADOW_LOOK,
+  before: [line],
+  after: [{ text: '(The shadow breaks into grey smoke and disappears.)', es: '(La sombra se deshace en humo gris y desaparece.)' }],
+  freed: { text: '(The air is a little clearer now.)', es: '(El aire está un poco más limpio ahora.)' },
+})
+
+/**
+ * Panic: la parálisis hecha monstruo, una figura de escarcha que sujeta a tu yo adulto de los hombros. Jefe de 2 fases.
+ * Fase 1: verbos de los sentidos y like / as if (b2-03-boss-sn) · Fase 2: sentimientos, adjetivo y sustantivo y lesiones,
+ * con escuchas de evacuación (b2-03-boss-fe). Al vencerlo, la escena no cambia: tu yo adulto sigue quieto (prepara el lugar 13).
+ */
+export const B2_03_BOSS_DEF: EnemyDef = {
+  id: B2_03_BOSS,
+  name: 'Panic',
+  person: 'Panic',
+  kind: 'boss',
+  hp: 10,
+  topics: [SN, FE, IJ],
+  kinds: ['fill', 'fix', 'order', 'listen'],
+  tags: ['b2-03-boss-sn'],
+  phases: [
+    { hp: 5, title: 'Escarcha: los sentidos', topics: [SN], kinds: ['fill', 'fix', 'order'], tags: ['b2-03-boss-sn'], line: { text: 'I could smell the smoke to come… He looked as if he is a statue!', es: 'smell the smoke to come y as if he is (en una historia en pasado): mal.' } },
+    { hp: 5, title: 'Escarcha: lo que sientes', topics: [FE, IJ], kinds: ['fill', 'fix', 'listen'], tags: ['b2-03-boss-fe'], line: { text: 'He felt a lot of anxious! She sprained her ankle\'s! Stay still… stay still…', es: 'a lot of anxious y her ankle\'s: mal.' } },
+  ],
+  onlyTags: true,
+  zone: 'pasillo-noche',
+  look: { shirt: '#bfe2ff', hair: '#e8f5ff', skin: '#9fc8e8' },
+  before: [{ text: 'Shhh… Don\'t move. Don\'t speak. If you stay still, nothing can go wrong.', es: 'Shhh… No te muevas. No hables. Si no te mueves, nada puede salir mal.' }],
+  after: [{ text: '(The frost melts and falls to the floor like rain.)', es: '(La escarcha se derrite y cae al suelo como lluvia.)' }],
+  freed: { text: '(Panic is gone… but your older self is still standing there, frozen.)', es: '(Panic se fue… pero tu yo adulto sigue ahí, paralizado.)' },
+}
+
+export const B2_03_ENEMIES: Record<string, EnemyDef> = {
+  [B2_03_SHADOW1]: SHADOW(B2_03_SHADOW1, { text: 'I saw him to run… We heard her to call for help… Nobody listens…', es: 'saw him to run y heard her to call: mal (sin to).' }),
+  [B2_03_SHADOW2]: SHADOW(B2_03_SHADOW2, { text: "I'm boring in this class… so boring… I'm exhausting…", es: "I'm boring (por bored) e I'm exhausting (por exhausted): mal." }),
+  [B2_03_BOSS]: B2_03_BOSS_DEF,
+}
