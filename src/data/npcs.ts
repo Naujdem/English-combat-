@@ -1728,7 +1728,16 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'G (García)',
     look: { shirt: '#23252d', hair: '#c9ccd2', skin: '#d7a77a', gender: 'male' },
     after: 'b2-14-reveal',
+    until: 'b2-14-echo3',
     doneLine: { text: "But tonight… you didn't stay silent.", es: 'Pero esta noche… no te quedaste en silencio.' },
+  },
+  // B2-14 · bloque 2: G en paz, al vencerlo (tarea b2-14-ending)
+  'b2-14-g-peace': {
+    name: 'G (García)',
+    look: { shirt: '#23252d', hair: '#c9ccd2', skin: '#d7a77a', gender: 'male' },
+    after: 'b2-14-boss',
+    until: 'b2-14-ending',
+    doneLine: { text: 'Be brave. Use your voice.', es: 'Sean valientes. Usen su voz.' },
   },
   // ── B2-13 · The Fire, bloque 1 (Ventana 2061, el pasillo del tercer piso, data/b2Fire.ts). Aquí sí te oyen ──
   'b2-13-student': {
