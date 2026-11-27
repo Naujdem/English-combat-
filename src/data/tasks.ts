@@ -91,6 +91,8 @@ import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_I
 import { B2_08_ARRIVAL_SCRIPT, B2_08_CLOSE_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNCH_SCRIPT, B2_08_UNHEARD_ROOM } from './b2Pitch'
 import { B2_08_ACRONYMS_IDS, B2_08_COMPARE_IDS, B2_08_PERKS_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
+import { B2_11_ARRIVAL_SCRIPT, B2_11_BOARD_ITEMS, B2_11_FACT_CHECK, B2_11_MOVIE_SCRIPT } from './b2WhoIsG'
+import { B2_11_FILM_IDS, B2_11_INDIRECT_IDS, B2_11_NARRATIVE_IDS } from './questions-b2-11'
 import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
 import { B2_10_ARRIVAL_SCRIPT, B2_10_BENCH_SCRIPT, B2_10_CARD_CONTENT, B2_10_CLASS_SCRIPT, B2_10_CLOSE_SCRIPT, B2_10_GIFT_SCRIPT } from './b2Card'
 import { B2_10_CONTRAST_IDS, B2_10_ING_IDS } from './questions-b2-10'
@@ -8414,3 +8416,122 @@ NPC_TASKS['b2-10-close'] = {
   },
 }
 
+
+// ── B2-11 · Who Is G?, bloque 1 (el archivo del Herald y la noche de cine, data/b2WhoIsG.ts). NO guarda el cierre de la misión ──
+// Manuel en el archivo (script): las pistas, sin los viajes en el tiempo
+NPC_TASKS['b2-11-arrival'] = {
+  npc: 'b2-11-manuel',
+  done: 'b2-11-arrival',
+  activity: 'script',
+  script: B2_11_ARRIVAL_SCRIPT,
+  steps: [],
+  reward: { text: 'Who is G?', es: '¿Quién es G?', sub: 'Vuelve a hablar con Manuel: la lección de las preguntas.', say: 'Who is G?' },
+}
+
+// Manuel: lección 'indirect-b2' + práctica b2-11-in1…in6. 5 monedas
+NPC_TASKS['b2-11-indirect'] = {
+  npc: 'b2-11-manuel',
+  done: 'b2-11-indirect',
+  lesson: 'indirect-b2',
+  activity: 'practice',
+  practice: 'indirect-b2',
+  practiceIds: B2_11_INDIRECT_IDS,
+  coins: 5,
+  requires: { id: 'b2-11-arrival', text: 'You said you had something to tell me.', es: 'Dijiste que tenías algo que contarme.', sub: 'Primero habla con Manuel.' },
+  steps: [],
+  reward: {
+    text: 'Do you know where G is? That\'s how a journalist asks.',
+    es: '¿Sabes dónde está G? Así pregunta un periodista.',
+    sub: 'Lección hecha. Habla otra vez con Manuel: tiene borradores viejos para revisar.',
+    say: 'Do you know where G is?',
+  },
+}
+
+// Manuel: Fact Check, tercera y última vez (6 rondas, se gana con 5). Abre la puerta de la sala común. 10 monedas
+NPC_TASKS['b2-11-factcheck'] = {
+  npc: 'b2-11-manuel',
+  done: 'b2-11-factcheck',
+  activity: 'factcheck',
+  factcheck: B2_11_FACT_CHECK,
+  requires: { id: 'b2-11-indirect', text: 'First, good questions.', es: 'Primero, buenas preguntas.', sub: 'Primero termina la lección con Manuel.' },
+  coins: 10,
+  steps: [],
+  reward: {
+    text: 'Six questions, six facts. Now go and rest. You look exhausted.',
+    es: 'Seis preguntas, seis hechos. Ahora ve a descansar. Te ves agotado.',
+    sub: 'Fact Check terminado. En la residencia, Marisol preparó una noche de cine: la puerta de la sala común está abierta.',
+  },
+}
+
+// Marisol: la noche de cine (script, escucha). El protagonista se queda callado
+NPC_TASKS['b2-11-movie'] = {
+  npc: 'b2-11-marisol',
+  done: 'b2-11-movie',
+  activity: 'script',
+  script: B2_11_MOVIE_SCRIPT,
+  requires: { id: 'b2-11-factcheck', text: 'Movie night starts soon!', es: '¡La noche de cine empieza pronto!', sub: 'Primero termina el trabajo en el archivo con Manuel.' },
+  steps: [],
+  reward: { text: "It's well worth watching.", es: 'Vale mucho la pena verla.', sub: 'Maya quiere hablar de la película contigo.', say: "It's well worth watching." },
+}
+
+// Maya: lección 'film-b2' + práctica b2-11-fm1…fm6 (2 de escucha). 5 monedas
+NPC_TASKS['b2-11-film'] = {
+  npc: 'b2-11-maya',
+  done: 'b2-11-film',
+  lesson: 'film-b2',
+  activity: 'practice',
+  practice: 'film-b2',
+  practiceIds: B2_11_FILM_IDS,
+  coins: 5,
+  requires: { id: 'b2-11-movie', text: 'Shh! The film is starting.', es: '¡Shh! Ya empieza la película.', sub: 'Primero habla con Marisol: la noche de cine.' },
+  steps: [],
+  reward: {
+    text: 'What a plot twist! Gripping, a bit predictable… but well worth watching.',
+    es: '¡Qué giro! Atrapante, un poco predecible… pero vale mucho la pena.',
+    sub: 'Lección hecha. La persona especial te espera junto a un tablero de corcho.',
+    say: 'What a plot twist!',
+  },
+}
+
+// La persona especial: lección 'narrative-b2' + práctica b2-11-nt1…nt6. 5 monedas
+NPC_TASKS['b2-11-narrative'] = {
+  npc: 'b2-11-special',
+  done: 'b2-11-narrative',
+  lesson: 'narrative-b2',
+  activity: 'practice',
+  practice: 'narrative-b2',
+  practiceIds: B2_11_NARRATIVE_IDS,
+  coins: 5,
+  requires: { id: 'b2-11-film', text: "Let's finish the film first.", es: 'Terminemos la película primero.', sub: 'Primero habla con Maya sobre la película.' },
+  steps: [],
+  reward: {
+    text: 'G had been planning it for years.',
+    es: 'G llevaba años planeándolo.',
+    sub: 'Lección hecha. Habla otra vez con la persona especial: el tablero de pistas.',
+    say: 'G had been planning it for years.',
+  },
+}
+
+// La persona especial: Reconstruct, versión "tablero" (reutilizado, 5 pistas con hilos rojos). 10 monedas
+NPC_TASKS['b2-11-board'] = {
+  npc: 'b2-11-special',
+  done: 'b2-11-board',
+  activity: 'reconstruct',
+  requires: { id: 'b2-11-narrative', text: 'First, how to tell a story.', es: 'Primero, cómo contar una historia.', sub: 'Primero termina la lección con la persona especial.' },
+  reconstruct: {
+    title: 'Detective: The Clue Board',
+    intro: {
+      en: 'Red threads, five clues and five wrong notes. Put the timeline in order: choose the sentence that tells what really happened.',
+      es: 'Hilos rojos, cinco pistas y cinco notas equivocadas. Ordena la línea de tiempo: elige la frase que cuenta lo que pasó de verdad.',
+    },
+    items: B2_11_BOARD_ITEMS,
+  },
+  coins: 10,
+  steps: [],
+  reward: {
+    text: 'The fire, Vocalis, the device, the card, the birthday… Everything points to G.',
+    es: 'El incendio, Vocalis, el aparato, la tarjeta, el cumpleaños… Todo apunta a G.',
+    sub: 'Ganaste 10 monedas. Leo te mira desde el fondo de la sala. Parece que quiere decirte algo.',
+    say: 'Everything points to G.',
+  },
+}

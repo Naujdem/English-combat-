@@ -1700,6 +1700,38 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b2-10-contrast',
     doneLine: { text: "It's worth trying one last time.", es: 'Vale la pena intentarlo una última vez.' },
   },
+  // ── B2-11 · Who Is G?, bloque 1 (el archivo del Herald y la sala común, data/b2WhoIsG.ts) ──
+  // Manuel en el archivo (mismo look que en B2-02 y B2-05): tareas b2-11-arrival, b2-11-indirect y b2-11-factcheck
+  'b2-11-manuel': {
+    name: 'Manuel',
+    look: { shirt: '#7a2f3a', hair: '#2a1a12', skin: '#b9805c', gender: 'male' },
+    doneLine: { text: 'Do you know who G is? Not yet. But we will.', es: '¿Sabes quién es G? Todavía no. Pero lo sabremos.' },
+  },
+  // Marisol en la sala común: la noche de cine (tarea b2-11-movie)
+  'b2-11-marisol': {
+    name: 'Marisol',
+    look: { shirt: '#b5653a', hair: '#5a3a22', skin: '#d7a77a', gender: 'female' },
+    doneLine: { text: "More popcorn? It's well worth it.", es: '¿Más palomitas? Valen mucho la pena.' },
+  },
+  // Maya: lección de películas y series (tarea b2-11-film)
+  'b2-11-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    doneLine: { text: "Don't give away the ending!", es: '¡No cuentes el final!' },
+  },
+  // La persona especial: lección de tiempos narrativos y el tablero de pistas (tareas b2-11-narrative y b2-11-board)
+  'b2-11-special': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    doneLine: { text: "Let's piece it together.", es: 'Armémoslo pieza por pieza.' },
+  },
+  // Leo, callado frente a la pantalla (su confesión llega en el bloque 2)
+  'b2-11-leo': {
+    name: 'Leo',
+    look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
+    doneLine: { text: "…I'm fine. Really.", es: '…Estoy bien. De verdad.' },
+  },
   // ── B2-09 · The Gallery, bloque 1 (el museo de arte, data/b2Gallery.ts) ──
   // La persona especial (guía): tareas b2-09-arrival, b2-09-strong, b2-09-order y b2-09-relative
   'b2-09-special': {
