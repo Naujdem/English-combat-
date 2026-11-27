@@ -83,7 +83,7 @@ import { B2_UNHEARD_DEMO } from './b2Demos'
 import { B2_03_DIARY_IDS, B2_03_FEELINGS_IDS, B2_03_INJURY_IDS, B2_03_SENSES_IDS } from './questions-b2-03'
 import { B2_04_DETECTIVE_CONTENT, B2_04_ECHO_SCRIPT, B2_04_JEISON_SCRIPT, B2_04_PROFILE_SCRIPT } from './b2FakeProfile'
 import { B2_04_FRAUD_IDS, B2_04_MODALS_IDS, B2_04_NEEDNT_IDS, B2_04_SECURITY_IDS } from './questions-b2-04'
-import { B2_05_ARRIVAL_SCRIPT, B2_05_CAPTAIN_SCRIPT, B2_05_TOMAS_SCRIPT, B2_05_ZOE_SCRIPT } from './b2VoiceBlackouts'
+import { B2_05_ARRIVAL_SCRIPT, B2_05_CAPTAIN_SCRIPT, B2_05_FACT_CHECK, B2_05_TOMAS_SCRIPT, B2_05_ZOE_SCRIPT } from './b2VoiceBlackouts'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
 import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
@@ -7446,7 +7446,23 @@ NPC_TASKS['b2-05-press'] = {
   reward: {
     text: 'Rumours get clicks. Facts get the truth.',
     es: 'Los rumores dan clics. Los hechos dan la verdad.',
-    sub: 'Bloque 1 terminado. (Fact Check, las gaviotas y el jefe llegan en el bloque 2.)',
+    sub: 'Lección hecha. Habla otra vez con Manuel: tiene borradores para revisar.',
     say: 'Facts get the truth.',
+  },
+}
+
+// Manuel en el Herald: Fact Check, versión completa (6 rondas, se gana con 5). Al terminar, Zoe se va y salen las gaviotas. 10 monedas
+NPC_TASKS['b2-05-factcheck'] = {
+  npc: 'b2-05-manuel-desk',
+  done: 'b2-05-factcheck',
+  activity: 'factcheck',
+  factcheck: B2_05_FACT_CHECK,
+  requires: { id: 'b2-05-press', text: 'First, the difference between a rumour and a fact.', es: 'Primero, la diferencia entre un rumor y un hecho.', sub: 'Primero termina la lección de prensa con Manuel.' },
+  coins: 10,
+  steps: [],
+  reward: {
+    text: 'Six drafts, six facts. Now listen… What is that noise outside?',
+    es: 'Seis borradores, seis hechos. Ahora escucha… ¿Qué es ese ruido afuera?',
+    sub: 'Fact Check terminado. Las gaviotas del puerto gritan rumores, y el blog de Zoe está creciendo en el paseo.',
   },
 }
