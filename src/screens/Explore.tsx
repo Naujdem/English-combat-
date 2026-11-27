@@ -97,6 +97,7 @@ import { MusicChallenge } from '../components/MusicChallenge'
 import { WhatIf } from '../components/WhatIf'
 import { Reporter } from '../components/Reporter'
 import { B1Exam } from '../components/B1Exam'
+import { B2_EXAM } from '../data/b2Exam'
 import { ReviewWriter } from '../components/ReviewWriter'
 import { ShelterDog } from '../components/ShelterDog'
 import { B1_06_DOG_NPCS } from '../data/b1Kennels'
@@ -1693,9 +1694,12 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             if (t.activity === 'b1exam')
               return (
                 <B1Exam
+                  content={t.examLevel === 'b2' ? B2_EXAM : undefined}
                   onClose={() => finishTask(task, false)}
                   onSave={(r) => {
-                    update((s) => ({ ...s, writings: { ...(s.writings ?? {}), b1: [r.writing, ...r.speaking], 'b1-notas': [`Reading ${r.reading}/5`, `Listening ${r.listening}/5`] } }))
+                    const lv = t.examLevel === 'b2' ? 'b2' : 'b1'
+                    const of = lv === 'b2' ? 6 : 5
+                    update((s) => ({ ...s, writings: { ...(s.writings ?? {}), [lv]: [r.writing, ...r.speaking], [`${lv}-notas`]: [`Reading ${r.reading}/${of}`, `Listening ${r.listening}/${of}`] } }))
                     finishTask(task, true)
                   }}
                 />

@@ -760,4 +760,67 @@ export const B2_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B2-14 · Use Your Voice (final): página del protagonista, la última página del cuaderno de G (aparece sola) y página mezclada
+  {
+    id: 'b2-mission-14',
+    title: 'B2 · Misión 14: Use Your Voice',
+    unlock: 'b2-14-close',
+    words: [
+      { title: 'Recordar', words: [['recall', 'recordar'], ['look back on', 'mirar atrás'], ['remind', 'recordarle a alguien'], ['reminisce', 'rememorar'], ['memory', 'recuerdo'], ['unforgettable', 'inolvidable']] },
+      { title: 'Gratitud y arrepentimiento', words: [['grateful', 'agradecido'], ['thankful', 'agradecido'], ['regret', 'arrepentirse'], ['forgive', 'perdonar'], ['closure', 'cierre'], ['let go', 'soltar']] },
+      { title: 'Deseos e hipótesis', words: [['I wish I had…', 'ojalá hubiera…'], ['if only', 'si tan solo'], ["I'd rather you…", 'preferiría que tú…'], ["if I hadn't…, I wouldn't be…", 'si no hubiera…, no estaría…']] },
+      { title: 'Phrasal verbs', words: [['stand up for', 'defender'], ['let go of', 'soltar'], ['look back on', 'mirar atrás'], ['move on', 'seguir adelante']] },
+    ],
+    versions: [
+      {
+        id: 'b2-mission-14-mine',
+        tense: 'p',
+        tab: 'Mi diario',
+        title: 'The harbour at sunset',
+        unlock: 'b2-14-close',
+        frame: 'La última página de tu diario. La escribes en el muelle.',
+        lines: [
+          { en: 'Tonight we [found]p G at the harbour. When his hood [fell]p, I [saw]p Leo\'s eyes.', es: 'Esta noche encontramos a G en el puerto. Cuando se le cayó la capucha, vi los ojos de Leo.' },
+          { en: 'Leo and I [spoke]p together, and G [smiled]p for the first time.', es: 'Leo y yo hablamos juntos, y G sonrió por primera vez.' },
+          { en: 'He [gave]p me back the core of the clock and [faded]p away in peace.', es: 'Me devolvió el núcleo del reloj y se desvaneció en paz.' },
+          { en: "I used my voice. And I'll keep using it.", es: 'Usé mi voz. Y la voy a seguir usando.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-14-g',
+        kind: 'L',
+        tense: 'mix',
+        tab: 'Cuaderno de G',
+        title: 'The last page',
+        unlock: 'b2-14-close',
+        frame: 'Esta página no estaba antes. Apareció sola en tu diario, con la letra de G.',
+        lines: [
+          { en: 'If I [hadn\'t been]p so angry, I [would have seen]p the truth much earlier.', es: 'Si no hubiera estado tan enojado, habría visto la verdad mucho antes.' },
+          { en: 'I [wish]n I [had trusted]p you.', es: 'Ojalá hubiera confiado en ti.' },
+          { en: 'Thank you for not staying silent. — G.', es: 'Gracias por no quedarte en silencio. — G.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-14-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'Every echo',
+        unlock: 'b2-14-close',
+        frame: 'Todo el viaje, de A1 a B2, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'A stranger [took]p my voice on my first day at school.', es: 'Un desconocido me quitó la voz en mi primer día de escuela.' },
+          { en: 'Since then I [have travelled]n to the past, the future and a night of fire.', es: 'Desde entonces he viajado al pasado, al futuro y a una noche de fuego.' },
+          { en: 'If I [hadn\'t met]p Leo, I [wouldn\'t be]n the person I am now.', es: 'Si no hubiera conocido a Leo, no sería la persona que soy ahora.' },
+          { en: 'The clock [keeps]n every echo. And tomorrow, Leo [is going to start]f his English course.', es: 'El reloj guarda cada eco. Y mañana, Leo va a empezar su curso de inglés.' },
+        ],
+        questions: [
+          { q: 'What did G give back?', options: ['The card.', 'The core of the clock.', 'His notebook.'], answer: 1, tip: 'El diario dice: "He gave me back the core of the clock".' },
+          { q: 'What does G write on his last page?', options: ['Thank you for not staying silent.', 'I will come back.', 'Be careful with the clock.'], answer: 0, tip: 'La página de G dice: "Thank you for not staying silent".' },
+          { q: 'What does the clock keep?', options: ['The voices of the city.', 'The future.', 'Every echo.'], answer: 2, tip: 'El diario dice: "The clock keeps every echo".' },
+        ],
+      },
+    ],
+  },
 ]

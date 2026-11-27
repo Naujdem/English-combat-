@@ -5,6 +5,20 @@ import { commonErrors } from './EraExam'
 import { sfx } from '../game/sfx'
 import { canRecognize, hear } from '../game/mic'
 import { B1_EXAM_LISTENING, B1_EXAM_PASS, B1_EXAM_READING, B1_EXAM_SPEAKING, B1_EXAM_WRITING, writingChecks, wordCount, type ExamChoice } from '../data/b1Exam'
+import type { ExamContent } from '../data/b2Exam'
+
+/** El examen de B1 (por defecto). B2 pasa su propio contenido (data/b2Exam.ts) */
+const B1_CONTENT: ExamContent = {
+  level: 'B1',
+  intro: 'El examen final de B1 tiene cuatro partes: leer una noticia, escuchar un boletín, escribir un texto corto y responder tres preguntas en voz alta.',
+  pass: B1_EXAM_PASS,
+  reading: B1_EXAM_READING,
+  listening: B1_EXAM_LISTENING,
+  writing: B1_EXAM_WRITING,
+  checks: writingChecks,
+  speaking: B1_EXAM_SPEAKING,
+  modelBy: 'Leo',
+}
 
 /** Lo que se guarda del examen: el texto, las tres respuestas habladas (o escritas) y las notas de reading y listening */
 export type B1ExamResult = { writing: string; speaking: string[]; reading: number; listening: number }
@@ -62,7 +76,8 @@ function Choices({ questions, onDone }: { questions: ExamChoice[]; onDone: (scor
  * tras dos intentos se puede dejar así. Speaking: reconocimiento de voz con palabras clave; siempre se puede escribir.
  * Al final se ven el texto modelo y las respuestas modelo, y Guardar → onSave(resultado). Salir antes reinicia el examen.
  */
-export function B1Exam({ onClose, onSave }: { onClose: () => void; onSave: (r: B1ExamResult) => void }) {
+export function B1Exam({ onClose, onSave, content = B1_CONTENT }: { onClose: () => void; onSave: (r: B1ExamResult) => void; content?: ExamContent }) {
+  const c = content
   const [part, setPart] = useState<Part>('intro')
   const [round, setRound] = useState(0)
   const [score, setScore] = useState<number | null>(null)
@@ -84,7 +99,7 @@ export function B1Exam({ onClose, onSave }: { onClose: () => void; onSave: (r: B
   }
 
   // ── Writing ──
-  const checks = writingChecks(text)
+  const checks = c.checks(text)
   const advice = checked ? commonErrors(text) : []
   function checkWriting() {
     setChecked(true)
@@ -97,7 +112,7 @@ export function B1Exam({ onClose, onSave }: { onClose: () => void; onSave: (r: B
   }
 
   // ── Speaking ──
-  const sp = B1_EXAM_SPEAKING[spoken.length]
+  const sp = c.speaking[spoken.length]
   function acceptSpeak(said: string) {
     const t = said.trim()
     if (t.split(/\s+/).length < 4) return setNote('Responde con una frase completa (por lo menos 4 palabras).')
@@ -110,7 +125,7 @@ export function B1Exam({ onClose, onSave }: { onClose: () => void; onSave: (r: B
     setAnswer('')
     const all = [...spoken, t]
     setSpoken(all)
-    if (all.length === B1_EXAM_SPEAKING.length) setPart('done')
+    if (all.length === c.speaking.length) setPart('done')
   }
   async function listen() {
     setNote(null)
@@ -130,13 +145,13 @@ export function B1Exam({ onClose, onSave }: { onClose: () => void; onSave: (r: B
   return (
     <Panel className="max-h-[88vh] overflow-y-auto">
       <div className="flex items-center justify-between">
-        <p className="font-display text-xl text-gold">Examen de B1{step >= 0 ? ` · ${step + 1} de 4: ${PART_NAME[part]}` : ''}</p>
+        <p className="font-display text-xl text-gold">Examen de {c.level}{step >= 0 ? ` · ${step + 1} de 4: ${PART_NAME[part]}` : ''}</p>
         {part !== 'done' && <button className={btnGhost} onClick={onClose}>Después</button>}
       </div>
 
       {part === 'intro' && (
         <>
-          <p className="mt-2 text-[15px] text-paper/85">El examen final de B1 tiene cuatro partes: leer una noticia, escuchar un boletín, escribir un texto corto y responder tres preguntas en voz alta.</p>
+          <p className="mt-2 text-[15px] text-paper/85">{c.intro}</p>
           <p className="mt-2 text-sm text-paper/60">Si sales antes de terminar, el examen empieza de nuevo.</p>
           <button className={`${btnPrimary} mt-4 w-full`} onClick={() => go('reading')} autoFocus>Empezar</button>
         </>
@@ -145,18 +160,19 @@ export function B1Exam({ onClose, onSave }: { onClose: () => void; onSave: (r: B
       {part === 'reading' && (
         <>
           <div className="mt-2 rounded-xl bg-panel-2 px-3 py-3">
-            <p className="font-display text-lg text-paper">{B1_EXAM_READING.title}</p>
-            <p className="text-xs text-paper/55">{B1_EXAM_READING.by}</p>
-            {B1_EXAM_READING.paragraphs.map((p, i) => (
+            <p className="font-display text-lg text-paper">{c.reading.title}</p>
+            <p className="text-xs text-paper/55">{c.reading.by}</p>
+            {c.reading.paragraphs.map((p, i) => (
               <p key={i} className="mt-2 text-[15px] leading-relaxed text-paper/90">{p}</p>
             ))}
           </div>
           {score === null ? (
-            <Choices key={round} questions={B1_EXAM_READING.questions} onDone={setScore} />
+            <Choices key={round} questions={c.reading.questions} onDone={setScore} />
           ) : (
             <Result
+              pass={c.pass}
               score={score}
-              total={B1_EXAM_READING.questions.length}
+              total={c.reading.questions.length}
               onRetry={() => go('reading')}
               onNext={() => {
                 setReading(score)
@@ -170,20 +186,21 @@ export function B1Exam({ onClose, onSave }: { onClose: () => void; onSave: (r: B
       {part === 'listening' && (
         <>
           <div className="mt-2 flex items-center gap-3 rounded-xl bg-panel-2 px-3 py-3">
-            <SpeakButton text={B1_EXAM_LISTENING.audio} size="lg" label="Escuchar el boletín" />
+            <SpeakButton text={c.listening.audio} size="lg" label="Escuchar el boletín" />
             <div>
-              <p className="font-display text-lg text-paper">{B1_EXAM_LISTENING.title}</p>
+              <p className="font-display text-lg text-paper">{c.listening.title}</p>
               <p className="text-sm text-paper/60">Toca el altavoz para escuchar. Puedes oírlo las veces que quieras.</p>
             </div>
           </div>
           {score === null ? (
-            <Choices key={round} questions={B1_EXAM_LISTENING.questions} onDone={setScore} />
+            <Choices key={round} questions={c.listening.questions} onDone={setScore} />
           ) : (
             <>
-              <p className="mt-3 text-sm leading-relaxed text-paper/70">{B1_EXAM_LISTENING.audio}</p>
+              <p className="mt-3 text-sm leading-relaxed text-paper/70">{c.listening.audio}</p>
               <Result
+                pass={c.pass}
                 score={score}
-                total={B1_EXAM_LISTENING.questions.length}
+                total={c.listening.questions.length}
                 onRetry={() => go('listening')}
                 onNext={() => {
                   setListening(score)
@@ -197,8 +214,8 @@ export function B1Exam({ onClose, onSave }: { onClose: () => void; onSave: (r: B
 
       {part === 'writing' && (
         <>
-          <p className="mt-2 font-display text-[18px] leading-snug text-paper">{B1_EXAM_WRITING.ask}</p>
-          <p className="text-sm text-paper/60">{B1_EXAM_WRITING.es}</p>
+          <p className="mt-2 font-display text-[18px] leading-snug text-paper">{c.writing.ask}</p>
+          <p className="text-sm text-paper/60">{c.writing.es}</p>
           <textarea
             value={text}
             onChange={(e) => {
@@ -236,7 +253,7 @@ export function B1Exam({ onClose, onSave }: { onClose: () => void; onSave: (r: B
 
       {part === 'speaking' && sp && (
         <>
-          <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-paper/55">Pregunta {spoken.length + 1} de {B1_EXAM_SPEAKING.length}</p>
+          <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-paper/55">Pregunta {spoken.length + 1} de {c.speaking.length}</p>
           <div className="flex items-start gap-2">
             <div className="flex-1">
               <p className="font-display text-[18px] leading-snug text-paper">{sp.ask}</p>
@@ -287,22 +304,22 @@ export function B1Exam({ onClose, onSave }: { onClose: () => void; onSave: (r: B
 
       {part === 'done' && (
         <>
-          <p className="mt-2 text-[15px] text-paper/85">¡Terminaste el examen de B1! Reading: {reading} de 5 · Listening: {listening} de 5.</p>
+          <p className="mt-2 text-[15px] text-paper/85">¡Terminaste el examen de {c.level}! Reading: {reading} de {c.reading.questions.length} · Listening: {listening} de {c.listening.questions.length}.</p>
           <div className="mt-3 rounded-xl border-2 border-line px-3 py-2">
             <p className="text-xs text-paper/55">Tu texto</p>
             <p className="text-[15px] leading-relaxed text-paper">{text}</p>
             <div className="mt-2 flex items-start gap-2">
-              <p className="flex-1 text-sm leading-relaxed text-gold">Texto modelo de Leo: {B1_EXAM_WRITING.model}</p>
-              <SpeakButton text={B1_EXAM_WRITING.model} size="sm" />
+              <p className="flex-1 text-sm leading-relaxed text-gold">Texto modelo de {c.modelBy}: {c.writing.model}</p>
+              <SpeakButton text={c.writing.model} size="sm" />
             </div>
           </div>
           <ul className="mt-2 grid gap-2">
-            {B1_EXAM_SPEAKING.map((s, k) => (
+            {c.speaking.map((s, k) => (
               <li key={k} className="rounded-xl border-2 border-line px-3 py-2">
                 <p className="text-xs text-paper/55">{s.ask}</p>
                 <p className="text-[15px] text-paper">Tú: {spoken[k]}</p>
                 <div className="flex items-center gap-2">
-                  <p className="flex-1 text-sm text-gold">Leo: {s.model}</p>
+                  <p className="flex-1 text-sm text-gold">{c.modelBy}: {s.model}</p>
                   <SpeakButton text={s.model} size="sm" />
                 </div>
               </li>
@@ -315,8 +332,8 @@ export function B1Exam({ onClose, onSave }: { onClose: () => void; onSave: (r: B
   )
 }
 
-function Result({ score, total, onRetry, onNext }: { score: number; total: number; onRetry: () => void; onNext: () => void }) {
-  const pass = score >= B1_EXAM_PASS
+function Result({ score, total, pass: need, onRetry, onNext }: { score: number; total: number; pass: number; onRetry: () => void; onNext: () => void }) {
+  const pass = score >= need
   return (
     <div className="anim-fade-in mt-3">
       <p className={`font-display text-lg ${pass ? 'text-hp' : 'text-[#f3b0b0]'}`}>{score} de {total}</p>
@@ -324,7 +341,7 @@ function Result({ score, total, onRetry, onNext }: { score: number; total: numbe
         <button className={`${btnPrimary} mt-2 w-full`} onClick={onNext} autoFocus>Seguir</button>
       ) : (
         <>
-          <p className="text-sm text-paper/70">Necesitas {B1_EXAM_PASS} de {total}. Inténtalo otra vez con calma.</p>
+          <p className="text-sm text-paper/70">Necesitas {need} de {total}. Inténtalo otra vez con calma.</p>
           <button className={`${btnPrimary} mt-2 w-full`} onClick={onRetry} autoFocus>Repetir esta parte</button>
         </>
       )}

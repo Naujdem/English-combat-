@@ -1,5 +1,6 @@
 import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
+import type { DebateTurn } from '../components/DebateTalk'
 import { canRecognize } from '../game/mic'
 
 /**
@@ -75,10 +76,13 @@ export const B2_14_PORT: SceneDef = {
     { label: 'Los ecos de B2 (3)', done: s.defeated.includes('b2-14-echo3') },
     { label: 'G', done: s.defeated.includes('b2-14-boss') },
     { label: 'Be brave. Use your voice.', done: s.opened.includes('b2-14-ending') },
+    { label: 'Recordar juntos', done: s.opened.includes('b2-14-reflect') },
+    { label: 'El examen de B2', done: s.opened.includes('b2-14-exam') },
+    { label: 'Despedida', done: s.opened.includes('b2-14-close') },
   ],
   intro: {
     first: 'Lumen Bay harbour, at sunset. Someone is waiting for you. — El puerto de Lumen Bay, al atardecer. Alguien te espera.',
-    later: () => 'The harbour at sunset. — El puerto al atardecer.',
+    later: (s: GameState) => (s.opened.includes('b2-14-close') ? 'Use Your Voice. The end… for now. — Fin del juego. Puedes volver a jugar cualquier nivel.' : 'The harbour at sunset. — El puerto al atardecer.'),
   },
 }
 
@@ -193,4 +197,66 @@ export const B2_14_ENDING_SCRIPT: ScriptLine[] = [
   { who: 'L', text: 'My voice… it\'s back. All of it.', es: 'Mi voz… volvió. Completa.' },
   { who: 'narrator', text: '(The core clicks into the clock. Six segments, all glowing. A last inscription appears: "What happened, still happened. The clock keeps every echo.")', es: '(El núcleo encaja en el reloj. Seis segmentos, todos brillando. Aparece una última inscripción: "Lo que pasó, sigue habiendo pasado. El reloj guarda cada eco".)' },
   { who: 'narrator', text: '(Everything you lived, from the school to this harbour, is still real. But the future doesn\'t lead to G anymore.)', es: '(Todo lo que viviste, desde la escuela hasta este puerto, sigue siendo real. Pero el futuro ya no lleva a G.)' },
+]
+
+// ── Bloque 3 ──
+// Recordar juntos (b2-14-reflect, DebateTalk con Maya: sin respuestas malas) → Leo: el examen de B2 (b2-14-exam,
+// components/B1Exam.tsx con data/b2Exam.ts) → Leo: la despedida, los créditos y el cierre (b2-14-close = b2CloseId(14)).
+// Diario: data/b2Diary.ts (página del protagonista, última página del cuaderno de G y página mezclada).
+// Insignias "B2 completado" y "Juego completado" (data/collection.ts).
+export const B2_14_REFLECT = 'b2-14-reflect'
+export const B2_14_EXAM = 'b2-14-exam'
+export const B2_14_CLOSE = 'b2-14-close'
+
+/** Recordar juntos en el muelle (Busuu 24): cada amigo recuerda un momento de A1 a B2. Todas las respuestas valen */
+export const B2_14_REFLECT_TURNS: DebateTurn[] = [
+  {
+    text: 'Maya: Do you remember the first day at school? You couldn\'t say a word. I still recall your face!',
+    es: 'Maya: ¿Te acuerdas del primer día en la escuela? No podías decir ni una palabra. ¡Todavía recuerdo tu cara!',
+    options: [
+      { en: 'I remember it well. If it hadn\'t been for Leo, I would never have started talking.', es: 'Lo recuerdo bien. Si no hubiera sido por Leo, nunca habría empezado a hablar.', value: 'good', reply: { text: 'Leo was a good teacher even then.', es: 'Leo ya era buen profesor desde entonces.' } },
+      { en: 'It reminds me how far we have come.', es: 'Me recuerda lo lejos que hemos llegado.', value: 'good', reply: { text: 'Very far. From hello to here.', es: 'Muy lejos. Desde hello hasta aquí.' } },
+      { en: "Honestly, I'd rather not look back on that day!", es: 'La verdad, ¡prefiero no mirar atrás a ese día!', value: 'good', reply: { text: 'Ha! Fair enough.', es: '¡Ja! Me parece justo.' } },
+    ],
+  },
+  {
+    text: '{iname}: I keep thinking about the hospital, after the tower. I regret not staying with you that night.',
+    es: '{iname}: Sigo pensando en el hospital, después de la torre. Me arrepiento de no haberme quedado contigo esa noche.',
+    options: [
+      { en: "Don't regret anything. I'm grateful that you were there at all.", es: 'No te arrepientas de nada. Agradezco que hayas estado ahí.', value: 'good', reply: { text: "Then I'll stop regretting it.", es: 'Entonces dejaré de arrepentirme.' } },
+      { en: "You came every day after that. That's what I remember.", es: 'Viniste todos los días después de eso. Eso es lo que recuerdo.', value: 'good', reply: { text: 'Every single day.', es: 'Todos los días.' } },
+      { en: "I wish I had told you how much that meant to me.", es: 'Ojalá te hubiera dicho cuánto significó para mí.', value: 'good', reply: { text: "You're telling me now. That's enough.", es: 'Me lo estás diciendo ahora. Con eso basta.' } },
+    ],
+  },
+  {
+    text: "Leo: I can't stop thinking about him. About… me. Is it strange that I'm thankful?",
+    es: 'Leo: No puedo dejar de pensar en él. En… mí. ¿Es raro que esté agradecido?',
+    options: [
+      { en: "It's not strange. He gave you the card. It's time to let go of the rest.", es: 'No es raro. Él te dio la tarjeta. Es hora de soltar el resto.', value: 'good', reply: { text: 'Let go… yes. I think I can.', es: 'Soltar… sí. Creo que puedo.' } },
+      { en: "We'll never forget him. But we can move on.", es: 'Nunca lo vamos a olvidar. Pero podemos seguir adelante.', value: 'good', reply: { text: "Together, then.", es: 'Juntos, entonces.' } },
+      { en: "If you hadn't stood up for me, none of this would be possible.", es: 'Si no me hubieras defendido, nada de esto sería posible.', value: 'good', reply: { text: 'And if you hadn\'t shouted with me, I wouldn\'t have a voice.', es: 'Y si no hubieras gritado conmigo, yo no tendría voz.' } },
+    ],
+  },
+  {
+    text: 'Maya: OK, last one. Which moment was the most unforgettable for you?',
+    es: 'Maya: Bueno, la última. ¿Cuál fue el momento más inolvidable para ti?',
+    options: [
+      { en: 'The night of the fire, when two voices were louder than the alarm.', es: 'La noche del incendio, cuando dos voces sonaron más fuerte que la alarma.', value: 'good', reply: { text: 'I can almost hear it.', es: 'Casi puedo oírlo.' } },
+      { en: 'This one. Right now, with all of you.', es: 'Este. Ahora mismo, con todos ustedes.', value: 'good', reply: { text: "Stop, you're going to make me cry!", es: '¡Para, me vas a hacer llorar!' } },
+      { en: 'Every moment when someone didn\'t stay silent.', es: 'Cada momento en que alguien no se quedó en silencio.', value: 'good', reply: { text: "That's a good answer.", es: 'Esa es una buena respuesta.' } },
+    ],
+  },
+]
+
+/** La despedida en el puerto, los créditos y el fin del juego (b2-14-close) */
+export const B2_14_CLOSE_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(The sun touches the sea. The four of you sit at the end of the pier.)', es: '(El sol toca el mar. Los cuatro se sientan al final del muelle.)' },
+  { who: 'friend', text: "Maybe I'll be a teacher one day.", es: 'Tal vez algún día sea profesor.' },
+  { who: 'L', text: "You will. And you'll be a good one.", es: 'Lo serás. Y vas a ser uno bueno.' },
+  { who: 'narrator', text: '(Leo looks at the old card in his hand and smiles. Behind you, the port is full of voices.)', es: '(Leo mira la tarjeta vieja en su mano y sonríe. Detrás de ustedes, el puerto está lleno de voces.)' },
+  { who: 'narrator', text: 'ENGLISH COMBAT', es: 'ENGLISH COMBAT' },
+  { who: 'narrator', text: 'Created and directed by JuanMed.', es: 'Creado y dirigido por JuanMed.' },
+  { who: 'narrator', text: 'Story: the stranger, the clock, the fire and the voice. From A1 to B2.', es: 'Historia: el desconocido, el reloj, el incendio y la voz. De A1 a B2.' },
+  { who: 'narrator', text: 'Thank you for playing… and for using your voice.', es: 'Gracias por jugar… y por usar tu voz.' },
+  { who: 'narrator', text: '(You can play any level again from the menu: A1, A2, B1 or B2.)', es: '(Puedes volver a jugar cualquier nivel desde el menú: A1, A2, B1 o B2.)' },
 ]
