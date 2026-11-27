@@ -367,4 +367,88 @@ export const B2_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B2-08 · Pitch (Ventana 2064): página del protagonista y página mezclada. Sin página de G. Se abre al cerrar la misión 8
+  {
+    id: 'b2-mission-8',
+    title: 'B2 · Misión 8: Pitch (Ventana 2064)',
+    unlock: 'b2-08-close',
+    words: [
+      { title: 'Marketing', words: [['campaign', 'campaña'], ['target audience', 'público objetivo'], ['brand', 'marca'], ['slogan', 'eslogan'], ['launch', 'lanzamiento, lanzar'], ['influencer', 'influencer'], ['word of mouth', 'voz a voz'], ['market research', 'estudio de mercado'], ['survey', 'encuesta']] },
+      { title: 'Trabajo', words: [['perks', 'beneficios'], ['health insurance', 'seguro médico'], ['flexible hours', 'horario flexible'], ['parental leave', 'licencia por un bebé'], ['sick leave', 'incapacidad'], ['notice period', 'preaviso'], ['resign', 'renunciar']] },
+      { title: 'Acrónimos', words: [['ASAP', 'lo antes posible'], ['ETA', 'hora estimada de llegada'], ['FYI', 'para que sepas'], ['EOD', 'fin del día'], ['TBC', 'por confirmar'], ['RSVP', 'responde, por favor'], ['BTW', 'por cierto'], ['IMO', 'en mi opinión']] },
+      { title: 'Phrasal verbs', words: [['hand in (your notice)', 'entregar (la renuncia)'], ['roll out', 'lanzar (un producto)'], ['cover up', 'encubrir'], ['sign up for', 'inscribirse en']] },
+    ],
+    versions: [
+      {
+        id: 'b2-mission-8-mine',
+        tense: 'p',
+        tab: 'Mi diario',
+        title: 'Launch day, 2064',
+        unlock: 'b2-08-close',
+        frame: 'Lo escribes al volver al presente.',
+        lines: [
+          { en: 'Today I [went]p into the future again. Vocalis [was launching]p Restore, and every screen [said]p: "Far easier than you think."', es: 'Hoy volví a entrar al futuro. Vocalis estaba lanzando Restore, y todas las pantallas decían: "Mucho más fácil de lo que crees".' },
+          { en: 'I [printed]p the fine print: "A compatible donor voice is required." Then I [left]p a note for Dr. Mensah.', es: 'Imprimí la letra pequeña: "Se requiere una voz donante compatible". Luego le dejé una nota al Dr. Mensah.' },
+          { en: 'At the launch I [saw]p someone with a hood at the back. They [touched]p their throat and [disappeared]p.', es: 'En el lanzamiento vi a alguien con capucha al fondo. Se tocó la garganta y desapareció.' },
+          { en: 'Mensah [read]p my note and [handed]p in his notice. They sell it as wellbeing. Somebody always pays the price.', es: 'Mensah leyó mi nota y presentó su renuncia. Lo venden como bienestar. Alguien siempre paga el precio.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-8-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'Restore',
+        unlock: 'b2-08-close',
+        frame: 'Toda la campaña, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'The ads [say]n that Restore [is]n far more effective than therapy and twice as fast.', es: 'Los anuncios dicen que Restore es mucho más eficaz que la terapia y el doble de rápido.' },
+          { en: 'Chloe [wrote]p: "FYI, the donor issue is TBC. Keep it off the ads."', es: 'Chloe escribió: "Para que sepan, el tema del donante está por confirmar. Que no salga en los anuncios".' },
+          { en: 'Mensah [has handed]p in his notice. He [won\'t help]f them cover it up.', es: 'Mensah ha presentado su renuncia. No los va a ayudar a encubrirlo.' },
+          { en: 'And the person with the hood… I [think]n I [will see]f them again.', es: 'Y la persona de la capucha… creo que la voy a volver a ver.' },
+        ],
+        questions: [
+          { q: 'What do the ads say about Restore?', options: ['It is twice as fast as therapy.', 'It needs a donor voice.', 'It is slightly slower than therapy.'], answer: 0, tip: 'El diario dice: "far more effective than therapy and twice as fast".' },
+          { q: 'What did Chloe want to keep off the ads?', options: ['The price.', 'The donor issue.', 'The launch date.'], answer: 1, tip: 'El correo dice: "the donor issue is TBC. Keep it off the ads".' },
+          { q: 'What has Mensah done?', options: ['He has signed up for Restore.', 'He has become head of marketing.', 'He has handed in his notice.'], answer: 2, tip: 'El diario dice: "Mensah has handed in his notice".' },
+        ],
+      },
+    ],
+  },
+  // Lectura larga de B2 (opcional, unas 250 palabras con 5 preguntas). Se abre al cerrar la misión 8
+  {
+    id: 'b2-reading-2',
+    title: 'Lectura: Restore: the small print',
+    unlock: 'b2-08-close',
+    words: [
+      { title: 'El artículo', words: [['medical community', 'comunidad médica'], ['donor', 'donante'], ['consent', 'consentimiento'], ['long-term', 'a largo plazo'], ['side effects', 'efectos secundarios'], ['regulator', 'ente regulador']] },
+    ],
+    versions: [
+      {
+        id: 'b2-reading-2-text',
+        tense: 'mix',
+        tab: 'Lectura',
+        title: 'Restore: the small print',
+        unlock: 'b2-08-close',
+        frame: 'Un artículo de la revista Health Today, 2064. Es un texto largo: léelo con calma antes de responder.',
+        lines: [
+          { en: 'This spring, Vocalis rolled out Restore, a treatment that promises to give people their lost voices back. The adverts are everywhere: "Far easier than you think."', es: 'Esta primavera, Vocalis lanzó Restore, un tratamiento que promete devolverle a la gente la voz perdida. Los anuncios están por todas partes: "Mucho más fácil de lo que crees".' },
+          { en: 'According to the company, Restore is far more effective than traditional therapy and works twice as fast. Thousands of patients have already signed up for it.', es: 'Según la empresa, Restore es mucho más eficaz que la terapia tradicional y funciona el doble de rápido. Miles de pacientes ya se han inscrito.' },
+          { en: 'However, many doctors are worried. The problem is not in the adverts, but in the small print of the contract: "A compatible donor voice is required."', es: 'Sin embargo, muchos médicos están preocupados. El problema no está en los anuncios, sino en la letra pequeña del contrato: "Se requiere una voz donante compatible".' },
+          { en: 'In other words, for one person to speak again, another person has to give their voice. Vocalis says that all donors give their consent. But there is very little information about who the donors are, and nobody knows the long-term effects.', es: 'En otras palabras, para que una persona vuelva a hablar, otra tiene que dar su voz. Vocalis dice que todos los donantes dan su consentimiento. Pero hay muy poca información sobre quiénes son los donantes, y nadie conoce los efectos a largo plazo.' },
+          { en: '"Some donors may never speak again," says Dr. Kwame Mensah, who worked for Vocalis until last month. "I couldn\'t help them cover it up, so I handed in my notice."', es: '"Puede que algunos donantes nunca vuelvan a hablar", dice el Dr. Kwame Mensah, quien trabajó para Vocalis hasta el mes pasado. "No podía ayudarles a encubrirlo, así que presenté mi renuncia".' },
+          { en: 'Vocalis says that Dr. Mensah\'s claims are "nowhere near as serious as they sound". The regulator has asked the company for more research before the end of the year.', es: 'Vocalis dice que lo que afirma el Dr. Mensah "no es ni de lejos tan grave como suena". El ente regulador le ha pedido a la empresa más investigación antes de fin de año.' },
+          { en: 'Our advice? Before you sign anything, read the small print. Then read it again, aloud.', es: '¿Nuestro consejo? Antes de firmar algo, lee la letra pequeña. Luego léela otra vez, en voz alta.' },
+        ],
+        questions: [
+          { q: 'What does Vocalis say about Restore?', options: ['It is cheaper than any other treatment.', 'It is far more effective than traditional therapy.', 'It doesn\'t need a donor.'], answer: 1, tip: 'El artículo dice: "Restore is far more effective than traditional therapy".' },
+          { q: 'Where is the problem, according to doctors?', options: ['In the small print of the contract.', 'In the price.', 'In the adverts.'], answer: 0, tip: 'El artículo dice: "The problem is not in the adverts, but in the small print".' },
+          { q: 'What is missing about the donors?', options: ['Their consent.', 'Their price.', 'Information about who they are.'], answer: 2, tip: 'El artículo dice: "there is very little information about who the donors are".' },
+          { q: 'Why did Dr. Mensah leave Vocalis?', options: ['He couldn\'t help them cover it up.', 'He wanted flexible hours.', 'He got a better job.'], answer: 0, tip: 'Mensah dice: "I couldn\'t help them cover it up, so I handed in my notice".' },
+          { q: 'What has the regulator asked for?', options: ['A new slogan.', 'More research.', 'A cheaper treatment.'], answer: 1, tip: 'El artículo dice: "The regulator has asked the company for more research".' },
+        ],
+      },
+    ],
+  },
 ]
+

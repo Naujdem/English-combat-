@@ -48,6 +48,7 @@ import { Unheard } from '../components/Unheard'
 import { B2_03_CLOSE, B2_03_EXITED, B2_03_SCHOOL_ID, B2_LEO_ADULT_LOOK } from '../data/b2Frozen'
 import { WindowExit } from '../components/WindowFrame'
 import { B2_06_CLOSE, B2_06_EXITED, B2_06_LAB_ID } from '../data/b2Lab'
+import { B2_08_CLOSE, B2_08_EXITED, B2_08_VOCALIS_ID } from '../data/b2Pitch'
 import { MemoriesTab } from '../components/MemoriesTab'
 import { Inscriptions } from '../components/Inscriptions'
 import { B1_DEMO_TABLET } from '../data/b1TabletDemo'
@@ -1426,6 +1427,17 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             update((s) => (s.opened.includes(B1_12_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B1_12_FRAGMENTS] }))
             onWorld()
           }}
+        />
+      )}
+      {/* B2-08 · cierre: fundido azul y vuelta al presente; se vuelve al mapa con el lugar 9 y el Extra Paws Debate abiertos */}
+      {scene.id === B2_08_VOCALIS_ID && state.opened.includes(B2_08_CLOSE) && !state.opened.includes(B2_08_EXITED) && !task && !outro && !msg && (
+        <WindowExit
+          onDone={() =>
+            update((s) => {
+              const back = s.b2Window?.returnTo ?? { sceneId: 'b2-07-oldtown', pos: { x: 14, y: 3 } }
+              return { ...s, sceneId: back.sceneId, pos: { ...back.pos }, b2Window: undefined, opened: s.opened.includes(B2_08_EXITED) ? s.opened : [...s.opened, B2_08_EXITED], screen: 'world' }
+            })
+          }
         />
       )}
       {/* B2-06 · cierre: fundido azul y vuelta al presente; se vuelve al mapa con el lugar 7 abierto */}

@@ -88,7 +88,7 @@ import { B2_S1_CLOSE_SCRIPT, B2_S1_MENU_PLAN, B2_S1_POST_SCRIPT } from './b2Fusi
 import { B2_S1_WORDS_IDS } from './questions-b2-s1'
 import { B2_06_ARRIVAL_SCRIPT, B2_06_CLOSE_SCRIPT, B2_06_FINDING_SCRIPT, B2_06_UNHEARD_ROOM } from './b2Lab'
 import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_IDS } from './questions-b2-06'
-import { B2_08_ARRIVAL_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNCH_SCRIPT, B2_08_UNHEARD_ROOM } from './b2Pitch'
+import { B2_08_ARRIVAL_SCRIPT, B2_08_CLOSE_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNCH_SCRIPT, B2_08_UNHEARD_ROOM } from './b2Pitch'
 import { B2_08_ACRONYMS_IDS, B2_08_COMPARE_IDS, B2_08_PERKS_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_07_OLIVER_SCRIPT, B2_07_ARRIVAL_SCRIPT, B2_07_DEBATE_ENDINGS, B2_07_DEBATE_TURNS, B2_07_EXPLORE_ROOM, B2_07_POSTER_SCRIPT, B2_07_ROSA_SCRIPT, B2_07_SAM_INTRO } from './b2OldBuilding'
@@ -8069,5 +8069,23 @@ NPC_TASKS['b2-08-launch'] = {
     text: 'Vocalis Restore. Far easier than you think.',
     es: 'Vocalis Restore. Mucho más fácil de lo que crees.',
     sub: 'Al fondo había alguien con capucha… El holograma parpadea y los Promo Bots vienen hacia ti.',
+  },
+}
+
+// ── B2-08 · Pitch, bloque 3: la nota de Mensah y el cierre. done = b2CloseId(8) = 'b2-08-close'. Al guardarse, Explore
+// muestra WindowExit (fundido azul) y se vuelve al presente: se abren el lugar 9 y el Extra Paws Debate ──
+NPC_TASKS['b2-08-close'] = {
+  npc: 'b2-08-mensah-desk',
+  done: 'b2-08-close',
+  activity: 'script',
+  script: B2_08_CLOSE_SCRIPT,
+  recover: ['compare-b2', 'uncount-b2', 'perks-b2', 'acronyms-b2'],
+  coins: 15,
+  steps: [],
+  reward: {
+    text: 'They sell it as wellbeing. Somebody always pays the price.',
+    es: 'Lo venden como bienestar. Alguien siempre paga el precio.',
+    sub: 'Misión 8: Pitch. Se abrieron el lugar 9 y el Extra Paws Debate en el mapa.',
+    say: 'Somebody always pays the price.',
   },
 }
