@@ -363,6 +363,8 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   'casco-explorador': { name: 'Casco de explorador urbano', color: '#e0892b' },
   // B2-09 · The Gallery: regalo de Arturo Silva al vencer a The Curator
   'boina-artista': { name: 'Boina de artista', color: '#7a2e3a' },
+  // B2-11 · Who Is G?: regalo de Marisol al vencer a The Spoiler (variante del pijama de noche de películas de B1)
+  'pijama-cine-b2': { name: 'Pijama de cine azul medianoche', color: '#1f2f6b' },
   // B2-04 · Fake Profile: regalo de The Catfish (jefe)
   'hoodie-hacker': { name: 'Hoodie de hacker', color: '#1f2a33' },
   // B2-02 · The Herald: regalo de The Deadline (jefe)

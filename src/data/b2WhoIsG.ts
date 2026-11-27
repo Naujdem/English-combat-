@@ -2,6 +2,9 @@ import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
 import type { FactCheckContent } from '../components/FactCheck'
 import type { ReconstructItem } from '../components/Reconstruct'
+import type { ReviewContent } from '../components/ReviewWriter'
+import type { CasualChat } from '../game/types'
+import { wordCount } from './b1Exam'
 
 /**
  * B2-11 · Who Is G? (presente, Lumen Bay). Guía: Manuel en el archivo, y luego el grupo (ficha 11).
@@ -15,8 +18,11 @@ import type { ReconstructItem } from '../components/Reconstruct'
  * Bloque 2: Leo confiesa (b2-11-confess, script, escucha: el grupo le pregunta con preguntas indirectas; su voz desaparece cuando
  *   los fragmentos brillan y sueña con humo) → dos Plot Holes (esbirros, huecos de guion corrompidos que salen de la pantalla)
  *   → el jefe The Spoiler (2 fases), un crítico de cine corrompido que intenta contar el final de todo.
- * Bloque 3 (pendiente): los quintos momentos de amistad, el cierre (dos fragmentos llenan el quinto segmento del núcleo y se abre
- *   la Ventana 12; "If I ever lose my voice… promise you'll speak for me."), la reseña opcional, diario y recompensas.
+ * Bloque 3: tras vencer a The Spoiler, los quintos momentos de amistad de B2, en orden (Explore.tsx): Maya (películas que cada uno
+ *   recomienda, B2_11_FRIEND_MAYA) → Leo (qué haría cada uno si perdiera la voz, B2_11_FRIEND_LEO) → la persona especial (confianza,
+ *   B2_11_FRIEND_SPECIAL). Marisol: el pijama de cine mejorado (b2-11-pyjamas) y la reseña opcional (b2-11-review). Leo: el cierre
+ *   (b2-11-close): "If I ever lose my voice… promise you'll speak for me."; Explore muestra FragmentJoin (dos fragmentos llenan
+ *   el quinto segmento, B2_11_FRAGMENTS) y se abre la Ventana 12. Diario: data/b2Diary.ts (la línea de tiempo del protagonista).
  */
 export const B2_11_HERALD_ID = 'b2-11-herald'
 export const B2_11_MANUEL = 'b2-11-manuel'
@@ -36,6 +42,16 @@ export const B2_11_CONFESS = 'b2-11-confess'
 export const B2_11_HOLE1 = 'b2-11-hole1'
 export const B2_11_HOLE2 = 'b2-11-hole2'
 export const B2_11_BOSS = 'b2-11-boss'
+/** Bloque 3 */
+export const B2_11_FRIEND_MAYA = 'b2-11-friend-maya'
+export const B2_11_FRIEND_LEO = 'b2-11-friend-leo'
+export const B2_11_FRIEND_SPECIAL = 'b2-11-friend-special'
+export const B2_11_PYJAMAS = 'b2-11-pyjamas'
+export const B2_11_REVIEW = 'b2-11-review'
+export const B2_11_CLOSE = 'b2-11-close'
+/** Se guarda al terminar la animación: dos fragmentos llenan el quinto segmento del núcleo (abre la Ventana 12) */
+export const B2_11_FRAGMENTS = 'b2-11-fragments'
+export const B2_FIFTH_SEGMENT = { en: 'The two fragments fill the fifth segment. Only one segment is still dark.', es: 'Los dos fragmentos llenan el quinto segmento. Solo queda un segmento apagado.' }
 
 /**
  * Leyenda (Tiles.tsx, sin dibujos nuevos): # pared · L estantería · F archivador · O escritorio · M escritorio de Manuel ·
@@ -120,11 +136,20 @@ export const B2_11_HERALD: SceneDef = {
     { label: 'Leo confiesa', done: s.opened.includes(B2_11_CONFESS) },
     { label: 'Plot Holes (2)', done: s.defeated.includes(B2_11_HOLE2) },
     { label: 'The Spoiler', done: s.defeated.includes(B2_11_BOSS) },
+    { label: 'Charla con Maya', done: s.opened.includes(B2_11_FRIEND_MAYA) },
+    { label: 'Charla con Leo', done: s.opened.includes(B2_11_FRIEND_LEO) },
+    { label: 'Charla con la persona especial', done: s.opened.includes(B2_11_FRIEND_SPECIAL) },
+    { label: 'Reseña (opcional)', done: s.opened.includes(B2_11_REVIEW) },
+    { label: 'El cierre', done: s.opened.includes(B2_11_CLOSE) },
   ],
   intro: {
     first: 'Presente. El archivo del Lumen Bay Herald. Tienes demasiadas pistas y ninguna respuesta. Manuel te espera entre cajas de periódicos viejos.',
     later: (s) =>
-      s.opened.includes(B2_11_BOARD)
+      s.opened.includes(B2_11_CLOSE)
+        ? 'La sala común. "Promise you\'ll speak for me." La misión 11 terminó: la Ventana 12 te espera en el mapa.'
+        : s.defeated.includes(B2_11_BOSS)
+        ? 'La sala común. La pantalla está apagada. Maya, Leo y la persona especial siguen despiertos.'
+        : s.opened.includes(B2_11_BOARD)
         ? 'La sala común. El tablero de pistas está lleno de hilos rojos. Leo no ha dicho nada en toda la noche.'
         : s.opened.includes(B2_11_FACTCHECK)
           ? 'La sala común de la residencia. Marisol preparó palomitas: hay noche de cine.'
@@ -334,6 +359,12 @@ export const B2_11_BOSS_DEF: EnemyDef = {
   ],
   after: [{ text: '(The critic drops his notebook. The pages fly away, all of them blank.)', es: '(El crítico suelta su cuaderno. Las páginas salen volando, todas en blanco.)' }],
   freed: { text: '(The screen goes dark. The film is over.)', es: '(La pantalla se apaga. La película terminó.)' },
+  farewell: {
+    q: 'The Spoiler (fading): "Can you tell me… how your story ends?"',
+    options: ["I don't know how it ends yet.", "I don't know how does it end yet.", "I don't know how ends it yet."],
+    answer: 0,
+    tip: 'Pregunta indirecta: how + sujeto + verbo (how it ends).',
+  },
 }
 
 export const B2_11_ENEMIES: Record<string, EnemyDef> = {
@@ -341,3 +372,93 @@ export const B2_11_ENEMIES: Record<string, EnemyDef> = {
   [B2_11_HOLE2]: HOLE(B2_11_HOLE2, { text: 'By the time we arrived, the film already started!', es: 'already started: falta had.' }),
   [B2_11_BOSS]: B2_11_BOSS_DEF,
 }
+
+// ── Bloque 3 ──
+
+/** Los quintos momentos de amistad de B2 (Explore.tsx), en orden: Maya → Leo → la persona especial. No hay respuestas malas */
+export const B2_11_MAYA_CHAT: CasualChat = {
+  requires: null,
+  level: 'B2',
+  text: "OK, that film was too close to home. Let's change the subject. What film or series would you recommend to me, and why?",
+  es: 'Bueno, esa película nos tocó de cerca. Cambiemos de tema. ¿Qué película o serie me recomendarías, y por qué?',
+  options: [
+    { text: "There's a series about a lighthouse keeper. It's a bit slow at first, but it's well worth watching. Every episode ends with a cliffhanger.", textEs: 'Hay una serie sobre un guardián de faro. Es un poco lenta al principio, pero vale mucho la pena. Cada episodio termina en suspenso.', reply: "Sold! I'll binge-watch it this weekend. Don't give away the ending!", es: '¡Vendido! La veré de corrido este fin de semana. ¡No me cuentes el final!', effect: 2 },
+    { text: "A thought-provoking film about a family that had stopped talking. It turned out to be my favourite of the year.", textEs: 'Una película que hace pensar, sobre una familia que había dejado de hablarse. Resultó ser mi favorita del año.', reply: 'That sounds gripping. And a bit like us, sometimes.', es: 'Suena atrapante. Y un poco como nosotros, a veces.', effect: 2 },
+    { text: "Honestly, most films are overrated. I prefer documentaries.", textEs: 'Sinceramente, la mayoría de las películas están sobrevaloradas. Prefiero los documentales.', reply: 'Fair enough! Next movie night, you choose.', es: '¡Me parece justo! En la próxima noche de cine, eliges tú.', effect: 1 },
+    { text: 'Plot the twist series recommend watching cast.', textEs: '(No tiene sentido.)', reply: "Sorry, I didn't understand.", es: 'Perdón, no te entendí.', effect: -1 },
+  ],
+}
+
+export const B2_11_LEO_CHAT: CasualChat = {
+  requires: null,
+  level: 'B2',
+  text: "Can I ask you something strange? What would you do if you lost your voice? I… I'm scared it'll happen to me.",
+  es: '¿Puedo preguntarte algo raro? ¿Qué harías si perdieras la voz? Yo… tengo miedo de que me pase.',
+  options: [
+    { text: "I'd be terrified. But I'd find another way to speak: writing, signs, anything. And I'd have you.", textEs: 'Me aterraría. Pero encontraría otra forma de hablar: escribiendo, con señas, como sea. Y te tendría a ti.', reply: "Thanks. It's easier to be scared when you're not alone.", es: 'Gracias. Es más fácil tener miedo cuando no estás solo.', effect: 2 },
+    { text: "I know how it feels. I lost mine once, remember? It came back piece by piece.", textEs: 'Sé lo que se siente. Una vez perdí la mía, ¿recuerdas? Volvió pieza por pieza.', reply: "You're right. If yours came back… maybe mine will too.", es: 'Tienes razón. Si la tuya volvió… quizá la mía también.', effect: 2 },
+    { text: "I don't know. I try not to think about it.", textEs: 'No sé. Trato de no pensar en eso.', reply: "Yeah… me neither. Until it happens again.", es: 'Sí… yo tampoco. Hasta que vuelve a pasar.', effect: 1 },
+    { text: 'Voice lost the would if scared I.', textEs: '(No tiene sentido.)', reply: "Sorry, I didn't understand.", es: 'Perdón, no te entendí.', effect: -1 },
+  ],
+}
+
+export const B2_11_SPECIAL_CHAT: CasualChat = {
+  requires: null,
+  level: 'B2',
+  text: "You've been quiet all night. You don't have to tell me everything. But whatever happens, I'm here.",
+  es: 'Has estado callado toda la noche. No tienes que contarme todo. Pero pase lo que pase, aquí estoy.',
+  options: [
+    { text: "I'll be honest: I've seen things I can't explain, and I think Leo is in danger. I'm scared.", textEs: 'Te voy a ser sincero: he visto cosas que no puedo explicar, y creo que Leo está en peligro. Tengo miedo.', reply: "Then we'll face it together.", es: 'Entonces lo enfrentaremos juntos.', effect: 2 },
+    { text: "Thank you. I can't tell you everything yet, but I'll tell you as soon as I understand it.", textEs: 'Gracias. Todavía no puedo contarte todo, pero te lo contaré en cuanto lo entienda.', reply: "OK. I trust you. I'll be waiting.", es: 'Está bien. Confío en ti. Te estaré esperando.', effect: 2 },
+    { text: "I'm fine, really. It was just the film.", textEs: 'Estoy bien, de verdad. Fue solo la película.', reply: 'If you say so… The offer stands.', es: 'Si tú lo dices… La oferta sigue en pie.', effect: 1 },
+    { text: 'Here whatever I happens trust the.', textEs: '(No tiene sentido.)', reply: "Sorry, I didn't understand.", es: 'Perdón, no te entendí.', effect: -1 },
+  ],
+}
+
+/** Marisol: el pijama de cine mejorado (pasos de la tarea b2-11-pyjamas) */
+export const B2_11_PYJAMAS_STEPS = [
+  { text: "What a night! First a thriller, then a critic jumping out of the screen. I've never had a movie night like this.", es: '¡Qué noche! Primero un thriller, luego un crítico saltando de la pantalla. Nunca había tenido una noche de cine así.' },
+  { text: 'Remember the movie pyjamas I gave you last year? I made you a new pair. Midnight blue, with little stars.', es: '¿Recuerdas el pijama de películas que te regalé el año pasado? Te hice uno nuevo. Azul medianoche, con estrellitas.' },
+]
+
+const FILM_WORDS = ['plot', 'plot twist', 'cliffhanger', 'cast', 'sequel', 'episode', 'review', 'gripping', 'predictable', 'spine-chilling', 'overrated', 'thought-provoking', 'well worth', 'binge-watch']
+const PAST_PERFECT = /\bhad\s+(been\s+\w+ing|already\s+\w+|\w+(ed|en|wn|ne|t))\b/i
+const PAST_CONT = /\b(was|were)\s+\w+ing\b/i
+const RECOMMEND = /\b(i would recommend|i'd recommend|i recommend|well worth watching|you should (definitely )?(see|watch) it|not really my thing)\b/i
+
+/** Requisitos de la reseña (se revisa con patrones, igual que en Movie Night de B1). No se revisa la calidad */
+export function b2ReviewChecks(text: string): { label: string; ok: boolean }[] {
+  const n = wordCount(text)
+  const t = ` ${text.toLowerCase().replace(/[^a-z' -]+/g, ' ')} `
+  const found = FILM_WORDS.filter((w) => t.includes(` ${w}`))
+  return [
+    { label: `Entre 60 y 90 palabras (llevas ${n})`, ok: n >= 60 && n <= 90 },
+    { label: 'Un pasado perfecto (had planned, had already happened, had been waiting…)', ok: PAST_PERFECT.test(text) },
+    { label: 'Un pasado continuo para el fondo (was travelling, were watching…)', ok: PAST_CONT.test(text) },
+    { label: `Al menos 2 palabras de cine: plot twist, gripping, predictable… (llevas ${found.length})`, ok: found.length >= 2 },
+    { label: 'Una recomendación: I would recommend it, It\'s well worth watching…', ok: RECOMMEND.test(text) },
+  ]
+}
+
+/** La reseña opcional de "Last Train to Yesterday" (ReviewWriter, reutilizado) */
+export const B2_11_REVIEW_GAME: ReviewContent = {
+  title: 'Movie review',
+  ask: 'Write a short review of "Last Train to Yesterday".',
+  es: 'Escribe una reseña corta de "Last Train to Yesterday" (60 a 90 palabras): cuenta un poco de la trama con varios pasados y da tu recomendación.',
+  help: 'A man had been planning… · While he was travelling… · By the time he arrived, … · It\'s well worth watching.',
+  checks: b2ReviewChecks,
+  model:
+    'Last Train to Yesterday is a gripping thriller. A man had been planning a trip to the past for years because he wanted to stop an accident. ' +
+    'While he was travelling, the train stopped in the wrong year. By the time he arrived, the accident had already happened. ' +
+    'The plot twist at the end is spine-chilling, although the first half is a bit predictable. ' +
+    "It's a bit slow at first, but it's well worth watching.",
+  modelBy: 'Reseña modelo de Marisol',
+}
+
+/** El cierre con Leo (pasos de la tarea b2-11-close) */
+export const B2_11_CLOSE_STEPS = [
+  { text: '(Two small lights rise from the dark screen and fly into your clock. Click. Click.)', es: '(Dos lucecitas salen de la pantalla apagada y vuelan hacia tu reloj. Clic. Clic.)' },
+  { text: '(Leo is looking at the clock. When the fragments glow, his voice breaks again.)', es: '(Leo mira el reloj. Cuando los fragmentos brillan, su voz vuelve a quebrarse.)' },
+  { text: 'Leo: If I ever lose my voice… promise you\'ll speak for me.', es: 'Leo: Si alguna vez pierdo la voz… prométeme que hablarás por mí.' },
+  { text: '(You promise. On the clue board, under the last red thread, you write: "Who is G?")', es: '(Se lo prometes. En el tablero de pistas, bajo el último hilo rojo, escribes: "¿Quién es G?")' },
+]
