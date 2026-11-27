@@ -1,5 +1,6 @@
-import type { GameState, SceneDef, Zone } from '../game/types'
+import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
+import { canRecognize } from '../game/mic'
 
 /**
  * B2-14 · Use Your Voice (presente, final de B2 y del juego). El puerto de Lumen Bay al atardecer, el mismo de The Grudge (B1).
@@ -53,6 +54,12 @@ export const B2_14_PORT: SceneDef = {
     { type: 'npc', id: B2_14_SPECIAL, x: 3, y: 4 },
     { type: 'npc', id: B2_14_FIGURE, x: 9, y: 2 },
     { type: 'npc', id: B2_14_G, x: 9, y: 2 },
+    // Bloque 2: los ecos salen del agua; G pelea; al vencerlo queda G en paz (el desenlace)
+    { type: 'enemy', id: 'b2-14-echo1', x: 6, y: 2, after: 'b2-14-reveal' },
+    { type: 'enemy', id: 'b2-14-echo2', x: 7, y: 4, after: 'b2-14-echo1' },
+    { type: 'enemy', id: 'b2-14-echo3', x: 8, y: 3, after: 'b2-14-echo2' },
+    { type: 'enemy', id: 'b2-14-boss', x: 9, y: 2, after: 'b2-14-echo3' },
+    { type: 'npc', id: 'b2-14-g-peace', x: 9, y: 2 },
   ],
   labels: [{ text: 'The harbour', x: 6, y: 1 }],
   zoneAt,
@@ -65,6 +72,9 @@ export const B2_14_PORT: SceneDef = {
     { label: 'Leo: condicionales mixtos', done: s.opened.includes(B2_14_MIXED) },
     { label: 'Leo: wish, if only y would rather', done: s.opened.includes(B2_14_WISH) },
     { label: 'La revelación', done: s.opened.includes(B2_14_REVEAL) },
+    { label: 'Los ecos de B2 (3)', done: s.defeated.includes('b2-14-echo3') },
+    { label: 'G', done: s.defeated.includes('b2-14-boss') },
+    { label: 'Be brave. Use your voice.', done: s.opened.includes('b2-14-ending') },
   ],
   intro: {
     first: 'Lumen Bay harbour, at sunset. Someone is waiting for you. — El puerto de Lumen Bay, al atardecer. Alguien te espera.',
@@ -91,4 +101,96 @@ export const B2_14_REVEAL_SCRIPT: ScriptLine[] = [
   { who: 'L', text: 'The fire. The card. Your birthday. My voice… It was you. It was always you.', es: 'El incendio. La tarjeta. Tu cumpleaños. Mi voz… Eras tú. Siempre fuiste tú.' },
   { who: 'friend', text: "I blamed you for everything. But tonight… you didn't stay silent.", es: 'Te culpé de todo. Pero esta noche… no te quedaste en silencio.' },
   { who: 'narrator', text: '(Mrs. García, Leo\'s mother. Mr. García, the teacher of 2056. G was never a stranger. G was Leo.)', es: '(La señora García, la mamá de Leo. El señor García, el profesor de 2056. G nunca fue un desconocido. G era Leo.)' },
+]
+
+// ── Bloque 2 ──
+// Tres ecos de los jefes de B2 (uno por parte del mapa: The Deadline, The Developer y The Spoiler; reutilizan sus preguntas)
+// → el jefe final G (3 fases; la 3.ª a dos voces con Leo joven, en voz alta o escrita) → el desenlace (b2-14-ending, script
+// con G en paz): devuelve el centro del reloj, "Be brave. Use your voice.", se desvanece; la inscripción del reloj.
+export const B2_14_ECHO1 = 'b2-14-echo1'
+export const B2_14_ECHO2 = 'b2-14-echo2'
+export const B2_14_ECHO3 = 'b2-14-echo3'
+export const B2_14_BOSS = 'b2-14-boss'
+export const B2_14_G_PEACE = 'b2-14-g-peace'
+export const B2_14_ENDING = 'b2-14-ending'
+
+const GREY = { shirt: '#4a4a55', hair: '#2a2a33', skin: '#8f8f9c' }
+
+/** Ecos de los jefes de B2: repaso rápido con las preguntas de los jefes originales (sus etiquetas). Sin atuendo */
+const ECHO = (id: string, name: string, topics: EnemyDef['topics'], tags: string[], before: { text: string; es: string }): EnemyDef => ({
+  id,
+  name,
+  person: name,
+  kind: 'minion',
+  echo: true,
+  hp: 4,
+  topics,
+  kinds: ['fill', 'fix', 'order', 'listen'],
+  tags,
+  onlyTags: true,
+  zone: 'calle',
+  look: GREY,
+  before: [before],
+  after: [{ text: '(The echo breaks and falls back into the water.)', es: '(El eco se rompe y cae de nuevo al agua.)' }],
+  freed: { text: '(Only the sound of the waves.)', es: '(Solo el sonido de las olas.)' },
+})
+
+const MX = 'mixed-cond-b2' as const
+const WS = 'wish-b2' as const
+const REVIEW: EnemyDef['topics'] = ['past-modals-b2', 'reporting-to-b2', 'reporting-ing-b2', 'passive-report-b2', 'fperfect-b2', 'nd-relative-b2', 'contrast-b2']
+
+/**
+ * G, el último resto de su rencor. Ya no es malvado, solo está dolido. Jefe de 3 fases.
+ * Fase 1: condicionales mixtos y wish (b2-14-boss-mx, con escucha) · Fase 2: repaso de todo B2 (b2-14-boss-mix: modales en
+ * pasado, verbos declarativos, pasiva de reporte, futuro perfecto, relativas explicativas y contraste) · Fase 3: a dos voces
+ * (b2-14-boss-v): el protagonista y Leo joven hablan juntos; sin micrófono se escribe.
+ * Suelta el atuendo final 'chaqueta-dos-voces' (data/school.ts) y tiene despedida.
+ */
+export const B2_14_BOSS_DEF: EnemyDef = {
+  id: B2_14_BOSS,
+  name: 'G',
+  person: 'G',
+  kind: 'boss',
+  reward: 'chaqueta-dos-voces',
+  hp: 12,
+  topics: [MX, WS],
+  kinds: ['fill', 'fix', 'order', 'listen'],
+  tags: ['b2-14-boss-mx'],
+  phases: [
+    { hp: 4, title: 'Lo que pudo ser', topics: [MX, WS], kinds: ['fill', 'fix', 'listen'], tags: ['b2-14-boss-mx'], line: { text: "If I would have known, I would be here… If you had helped me, I wouldn't lost my voice!", es: "If I would have known y I wouldn't lost: mal." } },
+    { hp: 4, title: 'Todo B2', topics: REVIEW, kinds: ['fill', 'fix'], tags: ['b2-14-boss-mix'], line: { text: 'You should have help me! It is say that you never cared…', es: 'should have help e It is say: mal.' } },
+    { hp: 4, title: 'Dos voces', topics: [MX, WS, 'fire-b2'], kinds: canRecognize ? ['speak'] : ['write'], tags: ['b2-14-boss-v'], line: { text: "(Leo stands next to you. \"Together?\" he says. You nod.)", es: '(Leo se pone a tu lado. "¿Juntos?", dice. Asientes.)' } },
+  ],
+  onlyTags: true,
+  zone: 'calle',
+  look: { shirt: '#23252d', hair: '#c9ccd2', skin: '#d7a77a', gender: 'male' },
+  before: [{ text: "If I would have known how this ends, I would be here forever. Say something! You never say anything…", es: '"If I would have known" está mal (If I had known). ¡Di algo! Tú nunca dices nada…' }],
+  after: [{ text: '(The anger leaves his face. For the first time, G smiles.)', es: '(La rabia se va de su cara. Por primera vez, G sonríe.)' }],
+  freed: { text: '(He is still transparent… but he looks calm now.)', es: '(Sigue transparente… pero ahora se ve tranquilo.)' },
+  farewell: {
+    q: 'G (smiling): "If you could go back, would you change anything?"',
+    options: ["If I could, I won't change our friendship.", "If I could, I wouldn't change our friendship.", "If I can, I wouldn't changed our friendship."],
+    answer: 1,
+    tip: 'Segundo condicional: If I could, I wouldn\'t change…',
+  },
+}
+
+export const B2_14_ENEMIES: Record<string, EnemyDef> = {
+  [B2_14_ECHO1]: ECHO(B2_14_ECHO1, 'Echo of The Deadline', ['ppc-b2', 'interview-b2'], ['b2-02-boss-pp'], { text: 'Too late, too late… you had been finish!', es: 'Parte 1 · The Deadline: "had been finish" está mal.' }),
+  [B2_14_ECHO2]: ECHO(B2_14_ECHO2, 'Echo of The Developer', ['if-alt-b2', 'get-b2'], ['b2-07-boss-if'], { text: 'Provided that it will have exits… you won\'t get away from me!', es: 'Parte 2 · The Developer: "provided… will have" y "get away from" están mal.' }),
+  [B2_14_ECHO3]: ECHO(B2_14_ECHO3, 'Echo of The Spoiler', ['narrative-b2', 'film-b2'], ['b2-11-boss-nt'], { text: 'She had been knowing him for years! The end!', es: 'Parte 3 · The Spoiler: "had been knowing" está mal.' }),
+  [B2_14_BOSS]: B2_14_BOSS_DEF,
+}
+
+/** El desenlace (final B): G devuelve el centro del reloj y se desvanece en paz. La paradoja se resuelve con la inscripción */
+export const B2_14_ENDING_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(G opens his hand. Inside, the centre of the clock: the core he took from you on the tower, long ago.)', es: '(G abre la mano. Adentro, el centro del reloj: el núcleo que te quitó en la torre, hace mucho.)' },
+  { who: 'friend', text: 'This was always yours. I should never have taken it.', es: 'Esto siempre fue tuyo. Nunca debí habértelo quitado.' },
+  { who: 'narrator', text: '(He looks at you. Then at Leo. Two friends, side by side.)', es: '(Te mira. Luego a Leo. Dos amigos, uno al lado del otro.)' },
+  { who: 'friend', text: 'Be brave. Use your voice.', es: 'Sean valientes. Usen su voz.' },
+  { who: 'narrator', text: '(He fades like morning fog over the water. In peace.)', es: '(Se desvanece como la niebla de la mañana sobre el agua. En paz.)' },
+  { who: 'narrator', text: '(Leo takes an old card out of his pocket: the card from his 15th birthday. It is the only thing left of G.)', es: '(Leo saca una tarjeta vieja del bolsillo: la de su cumpleaños número 15. Es lo único que queda de G.)' },
+  { who: 'L', text: 'My voice… it\'s back. All of it.', es: 'Mi voz… volvió. Completa.' },
+  { who: 'narrator', text: '(The core clicks into the clock. Six segments, all glowing. A last inscription appears: "What happened, still happened. The clock keeps every echo.")', es: '(El núcleo encaja en el reloj. Seis segmentos, todos brillando. Aparece una última inscripción: "Lo que pasó, sigue habiendo pasado. El reloj guarda cada eco".)' },
+  { who: 'narrator', text: '(Everything you lived, from the school to this harbour, is still real. But the future doesn\'t lead to G anymore.)', es: '(Todo lo que viviste, desde la escuela hasta este puerto, sigue siendo real. Pero el futuro ya no lleva a G.)' },
 ]

@@ -353,6 +353,8 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   'camisa-fiesta': { name: 'Camisa de fiesta', color: '#d4488a' },
   // B1-14 · Voices: regalo de The Grudge (jefe final de B1). Solo el color de la camiseta
   'chaqueta-lumen': { name: 'Chaqueta de Lumen Bay', color: '#1f6f8a' },
+  // B2-14 · Use Your Voice: el atuendo final, regalo de G (jefe final del juego)
+  'chaqueta-dos-voces': { name: 'Chaqueta de las dos voces', color: '#3f7fd9' },
   // B2-01 · Catching Up: regalo de Echo of the Grudge (jefe ligero)
   'sudadera-cafe': { name: 'Sudadera del café del puerto', color: '#8a5a3c' },
   // B2 · Extras, Fusion Night: regalo de Mei Lin

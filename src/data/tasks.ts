@@ -97,7 +97,7 @@ import { B2_12_ARRIVAL_SCRIPT, B2_12_CLOSE_SCRIPT, B2_12_PLANNER_CONTENT, B2_12_
 import { B2_12_GOALS_IDS, B2_12_NOTEBOOK_IDS, B2_12_PLAN_IDS } from './questions-b2-12'
 import { B2_13_ALARM_SCRIPT, B2_13_ARRIVAL_SCRIPT, B2_13_BEFORE_SCRIPT, B2_13_CALL_CONFIG, B2_13_CLOSE_SCRIPT } from './b2Fire'
 import { B2_13_HADBETTER_IDS, B2_13_TIME_IDS } from './questions-b2-13'
-import { B2_14_ARRIVAL_SCRIPT, B2_14_REVEAL_SCRIPT } from './b2UseYourVoice'
+import { B2_14_ARRIVAL_SCRIPT, B2_14_ENDING_SCRIPT, B2_14_REVEAL_SCRIPT } from './b2UseYourVoice'
 import { B2_14_MIXED_IDS, B2_14_WISH_IDS } from './questions-b2-14'
 import { B2_11_FILM_IDS, B2_11_INDIRECT_IDS, B2_11_NARRATIVE_IDS } from './questions-b2-11'
 import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
@@ -8895,5 +8895,21 @@ NPC_TASKS['b2-14-reveal'] = {
     es: 'G… García. G era Leo.',
     sub: 'La estática de los nombres se limpió en todo el juego (diario, recuerdos y Ventanas).',
     say: 'It was always you.',
+  },
+}
+
+// ── B2-14 · Use Your Voice, bloque 2: tras los ecos y el jefe G, el desenlace (final B). NO guarda el cierre ──
+NPC_TASKS['b2-14-ending'] = {
+  npc: 'b2-14-g-peace',
+  done: 'b2-14-ending',
+  activity: 'script',
+  script: B2_14_ENDING_SCRIPT,
+  coins: 10,
+  steps: [],
+  reward: {
+    text: 'What happened, still happened. The clock keeps every echo.',
+    es: 'Lo que pasó, sigue habiendo pasado. El reloj guarda cada eco.',
+    sub: 'El núcleo está completo y tu voz volvió entera. Tus amigos te esperan en el muelle.',
+    say: 'Be brave. Use your voice.',
   },
 }
