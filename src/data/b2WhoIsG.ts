@@ -1,4 +1,4 @@
-import type { GameState, SceneDef, Zone } from '../game/types'
+import type { EnemyDef, GameState, SceneDef, Zone } from '../game/types'
 import type { ScriptLine } from './b1Accident'
 import type { FactCheckContent } from '../components/FactCheck'
 import type { ReconstructItem } from '../components/Reconstruct'
@@ -12,7 +12,9 @@ import type { ReconstructItem } from '../components/Reconstruct'
  *   (b2-11-movie, script, escucha: "Last Train to Yesterday") → Maya: lección 'film-b2' + práctica (b2-11-film) → la persona
  *   especial: lección 'narrative-b2' + práctica (b2-11-narrative): tiempos narrativos combinados → el tablero de pistas: Reconstruct,
  *   versión "tablero" (b2-11-board): la línea de tiempo de B2 (el incendio, Vocalis, el aparato, la tarjeta y el cumpleaños).
- * Bloque 2 (pendiente): Leo confiesa (escucha, preguntas indirectas), Plot Holes (2) y The Spoiler (2 fases).
+ * Bloque 2: Leo confiesa (b2-11-confess, script, escucha: el grupo le pregunta con preguntas indirectas; su voz desaparece cuando
+ *   los fragmentos brillan y sueña con humo) → dos Plot Holes (esbirros, huecos de guion corrompidos que salen de la pantalla)
+ *   → el jefe The Spoiler (2 fases), un crítico de cine corrompido que intenta contar el final de todo.
  * Bloque 3 (pendiente): los quintos momentos de amistad, el cierre (dos fragmentos llenan el quinto segmento del núcleo y se abre
  *   la Ventana 12; "If I ever lose my voice… promise you'll speak for me."), la reseña opcional, diario y recompensas.
  */
@@ -30,6 +32,10 @@ export const B2_11_MOVIE = 'b2-11-movie'
 export const B2_11_FILM = 'b2-11-film'
 export const B2_11_NARRATIVE = 'b2-11-narrative'
 export const B2_11_BOARD = 'b2-11-board'
+export const B2_11_CONFESS = 'b2-11-confess'
+export const B2_11_HOLE1 = 'b2-11-hole1'
+export const B2_11_HOLE2 = 'b2-11-hole2'
+export const B2_11_BOSS = 'b2-11-boss'
 
 /**
  * Leyenda (Tiles.tsx, sin dibujos nuevos): # pared · L estantería · F archivador · O escritorio · M escritorio de Manuel ·
@@ -62,6 +68,9 @@ export const B2_11_HERALD: SceneDef = {
     { type: 'npc', id: B2_11_MAYA, x: 15, y: 1 },
     { type: 'npc', id: B2_11_SPECIAL, x: 17, y: 3 },
     { type: 'npc', id: B2_11_LEO, x: 21, y: 4 },
+    { type: 'enemy', id: B2_11_HOLE1, x: 13, y: 1, after: B2_11_CONFESS },
+    { type: 'enemy', id: B2_11_HOLE2, x: 19, y: 1, after: B2_11_HOLE1 },
+    { type: 'enemy', id: B2_11_BOSS, x: 16, y: 1, after: B2_11_HOLE2 },
   ],
   labels: [
     { text: 'The Herald · Archive', x: 4, y: 5 },
@@ -108,6 +117,9 @@ export const B2_11_HERALD: SceneDef = {
     { label: 'Hablar de películas · plot twist, gripping', done: s.opened.includes(B2_11_FILM) },
     { label: 'Tiempos narrativos combinados', done: s.opened.includes(B2_11_NARRATIVE) },
     { label: 'El tablero de pistas', done: s.opened.includes(B2_11_BOARD) },
+    { label: 'Leo confiesa', done: s.opened.includes(B2_11_CONFESS) },
+    { label: 'Plot Holes (2)', done: s.defeated.includes(B2_11_HOLE2) },
+    { label: 'The Spoiler', done: s.defeated.includes(B2_11_BOSS) },
   ],
   intro: {
     first: 'Presente. El archivo del Lumen Bay Herald. Tienes demasiadas pistas y ninguna respuesta. Manuel te espera entre cajas de periódicos viejos.',
@@ -258,3 +270,74 @@ export const B2_11_BOARD_ITEMS: ReconstructItem[] = [
     tip: 'Lo que pasó antes: had already written. Lo que pasó después: opened.',
   },
 ]
+
+/** Leo confiesa (MemoryScript, escucha): el grupo le pregunta con preguntas indirectas. Solo una sospecha: "What if G is connected to Leo?" */
+export const B2_11_CONFESS_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(Leo is holding his throat. When he tries to speak, only air comes out. Then his voice comes back, weak.)', es: '(Leo se sostiene la garganta. Cuando intenta hablar, solo sale aire. Luego su voz vuelve, débil.)' },
+  { who: 'narrator', text: 'Maya: Leo, can you tell us why your voice keeps breaking?', es: 'Maya: Leo, ¿puedes decirnos por qué se te sigue quebrando la voz?' },
+  { who: 'narrator', text: "Leo: It started at the hospital, after the clock. My voice disappears when the fragments glow.", es: 'Leo: Empezó en el hospital, después del reloj. Mi voz desaparece cuando los fragmentos brillan.' },
+  { who: 'narrator', text: 'Special person: Do you know how long it lasts?', es: 'La persona especial: ¿Sabes cuánto dura?' },
+  { who: 'narrator', text: "Leo: A few seconds. A minute, sometimes. And I've been having the same dream for weeks.", es: 'Leo: Unos segundos. Un minuto, a veces. Y llevo semanas teniendo el mismo sueño.' },
+  { who: 'narrator', text: "Leo: Smoke. A corridor on fire. Somebody is standing on the stairs and I'm shouting for help.", es: 'Leo: Humo. Un pasillo en llamas. Alguien está de pie en la escalera y yo grito pidiendo ayuda.' },
+  { who: 'narrator', text: "Maya: Why didn't you tell us?", es: 'Maya: ¿Por qué no nos contaste?' },
+  { who: 'narrator', text: "Leo: I didn't want to worry you.", es: 'Leo: No quería preocuparlos.' },
+  { who: 'narrator', text: '(A corridor on fire. Somebody on the stairs. You have seen that place through a Window. You think: "What if G is connected to Leo?")', es: '(Un pasillo en llamas. Alguien en la escalera. Has visto ese lugar a través de una Ventana. Piensas: "¿Y si G está conectado con Leo?")' },
+  { who: 'narrator', text: '(Suddenly the screen flickers. The film is playing again, but the scenes are full of holes.)', es: '(De repente la pantalla parpadea. La película vuelve a correr, pero las escenas están llenas de huecos.)' },
+]
+
+const IN = 'indirect-b2' as const
+const NT = 'narrative-b2' as const
+const FM = 'film-b2' as const
+
+/** Plot Holes: huecos de guion corrompidos que salen de la pantalla. Preguntas: etiqueta b2-11-hole */
+const HOLE = (id: string, line: { text: string; es: string }): EnemyDef => ({
+  id,
+  name: 'Plot Hole',
+  person: 'Plot Hole',
+  kind: 'minion',
+  hp: 4,
+  topics: [IN, NT],
+  kinds: ['fill', 'fix'],
+  tags: ['b2-11-hole'],
+  onlyTags: true,
+  zone: 'sala',
+  look: { shirt: '#2b2b3a', hair: '#111118', skin: '#4a4a63' },
+  before: [line],
+  after: [{ text: '(The hole closes. The scene on the screen is complete again.)', es: '(El hueco se cierra. La escena de la pantalla vuelve a estar completa.)' }],
+  freed: { text: '(Only a bit of popcorn is left on the floor.)', es: '(Solo quedan unas palomitas en el suelo.)' },
+})
+
+/**
+ * The Spoiler: un crítico de cine corrompido que intenta contar el final de todo. Jefe de 2 fases.
+ * Fase 1: tiempos narrativos combinados (b2-11-boss-nt) · Fase 2: preguntas indirectas y en estilo indirecto, con la confesión
+ * de Leo en escucha (b2-11-boss-in). Los fragmentos, la despedida y el cierre llegan en el bloque 3.
+ */
+export const B2_11_BOSS_DEF: EnemyDef = {
+  id: B2_11_BOSS,
+  name: 'The Spoiler',
+  person: 'The Spoiler',
+  kind: 'boss',
+  hp: 10,
+  topics: [NT, IN, FM],
+  kinds: ['fill', 'fix', 'order', 'listen'],
+  tags: ['b2-11-boss-nt'],
+  phases: [
+    { hp: 5, title: 'Primer acto: contarlo todo mal', topics: [NT, FM], kinds: ['fill', 'fix', 'order'], tags: ['b2-11-boss-nt'], line: { text: 'She had been knowing him for years! When you arrived, they already left! The end!', es: 'had been knowing y they already left: mal.' } },
+    { hp: 5, title: 'Último acto: preguntas sin respuesta', topics: [IN], kinds: ['fill', 'fix', 'listen'], tags: ['b2-11-boss-in'], line: { text: 'Can you tell me what time does it end? He asked me did I like it! I know how it ends!', es: 'what time does it end y asked me did I like it: mal.' } },
+  ],
+  onlyTags: true,
+  zone: 'sala',
+  look: { shirt: '#1d1d1d', hair: '#c9c9c9', skin: '#8f8fa3' },
+  before: [
+    { text: '(A tall man in a long black coat steps out of the screen. He is holding a notebook full of reviews.)', es: '(Un hombre alto con un abrigo negro largo sale de la pantalla. Tiene un cuaderno lleno de reseñas.)' },
+    { text: 'SPOILER ALERT! I KNOW HOW YOUR STORY ENDS. SHALL I TELL YOU?', es: '¡ALERTA DE SPOILER! SÉ CÓMO TERMINA TU HISTORIA. ¿TE LO CUENTO?' },
+  ],
+  after: [{ text: '(The critic drops his notebook. The pages fly away, all of them blank.)', es: '(El crítico suelta su cuaderno. Las páginas salen volando, todas en blanco.)' }],
+  freed: { text: '(The screen goes dark. The film is over.)', es: '(La pantalla se apaga. La película terminó.)' },
+}
+
+export const B2_11_ENEMIES: Record<string, EnemyDef> = {
+  [B2_11_HOLE1]: HOLE(B2_11_HOLE1, { text: 'Do you know where is G? He asked me where was I going!', es: 'where is G y where was I going: mal.' }),
+  [B2_11_HOLE2]: HOLE(B2_11_HOLE2, { text: 'By the time we arrived, the film already started!', es: 'already started: falta had.' }),
+  [B2_11_BOSS]: B2_11_BOSS_DEF,
+}
