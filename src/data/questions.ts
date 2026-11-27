@@ -62,6 +62,7 @@ import { B2_06_COMBAT_QUESTIONS, B2_06_QUESTIONS } from './questions-b2-06'
 import { B2_08_COMBAT_QUESTIONS, B2_08_QUESTIONS } from './questions-b2-08'
 import { B2_09_QUESTIONS } from './questions-b2-09'
 import { B2_10_COMBAT_QUESTIONS, B2_10_QUESTIONS } from './questions-b2-10'
+import { B2_11_QUESTIONS } from './questions-b2-11'
 import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
@@ -466,6 +467,7 @@ export const QUESTIONS: Question[] = [
   ...B2_09_QUESTIONS,
   ...B2_10_QUESTIONS,
   ...B2_10_COMBAT_QUESTIONS,
+  ...B2_11_QUESTIONS,
   ...B2_S1_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
@@ -787,6 +789,31 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
       'Una oración: Some people speak up, whereas / while others stay quiet. (Sin but: nunca "Whereas…, but…".)',
       'Oración nueva con coma: However, … · Nevertheless, … · On the other hand, …',
       'despite / in spite of + sustantivo o -ing: Despite the rain · Despite being scared. (Nunca "despite of" ni "in spite" sin of.)',
+    ],
+  },
+  // B2-11 · Who Is G? (data/b2WhoIsG.ts)
+  'indirect-b2': {
+    name: 'Preguntas indirectas y en estilo indirecto',
+    level: 'B2',
+    lesson: [
+      'Do you know / Can you tell me + palabra interrogativa + sujeto + verbo: Do you know where G is? (sin do / does / did).',
+      'Sí o no: if / whether. En estilo indirecto el tiempo retrocede: He asked me where I was going. She asked if I had seen it.',
+    ],
+  },
+  'film-b2': {
+    name: 'Películas y series',
+    level: 'B2',
+    lesson: [
+      "Recomendar: It's well worth watching. It's a bit slow at first, but… · plot twist, cliffhanger, cast, sequel, binge-watch.",
+      'gripping · predictable · spine-chilling · overrated · thought-provoking · figure out, turn out, piece together, give away.',
+    ],
+  },
+  'narrative-b2': {
+    name: 'Tiempos narrativos combinados',
+    level: 'B2',
+    lesson: [
+      'Hechos: pasado simple · fondo: was + -ing · antes: had + participio · duración antes: had been + -ing.',
+      'By the time Leo turned fifteen, G had already written the card. Verbos de estado sin continuo: had known (no "had been knowing").',
     ],
   },
   'ing-prep-b2': {
