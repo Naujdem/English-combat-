@@ -1455,6 +1455,39 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#6b3fa0', hair: '#222222', skin: '#c68e6a', gender: 'male' },
     doneLine: { text: 'This final is so exciting!', es: '¡Esta final es tan emocionante!' },
   },
+  // ── B2-03 · Frozen, bloque 1 (Ventana 2061, la escuela nocturna, data/b2Frozen.ts). Nadie oye al protagonista ──
+  'b2-03-student': {
+    name: 'A student',
+    look: { shirt: '#c25a7c', hair: '#3a2418', skin: '#d9a47e', gender: 'female' },
+    doneLine: { text: 'I can hardly keep my eyes open.', es: 'Casi no puedo mantener los ojos abiertos.' },
+  },
+  // Leo adulto: en sombra, de espaldas, con el nombre en estática (ficha 0.3)
+  'b2-03-teacher': {
+    name: 'The teacher',
+    look: { shirt: '#1d2430', hair: '#0e1218', skin: '#2a313c', gender: 'male' },
+    doneLine: { text: '(He is cleaning the board. He does not turn around.)', es: '(Está borrando la pizarra. No se da la vuelta.)' },
+  },
+  'b2-03-board': {
+    name: 'La pizarra',
+    look: { shirt: '#24402f', hair: '#8a6a40', skin: '#24402f' },
+    doneLine: { text: 'I heard someone scream. I heard someone screaming.', es: 'Oí a alguien gritar. Oí a alguien gritando.' },
+  },
+  // El protagonista adulto (mismo sprite, con lentes)
+  'b2-03-adult': {
+    name: 'Tu yo adulto',
+    look: { shirt: '#4a5568', hair: '#2a1a12', skin: '#c68e6a', gender: 'male' },
+    doneLine: { text: '(Your older self is looking at the floor.)', es: '(Tu yo adulto mira el suelo.)' },
+  },
+  'b2-03-poster': {
+    name: 'El cartel de bienestar',
+    look: { shirt: '#f2d98a', hair: '#3fa9ff', skin: '#f2d98a' },
+    doneLine: { text: 'How are you REALLY feeling?', es: '¿Cómo te sientes DE VERDAD?' },
+  },
+  'b2-03-notebook': {
+    name: 'El cuaderno olvidado',
+    look: { shirt: '#efe6d2', hair: '#8a5a32', skin: '#efe6d2' },
+    doneLine: { text: 'Sometimes I feel as if I\'m always holding back.', es: 'A veces siento como si siempre me estuviera conteniendo.' },
+  },
   // ── B2-02 · The Herald, bloque 1 (la redacción, data/b2Herald.ts) ──
   // Manuel (guía): tareas b2-02-arrival, b2-02-ppc, b2-02-interview-prep, b2-02-meeting y b2-02-patterns
   'b2-02-manuel': {

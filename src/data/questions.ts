@@ -54,6 +54,7 @@ import { B1_12_QUESTIONS } from './questions-b1-12'
 import { B1_14_QUESTIONS } from './questions-b1-14'
 import { B2_01_QUESTIONS } from './questions-b2-01'
 import { B2_02_COMBAT_QUESTIONS, B2_02_QUESTIONS } from './questions-b2-02'
+import { B2_03_QUESTIONS } from './questions-b2-03'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
@@ -442,6 +443,7 @@ export const QUESTIONS: Question[] = [
   ...B1_14_QUESTIONS,
   ...B2_01_QUESTIONS,
   ...B2_02_QUESTIONS,
+  ...B2_03_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
   ...B1_11_QUESTIONS,
@@ -706,6 +708,33 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
       'ask / tell / want / expect + objeto + to: She asked me to check it. · I want you to check it (nunca want that).',
       'make / let + objeto + verbo sin to: He made me rewrite it. · suggest + -ing (nunca suggest me to).',
       'Cambian de significado: remember to (no olvidar) / remember -ing (recuerdo) · stop to (para hacer algo) / stop -ing (dejar de) · try -ing (probar) / try to (intentar).',
+    ],
+  },
+  // B2-03 · Frozen (Ventana 2061, data/b2Frozen.ts)
+  'senses-b2': {
+    name: 'Verbos de los sentidos y like / as if',
+    level: 'B2',
+    lesson: [
+      'see / hear / watch / feel / smell / notice + objeto + forma base (acción completa): I heard someone scream.',
+      '… + objeto + -ing (acción en curso): I heard someone screaming. Nunca to: I saw him run (no "to run").',
+      'like + sustantivo: It sounds like rain. · as if + oración: You look as if you haven\'t slept. En pasado: He looked as if he were made of stone.',
+    ],
+  },
+  'feelings-b2': {
+    name: 'Sentimientos complejos y adjetivos -ed / -ing',
+    level: 'B2',
+    lesson: [
+      'overwhelmed · anxious · ashamed · numb · relieved · guilty.',
+      'Adjetivo → sustantivo: anxious → anxiety · ashamed → shame · relieved → relief · guilty → guilt. Nunca "a lot of anxious".',
+      '-ed = cómo se siente la persona (I\'m bored) · -ing = lo que lo causa (The class is boring).',
+    ],
+  },
+  'diary-b2': {
+    name: 'Hablar de cómo te sientes (varios tiempos)',
+    level: 'B2',
+    lesson: [
+      'I\'ve been feeling tired lately (sigue ahora) · I used to speak up more (antes sí, ahora no) · I feel as if I\'m always holding back.',
+      'Phrasal verbs: hold back · speak up · freeze up · calm down.',
     ],
   },
   // B2-01 · Catching Up (data/b2CatchingUp.ts)

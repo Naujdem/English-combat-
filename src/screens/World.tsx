@@ -24,6 +24,8 @@ import { B2Map, CoreBar } from '../components/B2Map'
 import { B2Opening } from '../components/B2Opening'
 import { B2_01_PORT_ID } from '../data/b2CatchingUp'
 import { B2_02_HERALD_ID } from '../data/b2Herald'
+import { B2_03_SCHOOL } from '../data/b2Frozen'
+import { enterB2Window, isB2WindowScene } from '../game/b2Window'
 import { B2_NODES, B2_OPENING, B2_PART_NAMES, B2_ERA_COLOR, b2LockedText, b2Message, b2NodeDone, b2NodeOpen, isB2Unlocked, type B2Node, type B2Part } from '../data/b2World'
 import { enterMemory, memoryFlag } from '../game/memory'
 import { B1_01_SCHOOL } from '../data/b1Accident'
@@ -199,6 +201,8 @@ export function World({ state, update, onEnter, onTitle }: { state: GameState; u
     if (n.num === 1) return onEnter(B2_01_PORT_ID)
     // Lugar 2 (presente): The Herald, la redacción (data/b2Herald.ts)
     if (n.num === 2) return onEnter(B2_02_HERALD_ID)
+    // Lugar 3 (Ventana 2061): Frozen, la escuela nocturna (data/b2Frozen.ts). Con la animación de entrada solo la primera vez
+    if (n.num === 3) return state.b2Window?.n === 3 && isB2WindowScene(state.sceneId) ? onEnter(B2_03_SCHOOL.id) : update((s) => enterB2Window(s, 3, B2_03_SCHOOL.id, B2_03_SCHOOL.start))
     // Las demás misiones de B2 todavía no están construidas (fichas 3 a 14)
     setMsg(`${label}${n.year ? ` (Ventana ${n.year})` : ''}: este lugar se construirá pronto.`)
   }
