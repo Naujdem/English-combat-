@@ -94,6 +94,8 @@ import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './ques
 import { B2_11_ARRIVAL_SCRIPT, B2_11_CLOSE_STEPS, B2_11_PYJAMAS_STEPS, B2_11_REVIEW_GAME, B2_11_CONFESS_SCRIPT, B2_11_BOARD_ITEMS, B2_11_FACT_CHECK, B2_11_MOVIE_SCRIPT } from './b2WhoIsG'
 import { B2_12_ARRIVAL_SCRIPT, B2_12_CLOSE_SCRIPT, B2_12_PLANNER_CONTENT, B2_12_RETURN_SCRIPT, B2_12_UNHEARD_ROOM } from './b2Countdown'
 import { B2_12_GOALS_IDS, B2_12_NOTEBOOK_IDS, B2_12_PLAN_IDS } from './questions-b2-12'
+import { B2_13_ARRIVAL_SCRIPT, B2_13_BEFORE_SCRIPT } from './b2Fire'
+import { B2_13_HADBETTER_IDS, B2_13_TIME_IDS } from './questions-b2-13'
 import { B2_11_FILM_IDS, B2_11_INDIRECT_IDS, B2_11_NARRATIVE_IDS } from './questions-b2-11'
 import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
 import { B2_10_ARRIVAL_SCRIPT, B2_10_BENCH_SCRIPT, B2_10_CARD_CONTENT, B2_10_CLASS_SCRIPT, B2_10_CLOSE_SCRIPT, B2_10_GIFT_SCRIPT } from './b2Card'
@@ -8715,5 +8717,67 @@ NPC_TASKS['b2-12-close'] = {
     es: 'Sé a dónde tengo que ir. La noche del incendio.',
     sub: 'Misión 12: Countdown. La nota quedó en Mochila › Recuerdos y Ventanas. El núcleo tiembla: la Ventana 13 se abrió sola en el mapa.',
     say: 'The night of the fire.',
+  },
+}
+
+// ── B2-13 · The Fire, bloque 1 (Ventana 2061, el pasillo del tercer piso, data/b2Fire.ts). Tu voz funciona. NO guarda el cierre ──
+// La estudiante: por primera vez en una Ventana, alguien te oye (script)
+NPC_TASKS['b2-13-arrival'] = {
+  npc: 'b2-13-student',
+  done: 'b2-13-arrival',
+  activity: 'script',
+  script: B2_13_ARRIVAL_SCRIPT,
+  steps: [],
+  reward: { text: 'My voice… it works here now.', es: 'Mi voz… aquí ya funciona.', sub: 'El núcleo está completo. En la puerta del aula espera alguien que conoces.', say: 'My voice works here now.' },
+}
+
+// Antes de la alarma: Leo adulto termina la clase y tu yo adulto espera en la puerta (script)
+NPC_TASKS['b2-13-before'] = {
+  npc: 'b2-13-adult',
+  done: 'b2-13-before',
+  activity: 'script',
+  script: B2_13_BEFORE_SCRIPT,
+  requires: { id: 'b2-13-arrival', text: 'Someone is waiting at the door.', es: 'Alguien espera en la puerta.', sub: 'Primero habla con la estudiante.' },
+  steps: [],
+  reward: { text: 'Not this time.', es: 'Esta vez no.', sub: 'Junto a las escaleras traseras hay un cartel de evacuación. Léelo.', say: 'Not this time.' },
+}
+
+// El cartel de evacuación: lección 'hadbetter-b2' (la guía el cartel) + práctica b2-13-hb1…hb6 (1 de escucha). 5 monedas
+NPC_TASKS['b2-13-hadbetter'] = {
+  npc: 'b2-13-sign',
+  done: 'b2-13-hadbetter',
+  lesson: 'hadbetter-b2',
+  placeGuide: { name: 'El cartel de evacuación', icon: '⚠' },
+  activity: 'practice',
+  practice: 'hadbetter-b2',
+  practiceIds: B2_13_HADBETTER_IDS,
+  coins: 5,
+  requires: { id: 'b2-13-before', text: 'IN CASE OF FIRE', es: 'EN CASO DE INCENDIO', sub: 'Primero mira la puerta del aula.' },
+  steps: [],
+  reward: {
+    text: "You'd better use the back stairs. You'd better not use the lift.",
+    es: 'Más vale usar las escaleras traseras. Más vale no usar el ascensor.',
+    sub: 'En la ventana oscura del pasillo se ve tu reflejo.',
+    say: "You'd better use the back stairs.",
+  },
+}
+
+// Tu reflejo en la ventana oscura: lección 'itstime-b2' (la guía tu propia voz) + práctica b2-13-it1…it6 (1 de escucha). 5 monedas
+NPC_TASKS['b2-13-time'] = {
+  npc: 'b2-13-reflection',
+  done: 'b2-13-time',
+  lesson: 'itstime-b2',
+  placeGuide: { name: 'Tu propia voz', icon: '♪' },
+  activity: 'practice',
+  practice: 'itstime-b2',
+  practiceIds: B2_13_TIME_IDS,
+  coins: 5,
+  requires: { id: 'b2-13-hadbetter', text: 'Your reflection in the dark window.', es: 'Tu reflejo en la ventana oscura.', sub: 'Primero lee el cartel de evacuación.' },
+  steps: [],
+  reward: {
+    text: "It's time everyone left. It's high time you spoke up.",
+    es: 'Ya es hora de que todos se vayan. Ya es hora de que alces la voz.',
+    sub: 'Son las diez y treinta y cuatro. Falta un minuto para la alarma.',
+    say: "It's time you spoke up.",
   },
 }

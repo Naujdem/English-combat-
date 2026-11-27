@@ -1595,4 +1595,24 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: 'Hurry! The ship ___ leave.', choice: { options: ['is about to', 'is about', 'is about leaving'], answer: 0, tip: 'be about to + verbo.' } },
     { who: 'narrator', text: '(At the bottom of the page: "Tomorrow I\'ll have my voice back. And he\'ll have lost his.")', es: '(Al final de la página: "Mañana tendré mi voz de vuelta. Y él habrá perdido la suya".)' },
   ],
+  // B2-13 · bloque 1 (Ventana 2061, el pasillo del tercer piso, data/b2Fire.ts): el cartel de evacuación, had better (Murphy 35)
+  'hadbetter-b2': [
+    { who: 'narrator', text: '(A red and white sign next to the back stairs. At the top, in big letters: "IN CASE OF FIRE".)', es: '(Un cartel rojo y blanco junto a las escaleras traseras. Arriba, en letras grandes: "EN CASO DE INCENDIO".)', board: ['IN CASE OF FIRE', "You'd better use the back stairs."] },
+    { who: 'narrator', text: 'Had better + base form: strong advice for one specific situation. If you don\'t follow it, something bad can happen. You\'d = you had.', es: 'Had better + forma base: un consejo fuerte para una situación concreta. Si no lo sigues, puede pasar algo malo. You\'d = you had.', board: ['had better + base form', "you'd better = you had better"] },
+    { who: 'board', text: 'In case of fire, you ___ the back stairs.', choice: { options: ["'d better use", "'d better to use", "'d better using"], answer: 0, tip: 'had better + forma base, sin to: better use.' } },
+    { who: 'narrator', text: '"You\'d better not use the lift." In the negative, not goes after better: had better not + base form.', es: '"Más vale que no uses el ascensor". En negativo, not va después de better: had better not + forma base.', board: ['Negative', "You'd better not use the lift."] },
+    { who: 'board', text: 'You ___ the lift.', choice: { options: ["'d not better use", "'d better not use", "'d better not to use"], answer: 1, tip: 'had better not + forma base.' } },
+    { who: 'narrator', text: 'It looks like a past form, but had better is about now or the future: "It\'s late. We\'d better go." Never "had better to go".', es: 'Parece pasado, pero had better habla de ahora o del futuro: "Es tarde. Más vale que nos vayamos". Nunca "had better to go".', board: ['Now / future', "It's late. We'd better go."] },
+    { who: 'narrator', text: '(Small letters at the bottom of the sign: "Back stairs added in 2058. Every floor must have two exits.")', es: '(Letras pequeñas al final del cartel: "Escaleras traseras añadidas en 2058. Cada piso debe tener dos salidas". Existen gracias a la condición que pediste en el lugar 7.)' },
+  ],
+  // B2-13 · bloque 1: tu reflejo en la ventana oscura y tu propia voz, it's time (Murphy 35)
+  'itstime-b2': [
+    { who: 'narrator', text: '(In the dark window you see your reflection. You whisper… and you hear your own voice.)', es: '(En la ventana oscura ves tu reflejo. Susurras… y oyes tu propia voz.)', board: ['Your own voice'] },
+    { who: 'narrator', text: '"It\'s time to leave." It\'s time to + base form: this is the right moment to do something.', es: '"Es hora de irse". It\'s time to + forma base: es el momento de hacer algo.', board: ["It's time to + base form", "It's time to leave."] },
+    { who: 'board', text: "It's late. It's time ___ home.", choice: { options: ['going', 'to go', 'go to'], answer: 1, tip: "It's time to + forma base." } },
+    { who: 'narrator', text: '"It\'s time everyone left." It\'s time + subject + past simple: something should be happening already, and it isn\'t. The meaning is present, but the verb is past.', es: '"Ya es hora de que todos se vayan". It\'s time + sujeto + pasado simple: algo ya debería estar pasando, y no pasa. El sentido es presente, pero el verbo va en pasado.', board: ["It's time + subject + past", "It's time everyone left."] },
+    { who: 'board', text: "It's half past ten. It's time we ___.", choice: { options: ['leaves', 'leaving', 'left'], answer: 2, tip: "It's time + sujeto + pasado: we left." } },
+    { who: 'narrator', text: 'For more force: it\'s high time. "It\'s high time you spoke up." Speak up = say what you think, loudly and clearly. The opposite: hold back.', es: 'Con más fuerza: it\'s high time. "Ya es hora de que alces la voz". Speak up = decir lo que piensas, claro y en voz alta. Lo contrario: hold back (contenerse).', board: ["It's high time you spoke up.", 'speak up ↔ hold back'] },
+    { who: 'narrator', text: '(You look at your reflection. "It\'s time you spoke up," you say. This time, your voice doesn\'t disappear.)', es: '(Miras tu reflejo. "Ya es hora de que alces la voz", dices. Esta vez, tu voz no desaparece.)' },
+  ],
 }

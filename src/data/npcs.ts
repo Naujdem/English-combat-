@@ -1700,6 +1700,37 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b2-10-contrast',
     doneLine: { text: "It's worth trying one last time.", es: 'Vale la pena intentarlo una última vez.' },
   },
+  // ── B2-13 · The Fire, bloque 1 (Ventana 2061, el pasillo del tercer piso, data/b2Fire.ts). Aquí sí te oyen ──
+  'b2-13-student': {
+    name: 'A student',
+    look: { shirt: '#2e8b8b', hair: '#1d1d1d', skin: '#8d5a3b', gender: 'female' },
+    doneLine: { text: 'The class next door is about to finish.', es: 'La clase de al lado está a punto de terminar.' },
+  },
+  // Leo adulto: en sombra, de espaldas, con el nombre en estática (ficha 0.3)
+  'b2-13-teacher': {
+    name: 'The teacher',
+    look: { shirt: '#1d2430', hair: '#0e1218', skin: '#2a313c', gender: 'male' },
+    doneLine: { text: "(He is putting his books away. He doesn't turn around.)", es: '(Guarda sus libros. No se da la vuelta.)' },
+  },
+  // El protagonista adulto (mismo sprite, con lentes)
+  'b2-13-adult': {
+    name: 'Tu yo adulto',
+    look: { shirt: '#4a5568', hair: '#2a1a12', skin: '#c68e6a', gender: 'male' },
+    after: 'b2-13-arrival',
+    doneLine: { text: '(Your older self is looking at the floor.)', es: '(Tu yo adulto mira el suelo.)' },
+  },
+  'b2-13-sign': {
+    name: 'El cartel de evacuación',
+    look: { shirt: '#c0392b', hair: '#f4f4f0', skin: '#c0392b' },
+    after: 'b2-13-before',
+    doneLine: { text: "In case of fire, you'd better use the back stairs.", es: 'En caso de incendio, más vale usar las escaleras traseras.' },
+  },
+  'b2-13-reflection': {
+    name: 'Tu reflejo',
+    look: { shirt: '#14263d', hair: '#3fa9ff', skin: '#14263d' },
+    after: 'b2-13-hadbetter',
+    doneLine: { text: "It's time you spoke up.", es: 'Ya es hora de que alces la voz.' },
+  },
   // ── B2-12 · Countdown, bloque 1 (Ventana 2056, el cuarto de G, data/b2Countdown.ts). Nadie oye al protagonista. G no está ──
   'b2-12-wall': {
     name: 'La pared del plan',
