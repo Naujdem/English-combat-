@@ -1732,6 +1732,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#3b9d5d', hair: '#2d2d3a', skin: '#e0ac69', gender: 'male' },
     doneLine: { text: "…I'm fine. Really.", es: '…Estoy bien. De verdad.' },
   },
+  // Marisol después de vencer a The Spoiler: el pijama de cine y la reseña opcional (b2-11-pyjamas, b2-11-review) usan 'b2-11-marisol'
   // ── B2-09 · The Gallery, bloque 1 (el museo de arte, data/b2Gallery.ts) ──
   // La persona especial (guía): tareas b2-09-arrival, b2-09-strong, b2-09-order y b2-09-relative
   'b2-09-special': {

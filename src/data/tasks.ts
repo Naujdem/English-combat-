@@ -91,7 +91,7 @@ import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_I
 import { B2_08_ARRIVAL_SCRIPT, B2_08_CLOSE_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNCH_SCRIPT, B2_08_UNHEARD_ROOM } from './b2Pitch'
 import { B2_08_ACRONYMS_IDS, B2_08_COMPARE_IDS, B2_08_PERKS_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
-import { B2_11_ARRIVAL_SCRIPT, B2_11_CONFESS_SCRIPT, B2_11_BOARD_ITEMS, B2_11_FACT_CHECK, B2_11_MOVIE_SCRIPT } from './b2WhoIsG'
+import { B2_11_ARRIVAL_SCRIPT, B2_11_CLOSE_STEPS, B2_11_PYJAMAS_STEPS, B2_11_REVIEW_GAME, B2_11_CONFESS_SCRIPT, B2_11_BOARD_ITEMS, B2_11_FACT_CHECK, B2_11_MOVIE_SCRIPT } from './b2WhoIsG'
 import { B2_11_FILM_IDS, B2_11_INDIRECT_IDS, B2_11_NARRATIVE_IDS } from './questions-b2-11'
 import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
 import { B2_10_ARRIVAL_SCRIPT, B2_10_BENCH_SCRIPT, B2_10_CARD_CONTENT, B2_10_CLASS_SCRIPT, B2_10_CLOSE_SCRIPT, B2_10_GIFT_SCRIPT } from './b2Card'
@@ -8545,4 +8545,45 @@ NPC_TASKS['b2-11-confess'] = {
   requires: { id: 'b2-11-board', text: "…I'm fine. Really.", es: '…Estoy bien. De verdad.', sub: 'Primero termina el tablero de pistas con la persona especial.' },
   steps: [],
   reward: { text: "I didn't want to worry you.", es: 'No quería preocuparlos.', sub: 'La pantalla está llena de huecos. ¡Cierra los Plot Holes!', say: "I didn't want to worry you." },
+}
+
+// ── B2-11 · Who Is G?, bloque 3: el pijama de cine, la reseña opcional y el cierre con Leo ──
+// Marisol: el pijama de cine azul medianoche (al vencer a The Spoiler)
+NPC_TASKS['b2-11-pyjamas'] = {
+  npc: 'b2-11-marisol',
+  done: 'b2-11-pyjamas',
+  outfit: 'pijama-cine-b2',
+  coins: 10,
+  requires: { id: 'b2-11-movie', text: 'More popcorn?', es: '¿Más palomitas?', sub: 'Primero mira la película.' },
+  steps: B2_11_PYJAMAS_STEPS,
+  reward: { text: 'Midnight blue movie pyjamas', es: 'Pijama de cine azul medianoche', sub: 'Ganaste el pijama y 10 monedas. Si quieres, vuelve a hablar con Marisol para escribir una reseña (opcional). Maya quiere hablar contigo.', say: 'Movie night!' },
+}
+
+// Marisol: la reseña opcional de "Last Train to Yesterday" (ReviewWriter, reutilizado; se guarda en writings). 10 monedas
+NPC_TASKS['b2-11-review'] = {
+  npc: 'b2-11-marisol',
+  done: 'b2-11-review',
+  activity: 'review',
+  review: B2_11_REVIEW_GAME,
+  requires: { id: 'b2-11-pyjamas', text: 'What a night!', es: '¡Qué noche!', sub: 'Primero habla con Marisol.' },
+  coins: 10,
+  steps: [],
+  reward: { text: 'Your review is on the board.', es: 'Tu reseña está en el tablero.', sub: 'Reseña guardada (opcional).', say: "It's well worth watching." },
+}
+
+// Cierre. done = b2CloseId(11) = 'b2-11-close'. Al guardarse, Explore muestra FragmentJoin: dos fragmentos llenan el quinto
+// segmento del núcleo (b2Core en data/b2World.ts) y se abre la Ventana 12
+NPC_TASKS['b2-11-close'] = {
+  npc: 'b2-11-leo',
+  done: 'b2-11-close',
+  recover: ['indirect-b2', 'film-b2', 'narrative-b2'],
+  coins: 15,
+  requires: { id: 'b2-11-friend-special', text: "…I'm fine. Really.", es: '…Estoy bien. De verdad.', sub: 'Primero habla con Maya, con Leo y con la persona especial.' },
+  steps: B2_11_CLOSE_STEPS,
+  reward: {
+    text: 'Mission 11: Who Is G?',
+    es: 'Misión 11: ¿Quién es G?',
+    sub: 'El quinto segmento del núcleo se llenó. Se abrió la Ventana 12 (2056).',
+    say: 'Who is G?',
+  },
 }

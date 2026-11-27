@@ -62,6 +62,7 @@ import { B1_03_NOTEBOOK, B1_03_PHONE } from '../data/b1Words'
 import { B1_05_BOX, B1_05_BOXES, B1_05_ENVELOPE, B1_05_NOTEBOOK, B1_05_PAPERS } from '../data/b1Flat'
 import { B1_04_CLOSE, B1_04_FRAGMENTS, B1_04_FRIEND, B1_04_MAYA, B1_04_MAYA_BANK, B1_04_MAYA_LOBBY, B1_04_MOSCU, B1_04_RESIDENCE_ID, B1_04_RICARDO } from '../data/b1Residence'
 import { B2_01_SPECIAL_CHAT, B2_04_LEO_CHAT, B2_09_MAYA_CHAT } from '../data/friends'
+import { B2_11_BOSS, B2_11_CLOSE, B2_11_FRAGMENTS, B2_11_FRIEND_LEO, B2_11_FRIEND_MAYA, B2_11_FRIEND_SPECIAL, B2_11_HERALD_ID, B2_11_LEO, B2_11_LEO_CHAT, B2_11_MAYA, B2_11_MAYA_CHAT, B2_11_SPECIAL, B2_11_SPECIAL_CHAT, B2_FIFTH_SEGMENT } from '../data/b2WhoIsG'
 import { B2_07_CLOSE, B2_07_FRAGMENTS, B2_07_OLDTOWN_ID, B2_THIRD_SEGMENT } from '../data/b2OldBuilding'
 import { B2_09_BOSS, B2_09_CLOSE, B2_09_FRAGMENTS, B2_09_FRIEND, B2_09_GALLERY_ID, B2_09_MAYA, B2_FOURTH_SEGMENT } from '../data/b2Gallery'
 import { B2_05_CLOSE, B2_05_FRAGMENTS, B2_05_PORT_ID, B2_SECOND_SEGMENT } from '../data/b2VoiceBlackouts'
@@ -180,7 +181,7 @@ type Talk = {
   level?: string
   note?: string
   /** Charla especial de una misión */
-  quest?: 'lostIntro' | 'b1-02-plane' | 'b1-04-maya' | 'b1-06-leo' | 'b1-08-special' | 'b1-10-leo' | 'b1-12-leo' | 'b1-12-maya' | 'b1-12-special' | 'b2-01-special' | 'b2-04-leo' | 'b2-09-maya'
+  quest?: 'lostIntro' | 'b1-02-plane' | 'b1-04-maya' | 'b1-06-leo' | 'b1-08-special' | 'b1-10-leo' | 'b1-12-leo' | 'b1-12-maya' | 'b1-12-special' | 'b2-01-special' | 'b2-04-leo' | 'b2-09-maya' | 'b2-11-maya' | 'b2-11-leo' | 'b2-11-special'
 }
 
 export function Explore({ state, update, onBattle, onWorld }: { state: GameState; update: Update; onBattle: (enemyId: string) => void; onWorld: () => void }) {
@@ -381,6 +382,22 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
     (e: Entity) => {
       if (e.type === 'npc') {
         const npc = npcOf(e.id)
+        // B2-11 · Who Is G?: los quintos momentos de amistad de B2, después de vencer a The Spoiler, en orden: Maya → Leo → la persona especial
+        if (state.defeated.includes(B2_11_BOSS)) {
+          const chat =
+            e.id === B2_11_MAYA && !state.opened.includes(B2_11_FRIEND_MAYA)
+              ? { c: B2_11_MAYA_CHAT, friendId: 'maya', quest: 'b2-11-maya' as const }
+              : e.id === B2_11_LEO && state.opened.includes(B2_11_FRIEND_MAYA) && !state.opened.includes(B2_11_FRIEND_LEO)
+                ? { c: B2_11_LEO_CHAT, friendId: 'leo', quest: 'b2-11-leo' as const }
+                : e.id === B2_11_SPECIAL && state.opened.includes(B2_11_FRIEND_LEO) && !state.opened.includes(B2_11_FRIEND_SPECIAL)
+                  ? { c: B2_11_SPECIAL_CHAT, friendId: 'interest', quest: 'b2-11-special' as const }
+                  : null
+          if (chat) {
+            setMsg(null)
+            setTalk({ friendId: chat.friendId, story: null, lines: [{ who: 'friend', text: chat.c.text, es: chat.c.es, options: chat.c.options }], title: 'Charla casual', level: 'B2', quest: chat.quest })
+            return
+          }
+        }
         // B2-09 · The Gallery: la charla de amistad con Maya en el museo, después de vencer a The Curator (una sola vez; se guarda B2_09_FRIEND)
         if (e.id === B2_09_MAYA && state.defeated.includes(B2_09_BOSS) && !state.opened.includes(B2_09_FRIEND)) {
           setMsg(null)
@@ -1032,6 +1049,21 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                 else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: 'La puerta del avión ya está abierta. Leo espera junto a la cinta de equipaje.', tone: 'good' })
                 return
               }
+              if (t.quest === 'b2-11-maya' || t.quest === 'b2-11-leo' || t.quest === 'b2-11-special') {
+                // Los quintos momentos de amistad de B2 (charla casual): Maya → Leo → la persona especial. Después, Leo cierra la misión
+                const step = {
+                  'b2-11-maya': { friend: 'maya', flag: B2_11_FRIEND_MAYA, next: 'Leo quiere preguntarte algo.' },
+                  'b2-11-leo': { friend: 'leo', flag: B2_11_FRIEND_LEO, next: 'La persona especial te espera junto al tablero.' },
+                  'b2-11-special': { friend: 'interest', flag: B2_11_FRIEND_SPECIAL, next: 'Leo te espera en el fondo de la sala.' },
+                }[t.quest]
+                update((s) => {
+                  const n = applyCasual(s, step.friend, delta)
+                  return { ...n, opened: n.opened.includes(step.flag) ? n.opened : [...n.opened, step.flag] }
+                })
+                if (delta < 0) setMsg({ text: `${talkFriend.name} no te entendió. La amistad bajó un poco.`, sub: step.next, tone: 'warn' })
+                else setMsg({ text: `Tu amistad con ${talkFriend.name} creció.`, sub: step.next, tone: 'good' })
+                return
+              }
               if (t.quest === 'b2-09-maya') {
                 // Charla casual B2 con Maya: la amistad cambia con la regla de las charlas casuales. Después, la persona especial cierra la misión
                 update((s) => {
@@ -1372,6 +1404,18 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
         </Overlay>
       )}
 
+      {/* B2-11 · cierre: al guardar b2CloseId(11), dos fragmentos llenan el quinto segmento del núcleo (abre la Ventana 12) */}
+      {scene.id === B2_11_HERALD_ID && state.opened.includes(B2_11_CLOSE) && !state.opened.includes(B2_11_FRAGMENTS) && !task && !outro && (
+        <FragmentJoin
+          state={state}
+          update={update}
+          message={B2_FIFTH_SEGMENT}
+          onDone={() => {
+            update((s) => (s.opened.includes(B2_11_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B2_11_FRAGMENTS] }))
+            onWorld()
+          }}
+        />
+      )}
       {/* B1 · apertura: al colgar, dos fragmentos se juntan. FragmentJoin guarda la apertura (abre el recuerdo 1) */}
       {scene.id === B1_HOME_ID && state.opened.includes(B1_CALL) && !state.opened.includes(B1_OPENING) && !task && (
         <FragmentJoin state={state} update={update} memoryNumber={1} onDone={onWorld} />

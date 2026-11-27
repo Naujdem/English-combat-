@@ -564,4 +564,54 @@ export const B2_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B2-11 · Who Is G? (presente): página del protagonista (la línea de tiempo del tablero de pistas) y página mezclada
+  {
+    id: 'b2-mission-11',
+    title: 'B2 · Misión 11: Who Is G?',
+    unlock: 'b2-11-close',
+    words: [
+      { title: 'Cine y series', words: [['plot', 'trama'], ['plot twist', 'giro'], ['cliffhanger', 'final en suspenso'], ['cast', 'reparto'], ['sequel', 'secuela'], ['episode', 'episodio'], ['binge-watch', 'ver muchos episodios seguidos'], ['review', 'reseña']] },
+      { title: 'Adjetivos', words: [['gripping', 'atrapante'], ['predictable', 'predecible'], ['spine-chilling', 'escalofriante'], ['overrated', 'sobrevalorado'], ['thought-provoking', 'que hace pensar']] },
+      { title: 'Preguntas indirectas', words: [['Do you know where…?', '¿Sabes dónde…?'], ['Can you tell me when…?', '¿Puedes decirme cuándo…?'], ['I wonder whether…', 'Me pregunto si…'], ['He asked me if…', 'Me preguntó si…']] },
+      { title: 'Phrasal verbs', words: [['figure out', 'descifrar'], ['turn out', 'resultar'], ['piece together', 'armar (las pistas)'], ['give away', 'revelar (un final)']] },
+    ],
+    versions: [
+      {
+        id: 'b2-mission-11-mine',
+        tense: 'p',
+        tab: 'Mi línea de tiempo',
+        title: 'Red threads',
+        unlock: 'b2-11-close',
+        frame: 'La línea de tiempo que armaste en el tablero de pistas, contada por ti.',
+        lines: [
+          { en: 'A teacher [was teaching]p a night class when the fire [started]p. A man [froze]p on the stairs.', es: 'Un profesor estaba dando una clase nocturna cuando empezó el incendio. Un hombre se quedó paralizado en la escalera.' },
+          { en: 'A year later, Vocalis [had been testing]p a device for months.', es: 'Un año después, Vocalis llevaba meses probando un aparato.' },
+          { en: 'By the time Vocalis [launched]p "Restore", G [had already stolen]p the prototype.', es: 'Para cuando Vocalis lanzó "Restore", G ya había robado el prototipo.' },
+          { en: 'G [was sitting]p on a bench when he [wrote]p the card. By the time Leo [opened]p the gift, G [had already written]p it.', es: 'G estaba sentado en una banca cuando escribió la tarjeta. Para cuando Leo abrió el regalo, G ya la había escrito.' },
+          { en: 'Tonight Leo [told]p us that he [had been having]p the same dream for weeks: smoke and a corridor on fire.', es: 'Esta noche Leo nos contó que llevaba semanas teniendo el mismo sueño: humo y un pasillo en llamas.' },
+          { en: 'I [promised]p to speak for him. Under the last red thread I [wrote]p: "Who is G?"', es: 'Le prometí hablar por él. Bajo el último hilo rojo escribí: "¿Quién es G?"' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-11-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'Movie night',
+        unlock: 'b2-11-close',
+        frame: 'La noche entera, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'In the archive, Manuel [asked]p me who G [was]p. I [didn\'t know]p.', es: 'En el archivo, Manuel me preguntó quién era G. No lo sabía.' },
+          { en: 'Then Marisol [chose]p a thriller. It [was]p a bit slow at first, but the plot twist [was]p spine-chilling.', es: 'Luego Marisol escogió un thriller. Fue un poco lento al principio, pero el giro fue escalofriante.' },
+          { en: 'A critic [jumped]p out of the screen and [tried]p to give away the ending of everything.', es: 'Un crítico saltó de la pantalla e intentó revelar el final de todo.' },
+          { en: 'Now Leo [is]n scared, and I [don\'t know]n how this story [ends]n. But we [will face]f it together.', es: 'Ahora Leo tiene miedo, y no sé cómo termina esta historia. Pero la enfrentaremos juntos.' },
+        ],
+        questions: [
+          { q: 'What did Manuel ask?', options: ['Who G was.', 'Who was G.', 'Where the film was.'], answer: 0, tip: 'El diario dice: "Manuel asked me who G was".' },
+          { q: 'What was the film like?', options: ['Fast and predictable.', 'Slow at first, with a spine-chilling twist.', 'Overrated and boring.'], answer: 1, tip: 'El diario dice: "a bit slow at first, but the plot twist was spine-chilling".' },
+          { q: 'What did the critic try to do?', options: ['Write a review.', 'Steal the clock.', 'Give away the ending of everything.'], answer: 2, tip: 'El diario dice: "tried to give away the ending of everything".' },
+        ],
+      },
+    ],
+  },
 ]
