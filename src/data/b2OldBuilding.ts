@@ -16,7 +16,10 @@ import type { DebateEndings, DebateTurn } from '../components/DebateTalk'
  *   ¿apartamentos de lujo o escuela comunitaria? En el último turno el protagonista pide la condición de las dos salidas de
  *   emergencia; con cualquier desenlace se guarda B2_07_TWO_EXITS (dato de historia para el lugar 13: las escaleras traseras de
  *   2061). Oliver Grant sale furioso → dos Rent Raisers en la calle (esbirros) → el jefe The Developer (2 fases) frente al edificio.
- * Bloque 3 (pendiente): el cierre (dos fragmentos llenan el tercer segmento del núcleo y se abre la Ventana 8), diario y recompensas.
+ * Bloque 3: tras vencer a The Developer: Oliver vuelve a la normalidad (b2-07-oliver-sorry, script) → Sam regala el casco de
+ *   explorador urbano (b2-07-helmet) → Leo frente al edificio: el cierre (b2-07-close): el ayuntamiento vota por la escuela
+ *   comunitaria con la condición de las dos salidas; recupera los temas; Explore muestra FragmentJoin (dos fragmentos llenan
+ *   el tercer segmento, B2_07_FRAGMENTS) y se abre la Ventana 8. Diario: data/b2Diary.ts. Sin amistad.
  */
 export const B2_07_OLDTOWN_ID = 'b2-07-oldtown'
 export const B2_07_LEO = 'b2-07-leo'
@@ -41,6 +44,15 @@ export const B2_07_TWO_EXITS = 'b2-07-two-exits'
 export const B2_07_RAISER1 = 'b2-07-raiser1'
 export const B2_07_RAISER2 = 'b2-07-raiser2'
 export const B2_07_BOSS = 'b2-07-boss'
+/** Bloque 3 */
+export const B2_07_OLIVER_BACK = 'b2-07-oliver-back'
+export const B2_07_LEO_CLOSE = 'b2-07-leo-close'
+export const B2_07_OLIVER_SORRY = 'b2-07-oliver-sorry'
+export const B2_07_HELMET = 'b2-07-helmet'
+export const B2_07_CLOSE = 'b2-07-close'
+/** Se guarda al terminar la animación: dos fragmentos llenan el tercer segmento del núcleo (abre la Ventana 8) */
+export const B2_07_FRAGMENTS = 'b2-07-fragments'
+export const B2_THIRD_SEGMENT = { en: 'The two fragments fill the third segment. Half of the core is shining now.', es: 'Los dos fragmentos llenan el tercer segmento. La mitad del núcleo ya brilla.' }
 
 /**
  * Leyenda (Tiles.tsx, sin dibujos nuevos): b pared de ladrillo · h afiche · ^ escalera · g andamio · 8 caja de herramientas ·
@@ -84,6 +96,9 @@ export const B2_07_OLDTOWN: SceneDef = {
     { type: 'enemy', id: B2_07_RAISER1, x: 11, y: 4, after: B2_07_DEBATE },
     { type: 'enemy', id: B2_07_RAISER2, x: 14, y: 2, after: B2_07_RAISER1 },
     { type: 'enemy', id: B2_07_BOSS, x: 7, y: 2, after: B2_07_RAISER2 },
+    // Bloque 3: al vencer a The Developer, Oliver vuelve a ser él y Leo espera frente al edificio (npcs.ts, after: b2-07-boss)
+    { type: 'npc', id: B2_07_OLIVER_BACK, x: 7, y: 2 },
+    { type: 'npc', id: B2_07_LEO_CLOSE, x: 10, y: 3 },
   ],
   labels: [
     { text: 'The old building', x: 3, y: 5 },
@@ -118,11 +133,18 @@ export const B2_07_OLDTOWN: SceneDef = {
     { label: 'La reunión vecinal', done: s.opened.includes(B2_07_DEBATE) },
     { label: 'Rent Raisers (2)', done: s.defeated.includes(B2_07_RAISER2) },
     { label: 'The Developer', done: s.defeated.includes(B2_07_BOSS) },
+    { label: 'Oliver vuelve a ser él', done: s.opened.includes(B2_07_OLIVER_SORRY) },
+    { label: 'El regalo de Sam', done: s.opened.includes(B2_07_HELMET) },
+    { label: 'El cierre (Leo)', done: s.opened.includes(B2_07_CLOSE) },
   ],
   intro: {
     first: 'Presente. El barrio antiguo de Lumen Bay. Hay turistas por todas partes. Leo te espera en la calle.',
     later: (s) =>
-      s.opened.includes(B2_07_DEBATE)
+      s.opened.includes(B2_07_CLOSE)
+        ? 'El barrio antiguo. El edificio será una escuela comunitaria. La misión 7 terminó: la Ventana 8 te espera en el mapa.'
+        : s.defeated.includes(B2_07_BOSS)
+        ? 'El barrio antiguo. La grúa desapareció. Oliver, Sam y Leo te esperan frente al edificio.'
+        : s.opened.includes(B2_07_DEBATE)
         ? 'El barrio antiguo. Oliver Grant salió furioso de la reunión… y algo enorme se mueve frente al edificio.'
         : s.opened.includes(B2_07_GET)
         ? 'El barrio antiguo. La reunión vecinal empieza en el ayuntamiento: se decide el futuro del edificio.'
@@ -333,3 +355,14 @@ export const B2_07_ENEMIES: Record<string, EnemyDef> = {
   [B2_07_RAISER2]: RAISER(B2_07_RAISER2, { text: "It's getting more and more expensiver! Rents are going up since Monday!", es: 'more expensiver y are going up since: mal.' }),
   [B2_07_BOSS]: B2_07_BOSS_DEF,
 }
+
+// ── Bloque 3 ──
+
+/** Oliver Grant vuelve a la normalidad (MemoryScript) */
+export const B2_07_OLIVER_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(Oliver Grant is sitting on the pavement, holding his helmet. His arm is just an arm again.)', es: '(Oliver Grant está sentado en el andén con su casco en la mano. Su brazo vuelve a ser solo un brazo.)' },
+  { who: 'narrator', text: "Oliver: I don't know what happened. The angrier I got, the bigger that crane became.", es: 'Oliver: No sé qué pasó. Cuanto más me enojaba, más grande se volvía esa grúa.' },
+  { who: 'narrator', text: "Oliver: I grew up on this street too, you know. My grandfather built half of these houses.", es: 'Oliver: Yo también crecí en esta calle, ¿sabes? Mi abuelo construyó la mitad de estas casas.' },
+  { who: 'narrator', text: "Oliver: Maybe I got carried away with the money. I'll build the school, as long as the town hall pays me a fair price.", es: 'Oliver: Quizá el dinero me hizo perder la cabeza. Construiré la escuela, siempre y cuando el ayuntamiento me pague un precio justo.' },
+  { who: 'narrator', text: 'Oliver: Two fire exits. Front stairs and back stairs. You have my word.', es: 'Oliver: Dos salidas de emergencia. La escalera principal y la escalera trasera. Tienes mi palabra.' },
+]

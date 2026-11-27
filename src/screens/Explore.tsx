@@ -60,6 +60,7 @@ import { B1_03_NOTEBOOK, B1_03_PHONE } from '../data/b1Words'
 import { B1_05_BOX, B1_05_BOXES, B1_05_ENVELOPE, B1_05_NOTEBOOK, B1_05_PAPERS } from '../data/b1Flat'
 import { B1_04_CLOSE, B1_04_FRAGMENTS, B1_04_FRIEND, B1_04_MAYA, B1_04_MAYA_BANK, B1_04_MAYA_LOBBY, B1_04_MOSCU, B1_04_RESIDENCE_ID, B1_04_RICARDO } from '../data/b1Residence'
 import { B2_01_SPECIAL_CHAT, B2_04_LEO_CHAT } from '../data/friends'
+import { B2_07_CLOSE, B2_07_FRAGMENTS, B2_07_OLDTOWN_ID, B2_THIRD_SEGMENT } from '../data/b2OldBuilding'
 import { B2_05_CLOSE, B2_05_FRAGMENTS, B2_05_PORT_ID, B2_SECOND_SEGMENT } from '../data/b2VoiceBlackouts'
 import { B2_04_BOSS, B2_04_CLOSE, B2_04_FRAGMENTS, B2_04_FRIEND, B2_04_HALF_SEGMENT, B2_04_LEO, B2_04_RESIDENCE_ID } from '../data/b2FakeProfile'
 import { B2_01_BOSS, B2_01_FRIEND, B2_01_SPECIAL } from '../data/b2CatchingUp'
@@ -1457,6 +1458,18 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
           message={B2_04_HALF_SEGMENT}
           onDone={() => {
             update((s) => (s.opened.includes(B2_04_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B2_04_FRAGMENTS] }))
+            onWorld()
+          }}
+        />
+      )}
+      {/* B2-07 · cierre: al guardar b2CloseId(7), dos fragmentos llenan el tercer segmento del núcleo (abre la Ventana 8) */}
+      {scene.id === B2_07_OLDTOWN_ID && state.opened.includes(B2_07_CLOSE) && !state.opened.includes(B2_07_FRAGMENTS) && !task && !outro && (
+        <FragmentJoin
+          state={state}
+          update={update}
+          message={B2_THIRD_SEGMENT}
+          onDone={() => {
+            update((s) => (s.opened.includes(B2_07_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B2_07_FRAGMENTS] }))
             onWorld()
           }}
         />

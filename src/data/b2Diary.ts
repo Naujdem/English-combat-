@@ -319,4 +319,52 @@ export const B2_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B2-07 · The Old Building (presente): página del protagonista y página mezclada. Se abre al cerrar la misión 7. Sin amistad
+  {
+    id: 'b2-mission-7',
+    title: 'B2 · Misión 7: The Old Building',
+    unlock: 'b2-07-close',
+    words: [
+      { title: 'Ciudad y cambio', words: [['neighbourhood', 'barrio'], ['rent', 'arriendo'], ['gentrification', 'gentrificación'], ['run-down', 'viejo y en mal estado'], ['renovate', 'renovar'], ['abandoned', 'abandonado'], ['community', 'comunidad'], ['council', 'concejo, ayuntamiento']] },
+      { title: 'Turismo', words: [['overtourism', 'sobreturismo'], ['locals', 'los del lugar'], ['crowded', 'lleno de gente'], ['souvenir shops', 'tiendas de recuerdos'], ['short-term rentals', 'alquileres por días']] },
+      { title: 'Alternativas a if', words: [['unless', 'a menos que (= if… not)'], ['as long as', 'siempre y cuando'], ['provided (that)', 'siempre que'], ['otherwise', 'si no, de lo contrario'], ['suppose', 'imagina que']] },
+      { title: 'Phrasal verbs con get', words: [['get by', 'arreglárselas'], ['get around', 'moverse por un lugar'], ['get along with', 'llevarse bien con'], ['get over', 'superar'], ['get through', 'pasar por algo difícil'], ['get away with', 'salirse con la suya']] },
+    ],
+    versions: [
+      {
+        id: 'b2-mission-7-mine',
+        tense: 'p',
+        tab: 'Mi página',
+        title: 'The old building',
+        unlock: 'b2-07-close',
+        frame: 'Lo que pasó en el barrio antiguo, contado por ti.',
+        lines: [
+          { en: 'The Old Town [has changed]p a lot. It [used to be]p quiet, but now it [is getting]n busier and busier.', es: 'El barrio antiguo ha cambiado mucho. Antes era tranquilo, pero ahora cada vez hay más gente.' },
+          { en: 'Sam and I [explored]p the old building. It [was]p a school, and Leo [found]p an old poster for a night school.', es: 'Sam y yo exploramos el edificio viejo. Era una escuela, y Leo encontró un cartel viejo de una escuela nocturna.' },
+          { en: 'At the meeting I [said]p: "We\'ll support the school as long as it [has]n two fire exits."', es: 'En la reunión dije: "Apoyaremos la escuela siempre y cuando tenga dos salidas de emergencia".' },
+          { en: 'The town hall [voted]p for the school. I [don\'t know]n why, but those two exits [feel]n important.', es: 'El ayuntamiento votó por la escuela. No sé por qué, pero esas dos salidas se sienten importantes.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-7-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'A school for the Old Town',
+        unlock: 'b2-07-close',
+        frame: 'El barrio entero, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'Rents [have been rising]p for years, and Rosa [can\'t get]n around her own street.', es: 'Los arriendos llevan años subiendo, y Rosa ya no puede moverse por su propia calle.' },
+          { en: 'Oliver Grant [turned]p into a giant crane, but now he [is helping]n us.', es: 'Oliver Grant se convirtió en una grúa gigante, pero ahora nos está ayudando.' },
+          { en: 'He [will build]f the school, provided that the town hall [pays]n a fair price.', es: 'Construirá la escuela, siempre que el ayuntamiento pague un precio justo.' },
+          { en: 'Leo [said]p: "Maybe I\'ll teach here one day." I [hope]n he [will]f.', es: 'Leo dijo: "Quizá algún día enseñe aquí". Ojalá lo haga.' },
+        ],
+        questions: [
+          { q: 'What happened to Oliver Grant?', options: ['He moved to another city.', 'He turned into a giant crane.', 'He became a teacher.'], answer: 1, tip: 'El diario dice: "Oliver Grant turned into a giant crane".' },
+          { q: 'What is the condition for Oliver to build the school?', options: ['The town hall pays a fair price.', 'Rosa leaves the street.', 'Leo teaches there.'], answer: 0, tip: 'El diario dice: "provided that the town hall pays a fair price".' },
+          { q: 'What did Leo say?', options: ['That he wants luxury flats.', 'That he will leave Lumen Bay.', 'That maybe he will teach there one day.'], answer: 2, tip: 'El diario dice: "Maybe I\'ll teach here one day".' },
+        ],
+      },
+    ],
+  },
 ]

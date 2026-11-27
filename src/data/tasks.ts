@@ -89,7 +89,7 @@ import { B2_S1_WORDS_IDS } from './questions-b2-s1'
 import { B2_06_ARRIVAL_SCRIPT, B2_06_CLOSE_SCRIPT, B2_06_FINDING_SCRIPT, B2_06_UNHEARD_ROOM } from './b2Lab'
 import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_IDS } from './questions-b2-06'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
-import { B2_07_ARRIVAL_SCRIPT, B2_07_DEBATE_ENDINGS, B2_07_DEBATE_TURNS, B2_07_EXPLORE_ROOM, B2_07_POSTER_SCRIPT, B2_07_ROSA_SCRIPT, B2_07_SAM_INTRO } from './b2OldBuilding'
+import { B2_07_OLIVER_SCRIPT, B2_07_ARRIVAL_SCRIPT, B2_07_DEBATE_ENDINGS, B2_07_DEBATE_TURNS, B2_07_EXPLORE_ROOM, B2_07_POSTER_SCRIPT, B2_07_ROSA_SCRIPT, B2_07_SAM_INTRO } from './b2OldBuilding'
 import { B2_07_CHANGE_IDS, B2_07_CONDITIONS_IDS, B2_07_GET_IDS } from './questions-b2-07'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
 import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
@@ -7645,6 +7645,51 @@ NPC_TASKS['b2-07-debate'] = {
     text: 'Outside, someone is shouting prices…',
     es: 'Afuera, alguien está gritando precios…',
     sub: 'Reunión terminada. La condición de las dos salidas quedó en el acta. Oliver Grant salió furioso a la calle.',
+  },
+}
+
+// ── B2-07 · The Old Building, bloque 3: Oliver vuelve a ser él, el regalo de Sam y el cierre (Leo frente al edificio) ──
+NPC_TASKS['b2-07-oliver-sorry'] = {
+  npc: 'b2-07-oliver-back',
+  done: 'b2-07-oliver-sorry',
+  activity: 'script',
+  script: B2_07_OLIVER_SCRIPT,
+  steps: [],
+  reward: { text: "I'll build the school, as long as the price is fair.", es: 'Construiré la escuela, siempre y cuando el precio sea justo.', sub: 'Sam quiere hablar contigo frente al edificio.', say: "I'll build the school." },
+}
+
+// Sam: el casco de explorador urbano
+NPC_TASKS['b2-07-helmet'] = {
+  npc: 'b2-07-sam',
+  done: 'b2-07-helmet',
+  outfit: 'casco-explorador',
+  requires: { id: 'b2-07-oliver-sorry', text: 'Is Oliver OK?', es: '¿Oliver está bien?', sub: 'Primero habla con Oliver.' },
+  steps: [
+    { text: "You got us through that door, and through that meeting. Not bad for a beginner!", es: 'Nos hiciste pasar esa puerta, y esa reunión. ¡Nada mal para {h:un principiante|una principiante}!' },
+    { text: "Take my old helmet. Unless you're planning to explore without one… which I don't recommend.", es: 'Llévate mi casco viejo. A menos que pienses explorar sin uno… cosa que no te recomiendo.' },
+  ],
+  reward: { text: 'Urban explorer helmet', es: 'Casco de explorador urbano', sub: 'Ganaste el casco de explorador urbano. Leo te espera frente al edificio.', say: "Unless you're planning to explore without one." },
+}
+
+// Cierre. done = b2CloseId(7) = 'b2-07-close'. Al guardarse, Explore muestra FragmentJoin: dos fragmentos llenan el tercer
+// segmento del núcleo (b2Core en data/b2World.ts) y se abre la Ventana 8
+NPC_TASKS['b2-07-close'] = {
+  npc: 'b2-07-leo-close',
+  done: 'b2-07-close',
+  recover: ['change-b2', 'if-alt-b2', 'get-b2'],
+  coins: 15,
+  requires: { id: 'b2-07-helmet', text: 'Talk to Oliver and Sam first.', es: 'Primero habla con Oliver y con Sam.', sub: 'Oliver y Sam están frente al edificio.' },
+  steps: [
+    { text: '(A week later. Councillor Petrova reads the result: "The town hall votes for the community school… provided that it has two fire exits.")', es: '(Una semana después. La concejala Petrova lee el resultado: "El ayuntamiento vota por la escuela comunitaria… siempre que tenga dos salidas de emergencia".)' },
+    { text: '(Rosa claps the loudest. The two lights from the wrecking ball fly into your clock. Click. Click.)', es: '(Rosa es la que más aplaude. Las dos lucecitas de la bola de demolición vuelan hacia tu reloj. Clic. Clic.)' },
+    { text: '(Leo looks up at the old building. His voice breaks a little.)', es: '(Leo mira el edificio viejo. Se le quiebra un poco la voz.)' },
+    { text: "Maybe I'll teach here one day.", es: 'Quizá algún día enseñe aquí.' },
+  ],
+  reward: {
+    text: 'Mission 7: The Old Building',
+    es: 'Misión 7: El edificio viejo',
+    sub: 'El tercer segmento del núcleo se llenó. Se abrió la Ventana 8 (2064).',
+    say: 'The Old Building.',
   },
 }
 
