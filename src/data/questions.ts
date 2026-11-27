@@ -57,7 +57,7 @@ import { B2_02_COMBAT_QUESTIONS, B2_02_QUESTIONS } from './questions-b2-02'
 import { B2_03_COMBAT_QUESTIONS, B2_03_QUESTIONS } from './questions-b2-03'
 import { B2_04_COMBAT_QUESTIONS, B2_04_QUESTIONS } from './questions-b2-04'
 import { B2_05_COMBAT_QUESTIONS, B2_05_QUESTIONS } from './questions-b2-05'
-import { B2_06_QUESTIONS } from './questions-b2-06'
+import { B2_06_COMBAT_QUESTIONS, B2_06_QUESTIONS } from './questions-b2-06'
 import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
@@ -454,6 +454,7 @@ export const QUESTIONS: Question[] = [
   ...B2_05_QUESTIONS,
   ...B2_05_COMBAT_QUESTIONS,
   ...B2_06_QUESTIONS,
+  ...B2_06_COMBAT_QUESTIONS,
   ...B2_S1_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
@@ -738,6 +739,24 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
       'It is said / believed / reported + that…: It is believed that the writings are 3,000 years old.',
       'Persona + is said to + forma base (ahora) o to have + participio (antes): She is said to have found the key.',
       'be supposed to: se dice que (It is supposed to restore voices) o se debería (You\'re supposed to wear a badge).',
+    ],
+  },
+  'trends-b2': {
+    name: 'Tendencias y estadísticas',
+    level: 'B2',
+    lesson: [
+      'rise (rose, risen) · fall (fell, fallen) · peak · level off · fluctuate.',
+      'sharply (rápido y mucho) · steadily (poco a poco) · slightly (un poco).',
+      'from 12% to 40% (inicio y final) · by 28% (la diferencia). Nunca "rose with 28%".',
+    ],
+  },
+  'causative-b2': {
+    name: 'Have / get something done',
+    level: 'B2',
+    lesson: [
+      'have / get + objeto + participio: We had the prototype tested. I got my phone repaired (nunca "got repaired my phone").',
+      'En todos los tiempos: She is having the lab rebuilt. · Algo malo que te pasó: We had our files stolen.',
+      'Phrasal verbs: carry out · set up · rule out · point out.',
     ],
   },
   // B2-05 · Voice Blackouts (data/b2VoiceBlackouts.ts)
