@@ -361,6 +361,8 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   'delantal-fusion': { name: 'Delantal de fusión', color: '#c0392b' },
   // B2 · Extras · Paws Debate: regalo de Nayi
   'panoleta-paws': { name: 'Pañoleta de Lumen Paws', color: '#e0873a' },
+  // B2 · Extras · A Year Abroad: regalo de Ciarán, por medio de Ms. Haddad
+  'gorra-irlandesa': { name: 'Gorra de lana irlandesa', color: '#3a7d44' },
   // B2-05 · Voice Blackouts: regalo de Tomás Quispe al cerrar la misión
   'chaqueta-pescador': { name: 'Chaqueta de pescador', color: '#c9a227' },
   // B2-07 · The Old Building: regalo de Sam Achebe al cerrar la misión
