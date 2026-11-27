@@ -65,6 +65,7 @@ import { B2_10_COMBAT_QUESTIONS, B2_10_QUESTIONS } from './questions-b2-10'
 import { B2_11_COMBAT_QUESTIONS, B2_11_QUESTIONS } from './questions-b2-11'
 import { B2_12_COMBAT_QUESTIONS, B2_12_QUESTIONS } from './questions-b2-12'
 import { B2_13_COMBAT_QUESTIONS, B2_13_QUESTIONS } from './questions-b2-13'
+import { B2_14_QUESTIONS } from './questions-b2-14'
 import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
@@ -474,6 +475,7 @@ export const QUESTIONS: Question[] = [
   ...B2_12_QUESTIONS,
   ...B2_13_QUESTIONS,
   ...B2_13_COMBAT_QUESTIONS,
+  ...B2_14_QUESTIONS,
   ...B2_12_COMBAT_QUESTIONS,
   ...B2_S1_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
@@ -877,6 +879,25 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
       'En una emergencia: Fire! Get out! · Is anybody there? · Use the back stairs! · Call the firefighters! · fire exit · evacuate.',
       "Para dar ánimo: Take a deep breath. · Stay calm. · You can do it. · I've got you. · You're not alone.",
       'Phrasal verbs: speak up (alzar la voz) · hold back (contenerse) · calm down (calmarse) · get out (salir).',
+    ],
+  },
+  // B2-14 · Use Your Voice (el puerto, data/b2UseYourVoice.ts)
+  'mixed-cond-b2': {
+    name: 'Condicionales mixtos',
+    level: 'B2',
+    lesson: [
+      'Repaso: If + presente, will · If + pasado, would · If + had + participio, would have + participio.',
+      "Pasado → presente: If + had + participio, would + verbo. If you hadn't been there, I wouldn't be disappearing now.",
+      "Presente → pasado: If + pasado, would have + participio. If I weren't so angry, I wouldn't have come back. (Nunca would en el if.)",
+    ],
+  },
+  'wish-b2': {
+    name: 'Wish, if only y would rather',
+    level: 'B2',
+    lesson: [
+      'wish / if only + had + participio: arrepentimiento del pasado. I wish I had trusted you. If only I had known.',
+      'wish + would: quieres que otra persona cambie algo que te molesta. I wish you would stop blaming him.',
+      "would rather + otra persona + pasado: I'd rather you didn't fight. · Misma persona + forma base: I'd rather stay.",
     ],
   },
   'time-clauses-b2': {

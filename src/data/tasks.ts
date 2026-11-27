@@ -97,6 +97,8 @@ import { B2_12_ARRIVAL_SCRIPT, B2_12_CLOSE_SCRIPT, B2_12_PLANNER_CONTENT, B2_12_
 import { B2_12_GOALS_IDS, B2_12_NOTEBOOK_IDS, B2_12_PLAN_IDS } from './questions-b2-12'
 import { B2_13_ALARM_SCRIPT, B2_13_ARRIVAL_SCRIPT, B2_13_BEFORE_SCRIPT, B2_13_CALL_CONFIG, B2_13_CLOSE_SCRIPT } from './b2Fire'
 import { B2_13_HADBETTER_IDS, B2_13_TIME_IDS } from './questions-b2-13'
+import { B2_14_ARRIVAL_SCRIPT, B2_14_REVEAL_SCRIPT } from './b2UseYourVoice'
+import { B2_14_MIXED_IDS, B2_14_WISH_IDS } from './questions-b2-14'
 import { B2_11_FILM_IDS, B2_11_INDIRECT_IDS, B2_11_NARRATIVE_IDS } from './questions-b2-11'
 import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
 import { B2_10_ARRIVAL_SCRIPT, B2_10_BENCH_SCRIPT, B2_10_CARD_CONTENT, B2_10_CLASS_SCRIPT, B2_10_CLOSE_SCRIPT, B2_10_GIFT_SCRIPT } from './b2Card'
@@ -8828,5 +8830,70 @@ NPC_TASKS['b2-13-close'] = {
     es: 'No cambié el incendio. Cambié el silencio.',
     sub: 'Misión 13: The Fire. Insignia "Two Voices". En el puerto, una figura se está borrando: se abrió el lugar 14 en el mapa.',
     say: 'I changed the silence.',
+  },
+}
+
+// ── B2-14 · Use Your Voice, bloque 1 (el puerto al atardecer, data/b2UseYourVoice.ts). Guía: Leo. NO guarda el cierre ──
+// La figura con capucha (script; 'friend' = la figura)
+NPC_TASKS['b2-14-arrival'] = {
+  npc: 'b2-14-figure',
+  done: 'b2-14-arrival',
+  activity: 'script',
+  script: B2_14_ARRIVAL_SCRIPT,
+  steps: [],
+  reward: { text: "You weren't supposed to be there. That night was mine.", es: 'Tú no debías estar ahí. Esa noche era mía.', sub: 'Leo puede explicar cada frase de la figura. Háblale.', say: 'That night was mine.' },
+}
+
+// Leo: condicionales mixtos, con repaso de los tres de B1 (lección 'mixed-cond-b2') + práctica b2-14-mx1…mx6. 5 monedas
+NPC_TASKS['b2-14-mixed'] = {
+  npc: 'b2-14-leo',
+  done: 'b2-14-mixed',
+  lesson: 'mixed-cond-b2',
+  activity: 'practice',
+  practice: 'mixed-cond-b2',
+  practiceIds: B2_14_MIXED_IDS,
+  coins: 5,
+  requires: { id: 'b2-14-arrival', text: 'Leo is looking at the figure.', es: 'Leo mira a la figura.', sub: 'Primero acércate a la figura con capucha.' },
+  steps: [],
+  reward: {
+    text: "If you hadn't been there, I wouldn't be disappearing now.",
+    es: 'Si no hubieras estado ahí, no me estaría borrando ahora.',
+    sub: 'La figura mira a Leo. Leo tiene algo más que explicar.',
+    say: "If I weren't so angry, I wouldn't have come back.",
+  },
+}
+
+// Leo: wish / if only, wish + would y would rather (lección 'wish-b2') + práctica b2-14-ws1…ws6. 5 monedas
+NPC_TASKS['b2-14-wish'] = {
+  npc: 'b2-14-leo',
+  done: 'b2-14-wish',
+  lesson: 'wish-b2',
+  activity: 'practice',
+  practice: 'wish-b2',
+  practiceIds: B2_14_WISH_IDS,
+  coins: 5,
+  requires: { id: 'b2-14-mixed', text: '…', es: '…', sub: 'Primero los condicionales mixtos.' },
+  steps: [],
+  reward: {
+    text: 'I wish I had trusted you. If only I had known.',
+    es: 'Ojalá hubiera confiado en ti. Si tan solo lo hubiera sabido.',
+    sub: 'El viento sopla fuerte. La capucha de la figura se mueve…',
+    say: "I'd rather you didn't fight.",
+  },
+}
+
+// La revelación (script): cae la capucha, "G… García". Desde aquí la estática se limpia en todo el juego
+NPC_TASKS['b2-14-reveal'] = {
+  npc: 'b2-14-figure',
+  done: 'b2-14-reveal',
+  activity: 'script',
+  script: B2_14_REVEAL_SCRIPT,
+  requires: { id: 'b2-14-wish', text: 'The hood is moving in the wind.', es: 'La capucha se mueve con el viento.', sub: 'Primero escucha a Leo.' },
+  steps: [],
+  reward: {
+    text: 'G… García.',
+    es: 'G… García. G era Leo.',
+    sub: 'La estática de los nombres se limpió en todo el juego (diario, recuerdos y Ventanas).',
+    say: 'It was always you.',
   },
 }
