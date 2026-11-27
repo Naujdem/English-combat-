@@ -273,4 +273,50 @@ export const B2_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B2-06 · The Lab (Ventana 2062): sin página de G (todavía no ha llegado a Vocalis). Se abre al cerrar la misión 6
+  {
+    id: 'b2-mission-6',
+    title: 'B2 · Misión 6: The Lab (Ventana 2062)',
+    unlock: 'b2-06-close',
+    words: [
+      { title: 'Laboratorio', words: [['trial', 'prueba, ensayo'], ['prototype', 'prototipo'], ['results', 'resultados'], ['data', 'datos'], ['donor', 'donante'], ['side effect', 'efecto secundario'], ['breakthrough', 'gran avance']] },
+      { title: 'Tendencias', words: [['rise / rose', 'subir / subió'], ['fall / fell', 'bajar / bajó'], ['peak', 'llegar al máximo'], ['level off', 'estabilizarse'], ['fluctuate', 'subir y bajar'], ['sharply / steadily / slightly', 'bruscamente / poco a poco / un poco']] },
+      { title: 'Formación de palabras', words: [['wellbeing', 'bienestar'], ['ability', 'capacidad'], ['restoration', 'restauración'], ['improvement', 'mejora'], ['effectiveness', 'eficacia']] },
+      { title: 'Phrasal verbs', words: [['carry out', 'realizar'], ['set up', 'preparar, instalar'], ['rule out', 'descartar'], ['point out', 'señalar']] },
+    ],
+    versions: [
+      {
+        id: 'b2-mission-6-mine',
+        tense: 'p',
+        tab: 'Mi diario',
+        title: 'What I found in 2062',
+        unlock: 'b2-06-close',
+        frame: 'Lo escribes al volver al presente.',
+        lines: [
+          { en: 'Tonight I [went]p into the Vocalis lab. Nobody [could]p hear me, so I [read]p everything.', es: 'Esta noche entré al laboratorio de Vocalis. Nadie podía oírme, así que leí todo.' },
+          { en: 'The success rate [rose]p sharply. But in Trial 7 the donor [lost]p her voice.', es: 'La tasa de éxito subió bruscamente. Pero en la prueba 7 la donante perdió la voz.' },
+          { en: 'Vocalis [knew]p. They [knew]p someone had to lose a voice.', es: 'Vocalis lo sabía. Sabían que alguien tenía que perder la voz.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-6-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'The lab',
+        unlock: 'b2-06-close',
+        frame: 'Todo el laboratorio, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'The device [is said]n to restore lost voices. Dr. Sato [is said]n to have found the key in a temple.', es: 'Se dice que el aparato devuelve las voces perdidas. Se dice que la Dra. Sato encontró la clave en un templo.' },
+          { en: 'They [had]p the prototype tested, and the results [were]p too good to stop.', es: 'Hicieron probar el prototipo, y los resultados eran demasiado buenos para parar.' },
+          { en: 'Next, I [am going to find]f out who took that device.', es: 'Ahora voy a averiguar quién se llevó ese aparato.' },
+        ],
+        questions: [
+          { q: 'What did the report of Trial 7 say?', options: ['The device stopped working.', 'A voice was restored, and the donor lost hers.', 'Nobody wanted to be a donor.'], answer: 1, tip: 'El informe decía: "Voice restored. The donor lost theirs."' },
+          { q: 'What happened to the success rate?', options: ['It rose sharply.', 'It fell slightly.', 'It never changed.'], answer: 0, tip: 'El diario dice: "The success rate rose sharply".' },
+          { q: 'What did Vocalis know?', options: ['That the temples were fake.', 'That G was coming.', 'That someone had to lose a voice.'], answer: 2, tip: 'El diario dice: "They knew someone had to lose a voice".' },
+        ],
+      },
+    ],
+  },
 ]

@@ -1595,6 +1595,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#f4f7fa', hair: '#1c1c24', skin: '#e8c4a0', gender: 'female' },
     doneLine: { text: 'The results are too good to stop now.', es: 'Los resultados son demasiado buenos para parar ahora.' },
   },
+  // B2-06 · bloque 3: la pantalla final de la sala de pruebas, que se enciende al vencer a The Prototype (tarea b2-06-close)
+  'b2-06-screen': {
+    name: 'La pantalla final',
+    look: { shirt: '#0e2a44', hair: '#e35d5d', skin: '#0e2a44' },
+    after: 'b2-06-boss',
+    doneLine: { text: 'Project Voice — Sources: Stones · Time · Echoes', es: 'Proyecto Voz — Fuentes: Stones · Time · Echoes' },
+  },
   // ── B2-05 · Voice Blackouts, bloque 1 (el puerto de noche y el Herald, data/b2VoiceBlackouts.ts) ──
   // Manuel en el puerto (mismo look que b2-02-manuel): tareas b2-05-arrival y b2-05-verbs-to, b2-05-verbs-ing
   'b2-05-manuel': {
