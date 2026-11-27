@@ -13,7 +13,10 @@ import type { ReconstructItem } from '../components/Reconstruct'
  * Bloque 2: G escribe la tarjeta: Reconstruct (b2-10-card, reutilizado: se descartan los borradores tachados hasta el mensaje
  *   de A1, "Happy birthday, Leo. Be brave. Use your voice.", firmado con una G) → G envuelve el regalo (b2-10-gift, script)
  *   → dos Ink Blots (esbirros, manchas de tinta del cuaderno) → el jefe Second Thoughts (2 fases), las dudas de G que intentan
- *   romper la tarjeta. Bloque 3 (pendiente): el cierre y la salida de la Ventana.
+ *   romper la tarjeta.
+ * Bloque 3: al vencer a Second Thoughts, G guarda el regalo bajo el abrigo (b2-10-g-leaving): el cierre (b2-10-close, script) recupera
+ *   los temas → Explore muestra WindowExit (fundido azul) y vuelves al presente (B2_10_EXITED); se abre el lugar 11. La tarjeta queda
+ *   como pista en Mochila › Recuerdos y Ventanas (B2_WINDOW_CLUES). Diario: data/b2Diary.ts (con página del cuaderno de G).
  */
 export const B2_10_SCHOOL_ID = 'b2-10-school'
 export const B2_10_G_WINDOW = 'b2-10-g-window'
@@ -33,6 +36,11 @@ export const B2_10_GIFT = 'b2-10-gift'
 export const B2_10_BLOT1 = 'b2-10-blot1'
 export const B2_10_BLOT2 = 'b2-10-blot2'
 export const B2_10_BOSS = 'b2-10-boss'
+/** Bloque 3 */
+export const B2_10_G_LEAVING = 'b2-10-g-leaving'
+export const B2_10_CLOSE = 'b2-10-close'
+/** Se guarda al salir de la Ventana (después del fundido azul) */
+export const B2_10_EXITED = 'b2-10-exited'
 
 /** G, ya muy viejo: abrigo oscuro y capucha, siempre de espaldas o en sombra */
 export const B2_G_OLD_LOOK = { shirt: '#23252d', hair: '#9b9ea6', skin: '#363b46', gender: 'male' as const }
@@ -76,6 +84,8 @@ export const B2_10_SCHOOL: SceneDef = {
     { type: 'enemy', id: B2_10_BLOT1, x: 3, y: 4, after: B2_10_GIFT },
     { type: 'enemy', id: B2_10_BLOT2, x: 5, y: 6, after: B2_10_BLOT1 },
     { type: 'enemy', id: B2_10_BOSS, x: 6, y: 5, after: B2_10_BLOT2 },
+    // Bloque 3: G con el regalo, listo para irse (aparece al vencer a Second Thoughts)
+    { type: 'npc', id: B2_10_G_LEAVING, x: 7, y: 5 },
   ],
   labels: [
     { text: '2056', x: 5, y: 2 },
@@ -105,6 +115,7 @@ export const B2_10_SCHOOL: SceneDef = {
     { label: 'El regalo', done: s.opened.includes(B2_10_GIFT) },
     { label: 'Ink Blots (2)', done: s.defeated.includes(B2_10_BLOT2) },
     { label: 'Second Thoughts', done: s.defeated.includes(B2_10_BOSS) },
+    { label: 'G se va', done: s.opened.includes(B2_10_CLOSE) },
   ],
   intro: {
     first: '2056. A school in the afternoon. — 2056. Una escuela por la tarde. Aquí nadie te oye.',
@@ -262,3 +273,25 @@ export const B2_10_ENEMIES: Record<string, EnemyDef> = {
   [B2_10_BLOT2]: BLOT(B2_10_BLOT2, { text: "I'm tired to wait! I'm afraid to failing!", es: 'tired to wait y afraid to failing: mal.' }),
   [B2_10_BOSS]: B2_10_BOSS_DEF,
 }
+
+// ── Bloque 3 ──
+
+/** El cierre: G se va hacia el puerto viejo con el regalo; fundido azul y vuelta al presente */
+export const B2_10_CLOSE_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(G picks up the card from the bench. It is in one piece. He smiles for the first time.)', es: '(G recoge la tarjeta de la banca. Está entera. Sonríe por primera vez.)' },
+  { who: 'narrator', text: '(He puts the gift under his coat and walks slowly towards the old port. He doesn\'t look back.)', es: '(Guarda el regalo bajo el abrigo y camina despacio hacia el puerto viejo. No mira atrás.)' },
+  { who: 'L', fx: 'unheard', text: 'Wait! Why do you know Leo?', es: 'Intentas decir: "¡Espera! ¿Por qué conoces a Leo?"' },
+  { who: 'narrator', text: '(The blue light grows around you. The school and the patio fade.)', es: '(La luz azul crece a tu alrededor. La escuela y el patio se desvanecen.)' },
+  { who: 'narrator', text: '(Back in your notebook, you write: "The man in the park on Leo\'s birthday… it was G. Why would he know Leo?")', es: '(De vuelta en tu cuaderno, escribes: "El hombre del parque en el cumpleaños de Leo… era G. ¿Por qué conocería a Leo?".)' },
+]
+
+/** Pistas de las Ventanas para Mochila › Recuerdos y Ventanas (components/MemoriesTab.tsx). Se ven al cerrar la misión */
+export const B2_WINDOW_CLUES: { flag: string; year: number; title: string; text: string; es: string }[] = [
+  {
+    flag: B2_10_CLOSE,
+    year: 2056,
+    title: 'La tarjeta de G',
+    text: 'Happy birthday, Leo. Be brave. Use your voice. — G',
+    es: 'G la escribió en el patio de una escuela y la pegó en un regalo. Es la misma tarjeta que Leo abrió en el parque en su cumpleaños.',
+  },
+]
