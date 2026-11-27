@@ -87,6 +87,8 @@ import { B2_04_FRAUD_IDS, B2_04_MODALS_IDS, B2_04_NEEDNT_IDS, B2_04_SECURITY_IDS
 import { B2_05_ARRIVAL_SCRIPT, B2_05_CAPTAIN_SCRIPT, B2_05_FACT_CHECK, B2_05_TOMAS_SCRIPT, B2_05_ZOE_SCRIPT, B2_05_APOLOGY_SCRIPT, B2_05_VOCALIS } from './b2VoiceBlackouts'
 import { B2_S1_CLOSE_SCRIPT, B2_S1_MENU_PLAN, B2_S1_POST_SCRIPT } from './b2FusionNight'
 import { B2_S1_WORDS_IDS } from './questions-b2-s1'
+import { B2_S2_WORDS_IDS } from './questions-b2-s2'
+import { B2_S2_CLOSE_SCRIPT, B2_S2_DEBATE_TURNS, B2_S2_VIDEO_SCRIPT, B2_S2_WHICH_DOG } from './b2PawsDebate'
 import { B2_06_ARRIVAL_SCRIPT, B2_06_CLOSE_SCRIPT, B2_06_FINDING_SCRIPT, B2_06_UNHEARD_ROOM } from './b2Lab'
 import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_IDS } from './questions-b2-06'
 import { B2_08_ARRIVAL_SCRIPT, B2_08_CLOSE_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNCH_SCRIPT, B2_08_UNHEARD_ROOM } from './b2Pitch'
@@ -8962,4 +8964,66 @@ NPC_TASKS['b2-14-close'] = {
     sub: 'Insignias "B2 completado" y "Juego completado". Desde el menú puedes volver a jugar cualquier nivel (A1 a B2).',
     say: 'Use your voice.',
   },
+}
+
+// ── B2 · Extras: Paws Debate (Lumen Paws, data/b2PawsDebate.ts). Se abre al cerrar la misión 8 ──
+// La pantalla: el video del documentalista (escucha)
+NPC_TASKS['b2-s2-video'] = {
+  npc: 'b2-s2-tv',
+  done: 'b2-s2-video',
+  activity: 'script',
+  script: B2_S2_VIDEO_SCRIPT,
+  steps: [],
+  reward: { text: 'Neither side is completely right.', es: 'Ningún lado tiene toda la razón.', sub: 'Nayi te va a explicar las palabras del debate.', say: 'Neither side is completely right.' },
+}
+
+// Nayi: lección 'paws-b2' + práctica b2-s2-p1…p8 (1 de escucha). 5 monedas
+NPC_TASKS['b2-s2-words'] = {
+  npc: 'b2-s2-nayi',
+  done: 'b2-s2-words',
+  lesson: 'paws-b2',
+  activity: 'practice',
+  practice: 'paws-b2',
+  practiceIds: B2_S2_WORDS_IDS,
+  coins: 5,
+  requires: { id: 'b2-s2-video', text: 'Did you watch the video?', es: '¿Viste el video?', sub: 'Primero mira el documental en la pantalla.' },
+  steps: [],
+  reward: { text: 'Laica is calm, whereas Kitay never stops.', es: 'Laica es tranquila, mientras que Kitay nunca para.', sub: 'Lección hecha. El tablero de pedidos tiene trabajo para ti.', say: 'Neither of them is dangerous.' },
+}
+
+// El tablero de pedidos: Which Dog? con contraste (reutilizado de B1-06). 5 monedas
+NPC_TASKS['b2-s2-dogs'] = {
+  npc: 'b2-s2-board',
+  done: 'b2-s2-dogs',
+  activity: 'whichdog',
+  whichdog: B2_S2_WHICH_DOG,
+  requires: { id: 'b2-s2-words', text: 'The order board.', es: 'El tablero de pedidos.', sub: 'Primero haz la lección de Nayi.' },
+  coins: 5,
+  steps: [],
+  reward: { text: 'Nayi: "You know them all. Now, the debate!"', es: '¡Los conoces a todos! Ahora, el debate.', sub: 'Habla otra vez con Nayi.', say: 'You know them all.' },
+}
+
+// Nayi: el debate de zoológicos y mascotas exóticas (DebateTalk: reconocer la otra postura antes de responder)
+NPC_TASKS['b2-s2-debate'] = {
+  npc: 'b2-s2-nayi',
+  done: 'b2-s2-debate',
+  activity: 'debate',
+  requires: { id: 'b2-s2-dogs', text: 'First, the dogs!', es: '¡Primero, los perros!', sub: 'Primero ayuda con el tablero de pedidos.' },
+  debate: { title: 'Zoos, shelters and exotic pets', name: 'Nayi', ask: 'Reconoce la otra postura antes de dar la tuya.', turns: B2_S2_DEBATE_TURNS },
+  steps: [],
+  reward: { text: 'Oh no. Look who just came in…', es: 'Ay, no. Mira quién acaba de entrar…', sub: 'Un vendedor de mascotas exóticas está en la sala. Discute con él.' },
+}
+
+// Nayi: el cierre (pañoleta de Lumen Paws)
+NPC_TASKS['b2-s2-close'] = {
+  npc: 'b2-s2-nayi',
+  done: 'b2-s2-close',
+  activity: 'script',
+  script: B2_S2_CLOSE_SCRIPT,
+  requires: { id: 'b2-s2-seller', text: 'That man again…', es: 'Ese señor otra vez…', sub: 'Primero discute con el vendedor Mr. Kraven.' },
+  recover: ['paws-b2'],
+  outfit: 'panoleta-paws',
+  coins: 20,
+  steps: [],
+  reward: { text: 'Extra: Paws Debate', es: 'Extra: el debate de Lumen Paws', sub: 'Extra completado. Ganaste la pañoleta de Lumen Paws.', say: 'Neither of them cares!' },
 }

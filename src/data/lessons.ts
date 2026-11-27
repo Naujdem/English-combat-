@@ -1637,4 +1637,14 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: "I'd rather you ___ him alone.", choice: { options: ['leaving', 'left', 'to leave'], answer: 1, tip: 'would rather + otra persona + pasado: left.' } },
     { who: 'narrator', text: '(Leo\'s voice is shaking. "Why does he sound… like me?")', es: '(A Leo le tiembla la voz. "¿Por qué suena… como yo?")' },
   ],
+  // B2 · Extras: Paws Debate (Lumen Paws, data/b2PawsDebate.ts): Nayi presenta el contraste y both / neither / either (Busuu 22, Murphy 89)
+  'paws-b2': [
+    { who: 'nayi', text: 'To compare two opposite ideas, use whereas or while in the same sentence: "Laica is calm, whereas Kitay never stops."', es: 'Para comparar dos ideas opuestas, usa whereas o while en la misma oración: "Laica es tranquila, mientras que Kitay nunca para".', board: ['Same sentence', 'Laica is calm, whereas / while Kitay never stops.'] },
+    { who: 'board', text: 'Zirius loves the ball, ___ Lupe only barks at it.', choice: { options: ['whereas', 'however', 'on the other hand'], answer: 0, tip: 'En la misma oración: whereas.' } },
+    { who: 'nayi', text: 'However and on the other hand start a new sentence, with a comma: "Good zoos fund research. However, small zoos are often terrible."', es: 'However y on the other hand empiezan otra oración, con coma: "Los buenos zoológicos financian investigación. Sin embargo, los pequeños suelen ser terribles".', board: ['New sentence', 'However, … · On the other hand, …'] },
+    { who: 'nayi', text: 'Never use two contrast words together. "Whereas zoos protect animals, but…" is wrong.', es: 'Nunca uses dos conectores de contraste juntos. "Whereas zoos protect animals, but…" está mal.', board: ['Whereas…, but… ✗', 'Whereas zoos protect animals, cages are small. ✓'] },
+    { who: 'nayi', text: 'Both = the two. Neither = not one and not the other. Either = one or the other. "Both cats are asleep. Neither of them cares!"', es: 'Both = los dos. Neither = ni uno ni otro. Either = uno u otro. "Los dos gatos duermen. ¡A ninguno le importa!"', board: ['both · neither · either', 'Both cats are asleep. Neither of them cares.'] },
+    { who: 'board', text: '___ option is perfect.', choice: { options: ['Both', 'Neither', 'Either of'], answer: 1, tip: 'neither + singular: ninguna de las dos.' } },
+    { who: 'nayi', text: 'In a formal exam, use the singular after neither of / either of: "Neither of them IS dangerous." It\'s the safe form.', es: 'En un examen formal, usa el singular después de neither of / either of: "Neither of them IS dangerous". Es la forma segura.', board: ['Exam-safe', 'Neither of them is…'] },
+  ],
 }
