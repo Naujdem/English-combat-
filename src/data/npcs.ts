@@ -1662,6 +1662,36 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b2-06-boss',
     doneLine: { text: 'Project Voice — Sources: Stones · Time · Echoes', es: 'Proyecto Voz — Fuentes: Stones · Time · Echoes' },
   },
+  // ── B2-10 · The Card, bloque 1 (Ventana 2056, la escuela, data/b2Card.ts). Nadie oye al protagonista ──
+  // G, muy viejo y con capucha: en la ventana hasta la pizarra; después en la banca del patio
+  'b2-10-g-window': {
+    name: 'El hombre de la capucha',
+    look: { shirt: '#23252d', hair: '#9b9ea6', skin: '#363b46', gender: 'male' },
+    until: 'b2-10-contrast',
+    doneLine: { text: '(He keeps looking at the classroom. He doesn\'t hear you.)', es: '(Sigue mirando el salón. No te oye.)' },
+  },
+  'b2-10-window': {
+    name: 'La ventana del salón',
+    look: { shirt: '#9fd3f0', hair: '#e8e8e8', skin: '#9fd3f0' },
+    doneLine: { text: 'Should we always speak up?', es: '¿Siempre deberíamos alzar la voz?' },
+  },
+  'b2-10-board': {
+    name: 'La pizarra del salón',
+    look: { shirt: '#24402f', hair: '#8a6a40', skin: '#24402f' },
+    doneLine: { text: 'Despite being scared, she spoke.', es: 'A pesar de tener miedo, ella habló.' },
+  },
+  'b2-10-g-bench': {
+    name: 'G',
+    look: { shirt: '#23252d', hair: '#9b9ea6', skin: '#363b46', gender: 'male' },
+    after: 'b2-10-contrast',
+    doneLine: { text: '(He is writing slowly. He doesn\'t look up.)', es: '(Escribe despacio. No levanta la mirada.)' },
+  },
+  'b2-10-notebook': {
+    name: 'El cuaderno de G',
+    look: { shirt: '#3a2f25', hair: '#1d1d1d', skin: '#3a2f25' },
+    after: 'b2-10-contrast',
+    doneLine: { text: "It's worth trying one last time.", es: 'Vale la pena intentarlo una última vez.' },
+  },
   // ── B2-09 · The Gallery, bloque 1 (el museo de arte, data/b2Gallery.ts) ──
   // La persona especial (guía): tareas b2-09-arrival, b2-09-strong, b2-09-order y b2-09-relative
   'b2-09-special': {
