@@ -59,6 +59,7 @@ import { B2_04_COMBAT_QUESTIONS, B2_04_QUESTIONS } from './questions-b2-04'
 import { B2_05_COMBAT_QUESTIONS, B2_05_QUESTIONS } from './questions-b2-05'
 import { B2_07_COMBAT_QUESTIONS, B2_07_QUESTIONS } from './questions-b2-07'
 import { B2_06_COMBAT_QUESTIONS, B2_06_QUESTIONS } from './questions-b2-06'
+import { B2_08_QUESTIONS } from './questions-b2-08'
 import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
@@ -458,6 +459,7 @@ export const QUESTIONS: Question[] = [
   ...B2_07_COMBAT_QUESTIONS,
   ...B2_06_QUESTIONS,
   ...B2_06_COMBAT_QUESTIONS,
+  ...B2_08_QUESTIONS,
   ...B2_S1_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
@@ -723,6 +725,25 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
       'Adjetivos compuestos: home-made · deep-fried · slow-cooked · well-done · sugar-free · mouth-watering.',
       'Sabor y textura: bland · spicy · tangy · rich · crunchy · chewy.',
       "It's worth + -ing: It's worth trying the arepa dumplings. (Nunca \"worth to try\".)",
+    ],
+  },
+  // B2-08 · Pitch (Ventana 2064, data/b2Pitch.ts)
+  'compare-b2': {
+    name: 'Comparaciones precisas (marketing)',
+    level: 'B2',
+    lesson: [
+      'Diferencia grande: far / much / a lot + comparativo (far more effective, much cheaper). Pequeña: slightly / a bit + comparativo.',
+      'nowhere near as … as (muchísimo menos) · just as … as (igual de) · twice / three times as … as (nunca "twice faster than").',
+      'Marketing: influencer marketing, word of mouth (voz a voz), targeted ads (anuncios dirigidos).',
+    ],
+  },
+  'uncount-b2': {
+    name: 'Contables e incontables',
+    level: 'B2',
+    lesson: [
+      'Incontables: advice, information, research, equipment, feedback, news. Sin plural y sin a / an.',
+      'some information · a piece of advice · a lot of feedback · how much research? (nunca "an information" ni "advices").',
+      'news va en singular: The news is good.',
     ],
   },
   // B2-06 · The Lab (Ventana 2062, data/b2Lab.ts)
