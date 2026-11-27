@@ -361,6 +361,8 @@ export const OUTFITS: Record<string, { name: string; color: string }> = {
   'chaqueta-pescador': { name: 'Chaqueta de pescador', color: '#c9a227' },
   // B2-07 · The Old Building: regalo de Sam Achebe al cerrar la misión
   'casco-explorador': { name: 'Casco de explorador urbano', color: '#e0892b' },
+  // B2-09 · The Gallery: regalo de Arturo Silva al vencer a The Curator
+  'boina-artista': { name: 'Boina de artista', color: '#7a2e3a' },
   // B2-04 · Fake Profile: regalo de The Catfish (jefe)
   'hoodie-hacker': { name: 'Hoodie de hacker', color: '#1f2a33' },
   // B2-02 · The Herald: regalo de The Deadline (jefe)

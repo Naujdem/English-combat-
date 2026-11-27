@@ -16,8 +16,10 @@ import type { InscriptionRoom } from '../game/inscriptions'
  *   Ingrid Larsen, la librera, y el cuento "The Man Who Lost His Voice" (b2-09-story, script) → lección 'adv-phrases-b2' + práctica
  *   (b2-09-adverbs): locuciones adverbiales, rasgos de los personajes, look up to / pick out → Arturo desaparece y dos Living Statues
  *   se mueven en la exposición (esbirros) → el jefe The Curator (2 fases).
- * Bloque 3 (pendiente): amistad con Maya, el cierre (dos fragmentos llenan el cuarto segmento del núcleo y se abre la Ventana 10),
- *   diario (la inscripción de las dos voces) y recompensas.
+ * Bloque 3: tras vencer a The Curator: Arturo vuelve a la normalidad (b2-09-arturo-sorry, script) y regala la boina de artista
+ *   (b2-09-beret) → Maya llega al museo: charla de amistad sobre un personaje de ficción (B2_09_FRIEND, Explore.tsx) → la persona
+ *   especial: el cierre (b2-09-close): recupera los temas; Explore muestra FragmentJoin (dos fragmentos llenan el cuarto segmento,
+ *   B2_09_FRAGMENTS) y se abre la Ventana 10. Diario: data/b2Diary.ts (la inscripción de las dos voces, pista para los lugares 13 y 14).
  */
 export const B2_09_GALLERY_ID = 'b2-09-gallery'
 export const B2_09_SPECIAL = 'b2-09-special'
@@ -40,6 +42,17 @@ export const B2_09_ADVERBS = 'b2-09-adverbs'
 export const B2_09_STATUE1 = 'b2-09-statue1'
 export const B2_09_STATUE2 = 'b2-09-statue2'
 export const B2_09_BOSS = 'b2-09-boss'
+/** Bloque 3 */
+export const B2_09_ARTURO_BACK = 'b2-09-arturo-back'
+export const B2_09_MAYA = 'b2-09-maya'
+export const B2_09_SPECIAL_CLOSE = 'b2-09-special-close'
+export const B2_09_ARTURO_SORRY = 'b2-09-arturo-sorry'
+export const B2_09_BERET = 'b2-09-beret'
+export const B2_09_FRIEND = 'b2-09-friend'
+export const B2_09_CLOSE = 'b2-09-close'
+/** Se guarda al terminar la animación: dos fragmentos llenan el cuarto segmento del núcleo (abre la Ventana 10) */
+export const B2_09_FRAGMENTS = 'b2-09-fragments'
+export const B2_FOURTH_SEGMENT = { en: 'The two fragments fill the fourth segment. Only two segments are still dark.', es: 'Los dos fragmentos llenan el cuarto segmento. Solo quedan dos segmentos apagados.' }
 
 /**
  * Leyenda (Tiles.tsx, sin dibujos nuevos): # pared · h pared con cuadros · O vitrina (las tablillas) · H banca · v pantalla
@@ -80,6 +93,10 @@ export const B2_09_GALLERY: SceneDef = {
     { type: 'enemy', id: B2_09_STATUE1, x: 2, y: 1, after: B2_09_ADVERBS },
     { type: 'enemy', id: B2_09_STATUE2, x: 6, y: 1, after: B2_09_STATUE1 },
     { type: 'enemy', id: B2_09_BOSS, x: 5, y: 3, after: B2_09_STATUE2 },
+    // Bloque 3: al vencer a The Curator (npcs.ts, after: b2-09-boss), Arturo, Maya y la persona especial en la exposición
+    { type: 'npc', id: B2_09_ARTURO_BACK, x: 5, y: 3 },
+    { type: 'npc', id: B2_09_MAYA, x: 2, y: 3 },
+    { type: 'npc', id: B2_09_SPECIAL_CLOSE, x: 7, y: 3 },
   ],
   labels: [
     { text: 'Voices of Stone', x: 4, y: 5 },
@@ -133,11 +150,19 @@ export const B2_09_GALLERY: SceneDef = {
     { label: 'Locuciones adverbiales', done: s.opened.includes(B2_09_ADVERBS) },
     { label: 'Living Statues (2)', done: s.defeated.includes(B2_09_STATUE2) },
     { label: 'The Curator', done: s.defeated.includes(B2_09_BOSS) },
+    { label: 'Arturo vuelve a ser él', done: s.opened.includes(B2_09_ARTURO_SORRY) },
+    { label: 'El regalo de Arturo', done: s.opened.includes(B2_09_BERET) },
+    { label: 'Charla con Maya', done: s.opened.includes(B2_09_FRIEND) },
+    { label: 'El cierre', done: s.opened.includes(B2_09_CLOSE) },
   ],
   intro: {
     first: 'Presente. El museo de arte de Lumen Bay. Hay una exposición nueva: "Voices of Stone". La persona especial te espera en la entrada.',
     later: (s) =>
-      s.opened.includes(B2_09_ADVERBS)
+      s.opened.includes(B2_09_CLOSE)
+        ? 'El museo. "Two voices together…" La misión 9 terminó: la Ventana 10 te espera en el mapa.'
+        : s.defeated.includes(B2_09_BOSS)
+        ? 'El museo. El marco dorado desapareció. Arturo, Maya y la persona especial te esperan en la exposición.'
+        : s.opened.includes(B2_09_ADVERBS)
         ? 'El museo. Las estatuas de la exposición se mueven… y Arturo ya no está en su puesto.'
         : s.opened.includes(B2_09_INSCRIPTIONS)
         ? 'El museo. "A voice that is taken returns only when two voices rise together." Leo se fue a otra sala sin decir nada.'
@@ -325,3 +350,16 @@ export const B2_09_ENEMIES: Record<string, EnemyDef> = {
   [B2_09_STATUE2]: STATUE(B2_09_STATUE2, { text: 'My brother, that lives in Lima, is an artist! He is absolutely good!', es: ', that y absolutely good: mal.' }),
   [B2_09_BOSS]: B2_09_BOSS_DEF,
 }
+
+// ── Bloque 3 ──
+
+/** Arturo vuelve a la normalidad (MemoryScript) */
+export const B2_09_ARTURO_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(Arturo is sitting on a bench, surrounded by pieces of the golden frame. He looks tired, but his eyes are normal again.)', es: '(Arturo está sentado en una banca, rodeado de pedazos del marco dorado. Se ve cansado, pero sus ojos ya son normales.)' },
+  { who: 'narrator', text: 'Arturo: I touched the last tablet this morning, which I never do without gloves. Then everything went gold.', es: 'Arturo: Esta mañana toqué la última tablilla, cosa que nunca hago sin guantes. Luego todo se volvió dorado.' },
+  { who: 'narrator', text: 'Arturo: I wanted to keep everything in a frame: the tablets, the statues, the visitors… even your voice. How awful.', es: 'Arturo: Quería guardarlo todo en un marco: las tablillas, las estatuas, los visitantes… hasta tu voz. Qué horrible.' },
+  { who: 'narrator', text: 'Arturo: Art, which belongs to everyone, should be free. I\'ll remember that.', es: 'Arturo: El arte, que nos pertenece a todos, debería ser libre. Lo voy a recordar.' },
+]
+
+/** Lo que el protagonista anota al cerrar la misión (cierre y diario) */
+export const B2_09_NOTE = { en: 'Two voices together… what does that mean?', es: 'Dos voces juntas… ¿qué significa eso?' }

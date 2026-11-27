@@ -450,5 +450,55 @@ export const B2_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B2-09 · The Gallery (presente): página del protagonista (la inscripción de las dos voces, pista para los lugares 13 y 14) y página mezclada
+  {
+    id: 'b2-mission-9',
+    title: 'B2 · Misión 9: The Gallery',
+    unlock: 'b2-09-close',
+    words: [
+      { title: 'Arte', words: [['exhibition', 'exposición'], ['gallery', 'galería'], ['curator', 'curador, curadora'], ['sculpture', 'escultura'], ['installation', 'instalación'], ['masterpiece', 'obra maestra'], ['abstract', 'abstracto'], ['portrait', 'retrato']] },
+      { title: 'Literatura', words: [['character', 'personaje'], ['plot', 'trama'], ['narrator', 'narrador'], ['chapter', 'capítulo'], ['relatable', 'con quien uno se identifica'], ['complex', 'complejo']] },
+      { title: 'Adjetivos fuertes', words: [['amazing', 'increíble'], ['stunning', 'impresionante'], ['awful', 'horrible'], ['tiny', 'diminuto'], ['huge', 'enorme'], ['fascinating', 'fascinante']] },
+      { title: 'Locuciones adverbiales', words: [['without a word', 'sin decir nada'], ['in silence', 'en silencio'], ['all of a sudden', 'de repente'], ['at long last', 'por fin'], ['by no means', 'de ninguna manera']] },
+      { title: 'Phrasal verbs', words: [['look up to', 'admirar'], ['stand out', 'destacarse'], ['pick out', 'escoger'], ['take in', 'observar con calma, asimilar']] },
+    ],
+    versions: [
+      {
+        id: 'b2-mission-9-mine',
+        tense: 'p',
+        tab: 'Mi página',
+        title: 'Two voices',
+        unlock: 'b2-09-close',
+        frame: 'Lo que pasó en el museo, contado por ti. Aquí copiaste la inscripción de la última tablilla.',
+        lines: [
+          { en: 'Today we [went]p to the art museum. The exhibition, which [is called]n "Voices of Stone", [has]n tablets from the four temples.', es: 'Hoy fuimos al museo de arte. La exposición, que se llama "Voices of Stone", tiene tablillas de los cuatro templos.' },
+          { en: 'I [translated]p the last tablet. I [copied]p it here, word for word:', es: 'Traduje la última tablilla. La copié aquí, palabra por palabra:' },
+          { en: '"A voice that [is taken]n [returns]n only when two voices [rise]n together."', es: '"Una voz que es arrebatada solo regresa cuando dos voces se alzan juntas".' },
+          { en: 'Leo [read]p it, [touched]p his throat and [left]p without a word.', es: 'Leo la leyó, se tocó la garganta y se fue sin decir nada.' },
+          { en: 'Two voices together… what [does]n that [mean]n?', es: 'Dos voces juntas… ¿qué significa eso?' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-9-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'A golden frame',
+        unlock: 'b2-09-close',
+        frame: 'El museo entero, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'The light show in the digital room [was]p absolutely stunning, but the beginning [was]p rather slow.', es: 'El espectáculo de luz de la sala digital fue absolutamente impresionante, pero el comienzo fue más bien lento.' },
+          { en: 'In the bookshop, someone [had torn]p out the last page of "The Man Who Lost His Voice".', es: 'En la librería, alguien había arrancado la última página de "The Man Who Lost His Voice".' },
+          { en: 'Arturo, who [had touched]p the oldest tablet, [turned]p into a huge golden frame.', es: 'Arturo, que había tocado la tablilla más antigua, se convirtió en un marco dorado enorme.' },
+          { en: 'Now he [says]n that art [should be]n free. Maya [is reading]n the book, and I [will find]f out what the inscription means.', es: 'Ahora dice que el arte debería ser libre. Maya está leyendo el libro, y yo descubriré qué significa la inscripción.' },
+        ],
+        questions: [
+          { q: 'How was the beginning of the light show?', options: ['Absolutely stunning.', 'Rather slow.', 'Very huge.'], answer: 1, tip: 'El diario dice: "the beginning was rather slow".' },
+          { q: 'What was missing from the book?', options: ['The last page.', 'The cover.', 'The first chapter.'], answer: 0, tip: 'El diario dice: "someone had torn out the last page".' },
+          { q: 'Why did Arturo turn into a golden frame?', options: ['Because he sold the tablets.', 'Because Leo touched him.', 'Because he had touched the oldest tablet.'], answer: 2, tip: 'El diario dice: "Arturo, who had touched the oldest tablet, turned into…"' },
+        ],
+      },
+    ],
+  },
 ]
 
