@@ -88,6 +88,8 @@ import { B2_S1_CLOSE_SCRIPT, B2_S1_MENU_PLAN, B2_S1_POST_SCRIPT } from './b2Fusi
 import { B2_S1_WORDS_IDS } from './questions-b2-s1'
 import { B2_06_ARRIVAL_SCRIPT, B2_06_CLOSE_SCRIPT, B2_06_FINDING_SCRIPT, B2_06_UNHEARD_ROOM } from './b2Lab'
 import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_IDS } from './questions-b2-06'
+import { B2_08_ARRIVAL_SCRIPT, B2_08_UNHEARD_ROOM } from './b2Pitch'
+import { B2_08_COMPARE_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_07_OLIVER_SCRIPT, B2_07_ARRIVAL_SCRIPT, B2_07_DEBATE_ENDINGS, B2_07_DEBATE_TURNS, B2_07_EXPLORE_ROOM, B2_07_POSTER_SCRIPT, B2_07_ROSA_SCRIPT, B2_07_SAM_INTRO } from './b2OldBuilding'
 import { B2_07_CHANGE_IDS, B2_07_CONDITIONS_IDS, B2_07_GET_IDS } from './questions-b2-07'
@@ -7927,5 +7929,72 @@ NPC_TASKS['b2-06-close'] = {
     es: 'Vocalis lo sabía. Sabían que alguien tenía que perder la voz.',
     sub: 'Misión 6: The Lab. Se abrió el lugar 7 en el mapa.',
     say: 'Vocalis knew. They knew someone had to lose a voice.',
+  },
+}
+
+// ── B2-08 · Pitch, bloque 1 (Ventana 2064, las oficinas de marketing de Vocalis, data/b2Pitch.ts). Nadie te oye. NO guarda el cierre ──
+// Las pantallas con el eslogan: entrada a la Ventana (script)
+NPC_TASKS['b2-08-arrival'] = {
+  npc: 'b2-08-slogan',
+  done: 'b2-08-arrival',
+  activity: 'script',
+  script: B2_08_ARRIVAL_SCRIPT,
+  steps: [],
+  reward: { text: 'Get your voice back. Far easier than you think.', es: 'Recupera tu voz. Mucho más fácil de lo que crees.', sub: 'En un escritorio hay una propuesta de campaña.', say: 'Get your voice back. Far easier than you think.' },
+}
+
+// La propuesta de campaña: lección 'compare-b2' (la guía la propuesta) + práctica b2-08-cp1…cp6. 5 monedas
+NPC_TASKS['b2-08-compare'] = {
+  npc: 'b2-08-proposal',
+  done: 'b2-08-compare',
+  lesson: 'compare-b2',
+  placeGuide: { name: 'La propuesta de campaña', icon: '❏' },
+  activity: 'practice',
+  practice: 'compare-b2',
+  practiceIds: B2_08_COMPARE_IDS,
+  coins: 5,
+  requires: { id: 'b2-08-arrival', text: 'A campaign proposal.', es: 'Una propuesta de campaña.', sub: 'Primero mira las pantallas de la oficina.' },
+  steps: [],
+  reward: {
+    text: 'far more effective · slightly cheaper · twice as fast as',
+    es: 'mucho más eficaz · un poco más barato · el doble de rápido que',
+    sub: 'Propuesta leída. En la pantalla del fondo hay una encuesta de mercado.',
+    say: 'Far more effective. Twice as fast.',
+  },
+}
+
+// La encuesta de mercado: lección 'uncount-b2' + práctica b2-08-un1…un6. 5 monedas
+NPC_TASKS['b2-08-survey'] = {
+  npc: 'b2-08-survey-npc',
+  done: 'b2-08-survey',
+  lesson: 'uncount-b2',
+  placeGuide: { name: 'La encuesta de mercado', icon: '✎' },
+  activity: 'practice',
+  practice: 'uncount-b2',
+  practiceIds: B2_08_SURVEY_IDS,
+  coins: 5,
+  requires: { id: 'b2-08-compare', text: 'A market survey on the screen.', es: 'Una encuesta de mercado en la pantalla.', sub: 'Primero lee la propuesta de campaña.' },
+  steps: [],
+  reward: {
+    text: 'some information · a piece of advice · a lot of feedback',
+    es: 'algo de información · un consejo · muchas opiniones',
+    sub: 'Encuesta leída. La oficina de Chloe se acaba de quedar vacía.',
+    say: 'Some information. A piece of advice.',
+  },
+}
+
+// Unheard en la oficina (ficha 8): abrir la carpeta, imprimir la letra pequeña y dejarle una nota a Mensah. Con 0-1 errores, escudo
+NPC_TASKS['b2-08-unheard'] = {
+  npc: 'b2-08-desk',
+  done: 'b2-08-unheard',
+  activity: 'command',
+  command: B2_08_UNHEARD_ROOM,
+  requires: { id: 'b2-08-survey', text: "Chloe's desk. A blue folder and a printer.", es: 'El escritorio de Chloe. Una carpeta azul y una impresora.', sub: 'Primero lee la encuesta de mercado.' },
+  steps: [],
+  reward: {
+    text: 'A compatible donor voice is required.',
+    es: 'Se requiere una voz donante compatible.',
+    sub: 'Unheard completado. La puerta de la sala de reuniones se abrió: va a empezar la reunión de la campaña.',
+    say: 'A compatible donor voice is required.',
   },
 }

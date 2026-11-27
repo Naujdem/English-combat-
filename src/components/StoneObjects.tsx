@@ -217,6 +217,50 @@ export const STONE_OBJECTS: Record<string, StoneObject> = {
       </g>
     ),
   },
+  // B2-08 · Unheard en la oficina de marketing de Vocalis: la carpeta de la campaña (se abre), la impresora (imprime la
+  // letra pequeña) y la nota para el Dr. Mensah (queda pegada en su escritorio)
+  folder: {
+    names: ['campaign folder', 'folder'],
+    es: 'la carpeta de la campaña',
+    draw: (a) => (
+      <g>
+        <rect x="10" y="22" width="44" height="32" rx="2" fill="#3fa9ff" stroke="#1f5d8c" strokeWidth="2" />
+        {a && <rect className="stone-fade" x="16" y="12" width="32" height="26" fill="#fff" stroke="#9aa5b4" strokeWidth="1.5" />}
+        {a && <path className="stone-fade" d="M20 18 h24 M20 23 h20 M20 28 h24" stroke="#9aa5b4" strokeWidth="1.5" />}
+        <g className="stone-move" style={{ transform: a ? 'skewX(-18deg) translateX(10px)' : 'none', transformOrigin: '50% 100%' }}>
+          <rect x="10" y="26" width="44" height="28" rx="2" fill="#5bb6ff" stroke="#1f5d8c" strokeWidth="2" />
+          <text x="32" y="44" textAnchor="middle" fontSize="7" fill="#fff" fontWeight="bold">RESTORE</text>
+        </g>
+      </g>
+    ),
+  },
+  printer: {
+    names: ['fine print', 'printer'],
+    es: 'la letra pequeña (en la impresora)',
+    draw: (a) => (
+      <g>
+        {a && <rect className="stone-fade" x="18" y="40" width="28" height="18" fill="#fff" stroke="#9aa5b4" strokeWidth="1" />}
+        {a && <path className="stone-fade" d="M21 46 h22 M21 49 h18 M21 52 h22" stroke="#4a525e" strokeWidth="0.8" />}
+        <rect x="12" y="26" width="40" height="16" rx="2" fill="#d8dde3" stroke="#4a525e" strokeWidth="2" />
+        <rect x="18" y="14" width="28" height="12" fill="#fff" stroke="#9aa5b4" strokeWidth="1.5" />
+        <circle cx="46" cy="32" r="2" fill={a ? '#3fd16a' : '#7d8794'} className="stone-fill" />
+      </g>
+    ),
+  },
+  note: {
+    names: ['small print', 'note'],
+    es: 'la nota',
+    draw: (a) => (
+      <g>
+        <rect x="8" y="40" width="48" height="14" fill="#8a5a32" stroke="#5a3a20" strokeWidth="2" />
+        <g className="stone-move" style={{ transform: a ? 'translateY(14px) rotate(-6deg)' : 'none', transformOrigin: '50% 50%' }}>
+          <rect x="20" y="12" width="24" height="22" fill="#ffe680" stroke="#c9a400" strokeWidth="1.5" />
+          <path d="M24 19 h16 M24 24 h14 M24 29 h16" stroke="#7d6a4a" strokeWidth="1.2" />
+        </g>
+        {a && <circle className="stone-fade" cx="32" cy="34" r="16" fill="none" stroke="#ffe680" strokeWidth="2" opacity="0.7" />}
+      </g>
+    ),
+  },
   // B2 · Unheard (ficha 0.7): las escaleras traseras de la escuela nocturna. Al acertar, la nota queda pegada y brilla la flecha
   stairs: {
     names: ['back stairs', 'stairs', 'staircase'],

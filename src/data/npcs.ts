@@ -1553,6 +1553,27 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#6b4a2f', hair: '#d8d8d8', skin: '#c98f68', gender: 'male' },
     doneLine: { text: 'Guests of honour! At my age! Ha!', es: '¡Invitados de honor! ¡A mi edad! ¡Ja!' },
   },
+  // ── B2-08 · Pitch, bloque 1 (Ventana 2064, las oficinas de marketing de Vocalis, data/b2Pitch.ts). Nadie oye al protagonista ──
+  'b2-08-slogan': {
+    name: 'Las pantallas de Vocalis',
+    look: { shirt: '#dfe6ee', hair: '#3fa9ff', skin: '#dfe6ee' },
+    doneLine: { text: 'Get your voice back. Far easier than you think.', es: 'Recupera tu voz. Mucho más fácil de lo que crees.' },
+  },
+  'b2-08-proposal': {
+    name: 'La propuesta de campaña',
+    look: { shirt: '#f4f7fa', hair: '#3fa9ff', skin: '#f4f7fa' },
+    doneLine: { text: 'Restore works twice as fast as therapy.', es: 'Restore funciona el doble de rápido que la terapia.' },
+  },
+  'b2-08-survey-npc': {
+    name: 'La encuesta de mercado',
+    look: { shirt: '#dfe6ee', hair: '#9aa5b4', skin: '#dfe6ee' },
+    doneLine: { text: 'Feedback: very positive. More research is needed.', es: 'Opiniones: muy positivas. Se necesita más investigación.' },
+  },
+  'b2-08-desk': {
+    name: 'El escritorio de Chloe',
+    look: { shirt: '#3fa9ff', hair: '#1f5d8c', skin: '#3fa9ff' },
+    doneLine: { text: 'Read the small print aloud.', es: 'Lee la letra pequeña en voz alta.' },
+  },
   // ── B2-06 · The Lab, bloque 1 (Ventana 2062, la recepción y el archivo de Vocalis, data/b2Lab.ts). Nadie oye al protagonista ──
   'b2-06-motto': {
     name: 'El lema de la pared',
