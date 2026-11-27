@@ -64,6 +64,7 @@ import { B2_09_QUESTIONS } from './questions-b2-09'
 import { B2_10_COMBAT_QUESTIONS, B2_10_QUESTIONS } from './questions-b2-10'
 import { B2_11_COMBAT_QUESTIONS, B2_11_QUESTIONS } from './questions-b2-11'
 import { B2_12_COMBAT_QUESTIONS, B2_12_QUESTIONS } from './questions-b2-12'
+import { B2_13_QUESTIONS } from './questions-b2-13'
 import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
@@ -471,6 +472,7 @@ export const QUESTIONS: Question[] = [
   ...B2_11_QUESTIONS,
   ...B2_11_COMBAT_QUESTIONS,
   ...B2_12_QUESTIONS,
+  ...B2_13_QUESTIONS,
   ...B2_12_COMBAT_QUESTIONS,
   ...B2_S1_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
@@ -846,6 +848,25 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
       'will have been + -ing (+ for): cuánto tiempo llevará algo en el futuro. By 40, I will have been teaching for ten years.',
       'Metas: goal · ambition · achieve a goal · fulfil a dream · milestone.',
       "Phrasal verbs: look back on (mirar atrás) · turn out (resultar): Life didn't turn out as I planned.",
+    ],
+  },
+  // B2-13 · The Fire (Ventana 2061, data/b2Fire.ts)
+  'hadbetter-b2': {
+    name: 'Had better',
+    level: 'B2',
+    lesson: [
+      "had better + forma base (sin to): consejo fuerte para una situación concreta. You'd better use the back stairs.",
+      "Negativo: had better not + forma base. You'd better not use the lift.",
+      "Habla de ahora o del futuro, aunque parezca pasado: It's late. We'd better go.",
+    ],
+  },
+  'itstime-b2': {
+    name: "It's time",
+    level: 'B2',
+    lesson: [
+      "It's time to + forma base: es el momento de hacerlo. It's time to leave.",
+      "It's time + sujeto + pasado simple: ya debería estar pasando. It's time everyone left. (Nunca \"everyone leave\").",
+      "It's high time you spoke up. Phrasal verbs: speak up (alzar la voz) ↔ hold back (contenerse).",
     ],
   },
   'time-clauses-b2': {
