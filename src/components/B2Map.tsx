@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 import type { GameState } from '../game/types'
-import { B2_BAND, B2_ERA_COLOR, B2_NODES, b2Core, b2Label, b2NodeDone, b2NodeOpen, type B2Node, type B2Part } from '../data/b2World'
+import { B2_13_ENTERED, B2_BAND, B2_ERA_COLOR, B2_NODES, b2CloseId, b2Core, b2Label, b2NodeDone, b2NodeOpen, type B2Node, type B2Part } from '../data/b2World'
 
 const FONT = 'Fredoka, Nunito, system-ui, sans-serif'
 
@@ -76,8 +76,10 @@ function ClockLock({ x, y }: { x: number; y: number }) {
 export function CoreBar({ state, filled: forced }: { state?: GameState; filled?: number }) {
   const core = state ? b2Core(state) : { filled: forced ?? 0, loose: false }
   const filled = forced ?? core.filled
+  // Ficha 12: al volver de Countdown el núcleo tiembla hasta que se entra a la Ventana 13
+  const tremble = !!state && state.opened.includes(b2CloseId(12)) && !state.opened.includes(B2_13_ENTERED)
   return (
-    <div className="flex items-center gap-2" aria-label={`Núcleo del reloj: ${filled} de 6 segmentos`}>
+    <div className={`flex items-center gap-2${tremble ? ' anim-tremble' : ''}`} aria-label={`Núcleo del reloj: ${filled} de 6 segmentos`}>
       <span className="text-xs font-semibold uppercase tracking-wide text-[#8fcbff]">Núcleo</span>
       <div className="flex flex-1 gap-1">
         {Array.from({ length: 6 }, (_, k) => {

@@ -14,6 +14,10 @@ import type { TextCommandRoom } from '../components/TextCommand'
  * Bloque 2: G vuelve y lee la nota (b2-12-return, script, escucha: be about to y futuro perfecto continuo) → el cuaderno de G:
  *   lección 'time-clauses-b2' + práctica (b2-12-notebook) → Future Planner versión G en la pared (b2-12-timeline, reutilizado:
  *   la línea de tiempo de G con futuro perfecto) → dos Ticking Shadows (esbirros) → el jefe The Countdown (2 fases).
+ * Bloque 3: al vencer a The Countdown, G guarda el reloj y la tarjeta (b2-12-g-leaving): el cierre (b2-12-close, script) recupera
+ *   los temas → Explore muestra WindowExit (fundido azul) y vuelves al presente (B2_12_EXITED). El núcleo tiembla con 5 de 6
+ *   segmentos (CoreBar) y se abre sola la Ventana 13. La nota "Don't do it." queda en Mochila › Recuerdos y Ventanas
+ *   (B2_WINDOW_CLUES, data/b2Card.ts). Diario: data/b2Diary.ts (con página del cuaderno de G y la lectura larga 3).
  */
 export const B2_12_ROOM_ID = 'b2-12-room'
 export const B2_12_WALL = 'b2-12-wall'
@@ -33,6 +37,9 @@ export const B2_12_TIMELINE = 'b2-12-timeline'
 export const B2_12_SHADOW1 = 'b2-12-shadow1'
 export const B2_12_SHADOW2 = 'b2-12-shadow2'
 export const B2_12_BOSS = 'b2-12-boss'
+/** Bloque 3 */
+export const B2_12_G_LEAVING = 'b2-12-g-leaving'
+export const B2_12_CLOSE = 'b2-12-close'
 /** Se guarda al salir de la Ventana (después del fundido azul) */
 export const B2_12_EXITED = 'b2-12-exited'
 
@@ -72,6 +79,8 @@ export const B2_12_ROOM: SceneDef = {
     { type: 'enemy', id: B2_12_SHADOW1, x: 5, y: 1, after: B2_12_TIMELINE },
     { type: 'enemy', id: B2_12_SHADOW2, x: 3, y: 4, after: B2_12_SHADOW1 },
     { type: 'enemy', id: B2_12_BOSS, x: 6, y: 3, after: B2_12_SHADOW2 },
+    // Bloque 3: G guarda el reloj y la tarjeta, listo para irse (aparece al vencer a The Countdown)
+    { type: 'npc', id: B2_12_G_LEAVING, x: 9, y: 3 },
   ],
   labels: [{ text: '2056', x: 5, y: 3 }],
   zoneAt,
@@ -94,6 +103,7 @@ export const B2_12_ROOM: SceneDef = {
     { label: 'La línea de tiempo de G', done: s.opened.includes(B2_12_TIMELINE) },
     { label: 'Ticking Shadows (2)', done: s.defeated.includes(B2_12_SHADOW2) },
     { label: 'The Countdown', done: s.defeated.includes(B2_12_BOSS) },
+    { label: 'G se va', done: s.opened.includes(B2_12_CLOSE) },
   ],
   intro: {
     first: '2056. A small room near the old port, at night. — 2056. Un cuarto pequeño cerca del puerto viejo, de noche. Aquí nadie te oye.',
@@ -280,3 +290,17 @@ export const B2_12_ENEMIES: Record<string, EnemyDef> = {
   [B2_12_SHADOW2]: SHADOW(B2_12_SHADOW2, { text: 'Tick, tock… I will have been wait for years!', es: 'will have been wait: mal.' }),
   [B2_12_BOSS]: B2_12_BOSS_DEF,
 }
+
+// ── Bloque 3 ──
+
+/** El cierre: G arruga la nota y desaparece en la luz; fundido azul, vuelta al presente, el núcleo tiembla y Leo pierde la voz */
+export const B2_12_CLOSE_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(G takes the clock out of the drawer. He puts it in his coat, next to the gift with the card.)', es: '(G saca el reloj del cajón. Lo guarda en el abrigo, junto al regalo con la tarjeta.)' },
+  { who: 'narrator', text: '(He picks up your note. "Don\'t do it." He looks at it for a long moment…)', es: '(Recoge tu nota. "No lo hagas". La mira durante un largo rato…)' },
+  { who: 'narrator', text: '(…and crumples it in his hand. The clock glows. G disappears in the light.)', es: '(…y la arruga en la mano. El reloj brilla. G desaparece en la luz.)' },
+  { who: 'L', fx: 'unheard', text: 'No! Wait!', es: 'Intentas decir: "¡No! ¡Espera!"' },
+  { who: 'narrator', text: '(Blue light everywhere. When it fades, you are back in Lumen Bay, next to Leo.)', es: '(Luz azul por todas partes. Cuando se apaga, estás de vuelta en Lumen Bay, junto a Leo.)' },
+  { who: 'narrator', text: '(The clock in your hand is shaking. Five of the six segments of the core are glowing.)', es: '(El reloj en tu mano tiembla. Cinco de los seis segmentos del núcleo brillan.)' },
+  { who: 'narrator', text: '(Leo opens his mouth to speak… and nothing comes out. Five seconds. Ten. Then, very quietly: "I\'m OK… I\'m OK.")', es: '(Leo abre la boca para hablar… y no sale nada. Cinco segundos. Diez. Luego, muy bajito: "Estoy bien… estoy bien".)' },
+  { who: 'narrator', text: '(You open your notebook and write: "I know where I have to go. The night of the fire.")', es: '(Abres tu cuaderno y escribes: "Sé a dónde tengo que ir. La noche del incendio".)' },
+]
