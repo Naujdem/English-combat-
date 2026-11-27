@@ -91,7 +91,7 @@ import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_I
 import { B2_08_ARRIVAL_SCRIPT, B2_08_CLOSE_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNCH_SCRIPT, B2_08_UNHEARD_ROOM } from './b2Pitch'
 import { B2_08_ACRONYMS_IDS, B2_08_COMPARE_IDS, B2_08_PERKS_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
-import { B2_09_ARRIVAL_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
+import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
 import { B2_09_ADVERBS_IDS, B2_09_ORDER_IDS, B2_09_RELATIVE_IDS, B2_09_REVIEW_IDS, B2_09_STRONG_IDS } from './questions-b2-09'
 import { B2_07_OLIVER_SCRIPT, B2_07_ARRIVAL_SCRIPT, B2_07_DEBATE_ENDINGS, B2_07_DEBATE_TURNS, B2_07_EXPLORE_ROOM, B2_07_POSTER_SCRIPT, B2_07_ROSA_SCRIPT, B2_07_SAM_INTRO } from './b2OldBuilding'
 import { B2_07_CHANGE_IDS, B2_07_CONDITIONS_IDS, B2_07_GET_IDS } from './questions-b2-07'
@@ -8244,5 +8244,50 @@ NPC_TASKS['b2-09-adverbs'] = {
     es: '¡De repente, un estruendo desde la exposición!',
     sub: 'Lección hecha. Las estatuas de "Voices of Stone" se están moviendo. Vuelve a la exposición.',
     say: 'All of a sudden.',
+  },
+}
+
+// ── B2-09 · The Gallery, bloque 3: Arturo vuelve a ser él, la boina de artista y el cierre (la persona especial) ──
+NPC_TASKS['b2-09-arturo-sorry'] = {
+  npc: 'b2-09-arturo-back',
+  done: 'b2-09-arturo-sorry',
+  activity: 'script',
+  script: B2_09_ARTURO_SCRIPT,
+  steps: [],
+  reward: { text: 'Art, which belongs to everyone, should be free.', es: 'El arte, que nos pertenece a todos, debería ser libre.', sub: 'Habla otra vez con Arturo.', say: 'Art should be free.' },
+}
+
+// Arturo: la boina de artista
+NPC_TASKS['b2-09-beret'] = {
+  npc: 'b2-09-arturo-back',
+  done: 'b2-09-beret',
+  outfit: 'boina-artista',
+  requires: { id: 'b2-09-arturo-sorry', text: '…', es: '…', sub: 'Primero habla con Arturo.' },
+  steps: [
+    { text: 'You read the tablets, which nobody in this museum could do. That was absolutely remarkable.', es: 'Leíste las tablillas, cosa que nadie en este museo pudo hacer. Fue absolutamente extraordinario.' },
+    { text: 'Please, take this old beret. It belonged to an artist who painted in silence for years… and then, at long last, spoke.', es: 'Por favor, llévate esta boina vieja. Fue de un artista que pintó en silencio durante años… y luego, por fin, habló.' },
+  ],
+  reward: { text: "Artist's beret", es: 'Boina de artista', sub: 'Ganaste la boina de artista. Maya acaba de llegar al museo.', say: 'At long last.' },
+}
+
+// Cierre. done = b2CloseId(9) = 'b2-09-close'. Al guardarse, Explore muestra FragmentJoin: dos fragmentos llenan el cuarto
+// segmento del núcleo (b2Core en data/b2World.ts) y se abre la Ventana 10
+NPC_TASKS['b2-09-close'] = {
+  npc: 'b2-09-special-close',
+  done: 'b2-09-close',
+  recover: ['gradable-b2', 'adj-order-b2', 'nd-relative-b2', 'review-b2', 'adv-phrases-b2'],
+  coins: 15,
+  requires: { id: 'b2-09-friend', text: "Maya's here! Go and say hi.", es: '¡Llegó Maya! Ve a saludarla.', sub: 'Primero habla con Arturo y con Maya.' },
+  steps: [
+    { text: '(The two lights from the golden frame fly into your clock. Click. Click.)', es: '(Las dos lucecitas del marco dorado vuelan hacia tu reloj. Clic. Clic.)' },
+    { text: '(You open your notebook and read the inscription again: "A voice that is taken returns only when two voices rise together.")', es: '(Abres tu cuaderno y vuelves a leer la inscripción: "Una voz que es arrebatada solo regresa cuando dos voces se alzan juntas".)' },
+    { text: '(Below it, you write: "Two voices together… what does that mean?")', es: '(Debajo escribes: "Dos voces juntas… ¿qué significa eso?".)' },
+    { text: "Leo didn't say a word all afternoon. Whatever it means, we'll find out together.", es: 'Leo no dijo ni una palabra en toda la tarde. Signifique lo que signifique, lo descubriremos juntos.' },
+  ],
+  reward: {
+    text: 'Mission 9: The Gallery',
+    es: 'Misión 9: La galería',
+    sub: 'El cuarto segmento del núcleo se llenó. Se abrió la Ventana 10 (2056).',
+    say: 'The Gallery.',
   },
 }

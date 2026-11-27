@@ -1689,6 +1689,7 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
   // B2-09 · bloque 2: la persona especial en la sala de arte digital (b2-09-digital y b2-09-review)
   'b2-09-special-digital': {
     name: '',
+    until: 'b2-09-boss',
     look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
     interest: true,
     after: 'b2-09-inscriptions',
@@ -1699,6 +1700,28 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     name: 'Ingrid Larsen',
     look: { shirt: '#c0504d', hair: '#e8d27a', skin: '#f1d3bd', gender: 'female' },
     doneLine: { text: 'At long last, someone who reads to the end!', es: '¡Por fin, alguien que lee hasta el final!' },
+  },
+  // B2-09 · bloque 3 (al vencer a The Curator): Arturo otra vez él mismo (b2-09-arturo-sorry, b2-09-beret)
+  'b2-09-arturo-back': {
+    name: 'Arturo Silva',
+    look: { shirt: '#7a4fa3', hair: '#6b6b6b', skin: '#c68e63', gender: 'male' },
+    after: 'b2-09-boss',
+    doneLine: { text: 'Art, which belongs to everyone, should be free.', es: 'El arte, que nos pertenece a todos, debería ser libre.' },
+  },
+  // Maya llega al museo: la charla de amistad (Explore.tsx, B2_09_FRIEND)
+  'b2-09-maya': {
+    name: 'Maya',
+    look: { shirt: '#d4537e', hair: '#4a2c17', skin: '#c68642', gender: 'female' },
+    after: 'b2-09-boss',
+    doneLine: { text: 'I always look up to the quiet characters. They surprise you at the end.', es: 'Siempre admiro a los personajes callados. Te sorprenden al final.' },
+  },
+  // La persona especial en la exposición: el cierre (b2-09-close)
+  'b2-09-special-close': {
+    name: '',
+    look: { shirt: '#5d8fd4', hair: '#1f1f1f', skin: '#e0ac69' },
+    interest: true,
+    after: 'b2-09-boss',
+    doneLine: { text: 'Two voices together… We\'ll find out what it means.', es: 'Dos voces juntas… Ya descubriremos qué significa.' },
   },
   // ── B2-07 · The Old Building, bloque 1 (el barrio antiguo y el edificio, data/b2OldBuilding.ts) ──
   // Leo en la calle: tareas b2-07-arrival y b2-07-change. Entra al edificio cuando Sam lo abre

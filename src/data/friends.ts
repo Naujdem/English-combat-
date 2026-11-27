@@ -925,3 +925,18 @@ export const B2_04_LEO_CHAT: CasualChat = {
     { text: 'Online hide the voice people what.', textEs: '(No tiene sentido.)', reply: "Sorry, I didn't understand.", es: 'Perdón, no te entendí.', effect: -1 },
   ],
 }
+
+/** B2-09 · The Gallery, bloque 3: la charla de amistad con Maya en el museo (una vez; se guarda B2_09_FRIEND en Explore.tsx).
+ *  Un personaje de ficción con el que cada uno se identifica (Busuu 20). No hay respuestas malas */
+export const B2_09_MAYA_CHAT: CasualChat = {
+  requires: null,
+  level: 'B2',
+  text: 'I bought that little book, "The Man Who Lost His Voice". Is there a character in a story that you can relate to?',
+  es: 'Compré ese librito, "The Man Who Lost His Voice". ¿Hay algún personaje de una historia con el que te identifiques?',
+  options: [
+    { text: 'Nell, I think. She was frightened and stayed quiet, which I understand. But at long last she found her voice.', textEs: 'Nell, creo. Tenía miedo y se quedó callada, cosa que entiendo. Pero por fin encontró su voz.', reply: 'Me too. She is a really complex character. I look up to people like her.', es: 'Yo también. Es un personaje muy complejo. Admiro a la gente como ella.', effect: 2 },
+    { text: 'A brave detective from a book I read as a child. I always wanted to be like him.', textEs: 'Un detective valiente de un libro que leí de niño. Siempre quise ser como él.', reply: "That's lovely! Now you're the one solving mysteries.", es: '¡Qué bonito! Ahora tú eres quien resuelve misterios.', effect: 2 },
+    { text: "Not really. I don't read much fiction.", textEs: 'La verdad no. No leo mucha ficción.', reply: "That's OK. Maybe this book will change your mind.", es: 'Está bien. Quizá este libro te haga cambiar de opinión.', effect: 1 },
+    { text: 'Character the voice a relate story lost.', textEs: '(No tiene sentido.)', reply: "Sorry, I didn't understand.", es: 'Perdón, no te entendí.', effect: -1 },
+  ],
+}
