@@ -1483,6 +1483,12 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     look: { shirt: '#f2d98a', hair: '#3fa9ff', skin: '#f2d98a' },
     doneLine: { text: 'How are you REALLY feeling?', es: '¿Cómo te sientes DE VERDAD?' },
   },
+  // Bloque 2: el panel de emergencia del pasillo (tareas b2-03-alarm y b2-03-unheard)
+  'b2-03-panel': {
+    name: 'El panel de emergencia',
+    look: { shirt: '#c0392b', hair: '#f2d98a', skin: '#c0392b' },
+    doneLine: { text: 'FIRE ALARM · EMERGENCY LIGHTS · FIRE DOOR', es: 'ALARMA DE INCENDIO · LUCES DE EMERGENCIA · PUERTA DE EMERGENCIA' },
+  },
   'b2-03-notebook': {
     name: 'El cuaderno olvidado',
     look: { shirt: '#efe6d2', hair: '#8a5a32', skin: '#efe6d2' },

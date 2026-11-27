@@ -78,8 +78,9 @@ import { B1_07_CLOSE_SCRIPT } from './b1Room'
 import { B2_01_BREAKFAST_SCRIPT, B2_01_GROUP_CHAT, B2_01_JEISON_SCRIPT, B2_01_MARISOL_SCRIPT, B2_01_NAYI_SCRIPT } from './b2CatchingUp'
 import { B2_01_CATCHUP_IDS, B2_01_PPCONT_IDS, B2_01_REACTIONS_IDS } from './questions-b2-01'
 import type { FactCheckContent } from '../components/FactCheck'
-import { B2_03_ADULT_SCRIPT, B2_03_CLASS_SCRIPT, B2_03_HELLO_SCRIPT } from './b2Frozen'
-import { B2_03_DIARY_IDS, B2_03_FEELINGS_IDS, B2_03_SENSES_IDS } from './questions-b2-03'
+import { B2_03_ADULT_SCRIPT, B2_03_ALARM_SCRIPT, B2_03_CLASS_SCRIPT, B2_03_FREEZE_SCRIPT, B2_03_HELLO_SCRIPT } from './b2Frozen'
+import { B2_UNHEARD_DEMO } from './b2Demos'
+import { B2_03_DIARY_IDS, B2_03_FEELINGS_IDS, B2_03_INJURY_IDS, B2_03_SENSES_IDS } from './questions-b2-03'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
 import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
 
@@ -7114,7 +7115,65 @@ NPC_TASKS['b2-03-diary'] = {
   reward: {
     text: 'Sometimes I feel as if I\'m always holding back.',
     es: 'A veces siento como si siempre me estuviera conteniendo.',
-    sub: 'Bloque 1 terminado. (La alarma, Unheard y el jefe Panic llegan en el bloque 2.)',
+    sub: 'Hay un panel de emergencia al fondo del pasillo.',
     say: 'Sometimes I feel as if I\'m always holding back.',
+  },
+}
+
+// ── B2-03 · Frozen, bloque 2 (la alarma, Unheard, la parálisis, las lesiones y el combate). NO guarda el cierre ──
+// El panel de emergencia: suena la alarma (script)
+NPC_TASKS['b2-03-alarm'] = {
+  npc: 'b2-03-panel',
+  done: 'b2-03-alarm',
+  activity: 'script',
+  script: B2_03_ALARM_SCRIPT,
+  requires: { id: 'b2-03-diary', text: 'An emergency panel. Everything is quiet… for now.', es: 'Un panel de emergencia. Todo está tranquilo… por ahora.', sub: 'Primero lee el cuaderno olvidado de la banca.' },
+  steps: [],
+  reward: { text: '(Nobody can hear you. But you can still help.)', es: '(Nadie te oye. Pero todavía puedes ayudar.)', sub: 'Vuelve al panel: Unheard.' },
+}
+
+// Unheard (ficha 0.7, primera vez): 3 metas sin voz. Con 0-1 errores, escudo
+NPC_TASKS['b2-03-unheard'] = {
+  npc: 'b2-03-panel',
+  done: 'b2-03-unheard',
+  activity: 'command',
+  command: B2_UNHEARD_DEMO,
+  requires: { id: 'b2-03-alarm', text: 'The alarm is ringing.', es: 'Suena la alarma.', sub: 'Primero toca el panel de emergencia.' },
+  steps: [],
+  reward: {
+    text: 'Nobody heard you… but they read you.',
+    es: 'Nadie te oyó… pero te leyeron.',
+    sub: 'Unheard completado. Tu yo adulto sigue en el pasillo.',
+    say: 'Nobody heard you, but they read you.',
+  },
+}
+
+// La parálisis: tu yo adulto no se mueve (script)
+NPC_TASKS['b2-03-freeze'] = {
+  npc: 'b2-03-adult',
+  done: 'b2-03-freeze',
+  activity: 'script',
+  script: B2_03_FREEZE_SCRIPT,
+  requires: { id: 'b2-03-unheard', text: '(Your older self is looking at the floor.)', es: '(Tu yo adulto mira el suelo.)', sub: 'Primero ayuda desde el panel de emergencia (Unheard).' },
+  steps: [],
+  reward: { text: '(A student is hurt. She is in the classroom, near the window.)', es: '(Una estudiante se lastimó. Está en el aula, junto a la ventana.)', sub: 'Ve con la estudiante del aula.' },
+}
+
+// La estudiante del tobillo: lección 'injuries-b2' (la guía el botiquín) + práctica b2-03-ij1…ij6. Al terminar salen las sombras del humo
+NPC_TASKS['b2-03-injury'] = {
+  npc: 'b2-03-student',
+  done: 'b2-03-injury',
+  lesson: 'injuries-b2',
+  placeGuide: { name: 'El botiquín', icon: '✚' },
+  activity: 'practice',
+  practice: 'injuries-b2',
+  practiceIds: B2_03_INJURY_IDS,
+  coins: 5,
+  requires: { id: 'b2-03-freeze', text: 'I can hardly keep my eyes open.', es: 'Casi no puedo mantener los ojos abiertos.', sub: 'Primero mira a tu yo adulto en el pasillo.' },
+  steps: [],
+  reward: {
+    text: '(You leave the first aid kit next to her. A friend helps her to the back stairs.)',
+    es: '(Le dejas el botiquín al lado. Una amiga la ayuda a llegar a las escaleras traseras.)',
+    sub: 'En el pasillo, el humo toma forma: Smoke Shadows. Y algo frío sujeta a tu yo adulto.',
   },
 }

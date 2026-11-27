@@ -54,7 +54,7 @@ import { B1_12_QUESTIONS } from './questions-b1-12'
 import { B1_14_QUESTIONS } from './questions-b1-14'
 import { B2_01_QUESTIONS } from './questions-b2-01'
 import { B2_02_COMBAT_QUESTIONS, B2_02_QUESTIONS } from './questions-b2-02'
-import { B2_03_QUESTIONS } from './questions-b2-03'
+import { B2_03_COMBAT_QUESTIONS, B2_03_QUESTIONS } from './questions-b2-03'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
 
@@ -444,6 +444,7 @@ export const QUESTIONS: Question[] = [
   ...B2_01_QUESTIONS,
   ...B2_02_QUESTIONS,
   ...B2_03_QUESTIONS,
+  ...B2_03_COMBAT_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
   ...B1_11_QUESTIONS,
@@ -735,6 +736,15 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
     lesson: [
       'I\'ve been feeling tired lately (sigue ahora) · I used to speak up more (antes sí, ahora no) · I feel as if I\'m always holding back.',
       'Phrasal verbs: hold back · speak up · freeze up · calm down.',
+    ],
+  },
+  'injuries-b2': {
+    name: 'El cuerpo y las lesiones',
+    level: 'B2',
+    lesson: [
+      'sprain / twist your ankle · burn your hand · cut your finger · a bruise · bleed.',
+      'Con el cuerpo, posesivo: She sprained her ankle (no "the ankle", nunca "her ankle\'s").',
+      'injury (sustantivo) · injured (adjetivo): a serious injury · Three people were injured.',
     ],
   },
   // B2-01 · Catching Up (data/b2CatchingUp.ts)
