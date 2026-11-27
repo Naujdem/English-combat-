@@ -47,6 +47,7 @@ import { isB2WindowScene } from '../game/b2Window'
 import { Unheard } from '../components/Unheard'
 import { B2_03_CLOSE, B2_03_EXITED, B2_03_SCHOOL_ID, B2_LEO_ADULT_LOOK } from '../data/b2Frozen'
 import { WindowExit } from '../components/WindowFrame'
+import { B2_06_CLOSE, B2_06_EXITED, B2_06_LAB_ID } from '../data/b2Lab'
 import { MemoriesTab } from '../components/MemoriesTab'
 import { Inscriptions } from '../components/Inscriptions'
 import { B1_DEMO_TABLET } from '../data/b1TabletDemo'
@@ -861,7 +862,7 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
                   })()
                 return (
                   <g key={key} transform={`translate(${e.x * T} ${e.y * T})`}>
-                    {e.id === 'b1-13-student' ? <SpriteBody look={heroLook(state)} /> : e.id === 'b2-03-adult' ? <SpriteBody look={heroLook(state, { accessory: 'glasses' })} /> : e.id === 'b2-03-teacher' ? <SpriteBody look={B2_LEO_ADULT_LOOK} /> : e.id === 'b2-03-board' || e.id === 'b2-03-poster' || e.id === 'b2-03-panel' ? <TabletIcon lit={pending} /> : e.id === 'b2-03-notebook' || e.id === 'b2-06-brochures' ? <NotebookIcon lit={pending} /> : e.id === 'b2-06-motto' || e.id === 'b2-06-clippings' || e.id === 'b2-06-charts' ? <TabletIcon lit={pending} /> : e.id === 'b2-06-memo-npc' ? <NotebookIcon lit={pending} /> : e.id === 'b2-06-archive' ? <ToolboxIcon lit={pending} /> : e.id === 'b1-11-alarm' || e.id === 'b1-11-exit' || e.id === 'b1-13-window' ? <g /> : e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS || e.id === B1_07_TV || e.id === 'b1-14-tv' || e.id === 'b1-s2-tv' || e.id === 'b1-09-wall' || e.id === 'b1-09-time-wall' || e.id === 'b1-11-wall' || e.id === 'b1-11-roads-wall' || e.id === 'b1-13-wall' || e.id === B1_07_CRACK || e.id === B1_07_ESCAPE_NPC ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_07_NOTEBOOK || e.id === 'b1-09-notebook' || e.id === 'b1-11-notebook' || e.id === 'b1-11-page43' || e.id === 'b1-11-page44' || e.id === 'b1-13-notebook' || e.id === 'b1-13-notebook2' || e.id === 'b1-13-page63' || e.id === 'b1-13-journal' || e.id === 'b1-13-bench' || e.id === B1_05_ENVELOPE || e.id === B1_06_BOARD || e.id === B1_06_DESK || e.id === 'b1-06-orders' || e.id === 'b1-08-predict-board' || e.id === 'b1-08-return' || e.id === 'b1-12-album' || e.id === 'b1-s2-board' ? <NotebookIcon lit={pending} /> : B1_06_DOG_NPCS[e.id] ? <ShelterDog who={B1_06_DOG_NPCS[e.id]} /> : e.id === B1_04_MOSCU || e.id === 'b1-s2-moscu' || e.id === 'b2-01-moscu' ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX || e.id === B1_07_DEVICE || e.id === B1_07_DEVICE_ROOM || e.id === 'b1-09-stone' || e.id === 'b1-09-clock' || e.id === 'b1-13-camp-clock' || e.id === 'b1-11-clock' || e.id === 'b1-11-stone' ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
+                    {e.id === 'b1-13-student' ? <SpriteBody look={heroLook(state)} /> : e.id === 'b2-03-adult' ? <SpriteBody look={heroLook(state, { accessory: 'glasses' })} /> : e.id === 'b2-03-teacher' ? <SpriteBody look={B2_LEO_ADULT_LOOK} /> : e.id === 'b2-03-board' || e.id === 'b2-03-poster' || e.id === 'b2-03-panel' ? <TabletIcon lit={pending} /> : e.id === 'b2-03-notebook' || e.id === 'b2-06-brochures' ? <NotebookIcon lit={pending} /> : e.id === 'b2-06-motto' || e.id === 'b2-06-clippings' || e.id === 'b2-06-charts' || e.id === 'b2-06-screen' ? <TabletIcon lit={pending} /> : e.id === 'b2-06-memo-npc' ? <NotebookIcon lit={pending} /> : e.id === 'b2-06-archive' ? <ToolboxIcon lit={pending} /> : e.id === 'b1-11-alarm' || e.id === 'b1-11-exit' || e.id === 'b1-13-window' ? <g /> : e.id === B1_PHONE || e.id === B1_LEO_PHONE || e.id === B1_03_PHONE ? <PhoneIcon ringing={pending} /> : e.id === B1_DEMO_TABLET || e.id === B1_05_PAPERS || e.id === B1_07_TV || e.id === 'b1-14-tv' || e.id === 'b1-s2-tv' || e.id === 'b1-09-wall' || e.id === 'b1-09-time-wall' || e.id === 'b1-11-wall' || e.id === 'b1-11-roads-wall' || e.id === 'b1-13-wall' || e.id === B1_07_CRACK || e.id === B1_07_ESCAPE_NPC ? <TabletIcon lit={pending} /> : e.id === B1_03_NOTEBOOK || e.id === B1_05_NOTEBOOK || e.id === B1_07_NOTEBOOK || e.id === 'b1-09-notebook' || e.id === 'b1-11-notebook' || e.id === 'b1-11-page43' || e.id === 'b1-11-page44' || e.id === 'b1-13-notebook' || e.id === 'b1-13-notebook2' || e.id === 'b1-13-page63' || e.id === 'b1-13-journal' || e.id === 'b1-13-bench' || e.id === B1_05_ENVELOPE || e.id === B1_06_BOARD || e.id === B1_06_DESK || e.id === 'b1-06-orders' || e.id === 'b1-08-predict-board' || e.id === 'b1-08-return' || e.id === 'b1-12-album' || e.id === 'b1-s2-board' ? <NotebookIcon lit={pending} /> : B1_06_DOG_NPCS[e.id] ? <ShelterDog who={B1_06_DOG_NPCS[e.id]} /> : e.id === B1_04_MOSCU || e.id === 'b1-s2-moscu' || e.id === 'b2-01-moscu' ? <AnimalSprite kind="cat" /> : e.id === B1_04_TOOLBOX || e.id === B1_05_BOXES || e.id === B1_05_BOX || e.id === B1_07_DEVICE || e.id === B1_07_DEVICE_ROOM || e.id === 'b1-09-stone' || e.id === 'b1-09-clock' || e.id === 'b1-13-camp-clock' || e.id === 'b1-11-clock' || e.id === 'b1-11-stone' ? <ToolboxIcon lit={pending} /> : inMemory ? <BlurFace look={npcOf(e.id).look} /> : <SpriteBody look={npcOf(e.id).look} />}
                     {pending && (
                       <g className="anim-bob">
                         <circle cx="26" cy="2" r="5.5" fill="#e0a526" />
@@ -1424,6 +1425,17 @@ export function Explore({ state, update, onBattle, onWorld }: { state: GameState
             update((s) => (s.opened.includes(B1_12_FRAGMENTS) ? s : { ...s, opened: [...s.opened, B1_12_FRAGMENTS] }))
             onWorld()
           }}
+        />
+      )}
+      {/* B2-06 · cierre: fundido azul y vuelta al presente; se vuelve al mapa con el lugar 7 abierto */}
+      {scene.id === B2_06_LAB_ID && state.opened.includes(B2_06_CLOSE) && !state.opened.includes(B2_06_EXITED) && !task && !outro && !msg && (
+        <WindowExit
+          onDone={() =>
+            update((s) => {
+              const back = s.b2Window?.returnTo ?? { sceneId: 'b2-05-port', pos: { x: 12, y: 3 } }
+              return { ...s, sceneId: back.sceneId, pos: { ...back.pos }, b2Window: undefined, opened: s.opened.includes(B2_06_EXITED) ? s.opened : [...s.opened, B2_06_EXITED], screen: 'world' }
+            })
+          }
         />
       )}
       {/* B2-03 · cierre: fundido azul y vuelta al presente (al último lugar donde estabas); se vuelve al mapa con el lugar 4 abierto */}

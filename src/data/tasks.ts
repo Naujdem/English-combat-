@@ -86,7 +86,7 @@ import { B2_04_FRAUD_IDS, B2_04_MODALS_IDS, B2_04_NEEDNT_IDS, B2_04_SECURITY_IDS
 import { B2_05_ARRIVAL_SCRIPT, B2_05_CAPTAIN_SCRIPT, B2_05_FACT_CHECK, B2_05_TOMAS_SCRIPT, B2_05_ZOE_SCRIPT, B2_05_APOLOGY_SCRIPT, B2_05_VOCALIS } from './b2VoiceBlackouts'
 import { B2_S1_CLOSE_SCRIPT, B2_S1_MENU_PLAN, B2_S1_POST_SCRIPT } from './b2FusionNight'
 import { B2_S1_WORDS_IDS } from './questions-b2-s1'
-import { B2_06_ARRIVAL_SCRIPT, B2_06_FINDING_SCRIPT, B2_06_UNHEARD_ROOM } from './b2Lab'
+import { B2_06_ARRIVAL_SCRIPT, B2_06_CLOSE_SCRIPT, B2_06_FINDING_SCRIPT, B2_06_UNHEARD_ROOM } from './b2Lab'
 import { B2_06_CAUSATIVE_IDS, B2_06_PASSIVE_IDS, B2_06_TRENDS_IDS, B2_06_WORDS_IDS } from './questions-b2-06'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
@@ -7730,5 +7730,24 @@ NPC_TASKS['b2-06-finding'] = {
     text: 'Trial 7: voice restored. The donor lost theirs.',
     es: 'Prueba 7: voz recuperada. El donante perdió la suya.',
     sub: 'Vocalis lo sabe y lo esconde. Suenan los drones de seguridad… y el prototipo de la mesa se enciende solo.',
+  },
+}
+
+// ── B2-06 · The Lab, bloque 3 ──
+// Cierre con la pantalla final (script). done = b2CloseId(6) = 'b2-06-close': abre el lugar 7. Las Ventanas no sueltan fragmentos.
+// Después del mensaje, Explore muestra WindowExit (fundido azul) y el protagonista vuelve al presente
+NPC_TASKS['b2-06-close'] = {
+  npc: 'b2-06-screen',
+  done: 'b2-06-close',
+  activity: 'script',
+  script: B2_06_CLOSE_SCRIPT,
+  recover: ['wordform-b2', 'passive-report-b2', 'trends-b2', 'causative-b2'],
+  coins: 15,
+  steps: [],
+  reward: {
+    text: 'Vocalis knew. They knew someone had to lose a voice.',
+    es: 'Vocalis lo sabía. Sabían que alguien tenía que perder la voz.',
+    sub: 'Misión 6: The Lab. Se abrió el lugar 7 en el mapa.',
+    say: 'Vocalis knew. They knew someone had to lose a voice.',
   },
 }

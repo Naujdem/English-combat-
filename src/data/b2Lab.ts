@@ -13,6 +13,9 @@ import type { TextCommandRoom } from '../components/TextCommand'
  * Bloque 2: las gráficas de la sala de datos: lección 'trends-b2' + práctica (b2-06-trends) → el memo interno: lección
  *   'causative-b2' + práctica (b2-06-memo; abre la sala de pruebas) → el hallazgo con el Dr. Mensah y la Dra. Sato
  *   (b2-06-finding, script: el informe de la prueba 7) → dos Lab Drones (esbirros) → el jefe The Prototype (2 fases).
+ * Bloque 3: al vencer a The Prototype se enciende la pantalla final (b2-06-screen): el cierre (b2-06-close, script) con el
+ *   mapa de los tres templos de B1 recupera los temas → Explore muestra WindowExit (fundido azul) y vuelves al presente
+ *   (B2_06_EXITED); se abre el lugar 7. Diario: data/b2Diary.ts (sin página de G). Las Ventanas no dan atuendos.
  */
 export const B2_06_LAB_ID = 'b2-06-lab'
 export const B2_06_MOTTO = 'b2-06-motto'
@@ -35,6 +38,11 @@ export const B2_06_FINDING = 'b2-06-finding'
 export const B2_06_DRONE1 = 'b2-06-drone1'
 export const B2_06_DRONE2 = 'b2-06-drone2'
 export const B2_06_BOSS = 'b2-06-boss'
+/** Bloque 3 */
+export const B2_06_SCREEN = 'b2-06-screen'
+export const B2_06_CLOSE = 'b2-06-close'
+/** Se guarda al salir de la Ventana (después del fundido azul) */
+export const B2_06_EXITED = 'b2-06-exited'
 
 /**
  * Leyenda: # pared · i pantalla en la pared · q pared de vidrio · d puerta · C mostrador · O asiento · M escritorio
@@ -83,6 +91,8 @@ export const B2_06_LAB: SceneDef = {
     { type: 'enemy', id: B2_06_DRONE1, x: 8, y: 10, after: B2_06_FINDING },
     { type: 'enemy', id: B2_06_DRONE2, x: 13, y: 10, after: B2_06_DRONE1 },
     { type: 'enemy', id: B2_06_BOSS, x: 11, y: 8, after: B2_06_DRONE2 },
+    // Bloque 3: la pantalla final (aparece al vencer a The Prototype)
+    { type: 'npc', id: B2_06_SCREEN, x: 13, y: 8 },
   ],
   labels: [
     { text: 'Recepción', x: 3, y: 5 },
@@ -114,6 +124,7 @@ export const B2_06_LAB: SceneDef = {
     { label: 'La prueba 7', done: s.opened.includes(B2_06_FINDING) },
     { label: 'Lab Drones (2)', done: s.defeated.includes(B2_06_DRONE2) },
     { label: 'The Prototype', done: s.defeated.includes(B2_06_BOSS) },
+    { label: 'La pantalla final', done: s.opened.includes(B2_06_CLOSE) },
   ],
   intro: {
     first: '2062. The Vocalis lab, late at night. — 2062. El laboratorio de Vocalis, tarde en la noche. Aquí nadie te oye.',
@@ -253,3 +264,14 @@ export const B2_06_ENEMIES: Record<string, EnemyDef> = {
   [B2_06_DRONE2]: DRONE(B2_06_DRONE2, { text: 'It is believed that be old… Unable… unsafe… inable…', es: 'It is believed that be old e inable: mal.' }),
   [B2_06_BOSS]: B2_06_BOSS_DEF,
 }
+
+// ── Bloque 3 ──
+
+/** El cierre: la pantalla final con el mapa de los tres templos de B1, el fundido azul y la nota del protagonista */
+export const B2_06_CLOSE_SCRIPT: ScriptLine[] = [
+  { who: 'narrator', text: '(The Prototype is silent. On the wall, a big screen turns on by itself: "Project Voice — Sources".)', es: '(The Prototype está en silencio. En la pared, una pantalla grande se enciende sola: "Proyecto Voz — Fuentes".)' },
+  { who: 'narrator', text: '(A map. Three temples are marked in red: Stones, Time and Echoes.)', es: '(Un mapa. Hay tres templos marcados en rojo: Stones, Time y Echoes.)' },
+  { who: 'narrator', text: '(You know those names. You have walked through those temples… in G\'s memories.)', es: '(Conoces esos nombres. Caminaste por esos templos… en los recuerdos de G.)' },
+  { who: 'narrator', text: '(Dr. Mensah looks at the screen for a long time. Then he looks at the report of Trial 7, and puts it in his bag.)', es: '(El Dr. Mensah mira la pantalla un largo rato. Luego mira el informe de la prueba 7 y lo guarda en su maletín.)' },
+  { who: 'narrator', text: '(The blue light grows around you. The lab fades.)', es: '(La luz azul crece a tu alrededor. El laboratorio se desvanece.)' },
+]
