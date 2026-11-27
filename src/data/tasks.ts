@@ -78,6 +78,8 @@ import { B1_07_CLOSE_SCRIPT } from './b1Room'
 import { B2_01_BREAKFAST_SCRIPT, B2_01_GROUP_CHAT, B2_01_JEISON_SCRIPT, B2_01_MARISOL_SCRIPT, B2_01_NAYI_SCRIPT } from './b2CatchingUp'
 import { B2_01_CATCHUP_IDS, B2_01_PPCONT_IDS, B2_01_REACTIONS_IDS } from './questions-b2-01'
 import type { FactCheckContent } from '../components/FactCheck'
+import { B2_03_ADULT_SCRIPT, B2_03_CLASS_SCRIPT, B2_03_HELLO_SCRIPT } from './b2Frozen'
+import { B2_03_DIARY_IDS, B2_03_FEELINGS_IDS, B2_03_SENSES_IDS } from './questions-b2-03'
 import { B2_02_ARRIVAL_SCRIPT, B2_02_VIKTOR_BACK_SCRIPT, B2_02_FACT_CHECK, B2_02_INTERVIEW_ENDINGS, B2_02_INTERVIEW_TURNS, B2_02_STYLE_GUIDE } from './b2Herald'
 import { B2_02_INTERVIEW_IDS, B2_02_MEETING_IDS, B2_02_PATTERNS_IDS, B2_02_PPC_IDS, B2_02_STYLE_IDS } from './questions-b2-02'
 
@@ -175,6 +177,8 @@ export type NpcTask = {
   lessonSteps?: LessonStep[]
   /** B1 (recuerdos 3, 5 y 7): la lección es una página del Cuaderno de L con ese número (components/LNotebook.tsx) */
   notebookPage?: number
+  /** B2 (Ventanas): la lección y la práctica las guía lo que hay en el lugar (la pizarra, un cartel, un cuaderno), sin voz propia */
+  placeGuide?: { name: string; icon: string }
   /** Para activity 'script' (B1, recuerdos): secuencia fija sin elecciones (MemoryScript); 'friend' = el personaje de la tarea */
   script?: ScriptLine[]
   /** Para activity 'textonly' (B1-03, Text Only): los chats en el teléfono de L. Los steps de la tarea los narra L antes */
@@ -7019,5 +7023,98 @@ NPC_TASKS['b2-02-close'] = {
     es: 'Misión 2: The Herald',
     sub: 'Ganaste la credencial de prensa. El primer segmento del núcleo se llenó. Se abrió la Ventana 3 (2061).',
     say: 'The Herald.',
+  },
+}
+
+// ── B2-03 · Frozen, bloque 1 (Ventana 2061, la escuela nocturna, data/b2Frozen.ts). Nadie te oye. NO guarda el cierre ──
+// La estudiante: intentas saludar y no sale ningún sonido (script)
+NPC_TASKS['b2-03-hello'] = {
+  npc: 'b2-03-student',
+  done: 'b2-03-hello',
+  activity: 'script',
+  script: B2_03_HELLO_SCRIPT,
+  steps: [],
+  reward: { text: '(Nobody can hear you here.)', es: '(Aquí nadie te oye.)', sub: 'El profesor está frente a la pizarra.' },
+}
+
+// El profesor (Leo adulto, en sombra) termina la clase (script)
+NPC_TASKS['b2-03-class'] = {
+  npc: 'b2-03-teacher',
+  done: 'b2-03-class',
+  activity: 'script',
+  script: B2_03_CLASS_SCRIPT,
+  requires: { id: 'b2-03-hello', text: '(The teacher is talking to the class.)', es: '(El profesor le habla a la clase.)', sub: 'Primero mira a tu alrededor: hay una estudiante al fondo del aula.' },
+  steps: [],
+  reward: { text: 'Read the board again before you go home.', es: 'Lean otra vez la pizarra antes de irse a casa.', sub: 'Lee la pizarra.', say: 'Read the board again before you go home.' },
+}
+
+// La pizarra: lección 'senses-b2' (la guía la pizarra) + práctica b2-03-sn1…sn6. 5 monedas
+NPC_TASKS['b2-03-senses'] = {
+  npc: 'b2-03-board',
+  done: 'b2-03-senses',
+  lesson: 'senses-b2',
+  placeGuide: { name: 'La pizarra', icon: '✎' },
+  activity: 'practice',
+  practice: 'senses-b2',
+  practiceIds: B2_03_SENSES_IDS,
+  coins: 5,
+  requires: { id: 'b2-03-class', text: 'The board is full of words.', es: 'La pizarra está llena de palabras.', sub: 'Primero escucha al profesor.' },
+  steps: [],
+  reward: {
+    text: 'I heard someone scream. I heard someone screaming.',
+    es: 'Oí a alguien gritar. Oí a alguien que gritaba.',
+    sub: 'Pizarra leída. Alguien espera en el pasillo, junto a la puerta del aula.',
+    say: 'I heard someone scream.',
+  },
+}
+
+// Tu yo adulto, junto a la puerta del aula (script)
+NPC_TASKS['b2-03-adult'] = {
+  npc: 'b2-03-adult',
+  done: 'b2-03-adult',
+  activity: 'script',
+  script: B2_03_ADULT_SCRIPT,
+  requires: { id: 'b2-03-senses', text: '(Someone is waiting in the corridor.)', es: '(Alguien espera en el pasillo.)', sub: 'Primero lee la pizarra del aula.' },
+  steps: [],
+  reward: { text: 'How are you REALLY feeling?', es: '¿Cómo te sientes DE VERDAD?', sub: 'Lee el cartel del pasillo.', say: 'How are you really feeling?' },
+}
+
+// El cartel de bienestar: lección 'feelings-b2' + práctica b2-03-fe1…fe6. 5 monedas
+NPC_TASKS['b2-03-feelings'] = {
+  npc: 'b2-03-poster',
+  done: 'b2-03-feelings',
+  lesson: 'feelings-b2',
+  placeGuide: { name: 'El cartel de bienestar', icon: '♡' },
+  activity: 'practice',
+  practice: 'feelings-b2',
+  practiceIds: B2_03_FEELINGS_IDS,
+  coins: 5,
+  requires: { id: 'b2-03-adult', text: 'A poster: "How are you REALLY feeling?"', es: 'Un cartel: "¿Cómo te sientes DE VERDAD?"', sub: 'Primero mira quién espera junto a la puerta del aula.' },
+  steps: [],
+  reward: {
+    text: "I'm exhausted. It's exhausting.",
+    es: 'Estoy agotado. Es agotador.',
+    sub: 'Cartel leído. En la banca hay un cuaderno olvidado.',
+    say: "I'm exhausted. It's exhausting.",
+  },
+}
+
+// El cuaderno olvidado del protagonista adulto: lección 'diary-b2' + práctica b2-03-di1…di6. 5 monedas
+NPC_TASKS['b2-03-diary'] = {
+  npc: 'b2-03-notebook',
+  done: 'b2-03-diary',
+  lesson: 'diary-b2',
+  placeGuide: { name: 'El cuaderno olvidado', icon: '✎' },
+  activity: 'practice',
+  practice: 'diary-b2',
+  practiceIds: B2_03_DIARY_IDS,
+  coins: 5,
+  requires: { id: 'b2-03-feelings', text: 'A notebook on the bench.', es: 'Un cuaderno en la banca.', sub: 'Primero lee el cartel del pasillo.' },
+  steps: [],
+  reward: {
+    text: 'Sometimes I feel as if I\'m always holding back.',
+    es: 'A veces siento como si siempre me estuviera conteniendo.',
+    sub: 'Bloque 1 terminado. (La alarma, Unheard y el jefe Panic llegan en el bloque 2.)',
+    say: 'Sometimes I feel as if I\'m always holding back.',
   },
 }

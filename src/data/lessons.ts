@@ -1129,6 +1129,40 @@ export const LESSONS: Partial<Record<TopicId, LessonStep[]>> = {
     { who: 'board', text: "Frase negativa → tag positivo: You don't eat meat, do you? · She didn't call, did she? · We won't be late, will we?", topic: 'party-b1' },
     { who: 'board', text: "You didn't invite Mr. Fine Print, ___ you?", choice: { options: ["didn't", 'do', 'did'], answer: 2, tip: 'Frase negativa en pasado → tag positivo: did you?' } },
   ],
+  // B2-03 · bloque 1 (Ventana 2061, la escuela nocturna, data/b2Frozen.ts): la pizarra de la clase del profesor (Murphy 67 y 118)
+  'senses-b2': [
+    { who: 'narrator', text: "Tonight's lesson: verbs of the senses. See, hear, watch, feel, smell, notice.", es: 'La lección de esta noche: verbos de los sentidos. See, hear, watch, feel, smell, notice.', board: ['Verbs of the senses', 'see · hear · watch · feel · smell · notice'] },
+    { who: 'narrator', text: 'Sense verb + object + base form: you hear or see the whole action. "I heard someone scream."', es: 'Verbo de los sentidos + objeto + forma base: oyes o ves la acción completa. "Oí a alguien gritar".', board: ['+ base form / + -ing', 'I heard someone scream. · I heard someone screaming.'] },
+    { who: 'narrator', text: 'Sense verb + object + -ing: you hear or see part of the action, while it is happening. "I heard someone screaming."', es: 'Verbo de los sentidos + objeto + -ing: oyes o ves una parte de la acción, mientras ocurre. "Oí a alguien que gritaba".' },
+    { who: 'narrator', text: 'Never put "to" after these verbs. "I saw him run." Never "I saw him to run".', es: 'Nunca pongas "to" después de estos verbos. "Lo vi correr". Nunca "I saw him to run".' },
+    { who: 'board', text: 'We heard someone ___ for help.', choice: { options: ['to call', 'calling', 'called'], answer: 1, tip: 'hear + alguien + -ing (o forma base), nunca to.' } },
+    { who: 'narrator', text: 'Like + a noun: "It sounds like rain." "He looks like his father."', es: 'Like + un sustantivo: "Suena como lluvia". "Se parece a su padre".', board: ['like / as if', 'It sounds like rain. · You look as if you haven\'t slept.'] },
+    { who: 'narrator', text: 'As if + a full sentence: "You look as if you haven\'t slept."', es: 'As if + una oración completa: "Tienes cara de no haber dormido".' },
+    { who: 'narrator', text: 'In a story in the past, the sentence goes back too: "He looked as if he was tired." For something unreal we often use were: "He looked as if he were made of stone."', es: 'En una historia en pasado, la oración también va en pasado: "Parecía cansado". Para algo irreal se usa a menudo were: "Parecía hecho de piedra".' },
+    { who: 'board', text: 'It sounds ___ rain.', choice: { options: ['as if', 'like', 'as'], answer: 1, tip: 'like + sustantivo (rain).' } },
+  ],
+  // B2-03 · bloque 1: el cartel de bienestar del pasillo, "How are you REALLY feeling?" (Busuu 10, Murphy 98)
+  'feelings-b2': [
+    { who: 'narrator', text: 'How are you really feeling? Sometimes "fine" is not the whole answer.', es: '¿Cómo te sientes de verdad? A veces "bien" no es toda la respuesta.', board: ['Complex feelings', 'overwhelmed · anxious · ashamed · numb · relieved'] },
+    { who: 'narrator', text: 'Overwhelmed: too much at the same time. Anxious: worried and nervous about what might happen.', es: 'Overwhelmed (abrumado): demasiado al mismo tiempo. Anxious (ansioso): preocupado y nervioso por lo que pueda pasar.' },
+    { who: 'narrator', text: 'Ashamed: you feel bad about something you did. Numb: you feel nothing at all. Relieved: a worry has gone.', es: 'Ashamed (avergonzado): te sientes mal por algo que hiciste. Numb (insensible): no sientes nada. Relieved (aliviado): una preocupación se fue.' },
+    { who: 'narrator', text: 'Each feeling has a noun. "I feel anxious" → "Anxiety is common." "I felt guilty" → "The guilt stayed with me."', es: 'Cada sentimiento tiene un sustantivo. "Me siento ansioso" → "La ansiedad es común". "Me sentí culpable" → "La culpa se quedó conmigo".', board: ['Adjective → noun', 'anxious → anxiety · ashamed → shame · relieved → relief · guilty → guilt'] },
+    { who: 'narrator', text: 'Don\'t mix them: "I felt very anxious" or "I felt a lot of anxiety". Never "a lot of anxious".', es: 'No los mezcles: "I felt very anxious" o "I felt a lot of anxiety". Nunca "a lot of anxious".' },
+    { who: 'narrator', text: '-ed is how a person feels. -ing is the thing that makes you feel it. "I\'m exhausted. This job is exhausting."', es: '-ed es cómo se siente una persona. -ing es lo que te hace sentir así. "Estoy agotado. Este trabajo es agotador".', board: ['-ed / -ing', "I'm exhausted. · It's exhausting."] },
+    { who: 'narrator', text: '"I\'m bored" means the class is boring. "I\'m boring" means people find you boring!', es: '"I\'m bored" quiere decir que la clase es aburrida. "I\'m boring" quiere decir que tú eres aburrido.' },
+    { who: 'board', text: "This class is so long. I'm really ___.", choice: { options: ['boring', 'bored', 'bore'], answer: 1, tip: 'Cómo se siente la persona → -ed: bored.' } },
+  ],
+  // B2-03 · bloque 1: el cuaderno olvidado del protagonista adulto (varios tiempos verbales, Busuu 10, y phrasal verbs)
+  'diary-b2': [
+    { who: 'narrator', text: '(A notebook on the bench. The handwriting is yours.)', es: '(Un cuaderno en la banca. La letra es la tuya.)', board: ['The notebook', 'Different tenses, one story'] },
+    { who: 'narrator', text: '"I\'ve been feeling tired lately." Present perfect continuous: it started in the past and it is still going on.', es: '"Últimamente me he sentido cansado". Present perfect continuous: empezó en el pasado y sigue ahora.' },
+    { who: 'narrator', text: '"I used to speak up more." Used to: a habit in the past that is not true now.', es: '"Antes hablaba más". Used to: una costumbre del pasado que ya no es así.' },
+    { who: 'narrator', text: '"Sometimes I feel as if I\'m always holding back." As if + present: how it seems now.', es: '"A veces siento como si siempre me estuviera conteniendo". As if + presente: cómo parece ahora.' },
+    { who: 'narrator', text: 'Hold back: not say or do what you want. Speak up: say what you think, or speak louder.', es: 'Hold back: no decir o no hacer lo que quieres. Speak up: decir lo que piensas, o hablar más fuerte.', board: ['Phrasal verbs', 'hold back · speak up · freeze up · calm down'] },
+    { who: 'narrator', text: 'Freeze up: suddenly you can\'t move or speak, because of fear. Calm down: become calm again.', es: 'Freeze up: de repente no puedes moverte ni hablar, por el miedo. Calm down: volver a la calma.' },
+    { who: 'narrator', text: '"When people shout, I freeze up. Then I tell myself to calm down." It is not a choice. It happens to many people.', es: '"Cuando la gente grita, me congelo. Luego me digo que me calme". No es una decisión. Le pasa a mucha gente.' },
+    { who: 'board', text: 'I used to ___ up more in class.', choice: { options: ['speak', 'spoke', 'speaking'], answer: 0, tip: 'used to + verbo en forma base.' } },
+  ],
   // B2-02 · bloque 1 (la redacción del Herald, data/b2Herald.ts): Manuel, past perfect continuous
   'ppc-b2': [
     { who: 'manuel', text: 'In an interview you tell your story. Sometimes you need an activity that continued up to a moment in the past.', es: 'En una entrevista cuentas tu historia. A veces necesitas una actividad que continuó hasta un momento del pasado.' },

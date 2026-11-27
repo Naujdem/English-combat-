@@ -958,6 +958,7 @@ PRESETS.push(
   { id: 'b2-02', label: 'B2-02: la redacción del Herald (bloque 1)', apply: (s) => ({ ...b2Start(s, ['b2-00-opening', b2Close(1)]), screen: 'explore' as const, sceneId: 'b2-02-herald', pos: { x: 5, y: 3 } }) },
   { id: 'b2-02-b2', label: 'B2-02: bloque 2 (entrevista, Fact Check y jefe)', apply: (s) => ({ ...b2Start(s, ['b2-00-opening', b2Close(1), 'b2-02-arrival', 'b2-02-ppc', 'b2-02-interview-prep']), screen: 'explore' as const, sceneId: 'b2-02-herald', pos: { x: 5, y: 3 } }) },
   { id: 'b2-02-b3', label: 'B2-02: bloque 3 (The Deadline vencido: Viktor y cierre)', apply: (s) => { const b = b2Start(s, ['b2-00-opening', b2Close(1), 'b2-02-arrival', 'b2-02-ppc', 'b2-02-interview-prep', 'b2-02-interview', 'b2-02-style', 'b2-02-styleguide', 'b2-02-meeting', 'b2-02-patterns', 'b2-02-factcheck']); return { ...b, defeated: add(b.defeated, ['b2-02-intern1', 'b2-02-intern2', 'b2-02-boss']), screen: 'explore' as const, sceneId: 'b2-02-herald', pos: { x: 5, y: 3 } } } },
+  { id: 'b2-03', label: 'B2-03: Ventana 2061, la escuela nocturna (bloque 1)', apply: (s) => ({ ...b2Start(s, ['b2-00-opening', b2Close(1), b2Close(2)]), b2Window: { n: 3, year: 2061, returnTo: { sceneId: 'b2-02-herald', pos: { x: 5, y: 3 } }, phase: 'in' as const }, screen: 'explore' as const, sceneId: 'b2-03-school', pos: { x: 3, y: 4 } }) },
   { id: 'b2-core', label: 'B2: núcleo a medio llenar (lugares 1 a 4 cerrados)', apply: (s) => b2Start(s, ['b2-00-opening', b2Close(1), b2Close(2), b2Close(3), b2Close(4)]) },
 )
 

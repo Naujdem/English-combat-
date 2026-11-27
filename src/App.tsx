@@ -18,6 +18,8 @@ import { newCard } from './game/cards'
 import { MemoryFrame } from './components/MemoryFrame'
 import { MemoryTransitions } from './components/MemoryTransitions'
 import { isMemoryScene } from './game/memory'
+import { isB2WindowScene } from './game/b2Window'
+import { WindowFrame } from './components/WindowFrame'
 
 /** Epílogo de la torre de 2056 (final de A1) y primera escena de A2 */
 const A1_FINAL_EPILOGUE = 'office-future-epilogue'
@@ -194,6 +196,19 @@ export default function App() {
       >
         {screen}
       </MemoryFrame>
+    )
+  }
+
+  // B2: las escenas de Ventana se ven con el filtro azul (exploración y combate)
+  if ((state.screen === 'explore' || state.screen === 'battle') && isB2WindowScene(state.sceneId)) {
+    screen = (
+      <WindowFrame
+        year={state.b2Window?.year ?? 2061}
+        entering={state.b2Window?.phase === 'in'}
+        onEntered={() => update((s) => (s.b2Window?.phase === 'in' ? { ...s, b2Window: { ...s.b2Window, phase: undefined } } : s))}
+      >
+        {screen}
+      </WindowFrame>
     )
   }
 

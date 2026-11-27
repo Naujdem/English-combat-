@@ -102,7 +102,7 @@ export function Lesson({
   /** B1 (recuerdos 3, 5 y 7): la lección es una página del Cuaderno de L con ese número (components/LNotebook.tsx) */
   notebook?: number
   /** B1: el personaje de la tarea, si la lección no trae pasos de un guía propio (Leo solo si no hay nadie más) */
-  defaultGuide?: { name: string; look: SpriteLook; voice: Voice }
+  defaultGuide?: { name: string; look: SpriteLook; voice: Voice; /** B2 (Ventanas): guía un objeto del lugar; no se dibuja ningún personaje y lo lee la voz neutral */ place?: boolean }
 }) {
   // La muletilla de Leo: empieza cada lección con "Hi, hi!"
   const steps = useMemo(() => {
@@ -157,7 +157,8 @@ export function Lesson({
     : steps.some((x) => x.who === 'leo') || !defaultGuide
     ? { name: 'Leo', look: FRIENDS.leo.look, voice: 'male' as const }
     : defaultGuide
-  const talks = s.who === 'leo' || s.who === 'maya' || s.who === 'haddad' || s.who === 'nayi' || s.who === 'special' || s.who === 'einer' || s.who === 'manuel' || s.who === 'priya'
+  const place = 'place' in guide && !!guide.place
+  const talks = (place && s.who === 'narrator') || s.who === 'leo' || s.who === 'maya' || s.who === 'haddad' || s.who === 'nayi' || s.who === 'special' || s.who === 'einer' || s.who === 'manuel' || s.who === 'priya'
   const last = i === steps.length - 1
   const waiting = !!s.choice && !solved
   // La pizarra conserva lo último escrito si el paso actual no trae nada nuevo
@@ -247,11 +248,13 @@ export function Lesson({
           <g transform="translate(40 92) scale(3)">
             <SpriteBody look={heroLook(state)} mood={state.recovered.length ? 'normal' : 'mute'} />
           </g>
-          <g className="anim-appear">
-            <g transform="translate(280 92) scale(-3 3)">
-              <SpriteBody look={guide.look} />
+          {!place && (
+            <g className="anim-appear">
+              <g transform="translate(280 92) scale(-3 3)">
+                <SpriteBody look={guide.look} />
+              </g>
             </g>
-          </g>
+          )}
         </ClassroomStage>
       )}
 
