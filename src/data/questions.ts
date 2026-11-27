@@ -57,6 +57,7 @@ import { B2_02_COMBAT_QUESTIONS, B2_02_QUESTIONS } from './questions-b2-02'
 import { B2_03_COMBAT_QUESTIONS, B2_03_QUESTIONS } from './questions-b2-03'
 import { B2_04_COMBAT_QUESTIONS, B2_04_QUESTIONS } from './questions-b2-04'
 import { B2_05_COMBAT_QUESTIONS, B2_05_QUESTIONS } from './questions-b2-05'
+import { B2_06_QUESTIONS } from './questions-b2-06'
 import { B2_S1_QUESTIONS } from './questions-b2-s1'
 import { B1_EXTRA_QUESTIONS } from './questions-b1-extras'
 import { IRREGULAR_VERBS, MORE_IRREGULAR_PASTS } from './irregular'
@@ -452,6 +453,7 @@ export const QUESTIONS: Question[] = [
   ...B2_04_COMBAT_QUESTIONS,
   ...B2_05_QUESTIONS,
   ...B2_05_COMBAT_QUESTIONS,
+  ...B2_06_QUESTIONS,
   ...B2_S1_QUESTIONS,
   ...B2_02_COMBAT_QUESTIONS,
   ...B1_EXTRA_QUESTIONS,
@@ -717,6 +719,25 @@ export const TOPICS: Record<TopicId, { name: string; level: 'A1' | 'A2' | 'B1' |
       'Adjetivos compuestos: home-made · deep-fried · slow-cooked · well-done · sugar-free · mouth-watering.',
       'Sabor y textura: bland · spicy · tangy · rich · crunchy · chewy.',
       "It's worth + -ing: It's worth trying the arepa dumplings. (Nunca \"worth to try\".)",
+    ],
+  },
+  // B2-06 · The Lab (Ventana 2062, data/b2Lab.ts)
+  'wordform-b2': {
+    name: 'Formación de palabras (bienestar)',
+    level: 'B2',
+    lesson: [
+      'Verbo → sustantivo: restore → restoration · improve → improvement · treat → treatment.',
+      'Adjetivo → sustantivo: effective → effectiveness · aware → awareness · able → ability · well → wellbeing.',
+      'Prefijos: un- / in- = no (unable, unsafe, inexpensive) · re- = otra vez (rebuild, rewrite).',
+    ],
+  },
+  'passive-report-b2': {
+    name: 'Pasiva de reporte y be supposed to',
+    level: 'B2',
+    lesson: [
+      'It is said / believed / reported + that…: It is believed that the writings are 3,000 years old.',
+      'Persona + is said to + forma base (ahora) o to have + participio (antes): She is said to have found the key.',
+      'be supposed to: se dice que (It is supposed to restore voices) o se debería (You\'re supposed to wear a badge).',
     ],
   },
   // B2-05 · Voice Blackouts (data/b2VoiceBlackouts.ts)

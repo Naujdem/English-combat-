@@ -188,6 +188,35 @@ export const STONE_OBJECTS: Record<string, StoneObject> = {
       </g>
     ),
   },
+  // B2-06 · Unheard en el archivo de Vocalis: el cajón (se abre) y la pantalla de datos (se enciende)
+  drawer: {
+    names: ['archive drawer', 'drawer'],
+    es: 'el cajón del archivo',
+    draw: (a) => (
+      <g>
+        <rect x="10" y="14" width="44" height="44" fill="#9aa3ad" stroke="#4a525e" strokeWidth="2" />
+        <rect x="14" y="40" width="36" height="14" fill="#7d8794" stroke="#4a525e" strokeWidth="1.5" />
+        <g className="stone-move" style={{ transform: a ? 'translateY(8px) scale(1.08)' : 'none', transformOrigin: '50% 100%' }}>
+          <rect x="14" y="20" width="36" height="16" fill="#b8bec6" stroke="#4a525e" strokeWidth="1.5" />
+          <rect x="27" y="26" width="10" height="3" rx="1" fill="#4a525e" />
+          {a && <path className="stone-fade" d="M18 20 v-6 h6 v6 M26 20 v-8 h6 v8 M34 20 v-5 h6 v5" fill="#fff8dc" stroke="#7d6a4a" strokeWidth="1" />}
+        </g>
+      </g>
+    ),
+  },
+  screen: {
+    names: ['data screen', 'screen', 'monitor'],
+    es: 'la pantalla de datos',
+    draw: (a) => (
+      <g>
+        <rect x="6" y="10" width="52" height="34" rx="3" fill="#1c232c" stroke="#4a525e" strokeWidth="2" />
+        <rect x="10" y="14" width="44" height="26" fill={a ? '#0e2a44' : '#2a313c'} className="stone-fill" />
+        {a && <path className="stone-fade" d="M13 34 L22 30 L30 31 L38 22 L50 20" fill="none" stroke="#3fa9ff" strokeWidth="2" />}
+        <rect x="28" y="44" width="8" height="8" fill="#4a525e" />
+        <rect x="20" y="52" width="24" height="4" rx="1" fill="#4a525e" />
+      </g>
+    ),
+  },
   // B2 · Unheard (ficha 0.7): las escaleras traseras de la escuela nocturna. Al acertar, la nota queda pegada y brilla la flecha
   stairs: {
     names: ['back stairs', 'stairs', 'staircase'],
