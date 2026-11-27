@@ -614,4 +614,102 @@ export const B2_DIARY: DiaryChapter[] = [
       },
     ],
   },
+  // B2-12 · Countdown (Ventana 2056): página del protagonista, página del cuaderno de G (letra a mano) y página mezclada
+  {
+    id: 'b2-mission-12',
+    title: 'B2 · Misión 12: Countdown (Ventana 2056)',
+    unlock: 'b2-12-close',
+    words: [
+      { title: 'Metas y futuro', words: [['goal', 'meta'], ['ambition', 'ambición'], ['achieve', 'lograr'], ['fulfil', 'cumplir'], ['milestone', 'hito'], ['look back on', 'mirar atrás'], ['turn out', 'resultar']] },
+      { title: 'Tiempo', words: [['deadline', 'fecha límite'], ['countdown', 'cuenta regresiva'], ['by then', 'para entonces'], ['in time', 'a tiempo'], ['too late', 'demasiado tarde'], ['be about to', 'estar a punto de']] },
+      { title: 'By, until y by the time', words: [['by eight', 'a más tardar a las ocho'], ['until he comes', 'hasta que venga'], ['by the time he sees me', 'para cuando me vea']] },
+      { title: 'Phrasal verbs', words: [['carry out', 'llevar a cabo (un plan)'], ['give up on', 'darse por vencido con'], ['follow through', 'cumplir hasta el final'], ['take down', 'descolgar, quitar']] },
+    ],
+    versions: [
+      {
+        id: 'b2-mission-12-mine',
+        tense: 'p',
+        tab: 'Mi diario',
+        title: "G's room, 2056",
+        unlock: 'b2-12-close',
+        frame: 'Lo escribes al volver al presente, con el reloj todavía temblando.',
+        lines: [
+          { en: 'Tonight the Window [took]p me to a small room near the old port. G [wasn\'t]p there.', es: 'Esta noche la Ventana me llevó a un cuarto pequeño cerca del puerto viejo. G no estaba.' },
+          { en: 'On the wall there [was]p a plan: "By tomorrow morning, I will have arrived at his school."', es: 'En la pared había un plan: "Para mañana por la mañana, habré llegado a su escuela".' },
+          { en: 'I [tried]p to take it down, but it [didn\'t move]p. So I [left]p him a note: "Don\'t do it."', es: 'Intenté descolgarlo, pero no se movió. Así que le dejé una nota: "No lo hagas".' },
+          { en: 'He [read]p it… and [crumpled]p it. When I [came]p back, Leo [lost]p his voice for ten seconds.', es: 'La leyó… y la arrugó. Cuando volví, Leo perdió la voz durante diez segundos.' },
+          { en: 'I know where I have to go. The night of the fire.', es: 'Sé a dónde tengo que ir. La noche del incendio.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-12-g',
+        kind: 'L',
+        tense: 'mix',
+        tab: 'Cuaderno de G',
+        title: 'Tomorrow',
+        unlock: 'b2-12-close',
+        frame: 'La página de esta noche en el cuaderno de G. Letra temblorosa, pero rápida.',
+        lines: [
+          { en: 'By the time he [sees]n me, it [will be]f too late.', es: 'Para cuando me vea, será demasiado tarde.' },
+          { en: "I['ll wait]f until he['s]n alone. When I [take]n his voice, I['ll speak]f again.", es: 'Esperaré hasta que esté solo. Cuando le quite la voz, volveré a hablar.' },
+          { en: "~~Someone left a note~~ I [won't give]f up on my plan. I['m]n about to carry it out.", es: 'No me voy a dar por vencido con mi plan. Estoy a punto de llevarlo a cabo.' },
+          { en: "Tomorrow I['ll have]f my voice back. And he['ll have lost]f his.", es: 'Mañana tendré mi voz de vuelta. Y él habrá perdido la suya.' },
+        ],
+        questions: [],
+      },
+      {
+        id: 'b2-mission-12-mix',
+        tense: 'mix',
+        tab: 'Mezcla',
+        title: 'Thirty years',
+        unlock: 'b2-12-close',
+        frame: 'Todo lo que pasó en la Ventana, con los tiempos de colores. Activa "Ver verbos" para verlos.',
+        lines: [
+          { en: 'When G [was]p young, he [wrote]p a list of goals. By 30, he [had become]p a teacher.', es: 'Cuando G era joven, escribió una lista de metas. A los 30, ya se había vuelto profesor.' },
+          { en: 'Then his life [turned]p out very differently, and he [crossed]p out the rest of the list.', es: 'Luego su vida resultó muy distinta, y tachó el resto de la lista.' },
+          { en: 'Tomorrow he [will have been waiting]f for thirty years. He [is]n about to follow through with his plan.', es: 'Mañana llevará treinta años esperando. Está a punto de cumplir su plan hasta el final.' },
+          { en: 'By the time the core [is]n full, I [will have reached]f the night of the fire. I hope I [am]n in time.', es: 'Para cuando el núcleo esté lleno, habré llegado a la noche del incendio. Espero llegar a tiempo.' },
+        ],
+        questions: [
+          { q: 'What happened to G\'s list of goals?', options: ['He fulfilled all of it.', 'He crossed out the rest after "teacher".', 'He lost it at school.'], answer: 1, tip: 'El diario dice: "he crossed out the rest of the list".' },
+          { q: 'How long will G have been waiting by tomorrow?', options: ['Thirty years.', 'Three days.', 'Ten years.'], answer: 0, tip: 'El diario dice: "Tomorrow he will have been waiting for thirty years".' },
+          { q: 'What is G about to do?', options: ['Give up on his plan.', 'Write a new list.', 'Follow through with his plan.'], answer: 2, tip: 'El diario dice: "He is about to follow through with his plan".' },
+        ],
+      },
+    ],
+  },
+  // Lectura larga de B2 (opcional, unas 250 palabras con 5 preguntas). Se abre al cerrar la misión 12
+  {
+    id: 'b2-reading-3',
+    title: 'Lectura: Letters to my future self',
+    unlock: 'b2-12-close',
+    words: [
+      { title: 'Las cartas', words: [['future self', 'yo del futuro'], ['time capsule', 'cápsula del tiempo'], ['seal', 'sellar'], ['dream', 'sueño'], ['proud', 'orgulloso'], ['scholarship', 'beca']] },
+    ],
+    versions: [
+      {
+        id: 'b2-reading-3-text',
+        tense: 'mix',
+        tab: 'Lectura',
+        title: 'Letters to my future self',
+        unlock: 'b2-12-close',
+        frame: 'Tres cartas de estudiantes del intercambio de Lumen Bay, guardadas en una cápsula del tiempo. Es un texto largo: léelo con calma antes de responder.',
+        lines: [
+          { en: 'Every year, the students of the Lumen Bay exchange write a letter to themselves. The letters are sealed in a time capsule and opened twenty years later. Here are three of them.', es: 'Cada año, los estudiantes del intercambio de Lumen Bay se escriben una carta a sí mismos. Las cartas se sellan en una cápsula del tiempo y se abren veinte años después. Aquí van tres.' },
+          { en: 'Dear future Amara, by the time you read this, you will have finished medical school. I hope you will have been working as a doctor for at least ten years. Don\'t forget the girl who was scared of blood!', es: 'Querida Amara del futuro: para cuando leas esto, habrás terminado la carrera de medicina. Espero que lleves al menos diez años trabajando como médica. ¡No olvides a la niña que le tenía miedo a la sangre!' },
+          { en: 'Dear future Tomás, I don\'t know what you will have achieved. Maybe you will have become a famous musician, or maybe your life will have turned out completely differently. Either way, I hope you haven\'t given up on music. Play the guitar when you finish reading this.', es: 'Querido Tomás del futuro: no sé qué habrás logrado. Quizá te hayas vuelto un músico famoso, o quizá tu vida haya resultado completamente distinta. De cualquier forma, espero que no te hayas dado por vencido con la música. Toca la guitarra cuando termines de leer esto.' },
+          { en: 'Dear future Hana, I\'m about to leave home for the first time, and I\'m nervous. By the time you open this capsule, you will have lived in three countries — that\'s my plan, anyway. Please remember to call Mum more often.', es: 'Querida Hana del futuro: estoy a punto de irme de casa por primera vez, y estoy nerviosa. Para cuando abras esta cápsula, habrás vivido en tres países; ese es mi plan, al menos. Por favor, acuérdate de llamar más seguido a mamá.' },
+          { en: 'Not every goal will have been fulfilled, of course. But when the students look back on their letters, most of them say the same thing: the plan mattered less than the person who wrote it.', es: 'No todas las metas se habrán cumplido, claro. Pero cuando los estudiantes miran atrás y releen sus cartas, la mayoría dice lo mismo: el plan importaba menos que la persona que lo escribió.' },
+        ],
+        questions: [
+          { q: 'When are the letters opened?', options: ['The next year.', 'Twenty years later.', 'When the students finish school.'], answer: 1, tip: 'La lectura dice: "opened twenty years later".' },
+          { q: 'What does Amara hope?', options: ['That she will have been working as a doctor for ten years.', 'That she will have become a musician.', 'That she will have lived in three countries.'], answer: 0, tip: 'Amara escribe: "I hope you will have been working as a doctor for at least ten years".' },
+          { q: 'What does Tomás hope?', options: ['That he will be famous.', 'That he has stopped playing music.', "That he hasn't given up on music."], answer: 2, tip: 'Tomás escribe: "I hope you haven\'t given up on music".' },
+          { q: 'How does Hana feel when she writes the letter?', options: ['Bored.', 'Nervous.', 'Angry.'], answer: 1, tip: 'Hana escribe: "I\'m about to leave home for the first time, and I\'m nervous".' },
+          { q: 'What do most students say when they look back on their letters?', options: ['The person mattered more than the plan.', 'All their goals were fulfilled.', 'They forgot what they wrote.'], answer: 0, tip: 'La lectura dice: "the plan mattered less than the person who wrote it".' },
+        ],
+      },
+    ],
+  },
 ]

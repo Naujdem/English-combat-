@@ -92,7 +92,7 @@ import { B2_08_ARRIVAL_SCRIPT, B2_08_CLOSE_SCRIPT, B2_08_FINE_PRINT, B2_08_LAUNC
 import { B2_08_ACRONYMS_IDS, B2_08_COMPARE_IDS, B2_08_PERKS_IDS, B2_08_SURVEY_IDS } from './questions-b2-08'
 import { B2_05_PRESS_IDS, B2_05_VERBS_ING_IDS, B2_05_VERBS_TO_IDS } from './questions-b2-05'
 import { B2_11_ARRIVAL_SCRIPT, B2_11_CLOSE_STEPS, B2_11_PYJAMAS_STEPS, B2_11_REVIEW_GAME, B2_11_CONFESS_SCRIPT, B2_11_BOARD_ITEMS, B2_11_FACT_CHECK, B2_11_MOVIE_SCRIPT } from './b2WhoIsG'
-import { B2_12_ARRIVAL_SCRIPT, B2_12_PLANNER_CONTENT, B2_12_RETURN_SCRIPT, B2_12_UNHEARD_ROOM } from './b2Countdown'
+import { B2_12_ARRIVAL_SCRIPT, B2_12_CLOSE_SCRIPT, B2_12_PLANNER_CONTENT, B2_12_RETURN_SCRIPT, B2_12_UNHEARD_ROOM } from './b2Countdown'
 import { B2_12_GOALS_IDS, B2_12_NOTEBOOK_IDS, B2_12_PLAN_IDS } from './questions-b2-12'
 import { B2_11_FILM_IDS, B2_11_INDIRECT_IDS, B2_11_NARRATIVE_IDS } from './questions-b2-11'
 import { B2_09_ARRIVAL_SCRIPT, B2_09_ARTURO_SCRIPT, B2_09_DIGITAL_SCRIPT, B2_09_INSCRIPTIONS_ROOM, B2_09_STORY_SCRIPT, B2_09_TOUR_SCRIPT } from './b2Gallery'
@@ -8698,4 +8698,22 @@ NPC_TASKS['b2-12-timeline'] = {
   requires: { id: 'b2-12-notebook', text: 'G is writing on the wall.', es: 'G escribe en la pared.', sub: 'Primero lee el cuaderno de G.' },
   steps: [],
   reward: { text: 'Tick… tock…', es: 'Tic… tac…', sub: 'Los alfileres del mapa hacen tic-tac. ¡Unas sombras salen de la pared!', say: 'By 8 a.m., I will have left this room.' },
+}
+
+// ── B2-12 · Countdown, bloque 3: G arruga la nota y se va. done = b2CloseId(12) = 'b2-12-close'. Al guardarse, Explore
+// muestra WindowExit (fundido azul) y se vuelve al presente: el núcleo tiembla y se abre sola la Ventana 13 ──
+NPC_TASKS['b2-12-close'] = {
+  npc: 'b2-12-g-leaving',
+  done: 'b2-12-close',
+  activity: 'script',
+  script: B2_12_CLOSE_SCRIPT,
+  recover: ['fperfect-b2', 'goals-b2', 'time-clauses-b2'],
+  coins: 15,
+  steps: [],
+  reward: {
+    text: 'I know where I have to go. The night of the fire.',
+    es: 'Sé a dónde tengo que ir. La noche del incendio.',
+    sub: 'Misión 12: Countdown. La nota quedó en Mochila › Recuerdos y Ventanas. El núcleo tiembla: la Ventana 13 se abrió sola en el mapa.',
+    say: 'The night of the fire.',
+  },
 }

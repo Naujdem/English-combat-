@@ -1732,6 +1732,13 @@ export const NPCS: Record<string, { name: string; look: SpriteLook; doneLine?: L
     after: 'b2-12-return',
     doneLine: { text: "Tomorrow I'll have my voice back. And he'll have lost his.", es: 'Mañana tendré mi voz de vuelta. Y él habrá perdido la suya.' },
   },
+  // B2-12 · bloque 3: G guarda el reloj y la tarjeta, al vencer a The Countdown (el cierre, tarea b2-12-close)
+  'b2-12-g-leaving': {
+    name: 'G',
+    look: { shirt: '#23252d', hair: '#9b9ea6', skin: '#363b46', gender: 'male' },
+    after: 'b2-12-boss',
+    doneLine: { text: '(The room is empty. Only the smell of coffee is left.)', es: '(El cuarto está vacío. Solo queda el olor a café.)' },
+  },
   // ── B2-11 · Who Is G?, bloque 1 (el archivo del Herald y la sala común, data/b2WhoIsG.ts) ──
   // Manuel en el archivo (mismo look que en B2-02 y B2-05): tareas b2-11-arrival, b2-11-indirect y b2-11-factcheck
   'b2-11-manuel': {

@@ -294,4 +294,11 @@ export const B2_WINDOW_CLUES: { flag: string; year: number; title: string; text:
     text: 'Happy birthday, Leo. Be brave. Use your voice. — G',
     es: 'G la escribió en el patio de una escuela y la pegó en un regalo. Es la misma tarjeta que Leo abrió en el parque en su cumpleaños.',
   },
+  {
+    flag: 'b2-12-close',
+    year: 2056,
+    title: 'Tu nota para G',
+    text: "Don't do it.",
+    es: 'La dejaste junto al reloj, en el cuarto de G. Él la leyó… y la arrugó. El plan siguió adelante.',
+  },
 ]
