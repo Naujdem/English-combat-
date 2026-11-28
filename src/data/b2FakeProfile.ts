@@ -75,10 +75,11 @@ export const B2_04_RESIDENCE: SceneDef = {
     { type: 'npc', id: B2_04_JEISON, x: 10, y: 3 },
     { type: 'npc', id: B2_04_RICARDO, x: 26, y: 1 },
     // Priya llega con el Herald impreso cuando terminas en el banco (npcs.ts, after: b2-04-bank)
-    { type: 'npc', id: B2_04_PRIYA, x: 20, y: 3 },
+    // Priya y los bots en la fila de arriba de la calle: la fila de abajo queda libre entre el banco y el vestíbulo (bot Humo)
+    { type: 'npc', id: B2_04_PRIYA, x: 18, y: 3 },
     // Bloque 2: dos Phishing Bots en la calle (tras el artículo de Priya) y The Catfish junto al mostrador de Marisol
-    { type: 'enemy', id: B2_04_BOT1, x: 19, y: 4, after: B2_04_ECHO },
-    { type: 'enemy', id: B2_04_BOT2, x: 21, y: 3, after: B2_04_BOT1 },
+    { type: 'enemy', id: B2_04_BOT1, x: 20, y: 3, after: B2_04_ECHO },
+    { type: 'enemy', id: B2_04_BOT2, x: 22, y: 3, after: B2_04_BOT1 },
     { type: 'enemy', id: B2_04_BOSS, x: 7, y: 3, after: B2_04_BOT2 },
     // Bloque 3: Leo llega al vestíbulo al vencer a The Catfish (npcs.ts, after: b2-04-boss)
     { type: 'npc', id: B2_04_LEO, x: 2, y: 4 },

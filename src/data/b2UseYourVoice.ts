@@ -50,9 +50,10 @@ export const B2_14_PORT: SceneDef = {
   bossDoor: { x: 0, y: 0 },
   keysNeeded: 0,
   entities: [
-    { type: 'npc', id: B2_14_LEO, x: 3, y: 3 },
-    { type: 'npc', id: B2_14_MAYA, x: 2, y: 2 },
-    { type: 'npc', id: B2_14_SPECIAL, x: 3, y: 4 },
+    // Los amigos en una columna, con la fila 2 libre: así no encierran al protagonista al entrar (lo encontró el bot Humo)
+    { type: 'npc', id: B2_14_LEO, x: 4, y: 3 },
+    { type: 'npc', id: B2_14_MAYA, x: 4, y: 1 },
+    { type: 'npc', id: B2_14_SPECIAL, x: 4, y: 4 },
     { type: 'npc', id: B2_14_FIGURE, x: 9, y: 2 },
     { type: 'npc', id: B2_14_G, x: 9, y: 2 },
     // Bloque 2: los ecos salen del agua; G pelea; al vencerlo queda G en paz (el desenlace)
@@ -60,7 +61,8 @@ export const B2_14_PORT: SceneDef = {
     { type: 'enemy', id: 'b2-14-echo2', x: 7, y: 4, after: 'b2-14-echo1' },
     { type: 'enemy', id: 'b2-14-echo3', x: 8, y: 3, after: 'b2-14-echo2' },
     { type: 'enemy', id: 'b2-14-boss', x: 9, y: 2, after: 'b2-14-echo3' },
-    { type: 'npc', id: 'b2-14-g-peace', x: 9, y: 2 },
+    // Al lado del jefe vencido (que sigue en su casilla y respondería primero): lo encontró el bot Humo
+    { type: 'npc', id: 'b2-14-g-peace', x: 10, y: 3 },
   ],
   labels: [{ text: 'The harbour', x: 6, y: 1 }],
   zoneAt,

@@ -1,0 +1,36 @@
+# Bot Humo · B2: juega solo cada misión de B2 (desde su atajo del modo profesor) en un navegador y lista los fallos.
+# No usa IA ni internet. Corre en 4 partes a la vez cuando cambia el juego, y también se puede lanzar a mano
+# (pestaña Actions → "Bot Humo B2" → Run workflow). Si algo se traba, esa parte sale en rojo y la lista queda en el resumen.
+name: Bot Humo B2
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'scripts/bot-humo/**'
+  workflow_dispatch:
+jobs:
+  b2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        parte: [1, 2, 3, 4]
+    name: B2 · parte ${{ matrix.parte }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npm run bot:b2 | tee bot.log
+        shell: bash
+        env:
+          BOT_PARTE: ${{ matrix.parte }}
+      - if: always()
+        run: |
+          echo "## Bot Humo · B2, parte ${{ matrix.parte }}" >> "$GITHUB_STEP_SUMMARY"
+          grep -E "^(✔|✘|!!)" bot.log >> "$GITHUB_STEP_SUMMARY" || true
