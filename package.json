@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "validate": "node scripts/validate.mjs",
     "test:command": "node scripts/test-command.mjs",
-    "bot:escuela": "node scripts/bot-humo/run.mjs"
+    "bot:escuela": "node scripts/bot-humo/run.mjs",
+    "bot:b2": "node scripts/bot-humo/run-b2.mjs"
   },
   "dependencies": {
     "react": "^19.3.1",

@@ -52,12 +52,13 @@ export const B2_LEO_ADULT_LOOK = { shirt: '#1d2430', hair: '#0e1218', skin: '#2a
  * Leyenda (como b1Accident.ts): # pared · W ventana · B pizarra · M escritorio del profesor · D pupitre · d puerta · p planta
  * @ reloj de pared · 9 alarma de incendio · 0 letrero de salida de emergencia · ^ escalera.
  * A la izquierda el aula; a la derecha el pasillo (el protagonista adulto espera junto a la puerta del aula).
+ * El pasillo tiene 3 filas: con 2, tu yo adulto, el cuaderno y la sombra vencida cerraban el paso al resto (lo encontró el bot Humo).
  */
 const MAP = [
   '##BBB#@##9###0##',
   '#MM.....d.....^#',
   'W.......#......#',
-  'W.D.D.D.########',
+  'W.D.D.D.#......#',
   '#.......########',
   'W.D.D.D.########',
   '#.......########',
@@ -82,7 +83,8 @@ export const B2_03_SCHOOL: SceneDef = {
     { type: 'npc', id: B2_03_BOARD, x: 5, y: 1 },
     { type: 'npc', id: B2_03_STUDENT, x: 5, y: 6 },
     { type: 'npc', id: B2_03_ADULT, x: 9, y: 2 },
-    { type: 'npc', id: B2_03_NOTEBOOK, x: 10, y: 2 },
+    // El cuaderno en la tercera fila del pasillo, para dejar libre el paso (bot Humo)
+    { type: 'npc', id: B2_03_NOTEBOOK, x: 9, y: 3 },
     { type: 'npc', id: B2_03_POSTER, x: 12, y: 1 },
     // Bloque 2: el panel de emergencia del pasillo; las sombras del humo y Panic, que sujeta a tu yo adulto
     { type: 'npc', id: B2_03_PANEL, x: 13, y: 2 },
